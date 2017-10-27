@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Http\Requests\Validations;
+
+use App\Http\Requests\Request;
+
+class CreateInventoryWithVariantRequest extends Request
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        $user = Request::user(); //Get current user
+        Request::merge( [ 'shop_id' => $user->shop_id ] ); //Set shop_id
+        Request::merge( [ 'user_id' => $user->id ] ); //Set user_id
+
+        return [
+            'variants.*' => 'required',
+            'sku.*' => 'required|unique:inventories,sku',
+            'purchase_price.*' => 'bail|required|numeric',
+            'sale_price.*' => 'bail|required|numeric',
+            'stock_quantity.*' => 'bail|required|integer',
+            'offer_price.*' => 'numeric',
+            'available_from' => 'date',
+            'offer_start' => 'date|required_with:offer_price.*|after_or_equal:now',
+            'offer_end' => 'date|required_with:offer_price.*|after:offer_start.*',
+            'image.*' => 'mimes:jpeg,png',
+        ];
+
+    }
+
+   /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        $messages =  [
+            'variants.*.required' => trans('validation.variants_required'),
+            'offer_start.*.required_with' => trans('validation.offer_start_required'),
+            'offer_start.after' => trans('validation.offer_start_after'),
+            'offer_end.required_with' => trans('validation.offer_end_required'),
+            'offer_end.after' => trans('validation.offer_end_after'),
+        ];
+
+        foreach($this->request->get('sku') as $key => $val)
+        {
+            $messages['sku.'.$key.'.unique'] = $val .' '. trans('validation.sku-unique');
+        }
+
+        return $messages;
+
+    }
+
+}
