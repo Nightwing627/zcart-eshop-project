@@ -7,11 +7,15 @@
       <div class="help-block with-errors"></div>
     </div>
   </div>
+  @php
+    $special_role = isset($role) && $role->id <= 3 ? TRUE : FALSE;
+  @endphp
   <div class="col-md-4 nopadding-left">
     <div class="form-group">
       {!! Form::label('public', trans('app.form.role_type').'*', ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('help.role_type') }}"></i>
-      {!! Form::select('public', ['0' => trans('app.restricted'), '1' => trans('app.public')], null, ['id' => 'user-role-status', 'class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), 'required']) !!}
+      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ $special_role ? trans('help.cant_edit_special_role') : trans('help.role_type') }}"></i>
+      {{ Form::hidden('public', Null) }}
+      {!! Form::select('public', ['0' => trans('app.restricted'), '1' => trans('app.public')], null, ['id' => 'user-role-status', 'class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), $special_role ? 'disabled' : 'required' ]) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -54,7 +58,8 @@
                 isset($role) &&
                 (
                   ($role->public == 1 && 'merchant' == $access_level) ||
-                  ($role->public == 0 && 'platform' == $access_level)
+                  ($role->id == config('installation.seed.merchant_role_id') && 'merchant' == $access_level) ||
+                  ($role->public == 0 && 'platform' == $access_level && $role->id != config('installation.seed.merchant_role_id'))
                 )
               ) ? 'show' : 'hidden' }}>
             <td>

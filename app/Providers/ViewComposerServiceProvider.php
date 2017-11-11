@@ -177,6 +177,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                     $view->with('carriers', ListHelper::carriers());
 
+                    $view->with('packagings', ListHelper::packagings());
+
                     $view->with('warehouses', ListHelper::warehouses());
 
                     $view->with('suppliers', ListHelper::suppliers());
@@ -197,6 +199,8 @@ class ViewComposerServiceProvider extends ServiceProvider
                     $view->with('taxes', ListHelper::taxes());
 
                     $view->with('carriers', ListHelper::carriers());
+
+                    $view->with('packagings', ListHelper::packagings());
 
                     $view->with('warehouses', ListHelper::warehouses());
 

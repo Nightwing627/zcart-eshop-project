@@ -135,8 +135,10 @@ class User extends Authenticatable
      */
     public function isSuperAdmin()
     {
-        if(Auth::user()->role_id === 1)
+        if($this->role_id === 1)
+        {
             return true;
+        }
 
         return false;
     }
@@ -148,10 +150,22 @@ class User extends Authenticatable
      */
     public function isFromPlatform()
     {
-        if(Auth::user()->shop_id)
-            return false;
+        if(! $this->shop_id )
+        {
+            return true;
+        }
 
-        return true;
+        return false;
+    }
+
+    /**
+     * Check if the user is the super admin
+     *
+     * @return bool
+     */
+    public function scopeNotSuperAdmin($query)
+    {
+        return $query->where('role_id', '!=', 1);
     }
 
     /**

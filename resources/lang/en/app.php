@@ -47,6 +47,7 @@ return [
 
     // Application Levels
     'platform' => 'Platform',
+    'super_admin' => 'Super Admin',
     'modules' => 'Modules',
     'logo' => 'Logo',
     'merchant' => 'Merchant',
@@ -163,11 +164,13 @@ return [
     'config_updated_at' => 'Config updated at',
     'update_address' => 'Update address',
     'show_addresses' => 'Address book',
+    'profile' => 'Profile',
+    'login' => 'Login',
+    'log_out' => 'Log out',
     'all' => 'All',
     'table' => 'Table',
     'trash' => 'Trash',
     'delete' => 'Delete',
-    'profile' => 'Profile',
     'add' => 'Add',
     'update' => 'Update',
     'edit' => 'Edit',

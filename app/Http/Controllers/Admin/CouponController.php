@@ -57,8 +57,9 @@ class CouponController extends Controller
 
         $coupon->customers()->sync($request->input('customer_list'));
 
-        if($coupon->save())
+        if($coupon->save()){
 	        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+        }
 
         return back()->with('error', trans('messages.failed', ['model' => $this->model_name]));
     }

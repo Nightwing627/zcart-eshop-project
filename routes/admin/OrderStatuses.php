@@ -3,4 +3,4 @@
 
 	Route::get('orderStatus/{orderStatus}/restore', 'OrderStatusController@restore')->name('orderStatus.restore');
 
-	Route::resource('orderStatus', 'OrderStatusController',['except'=>'show']);
+	Route::resource('orderStatus', 'OrderStatusController', ['except'=>'show']);

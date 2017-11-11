@@ -47,16 +47,17 @@ class CreateSystemsTable extends Migration
             $table->boolean('show_inactive_categories_also_when_create_category')->nullable();
 
             // Vendot Settings
-            $table->boolean('vendor_can_create_category_group')->nullable();
-            $table->boolean('vendor_can_create_category_sub_group')->nullable();
-            $table->boolean('vendor_can_create_category')->nullable();
-            $table->boolean('vendor_can_create_attribute')->nullable();
-            $table->boolean('vendor_can_create_attribute_value')->nullable();
-            $table->boolean('vendor_can_create_manufacturer')->nullable();
-            $table->boolean('vendor_can_create_product')->nullable();
-            $table->boolean('vendor_have_own_carriers')->nullable();
-            $table->boolean('vendor_can_have_own_gift_cards')->nullable();
-            $table->boolean('vendor_can_create_email_template')->nullable();
+            $table->boolean('merchant_can_create_category_group')->nullable();
+            $table->boolean('merchant_can_create_category_sub_group')->nullable();
+            $table->boolean('merchant_can_create_category')->nullable();
+            $table->boolean('merchant_can_create_attribute')->nullable();
+            $table->boolean('merchant_can_create_attribute_value')->nullable();
+            $table->boolean('merchant_can_create_manufacturer')->nullable();
+            $table->boolean('merchant_can_create_product')->nullable();
+            $table->boolean('merchant_can_have_own_user_roles')->nullable();
+            $table->boolean('merchant_can_have_own_carriers')->nullable();
+            $table->boolean('merchant_can_have_own_gift_cards')->nullable();
+            $table->boolean('merchant_can_create_email_template')->nullable();
 
             // Address
             $table->boolean('address_geocode')->nullable();
@@ -66,7 +67,7 @@ class CreateSystemsTable extends Migration
             $table->integer('address_default_state')->nullable();
 
             // Genaral Settings
-            $table->integer('vendor_logo_max_size_limit_kb')->default(2000);
+            $table->integer('merchant_logo_max_size_limit_kb')->default(2000);
             $table->integer('coupon_code_size')->default(8);
             $table->integer('gift_card_serial_number_size')->default(13);
             $table->integer('gift_card_pin_size')->default(10);

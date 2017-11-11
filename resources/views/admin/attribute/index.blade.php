@@ -34,17 +34,13 @@
 							<i data-toggle="tooltip" data-placement="top" title="{{ trans('app.move') }}" class="fa fa-arrows sort-handler"></i>&nbsp;
 				        </td>
 						<td>
-							<span class="order"> {{ $attribute->order }} </span>
+							<span class="order">{{ $attribute->order }}</span>
 						</td>
+						<td>{{ $attribute->name }}</td>
 						<td>
-							{{ $attribute->name }}
+							<span class="label label-primary">{{ $attribute->attribute_values_count }}</span>
 						</td>
-						<td>
-							{{ count($attribute->attributeValues) }}
-						</td>
-						<td>
-							{{ $attribute->attributeType->type }}
-						</td>
+						<td>{{ $attribute->attributeType->type }}</td>
 						<td class="row-options">
 							<a href="{{ route('admin.catalog.attribute.entities', $attribute->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.entities') }}" class="fa fa-expand"></i></a>&nbsp;
 

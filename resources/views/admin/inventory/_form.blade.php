@@ -177,7 +177,15 @@
 <fieldset>
   <legend>{{ trans('app.shipping') }}</legend>
   <div class="row">
-    <div class="col-lg-3 col-md-6 nopadding-right">
+    <div class="col-md-4 col-sm-12 nopadding-right">
+      <div class="form-group">
+        {!! Form::label('packaging_id', trans('app.form.packaging').'*', ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_packaging') }}"></i>
+        {!! Form::select('packaging_id', $packagings, isset($inventory) ? $inventory->packaging_id : config('shop_settings.default_packaging_id'), ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+        <div class="help-block with-errors"></div>
+      </div>
+    </div>
+    <div class="col-md-2 col-sm-6 nopadding-right">
       <div class="form-group">
           {!! Form::label('shipping_width', trans('app.form.shipping_width').'*', ['class' => 'with-help']) !!}
           <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_width') }}"></i>
@@ -189,7 +197,7 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 nopadding-left">
+    <div class="col-md-2 col-sm-6 nopadding">
       <div class="form-group">
         {!! Form::label('shipping_height', trans('app.form.shipping_height').'*', ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_height') }}"></i>
@@ -201,7 +209,7 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 nopadding-right">
+    <div class="col-md-2 col-sm-6 nopadding-right">
       <div class="form-group">
         {!! Form::label('shipping_depth', trans('app.form.shipping_depth').'*', ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_depth') }}"></i>
@@ -213,7 +221,7 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 nopadding-left">
+    <div class="col-md-2 col-sm-6 nopadding-left">
       <div class="form-group">
         {!! Form::label('shipping_weight', trans('app.form.shipping_weight').'*', ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_weight') }}"></i>

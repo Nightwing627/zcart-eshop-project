@@ -4,8 +4,6 @@
   {{ Form::hidden('product_id', $inventory->product_id) }}
 @endif
 
-<?php $i = 0; ?>
-
 <div class="row">
   <div class="col-lg-3 col-md-6 nopadding-right">
     <div class="form-group">
@@ -53,7 +51,7 @@
     <div class="form-group">
       {!! Form::label('tax_id', trans('app.form.tax').'*', ['class' => 'with-help']) !!}
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_tax') }}"></i>
-      {!! Form::select('tax_id', $taxes, null, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+      {!! Form::select('tax_id', $taxes, config('shop_settings.default_tax_id_for_inventory'), ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -109,6 +107,9 @@
       </tr>
     </thead>
     <tbody style="zoom: 0.80;">
+      @php
+        $i = 0;
+      @endphp
       @foreach($combinations as $combination)
         <tr>
           <td><div class="form-group">{{ $i + 1 }}</div></td>
@@ -207,11 +208,19 @@
   {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'placeholder' => trans('app.placeholder.description')]) !!}
 </div>
 
-@if(isset($inventory) && $inventory->product->requires_shipping || $product->requires_shipping)
+@if($product->requires_shipping)
 <fieldset>
   <legend>{{ trans('app.shipping') }}</legend>
   <div class="row">
-    <div class="col-lg-3 col-md-6 nopadding-right">
+    <div class="col-md-4 col-sm-12 nopadding-right">
+      <div class="form-group">
+        {!! Form::label('packaging_id', trans('app.form.packaging').'*', ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_packaging') }}"></i>
+        {!! Form::select('packaging_id', $packagings, config('shop_settings.default_packaging_id'), ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+        <div class="help-block with-errors"></div>
+      </div>
+    </div>
+    <div class="col-md-2 col-sm-6 nopadding-right">
       <div class="form-group">
           {!! Form::label('shipping_width', trans('app.form.shipping_width').'*', ['class' => 'with-help']) !!}
           <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_width') }}"></i>
@@ -223,7 +232,7 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 nopadding-left">
+    <div class="col-md-2 col-sm-6 nopadding">
       <div class="form-group">
         {!! Form::label('shipping_height', trans('app.form.shipping_height').'*', ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_height') }}"></i>
@@ -235,7 +244,7 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 nopadding-right">
+    <div class="col-md-2 col-sm-6 nopadding-right">
       <div class="form-group">
         {!! Form::label('shipping_depth', trans('app.form.shipping_depth').'*', ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_depth') }}"></i>
@@ -247,7 +256,7 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 nopadding-left">
+    <div class="col-md-2 col-sm-6 nopadding-left">
       <div class="form-group">
         {!! Form::label('shipping_weight', trans('app.form.shipping_weight').'*', ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_weight') }}"></i>

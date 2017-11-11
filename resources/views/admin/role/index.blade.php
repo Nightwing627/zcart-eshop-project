@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-	<a href="{{ route('admin.utility.role.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_role') }}</a>
+	<a href="{{ route('admin.setting.role.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_role') }}</a>
 @endsection
 
 @section('content')
@@ -18,6 +18,7 @@
 				<thead>
 					<tr>
 						<th>{{ trans('app.name') }}</th>
+						<th>{{ trans('app.users') }}</th>
 						<th style="width: 60%;">{{ trans('app.access_control') }}</th>
 						<th>{{ trans('app.status') }}</th>
 						<th>{{ trans('app.option') }}</th>
@@ -31,6 +32,7 @@
 					          	<p class="excerpt-td small">{!! $role->description !!}</p>
 				          	@endif
 						</td>
+						<td><span class="label label-primary">{{ $role->users_count }}</span></td>
 						<td>
 							@foreach($role->permissions as $permission)
 								<span class="label label-outline">{{ str_replace('_', ' ', title_case($permission->slug)) }}</span>
@@ -38,11 +40,11 @@
 						</td>
 						<td>{{ ($role->public) ? trans('app.public') : trans('app.restricted') }}</td>
 						<td class="row-options">
-							<a href="{{ route('admin.utility.role.show', $role->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+							<a href="{{ route('admin.setting.role.show', $role->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 
-							<a href="{{ route('admin.utility.role.edit', $role) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+							<a href="{{ route('admin.setting.role.edit', $role) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 
-							{!! Form::open(['route' => ['admin.utility.role.trash', $role->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+							{!! Form::open(['route' => ['admin.setting.role.trash', $role->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 								{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 							{!! Form::close() !!}
 						</td>
@@ -85,8 +87,8 @@
 						<td>{{ ($trash->public) ? trans('app.public') : trans('app.restricted') }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
-							<a href="{{ route('admin.utility.role.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
-							{!! Form::open(['route' => ['admin.utility.role.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+							<a href="{{ route('admin.setting.role.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+							{!! Form::open(['route' => ['admin.setting.role.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 							{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 							{!! Form::close() !!}
 						</td>

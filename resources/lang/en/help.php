@@ -17,6 +17,8 @@ return [
 
     'role_type' => 'Restricted: The role only available for the main platform, a marchant can\'t use this role. Public: The role will available when a marchant will add a new user.',
 
+    'cant_edit_special_role' => 'This role type is not editable. Be careful to modify the permissions of this role.',
+
     'set_role_permissions' => 'Set role permissions very carefully. Choose the \'Role Type\' to get approperit modules.',
 
     'permission_modules' => 'Enable the module to set permission for the module',

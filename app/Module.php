@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Module extends Model
@@ -13,6 +14,20 @@ class Module extends Model
      * @var string
      */
     protected $table = 'modules';
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('NotSuperAdminModule', function (Builder $builder) {
+            $builder->where('access', '!=', 'Super Admin');
+        });
+    }
 
     /**
      * Get the permissions for the shop.

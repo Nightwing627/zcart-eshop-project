@@ -103,8 +103,6 @@
           <ul class="treeview-menu">
             <li class=" {{ Request::is('admin/utility/tax*') ? 'active' : '' }} "><a href="{{ url('admin/utility/tax') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.taxes') }}</a></li>
 
-            <li class=" {{ Request::is('admin/utility/role*') ? 'active' : '' }} "><a href="{{ url('admin/utility/role') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.user_roles') }}</a></li>
-
             <li class=" {{ Request::is('admin/utility/orderStatus*') ? 'active' : '' }} "><a href="{{ url('admin/utility/orderStatus') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.order_statuses') }}</a></li>
 
             <li class=" {{ Request::is('admin/utility/paymentMethod*') ? 'active' : '' }} "><a href="{{ url('admin/utility/paymentMethod') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.payment_methods') }}</a></li>
@@ -141,6 +139,8 @@
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
+
+            <li class=" {{ Request::is('admin/setting/role*') ? 'active' : '' }} "><a href="{{ url('admin/setting/role') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.user_roles') }}</a></li>
 
             <li class=" {{ Request::is('settings*') ? 'active' : '' }} "><a href="{{ url('admin/settings/profile') }}"> Profile</a></li>
 

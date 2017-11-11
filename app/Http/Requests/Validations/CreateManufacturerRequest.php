@@ -30,7 +30,7 @@ class CreateManufacturerRequest extends Request
            'name' => 'bail|required|unique:manufacturers',
            'email' =>  'email|max:255|nullable',
            'active' => 'required',
-           'image' => 'mimes:jpg,jpeg,png,gif|max:' . config('system_settings.vendor_logo_max_size_limit_kb'),
+           'image' => 'mimes:jpg,jpeg,png,gif|max:' . config('system_settings.merchant_logo_max_size_limit_kb'),
         ];
     }
 

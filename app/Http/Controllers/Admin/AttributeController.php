@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use App\Attribute;
+use App\Common\Authorizable;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateAttributeRequest;
 use App\Http\Requests\Validations\UpdateAttributeRequest;
 
 class AttributeController extends Controller
 {
+    use Authorizable;
+
     private $model_name;
 
     /**
@@ -28,7 +30,7 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        $data['attributes'] = Attribute::with(['attributeValues', 'attributeType'])->get();
+        $data['attributes'] = Attribute::with('attributeType')->withCount('attributeValues')->get();
 
         $data['trashes'] = Attribute::onlyTrashed()->get();
 
@@ -57,9 +59,7 @@ class AttributeController extends Controller
 
         $attribute->save();
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -70,13 +70,13 @@ class AttributeController extends Controller
      */
     public function entities($id)
     {
-        $data['attribute'] = Attribute::find($id);
+        $attribute = Attribute::find($id);
 
-        $data['attributeValues'] = $data['attribute']->attributeValues()->get();
+        $attributeValues = $attribute->attributeValues()->get();
 
-        $data['trashes'] = $data['attribute']->attributeValues()->onlyTrashed()->get();
+        $trashes = $attribute->attributeValues()->onlyTrashed()->get();
 
-        return view('admin.attribute.entities', $data);
+        return view('admin.attribute.entities', compact('attribute', 'attributeValues', 'trashes'));
     }
 
     /**
@@ -103,9 +103,7 @@ class AttributeController extends Controller
 
         $attribute->update($request->all());
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -119,9 +117,7 @@ class AttributeController extends Controller
     {
         Attribute::find($id)->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -135,9 +131,7 @@ class AttributeController extends Controller
     {
         Attribute::onlyTrashed()->find($id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -150,9 +144,7 @@ class AttributeController extends Controller
     {
         Attribute::onlyTrashed()->find($id)->forceDelete();
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
     /**

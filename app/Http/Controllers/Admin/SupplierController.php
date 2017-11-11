@@ -62,14 +62,11 @@ class SupplierController extends Controller
 
         $supplier->addresses()->save($address);
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')){
             ImageHelper::UploadImages($request, 'suppliers', $supplier->id);
         }
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -110,19 +107,15 @@ class SupplierController extends Controller
 
         $supplier->update($request->all());
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')){
             ImageHelper::UploadImages($request, 'suppliers', $supplier->id);
         }
 
-        if ($request->input('delete_image') == 1)
-        {
+        if ($request->input('delete_image') == 1){
             ImageHelper::RemoveImages('suppliers', $supplier->id);
         }
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -136,9 +129,7 @@ class SupplierController extends Controller
     {
         Supplier::find($id)->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -152,9 +143,7 @@ class SupplierController extends Controller
     {
         Supplier::onlyTrashed()->where('id', $id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -174,9 +163,7 @@ class SupplierController extends Controller
 
         ImageHelper::RemoveImages('suppliers', $id);
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
 }

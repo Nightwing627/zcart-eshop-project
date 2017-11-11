@@ -34,6 +34,7 @@ class CreateInventoryTable extends Migration
             $table->timestamp('offer_start')->nullable();
             $table->timestamp('offer_end')->nullable();
 
+            $table->integer('packaging_id')->unsigned()->nullable();
             $table->decimal('shipping_width', 20, 2)->nullable();
             $table->decimal('shipping_height', 20, 2)->nullable();
             $table->decimal('shipping_depth', 20, 2)->nullable();

@@ -41,7 +41,7 @@
 						<td class="row-options">
 							<a href="{{ route('admin.order.order.show', $order->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 
-							<a href="{{ route('admin.order.order.edit', $order->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+							{{-- <a href="{{ route('admin.order.order.edit', $order->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp; --}}
 
 							{!! Form::open(['route' => ['admin.order.order.trash', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 								{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}

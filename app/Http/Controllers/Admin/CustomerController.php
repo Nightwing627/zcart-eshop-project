@@ -4,15 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Address;
 use App\Customer;
-use App\Helpers\ImageHelper;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
+use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateCustomerRequest;
 use App\Http\Requests\Validations\UpdateCustomerRequest;
 
 class CustomerController extends Controller
 {
+    use Authorizable;
+
     private $model_name;
 
     /**
@@ -71,9 +74,7 @@ class CustomerController extends Controller
             ImageHelper::UploadImages($request, 'customers', $customer->id);
         }
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -122,7 +123,6 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $data['customer'] = Customer::findOrFail($id);
-
         return view('admin.customer._edit', $data);
     }
 
@@ -139,19 +139,15 @@ class CustomerController extends Controller
 
         $customer->update($request->all());
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')){
             ImageHelper::UploadImages($request, 'customers', $customer->id);
         }
 
-        if ($request->input('delete_image') == 1)
-        {
+        if ($request->input('delete_image') == 1){
             ImageHelper::RemoveImages('customers', $customer->id);
         }
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -164,10 +160,7 @@ class CustomerController extends Controller
     public function trash(Request $request, $id)
     {
         Customer::find($id)->delete();
-
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -180,10 +173,7 @@ class CustomerController extends Controller
     public function restore(Request $request, $id)
     {
         Customer::onlyTrashed()->find($id)->restore();
-
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -203,9 +193,7 @@ class CustomerController extends Controller
 
         ImageHelper::RemoveImages('customers', $id);
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
 }

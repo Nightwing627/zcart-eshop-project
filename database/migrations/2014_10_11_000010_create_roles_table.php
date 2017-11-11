@@ -18,6 +18,7 @@ class CreateRolesTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->boolean('public')->nullable();
+            $table->integer('level')->unsigned()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

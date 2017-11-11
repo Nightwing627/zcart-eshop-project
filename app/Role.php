@@ -41,7 +41,7 @@ class Role extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'shop_id', 'description', 'public'];
+    protected $fillable = ['name', 'shop_id', 'description', 'public', 'level'];
 
     /**
      * Get the users for the role.

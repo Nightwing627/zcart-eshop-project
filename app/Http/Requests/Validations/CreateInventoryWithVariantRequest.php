@@ -23,6 +23,7 @@ class CreateInventoryWithVariantRequest extends Request
      */
     public function rules()
     {
+        // echo "<pre>"; print_r(Request::all()); echo "</pre>"; exit();
         $user = Request::user(); //Get current user
         Request::merge( [ 'shop_id' => $user->shop_id ] ); //Set shop_id
         Request::merge( [ 'user_id' => $user->id ] ); //Set user_id
@@ -33,13 +34,12 @@ class CreateInventoryWithVariantRequest extends Request
             'purchase_price.*' => 'bail|required|numeric',
             'sale_price.*' => 'bail|required|numeric',
             'stock_quantity.*' => 'bail|required|integer',
-            'offer_price.*' => 'numeric',
+            'offer_price.*' => 'sometimes|nullable|numeric',
             'available_from' => 'date',
-            'offer_start' => 'date|required_with:offer_price.*|after_or_equal:now',
-            'offer_end' => 'date|required_with:offer_price.*|after:offer_start.*',
+            'offer_start' => 'nullable|required_with:offer_price.*|date|after_or_equal:now',
+            'offer_end' => 'nullable|required_with:offer_price.*|date|after:offer_start.*',
             'image.*' => 'mimes:jpeg,png',
         ];
-
     }
 
    /**
@@ -60,6 +60,11 @@ class CreateInventoryWithVariantRequest extends Request
         foreach($this->request->get('sku') as $key => $val)
         {
             $messages['sku.'.$key.'.unique'] = $val .' '. trans('validation.sku-unique');
+        }
+
+        foreach($this->request->get('offer_price') as $key => $val)
+        {
+            $messages['offer_price.'.$key.'.numeric'] = $val .' '. trans('validation.offer_price-numeric');
         }
 
         return $messages;

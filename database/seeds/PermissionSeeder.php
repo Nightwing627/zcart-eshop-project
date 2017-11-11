@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class PermissionSeeder extends Seeder
 {
@@ -12,54 +12,47 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $modules = \DB::table('modules')->pluck('name','id');
+        $modules = \DB::table('modules')->where('access', '!=', 'Super Admin')->get();
 
-        foreach ($modules as $id => $name)
+        foreach ($modules as $module)
         {
-	        DB::table('permissions')->insert(
-	        	array_merge([
-                    [
-                        'module_id' => $id,
-                        'name' => 'View',
-                        'slug' => 'view_' . snake_case($name),
+            $actions = explode(',', $module->actions);
+
+            foreach ($actions as $action)
+            {
+                DB::table('permissions')->insert([
+                        'module_id' => $module->id,
+                        'name' => title_case($action),
+                        'slug' =>  strtolower($action). '_' . snake_case($module->name),
                         'created_at' => Carbon::Now(),
                         'updated_at' => Carbon::Now(),
-                    ],[
-			            'module_id' => $id,
-			            'name' => 'Add',
-			            'slug' => 'add_' . snake_case($name),
-			            'created_at' => Carbon::Now(),
-			            'updated_at' => Carbon::Now(),
-			        ],[
-			            'module_id' => $id,
-			            'name' => 'Edit',
-			            'slug' => 'edit_' . snake_case($name),
-			            'created_at' => Carbon::Now(),
-			            'updated_at' => Carbon::Now(),
-			        ],[
-			            'module_id' => $id,
-			            'name' => 'Delete',
-			            'slug' => 'delete_' . snake_case($name),
-			            'created_at' => Carbon::Now(),
-			            'updated_at' => Carbon::Now(),
-			        ]
-                ])
-	        );
+                    ]
+                );
+            }
         }
 
         // Demo permission_role on pivot table
-        $permissions = \DB::table('permissions')->pluck('id');
+        $permissions = \DB::table('permissions')->pluck('module_id','id');
 
-        foreach ($permissions as $index)
-        {
-            DB::table('permission_role')->insert(
-                [
-                    'permission_id' => $index,
-                    'role_id' => 1,
+        foreach ($permissions as $permission_id => $module_id){
+            DB::table('permission_role')->insert([
+                    'permission_id' => $permission_id,
+                    'role_id' => config('installation.seed.admin_role_id')?:2,
                     'created_at' => Carbon::Now(),
                     'updated_at' => Carbon::Now(),
                 ]
             );
+
+            $module = \DB::table('modules')->where('id', $module_id)->first();
+
+            if ($module->access == 'Merchant'){
+                DB::table('permission_role')->insert([
+                    'permission_id' => $permission_id,
+                    'role_id' => config('installation.seed.merchant_role_id')?:3,
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ]);
+            }
         }
 
     }

@@ -212,7 +212,7 @@
       var dataString = 'id=' + $(this).val();
       $.ajax({
           type: "get",
-          url : "{{ route('admin.catalog.parrentAttributeType') }}",
+          url : "{{ route('admin.ajax.getParrentAttributeType') }}",
           data : dataString,
           datatype: 'JSON',
           success : function(attribute_type)
@@ -227,7 +227,6 @@
             }
           }
       },"html");
-      // console.log("change val=" + $(this).val());
     });
 
     // $(".select2-roles").select2({
@@ -241,7 +240,8 @@
         $("#state_id").empty().trigger('change'); //Reset the state dropdown
 
         var ID = $("#country_id").select2('data')[0].id;
-        var url = "{{ route('address.getCountryStates') }}"
+
+        var url = "{{ route('ajax.getCountryStates') }}"
 
         $.ajax({
             delay: 250,

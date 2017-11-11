@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use App\Attribute;
 use App\AttributeValue;
+use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateAttributeValueRequest;
@@ -13,6 +13,8 @@ use App\Http\Requests\Validations\UpdateAttributeValueRequest;
 
 class AttributeValueController extends Controller
 {
+    // use Authorizable;
+
     private $model_name;
 
     /**

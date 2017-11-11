@@ -58,9 +58,7 @@ class TaxController extends Controller
 
         $tax->save();
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -74,7 +72,6 @@ class TaxController extends Controller
         $data['tax'] = Tax::findOrFail($id);
 
         return view('admin.tax._edit', $data);
-
     }
 
     /**
@@ -91,10 +88,7 @@ class TaxController extends Controller
 
         $tax->update($request->all());
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
-
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -108,9 +102,7 @@ class TaxController extends Controller
     {
         Tax::find($id)->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -124,9 +116,7 @@ class TaxController extends Controller
     {
         Tax::onlyTrashed()->where('id', $id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -140,9 +130,7 @@ class TaxController extends Controller
     {
         Tax::onlyTrashed()->find($id)->forceDelete();
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
 }

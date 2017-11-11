@@ -136,6 +136,14 @@ class Order extends Model
     }
 
     /**
+     * Get the packaging for the order.
+     */
+    public function packaging()
+    {
+        return $this->belongsTo('App\Packaging');
+    }
+
+    /**
      * Get the paymentStatus for the order.
      */
     public function paymentStatus()

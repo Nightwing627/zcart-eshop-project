@@ -6,6 +6,7 @@ use App\User;
 use App\Address;
 use App\Helpers\ListHelper;
 use App\Helpers\ImageHelper;
+use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -14,6 +15,8 @@ use App\Http\Requests\Validations\UpdateUserRequest;
 
 class UserController extends Controller
 {
+    use Authorizable;
+
     private $model_name;
 
     /**
@@ -39,7 +42,7 @@ class UserController extends Controller
         //     $data['users'] = User::mine()->with('shop', 'role', 'primaryAddress')->get();
         // }
 
-        $data['users'] = User::mine()->with('role', 'primaryAddress')->get();
+        $data['users'] = User::notSuperAdmin()->mine()->with('role', 'primaryAddress')->get();
 
         $data['trashes'] = User::mine()->onlyTrashed()->get();
 
@@ -72,14 +75,11 @@ class UserController extends Controller
 
         $user->addresses()->save($address);
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')){
             ImageHelper::UploadImages($request, 'users', $user->id);
         }
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -130,19 +130,15 @@ class UserController extends Controller
 
         $user->update($request->all());
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')){
             ImageHelper::UploadImages($request, 'users', $user->id);
         }
 
-        if ($request->input('delete_image') == 1)
-        {
+        if ($request->input('delete_image') == 1){
             ImageHelper::RemoveImages('users', $user->id);
         }
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -156,9 +152,7 @@ class UserController extends Controller
     {
         User::find($id)->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -172,9 +166,7 @@ class UserController extends Controller
     {
         User::onlyTrashed()->where('id',$id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -194,9 +186,7 @@ class UserController extends Controller
 
         ImageHelper::RemoveImages('users', $id);
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
 }

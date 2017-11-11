@@ -65,14 +65,11 @@ class WarehouseController extends Controller
 
         $warehouse->addresses()->save($address);
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')){
             ImageHelper::UploadImages($request, 'warehouses', $warehouse->id);
         }
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -112,19 +109,15 @@ class WarehouseController extends Controller
 
         $warehouse->update($request->all());
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')){
             ImageHelper::UploadImages($request, 'warehouses', $warehouse->id);
         }
 
-        if ($request->input('delete_image') == 1)
-        {
+        if ($request->input('delete_image') == 1){
             ImageHelper::RemoveImages('warehouses', $warehouse->id);
         }
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -138,9 +131,7 @@ class WarehouseController extends Controller
     {
         Warehouse::find($id)->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -154,9 +145,7 @@ class WarehouseController extends Controller
     {
         Warehouse::onlyTrashed()->where('id', $id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -176,9 +165,7 @@ class WarehouseController extends Controller
 
         ImageHelper::RemoveImages('warehouses', $id);
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
 }

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use Auth;
-use App\Blog;
 use App\Tag;
-// use App\Common\Authorizable;
+use App\Blog;
+use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateBlogRequest;
@@ -14,7 +13,7 @@ use App\Http\Requests\Validations\UpdateBlogRequest;
 
 class BlogController extends Controller
 {
-    // use Authorizable;
+    use Authorizable;
 
     private $model_name;
 
@@ -61,7 +60,9 @@ class BlogController extends Controller
     public function store(CreateBlogRequest $request)
     {
         $blog = new Blog($request->all());
+
         Auth::user()->blogs()->save($blog);
+
         if ($request->input('tag_list'))
         {
             $this->syncTags($blog, $request->input('tag_list'));
@@ -90,7 +91,9 @@ class BlogController extends Controller
     public function edit($id)
     {
         $data['blog'] = Blog::findOrFail($id);
+
         $data['tags'] = Tag::orderBy('name', 'asc')->pluck('name', 'id');
+
         return view('admin.blog._edit', $data);
     }
 
@@ -104,6 +107,7 @@ class BlogController extends Controller
     public function update(UpdateBlogRequest $request, $id)
     {
         $blog = Blog::findOrFail($id);
+
         $blog->update($request->all());
 
         if ($request->input('tag_list'))
@@ -151,7 +155,9 @@ class BlogController extends Controller
     public function destroy(Request $request, $id)
     {
         $blog = Blog::onlyTrashed()->find($id);
+
         $blog->forceDelete();
+
         $this->syncTags($blog, []);
 
         return redirect()->to('admin/blog')->with('success', trans('messages.deleted', ['model' => $this->model_name]));
@@ -168,7 +174,8 @@ class BlogController extends Controller
     {
         $tagArr = [];
 
-        foreach ($tagIds as $tag) {
+        foreach ($tagIds as $tag)
+        {
             $oldTagId = Tag::find($tag);
 
             if ($oldTagId){

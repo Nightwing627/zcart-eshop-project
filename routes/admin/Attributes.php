@@ -1,6 +1,4 @@
 <?php
-Route::get('attribute/parrentAttributeType', 'AttributeController@ajaxGetParrentAttributeType')->name('parrentAttributeType'); //AJAX rout
-
 Route::get('attribute/{attribute}/entities', 'AttributeController@entities')->name('attribute.entities');
 
 Route::delete('attribute/{attribute}/trash', 'AttributeController@trash')->name('attribute.trash');

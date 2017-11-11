@@ -7,6 +7,4 @@
 
 	Route::get('order/find', 'OrderController@find')->name('order.find');
 
-	// Route::get('order/create/{cart?}', 'OrderController@create')->name('order.create');
-
-	Route::resource('order', 'OrderController');
+	Route::resource('order', 'OrderController', ['except'=>['edit','update']]);

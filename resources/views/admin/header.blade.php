@@ -174,26 +174,36 @@
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <!-- The user image in the navbar-->
-            <img src="{{ get_image_src(1, 'users', '35x35') }}" class="user-image" alt="{{ trans('app.avatar') }}">
+            <img src="{{ get_image_src(Auth::user()->id, 'users', '35x35') }}" class="user-image" alt="{{ trans('app.avatar') }}">
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-            <span class="hidden-xs">Alexander Pierce</span>
+            <span class="hidden-xs">{{Auth::user()->nice_name ?: Auth::user()->name}}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->
             <li class="user-header">
-              <img src="{{ get_image_src(1, 'users', '150x150') }}" class="user-image" alt="{{ trans('app.avatar') }}">
+              <img src="{{ get_image_src(Auth::user()->id, 'users', '150x150') }}" class="user-image" alt="{{ trans('app.avatar') }}">
+              <h4>{{Auth::user()->name}}</h4>
               <p>
-                Alexander Pierce - Web Developer
-                <small>Member since Nov. 2012</small>
+                @if(Auth::user()->isSuperAdmin())
+                  {{ trans('app.super_admin') }}
+                @else
+                  {{ Auth::user()->role->name }}
+                @endif
+
+                @unless(Auth::user()->isFromPlatform())
+                  {{ ' | ' . Auth::user()->shop->name }}
+                @endunless
+
+                <small>{{ trans('app.member_since') . ' ' . Auth::user()->created_at->diffForHumans() }}</small>
               </p>
             </li>
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="{{ url('user/1/profile') }}" class="btn btn-default btn-flat">Profile</a>
+                <a href="{{ route('admin.admin.user.profile', Auth::user()) }}" class="btn btn-default btn-flat">{{ trans('app.profile') }}</a>
               </div>
               <div class="pull-right">
-                <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                <a href="{{ route('logout') }}" class="btn btn-default btn-flat">{{ trans('app.log_out') }}</a>
               </div>
             </li>
           </ul>

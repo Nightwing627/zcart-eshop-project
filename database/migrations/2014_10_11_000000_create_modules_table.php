@@ -16,7 +16,8 @@ class CreateModulesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->enum('access', ['Platform', 'Merchant', 'Common']);
+            $table->enum('access', ['Super Admin', 'Platform', 'Merchant', 'Common']);
+            $table->string('actions')->nullable();
             $table->boolean('active')->default(1);
             $table->softDeletes();
             $table->timestamps();

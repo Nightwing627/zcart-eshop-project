@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-	@can('create_blog')
+	@can('create', App\Blog::class)
 		<a href="{{ route('admin.exim', 'blogs') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 		<a href="{{ route('admin.blog.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_blog') }}</a>
 	@endcan
@@ -40,14 +40,14 @@
 			          <td>{{ ($blog->status) ? trans('app.published') : trans('app.draft') }}</td>
 			          <td>{{ $blog->published_at ? $blog->published_at->toDayDateTimeString() : trans('app.never') }}</td>
 			          <td class="row-options">
-						{{-- @can('update', $blog) --}}
+						@can('update', $blog)
 		                    <a href="{{ route('admin.blog.edit', $blog->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
-						{{-- @endcan --}}
-						{{-- @can('delete', $blog) --}}
+						@endcan
+						@can('delete', $blog)
 		                    {!! Form::open(['route' => ['admin.blog.trash', $blog->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 		                        {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 							{!! Form::close() !!}
-						{{-- @endcan --}}
+						@endcan
 			          </td>
 			        </tr>
 		        @endforeach

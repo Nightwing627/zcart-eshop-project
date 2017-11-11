@@ -24,6 +24,9 @@ class InitSettings
         {
             $shop_settings = ListHelper::shop_settings();
             config()->set('shop_settings', $shop_settings);
+
+            $permissions = ListHelper::authorizations();
+            config()->set('permissions', $permissions);
         }
 
         return $next($request);

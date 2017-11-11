@@ -29,7 +29,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $data['roles'] = Role::with('permissions')->get();
+        $data['roles'] = Role::with('permissions')->withCount('users')->get();
 
         $data['trashes'] = Role::onlyTrashed()->get();
 
@@ -86,7 +86,6 @@ class RoleController extends Controller
     public function edit($id)
     {
         $data['role'] = Role::findOrFail($id);
-
         return view('admin.role._edit', $data);
     }
 
@@ -118,7 +117,6 @@ class RoleController extends Controller
     public function trash(Request $request, $id)
     {
         Role::find($id)->delete();
-
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
@@ -132,7 +130,6 @@ class RoleController extends Controller
     public function restore(Request $request, $id)
     {
         Role::onlyTrashed()->where('id',$id)->restore();
-
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 

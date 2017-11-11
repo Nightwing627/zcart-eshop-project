@@ -5,13 +5,13 @@ Route::get('/logout' , 'Auth\LoginController@logout');
 Route::get('/', 'HomeController@index');
 
 // Common
-Route::group(['middleware' => ['auth','acl']], function()
+Route::group(['middleware' => ['auth']], function()
 {
 	include('Address.php');
 });
 
 // Admin
-Route::group(['middleware' => ['auth','acl'], 'namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function()
+Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function()
 {
 	// Dashboard
 	Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
@@ -62,7 +62,7 @@ Route::group(['middleware' => ['auth','acl'], 'namespace' => 'Admin', 'as' => 'a
 
 	});
 
-	// Shipping Routs for Admin
+	// Shipping Routs for Admin/Merchant
 	Route::group(['as' => 'shipping.', 'prefix' => 'shipping'], function()
 	{
 		include('admin/Carrier.php');
@@ -70,22 +70,28 @@ Route::group(['middleware' => ['auth','acl'], 'namespace' => 'Admin', 'as' => 'a
 		include('admin/Packaging.php');
 	});
 
-	// Order Routs for Admin
+	// Order Routs for Admin/Merchant
 	Route::group(['as' => 'order.', 'prefix' => 'order'], function()
 	{
 		include('admin/Orders.php');
 		include('admin/Carts.php');
 	});
 
-	// Stock Routs for Admin
+	// Utility Routs for Admin/Merchant
 	Route::group(['as' => 'utility.', 'prefix' => 'utility'], function()
 	{
-		include('admin/UserRole.php');
+		// include('admin/UserRole.php');
 		include('admin/Tax.php');
 		include('admin/EmailTemplates.php');
 		include('admin/OrderStatuses.php');
 		include('admin/PaymentStatuses.php');
 		include('admin/PaymentMethods.php');
+	});
+
+	// Settings Routs for Admin/Merchant
+	Route::group(['as' => 'setting.', 'prefix' => 'setting'], function()
+	{
+		include('admin/UserRole.php');
 	});
 
 	// Promotions Routs for Admin
@@ -105,13 +111,18 @@ Route::group(['middleware' => ['auth','acl'], 'namespace' => 'Admin', 'as' => 'a
 	// Route::resource('comment', 'CommentController');
 
 	// AJAX routes
-	Route::get('order/ajax/getTaxRate', 'OrderController@ajaxGetTaxRate')->name('ajax.getTaxRate');
+	Route::group(['middleware' => 'ajax'], function()
+	{
+		Route::get('catalog/ajax/getParrentAttributeType', 'AttributeController@ajaxGetParrentAttributeType')->name('ajax.getParrentAttributeType');
 
-	Route::get('order/ajax/getShippingCost', 'OrderController@ajaxGetShippingCost')->name('ajax.getShippingCost');
+		Route::get('order/ajax/getTaxRate', 'OrderController@ajaxGetTaxRate')->name('ajax.getTaxRate');
 
-	Route::get('order/ajax/getPackagingCost', 'OrderController@ajaxGetPackagingCost')->name('ajax.getPackagingCost');
+		Route::get('order/ajax/getShippingCost', 'OrderController@ajaxGetShippingCost')->name('ajax.getShippingCost');
 
-	Route::get('system/ajax/getFromPHPHelper', 'SettingController@ajaxGetFromPHPHelper')->name('ajax.getFromPHPHelper');
+		Route::get('order/ajax/getPackagingCost', 'OrderController@ajaxGetPackagingCost')->name('ajax.getPackagingCost');
+
+		Route::get('system/ajax/getFromPHPHelper', 'SettingController@ajaxGetFromPHPHelper')->name('ajax.getFromPHPHelper');
+	});
 
 });
 

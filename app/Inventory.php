@@ -11,18 +11,6 @@ use App\Scopes\ActiveScope;
 
 class Inventory extends Model
 {
-    /**
-     * The "booting" method of the model.
-     *
-     * @return void
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        // static::addGlobalScope(new ActiveScope);
-    }
-
     use SoftDeletes;
 
     /**
@@ -63,6 +51,7 @@ class Inventory extends Model
                         'offer_price',
                         'offer_start',
                         'offer_end',
+                        'packaging_id',
                         'shipping_width',
                         'shipping_height',
                         'shipping_depth',
@@ -103,6 +92,14 @@ class Inventory extends Model
     public function carriers()
     {
         return $this->belongsToMany('App\Carrier')->withTimestamps();
+    }
+
+    /**
+     * Get the packaging for the order.
+     */
+    public function packaging()
+    {
+        return $this->belongsTo('App\Packaging');
     }
 
     /**

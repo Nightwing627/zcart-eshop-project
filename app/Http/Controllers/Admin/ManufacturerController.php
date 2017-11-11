@@ -33,7 +33,6 @@ class ManufacturerController extends Controller
         $data['trashes'] = Manufacturer::onlyTrashed()->get();
 
         return view('admin.manufacturer.index', $data);
-
     }
 
     /**
@@ -58,14 +57,11 @@ class ManufacturerController extends Controller
 
         $manufacturer->save();
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')){
             ImageHelper::UploadImages($request, 'manufacturers', $manufacturer->id);
         }
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -88,7 +84,6 @@ class ManufacturerController extends Controller
     public function edit($id)
     {
         $data['manufacturer'] = Manufacturer::findOrFail($id);
-
         return view('admin.manufacturer._edit', $data);
     }
 
@@ -105,19 +100,15 @@ class ManufacturerController extends Controller
 
         $manufacturer->update($request->all());
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')){
             ImageHelper::UploadImages($request, 'manufacturers', $manufacturer->id);
         }
 
-        if ($request->input('delete_image') == 1)
-        {
+        if ($request->input('delete_image') == 1){
             ImageHelper::RemoveImages('manufacturers', $manufacturer->id);
         }
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -130,10 +121,7 @@ class ManufacturerController extends Controller
     public function trash(Request $request, $id)
     {
         Manufacturer::find($id)->delete();
-
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -146,10 +134,7 @@ class ManufacturerController extends Controller
     public function restore(Request $request, $id)
     {
         Manufacturer::onlyTrashed()->where('id',$id)->restore();
-
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -163,14 +148,11 @@ class ManufacturerController extends Controller
     {
         Manufacturer::onlyTrashed()->find($id)->forceDelete();
 
-        if ($request->input('delete_image') == 1)
-        {
+        if ($request->input('delete_image') == 1){
             ImageHelper::RemoveImages('manufacturers', $id);
         }
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
 }

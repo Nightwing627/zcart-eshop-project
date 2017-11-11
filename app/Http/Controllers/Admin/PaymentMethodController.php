@@ -58,14 +58,11 @@ class PaymentMethodController extends Controller
 
         $payment_method->save();
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')){
             ImageHelper::UploadImages($request, 'payment-methods', $payment_method->id);
         }
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -77,7 +74,6 @@ class PaymentMethodController extends Controller
     public function edit($id)
     {
         $data['payment_method'] = PaymentMethod::findOrFail($id);
-
         return view('admin.payment-method._edit', $data);
     }
 
@@ -94,19 +90,15 @@ class PaymentMethodController extends Controller
 
         $payment_method->update($request->all());
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')){
             ImageHelper::UploadImages($request, 'payment-methods', $payment_method->id);
         }
 
-        if ($request->input('delete_image') == 1)
-        {
+        if ($request->input('delete_image') == 1){
             ImageHelper::RemoveImages('payment-methods', $payment_method->id);
         }
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -119,10 +111,7 @@ class PaymentMethodController extends Controller
     public function trash(Request $request, $id)
     {
         PaymentMethod::find($id)->delete();
-
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -135,10 +124,7 @@ class PaymentMethodController extends Controller
     public function restore(Request $request, $id)
     {
         PaymentMethod::onlyTrashed()->where('id',$id)->restore();
-
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -154,9 +140,7 @@ class PaymentMethodController extends Controller
 
         ImageHelper::RemoveImages('payment-methods', $id);
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
 }

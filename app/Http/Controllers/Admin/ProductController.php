@@ -74,6 +74,7 @@ class ProductController extends Controller
         }
 
         $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
+
         return back()->withInput();
     }
 
@@ -116,24 +117,19 @@ class ProductController extends Controller
 
         $this->syncCategories($product, $request->input('category_list'));
 
-        if ($request->input('tag_list'))
-        {
+        if ($request->input('tag_list')){
             $this->syncTags($product, $request->input('tag_list'));
         }
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')){
             ImageHelper::UploadImages($request, 'products', $id);
         }
 
-        if ($request->input('delete_image') == 1)
-        {
+        if ($request->input('delete_image') == 1){
             ImageHelper::RemoveImages('products', $product->id);
         }
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -146,10 +142,7 @@ class ProductController extends Controller
     public function trash(Request $request, $id)
     {
         Product::find($id)->delete();
-
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -162,10 +155,7 @@ class ProductController extends Controller
     public function restore(Request $request, $id)
     {
         Product::onlyTrashed()->where('id',$id)->restore();
-
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -181,9 +171,7 @@ class ProductController extends Controller
 
         ImageHelper::RemoveImages('products', $id);
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
     /**

@@ -59,9 +59,7 @@ class OrderStatusController extends Controller
 
         $order_status->save();
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -92,9 +90,7 @@ class OrderStatusController extends Controller
 
         $order_status->update($request->all());
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -107,10 +103,7 @@ class OrderStatusController extends Controller
     public function trash(Request $request, $id)
     {
         OrderStatus::find($id)->delete();
-
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -123,10 +116,7 @@ class OrderStatusController extends Controller
     public function restore(Request $request, $id)
     {
         OrderStatus::onlyTrashed()->where('id',$id)->restore();
-
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -139,10 +129,7 @@ class OrderStatusController extends Controller
     public function destroy(Request $request, $id)
     {
         OrderStatus::onlyTrashed()->find($id)->forceDelete();
-
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
     /**

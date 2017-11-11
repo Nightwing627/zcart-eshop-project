@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use Auth;
+use App\User;
 use App\Module;
 use App\Attribute;
 
@@ -143,6 +144,23 @@ class ListHelper
     }
 
     /**
+     * Get permissions for the user.
+     *
+     * @return array
+     */
+    public static function authorizations(User $user = null)
+    {
+        $user = $user ?: Auth::user(); //Get current user
+
+        if($user->isSuperAdmin())
+        {
+            return [];
+        }
+
+        return $user->role->permissions()->pluck('slug')->toArray();
+    }
+
+    /**
      * Get merchants list for form dropdown.
      *
      * @return array
@@ -199,7 +217,7 @@ class ListHelper
      */
     public static function carriers($shop = null)
     {
-        if(config('system_settings.vendor_have_own_carriers'))
+        if(config('system_settings.merchant_can_have_own_carriers'))
         {
             $shop = $shop ?: Auth::user()->shop_id; //Get current user's shop_id
         }

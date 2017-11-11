@@ -65,14 +65,11 @@ class OrderController extends Controller
                 ->orWhere('name', $query)
                 ->get()->first();
 
-        if ( $customer_id )
-        {
+        if ( $customer_id ){
             return redirect(route('admin.order.order.create',['customer_id' => $customer_id]));
         }
 
-        $request->session()->flash('warning', trans('messages.nofound', ['model' => trans('app.model.customer')]));
-
-        return back();
+        return back()->with('warning', trans('messages.nofound', ['model' => trans('app.model.customer')]));
     }
 
     /**
@@ -83,11 +80,11 @@ class OrderController extends Controller
     public function create(Request $request)
     {
         $customer_id = $request->input('customer_id');
+
     	$cart_id = $request->input('cart_id');
 
         $data = [];
-        if ($cart_id)
-        {
+        if ($cart_id){
             $data['cart'] = Cart::find($cart_id);
         }
 
@@ -115,14 +112,11 @@ class OrderController extends Controller
         $this->syncInventory($order, $request->input('cart'));
 
         // DELETE THE SAVED CART AFTER THE ORDER
-        if ($request->input('delete_the_cart'))
-        {
+        if ($request->input('delete_the_cart')){
             Cart::find($request->input('cart_id'))->forceDelete();
         }
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return redirect(route('admin.order.order.index'));
+        return redirect()->route('admin.order.order.index')->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -144,18 +138,18 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $data['cart'] = Order::findOrFail($id);
+    // public function edit($id)
+    // {
+    //     $data['cart'] = Order::findOrFail($id);
 
-        $data['order_cart'] = true;
+    //     $data['order_cart'] = true;
 
-        $customer_id = $data['cart']->customer_id;
+    //     $customer_id = $data['cart']->customer_id;
 
-        $data = array_merge($data, $this->prepareForm($customer_id));
+    //     $data = array_merge($data, $this->prepareForm($customer_id));
 
-        return view('admin.order.create', $data);
-    }
+    //     return view('admin.order.create', $data);
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -164,21 +158,19 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOrderRequest $request, $id)
-    {
-        $order = Order::findOrFail($id);
+    // public function update(UpdateOrderRequest $request, $id)
+    // {
+    //     $order = Order::findOrFail($id);
 
-        setAdditionalCartInfo($request); //Set some system information using helper function
+    //     setAdditionalCartInfo($request); //Set some system information using helper function
 
-        $order->update($request->all());
-        // $order->update($request->except('cart', 'cart_id', 'same_as_billing_address', 'delete_the_cart', 'product', 'action'));
+    //     $order->update($request->all());
+    //     // $order->update($request->except('cart', 'cart_id', 'same_as_billing_address', 'delete_the_cart', 'product', 'action'));
 
-        $this->syncInventory($order, $request->input('cart'));
+    //     $this->syncInventory($order, $request->input('cart'));
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return redirect(route('admin.order.order.index'));
-    }
+    //     return redirect()->route('admin.order.order.index')->with('success', trans('messages.updated', ['model' => $this->model_name]));
+    // }
 
     /**
      * Trash the specified resource.
@@ -191,9 +183,7 @@ class OrderController extends Controller
     {
         Order::find($id)->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -207,9 +197,7 @@ class OrderController extends Controller
     {
         Order::archived()->where('id',$id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -237,14 +225,11 @@ class OrderController extends Controller
     private function syncInventory(Order $order, array $items)
     {
         // Increase stock if any item removed from the order
-        if($order->inventories->count() > 0)
-        {
+        if($order->inventories->count() > 0){
             $newItems = array_column($items, 'inventory_id');
 
-            foreach ($order->inventories as $inventory)
-            {
-                if (!in_array($inventory->id, $newItems))
-                {
+            foreach ($order->inventories as $inventory){
+                if (!in_array($inventory->id, $newItems)){
                     Inventory::find($inventory->id)->increment('stock_quantity', $inventory->pivot->quantity);
                 }
             }
@@ -252,8 +237,7 @@ class OrderController extends Controller
 
         $temp = [];
 
-        foreach ($items as $item)
-        {
+        foreach ($items as $item){
             $item = (object) $item;
             $id = $item->inventory_id;
 
@@ -264,27 +248,22 @@ class OrderController extends Controller
             ];
 
             // adjust stock qtt based on th order
-            if($order->inventories->contains($id))
-            {
+            if($order->inventories->contains($id)){
                 $old = $order->inventories()->where('inventory_id', $id)->first();
                 $old_qtt = $old->pivot->quantity;
 
-                if ($old_qtt > $item->quantity)
-                {
+                if ($old_qtt > $item->quantity){
                     Inventory::find($id)->increment('stock_quantity', $old_qtt - $item->quantity);
 
-                }else if($old_qtt < $item->quantity)
-                {
+                }else if($old_qtt < $item->quantity){
                     Inventory::find($id)->decrement('stock_quantity', $item->quantity - $old_qtt);
                 }
-            }else
-            {
+            }else{
                 Inventory::find($id)->decrement('stock_quantity', $item->quantity);
             }
         }
         // Sync the pivot table
-        if (!empty($temp))
-        {
+        if (!empty($temp)){
             $order->inventories()->sync($temp);
         }
 
@@ -298,10 +277,10 @@ class OrderController extends Controller
      */
     public function ajaxGetTaxRate(Request $request)
     {
-        if ($request->ajax())
-        {
+        if ($request->ajax()){
             return getTaxRate($request->input('ID'));
         }
+
         return false;
     }
 
@@ -312,17 +291,16 @@ class OrderController extends Controller
      */
     public function ajaxGetShippingCost(Request $request)
     {
-        if ($request->ajax())
-        {
+        if ($request->ajax()){
             $carrier = Carrier::find($request->input('ID'));
 
             $handling_cost = $carrier->handling_cost ? config('shop_settings.order_handling_cost') : 0;
 
             $result['handling_cost'] = $carrier->handling_cost ? get_formated_currency($handling_cost) : 0;
 
-            if($carrier->is_free)
-            {
+            if($carrier->is_free){
                 $result['shipping_cost'] = $handling_cost;
+
                 return $result;
             }
 
@@ -343,9 +321,9 @@ class OrderController extends Controller
      */
     public function ajaxGetPackagingCost(Request $request)
     {
-        if ($request->ajax())
-        {
+        if ($request->ajax()){
             $packaging = Packaging::find($request->input('ID'));
+
             return $packaging->charge_customer ? get_formated_decimal($packaging->cost) : 0;
         }
 
