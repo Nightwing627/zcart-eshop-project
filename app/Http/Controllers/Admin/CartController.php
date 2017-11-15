@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Cart;
 use Illuminate\Http\Request;
@@ -51,15 +49,13 @@ class CartController extends Controller
 
         $this->syncCartItems($cart, $request->input('cart'));
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Cart  $cart
      * @return \Illuminate\Http\Response
      */
     public function show(Cart $cart)
@@ -71,38 +67,32 @@ class CartController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCartRequest $request, $id)
+    public function update(UpdateCartRequest $request, Cart $cart)
     {
         setAdditionalCartInfo($request); //Set some system information using helper function
-
-        $cart = Cart::findOrFail($id);
 
         $cart->update($request->all());
 
         $this->syncCartItems($cart, $request->input('cart'));
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Cart $cart
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Cart $cart)
     {
-        Cart::find($id)->delete();
+        $cart->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -114,11 +104,9 @@ class CartController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Cart::onlyTrashed()->where('id',$id)->restore();
+        Cart::onlyTrashed()->where('id', $id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -132,9 +120,7 @@ class CartController extends Controller
     {
         Cart::onlyTrashed()->find($id)->forceDelete();
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
     /**

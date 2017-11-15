@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\GiftCard;
 use Illuminate\Http\Request;
@@ -32,7 +30,6 @@ class GiftCardController extends Controller
         $data['trashes'] = GiftCard::onlyTrashed()->get();
 
         return view('admin.gift-card.index', $data);
-
     }
 
     /**
@@ -55,48 +52,43 @@ class GiftCardController extends Controller
     {
         $gift_card = new GiftCard($request->all());
 
-        if($gift_card->save())
-	        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+        $gift_card->save();
 
-        return back()->with('error', trans('messages.failed', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  GiftCard  $giftCard
      * @return \Illuminate\Http\Response
      */
-    public function show(Coupon $gift_card)
+    public function show(GiftCard $giftCard)
     {
-        return view('admin.gift-card._show', compact('gift_card'));
+        return view('admin.gift-card._show', compact('giftCard'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  GiftCard $giftCard
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(GiftCard $giftCard)
     {
-        $data['gift_card'] = GiftCard::findOrFail($id);
-
-        return view('admin.gift-card._edit', $data);
+        return view('admin.gift-card._edit', compact('giftCard'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  GiftCard $giftCard
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGiftCardRequest $request, $id)
+    public function update(UpdateGiftCardRequest $request, GiftCard $giftCard)
     {
-        $gift_card = GiftCard::findOrFail($id);
-
-        $gift_card->update($request->all());
+        $giftCard->update($request->all());
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -105,12 +97,12 @@ class GiftCardController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  GiftCard $giftCard
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, GiftCard $giftCard)
     {
-        GiftCard::find($id)->delete();
+        $giftCard->delete();
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }

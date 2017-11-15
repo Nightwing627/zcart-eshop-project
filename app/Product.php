@@ -22,6 +22,7 @@ class Product extends Model
      * @var array
      */
     protected $casts = [
+        'has_variant' => 'boolean',
         'requires_shipping' => 'boolean',
         'downloadable' => 'boolean',
     ];
@@ -51,6 +52,7 @@ class Product extends Model
                         'min_price',
                         'max_price',
                         'origin_country',
+                        'has_variant',
                         'requires_shipping',
                         'downloadable',
                         'slug',
@@ -106,6 +108,14 @@ class Product extends Model
     public function tags()
     {
         return $this->morphToMany('App\Tag', 'taggable');
+    }
+
+    /**
+     * Set the requires_shipping for the Product.
+     */
+    public function setHasVariantAttribute($value)
+    {
+        $this->attributes['has_variant'] = (bool) $value;
     }
 
     /**

@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Attribute;
 use App\Common\Authorizable;
@@ -57,7 +55,7 @@ class AttributeController extends Controller
     {
         $attribute = new Attribute($request->all());
 
-        $attribute->save();
+        $attribute->save()
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -65,13 +63,11 @@ class AttributeController extends Controller
     /**
      * Display all Attribute Values the specified Attribute.
      *
-     * @param  int  $id
+     * @param  Attribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function entities($id)
+    public function entities(Attribute $attribute)
     {
-        $attribute = Attribute::find($id);
-
         $attributeValues = $attribute->attributeValues()->get();
 
         $trashes = $attribute->attributeValues()->onlyTrashed()->get();
@@ -82,7 +78,7 @@ class AttributeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $attribute
      * @return \Illuminate\Http\Response
      */
     public function edit(Attribute $attribute)
@@ -94,13 +90,11 @@ class AttributeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Attribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAttributeRequest $request, $id)
+    public function update(UpdateAttributeRequest $request, Attribute $attribute)
     {
-        $attribute = Attribute::findOrFail($id);
-
         $attribute->update($request->all());
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
@@ -110,12 +104,12 @@ class AttributeController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Attribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Attribute $attribute)
     {
-        Attribute::find($id)->delete();
+        $attribute->delete();
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }

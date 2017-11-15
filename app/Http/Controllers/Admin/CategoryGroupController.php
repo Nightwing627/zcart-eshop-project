@@ -1,11 +1,10 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
-
-use Illuminate\Http\Request;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\CategoryGroup;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Validations\CreateCategoryGroupRequest;
+use App\Http\Requests\Validations\UpdateCategoryGroupRequest;
 
 class CategoryGroupController extends Controller
 {
@@ -50,84 +49,52 @@ class CategoryGroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategoryGroupRequest $request)
     {
-        $rules = [
-           'name' => 'required',
-           'active' => 'required'
-        ];
-        $this->validate($request, $rules);
-
         $category = new CategoryGroup($request->all());
+
         $category->save();
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // $user = User::findOrFail($id);
-        // return view('admin.user._show', compact('user'));
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  CategoryGroup $categoryGroup
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(CategoryGroup $categoryGroup)
     {
-        $data['category'] = CategoryGroup::findOrFail($id);
-
-        return view('admin.category._editGrp', $data);
+        return view('admin.category._editGrp', compact('categoryGroup'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  CategoryGroup $categoryGroup
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryGroupRequest $request, CategoryGroup $categoryGroup)
     {
-        $rules = [
-           'name' => 'required',
-           'active' => 'required'
-        ];
-        $this->validate($request, $rules);
+        $categoryGroup->update($request->all());
 
-        $category = CategoryGroup::findOrFail($id);
-        $category->update($request->all());
-
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  CategoryGroup $categoryGroup
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, CategoryGroup $categoryGroup)
     {
-        CategoryGroup::find($id)->delete();
+        $categoryGroup->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -141,9 +108,7 @@ class CategoryGroupController extends Controller
     {
         CategoryGroup::onlyTrashed()->where('id',$id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -156,9 +121,7 @@ class CategoryGroupController extends Controller
     {
         CategoryGroup::onlyTrashed()->find($id)->forceDelete();
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
 }

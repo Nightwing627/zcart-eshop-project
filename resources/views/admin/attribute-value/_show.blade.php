@@ -3,14 +3,16 @@
         <div class="modal-body" style="padding: 0px;">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
 
-            <div class="col-md-3 nopadding" style="margin-top: 10px;">
- 	  			@if(File::exists(image_path('patterns') . $attributeValue->id . '_150x150.png'))
-
-					<img src="{{ get_image_src($attributeValue->id, 'patterns', '150x150') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
-
+            <div class="col-md-12 nopadding" style="margin-top: 10px;">
+ 	  			@if(File::exists(image_path('patterns') . $attributeValue->id . '.png'))
+					<img src="{{ get_image_src($attributeValue->id, 'patterns') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
+				@elseif($attributeValue->color)
+					<div class="jumbotron" style="background-color: {{ $attributeValue->color }}">
+						<h3 class="text-center" style="color: #d3d3d3; font-weight: lighter;">{{ strtoupper($attributeValue->color) }}</h3>
+					</div>
 				@endif
 			</div>
-            <div class="col-md-9 nopadding">
+            <div class="col-md-12 nopadding">
 				<table class="table no-border">
 					<tr>
 						<th class="text-right">{{ trans('app.attribute_type') }}:</th>

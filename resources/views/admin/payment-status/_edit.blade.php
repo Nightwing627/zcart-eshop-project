@@ -1,6 +1,6 @@
 <div class="modal-dialog modal-sm">
     <div class="modal-content">
-        {!! Form::model($status, ['method' => 'PUT', 'route' => ['admin.utility.paymentStatus.update', $status->id], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
+        {!! Form::model($paymentStatus, ['method' => 'PUT', 'route' => ['admin.utility.paymentStatus.update', $paymentStatus->id], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
         	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             {{ trans('app.form.form') }}

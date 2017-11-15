@@ -34,6 +34,10 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeAttributeValueForm();
 
+        $this->composeCategoryForm();
+
+        $this->composeCategorySubGroupForm();
+
         $this->composeShopForm();
 
         $this->composeProductForm();
@@ -42,7 +46,13 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeInventoryVariantForm();
 
+        $this->composeSetVariantForm();
+
         $this->composeTaxForm();
+
+        $this->composeOrderStatusForm();
+
+        $this->composePaymentStatusForm();
 
         $this->composeManufacturerForm();
 
@@ -59,6 +69,8 @@ class ViewComposerServiceProvider extends ServiceProvider
         $this->composeCreateOrderForm();
 
         $this->composeCouponForm();
+
+        $this->composeBlogForm();
 
     }
 
@@ -119,6 +131,36 @@ class ViewComposerServiceProvider extends ServiceProvider
                 function($view)
                 {
                     $view->with('attributeList', ListHelper::attributes());
+                });
+    }
+
+    /**
+     * compose partial view of category form
+     */
+    private function composeCategoryForm()
+    {
+        view()->composer(
+
+                'admin.category._form',
+
+                function($view)
+                {
+                    $view->with('catList', ListHelper::catGrpSubGrpListArray());
+                });
+    }
+
+    /**
+     * compose partial view of CategorySubGroupForm form
+     */
+    private function composeCategorySubGroupForm()
+    {
+        view()->composer(
+
+                'admin.category._formSubGrp',
+
+                function($view)
+                {
+                    $view->with('catGroups', ListHelper::categoryGrps());
                 });
     }
 
@@ -209,6 +251,21 @@ class ViewComposerServiceProvider extends ServiceProvider
     }
 
     /**
+     * compose partial view of set variant form
+     */
+    private function composeSetVariantForm()
+    {
+        view()->composer(
+
+                'admin.inventory._set_variant',
+
+                function($view)
+                {
+                    $view->with('attributes', ListHelper::attributeWithValues());
+                });
+    }
+
+    /**
      * compose partial view of tax form
      */
     private function composeTaxForm()
@@ -230,6 +287,36 @@ class ViewComposerServiceProvider extends ServiceProvider
                 $view->with('states', ListHelper::states($country_id));
             }
         );
+    }
+
+    /**
+     * compose partial view of Order Status form
+     */
+    private function composeOrderStatusForm()
+    {
+        view()->composer(
+
+                'admin.order-status._form',
+
+                function($view)
+                {
+                    $view->with('email_templates', ListHelper::email_templates());
+                });
+    }
+
+    /**
+     * compose partial view of Payment Status form
+     */
+    private function composePaymentStatusForm()
+    {
+        view()->composer(
+
+                'admin.payment-status._form',
+
+                function($view)
+                {
+                    $view->with('email_templates', ListHelper::email_templates());
+                });
     }
 
     /**
@@ -408,4 +495,19 @@ class ViewComposerServiceProvider extends ServiceProvider
         );
     }
 
+    /**
+     * compose partial view of blog form
+     */
+    private function composeBlogForm()
+    {
+        view()->composer(
+
+            'admin.blog._form',
+
+            function($view)
+            {
+                $view->with('tags', ListHelper::tags());
+            }
+        );
+    }
 }

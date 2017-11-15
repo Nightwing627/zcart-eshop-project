@@ -22,7 +22,19 @@
 </div>
 
 <div class="row">
-  <div class="col-md-6 nopadding-right">
+  <div class="col-md-4 nopadding-right">
+    <div class="form-group">
+      <div class="input-group">
+        {{ Form::hidden('has_variant', 0) }}
+        {!! Form::checkbox('has_variant', null, !isset($product) ? 1 : null, ['id' => 'has_variant', 'class' => 'icheckbox_line']) !!}
+        {!! Form::label('has_variant', trans('app.form.has_variant')) !!}
+        <span class="input-group-addon" id="basic-addon1">
+          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.has_variant') }}"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 nopadding">
     <div class="form-group">
       <div class="input-group">
         {{ Form::hidden('requires_shipping', 0) }}
@@ -34,7 +46,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6 nopadding-left">
+  <div class="col-md-4 nopadding-left">
     <div class="form-group">
       <div class="input-group">
         {{ Form::hidden('downloadable', 0) }}

@@ -78,7 +78,7 @@
 
 <div class="form-group">
   {!! Form::label('description', trans('app.form.description')) !!}
-  {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'placeholder' => trans('app.placeholder.description')]) !!}
+  {!! Form::textarea('description', null, ['class' => 'form-control summernote-without-tootbar', 'placeholder' => trans('app.placeholder.description')]) !!}
 </div>
 
 <div class="row">
@@ -113,7 +113,7 @@
       <div class="input-group">
         {{ Form::hidden('partial_use', 0) }}
         {!! Form::checkbox('partial_use', null, null, ['id' => 'partial_use', 'class' => 'icheckbox_line']) !!}
-        {!! Form::label('partial_use', trans('app.form.coupon_partial_use')) !!}
+        {!! Form::label('partial_use', trans('app.form.allow_partial_use')) !!}
         <span class="input-group-addon" id="">
           <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.coupon_partial_use') }}"></i>
         </span>

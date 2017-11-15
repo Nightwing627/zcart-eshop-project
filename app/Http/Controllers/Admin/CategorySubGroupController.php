@@ -1,12 +1,10 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
-
-use Illuminate\Http\Request;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\CategorySubGroup;
-use App\Helpers\ListHelper;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Validations\CreateCategorySubGroupRequest;
+use App\Http\Requests\Validations\UpdateCategorySubGroupRequest;
 
 class CategorySubGroupController extends Controller
 {
@@ -42,9 +40,7 @@ class CategorySubGroupController extends Controller
      */
     public function create()
     {
-        $data['catGroups'] = ListHelper::categoryGrps();
-
-        return view('admin.category._createSubGrp', $data);
+        return view('admin.category._createSubGrp');
     }
 
     /**
@@ -53,88 +49,52 @@ class CategorySubGroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategorySubGroupRequest $request)
     {
-        $rules = [
-            'category_group_id' => 'required|integer',
-            'name' => 'required',
-            'active' => 'required'
-        ];
-        $this->validate($request, $rules);
-
         $category = new CategorySubGroup($request->all());
+
         $category->save();
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // $user = User::findOrFail($id);
-        // return view('admin.user._show', compact('user'));
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  CategorySubGroup  $categorySubGroup
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(CategorySubGroup $categorySubGroup)
     {
-        $data['category'] = CategorySubGroup::findOrFail($id);
-
-        $data['catGroups'] = ListHelper::categoryGrps();
-
-        return view('admin.category._editSubGrp', $data);
+        return view('admin.category._editSubGrp', compact('categorySubGroup'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  CategorySubGroup $categorySubGroup
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategorySubGroupRequest $request, CategorySubGroup $categorySubGroup)
     {
-        $rules = [
-            'category_group_id' => 'required|integer',
-            'name' => 'required',
-            'active' => 'required'
-        ];
-        $this->validate($request, $rules);
+        $categorySubGroup->update($request->all());
 
-        $category = CategorySubGroup::findOrFail($id);
-        $category->update($request->all());
-
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  CategorySubGroup $categorySubGroup
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, CategorySubGroup $categorySubGroup)
     {
-        CategorySubGroup::find($id)->delete();
+        $categorySubGroup->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -148,9 +108,7 @@ class CategorySubGroupController extends Controller
     {
         CategorySubGroup::onlyTrashed()->where('id',$id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -163,9 +121,7 @@ class CategorySubGroupController extends Controller
     {
         CategorySubGroup::onlyTrashed()->find($id)->forceDelete();
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
 }

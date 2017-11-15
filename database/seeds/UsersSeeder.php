@@ -15,7 +15,7 @@ class UsersSeeder extends Seeder
         DB::table('users')->insert([
         [
             'id' => 1,
-        	'shop_id' => 1, //TEMPORARY for testing, Will remove
+        	'shop_id' => Null,
             'role_id' => 1,
             'nice_name' => 'SuperAdmin.',
             'name' => 'Super Admin',

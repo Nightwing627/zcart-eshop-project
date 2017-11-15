@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call('CurrenciesSeeder');
         $this->call('RolesSeeder');
         $this->call('UsersSeeder');
-        $this->call('ShopsSeeder');
+        // $this->call('ShopsSeeder');
         $this->call('ModulesSeeder');
         $this->call('PermissionSeeder');
         $this->call('AttributeSeeder');

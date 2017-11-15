@@ -75,7 +75,8 @@ class UserController extends Controller
 
         $user->addresses()->save($address);
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image'))
+        {
             ImageHelper::UploadImages($request, 'users', $user->id);
         }
 
@@ -96,14 +97,12 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function profile($id)
+    public function profile(User $user)
     {
-        $user = User::findOrFail($id);
-
-        return view('admin.user.profile', $user);
+        return view('admin.user.profile', compact('user'));
     }
 
     /**
@@ -121,20 +120,20 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $user = User::findOrFail($id);
-
         $user->update($request->all());
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image'))
+        {
             ImageHelper::UploadImages($request, 'users', $user->id);
         }
 
-        if ($request->input('delete_image') == 1){
+        if ($request->input('delete_image') == 1)
+        {
             ImageHelper::RemoveImages('users', $user->id);
         }
 
@@ -145,12 +144,12 @@ class UserController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, User $user)
     {
-        User::find($id)->delete();
+        $user->delete();
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }

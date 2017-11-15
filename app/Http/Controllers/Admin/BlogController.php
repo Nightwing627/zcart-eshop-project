@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use Auth;
 use App\Tag;
@@ -46,9 +44,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        $data['tags'] = Tag::orderBy('name', 'asc')->pluck('name', 'id');
-
-        return view('admin.blog._create', $data);
+        return view('admin.blog._create');
     }
 
     /**
@@ -68,7 +64,7 @@ class BlogController extends Controller
             $this->syncTags($blog, $request->input('tag_list'));
         }
 
-        return redirect()->to('admin/blog')->with('success', trans('messages.created', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -85,29 +81,23 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Blog $blog)
     {
-        $data['blog'] = Blog::findOrFail($id);
-
-        $data['tags'] = Tag::orderBy('name', 'asc')->pluck('name', 'id');
-
-        return view('admin.blog._edit', $data);
+        return view('admin.blog._edit', compact('blog'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBlogRequest $request, $id)
+    public function update(UpdateBlogRequest $request, Blog $blog)
     {
-        $blog = Blog::findOrFail($id);
-
         $blog->update($request->all());
 
         if ($request->input('tag_list'))
@@ -115,21 +105,21 @@ class BlogController extends Controller
             $this->syncTags($blog, $request->input('tag_list'));
         }
 
-        return redirect()->to('admin/blog')->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Blog $blog)
     {
-        Blog::find($id)->delete();
+        $blog->delete();
 
-        return redirect()->to('admin/blog')->with('success', trans('messages.trashed', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -143,7 +133,7 @@ class BlogController extends Controller
     {
         Blog::onlyTrashed()->where('id',$id)->restore();
 
-        return redirect()->to('admin/blog')->with('success', trans('messages.restored', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -160,7 +150,7 @@ class BlogController extends Controller
 
         $this->syncTags($blog, []);
 
-        return redirect()->to('admin/blog')->with('success', trans('messages.deleted', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model_name]));
     }
 
     /**

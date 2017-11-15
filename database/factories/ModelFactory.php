@@ -154,7 +154,7 @@ $factory->define(App\Product::class, function (Faker $faker) {
         'gtin_type' => $faker->randomElement(\DB::table('gtin_types')->pluck('name')->toArray()),
         'description' => $faker->text(1500),
         'origin_country' => $faker->randomElement(\DB::table('countries')->pluck('id')->toArray()),
-        // 'origin_country' => $faker->randomElement(\DB::table('countries')->pluck('name')->toArray()),
+        'has_variant' => $faker->boolean,
         'slug' => $faker->slug,
     	'meta_title' => $faker->sentence,
     	'meta_description' => $faker->realText,

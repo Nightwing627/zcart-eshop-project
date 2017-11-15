@@ -10,8 +10,14 @@
 				<table class="table no-border">
 					<tr>
 						<th class="text-right">{{ trans('app.name') }}:</th>
-						<td style="width: 75%;">{{ $product->name }}</td>
+						<td style="width: 75%;"><span class="lead">{{ $product->name }}</span></td>
 					</tr>
+		            @if($product->brand)
+		                <tr>
+		                	<th class="text-right">{{ trans('app.brand') }}: </th>
+		                	<td style="width: 75%;">{{ $product->brand }}</td>
+		                </tr>
+		            @endif
 		            @if($product->model_number)
 					<tr>
 						<th class="text-right">{{ trans('app.model_number') }}:</th>
@@ -20,7 +26,7 @@
 					@endif
 	                <tr>
 	                	<th class="text-right">{{ trans('app.status') }}: </th>
-	                	<td style="width: 75%;">{{ ($product->active) ? trans('app.active') : trans('app.inactive') }}</td>
+	                	<td style="width: 75%;">{{ $product->active ? trans('app.active') : trans('app.inactive') }}</td>
 	                </tr>
 					<tr>
 						<th class="text-right">{{ trans('app.available_from') }}:</th>
@@ -49,36 +55,64 @@
 				<div class="tab-content">
 				    <div class="tab-pane active" id="tab_1">
 				        <table class="table">
+							<tr>
+								<th>{{ trans('app.requires_shipping') }}:</th>
+								<td>{{ $product->requires_shipping ? trans('app.yes') : trans('app.no') }}</td>
+							</tr>
+							<tr>
+								<th>{{ trans('app.downloadable') }}:</th>
+								<td>{{ $product->downloadable ? trans('app.yes') : trans('app.no') }}</td>
+							</tr>
+							<tr>
+								<th>{{ trans('app.has_variant') }}:</th>
+								<td>{{ $product->has_variant ? trans('app.yes') : trans('app.no') }}</td>
+							</tr>
+
 				            @if($product->manufacturer)
-				                <tr><th>{{ trans('app.manufacturer') }}: </th><td>{{ $product->manufacturer->name }}</td></tr>
+				                <tr>
+				                	<th>{{ trans('app.manufacturer') }}: </th>
+				                	<td>{{ $product->manufacturer->name }}</td>
+				                </tr>
 				            @endif
 				            @if($product->origin)
-				                <tr><th>{{ trans('app.origin') }}: </th><td>{{ $product->origin->name }}</td></tr>
+				                <tr>
+				                	<th>{{ trans('app.origin') }}: </th>
+				                	<td>{{ $product->origin->name }}</td>
+				                </tr>
 				            @endif
 				            @if($product->gtin_type && $product->gtin )
-				                <tr><th>{{ $product->gtin_type }}: </th><td>{{ $product->gtin }}</td></tr>
+				                <tr>
+				                	<th>{{ $product->gtin_type }}: </th>
+				                	<td>{{ $product->gtin }}</td>
+				                </tr>
 				            @endif
 				            @if($product->mpn)
-				                <tr><th>{{ trans('app.mpn') }}: </th><td>{{ $product->mpn }}</td></tr>
-				            @endif
-				            @if($product->brand)
-				                <tr><th>{{ trans('app.brand') }}: </th><td>{{ $product->brand }}</td></tr>
-				            @endif
-				            @if($product->model_number)
-				                <tr><th>{{ trans('app.model_number') }}: </th><td>{{ $product->model_number }}</td></tr>
+				                <tr>
+				                	<th>{{ trans('app.mpn') }}: </th>
+				                	<td>{{ $product->mpn }}</td>
+				                </tr>
 				            @endif
 				            @if($product->categories)
-				                <tr><th>{{ trans('app.categories') }}: </th><td>
+				                <tr>
+				                	<th>{{ trans('app.categories') }}: </th>
+				                	<td>
 						          	@foreach($product->categories as $category)
 							          	<span class="label label-outline">{{ $category->name }}</span>
 							        @endforeach
-				                </td></tr>
+				                </td>
+				            </tr>
 				            @endif
 				            @if($product->min_price && $product->min_price != 0)
-				                <tr><th>{{ trans('app.min_price') }}: </th><td>{{ get_formated_currency($product->min_price) }}</td></tr>
+				                <tr>
+				                	<th>{{ trans('app.min_price') }}: </th>
+				                	<td>{{ get_formated_currency($product->min_price) }}</td>
+				                </tr>
 				            @endif
 				            @if($product->max_price && $product->max_price != 0)
-				                <tr><th>{{ trans('app.max_price') }}: </th><td>{{ get_formated_currency($product->max_price) }}</td></tr>
+				                <tr>
+				                	<th>{{ trans('app.max_price') }}: </th>
+				                	<td>{{ get_formated_currency($product->max_price) }}</td>
+				                </tr>
 				            @endif
 				        </table>
 				    </div>
@@ -116,7 +150,8 @@
 				            @if($product->meta_keywords)
 				                <tr>
 				                	<th>{{ trans('app.meta_keywords') }}: </th>
-				                	<td>{{ $product->meta_keywords }}</td></tr>
+				                	<td>{{ $product->meta_keywords }}</td>
+				                </tr>
 				            @endif
 				        </table>
 				    </div>

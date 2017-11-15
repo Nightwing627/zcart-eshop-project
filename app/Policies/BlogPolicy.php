@@ -15,12 +15,12 @@ class BlogPolicy
      * Determine whether the user can view the Blog.
      *
      * @param  \App\User  $user
-     * @param  \App\Blog  $Blog
+     * @param  \App\Blog  $blog
      * @return mixed
      */
-    public function view(User $user, Blog $Blog)
+    public function view(User $user, Blog $blog)
     {
-        return (new Authorize($user, 'view_blog', $Blog))->check();
+        return (new Authorize($user, 'view_blog', $blog))->check();
     }
 
     /**
@@ -38,23 +38,23 @@ class BlogPolicy
      * Determine whether the user can update the Blog.
      *
      * @param  \App\User  $user
-     * @param  \App\Blog  $Blog
+     * @param  \App\Blog  $blog
      * @return mixed
      */
-    public function update(User $user, Blog $Blog)
+    public function update(User $user, Blog $blog)
     {
-        return (new Authorize($user, 'edit_blog', $Blog))->check();
+        return (new Authorize($user, 'edit_blog', $blog))->check();
     }
 
     /**
      * Determine whether the user can delete the Blog.
      *
      * @param  \App\User  $user
-     * @param  \App\Blog  $Blog
+     * @param  \App\Blog  $blog
      * @return mixed
      */
-    public function delete(User $user, Blog $Blog)
+    public function delete(User $user, Blog $blog)
     {
-        return (new Authorize($user, 'delete_blog', $Blog))->check();
+        return (new Authorize($user, 'delete_blog', $blog))->check();
     }
 }

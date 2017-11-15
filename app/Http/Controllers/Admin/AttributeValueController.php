@@ -1,20 +1,15 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Attribute;
 use App\AttributeValue;
-use Illuminate\Http\Request;
-use App\Common\Authorizable;
 use App\Helpers\ImageHelper;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateAttributeValueRequest;
 use App\Http\Requests\Validations\UpdateAttributeValueRequest;
 
 class AttributeValueController extends Controller
 {
-    // use Authorizable;
-
     private $model_name;
 
     /**
@@ -54,9 +49,7 @@ class AttributeValueController extends Controller
             ImageHelper::UploadImages($request, 'patterns', $attribute_value->id);
         }
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -76,13 +69,13 @@ class AttributeValueController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(AttributeValue $attributeValue)
     {
-        $data['attributeValue'] = AttributeValue::findOrFail($id);
+        $this->authorize('update', $attributeValue);
 
-        $data['attribute'] = Attribute::findOrFail($data['attributeValue']->attribute_id);
+        $attribute = Attribute::findOrFail($attributeValue->attribute_id);
 
-        return view('admin.attribute-value._edit', $data);
+        return view('admin.attribute-value._edit', compact('attributeValue', 'attribute'));
     }
 
     /**
@@ -92,25 +85,23 @@ class AttributeValueController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAttributeValueRequest $request, $id)
+    public function update(UpdateAttributeValueRequest $request, AttributeValue $attributeValue)
     {
-        $attribute_value = AttributeValue::findOrFail($id);
+        $this->authorize('update', $attributeValue);
 
-        $attribute_value->update($request->all());
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'patterns', $attribute_value->id);
-        }
+        $attributeValue->update($request->all());
 
         if ($request->input('delete_image') == 1)
         {
-            ImageHelper::RemoveImages('patterns', $attribute_value->id);
+            ImageHelper::RemoveImages('patterns', $attributeValue->id);
         }
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
+        if ($request->hasFile('image'))
+        {
+            ImageHelper::UploadImages($request, 'patterns', $attributeValue->id);
+        }
 
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -120,15 +111,13 @@ class AttributeValueController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, AttributeValue $attributeValue)
     {
-        $attribute_value = AttributeValue::findOrFail($id);
+        $this->authorize('delete', $attributeValue);
 
-        $attribute_value->delete();
+        $attributeValue->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -140,11 +129,9 @@ class AttributeValueController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        $attribute_value = AttributeValue::onlyTrashed()->find($id)->restore();
+        AttributeValue::onlyTrashed()->find($id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -155,13 +142,11 @@ class AttributeValueController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $attribute_value = AttributeValue::onlyTrashed()->find($id)->forceDelete();
+        AttributeValue::onlyTrashed()->find($id)->forceDelete();
 
         ImageHelper::RemoveImages('patterns', $id);
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
     /**

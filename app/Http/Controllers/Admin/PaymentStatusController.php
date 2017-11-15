@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\PaymentStatus;
 use App\EmailTemplate;
@@ -43,8 +41,7 @@ class PaymentStatusController extends Controller
      */
     public function create()
     {
-        $data['email_templates'] = $this->getEmailTemplateList();
-        return view('admin.payment-status._create', $data);
+        return view('admin.payment-status._create');
     }
 
     /**
@@ -65,30 +62,24 @@ class PaymentStatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  PaymentStatus $paymentStatus
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(PaymentStatus $paymentStatus)
     {
-        $data['email_templates'] = $this->getEmailTemplateList();
-
-        $data['status'] = PaymentStatus::findOrFail($id);
-
-        return view('admin.payment-status._edit', $data);
+        return view('admin.payment-status._edit', compact('paymentStatus'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  PaymentStatus $paymentStatus
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePaymentStatusRequest $request, $id)
+    public function update(UpdatePaymentStatusRequest $request, PaymentStatus $paymentStatus)
     {
-        $payment_status = PaymentStatus::findOrFail($id);
-
-        $payment_status->update($request->all());
+        $paymentStatus->update($request->all());
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -97,12 +88,13 @@ class PaymentStatusController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  PaymentStatus $paymentStatus
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, PaymentStatus $paymentStatus)
     {
-        PaymentStatus::find($id)->delete();
+        $paymentStatus->delete();
+
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
@@ -116,6 +108,7 @@ class PaymentStatusController extends Controller
     public function restore(Request $request, $id)
     {
         PaymentStatus::onlyTrashed()->where('id',$id)->restore();
+
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
@@ -129,15 +122,7 @@ class PaymentStatusController extends Controller
     public function destroy(Request $request, $id)
     {
         PaymentStatus::onlyTrashed()->find($id)->forceDelete();
+
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
-
-    /**
-     * Return email template list for dropdown
-     */
-    private function getEmailTemplateList()
-    {
-        return EmailTemplate::orderBy('name', 'asc')->pluck('name', 'id');
-    }
-
 }

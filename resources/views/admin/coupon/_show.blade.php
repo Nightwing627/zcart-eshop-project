@@ -2,20 +2,28 @@
     <div class="modal-content">
         <div class="modal-body" style="padding: 0px;">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
-            <div class="col-md-9 nopadding">
+            <div class="col-md-12 nopadding">
 				<table class="table no-border">
 					<tr>
 						<th class="text-right">{{ trans('app.name') }}:</th>
-						<td style="width: 65%;">{{ $coupon->name }}</td>
+						<td style="width: 65%;"><span class="lead">{{ $coupon->name }}</span></td>
 					</tr>
+		            @if($coupon->shop_id)
 					<tr>
-						<th class="text-right">{{ trans('app.code') }}:</th>
-						<td style="width: 65%;">{{ $coupon->code }}</td>
+						<th class="text-right">{{ trans('app.merchant') }}:</th>
+						<td style="width: 65%;">
+							<span class="label label-outline">
+		                		{{ $coupon->shop->name }}
+							</span>
+						</td>
 					</tr>
+					@endif
 					<tr>
 						<th class="text-right">{{ trans('app.coupon_value') }}:</th>
 						<td style="width: 65%;">
-							{{ $coupon->type == 'amount' ? get_formated_currency($coupon->value) : get_formated_decimal($coupon->value) . ' ' . trans('app.percent') }}
+							<span class="label label-primary">
+								{{ $coupon->type == 'amount' ? get_formated_currency($coupon->value) : get_formated_decimal($coupon->value) . ' ' . trans('app.percent') }}
+							</span>
 						</td>
 					</tr>
 	                <tr>
@@ -55,26 +63,46 @@
 				<div class="tab-content">
 				    <div class="tab-pane active" id="tab_1">
 				        <table class="table">
-
-			                <tr><th>{{ trans('app.coupon_partial_use') }}: </th><td>{!! $coupon->partial_use ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' !!}</td></tr>
-
-			                <tr><th>{{ trans('app.exclude_offer_items') }}: </th><td>{!! $coupon->exclude_offer_items ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' !!}</td></tr>
-
-			                <tr><th>{{ trans('app.exclude_tax_n_shipping') }}: </th><td>{!! $coupon->exclude_tax_n_shipping ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' !!}</td></tr>
-
+			                <tr>
+			                	<th>{{ trans('app.code') }}: </th>
+			                	<td>{{ $coupon->code }}</td>
+			                </tr>
+			                <tr>
+			                	<th>{{ trans('app.allow_partial_use') }}: </th>
+			                	<td>{!! $coupon->partial_use ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' !!}</td>
+			                </tr>
+			                <tr>
+			                	<th>{{ trans('app.exclude_offer_items') }}: </th>
+			                	<td>{!! $coupon->exclude_offer_items ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' !!}</td>
+			                </tr>
+			                <tr>
+			                	<th>{{ trans('app.exclude_tax_n_shipping') }}: </th>
+			                	<td>{!! $coupon->exclude_tax_n_shipping ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' !!}</td>
+			                </tr>
 				            @if($coupon->quantity_per_customer && $coupon->quantity_per_customer != 0)
-				                <tr><th>{{ trans('app.coupon_quantity_per_customer') }}: </th><td>{{ $coupon->quantity_per_customer }}</td></tr>
+				                <tr>
+				                	<th>{{ trans('app.coupon_quantity_per_customer') }}: </th>
+				                	<td>{{ $coupon->quantity_per_customer }}</td>
+				                </tr>
 				            @endif
-
-			                <tr><th>{{ trans('app.active_from') }}: </th><td>{{ $coupon->starting_time->toDayDateTimeString() }}</td></tr>
-			                <tr><th>{{ trans('app.active_till') }}: </th><td>{{ $coupon->ending_time->toDayDateTimeString() }}</td></tr>
-
+			                <tr>
+			                	<th>{{ trans('app.active_from') }}: </th>
+			                	<td>{{ $coupon->starting_time->toDayDateTimeString() }}</td>
+			                </tr>
+			                <tr>
+			                	<th>{{ trans('app.active_till') }}: </th>
+			                	<td>{{ $coupon->ending_time->toDayDateTimeString() }}</td>
+			                </tr>
 				            @if($coupon->min_order_amount && $coupon->min_order_amount != 0)
-				                <tr><th>{{ trans('app.min_order_amount') }}: </th><td>{{ get_formated_currency($coupon->min_order_amount) }}</td></tr>
+				                <tr>
+				                	<th>{{ trans('app.min_order_amount') }}: </th>
+				                	<td>{{ get_formated_currency($coupon->min_order_amount) }}</td>
+				                </tr>
 				            @endif
-
-			                <tr><th>{{ trans('app.restriction') }}: </th><td>{{ $coupon->limited ? trans('app.limited_coupon') : trans('app.public_coupon') }}</td></tr>
-
+			                <tr>
+			                	<th>{{ trans('app.restriction') }}: </th>
+			                	<td>{{ $coupon->limited ? trans('app.limited_coupon') : trans('app.public_coupon') }}</td>
+			                </tr>
 				        </table>
 				    </div>
 				    <!-- /.tab-pane -->

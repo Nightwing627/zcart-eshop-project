@@ -313,6 +313,10 @@
         ['table', ['table']],
       ],
     });
+    $('.summernote-without-tootbar').summernote({
+      placeholder: "{{ trans('app.placeholder.start_here') }}",
+      toolbar: [],
+    });
     $('.summernote-long').summernote({
       placeholder: "{{ trans('app.placeholder.start_here') }}",
       toolbar: [
@@ -449,19 +453,20 @@
     //User Role form
     $("#user-role-status").change(function()
     {
-      var roleType = $("#user-role-status").select2('data')[0].text;
+      var temp = $("#user-role-status").select2('data')[0].text;
+      var roleType = temp.toLowerCase();
       var rows = $('table#tbl-permissions tr');
       var platform = rows.filter('.platform-module');
       var merchant = rows.filter('.merchant-module');
 
       switch(roleType)
       {
-        case 'Restricted':
+        case 'platform':
           platform.show();
           merchant.hide();
           merchant.find("input[type='checkbox']").iCheck('uncheck');
           break;
-        case 'Public':
+        case 'merchant':
           platform.hide();
           merchant.show();
           platform.find("input[type='checkbox']").iCheck('uncheck');

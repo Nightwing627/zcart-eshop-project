@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Coupon;
 use Illuminate\Http\Request;
@@ -32,7 +30,6 @@ class CouponController extends Controller
         $data['trashes'] = Coupon::mine()->onlyTrashed()->get();
 
         return view('admin.coupon.index', $data);
-
     }
 
     /**
@@ -55,13 +52,11 @@ class CouponController extends Controller
     {
         $coupon = new Coupon($request->all());
 
+        $coupon->save();
+
         $coupon->customers()->sync($request->input('customer_list'));
 
-        if($coupon->save()){
-	        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
-        }
-
-        return back()->with('error', trans('messages.failed', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -78,27 +73,23 @@ class CouponController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Coupon $coupon
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Coupon $coupon)
     {
-        $data['coupon'] = Coupon::findOrFail($id);
-
-        return view('admin.coupon._edit', $data);
+        return view('admin.coupon._edit', compact('coupon'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCouponRequest $request, $id)
+    public function update(UpdateCouponRequest $request, Coupon $coupon)
     {
-        $coupon = Coupon::findOrFail($id);
-
         $coupon->update($request->all());
 
         $coupon->customers()->sync($request->input('customer_list'));
@@ -110,12 +101,12 @@ class CouponController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Coupon $coupon
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Coupon $coupon)
     {
-        Coupon::find($id)->delete();
+        $coupon->delete();
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -129,7 +120,7 @@ class CouponController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Coupon::onlyTrashed()->where('id',$id)->restore();
+        Coupon::onlyTrashed()->where('id', $id)->restore();
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }

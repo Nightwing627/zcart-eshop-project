@@ -1,21 +1,28 @@
 <div class="row">
-  <div class="col-md-8 nopadding-right">
+  <div class="col-md-6 nopadding-right">
     <div class="form-group">
       {!! Form::label('name', trans('app.form.name').'*', ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.role_name') }}"></i>
+      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('help.role_name') }}"></i>
       {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.role_name'), 'required']) !!}
       <div class="help-block with-errors"></div>
+    </div>
+  </div>
+  <div class="col-md-3 nopadding">
+    <div class="form-group">
+      {!! Form::label('level', trans('app.form.role_level'), ['class' => 'with-help']) !!}
+      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('help.role_level') }}"></i>
+      {!! Form::text('level', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.role_level')]) !!}
     </div>
   </div>
   @php
     $special_role = isset($role) && $role->id <= 3 ? TRUE : FALSE;
   @endphp
-  <div class="col-md-4 nopadding-left">
+  <div class="col-md-3 nopadding-left">
     <div class="form-group">
       {!! Form::label('public', trans('app.form.role_type').'*', ['class' => 'with-help']) !!}
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ $special_role ? trans('help.cant_edit_special_role') : trans('help.role_type') }}"></i>
       {{ Form::hidden('public', Null) }}
-      {!! Form::select('public', ['0' => trans('app.restricted'), '1' => trans('app.public')], null, ['id' => 'user-role-status', 'class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), $special_role ? 'disabled' : 'required' ]) !!}
+      {!! Form::select('public', ['0' => trans('app.platform'), '1' => trans('app.merchant')], null, ['id' => 'user-role-status', 'class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), $special_role ? 'disabled' : 'required' ]) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -23,7 +30,7 @@
 
 <div class="form-group">
   {!! Form::label('description', trans('app.form.description')) !!}
-  {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'placeholder' => trans('app.placeholder.description')]) !!}
+  {!! Form::textarea('description', null, ['class' => 'form-control summernote-without-tootbar', 'placeholder' => trans('app.placeholder.description')]) !!}
 </div>
 
 <div class="form-group">
@@ -63,9 +70,14 @@
                 )
               ) ? 'show' : 'hidden' }}>
             <td>
-              {{ Form::hidden($module_name, 0) }}
-              {!! Form::checkbox($module_name, Null, $module_enabled ? 1 : Null, ['id' => $module_name, 'class' => 'icheckbox_line role-module']) !!}
-              {!! Form::label($module_name, strtoupper($module->name)) !!}
+              <div class="input-group">
+                {{ Form::hidden($module_name, 0) }}
+                <span class="input-group-addon" id="basic-addon1">
+                  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.module.name', ['module' => str_plural($module->name)]) . ' ' . trans('help.module.access.' . $access_level, ['access' => $access_level]) }}"></i>
+                </span>
+                {!! Form::checkbox($module_name, Null, $module_enabled ? 1 : Null, ['id' => $module_name, 'class' => 'icheckbox_line role-module']) !!}
+                {!! Form::label($module_name, strtoupper($module->name)) !!}
+              </div>
             </td>
             @foreach($module->permissions as $permission)
               <td>

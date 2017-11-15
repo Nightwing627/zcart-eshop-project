@@ -1,12 +1,9 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
-
-use Illuminate\Http\Request;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Packaging;
 use App\Http\Requests;
 use App\Helpers\ImageHelper;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreatePackagingRequest;
 use App\Http\Requests\Validations\UpdatePackagingRequest;
@@ -60,7 +57,8 @@ class PackagingController extends Controller
 
         $packaging->save();
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image'))
+        {
             ImageHelper::UploadImages($request, 'packagings', $packaging->id);
         }
 
@@ -82,21 +80,21 @@ class PackagingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Packaging $packaging
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePackagingRequest $request, $id)
+    public function update(UpdatePackagingRequest $request, Packaging $packaging)
     {
-        $packaging = Packaging::findOrFail($id);
-
         $packaging->update($request->all());
 
-        if ($request->hasFile('image')){
-            ImageHelper::UploadImages($request, 'packagings', $packaging->id);
+        if ($request->input('delete_image') == 1)
+        {
+            ImageHelper::RemoveImages('packagings', $packaging->id);
         }
 
-        if ($request->input('delete_image') == 1){
-            ImageHelper::RemoveImages('packagings', $packaging->id);
+        if ($request->hasFile('image'))
+        {
+            ImageHelper::UploadImages($request, 'packagings', $packaging->id);
         }
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
@@ -106,12 +104,13 @@ class PackagingController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Packaging  $packaging
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Packaging $packaging)
     {
-        Packaging::find($id)->delete();
+        $packaging->delete();
+
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
@@ -125,6 +124,7 @@ class PackagingController extends Controller
     public function restore(Request $request, $id)
     {
         Packaging::onlyTrashed()->find($id)->restore();
+
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 

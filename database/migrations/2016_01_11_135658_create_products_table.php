@@ -26,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->decimal('min_price', 20, 6)->nullable(); //Admin can set a MIN and MAX price for a product
             $table->decimal('max_price', 20, 6)->nullable();
             $table->string('origin_country')->nullable();
+            $table->boolean('has_variant')->nullable();
             $table->boolean('requires_shipping')->default(1)->nullable();
             $table->boolean('downloadable')->nullable();
             $table->string('slug', 200)->unique();

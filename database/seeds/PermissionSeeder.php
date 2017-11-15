@@ -34,16 +34,19 @@ class PermissionSeeder extends Seeder
         // Demo permission_role on pivot table
         $permissions = \DB::table('permissions')->pluck('module_id','id');
 
-        foreach ($permissions as $permission_id => $module_id){
-            DB::table('permission_role')->insert([
-                    'permission_id' => $permission_id,
-                    'role_id' => config('installation.seed.admin_role_id')?:2,
-                    'created_at' => Carbon::Now(),
-                    'updated_at' => Carbon::Now(),
-                ]
-            );
-
+        foreach ($permissions as $permission_id => $module_id)
+        {
             $module = \DB::table('modules')->where('id', $module_id)->first();
+
+            if ($module->access != 'Merchant'){
+                DB::table('permission_role')->insert([
+                        'permission_id' => $permission_id,
+                        'role_id' => config('installation.seed.admin_role_id')?:2,
+                        'created_at' => Carbon::Now(),
+                        'updated_at' => Carbon::Now(),
+                    ]
+                );
+            }
 
             if ($module->access == 'Merchant'){
                 DB::table('permission_role')->insert([

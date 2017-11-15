@@ -16,18 +16,12 @@ class AttributeSeeder extends Seeder
             [
                 'id' => 1,
                 'type' => 'Color/Pattern',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
             ],[
                 'id' => 2,
                 'type' => 'Radio',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
             ],[
                 'id' => 3,
                 'type' => 'Select',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
             ]
         ]);
 

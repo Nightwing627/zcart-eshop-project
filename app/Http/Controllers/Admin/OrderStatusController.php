@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\OrderStatus;
 use App\EmailTemplate;
@@ -43,8 +41,7 @@ class OrderStatusController extends Controller
      */
     public function create()
     {
-        $data['email_templates'] = $this->getEmailTemplateList();
-        return view('admin.order-status._create', $data);
+        return view('admin.order-status._create');
     }
 
     /**
@@ -65,30 +62,24 @@ class OrderStatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  OrderStatus  $orderStatus
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(OrderStatus $orderStatus)
     {
-        $data['email_templates'] = $this->getEmailTemplateList();
-
-        $data['status'] = OrderStatus::findOrFail($id);
-
-        return view('admin.order-status._edit', $data);
+        return view('admin.order-status._edit', compact('orderStatus'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  OrderStatus  $orderStatus
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOrderStatusRequest $request, $id)
+    public function update(UpdateOrderStatusRequest $request, OrderStatus $orderStatus)
     {
-        $order_status = OrderStatus::findOrFail($id);
-
-        $order_status->update($request->all());
+        $orderStatus->update($request->all());
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -97,12 +88,13 @@ class OrderStatusController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  OrderStatus  $orderStatus
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, $orderStatus)
     {
-        OrderStatus::find($id)->delete();
+        $orderStatus->delete();
+
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
@@ -115,7 +107,8 @@ class OrderStatusController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        OrderStatus::onlyTrashed()->where('id',$id)->restore();
+        OrderStatus::onlyTrashed()->where('id', $id)->restore();
+
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
@@ -129,15 +122,7 @@ class OrderStatusController extends Controller
     public function destroy(Request $request, $id)
     {
         OrderStatus::onlyTrashed()->find($id)->forceDelete();
+
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
-
-    /**
-     * Return email template list for dropdown
-     */
-    private function getEmailTemplateList()
-    {
-        return EmailTemplate::orderBy('name', 'asc')->pluck('name', 'id');
-    }
-
 }

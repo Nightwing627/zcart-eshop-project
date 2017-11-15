@@ -47,17 +47,17 @@ class CreateSystemsTable extends Migration
             $table->boolean('show_inactive_categories_also_when_create_category')->nullable();
 
             // Vendot Settings
-            $table->boolean('merchant_can_create_category_group')->nullable();
-            $table->boolean('merchant_can_create_category_sub_group')->nullable();
-            $table->boolean('merchant_can_create_category')->nullable();
-            $table->boolean('merchant_can_create_attribute')->nullable();
-            $table->boolean('merchant_can_create_attribute_value')->nullable();
-            $table->boolean('merchant_can_create_manufacturer')->nullable();
-            $table->boolean('merchant_can_create_product')->nullable();
-            $table->boolean('merchant_can_have_own_user_roles')->nullable();
-            $table->boolean('merchant_can_have_own_carriers')->nullable();
-            $table->boolean('merchant_can_have_own_gift_cards')->nullable();
-            $table->boolean('merchant_can_create_email_template')->nullable();
+            // $table->boolean('merchant_can_create_category_group')->nullable();
+            // $table->boolean('merchant_can_create_category_sub_group')->nullable();
+            // $table->boolean('merchant_can_create_category')->nullable();
+            // $table->boolean('merchant_can_create_attribute')->nullable();
+            // $table->boolean('merchant_can_create_attribute_value')->nullable();
+            // $table->boolean('merchant_can_create_manufacturer')->nullable();
+            // $table->boolean('merchant_can_create_product')->nullable();
+            // $table->boolean('merchant_can_have_own_user_roles')->nullable();
+            // $table->boolean('merchant_can_have_own_carriers')->nullable();
+            // $table->boolean('merchant_can_have_own_gift_cards')->nullable();
+            // $table->boolean('merchant_can_create_email_template')->nullable();
 
             // Address
             $table->boolean('address_geocode')->nullable();

@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Manufacturer;
 use Illuminate\Http\Request;
@@ -57,7 +55,8 @@ class ManufacturerController extends Controller
 
         $manufacturer->save();
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image'))
+        {
             ImageHelper::UploadImages($request, 'manufacturers', $manufacturer->id);
         }
 
@@ -78,34 +77,33 @@ class ManufacturerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Manufacturer  $manufacturer
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Manufacturer $manufacturer)
     {
-        $data['manufacturer'] = Manufacturer::findOrFail($id);
-        return view('admin.manufacturer._edit', $data);
+        return view('admin.manufacturer._edit', compact('manufacturer'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Manufacturer $manufacturer
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateManufacturerRequest $request, $id)
+    public function update(UpdateManufacturerRequest $request, Manufacturer $manufacturer)
     {
-        $manufacturer = Manufacturer::findOrFail($id);
-
         $manufacturer->update($request->all());
 
-        if ($request->hasFile('image')){
-            ImageHelper::UploadImages($request, 'manufacturers', $manufacturer->id);
+        if ($request->input('delete_image') == 1)
+        {
+            ImageHelper::RemoveImages('manufacturers', $manufacturer->id);
         }
 
-        if ($request->input('delete_image') == 1){
-            ImageHelper::RemoveImages('manufacturers', $manufacturer->id);
+        if ($request->hasFile('image'))
+        {
+            ImageHelper::UploadImages($request, 'manufacturers', $manufacturer->id);
         }
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
@@ -115,12 +113,13 @@ class ManufacturerController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Manufacturer $manufacturer
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Manufacturer $manufacturer)
     {
-        Manufacturer::find($id)->delete();
+        $manufacturer->delete();
+
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
@@ -134,6 +133,7 @@ class ManufacturerController extends Controller
     public function restore(Request $request, $id)
     {
         Manufacturer::onlyTrashed()->where('id',$id)->restore();
+
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
@@ -148,9 +148,7 @@ class ManufacturerController extends Controller
     {
         Manufacturer::onlyTrashed()->find($id)->forceDelete();
 
-        if ($request->input('delete_image') == 1){
-            ImageHelper::RemoveImages('manufacturers', $id);
-        }
+        ImageHelper::RemoveImages('manufacturers', $id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

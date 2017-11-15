@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Cart;
 use App\Order;
@@ -65,7 +63,8 @@ class OrderController extends Controller
                 ->orWhere('name', $query)
                 ->get()->first();
 
-        if ( $customer_id ){
+        if ( $customer_id )
+        {
             return redirect(route('admin.order.order.create',['customer_id' => $customer_id]));
         }
 
@@ -84,7 +83,8 @@ class OrderController extends Controller
     	$cart_id = $request->input('cart_id');
 
         $data = [];
-        if ($cart_id){
+        if ($cart_id)
+        {
             $data['cart'] = Cart::find($cart_id);
         }
 
@@ -112,7 +112,8 @@ class OrderController extends Controller
         $this->syncInventory($order, $request->input('cart'));
 
         // DELETE THE SAVED CART AFTER THE ORDER
-        if ($request->input('delete_the_cart')){
+        if ($request->input('delete_the_cart'))
+        {
             Cart::find($request->input('cart_id'))->forceDelete();
         }
 
@@ -176,12 +177,12 @@ class OrderController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function archive(Request $request, $id)
+    public function archive(Request $request, Order $order)
     {
-        Order::find($id)->delete();
+        $order->delete();
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -263,7 +264,8 @@ class OrderController extends Controller
             }
         }
         // Sync the pivot table
-        if (!empty($temp)){
+        if (!empty($temp))
+        {
             $order->inventories()->sync($temp);
         }
 
@@ -277,7 +279,8 @@ class OrderController extends Controller
      */
     public function ajaxGetTaxRate(Request $request)
     {
-        if ($request->ajax()){
+        if ($request->ajax())
+        {
             return getTaxRate($request->input('ID'));
         }
 

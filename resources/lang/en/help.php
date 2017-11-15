@@ -17,11 +17,25 @@ return [
 
     'role_type' => 'Restricted: The role only available for the main platform, a marchant can\'t use this role. Public: The role will available when a marchant will add a new user.',
 
+    'role_level' => 'Role level will be use determine who can control who. Example: An user with role level 2 can\'t modify any the user with role level 1. Keep emty if the role is for end level users.',
+
     'cant_edit_special_role' => 'This role type is not editable. Be careful to modify the permissions of this role.',
 
     'set_role_permissions' => 'Set role permissions very carefully. Choose the \'Role Type\' to get approperit modules.',
 
     'permission_modules' => 'Enable the module to set permission for the module',
+
+    'module' => [
+        'name' => 'All users under this role will be able to do specified actions to manage :module.',
+
+        'access' => [
+            'common' => 'This is a :Access module. That means both platform users and merchant users can get access.',
+
+            'platform' => 'This is a :Access module. That means only platform users can get access.',
+
+            'merchant' => 'This is a :Access module. That means only merchant users can get access.',
+        ]
+    ],
 
     'slug' => 'Slugs are usually a URL friendly version of the title',
 
@@ -80,6 +94,8 @@ return [
     'catalog_min_price' => 'Set a minimun price for the product. Vendors can add inventory within this price limits.',
 
     'catalog_max_price' => 'Set a maximun price for the product. Vendors can add inventory within this price limits.',
+
+    'has_variant' => 'This item has variants like different colors, shapes, sizes etc.',
 
     'requires_shipping' => 'This item requires shipping.',
 

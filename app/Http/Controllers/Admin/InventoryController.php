@@ -1,15 +1,11 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
-
-use Illuminate\Http\Request;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Product;
 use App\Inventory;
 use App\Attribute;
 use App\AttributeValue;
-use App\Helpers\ListHelper;
 use App\Helpers\ImageHelper;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\SearchRequest;
 use App\Http\Requests\Validations\CreateInventoryRequest;
@@ -67,7 +63,8 @@ class InventoryController extends Controller
                 ->orWhere('name', 'LIKE', '%'. $query .'%')
                 ->get();
 
-        if($products->isEmpty()){
+        if($products->isEmpty())
+        {
             return back()->with('warning', trans('messages.nofound', ['model' => trans('app.model.product')]));
         }
 
@@ -79,13 +76,9 @@ class InventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function setVariant(Request $request, $id)
+    public function setVariant(Request $request, $product_id)
     {
-        $data['product_id'] = $id;
-
-        $data['attributes'] = ListHelper::attributeWithValues();
-
-        return view('admin.inventory._set_variant', $data);
+        return view('admin.inventory._set_variant', compact('product_id'));
     }
 
     /**
@@ -97,7 +90,8 @@ class InventoryController extends Controller
     {
         $exist = Inventory::where('product_id', $id)->mine()->first();
 
-        if($exist){
+        if($exist)
+        {
             return redirect(route('admin.stock.inventory.edit', $exist->id))->with('warning', trans('messages.inventory_exist'));
         }
 
@@ -139,17 +133,17 @@ class InventoryController extends Controller
 
         $this->setAttributes($inventory, $request->input('variants'));
 
-        if ($request->input('carrier_list')){
+        if ($request->input('carrier_list'))
+        {
             $inventory->carriers()->sync($request->input('carrier_list'));
         }
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image'))
+        {
             ImageHelper::UploadImages($request, 'inventories', $inventory->id);
         }
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return redirect()->route('admin.stock.inventory.index');
+        return redirect()->route('admin.stock.inventory.index')->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -261,10 +255,8 @@ class InventoryController extends Controller
             }
 
         }
-        // exit('out');
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
 
-        return redirect()->route('admin.stock.inventory.index');
+        return redirect()->route('admin.stock.inventory.index')->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -288,7 +280,7 @@ class InventoryController extends Controller
     {
         $product = Product::findOrFail($inventory->product_id);
 
-        return view('admin.inventory.edit', compact('inventory','product'));
+        return view('admin.inventory.edit', compact('inventory', 'product'));
     }
 
     /**
@@ -311,35 +303,31 @@ class InventoryController extends Controller
             $inventory->carriers()->sync($request->input('carrier_list'));
         }
 
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'inventories', $inventory->id);
-        }
-
         if ($request->input('delete_image') == 1)
         {
             ImageHelper::RemoveImages('inventories', $id);
         }
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
+        if ($request->hasFile('image'))
+        {
+            ImageHelper::UploadImages($request, 'inventories', $inventory->id);
+        }
 
-        return redirect()->route('admin.stock.inventory.index');
+        return redirect()->route('admin.stock.inventory.index')->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Inventory $inventory
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Inventory $inventory)
     {
-        Inventory::find($id)->delete();
+        $inventory->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -351,7 +339,7 @@ class InventoryController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Inventory::onlyTrashed()->where('id',$id)->restore();
+        Inventory::onlyTrashed()->where('id', $id)->restore();
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -382,11 +370,13 @@ class InventoryController extends Controller
         $attributes = array_filter($attributes);        // remove empty elements
 
         $temp = [];
-        foreach ($attributes as $attribute_id => $attribute_value_id){
+        foreach ($attributes as $attribute_id => $attribute_value_id)
+        {
             $temp[$attribute_id] = ['attribute_value_id' => $attribute_value_id];
         }
 
-        if (!empty($temp)){
+        if (!empty($temp))
+        {
             $inventory->attributes()->sync($temp);
         }
 
@@ -403,16 +393,17 @@ class InventoryController extends Controller
     {
         $results = array();
 
-        foreach ($attributeWithValues as $attribute => $values){
-
-            foreach ($values as $value){
+        foreach ($attributeWithValues as $attribute => $values)
+        {
+            foreach ($values as $value)
+            {
                 $oldValueId = AttributeValue::find($value);
 
                 $oldValueName = AttributeValue::where('value', $value)->where('attribute_id', $attribute)->first();
 
-                if ($oldValueId || $oldValueName){
+                if ($oldValueId || $oldValueName)
+                {
                     $results[$attribute][($oldValueId) ? $oldValueId->id : $oldValueName->id] = ($oldValueId) ? $oldValueId->value : $oldValueName->value;
-
                 }else{
                     // if the value not numeric thats meaninig that its new value and we need to create it
                     $newID = AttributeValue::insertGetId(['attribute_id' => $attribute, 'value' => $value]);
@@ -426,6 +417,4 @@ class InventoryController extends Controller
 
         return $results;
     }
-
-
 }

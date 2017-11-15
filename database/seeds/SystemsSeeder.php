@@ -40,16 +40,16 @@ class SystemsSeeder extends Seeder
             'show_inactive_categories_also_when_create_category' => null,
 
             // Vendot Defults
-            'merchant_can_create_category_group' => null,
-            'merchant_can_create_category_sub_group' => null,
-            'merchant_can_create_category' => null,
-            'merchant_can_create_attribute' => null,
-            'merchant_can_create_attribute_value' => 1,
-            'merchant_can_create_manufacturer' => 1,
-            'merchant_can_create_product' => 1,
-            'merchant_can_have_own_user_roles' => 1,
-            'merchant_can_have_own_carriers' => 1,
-            'merchant_can_have_own_gift_cards' => 1,
+            // 'merchant_can_create_category_group' => null,
+            // 'merchant_can_create_category_sub_group' => null,
+            // 'merchant_can_create_category' => null,
+            // 'merchant_can_create_attribute' => null,
+            // 'merchant_can_create_attribute_value' => 1,
+            // 'merchant_can_create_manufacturer' => 1,
+            // 'merchant_can_create_product' => 1,
+            // 'merchant_can_have_own_user_roles' => 1,
+            // 'merchant_can_have_own_carriers' => 1,
+            // 'merchant_can_have_own_gift_cards' => 1,
 
             // Address Defults
             'address_geocode' => 1,

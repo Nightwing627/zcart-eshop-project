@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-md">
+<div class="modal-dialog modal-lg">
     <div class="modal-content">
         {!! Form::model($blog, ['method' => 'PUT', 'route' => ['admin.blog.update', $blog->id], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">

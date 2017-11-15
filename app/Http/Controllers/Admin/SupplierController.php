@@ -62,7 +62,8 @@ class SupplierController extends Controller
 
         $supplier->addresses()->save($address);
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image'))
+        {
             ImageHelper::UploadImages($request, 'suppliers', $supplier->id);
         }
 
@@ -83,35 +84,32 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Supplier $supplier
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Supplier $supplier)
     {
-        $data['supplier'] = Supplier::findOrFail($id);
-
-        return view('admin.supplier._edit', $data);
+        return view('admin.supplier._edit', compact('supplier'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Supplier $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSupplierRequest $request, $id)
+    public function update(UpdateSupplierRequest $request, Supplier $supplier)
     {
-
-        $supplier = Supplier::findOrFail($id);
-
         $supplier->update($request->all());
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image'))
+        {
             ImageHelper::UploadImages($request, 'suppliers', $supplier->id);
         }
 
-        if ($request->input('delete_image') == 1){
+        if ($request->input('delete_image') == 1)
+        {
             ImageHelper::RemoveImages('suppliers', $supplier->id);
         }
 
@@ -122,12 +120,12 @@ class SupplierController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Supplier $supplier
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Supplier $supplier)
     {
-        Supplier::find($id)->delete();
+        $supplier->delete();
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }

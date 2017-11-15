@@ -1,13 +1,10 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
-
-use Illuminate\Http\Request;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Tax;
 use App\Carrier;
 use App\Http\Requests;
 use App\Helpers\ImageHelper;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateCarrierRequest;
 use App\Http\Requests\Validations\UpdateCarrierRequest;
@@ -57,8 +54,6 @@ class CarrierController extends Controller
      */
     public function store(CreateCarrierRequest $request)
     {
-        $request->merge( array( 'shop_id' => $request->user()->shop_id ) ); //Set shop_id
-
         $carrier = new Carrier($request->all());
 
         $carrier->save();
@@ -68,9 +63,7 @@ class CarrierController extends Controller
             ImageHelper::UploadImages($request, 'carriers', $carrier->id);
         }
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -87,58 +80,50 @@ class CarrierController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Carrier $carrier
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Carrier $carrier)
     {
-        $data['carrier'] = Carrier::findOrFail($id);
-
-        return view('admin.carrier._edit', $data);
+        return view('admin.carrier._edit', compact('carrier'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Carrier  $carrier
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCarrierRequest $request, $id)
+    public function update(UpdateCarrierRequest $request, Carrier $carrier)
     {
-        $carrier = Carrier::findOrFail($id);
-
         $carrier->update($request->all());
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'carriers', $carrier->id);
-        }
 
         if ($request->input('delete_image') == 1)
         {
             ImageHelper::RemoveImages('carriers', $carrier->id);
         }
 
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
+        if ($request->hasFile('image'))
+        {
+            ImageHelper::UploadImages($request, 'carriers', $carrier->id);
+        }
 
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Carrier $carrier
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Carrier $carrier)
     {
-        Carrier::find($id)->delete();
+        $carrier->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -152,9 +137,7 @@ class CarrierController extends Controller
     {
         Carrier::onlyTrashed()->find($id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -170,9 +153,7 @@ class CarrierController extends Controller
 
         ImageHelper::RemoveImages('carriers', $id);
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
 }

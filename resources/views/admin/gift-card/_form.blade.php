@@ -120,7 +120,7 @@
       <div class="input-group">
         {{ Form::hidden('partial_use', 0) }}
         {!! Form::checkbox('partial_use', null, !isset($gift_card) ? 1 : null, ['id' => 'partial_use', 'class' => 'icheckbox_line']) !!}
-        {!! Form::label('partial_use', trans('app.form.gift_card_partial_use')) !!}
+        {!! Form::label('partial_use', trans('app.form.allow_partial_use')) !!}
         <span class="input-group-addon" id="">
           <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.gift_card_partial_use') }}"></i>
         </span>

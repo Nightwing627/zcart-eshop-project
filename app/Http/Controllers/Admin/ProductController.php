@@ -1,12 +1,9 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
-
-use Illuminate\Http\Request;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Tag;
 use App\Product;
 use App\Helpers\ImageHelper;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateProductRequest;
 use App\Http\Requests\Validations\UpdateProductRequest;
@@ -56,7 +53,6 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request)
     {
-
         $product = new Product($request->except('image', 'category_list', 'tag_list'));
 
         $product->save();
@@ -73,9 +69,7 @@ class ProductController extends Controller
             ImageHelper::UploadImages($request, 'products', $product->id);
         }
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back()->withInput();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));;
     }
 
     /**
@@ -92,40 +86,39 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Product $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        $data['product'] = Product::findOrFail($id);
-
-        return view('admin.product._edit', $data);
+        return view('admin.product._edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Product $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $product = Product::findOrFail($id);
-
         $product->update($request->except('image', 'category_list', 'tag_list', 'delete_image'));
 
         $this->syncCategories($product, $request->input('category_list'));
 
-        if ($request->input('tag_list')){
+        if ($request->input('tag_list'))
+        {
             $this->syncTags($product, $request->input('tag_list'));
         }
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image'))
+        {
             ImageHelper::UploadImages($request, 'products', $id);
         }
 
-        if ($request->input('delete_image') == 1){
+        if ($request->input('delete_image') == 1)
+        {
             ImageHelper::RemoveImages('products', $product->id);
         }
 
@@ -136,12 +129,13 @@ class ProductController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Product $product
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Product $product)
     {
-        Product::find($id)->delete();
+        $product->delete();
+
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
@@ -155,6 +149,7 @@ class ProductController extends Controller
     public function restore(Request $request, $id)
     {
         Product::onlyTrashed()->where('id',$id)->restore();
+
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
@@ -193,9 +188,7 @@ class ProductController extends Controller
      */
     public function syncTags(Product $product, array $tagIds)
     {
-        // dd($tagIds);
         $tagArr = [];
-
         foreach ($tagIds as $tag)
         {
             if (is_numeric($tag))

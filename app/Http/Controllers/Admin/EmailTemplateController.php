@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\EmailTemplate;
 use Illuminate\Http\Request;
@@ -57,56 +55,46 @@ class EmailTemplateController extends Controller
 
         $email_template->save();
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  EmailTemplate $emailTemplate
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(EmailTemplate $emailTemplate)
     {
-        $data['template'] = EmailTemplate::findOrFail($id);
-
-        return view('admin.email-template._edit', $data);
+        return view('admin.email-template._edit', compact('emailTemplate'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  EmailTemplate $emailTemplate
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEmailTemplateRequest $request, $id)
+    public function update(UpdateEmailTemplateRequest $request, EmailTemplate $emailTemplate)
     {
-        $template = EmailTemplate::findOrFail($id);
+        $emailTemplate->update($request->all());
 
-        $template->update($request->all());
-
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  EmailTemplate $emailTemplate
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, EmailTemplate $emailTemplate)
     {
-        EmailTemplate::find($id)->delete();
+        $emailTemplate->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -118,11 +106,9 @@ class EmailTemplateController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        EmailTemplate::onlyTrashed()->where('id',$id)->restore();
+        EmailTemplate::onlyTrashed()->where('id', $id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -136,9 +122,7 @@ class EmailTemplateController extends Controller
     {
         EmailTemplate::onlyTrashed()->find($id)->forceDelete();
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
 }

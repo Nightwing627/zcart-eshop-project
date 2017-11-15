@@ -1,13 +1,10 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
-
-use Illuminate\Http\Request;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Address;
 use App\Warehouse;
 use App\Helpers\ListHelper;
 use App\Helpers\ImageHelper;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateWarehouseRequest;
 use App\Http\Requests\Validations\UpdateWarehouseRequest;
@@ -65,7 +62,8 @@ class WarehouseController extends Controller
 
         $warehouse->addresses()->save($address);
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image'))
+        {
             ImageHelper::UploadImages($request, 'warehouses', $warehouse->id);
         }
 
@@ -75,7 +73,7 @@ class WarehouseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Warehouse $warehouse
      * @return \Illuminate\Http\Response
      */
     public function show(Warehouse $warehouse)
@@ -86,34 +84,32 @@ class WarehouseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Warehouse $warehouse
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Warehouse $warehouse)
     {
-        $data['warehouse'] = Warehouse::findOrFail($id);
-
-        return view('admin.warehouse._edit', $data);
+        return view('admin.warehouse._edit', compact('warehouse'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Warehouse $warehouse
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateWarehouseRequest $request, $id)
+    public function update(UpdateWarehouseRequest $request, Warehouse $warehouse)
     {
-        $warehouse = Warehouse::findOrFail($id);
-
         $warehouse->update($request->all());
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image'))
+        {
             ImageHelper::UploadImages($request, 'warehouses', $warehouse->id);
         }
 
-        if ($request->input('delete_image') == 1){
+        if ($request->input('delete_image') == 1)
+        {
             ImageHelper::RemoveImages('warehouses', $warehouse->id);
         }
 
@@ -124,12 +120,12 @@ class WarehouseController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Warehouse $warehouse
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Warehouse $warehouse)
     {
-        Warehouse::find($id)->delete();
+        $warehouse->delete();
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }

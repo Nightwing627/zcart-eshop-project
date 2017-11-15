@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Blog;
-use App\Policies\BlogPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -15,10 +13,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
-
-        Blog::class => BlogPolicy::class,
-        // 'App\Blog' => 'App\Policies\BlogPolicy',
+        \App\Blog::class            => \App\Policies\BlogPolicy::class,
+        \App\Attribute::class       => \App\Policies\AttributePolicy::class,
+        \App\AttributeValue::class  => \App\Policies\AttributeValuePolicy::class,
     ];
 
     /**
@@ -30,7 +27,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::resource('blog', 'BlogPolicy');
+        // Gate::resource('blog', 'BlogPolicy');
 
+        // Gate::resource('posts', 'PostPolicy', [
+        //     'restore' => 'restore',
+        //     'destroy' => 'destroy',
+        // ]);
     }
 }

@@ -59,7 +59,8 @@ trait Authorizable
 
         $slug = (bool) $slug ? $slug : $this->getSlug();
 
-        if(Auth::user()->isSuperAdmin() || $slug == 'dashboard'){
+        if(Auth::user()->isSuperAdmin() || $slug == 'dashboard')
+        {
             return true;
         }
 

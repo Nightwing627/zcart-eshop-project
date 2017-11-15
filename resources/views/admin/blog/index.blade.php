@@ -33,7 +33,7 @@
 			        <tr>
 			          <td>
 			          	<strong>{!! $blog->title !!}</strong>
-			          	<p class="excerpt-td">{!! $blog->excerpt !!}</p>
+			          	<span class="excerpt-td">{!! $blog->excerpt !!}</span>
 			          </td>
 			          <td>{{ $blog->user->nice_name }}</td>
 			          <td>{{ $blog->comments_count }}</td>
@@ -84,10 +84,12 @@
 			          <td>{{ $trash->user->nice_name }}</td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 			          <td class="row-options">
-	                    <a href="{{ route('admin.blog.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
-	                    {!! Form::open(['route' => ['admin.blog.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-	                        {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-						{!! Form::close() !!}
+						@can('delete', $trash)
+		                    <a href="{{ route('admin.blog.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+		                    {!! Form::open(['route' => ['admin.blog.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+		                        {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+							{!! Form::close() !!}
+						@endcan
 			          </td>
 			        </tr>
 		        @endforeach

@@ -1,6 +1,6 @@
 <div class="modal-dialog modal-sm">
     <div class="modal-content">
-        {!! Form::model($category, ['method' => 'PUT', 'route' => ['admin.catalog.categorySubGroup.update', $category->id], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
+        {!! Form::model($categorySubGroup, ['method' => 'PUT', 'route' => ['admin.catalog.categorySubGroup.update', $categorySubGroup->id], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             {{ trans('app.form.form') }}

@@ -1,10 +1,7 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Address;
 use App\Customer;
-use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Helpers\ImageHelper;
@@ -80,7 +77,7 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  customer  $customer
      * @return \Illuminate\Http\Response
      */
     public function show(Customer $customer)
@@ -91,7 +88,7 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Customer  $customer
      * @return \Illuminate\Http\Response
      */
     public function addresses(Customer $customer)
@@ -106,7 +103,7 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Customer  $customer
      * @return \Illuminate\Http\Response
      */
     public function profile(Customer $customer)
@@ -117,34 +114,33 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Customer $customer)
     {
-        $data['customer'] = Customer::findOrFail($id);
-        return view('admin.customer._edit', $data);
+        return view('admin.customer._edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCustomerRequest $request, $id)
+    public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        $customer = Customer::findOrFail($id);
-
         $customer->update($request->all());
 
-        if ($request->hasFile('image')){
-            ImageHelper::UploadImages($request, 'customers', $customer->id);
+        if($request->input('delete_image') == 1)
+        {
+            ImageHelper::RemoveImages('customers', $customer->id);
         }
 
-        if ($request->input('delete_image') == 1){
-            ImageHelper::RemoveImages('customers', $customer->id);
+        if ($request->hasFile('image'))
+        {
+            ImageHelper::UploadImages($request, 'customers', $customer->id);
         }
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
@@ -154,12 +150,13 @@ class CustomerController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Customer $customer)
     {
-        Customer::find($id)->delete();
+        $customer->delete();
+
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
@@ -173,6 +170,7 @@ class CustomerController extends Controller
     public function restore(Request $request, $id)
     {
         Customer::onlyTrashed()->find($id)->restore();
+
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 

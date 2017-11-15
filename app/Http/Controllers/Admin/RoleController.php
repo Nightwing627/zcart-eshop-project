@@ -29,7 +29,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $data['roles'] = Role::with('permissions')->withCount('users')->get();
+        $data['roles'] = Role::withCount('users')->get();
 
         $data['trashes'] = Role::onlyTrashed()->get();
 
@@ -43,9 +43,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $data['modules'] = Module::active()->with('permissions')->orderBy('name', 'asc')->get();
+        $modules = Module::active()->with('permissions')->orderBy('name', 'asc')->get();
 
-        return view('admin.role._create', $data);
+        return view('admin.role._create', compact('modules'));
     }
 
     /**
@@ -56,7 +56,6 @@ class RoleController extends Controller
      */
     public function store(CreateRoleRequest $request)
     {
-        // echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
         $role = new Role($request->all());
 
         $role->save();
@@ -74,32 +73,33 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        return view('admin.role._show', compact('role'));
+        $modules = Module::active()->with('permissions')->orderBy('name', 'asc')->get();
+
+        $role_permissions = $role->permissions()->pluck('module_id', 'slug')->toArray();
+
+        return view('admin.role._show', compact('role','modules','role_permissions'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        $data['role'] = Role::findOrFail($id);
-        return view('admin.role._edit', $data);
+        return view('admin.role._edit', compact('role'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoleRequest $request, $id)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
-        $role = Role::findOrFail($id);
-
         $role->update($request->all());
 
         $role->permissions()->sync($request->input('permissions', []));
@@ -111,12 +111,13 @@ class RoleController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Role $role
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Role $role)
     {
-        Role::find($id)->delete();
+        $role->delete();
+
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
@@ -130,6 +131,7 @@ class RoleController extends Controller
     public function restore(Request $request, $id)
     {
         Role::onlyTrashed()->where('id',$id)->restore();
+
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 

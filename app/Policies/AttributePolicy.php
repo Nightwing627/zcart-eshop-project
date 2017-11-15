@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\User;
 use App\Attribute;
-use App\AttributeValue;
 use App\Helpers\Authorize;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -21,7 +20,7 @@ class AttributePolicy
      */
     public function view(User $user, Attribute $attribute)
     {
-        //
+        return (new Authorize($user, 'view_attribute', $attribute))->check();
     }
 
     /**
@@ -32,7 +31,7 @@ class AttributePolicy
      */
     public function create(User $user)
     {
-        //
+        return (new Authorize($user, 'add_attribute'))->check();
     }
 
     /**
@@ -44,7 +43,7 @@ class AttributePolicy
      */
     public function update(User $user, Attribute $attribute)
     {
-        //
+        return (new Authorize($user, 'edit_attribute', $attribute))->check();
     }
 
     /**
@@ -56,6 +55,6 @@ class AttributePolicy
      */
     public function delete(User $user, Attribute $attribute)
     {
-        //
+        return (new Authorize($user, 'delete_attribute', $attribute))->check();
     }
 }

@@ -5,6 +5,14 @@ use Carbon\Carbon;
 
 class ModulesSeeder extends Seeder
 {
+    /**
+     * All modules and its attributes.
+     * This will generate the role accesses and will be used on permission control.
+     * access = Common, Platform, Merchant, and Super Admin
+     * actions is the comma separated string that will be use for permission control
+     *
+     * @var arr
+     */
     private $modules = [
         // Module name  => Access level //
         'Attribute' => [
@@ -23,6 +31,16 @@ class ModulesSeeder extends Seeder
         ],
 
         'Category' => [
+            'access' => 'Common',
+            'actions' => 'view,add,edit,delete'
+        ],
+
+        'Category Group' => [
+            'access' => 'Platform',
+            'actions' => 'view,add,edit,delete'
+        ],
+
+        'Category Sub-group' => [
             'access' => 'Platform',
             'actions' => 'view,add,edit,delete'
         ],
@@ -43,7 +61,7 @@ class ModulesSeeder extends Seeder
         ],
 
         'Gift Card' => [
-            'access' => 'Platform',
+            'access' => 'Common',
             'actions' => 'view,add,edit,delete'
         ],
 
@@ -83,7 +101,7 @@ class ModulesSeeder extends Seeder
         ],
 
         'Role' => [
-            'access' => 'Platform',
+            'access' => 'Common',
             'actions' => 'view,add,edit,delete'
         ],
 

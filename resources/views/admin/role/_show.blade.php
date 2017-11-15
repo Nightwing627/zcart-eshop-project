@@ -1,83 +1,81 @@
-<div class="modal-dialog modal-md">
+<div class="modal-dialog modal-lg">
     <div class="modal-content">
-        <div class="modal-body" style="padding: 0px;">
+        <div class="modal-body" style="padding-top: 15px;">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
 
-            <div class="col-md-3 nopadding" style="margin-top: 10px;">
-				<img src="{{ get_image_src($supplier->id, 'suppliers', '150x150') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
-			</div>
-            <div class="col-md-9 nopadding">
+            <div class="col-md-12 nopadding" style="margin-top: 10px;">
 				<table class="table no-border">
 					<tr>
-						<th class="text-right">{{ trans('app.name') }}:</th>
-						<td style="width: 75%;">{{ $supplier->name }}</td>
+						<th class="text-right">{{ trans('app.role') }}:</th>
+						<td style="width: 75%;"><span class="lead">{{ $role->name }}</span></td>
 					</tr>
 					<tr>
-						<th class="text-right">{{ trans('app.contact_person') }}:</th>
-						<td style="width: 75%;">{{ $supplier->contact_person }}</td>
+						<th class="text-right">{{ trans('app.description') }}:</th>
+						<td style="width: 75%;">{{ $role->description }}</td>
 					</tr>
 		            <tr>
-		            	<th class="text-right">{{ trans('app.status') }}: </th>
-		            	<td style="width: 75%;">{{ ($supplier->active) ? trans('app.active') : trans('app.inactive') }}</td>
+		            	<th class="text-right">{{ trans('app.type') }}: </th>
+		            	<td style="width: 75%;">{{ ($role->public) ? trans('app.public') : trans('app.restricted') }}</td>
 		            </tr>
 					<tr>
+						<th class="text-right">{{ trans('app.role_level') }}:</th>
+						<td style="width: 75%;"><span class="label label-default">{{ $role->level or trans('app.not_set') }}</span></td>
+					</tr>
+					<tr>
 						<th class="text-right">{{ trans('app.available_from') }}:</th>
-						<td style="width: 75%;">{{ $supplier->created_at->toFormattedDateString() }}</td>
+						<td style="width: 75%;">{{ $role->created_at->toFormattedDateString() }}</td>
 					</tr>
 					<tr>
 						<th class="text-right">{{ trans('app.updated_at') }}:</th>
-						<td style="width: 75%;">{{ $supplier->updated_at->toDayDateTimeString() }}</td>
+						<td style="width: 75%;">{{ $role->updated_at->toDayDateTimeString() }}</td>
 					</tr>
 				</table>
 			</div>
+
 			<div class="clearfix"></div>
 
-			<!-- Custom Tabs -->
-			<div class="nav-tabs-custom">
-				<ul class="nav nav-tabs nav-justified">
-				  <li class="active"><a href="#tab_1" data-toggle="tab">
-					{{ trans('app.description') }}
-				  </a></li>
-				  <li><a href="#tab_2" data-toggle="tab">
-					{{ trans('app.contact') }}
-				  </a></li>
-				</ul>
-				<div class="tab-content">
-				    <div class="tab-pane active" id="tab_1">
-					  <div class="box-body">
-			            {!! $supplier->description or trans('app.description_not_available') !!}
-					  </div>
-				    </div>
-				    <!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_2">
-				        <table class="table">
-				            {{-- @if($supplier->hasAddress()) --}}
-							<tr>
-								<th class="text-right">{{ trans('app.address') }}:</th>
-								<td style="width: 75%;">
-				        			{!! $supplier->primaryAddress->toHtml() !!}
-								</td>
-							</tr>
-							{{-- @endif --}}
-				            @if($supplier->contact_person)
-							<tr>
-								<th class="text-right">{{ trans('app.contact_person') }}:</th>
-								<td style="width: 75%;">{{ $supplier->contact_person }}</td>
-							</tr>
-							@endif
-				            @if($supplier->email)
-							<tr>
-								<th class="text-right">{{ trans('app.email') }}:</th>
-								<td style="width: 75%;">{{ $supplier->email }}</td>
-							</tr>
-							@endif
-				        </table>
-				    </div>
-				    <!-- /.tab-pane -->
-				</div>
-				<!-- /.tab-content -->
-			</div>
-
+            <div class="row">
+	            <div class="box-body">
+					@if($role_permissions)
+					    <table class="table table-striped">
+							<thead>
+								<tr>
+								  <th width="40%" class="text-center">
+								    {{ strtoupper(trans('app.modules')) }}
+								  </th>
+								  <th>
+								    {{ strtoupper(trans('app.form.permissions')) }}
+								  </th>
+								</tr>
+							</thead>
+					    	<tbody>
+				        		@foreach($modules as $module)
+									@if(in_array($module->id, $role_permissions))
+										<tr>
+											<td><button class="btn btn-primary btn-lg btn-block disabled" style="cursor: default;">{{ $module->name }}</button></td>
+											<td>
+									        @foreach($module->permissions as $permission)
+									        	@if(array_key_exists($permission->slug, $role_permissions))
+													<span class="label label-outline">
+													<i class="fa fa-check"></i>
+													{{ $permission->name }}</span>
+												@else
+													<span class="label label-danger">
+													<i class="fa fa-times"></i>
+													{{ $permission->name }}</span>
+												@endif
+					 						@endforeach
+											</td>
+										</tr>
+									@endif
+								@endforeach
+							</tbody>
+						</table>
+					@else
+						<div class="alert alert-danger">{{ trans('app.no_permissions_set') }}</div>
+					@endif
+		        </div>
+	        </div>
         </div>
     </div> <!-- / .modal-content -->
 </div> <!-- / .modal-dialog -->

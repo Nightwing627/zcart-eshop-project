@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Tax;
@@ -64,28 +65,23 @@ class TaxController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Tax $tax
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Tax $tax)
     {
-        $data['tax'] = Tax::findOrFail($id);
-
-        return view('admin.tax._edit', $data);
+        return view('admin.tax._edit', compact('tax'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Tax $tax
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTaxRequest $request, $id)
+    public function update(UpdateTaxRequest $request, Tax $tax)
     {
-
-        $tax = Tax::findOrFail($id);
-
         $tax->update($request->all());
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
@@ -95,12 +91,12 @@ class TaxController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Tax $tax
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Tax $tax)
     {
-        Tax::find($id)->delete();
+        $tax->delete();
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }

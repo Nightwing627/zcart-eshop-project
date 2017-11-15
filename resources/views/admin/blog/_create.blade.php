@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-md">
+<div class="modal-dialog modal-lg">
     <div class="modal-content">
     	<?php //echo "<pre/>"; print_r($nice_name); ?>
     	{!! Form::open(['route' => 'admin.blog.store', 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}

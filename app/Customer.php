@@ -41,7 +41,17 @@ class Customer extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['name', 'nice_name', 'email', 'password', 'dob', 'bio', 'sex', 'active'];
+    protected $fillable = [
+                'name',
+                'nice_name',
+                'email',
+                'password',
+                'dob',
+                'bio',
+                'sex',
+                'description',
+                'active'
+            ];
 
     /**
      * Get all of the country for the country.

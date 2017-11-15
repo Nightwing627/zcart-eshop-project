@@ -1,6 +1,6 @@
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
-        {!! Form::model($gift_card, ['method' => 'PUT', 'route' => ['admin.promotion.giftCard.update', $gift_card->id], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
+        {!! Form::model($giftCard, ['method' => 'PUT', 'route' => ['admin.promotion.giftCard.update', $giftCard->id], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             {{ trans('app.form.form') }}

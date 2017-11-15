@@ -5629,7 +5629,7 @@ div.dataTables_paginate ul.pagination {
  *
  */
 
-p.excerpt-td{
+span.excerpt-td, p.excerpt-td{
   width: 400px;
   height: 2.4em;
   line-height: 1.2em;

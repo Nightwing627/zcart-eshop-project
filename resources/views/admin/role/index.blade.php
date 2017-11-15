@@ -19,8 +19,8 @@
 					<tr>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.users') }}</th>
-						<th style="width: 60%;">{{ trans('app.access_control') }}</th>
-						<th>{{ trans('app.status') }}</th>
+						<th>{{ trans('app.type') }}</th>
+						<th>{{ trans('app.role_level') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
@@ -29,16 +29,12 @@
 						<td>
 				          	<h5>{{ $role->name }}</h5>
 				          	@if($role->description)
-					          	<p class="excerpt-td small">{!! $role->description !!}</p>
+					          	<span class="excerpt-td small">{!! $role->description !!}</span>
 				          	@endif
 						</td>
 						<td><span class="label label-primary">{{ $role->users_count }}</span></td>
-						<td>
-							@foreach($role->permissions as $permission)
-								<span class="label label-outline">{{ str_replace('_', ' ', title_case($permission->slug)) }}</span>
-							@endforeach
-						</td>
-						<td>{{ ($role->public) ? trans('app.public') : trans('app.restricted') }}</td>
+						<td>{{ ($role->public) ? trans('app.merchant') : trans('app.platform') }}</td>
+						<td><span class="label label-default">{{ $role->level }}</span></td>
 						<td class="row-options">
 							<a href="{{ route('admin.setting.role.show', $role->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 
@@ -68,8 +64,7 @@
 				<thead>
 					<tr>
 						<th>{{ trans('app.name') }}</th>
-						<th style="width: 40%;">{{ trans('app.access_control') }}</th>
-						<th>{{ trans('app.status') }}</th>
+						<th>{{ trans('app.type') }}</th>
 						<th>{{ trans('app.deleted_at') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -83,7 +78,6 @@
 					          	<p class="excerpt-td small">{!! $trash->description !!}</p>
 				          	@endif
 						</td>
-						<td>{{ '' }}</td>
 						<td>{{ ($trash->public) ? trans('app.public') : trans('app.restricted') }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">

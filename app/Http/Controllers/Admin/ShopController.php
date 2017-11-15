@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Shop;
-use App\User;
 use App\Address;
 use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
@@ -40,17 +39,16 @@ class ShopController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function staffs($shop)
+    public function staffs(Shop $shop)
     {
-        $data['shop'] = Shop::find($shop);
+        $staffs = $shop->staffs()->with('role', 'primaryAddress')->get();
 
-        $data['staffs'] = $data['shop']->staffs()->with('role', 'primaryAddress')->get();
+        $trashes = $shop->staffs()->onlyTrashed()->get();
 
-        $data['trashes'] = $data['shop']->staffs()->onlyTrashed()->get();
-
-        return view('admin.shop.staffs', $data);
+        return view('admin.shop.staffs', compact('shop', 'staffs', 'trashes'));
     }
 
     /**
@@ -79,7 +77,8 @@ class ShopController extends Controller
 
         $shop->addresses()->save($address);
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image'))
+        {
             ImageHelper::UploadImages($request, 'shops', $shop->id);
         }
 
@@ -89,7 +88,7 @@ class ShopController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Shop  $shop
      * @return \Illuminate\Http\Response
      */
     public function show(Shop $shop)
@@ -100,34 +99,32 @@ class ShopController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Shop $shop
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Shop $shop)
     {
-        $data['shop'] = Shop::findOrFail($id);
-
-        return view('admin.shop._edit', $data);
+        return view('admin.shop._edit', compact('shop'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Shop $shop
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateShopRequest $request, $id)
+    public function update(UpdateShopRequest $request, Shop $shop)
     {
-        $shop = Shop::findOrFail($id);
-
         $shop->update($request->all());
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image'))
+        {
             ImageHelper::UploadImages($request, 'shops', $shop->id);
         }
 
-        if ($request->input('delete_image') == 1){
+        if ($request->input('delete_image') == 1)
+        {
             ImageHelper::RemoveImages('shops', $shop->id);
         }
 
@@ -138,12 +135,12 @@ class ShopController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Shop $shop
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Shop $shop)
     {
-        Shop::find($id)->delete();
+        $shop->delete();
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }

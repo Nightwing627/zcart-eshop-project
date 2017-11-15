@@ -1,14 +1,11 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
-
-use Illuminate\Http\Request;
+<?php namespace App\Http\Controllers\Admin;
 
 use Excel;
 use App\Product;
 use App\Country;
 use App\Category;
 use App\Manufacturer;
+use Illuminate\Http\Request;
 use App\Http\Requests\ExportRequest;
 use App\Http\Requests\ImportRequest;
 use App\Http\Controllers\Controller;

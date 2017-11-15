@@ -9,7 +9,7 @@
 </div>
 <div class="form-group">
   {!! Form::label('excerpt', trans('app.form.excerpt').'*') !!}
-  {!! Form::textarea('excerpt', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.excerpt'), 'rows' => '3', 'required']) !!}
+  {!! Form::textarea('excerpt', null, ['class' => 'form-control summernote-without-tootbar', 'placeholder' => trans('app.placeholder.excerpt'), 'rows' => '3', 'required']) !!}
   <div class="help-block with-errors"></div>
 </div>
 <div class="form-group">

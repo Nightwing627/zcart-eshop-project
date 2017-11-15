@@ -1,13 +1,11 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
-
-use Illuminate\Http\Request;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Category;
-use App\Helpers\ListHelper;
 use App\Helpers\ImageHelper;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Validations\CreateCategoryRequest;
+use App\Http\Requests\Validations\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -43,9 +41,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $data['catList'] = ListHelper::catGrpSubGrpListArray();
-
-        return view('admin.category._create', $data);
+        return view('admin.category._create');
     }
 
     /**
@@ -54,17 +50,8 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
-        $rules = [
-           'cat_sub_grps' => 'required',
-           'name' => 'required|unique:categories',
-           'slug' => 'required|unique:categories',
-           'image' => 'mimes:jpg,jpeg,png',
-           'active' => 'required'
-        ];
-        $this->validate($request, $rules);
-
         $category = new Category($request->all());
 
         $category->save();
@@ -77,61 +64,37 @@ class CategoryController extends Controller
             ImageHelper::ResizeImage('categories', $category->id, 800, 200);
         }
 
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // $user = User::findOrFail($id);
-        // return view('admin.user._show', compact('user'));
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        $data['catList'] = ListHelper::catGrpSubGrpListArray();
-
-        $data['category'] = Category::findOrFail($id);
-
-        return view('admin.category._edit', $data);
+        return view('admin.category._edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-
-        $rules = [
-           'cat_sub_grps' => 'required',
-           'name' => 'required',
-           'slug' => 'required',
-           'image' => 'mimes:jpg,jpeg,png',
-           'active' => 'required'
-        ];
-        $this->validate($request, $rules);
-
-        $category = Category::findOrFail($id);
         $category->update($request->all());
 
         $this->syncSubGrps($category, $request->input('cat_sub_grps'));
+
+        if ($request->input('delete_image') == 1)
+        {
+            ImageHelper::RemoveImages('categories', $category->id);
+        }
 
         if ($request->hasFile('image'))
         {
@@ -139,29 +102,21 @@ class CategoryController extends Controller
             ImageHelper::ResizeImage('categories', $category->id, 800, 200);
         }
 
-        if ($request->input('delete_image') == 1)
-        {
-            ImageHelper::RemoveImages('categories', $category->id);
-        }
-
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $id)
+    public function trash(Request $request, Category $category)
     {
-        Category::find($id)->delete();
+        $category->delete();
 
-        $request->session()->flash('success', trans('messages.trashed', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
 
     /**
@@ -175,9 +130,7 @@ class CategoryController extends Controller
     {
         Category::onlyTrashed()->where('id',$id)->restore();
 
-        $request->session()->flash('success', trans('messages.restored', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
 
     /**
@@ -192,9 +145,7 @@ class CategoryController extends Controller
 
         ImageHelper::RemoveImages('categories', $id);
 
-        $request->session()->flash('success',  trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
     /**

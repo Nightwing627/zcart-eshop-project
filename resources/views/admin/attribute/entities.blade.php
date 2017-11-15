@@ -1,13 +1,15 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-	<a href="{{ route('admin.catalog.attributeValue.create', $attribute) }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_attribute_value') }} </a>
+	@can('create', App\AttributeValue::class)
+		<a href="{{ route('admin.catalog.attributeValue.create', $attribute) }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_attribute_value') }} </a>
+	@endcan
 @endsection
 
 @section('content')
 	<div class="box">
 	    <div class="box-header with-border">
-	      <h3 class="box-title">{{ trans('app.attribute') . ': ' . $attribute->name }}</h3>
+	      <h3 class="box-title">{{ trans('app.attribute') . ': ' . $attribute->name . ' | ' . trans('app.type') . ': ' . $attribute->attributeType->type }}</h3>
 	      <div class="box-tools pull-right">
 	        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -31,12 +33,8 @@
 			        	<td>
 							<i data-toggle="tooltip" data-placement="top" title="{{ trans('app.move') }}" class="fa fa-arrows sort-handler"></i>&nbsp;
 			        	</td>
-						<td>
-							<span class="order"> {{ $attributeValue->order }} </span>
-						</td>
-						<td>
-							{{ $attributeValue->value }}
-						</td>
+						<td><span class="order"> {{ $attributeValue->order }} </span></td>
+						<td>{{ $attributeValue->value }}</td>
 						<td>
 							@if($attributeValue->color)
 								<i class="fa fa-square" style="color: {{ $attributeValue->color }}"></i>
@@ -49,13 +47,17 @@
 							@endif
 						</td>
 						<td class="row-options">
-							<a href="{{ route('admin.catalog.attributeValue.show', ['id' => $attributeValue->id]) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
-
-							<a href="{{ route('admin.catalog.attributeValue.edit', ['id' => $attributeValue->id]) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
-
-							{!! Form::open(['route' => ['admin.catalog.attributeValue.trash', $attributeValue->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-							    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
+							@can('view', $attributeValue)
+								<a href="{{ route('admin.catalog.attributeValue.show', ['id' => $attributeValue->id]) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+							@endcan
+							@can('update', $attributeValue)
+								<a href="{{ route('admin.catalog.attributeValue.edit', ['id' => $attributeValue->id]) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+							@endcan
+							@can('delete', $attributeValue)
+								{!! Form::open(['route' => ['admin.catalog.attributeValue.trash', $attributeValue->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+								    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endcan
 						</td>
 			        </tr>
 		        @endforeach
@@ -100,11 +102,13 @@
 					  </td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 			          <td class="row-options">
-	                    <a href="{{ route('admin.catalog.attributeValue.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+						@can('delete', $trash)
+		                    <a href="{{ route('admin.catalog.attributeValue.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
 
-	                    {!! Form::open(['route' => ['admin.catalog.attributeValue.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-	                        {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-						{!! Form::close() !!}
+		                    {!! Form::open(['route' => ['admin.catalog.attributeValue.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+		                        {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+							{!! Form::close() !!}
+						@endcan
 			          </td>
 			        </tr>
 		        @endforeach

@@ -13,16 +13,25 @@ return [
     |
     */
 
-    'created' => ':model has been created successfully!',
-    'updated' => ':model has been updated successfully!',
-    'trashed' => ':model has been moved to trash!',
-    'restored' => ':model has been restored successfully!',
-    'deleted' => ':model has been deleted permanently!',
-    'nofound' => ':model is not exist! try another search.',
+    'created'           => ':model has been created successfully!',
+    'updated'           => ':model has been updated successfully!',
+    'trashed'           => ':model has been moved to trash!',
+    'restored'          => ':model has been restored successfully!',
+    'deleted'           => ':model has been deleted permanently!',
+    'nofound'           => ':model is not exist! try another search.',
+    'action_failed'     => 'The action has been failed to unknown reason!',
 
-    'inventory_exist' => 'The product is already exist in your inventory. Please update the existing list instead of creating duplicate list.',
+    // 'failed'    => [
+    //     'create'   => 'Create :model has been failed!',
+    //     'update'   => 'Update :model has been failed!',
+    //     'trash'   => ':model has been moved to trash!',
+    //     'restore'  => ':model has been restored failed!',
+    //     'delete'   => ':model has been deleted failed!',
+    // ],
 
-    'permission' => [
-        'denied'    => 'Permission denied!',
+    'inventory_exist'   => 'The product is already exist in your inventory. Please update the existing list instead of creating duplicate list.',
+
+    'permission'        => [
+            'denied'        => 'Permission denied!',
     ],
 ];

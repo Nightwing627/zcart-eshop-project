@@ -41,19 +41,20 @@ class ListHelper
      *
      * @return array
      */
-    public static function roles($shop = null)
+    public static function roles()
     {
+        $shop = Auth::user()->shop_id;
+
         $roles = \DB::table('roles')
                 ->where('id', '!=', 1)
-                ->where('deleted_at', Null)
-                ->orderBy('name', 'asc');
+                ->where('deleted_at', Null);
 
-        if (Auth::user()->shop_id)
-            $roles->where('public', 1);
+        if ($shop)
+            $roles->where('public', 1)->orWhere('shop_id', $shop);
         else
             $roles->where('public', Null);
 
-        return $roles->pluck('name', 'id');
+        return $roles->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -191,11 +192,9 @@ class ListHelper
      *
      * @return array
      */
-    public static function suppliers($shop = null)
+    public static function suppliers()
     {
-        $shop = $shop ?: Auth::user()->shop_id; //Get current user's shop_id
-
-        return \DB::table('suppliers')->where('shop_id', $shop)->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('suppliers')->where('shop_id', Auth::user()->shop_id)->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -203,11 +202,9 @@ class ListHelper
      *
      * @return array
      */
-    public static function warehouses($shop = null)
+    public static function warehouses()
     {
-        $shop = $shop ?: Auth::user()->shop_id; //Get current user's shop_id
-
-        return \DB::table('warehouses')->where('shop_id', $shop)->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('warehouses')->where('shop_id', Auth::user()->shop_id)->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -215,14 +212,9 @@ class ListHelper
      *
      * @return array
      */
-    public static function carriers($shop = null)
+    public static function carriers()
     {
-        if(config('system_settings.merchant_can_have_own_carriers'))
-        {
-            $shop = $shop ?: Auth::user()->shop_id; //Get current user's shop_id
-        }
-
-        return \DB::table('carriers')->where('shop_id', $shop)->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('carriers')->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -230,7 +222,7 @@ class ListHelper
      *
      * @return array
      */
-    public static function taxes($shop = null)
+    public static function taxes()
     {
         return \DB::table('taxes')
                 ->where('active',1)
@@ -241,8 +233,6 @@ class ListHelper
                 })
                 ->orderBy('name', 'asc')
                 ->pluck('name', 'id');
-
-        // return \DB::table('taxes')->where('shop_id', $shop)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -376,6 +366,16 @@ class ListHelper
     public static function gtin_types()
     {
         return \DB::table('gtin_types')->pluck('name', 'name');
+    }
+
+    /**
+     * Get EmailTemplate list with all values for form dropdown.
+     *
+     * @return array
+     */
+    public static function email_templates()
+    {
+        return \DB::table('email_templates')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
