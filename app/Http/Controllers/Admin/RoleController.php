@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Role;
 use App\Module;
 use App\Permission;
+use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateRoleRequest;
@@ -12,6 +13,8 @@ use App\Http\Requests\Validations\UpdateRoleRequest;
 
 class RoleController extends Controller
 {
+    use Authorizable;
+
     private $model_name;
 
     /**

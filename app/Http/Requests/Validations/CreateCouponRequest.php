@@ -37,7 +37,6 @@ class CreateCouponRequest extends Request
            'starting_time' => 'required|nullable|date|after_or_equal:now',
            'ending_time' => 'required|nullable|date|after:starting_time',
            'limited' => 'boolean',
-           // 'customers' => 'nullable|required_with:limited',
            'active' => 'required|boolean',
         ];
     }

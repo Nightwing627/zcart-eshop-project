@@ -17,7 +17,10 @@
         <span class="admin-user-widget-text text-muted">
             {{ trans('app.phone') . ': ' . $shop->primaryAddress->phone }}
         </span>
-        <a href="{{ route('admin.merchant.shop.show', $shop->id) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ trans('app.view_detail') }}</a>
+
+        @can('view', $shop)
+            <a href="{{ route('admin.merchant.shop.show', $shop->id) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ trans('app.view_detail') }}</a>
+        @endcan
 
         <span class="pull-right" style="margin-top: -60px;margin-right: 30px;font-size: 40px; color: rgba(0, 0, 0, 0.2);">
             <i class="fa fa-check-square-o"></i>

@@ -1,7 +1,9 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-	<a href="{{ route('admin.promotion.coupon.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_coupon') }}</a>
+	@can('create', App\Coupon::class)
+		<a href="{{ route('admin.promotion.coupon.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_coupon') }}</a>
+	@endcan
 @endsection
 
 @section('content')
@@ -44,13 +46,19 @@
 							@endif
 						</td>
 						<td class="row-options">
-							<a href="{{ route('admin.promotion.coupon.show', $coupon->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+							@can('view', $coupon)
+								<a href="{{ route('admin.promotion.coupon.show', $coupon->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+							@endcan
 
-							<a href="{{ route('admin.promotion.coupon.edit', $coupon->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+							@can('update', $coupon)
+								<a href="{{ route('admin.promotion.coupon.edit', $coupon->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+							@endcan
 
-							{!! Form::open(['route' => ['admin.promotion.coupon.trash', $coupon->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-								{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
+							@can('delete', $coupon)
+								{!! Form::open(['route' => ['admin.promotion.coupon.trash', $coupon->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endcan
 						</td>
 					</tr>
 					@endforeach
@@ -93,10 +101,13 @@
 						</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
-							<a href="{{ route('admin.promotion.coupon.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
-							{!! Form::open(['route' => ['admin.promotion.coupon.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-								{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
+							@can('delete', $trash)
+								<a href="{{ route('admin.promotion.coupon.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+
+								{!! Form::open(['route' => ['admin.promotion.coupon.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+									{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endcan
 						</td>
 					</tr>
 					@endforeach

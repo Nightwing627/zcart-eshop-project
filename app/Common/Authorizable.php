@@ -27,6 +27,17 @@ trait Authorizable
         'destroy' => 'delete'
     ];
 
+    /**
+     * List of modules thar grouped into a common module named utility modules
+     * This will help to set the role permissions
+     *
+     * @var arr
+     */
+    private $utility_modules = [
+        'orderStatus',
+        'paymentStatus',
+    ];
+
 	/**
      * Override of callAction to perform the authorization before
      *
@@ -59,10 +70,8 @@ trait Authorizable
 
         $slug = (bool) $slug ? $slug : $this->getSlug();
 
-        if(Auth::user()->isSuperAdmin() || $slug == 'dashboard')
-        {
+        if($slug == 'dashboard')
             return true;
-        }
 
         return (new Authorize(Auth::user(), $slug))->check();
     }
@@ -78,6 +87,23 @@ trait Authorizable
         $module = array_slice($temp1, -2, 1)[0];
         $action = array_slice($temp1, -1, 1)[0];
 
-        return $action == 'dashboard' ? $action : $this->abilities[$action] . '_' . $module;
+        if($this->isUtility($module))
+        {
+            return $this->abilities[$action] . '_utility';
+        }
+
+        return $action == 'dashboard' ? $action : $this->abilities[$action] . '_' . snake_case($module);
+    }
+
+    /**
+     * Check if module is an utility module.
+     *
+     * @param  str  $module
+     *
+     * @return boolean
+     */
+    private function isUtility($module)
+    {
+        return in_array($module, $this->utility_modules);
     }
 }

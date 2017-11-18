@@ -1,9 +1,11 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-	<a href="{{ route('admin.exim', 'gift-card') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
+	@can('create', App\GifCard::class)
+		<a href="{{ route('admin.exim', 'gift-card') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 
-	<a href="{{ route('admin.promotion.giftCard.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_gift_card') }}</a>
+		<a href="{{ route('admin.promotion.giftCard.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_gift_card') }}</a>
+	@endcan
 @endsection
 
 @section('content')
@@ -46,13 +48,19 @@
 							@endif
 						</td>
 						<td class="row-options">
-							<a href="{{ route('admin.promotion.giftCard.show', $card->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+							@can('view', $card)
+								<a href="{{ route('admin.promotion.giftCard.show', $card->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+							@endcan
 
-							<a href="{{ route('admin.promotion.giftCard.edit', $card->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+							@can('update', $card)
+								<a href="{{ route('admin.promotion.giftCard.edit', $card->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+							@endcan
 
-							{!! Form::open(['route' => ['admin.promotion.giftCard.trash', $card->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-								{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
+							@can('delete', $card)
+								{!! Form::open(['route' => ['admin.promotion.giftCard.trash', $card->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endcan
 						</td>
 					</tr>
 					@endforeach
@@ -93,10 +101,13 @@
 						<td>{{ get_formated_currency($trash->value) }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
-							<a href="{{ route('admin.promotion.giftCard.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
-							{!! Form::open(['route' => ['admin.promotion.giftCard.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-								{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
+							@can('delete', $trash)
+								<a href="{{ route('admin.promotion.giftCard.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+
+								{!! Form::open(['route' => ['admin.promotion.giftCard.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+									{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endcan
 						</td>
 					</tr>
 					@endforeach

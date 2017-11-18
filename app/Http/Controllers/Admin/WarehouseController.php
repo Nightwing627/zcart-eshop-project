@@ -5,12 +5,14 @@ use App\Warehouse;
 use App\Helpers\ListHelper;
 use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateWarehouseRequest;
 use App\Http\Requests\Validations\UpdateWarehouseRequest;
 
 class WarehouseController extends Controller
 {
+    use Authorizable;
 
     private $model_name;
 

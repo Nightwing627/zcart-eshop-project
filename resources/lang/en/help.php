@@ -57,7 +57,9 @@ return [
 
     'shop_legal_name' => 'The legal name of the shop',
 
-    'shop_owner_id' => 'The owner and super admin of the shop. A user registered as a Merchant can own a shop',
+    'shop_owner_id' => 'The owner and super admin of the shop. A user registered as a Merchant can own a shop. You can\'t change this later.',
+
+    'shop_owner_cant_change' => 'The owner of the shop can\'t be changed. Instead you can delete the shop and creat a new one.',
 
     'shop_description' => 'The brand description of the shop, this information will be visible on the shop\'s homepage.',
 

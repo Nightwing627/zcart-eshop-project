@@ -28,9 +28,13 @@
   <div class="col-md-6 nopadding-left">
     <div class="form-group">
       {!! Form::label('owner_id', trans('app.form.shop_owner'). '*', ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shop_owner_id') }}"></i>
-      {!! Form::select('owner_id', $users , null, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.shop_owner'), 'required']) !!}
-      <div class="help-block with-errors"></div>
+      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ isset($shop) ? trans('help.shop_owner_cant_change') :trans('help.shop_owner_id') }}"></i>
+      @if(isset($shop))
+        {{ Form::text('owner', $shop->owner->name, ['class' => 'form-control', 'disabled']) }}
+      @else
+        {!! Form::select('owner_id', $merchants , null, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.shop_owner'), 'required']) !!}
+        <div class="help-block with-errors"></div>
+      @endif
     </div>
   </div>
 </div>

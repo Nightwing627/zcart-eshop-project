@@ -1,7 +1,9 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-	<a href="{{ route('admin.order.order.searchCutomer') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_order') }}</a>
+	@can('create', App\Order::class)
+		<a href="{{ route('admin.order.order.searchCutomer') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_order') }}</a>
+	@endcan
 @endsection
 
 @section('content')
@@ -39,13 +41,15 @@
 						<td>{{ $order->paymentStatus->name }}</td>
 						<td>{{ $order->status->name }}</td>
 						<td class="row-options">
-							<a href="{{ route('admin.order.order.show', $order->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+							@can('view', $order)
+								<a href="{{ route('admin.order.order.show', $order->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+							@endcan
 
-							{{-- <a href="{{ route('admin.order.order.edit', $order->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp; --}}
-
-							{!! Form::open(['route' => ['admin.order.order.trash', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-								{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
+							@can('archive', $trash)
+								{!! Form::open(['route' => ['admin.order.order.trash', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endcan
 						</td>
 					</tr>
 					@endforeach
@@ -85,7 +89,9 @@
 						<td>{{ $archive->payment_method }}</td>
 						<td>{{ $archive->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
-							<a href="{{ route('admin.order.order.restore', $archive->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>
+							@can('archive', $trash)
+								<a href="{{ route('admin.order.order.restore', $archive->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>
+							@endcan
 						</td>
 					</tr>
 					@endforeach

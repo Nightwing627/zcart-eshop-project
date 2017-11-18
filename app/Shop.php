@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Common\Addressable;
+use App\Events\ShopCreated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

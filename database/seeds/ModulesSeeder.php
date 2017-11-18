@@ -40,13 +40,18 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,add,edit,delete'
         ],
 
-        'Category Sub-group' => [
+        'Category Sub Group' => [
             'access' => 'Platform',
             'actions' => 'view,add,edit,delete'
         ],
 
         'Coupon' => [
-            'access' => 'Common',
+            'access' => 'Merchant',
+            'actions' => 'view,add,edit,delete'
+        ],
+
+        'Cart' => [
+            'access' => 'Merchant',
             'actions' => 'view,add,edit,delete'
         ],
 
@@ -61,7 +66,7 @@ class ModulesSeeder extends Seeder
         ],
 
         'Gift Card' => [
-            'access' => 'Common',
+            'access' => 'Platform',
             'actions' => 'view,add,edit,delete'
         ],
 
@@ -82,7 +87,7 @@ class ModulesSeeder extends Seeder
 
         'Order' => [
             'access' => 'Merchant',
-            'actions' => 'view,add,delete'
+            'actions' => 'view,add,archive'
         ],
 
         'Product' => [
@@ -112,6 +117,16 @@ class ModulesSeeder extends Seeder
 
         'Shop' => [
             'access' => 'Platform',
+            'actions' => 'view,add,edit,delete'
+        ],
+
+        'Setting' => [
+            'access' => 'Merchant',
+            'actions' => 'view,edit'
+        ],
+
+        'Shop Rule' => [
+            'access' => 'Merchant',
             'actions' => 'view,add,edit,delete'
         ],
 

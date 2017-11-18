@@ -6,6 +6,7 @@ use App\Attribute;
 use App\AttributeValue;
 use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\SearchRequest;
 use App\Http\Requests\Validations\CreateInventoryRequest;
@@ -15,6 +16,8 @@ use App\Http\Requests\Validations\CreateInventoryWithVariantRequest;
 
 class InventoryController extends Controller
 {
+    use Authorizable;
+
     private $model_name;
 
     /**

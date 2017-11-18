@@ -1,9 +1,11 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-	<a href="{{ route('admin.exim', 'email-template') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
+	@can('create', App\EmailTemplate::class)
+		<a href="{{ route('admin.exim', 'email-template') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 
-	<a href="{{ route('admin.utility.emailTemplate.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_template') }}</a>
+		<a href="{{ route('admin.setting.emailTemplate.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_template') }}</a>
+	@endcan
 @endsection
 
 @section('content')
@@ -36,11 +38,15 @@
 						<td>{{ $template->type }}</td>
 						<td>{{ $template->template_for }}</td>
 						<td class="row-options">
-							<a href="{{ route('admin.utility.emailTemplate.edit', $template->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+							@can('update', $template)
+								<a href="{{ route('admin.setting.emailTemplate.edit', $template->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+							@endcan
 
-							{!! Form::open(['route' => ['admin.utility.emailTemplate.trash', $template->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-								{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
+							@can('delete', $template)
+								{!! Form::open(['route' => ['admin.setting.emailTemplate.trash', $template->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endcan
 						</td>
 					</tr>
 					@endforeach
@@ -78,11 +84,13 @@
 						<td>{{ $trash->type }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
-							<a href="{{ route('admin.utility.emailTemplate.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+							@can('delete', $trash)
+								<a href="{{ route('admin.setting.emailTemplate.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
 
-							{!! Form::open(['route' => ['admin.utility.emailTemplate.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-								{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
+								{!! Form::open(['route' => ['admin.setting.emailTemplate.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+									{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endcan
 						</td>
 					</tr>
 					@endforeach

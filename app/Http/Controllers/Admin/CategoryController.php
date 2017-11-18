@@ -3,12 +3,14 @@
 use App\Category;
 use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateCategoryRequest;
 use App\Http\Requests\Validations\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
+    use Authorizable;
 
     private $model_name;
 

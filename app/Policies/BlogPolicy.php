@@ -12,6 +12,18 @@ class BlogPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can view Blogs.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Blog  $blog
+     * @return mixed
+     */
+    public function index(User $user)
+    {
+        return (new Authorize($user, 'view_blog'))->check();
+    }
+
+    /**
      * Determine whether the user can view the Blog.
      *
      * @param  \App\User  $user

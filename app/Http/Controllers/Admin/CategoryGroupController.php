@@ -2,12 +2,14 @@
 
 use App\CategoryGroup;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateCategoryGroupRequest;
 use App\Http\Requests\Validations\UpdateCategoryGroupRequest;
 
 class CategoryGroupController extends Controller
 {
+    use Authorizable;
 
     private $model_name;
 

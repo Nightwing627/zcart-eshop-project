@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use App\Helpers\ListHelper; // TEMPORARY
 
@@ -20,13 +21,25 @@ class InitSettings
         $system_settings = ListHelper::system_settings();
         config()->set('system_settings', $system_settings);
 
-        if(\Auth::check())
+        if(Auth::check())
         {
-            $shop_settings = ListHelper::shop_settings();
-            config()->set('shop_settings', $shop_settings);
-
+            // Set all authorization slugs into the session to check permission very fast
             $permissions = ListHelper::authorizations();
             config()->set('permissions', $permissions);
+
+            // If the user from the platform then no need to set shop settings
+            if( ! Auth::user()->isFromPlatform() )
+            {
+                $shop_settings = ListHelper::shop_settings();
+                config()->set('shop_settings', $shop_settings);
+            }
+
+            // For the authorization purpouse the Super Admin will need auth slugs to hide the merchant module on the dashboard
+            if(Auth::user()->isSuperAdmin())
+            {
+                $slugs = ListHelper::slugsWithModulAccess();
+                config()->set('authSlugs', $slugs);
+            }
         }
 
         return $next($request);

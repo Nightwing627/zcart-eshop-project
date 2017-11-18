@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,9 +25,11 @@ class Module extends Model
     {
         parent::boot();
 
-        static::addGlobalScope('NotSuperAdminModule', function (Builder $builder) {
-            $builder->where('access', '!=', 'Super Admin');
-        });
+        if( ! Auth::user()->isSuperAdmin() ){
+            static::addGlobalScope('NotSuperAdminModule', function (Builder $builder) {
+                $builder->where('access', '!=', 'Super Admin');
+            });
+        }
     }
 
     /**

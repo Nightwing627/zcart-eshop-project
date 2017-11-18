@@ -1,12 +1,16 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-    <a href="{{ route('admin.stock.inventory.index') }}" class="btn btn-new btn-flat">{{ trans('app.form.cancel_update') }}</a>
+    @can('index', App\Inventory::class)
+        <a href="{{ route('admin.stock.inventory.index') }}" class="btn btn-new btn-flat">{{ trans('app.form.cancel_update') }}</a>
+    @endcan
 @endsection
 
 @section('content')
 
-    @include('admin.partials._product_widget')
+    @can('view', $product)
+        @include('admin.partials._product_widget')
+    @endcan
 
     <div class="box">
         <div class="box-header with-border">

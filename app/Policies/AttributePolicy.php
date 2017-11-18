@@ -12,6 +12,17 @@ class AttributePolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can view attributes.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function index(User $user)
+    {
+        return (new Authorize($user, 'view_attribute'))->check();
+    }
+
+    /**
      * Determine whether the user can view the Attribute.
      *
      * @param  \App\User  $user

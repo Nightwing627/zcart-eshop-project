@@ -1,9 +1,11 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-	<a href="{{ route('admin.exim', 'taxes') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
+	@can('create', App\Tax::class)
+		<a href="{{ route('admin.exim', 'taxes') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 
-	<a href="{{ route('admin.utility.tax.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_tax') }}</a>
+		<a href="{{ route('admin.setting.tax.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_tax') }}</a>
+	@endcan
 @endsection
 
 @section('content')
@@ -39,10 +41,15 @@
 						<td>{{ ($tax->public) ? trans('app.yes') : '-' }}</td>
 						<td>{{ ($tax->active) ? trans('app.active') : trans('app.inactive') }}</td>
 						<td class="row-options">
-						<a href="{{ route('admin.utility.tax.edit', $tax->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
-						{!! Form::open(['route' => ['admin.utility.tax.trash', $tax->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-							{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
+							@can('update', $tax)
+								<a href="{{ route('admin.setting.tax.edit', $tax->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+							@endcan
+
+							@can('delete', $tax)
+								{!! Form::open(['route' => ['admin.setting.tax.trash', $tax->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endcan
 						</td>
 					</tr>
 					@endforeach
@@ -78,10 +85,13 @@
 						<td>{{ $tax->country->name }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
-							<a href="{{ route('admin.utility.tax.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
-							{!! Form::open(['route' => ['admin.utility.tax.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-								{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
+							@can('delete', $trash)
+								<a href="{{ route('admin.setting.tax.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+
+								{!! Form::open(['route' => ['admin.setting.tax.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+									{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endcan
 						</td>
 					</tr>
 					@endforeach

@@ -2,12 +2,15 @@
 
 use App\GiftCard;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateGiftCardRequest;
 use App\Http\Requests\Validations\UpdateGiftCardRequest;
 
 class GiftCardController extends Controller
 {
+    use Authorizable;
+
     private $model_name;
 
     /**

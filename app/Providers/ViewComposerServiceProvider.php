@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Cart;
 use App\Inventory;
 use App\Helpers\ListHelper;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class ViewComposerServiceProvider extends ServiceProvider
@@ -79,7 +80,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeRoleForm()
     {
-        view()->composer(
+        View::composer(
 
                 'admin.role._form',
 
@@ -94,7 +95,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeUserForm()
     {
-        view()->composer(
+        View::composer(
 
                 'admin.user._form',
 
@@ -109,7 +110,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeAttributeForm()
     {
-        view()->composer(
+        View::composer(
 
                 'admin.attribute._form',
 
@@ -124,7 +125,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeAttributeValueForm()
     {
-        view()->composer(
+        View::composer(
 
                 'admin.attribute-value._form',
 
@@ -139,7 +140,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeCategoryForm()
     {
-        view()->composer(
+        View::composer(
 
                 'admin.category._form',
 
@@ -154,7 +155,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeCategorySubGroupForm()
     {
-        view()->composer(
+        View::composer(
 
                 'admin.category._formSubGrp',
 
@@ -169,13 +170,13 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeShopForm()
     {
-        view()->composer(
+        View::composer(
 
-                'admin.shop._form',
+                'admin.shop._create',
 
                 function($view)
                 {
-                    $view->with('users', ListHelper::merchants());
+                    $view->with('merchants', ListHelper::new_merchants());
                 });
     }
 
@@ -184,7 +185,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeProductForm()
     {
-        view()->composer(
+        View::composer(
 
                 'admin.product._form',
 
@@ -207,7 +208,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeInventoryForm()
     {
-        view()->composer(
+        View::composer(
 
                 'admin.inventory._form',
 
@@ -232,7 +233,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeInventoryVariantForm()
     {
-        view()->composer(
+        View::composer(
 
                 'admin.inventory._formWithVariant',
 
@@ -255,7 +256,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeSetVariantForm()
     {
-        view()->composer(
+        View::composer(
 
                 'admin.inventory._set_variant',
 
@@ -270,7 +271,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeTaxForm()
     {
-        view()->composer(
+        View::composer(
 
             'admin.tax._form',
 
@@ -294,7 +295,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeOrderStatusForm()
     {
-        view()->composer(
+        View::composer(
 
                 'admin.order-status._form',
 
@@ -309,7 +310,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composePaymentStatusForm()
     {
-        view()->composer(
+        View::composer(
 
                 'admin.payment-status._form',
 
@@ -324,7 +325,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeManufacturerForm()
     {
-        view()->composer(
+        View::composer(
 
             'admin.manufacturer._form',
 
@@ -340,7 +341,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeWarehouseForm()
     {
-        view()->composer(
+        View::composer(
 
             'admin.warehouse._form',
 
@@ -356,7 +357,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeCarrierForm()
     {
-        view()->composer(
+        View::composer(
 
             'admin.carrier._form',
 
@@ -372,7 +373,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeAddressForm()
     {
-        view()->composer(
+        View::composer(
 
             'address._form',
 
@@ -405,7 +406,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeSearchFilterForm()
     {
-        view()->composer(
+        View::composer(
 
             'admin.partials._filter',
 
@@ -425,7 +426,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeCreateOrderForm()
     {
-        view()->composer(
+        View::composer(
 
             'admin.order.create',
 
@@ -484,7 +485,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeCouponForm()
     {
-        view()->composer(
+        View::composer(
 
             'admin.coupon._form',
 
@@ -500,7 +501,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     private function composeBlogForm()
     {
-        view()->composer(
+        View::composer(
 
             'admin.blog._form',
 

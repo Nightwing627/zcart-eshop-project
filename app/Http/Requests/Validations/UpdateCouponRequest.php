@@ -38,7 +38,6 @@ class UpdateCouponRequest extends Request
            'quantity_per_customer' => 'nullable|integer',
            'starting_time' => 'required|nullable|date|after_or_equal:now',
            'ending_time' => 'required|nullable|date|after:starting_time',
-           // 'customers' => 'nullable|required_with:limited',
            'active' => 'required|boolean',
         ];
     }

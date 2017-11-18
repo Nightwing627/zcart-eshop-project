@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Setting;
 use App\Http\Requests;
 // use App\Helpers\ImageHelper;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\UpdateSettingRequest;
 
 class SettingController extends Controller
 {
+    use Authorizable;
 
     private $model_name;
 

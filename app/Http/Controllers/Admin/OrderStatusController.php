@@ -2,6 +2,7 @@
 
 use App\OrderStatus;
 use App\EmailTemplate;
+use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateOrderStatusRequest;
@@ -9,6 +10,7 @@ use App\Http\Requests\Validations\UpdateOrderStatusRequest;
 
 class OrderStatusController extends Controller
 {
+    use Authorizable;
 
     private $model_name;
 

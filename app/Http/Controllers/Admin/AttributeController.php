@@ -55,7 +55,7 @@ class AttributeController extends Controller
     {
         $attribute = new Attribute($request->all());
 
-        $attribute->save()
+        $attribute->save();
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }

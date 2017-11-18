@@ -4,12 +4,14 @@ use App\Tag;
 use App\Product;
 use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateProductRequest;
 use App\Http\Requests\Validations\UpdateProductRequest;
 
 class ProductController extends Controller
 {
+    use Authorizable;
 
     private $model_name;
 

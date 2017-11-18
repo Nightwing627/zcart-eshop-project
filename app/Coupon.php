@@ -162,6 +162,16 @@ class Coupon extends Model
     }
 
     /**
+     * Scope a query to only include valid records.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeValid($query)
+    {
+        return $query->where('active', 1)->where('starting_time', '<', Carbon::now())->where('ending_time', '>', Carbon::now());
+    }
+
+    /**
      * Scope a query to only include records from the users shop.
      *
      * @return \Illuminate\Database\Eloquent\Builder

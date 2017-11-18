@@ -23,13 +23,10 @@ class CreateGiftCardRequest extends Request
      */
     public function rules()
     {
-        $shop_id = Request::user()->shop_id; //Get current user's shop_id
-        Request::merge( array( 'shop_id' => $shop_id ) ); //Set shop_id
-
         return [
            'name' => 'required',
-           'pin_code' => 'required|composite_unique:gift_cards,shop_id:'.$shop_id,
-           'serial_number' => 'required|composite_unique:gift_cards,shop_id:'.$shop_id,
+           'pin_code' => 'required|unique:gift_cards',
+           'serial_number' => 'required|unique:gift_cards',
            'value' => 'required|numeric',
            'activation_time' => 'required|nullable|date|after_or_equal:now',
            'expiry_time' => 'required|nullable|date|after:starting_time',

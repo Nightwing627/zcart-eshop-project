@@ -28,21 +28,27 @@
                         <td>{{ get_formated_currency($cart_list->grand_total) }}</td>
                         <td class="row-options">
                             <div class="btn-group">
-                                {!! Form::open(['route' => ['admin.order.order.create'], 'method' => 'get', 'style' => 'display:inline;']) !!}
-                                    {{ Form::hidden('customer_id',$cart_list->customer->id) }}
-                                    {{ Form::hidden('cart_id',$cart_list->id) }}
-                                    <button type="submit" class="btn btn-sm btn-default">
-                                        <i data-toggle="tooltip" data-placement="top" title="{{ trans('app.use_this_cart') }}" class="fa fa-check"></i> {{ trans('app.use') }}
-                                    </button>
-                                {!! Form::close() !!}
-                                <a href="{{ Route('admin.order.cart.show', $cart_list->id) }}" class="btn btn-sm btn-default" data-target="myDynamicModal" data-toggle="modal">
-                                    <i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i>
-                                </a>
-                                {!! Form::open(['route' => ['admin.order.cart.trash', $cart_list->id], 'method' => 'delete', 'style' => 'display:inline;']) !!}
-                                    <button type="submit" class="btn btn-sm btn-default confirm ajax-silent">
-                                        <i data-toggle="tooltip" data-placement="top" title="{{ trans('app.trash') }}" class="fa fa-trash-o"></i>
-                                    </button>
-                                {!! Form::close() !!}
+                                @if(Gate::allows('create', App\Order::class) || Gate::allows('update', $cart))
+                                    {!! Form::open(['route' => ['admin.order.order.create'], 'method' => 'get', 'style' => 'display:inline;']) !!}
+                                        {{ Form::hidden('customer_id',$cart_list->customer->id) }}
+                                        {{ Form::hidden('cart_id',$cart_list->id) }}
+                                        <button type="submit" class="btn btn-sm btn-default">
+                                            <i data-toggle="tooltip" data-placement="top" title="{{ trans('app.use_this_cart') }}" class="fa fa-check"></i> {{ trans('app.use') }}
+                                        </button>
+                                    {!! Form::close() !!}
+                                @endif
+                                @can('view', $cart)
+                                    <a href="{{ Route('admin.order.cart.show', $cart_list->id) }}" class="btn btn-sm btn-default" data-target="myDynamicModal" data-toggle="modal">
+                                        <i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i>
+                                    </a>
+                                @endcan
+                                @can('delete', $cart)
+                                    {!! Form::open(['route' => ['admin.order.cart.trash', $cart_list->id], 'method' => 'delete', 'style' => 'display:inline;']) !!}
+                                        <button type="submit" class="btn btn-sm btn-default confirm ajax-silent">
+                                            <i data-toggle="tooltip" data-placement="top" title="{{ trans('app.trash') }}" class="fa fa-trash-o"></i>
+                                        </button>
+                                    {!! Form::close() !!}
+                                @endcan
                             </div>
                         </td>
                     </tr>

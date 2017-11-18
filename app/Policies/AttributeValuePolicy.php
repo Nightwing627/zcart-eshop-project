@@ -11,6 +11,17 @@ class AttributeValuePolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can view attributeValues.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function index(User $user)
+    {
+        return true;
+    }
+
+    /**
      * Determine whether the user can view the attributeValue.
      *
      * @param  \App\User  $user

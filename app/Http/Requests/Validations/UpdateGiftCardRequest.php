@@ -23,14 +23,12 @@ class UpdateGiftCardRequest extends Request
      */
     public function rules()
     {
-        $shop_id = Request::user()->shop_id; //Get current user's shop_id
         $id = Request::segment(count(Request::segments())); //Current model ID
-        Request::merge( array( 'shop_id' => $shop_id ) ); //Set shop_id
 
         return [
            'name' => 'required',
-           'pin_code' => 'required|composite_unique:gift_cards,shop_id:'.$shop_id.', '.$id,
-           'serial_number' => 'required|composite_unique:gift_cards,shop_id:'.$shop_id.', '.$id,
+           'pin_code' => 'required|composite_unique:gift_cards:'.$id,
+           'serial_number' => 'required|composite_unique:gift_cards:'.$id,
            'value' => 'required|numeric',
            'activation_time' => 'required|nullable|date|after_or_equal:now',
            'expiry_time' => 'required|nullable|date|after:starting_time',

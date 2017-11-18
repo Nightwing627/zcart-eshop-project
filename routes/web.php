@@ -80,18 +80,17 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 	// Utility Routs for Admin/Merchant
 	Route::group(['as' => 'utility.', 'prefix' => 'utility'], function()
 	{
-		// include('admin/UserRole.php');
-		include('admin/Tax.php');
-		include('admin/EmailTemplates.php');
 		include('admin/OrderStatuses.php');
 		include('admin/PaymentStatuses.php');
-		include('admin/PaymentMethods.php');
 	});
 
 	// Settings Routs for Admin/Merchant
 	Route::group(['as' => 'setting.', 'prefix' => 'setting'], function()
 	{
 		include('admin/UserRole.php');
+		include('admin/Tax.php');
+		include('admin/EmailTemplates.php');
+		include('admin/PaymentMethods.php');
 	});
 
 	// Promotions Routs for Admin

@@ -15,7 +15,6 @@ class CreateGiftCardsTable extends Migration
     {
         Schema::create('gift_cards', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('shop_id')->unsigned()->nullable();
             $table->bigInteger('customer_id')->unsigned()->nullable();
             $table->text('name')->nullable();
             $table->text('description')->nullable();

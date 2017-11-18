@@ -11,7 +11,7 @@ $factory->define(App\Role::class, function (Faker $faker) {
 
 $factory->define(App\User::class, function (Faker $faker) {
     return [
-        'shop_id' => rand(1, 6),
+        'shop_id' => rand(0,1) == 1 ? rand(1, 6) : Null,
         'role_id' => $faker->randomElement(\DB::table('roles')->where('id', '!=', 1)->pluck('id')->toArray()),
     	'nice_name' => $faker->lastName,
         'name' => $faker->name,

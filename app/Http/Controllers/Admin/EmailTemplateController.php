@@ -2,12 +2,14 @@
 
 use App\EmailTemplate;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateEmailTemplateRequest;
 use App\Http\Requests\Validations\UpdateEmailTemplateRequest;
 
 class EmailTemplateController extends Controller
 {
+    use Authorizable;
 
     private $model_name;
 

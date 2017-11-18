@@ -15,7 +15,7 @@
 					</tr>
 		            <tr>
 		            	<th class="text-right">{{ trans('app.type') }}: </th>
-		            	<td style="width: 75%;">{{ ($role->public) ? trans('app.public') : trans('app.restricted') }}</td>
+		            	<td style="width: 75%;">{{ ($role->public) ? trans('app.merchant') : trans('app.platform') }}</td>
 		            </tr>
 					<tr>
 						<th class="text-right">{{ trans('app.role_level') }}:</th>

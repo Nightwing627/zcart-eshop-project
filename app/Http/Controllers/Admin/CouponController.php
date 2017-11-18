@@ -2,12 +2,15 @@
 
 use App\Coupon;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateCouponRequest;
 use App\Http\Requests\Validations\UpdateCouponRequest;
 
 class CouponController extends Controller
 {
+    use Authorizable;
+
     private $model_name;
 
     /**

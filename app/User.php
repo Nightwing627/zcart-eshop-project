@@ -40,17 +40,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-                        'shop_id',
-                        'role_id',
-                        'name',
-                        'nice_name',
-                        'email',
-                        'password',
-                        'dob',
-                        'bio',
-                        'sex',
-                        'active',
-                        ];
+                    'shop_id',
+                    'role_id',
+                    'name',
+                    'nice_name',
+                    'email',
+                    'password',
+                    'dob',
+                    'bio',
+                    'sex',
+                    'active',
+                ];
 
     /**
      * Get all of the country for the country.
@@ -109,26 +109,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Set password for the user.
-     *
-     * @return array
-     */
-    public function setPasswordAttribute($password)
-    {
-        $this->attributes['password'] = bcrypt($password);
-    }
-
-    /**
-     * Get role list for the user.
-     *
-     * @return array
-     */
-    public function getRoleListAttribute()
-    {
-        if (count($this->roles)) return $this->roles->pluck('id')->toArray();
-    }
-
-    /**
      * Check if the user is the super admin
      *
      * @return bool
@@ -151,6 +131,21 @@ class User extends Authenticatable
     public function isFromPlatform()
     {
         if(! $this->shop_id )
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if the user is a Merchant
+     *
+     * @return bool
+     */
+    public function isMerchant()
+    {
+        if($this->role_id === 3)
         {
             return true;
         }
@@ -188,12 +183,35 @@ class User extends Authenticatable
         return $query->where('shop_id', Auth::user()->shop_id);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Access Control Level Methods
-    |--------------------------------------------------------------------------
-    */
+    /**
+     * Get role list for the user.
+     *
+     * @return array
+     */
+    public function getRoleListAttribute()
+    {
+        if (count($this->roles)) return $this->roles->pluck('id')->toArray();
+    }
 
+    /**
+     * Set password for the user.
+     *
+     * @return array
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
+    /**
+     * Get merchant id for the user.
+     *
+     * @return mix
+     */
+    public function merchantId()
+    {
+        return $this->shop_id;
+    }
 
 
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use App\Scopes\RoleScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,7 +20,9 @@ class Role extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new RoleScope);
+        if( ! Auth::user()->isSuperAdmin() ){
+            static::addGlobalScope(new RoleScope);
+        }
     }
 
     /**

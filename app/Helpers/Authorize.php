@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Auth;
+use App\Permission;
 
 /**
 * Check the action athentications
@@ -22,17 +23,52 @@ class Authorize
 		$this->slug = $slug;
 	}
 
+	/**
+	 * Check authorization
+	 *
+	 * @return boolean
+	 */
 	public function check()
 	{
-		if(
-			Auth::user()->isSuperAdmin() ||
-			isset($this->model->user_id) &&
-			$this->model->user_id == $this->user->id
-		)
+		// Auth::loginUsingId(1, true);
+
+		if($this->isExceptional())
 			return true;
 
-        $permissions = config('permissions') ?: $this->user->role->permissions()->pluck('slug')->toArray();
+        return in_array($this->slug, $this->permissionSlugs());
+	}
 
-        return in_array($this->slug, $permissions);
+	/**
+	 * Some case in special conditions you may allow all actions for the user
+	 *
+	 * @return boolean
+	 */
+	private function isExceptional()
+	{
+		// The Super admin will not required to check authorization.
+		// Just avoid the merchant modules to keep the dashboard clean
+		if(Auth::user()->isSuperAdmin())
+			return config('authSlugs')[$this->slug] != 'Merchant';
+
+		// The content creator always have the full permission
+		if(isset($this->model->user_id) && $this->model->user_id == $this->user->id)
+			return true;
+
+		return false;
+	}
+
+	/**
+	 * If the logged in user is the same user to check the authorization,
+	 * then return permission from config veriable that sets by the initSettings middleware.
+	 * Otherwise get the permission from the database.
+	 *
+	 * @return arr
+	 */
+	private function permissionSlugs()
+	{
+		if( Auth::user()->id == $this->user->id )
+	        return config('permissions');
+
+        return $this->user->role->permissions()->pluck('slug')->toArray();
 	}
 }

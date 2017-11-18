@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Tax;
 use App\Country;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateTaxRequest;
 use App\Http\Requests\Validations\UpdateTaxRequest;
 
 class TaxController extends Controller
 {
+    use Authorizable;
+
     private $model_name;
 
     /**

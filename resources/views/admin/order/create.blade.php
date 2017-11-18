@@ -1,9 +1,13 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
+  @can('create', App\Order::class)
     <a href="{{ route('admin.order.order.searchCutomer') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
+  @endcan
 
+  @can('index', App\Order::class)
     <a href="{{ route('admin.order.order.index') }}" class="btn btn-new btn-flat">{{ trans('app.cancel') }}</a>
+  @endcan
 @endsection
 
 @section('content')
@@ -12,8 +16,9 @@
 
     @if(count($cart_lists))
 
+      @can('index', App\Cart::class)
         @include('admin.partials._cart_list')
-
+      @endcan
     @endif
 
     {!! Form::open(['route' => 'admin.order.order.store', 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
@@ -182,23 +187,24 @@
                 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>
 
                 <div class="box-tools pull-right">
+                  @if(Gate::allows('create', App\Cart::class) || Gate::allows('create', App\Order::class) || Gate::allows('update', App\Cart::class))
                     <button onClick="saveTheCart()" name='action' value="1" class='btn btn-flat btn-lg btn-default' >
                         <i class="fa fa-save"></i>
                         @if(isset($order_cart))
                             {{ trans('app.update_the_order') }}
                         @elseif(isset($cart))
-                            {{ trans('app.update_n_back') }}
+                          {{ trans('app.update_n_back') }}
                         @else
-                            {{ trans('app.save_n_back') }}
+                          {{ trans('app.save_n_back') }}
                         @endif
                     </button>
+                  @endif
 
-                    @unless(isset($order_cart))
-                        <button name='action' type="submit" class='btn btn-flat btn-lg btn-new' >
-                            {{ trans('app.place_order') }}
-                        </button>
-                    @endunless
-
+                  @if( ! isset($order_cart) && Gate::allows('create', App\Order::class))
+                    <button name='action' type="submit" class='btn btn-flat btn-lg btn-new' >
+                      {{ trans('app.place_order') }}
+                    </button>
+                  @endif
                 </div>
             </div> <!-- /.box-body -->
         </div> <!-- /.box -->

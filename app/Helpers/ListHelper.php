@@ -5,6 +5,7 @@ use Auth;
 use App\User;
 use App\Module;
 use App\Attribute;
+use App\Permission;
 
 /**
 * This is a helper class to process,upload and remove images from different models
@@ -30,7 +31,7 @@ class ListHelper
      */
     public static function shop_settings($shop = null)
     {
-        $shop = $shop ?: Auth::user()->shop_id; //Get current user's shop_id
+        $shop = $shop ?: Auth::user()->merchantId(); //Get current user's shop_id
         return (array) \DB::table('settings')->where('shop_id', $shop)->first();
     }
 
@@ -43,16 +44,14 @@ class ListHelper
      */
     public static function roles()
     {
-        $shop = Auth::user()->shop_id;
-
         $roles = \DB::table('roles')
                 ->where('id', '!=', 1)
                 ->where('deleted_at', Null);
 
-        if ($shop)
-            $roles->where('public', 1)->orWhere('shop_id', $shop);
+        if (Auth::user()->isFromPlatform())
+            $roles->where('public', '!=', 1);
         else
-            $roles->where('public', Null);
+            $roles->where('public', 1)->orWhere('shop_id', Auth::user()->merchantId());
 
         return $roles->orderBy('name', 'asc')->pluck('name', 'id');
     }
@@ -121,17 +120,27 @@ class ListHelper
      */
     public static function permissions()
     {
-        return \DB::table('permissions')->orderBy('module_id', 'asc')->pluck('name', 'id');
+        return Permission::orderBy('module_id', 'asc')->pluck('name', 'id');
     }
 
     /**
-     * Get modulesWithPermissions list for form dropdown.
+     * Get modulesWithPermissions list.
      *
      * @return array
      */
     public static function modulesWithPermissions()
     {
         return Module::active()->with('permissions')->orderBy('name', 'asc')->get();
+    }
+
+    /**
+     * Get array of slugsWithModulAccess list.
+     *
+     * @return array
+     */
+    public static function slugsWithModulAccess()
+    {
+        return Permission::with('module')->get()->pluck('module.access', 'slug')->toArray();
     }
 
     /**
@@ -145,7 +154,7 @@ class ListHelper
     }
 
     /**
-     * Get permissions for the user.
+     * Get permission slugs for the user role.
      *
      * @return array
      */
@@ -162,7 +171,7 @@ class ListHelper
     }
 
     /**
-     * Get merchants list for form dropdown.
+     * Get all merchants list for form dropdown.
      *
      * @return array
      */
@@ -176,13 +185,28 @@ class ListHelper
     }
 
     /**
+     * Get new merchants list for form dropdown.
+     *
+     * @return array
+     */
+    public static function new_merchants()
+    {
+        return \DB::table('users')
+                ->where('shop_id', Null)
+                ->where('role_id', 3)
+                ->where('deleted_at', Null)
+                ->orderBy('name', 'asc')
+                ->pluck('name', 'id');
+    }
+
+    /**
      * Get users list under the shop for form dropdown.
      *
      * @return array
      */
     public static function staffs($shop = null)
     {
-        $shop = $shop ?: Auth::user()->shop_id; //Get current user's shop_id
+        $shop = $shop ?: Auth::user()->merchantId(); //Get current user's shop_id
 
         return \DB::table('users')->where('shop_id', $shop)->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
     }
@@ -194,7 +218,7 @@ class ListHelper
      */
     public static function suppliers()
     {
-        return \DB::table('suppliers')->where('shop_id', Auth::user()->shop_id)->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('suppliers')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -204,7 +228,7 @@ class ListHelper
      */
     public static function warehouses()
     {
-        return \DB::table('warehouses')->where('shop_id', Auth::user()->shop_id)->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('warehouses')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -229,7 +253,7 @@ class ListHelper
                 ->where('deleted_at', Null)
                 ->where( function ($query) {
                     $query->where('public', 1)
-                    ->orWhere('shop_id', Auth::user()->shop_id);
+                    ->orWhere('shop_id', Auth::user()->merchantId());
                 })
                 ->orderBy('name', 'asc')
                 ->pluck('name', 'id');
@@ -292,7 +316,7 @@ class ListHelper
      */
     public static function packagings()
     {
-        return \DB::table('packagings')->where('shop_id', Auth::user()->shop_id)->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('packagings')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**

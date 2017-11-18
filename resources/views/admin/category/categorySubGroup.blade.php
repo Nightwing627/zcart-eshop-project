@@ -1,7 +1,9 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-	<a href="{{ route('admin.catalog.categorySubGroup.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_category_sub_group') }} </a>
+	@can('create', App\CategorySubGroup::class)
+		<a href="{{ route('admin.catalog.categorySubGroup.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_category_sub_group') }} </a>
+	@endcan
 @endsection
 
 @section('content')
@@ -35,11 +37,15 @@
 			          <td>{{ $categorySubGrp->group->name or ''}}</td>
 			          <td>{{ ($categorySubGrp->active) ? trans('app.active') : trans('app.inactive') }}</td>
 			          <td class="row-options">
-	                    <a href="{{ route('admin.catalog.categorySubGroup.edit', $categorySubGrp->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="Edit" class="fa fa-edit"></i></a>&nbsp;
+						@can('update', $categorySubGrp)
+	                	    <a href="{{ route('admin.catalog.categorySubGroup.edit', $categorySubGrp->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="Edit" class="fa fa-edit"></i></a>&nbsp;
+						@endcan
 
-	                    {!! Form::open(['route' => ['admin.catalog.categorySubGroup.trash', $categorySubGrp->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-	                        {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => 'Trash', 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-						{!! Form::close() !!}
+						@can('delete', $categorySubGrp)
+		                    {!! Form::open(['route' => ['admin.catalog.categorySubGroup.trash', $categorySubGrp->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+		                        {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => 'Trash', 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+							{!! Form::close() !!}
+						@endcan
 			          </td>
 			        </tr>
 		        @endforeach
@@ -71,11 +77,13 @@
 			          <td>{{ $trash->name }}</td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 			          <td class="row-options">
-	                    <a href="{{ route('admin.catalog.categorySubGroup.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="Restore" class="fa fa-database"></i></a>&nbsp;
+						@can('delete', $trash)
+	                	    <a href="{{ route('admin.catalog.categorySubGroup.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="Restore" class="fa fa-database"></i></a>&nbsp;
 
-	                    {!! Form::open(['route' => ['admin.catalog.categorySubGroup.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-	                        {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => 'Delete Permanently', 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-						{!! Form::close() !!}
+		                    {!! Form::open(['route' => ['admin.catalog.categorySubGroup.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+		                        {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => 'Delete Permanently', 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+							{!! Form::close() !!}
+						@endcan
 			          </td>
 			        </tr>
 		        @endforeach

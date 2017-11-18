@@ -3,12 +3,14 @@
 use App\PaymentMethod;
 use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreatePaymentMethodRequest;
 use App\Http\Requests\Validations\UpdatePaymentMethodRequest;
 
 class PaymentMethodController extends Controller
 {
+    use Authorizable;
 
     private $model_name;
 

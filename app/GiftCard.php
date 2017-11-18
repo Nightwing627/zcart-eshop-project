@@ -42,7 +42,6 @@ class GiftCard extends Model
      * @var array
      */
     protected $fillable = [
-                    'shop_id',
                     'name',
                     'description',
                     'serial_number',
@@ -55,14 +54,6 @@ class GiftCard extends Model
                     'exclude_tax_n_shipping',
                     'active',
                  ];
-
-    /**
-     * Get the Shop associated with the packaging.
-     */
-    public function shop()
-    {
-        return $this->belongsTo('App\Shop');
-    }
 
     /**
      * Get the customer for the GiftCard.
@@ -113,6 +104,16 @@ class GiftCard extends Model
     }
 
     /**
+     * Scope a query to only include valid records.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeValid($query)
+    {
+        return $query->where('active', 1)->where('activation_time', '<', Carbon::now())->where('expiry_time', '>', Carbon::now());
+    }
+
+    /**
      * Scope a query to only include active records.
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -120,15 +121,5 @@ class GiftCard extends Model
     public function scopeActive($query)
     {
         return $query->where('active', 1);
-    }
-
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->shop_id);
     }
 }

@@ -4,12 +4,14 @@ use App\Packaging;
 use App\Http\Requests;
 use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreatePackagingRequest;
 use App\Http\Requests\Validations\UpdatePackagingRequest;
 
 class PackagingController extends Controller
 {
+    use Authorizable;
 
     private $model_name;
 

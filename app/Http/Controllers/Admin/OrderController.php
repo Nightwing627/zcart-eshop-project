@@ -6,6 +6,7 @@ use App\Carrier;
 use App\Customer;
 use App\Inventory;
 use App\Packaging;
+use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\SearchRequest;
@@ -14,6 +15,7 @@ use App\Http\Requests\Validations\UpdateOrderRequest;
 
 class OrderController extends Controller
 {
+    use Authorizable;
 
     private $model_name;
 

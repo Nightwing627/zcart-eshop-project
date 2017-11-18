@@ -1,11 +1,16 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-    <a href="{{ route('admin.stock.inventory.index') }}" class="btn btn-new btn-flat">{{ trans('app.back_to_inventory') }}</a>
+    @can('index', App\Inventory::class)
+        <a href="{{ route('admin.stock.inventory.index') }}" class="btn btn-new btn-flat">{{ trans('app.back_to_inventory') }}</a>
+    @endcan
+    @can('create', App\Inventory::class)
+        <a href="{{ route('admin.stock.inventory.search') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
+    @endcan
 
-    <a href="{{ route('admin.stock.inventory.search') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
-
-    <a href="{{ route('admin.catalog.product.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_product') }}</a>
+    @can('create', App\Product::class)
+        <a href="{{ route('admin.catalog.product.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_product') }}</a>
+    @endcan
 @endsection
 
 @section('content')
@@ -22,19 +27,13 @@
         </div> <!-- /.box-header -->
 
         <div class="box-body">
-
             @forelse($products as $product )
-
                 <div class="admin-user-widget">
-
                     <span class="admin-user-widget-img">
-
                         <img src="{{ get_image_src($product->id, 'products', '150x150') }}" class="thumbnail" alt="{{ trans('app.image') }}">
-
                     </span>
 
                     <div class="admin-user-widget-content">
-
                         <span class="admin-user-widget-title">
                             {{ $product->name }}
                         </span>
@@ -48,24 +47,22 @@
                             {{ trans('app.brand').': '.$product->brand }}
                         </span>
 
-                        <a href="{{ route('admin.catalog.product.show', $product->id) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ trans('app.view_detail') }}</a>
+                        @can('view', $product)
+                            <a href="{{ route('admin.catalog.product.show', $product->id) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ trans('app.view_detail') }}</a>
+                        @endcan
 
                         <span class="option-btn" style=" margin-top: -50px;">
-
-                            <a href="{{ route('admin.stock.inventory.setVariant', $product->id) }}" data-target="myDynamicModal" data-toggle="modal" class="btn bg-olive btn-flat">{{ trans('app.add_to_inventory_with_variant') }}</a>
+                            @if($product->has_variant)
+                                <a href="{{ route('admin.stock.inventory.setVariant', $product->id) }}" data-target="myDynamicModal" data-toggle="modal" class="btn bg-olive btn-flat">{{ trans('app.add_to_inventory_with_variant') }}</a>
+                            @endif
 
                             <a href="{{ route('admin.stock.inventory.add', $product->id) }}" class="btn bg-purple btn-flat">{{ trans('app.add_to_inventory') }}</a>
-
                         </span>
-
                     </div>            <!-- /.admin-user-widget-content -->
-
                 </div>          <!-- /.admin-user-widget -->
-
             @empty
                 <p class="lead"><i class="fa fa-warning"></i> {{ trans('help.no_product_found') }}</p>
             @endforelse
-
         </div> <!-- /.box-body -->
     </div> <!-- /.box -->
 @endsection

@@ -14,16 +14,6 @@
 							<span class="label label-primary">{{ get_formated_currency($giftCard->value) }}</span>
 						</td>
 					</tr>
-		            @if($giftCard->shop_id)
-					<tr>
-						<th class="text-right">{{ trans('app.merchant') }}:</th>
-						<td style="width: 65%;">
-							<span class="label label-outline">
-		                		{{ $giftCard->shop->name }}
-							</span>
-						</td>
-					</tr>
-					@endif
 	                <tr>
 	                	<th class="text-right">{{ trans('app.status') }}: </th>
 	                	<td style="width: 65%;">

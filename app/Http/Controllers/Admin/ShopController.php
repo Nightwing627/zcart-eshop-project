@@ -6,12 +6,15 @@ use App\Shop;
 use App\Address;
 use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateShopRequest;
 use App\Http\Requests\Validations\UpdateShopRequest;
 
 class ShopController extends Controller
 {
+    use Authorizable;
+
     private $model_name;
 
     /**
@@ -118,14 +121,14 @@ class ShopController extends Controller
     {
         $shop->update($request->all());
 
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'shops', $shop->id);
-        }
-
         if ($request->input('delete_image') == 1)
         {
             ImageHelper::RemoveImages('shops', $shop->id);
+        }
+
+        if ($request->hasFile('image'))
+        {
+            ImageHelper::UploadImages($request, 'shops', $shop->id);
         }
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
