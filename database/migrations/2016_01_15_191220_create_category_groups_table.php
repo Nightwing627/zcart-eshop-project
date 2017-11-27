@@ -29,7 +29,7 @@ class CreateCategoryGroupsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('category_group_id')->references('id')->on('category_groups');
+            $table->foreign('category_group_id')->references('id')->on('category_groups')->onDelete('cascade');
         });
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
@@ -43,18 +43,20 @@ class CreateCategoryGroupsTable extends Migration
 
         Schema::create('category_category_sub_group', function (Blueprint $table) {
             $table->integer('category_id')->unsigned()->index();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->integer('category_sub_group_id')->unsigned()->index();
-            $table->foreign('category_sub_group_id')->references('id')->on('category_sub_groups')->onDelete('cascade');
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_sub_group_id')->references('id')->on('category_sub_groups')->onDelete('cascade');
         });
 
         Schema::create('category_product', function (Blueprint $table) {
             $table->integer('category_id')->unsigned()->index();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->bigInteger('product_id')->unsigned()->index();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

@@ -1,13 +1,9 @@
-<?php
+<?php namespace App\Http\Controllers\Admin;
 
-namespace App\Http\Controllers\Admin;
-
-use App\Address;
-use App\Supplier;
-use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Repositories\Supplier\SupplierRepository;
 use App\Http\Requests\Validations\CreateSupplierRequest;
 use App\Http\Requests\Validations\UpdateSupplierRequest;
 
@@ -17,12 +13,16 @@ class SupplierController extends Controller
 
     private $model_name;
 
+    private $supplier;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(SupplierRepository $supplier)
     {
         $this->model_name = trans('app.model.supplier');
+
+        $this->supplier = $supplier;
     }
 
     /**
@@ -32,11 +32,11 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $data['suppliers'] = Supplier::mine()->with('shop', 'primaryAddress')->get();
+        $suppliers = $this->supplier->all();
 
-        $data['trashes'] = Supplier::mine()->onlyTrashed()->get();
+        $trashes = $this->supplier->trashOnly();
 
-        return view('admin.supplier.index', $data);
+        return view('admin.supplier.index', compact('suppliers', 'trashes'));
     }
 
     /**
@@ -57,18 +57,7 @@ class SupplierController extends Controller
      */
     public function store(CreateSupplierRequest $request)
     {
-        $supplier = new Supplier($request->all());
-
-        $supplier->save();
-
-        $address = new Address($request->all());
-
-        $supplier->addresses()->save($address);
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'suppliers', $supplier->id);
-        }
+        $this->supplier->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -79,19 +68,23 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function show($id)
     {
+        $supplier = $this->supplier->find($id);
+
         return view('admin.supplier._show', compact('supplier'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Supplier $supplier
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supplier $supplier)
+    public function edit($id)
     {
+        $supplier = $this->supplier->find($id);
+
         return view('admin.supplier._edit', compact('supplier'));
     }
 
@@ -99,22 +92,12 @@ class SupplierController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Supplier $supplier
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSupplierRequest $request, Supplier $supplier)
+    public function update(UpdateSupplierRequest $request, $id)
     {
-        $supplier->update($request->all());
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'suppliers', $supplier->id);
-        }
-
-        if ($request->input('delete_image') == 1)
-        {
-            ImageHelper::RemoveImages('suppliers', $supplier->id);
-        }
+        $this->supplier->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -123,12 +106,12 @@ class SupplierController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Supplier $supplier
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Supplier $supplier)
+    public function trash(Request $request, $id)
     {
-        $supplier->delete();
+        $this->supplier->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -142,7 +125,7 @@ class SupplierController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Supplier::onlyTrashed()->where('id', $id)->restore();
+        $this->supplier->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -156,13 +139,7 @@ class SupplierController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $supplier = Supplier::onlyTrashed()->find($id);
-
-        $supplier->addresses()->delete();
-
-        $supplier->forceDelete();
-
-        ImageHelper::RemoveImages('suppliers', $id);
+        $this->supplier->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

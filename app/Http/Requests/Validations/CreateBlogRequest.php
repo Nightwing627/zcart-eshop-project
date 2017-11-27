@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Validations;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Request;
 
-class CreateBlogRequest extends FormRequest
+class CreateBlogRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,6 +23,8 @@ class CreateBlogRequest extends FormRequest
      */
     public function rules()
     {
+        Request::merge(['user_id' => Auth()->user()->id]); //Set user_id
+
         return [
            'title' => 'required',
            'excerpt' => 'required|max:555',

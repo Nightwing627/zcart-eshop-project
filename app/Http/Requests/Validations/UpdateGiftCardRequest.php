@@ -27,8 +27,8 @@ class UpdateGiftCardRequest extends Request
 
         return [
            'name' => 'required',
-           'pin_code' => 'required|composite_unique:gift_cards:'.$id,
-           'serial_number' => 'required|composite_unique:gift_cards:'.$id,
+           'pin_code' => 'required|unique:gift_cards,pin_code,'.$id,
+           'serial_number' => 'required|unique:gift_cards,serial_number,'.$id,
            'value' => 'required|numeric',
            'activation_time' => 'required|nullable|date|after_or_equal:now',
            'expiry_time' => 'required|nullable|date|after:starting_time',

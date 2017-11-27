@@ -8,49 +8,51 @@
             <i class="fa fa-dashboard"></i> <span>{{ trans('nav.dashboard') }}</span>
           </a>
         </li>
-        <li class="treeview {{ Request::is('admin/catalog*') ? 'active' : '' }}">
-          <a href="#">
-            <i class="fa fa-tags"></i>
-            <span>{{ trans('nav.catalog') }}</span>
-            <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            @if(Gate::allows('index', App\Category::class) || Gate::allows('index', App\CategoryGroup::class) || Gate::allows('index', App\CategorySubGroup::class))
-              <li class="{{ Request::is('admin/catalog/category*') ? 'active' : '' }} ">
-                <a href="#">
-                  <i class="fa fa-angle-double-right"></i>
-                  {{ trans('nav.categories') }}
-                  <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  @can('index', App\CategoryGroup::class)
-                    <li class="{{ Request::is('admin/catalog/categoryGroup*') ? 'active' : '' }} "><a href="{{ route('admin.catalog.categoryGroup.index') }}"><i class="fa fa-angle-right"></i>{{ trans('nav.groups') }}</a></li>
-                  @endcan
+        @if(Gate::allows('index', App\Category::class) || Gate::allows('index', App\Attribute::class) || Gate::allows('index', App\Product::class) || Gate::allows('index', App\Manufacturer::class) || Gate::allows('index', App\CategoryGroup::class) || Gate::allows('index', App\CategorySubGroup::class))
+          <li class="treeview {{ Request::is('admin/catalog*') ? 'active' : '' }}">
+            <a href="#">
+              <i class="fa fa-tags"></i>
+              <span>{{ trans('nav.catalog') }}</span>
+              <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+              @if(Gate::allows('index', App\Category::class) || Gate::allows('index', App\CategoryGroup::class) || Gate::allows('index', App\CategorySubGroup::class))
+                <li class="{{ Request::is('admin/catalog/category*') ? 'active' : '' }} ">
+                  <a href="#">
+                    <i class="fa fa-angle-double-right"></i>
+                    {{ trans('nav.categories') }}
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </a>
+                  <ul class="treeview-menu">
+                    @can('index', App\CategoryGroup::class)
+                      <li class="{{ Request::is('admin/catalog/categoryGroup*') ? 'active' : '' }} "><a href="{{ route('admin.catalog.categoryGroup.index') }}"><i class="fa fa-angle-right"></i>{{ trans('nav.groups') }}</a></li>
+                    @endcan
 
-                  @can('index', App\CategorySubGroup::class)
-                    <li class="{{ Request::is('admin/catalog/categorySubGroup*') ? 'active' : '' }} "><a href="{{ route('admin.catalog.categorySubGroup.index') }}"><i class="fa fa-angle-right"></i>{{ trans('nav.sub-groups') }}</a></li>
-                  @endcan
+                    @can('index', App\CategorySubGroup::class)
+                      <li class="{{ Request::is('admin/catalog/categorySubGroup*') ? 'active' : '' }} "><a href="{{ route('admin.catalog.categorySubGroup.index') }}"><i class="fa fa-angle-right"></i>{{ trans('nav.sub-groups') }}</a></li>
+                    @endcan
 
-                  @can('index', App\Category::class)
-                    <li class="{{ Request::is('admin/catalog/category') ? 'active' : '' }} "><a href="{{ url('admin/catalog/category') }}"><i class="fa fa-angle-right"></i>{{ trans('nav.categories') }}</a></li>
-                  @endcan
-                </ul>
-              </li>
-            @endif
+                    @can('index', App\Category::class)
+                      <li class="{{ Request::is('admin/catalog/category') ? 'active' : '' }} "><a href="{{ url('admin/catalog/category') }}"><i class="fa fa-angle-right"></i>{{ trans('nav.categories') }}</a></li>
+                    @endcan
+                  </ul>
+                </li>
+              @endif
 
-            @can('index', App\Attribute::class)
-              <li class=" {{ Request::is('admin/catalog/attribute*') ? 'active' : '' }} "><a href="{{ url('admin/catalog/attribute') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.attributes') }}</a></li>
-            @endcan
+              @can('index', App\Attribute::class)
+                <li class=" {{ Request::is('admin/catalog/attribute*') ? 'active' : '' }} "><a href="{{ url('admin/catalog/attribute') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.attributes') }}</a></li>
+              @endcan
 
-            @can('index', App\Product::class)
-              <li class=" {{ Request::is('admin/catalog/product*') ? 'active' : '' }} "><a href="{{ url('admin/catalog/product') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.products') }}</a></li>
-            @endcan
+              @can('index', App\Product::class)
+                <li class=" {{ Request::is('admin/catalog/product*') ? 'active' : '' }} "><a href="{{ url('admin/catalog/product') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.products') }}</a></li>
+              @endcan
 
-            @can('index', App\Manufacturer::class)
-              <li class=" {{ Request::is('admin/catalog/manufacturer*') ? 'active' : '' }} "><a href="{{ url('admin/catalog/manufacturer') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.manufacturers') }}</a></li>
-            @endcan
-          </ul>
-        </li>
+              @can('index', App\Manufacturer::class)
+                <li class=" {{ Request::is('admin/catalog/manufacturer*') ? 'active' : '' }} "><a href="{{ url('admin/catalog/manufacturer') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.manufacturers') }}</a></li>
+              @endcan
+            </ul>
+          </li>
+        @endif
 
         @if(Gate::allows('index', App\Inventory::class) || Gate::allows('index', App\Warehouse::class) || Gate::allows('index', App\Supplier::class))
           <li class="treeview {{ Request::is('admin/stock*') ? 'active' : '' }}">

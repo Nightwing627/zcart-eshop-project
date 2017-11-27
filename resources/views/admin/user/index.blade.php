@@ -38,7 +38,7 @@
 				          <td>{{ $user->name }}</td>
 				          <td>{{ $user->email }}</td>
 				          <td>
-					          	<span class="label label-outline">{{ $user->role->name }}</span>
+					          	<span class="label label-outline">{{ $user->role->name or '' }}</span>
 				          </td>
 				          <td>{{ ($user->active) ? trans('app.active') : trans('app.inactive') }}</td>
 				          <td class="row-options">
@@ -100,7 +100,7 @@
 					        <td>{{ $trash->name }}</td>
 					        <td>{{ $trash->email }}</td>
 					        <td>
-					        	<span class="label label-outline">{{ $trash->role->name }}</span>
+					        	<span class="label label-outline">{{ $trash->role->name or '' }}</span>
 				          	</td>
 				          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 				          <td class="row-options">

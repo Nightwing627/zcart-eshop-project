@@ -58,14 +58,14 @@ class OrderPolicy
     }
 
     /**
-     * Determine whether the user can delete the Order.
+     * Determine whether the user can archived the Order.
      *
      * @param  \App\User  $user
      * @param  \App\Order  $order
      * @return mixed
      */
-    public function delete(User $user, Order $order)
+    public function archive(User $user, Order $order)
     {
-        return (new Authorize($user, 'delete_order', $order))->check();
+        return (new Authorize($user, 'archive_order', $order))->check();
     }
 }

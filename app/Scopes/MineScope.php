@@ -2,7 +2,7 @@
 
 namespace App\Scopes;
 
-use Illuminate\Support\Facades\Auth;
+use Auth;
 use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,8 +18,6 @@ class MineScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        // $shop_id = Auth()->user()->shop_id;
-
-        return $builder->where('shop_id', '=', Null);
+        return $builder->where('shop_id', Auth::user()->merchantId());
     }
 }

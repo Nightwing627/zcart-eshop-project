@@ -35,7 +35,7 @@ class CreateInventoryWithVariantRequest extends Request
             'sale_price.*' => 'bail|required|numeric',
             'stock_quantity.*' => 'bail|required|integer',
             'offer_price.*' => 'sometimes|nullable|numeric',
-            'available_from' => 'date',
+            'available_from' => 'nullable|date',
             'offer_start' => 'nullable|required_with:offer_price.*|date|after_or_equal:now',
             'offer_end' => 'nullable|required_with:offer_price.*|date|after:offer_start.*',
             'image.*' => 'mimes:jpeg,png',

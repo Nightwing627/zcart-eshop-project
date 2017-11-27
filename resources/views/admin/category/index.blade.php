@@ -37,7 +37,7 @@
 			          <td>
 			          	<h5>{{ $category->name }}</h5>
 			          	@if($category->description)
-				          	<p class="excerpt-td small">{!! str_limit($category->description, 150) !!}</p>
+				          	<span class="excerpt-td small">{!! str_limit($category->description, 150) !!}</span>
 			          	@endif
 			          </td>
 			          <td>
@@ -90,7 +90,7 @@
 			          <td>
 			          	<h5>{{ $trash->name }}</h5>
 			          	@if($trash->description)
-				          	<p class="excerpt-td small">{!! str_limit($trash->description, 150) !!}</p>
+				          	<span class="excerpt-td small">{!! str_limit($trash->description, 150) !!}</span>
 			          	@endif
 			          </td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>

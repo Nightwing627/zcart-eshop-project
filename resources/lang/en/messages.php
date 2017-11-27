@@ -20,6 +20,7 @@ return [
     'deleted'           => ':model has been deleted permanently!',
     'nofound'           => ':model is not exist! try another search.',
     'action_failed'     => 'The action has been failed to unknown reason!',
+    'archived'          => ':model has been archived successfully!',
 
     // 'failed'    => [
     //     'create'   => 'Create :model has been failed!',

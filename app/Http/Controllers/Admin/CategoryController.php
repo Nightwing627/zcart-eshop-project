@@ -1,10 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Category;
-use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Repositories\Category\CategoryRepository;
 use App\Http\Requests\Validations\CreateCategoryRequest;
 use App\Http\Requests\Validations\UpdateCategoryRequest;
 
@@ -14,12 +13,15 @@ class CategoryController extends Controller
 
     private $model_name;
 
+    private $category;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(CategoryRepository $category)
     {
         $this->model_name = trans('app.model.category');
+        $this->category = $category;
     }
 
     /**
@@ -29,11 +31,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data['categories'] = Category::with('subGroups')->withCount('products')->get();
+        $categories = $this->category->all();
 
-        $data['trashes'] = Category::onlyTrashed()->get();
+        $trashes = $this->category->trashOnly();
 
-        return view('admin.category.index', $data);
+        return view('admin.category.index', compact('categories', 'trashes'));
     }
 
     /**
@@ -54,17 +56,7 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        $category = new Category($request->all());
-
-        $category->save();
-
-        $this->syncSubGrps($category, $request->input('cat_sub_grps'));
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'categories', $category->id);
-            ImageHelper::ResizeImage('categories', $category->id, 800, 200);
-        }
+        $this->category->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -72,11 +64,13 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
+        $category = $this->category->find($id);
+
         return view('admin.category._edit', compact('category'));
     }
 
@@ -84,25 +78,12 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, $id)
     {
-        $category->update($request->all());
-
-        $this->syncSubGrps($category, $request->input('cat_sub_grps'));
-
-        if ($request->input('delete_image') == 1)
-        {
-            ImageHelper::RemoveImages('categories', $category->id);
-        }
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'categories', $category->id);
-            ImageHelper::ResizeImage('categories', $category->id, 800, 200);
-        }
+        $this->category->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -111,12 +92,12 @@ class CategoryController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Category $category)
+    public function trash(Request $request, $id)
     {
-        $category->delete();
+        $this->category->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -130,7 +111,7 @@ class CategoryController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Category::onlyTrashed()->where('id',$id)->restore();
+        $this->category->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -143,22 +124,9 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        Category::onlyTrashed()->find($id)->forceDelete();
-
-        ImageHelper::RemoveImages('categories', $id);
+        $this->category->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
-    }
-
-    /**
-     * Sync up the list of roles for specified user
-     * @param  User $user
-     * @param  array $roleIds
-     * @return void
-     */
-    public function syncSubGrps(Category $category, array $subGrpIds)
-    {
-        $category->subGroups()->sync($subGrpIds);
     }
 
 }

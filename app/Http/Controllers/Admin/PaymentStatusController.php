@@ -1,10 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\PaymentStatus;
-use App\EmailTemplate;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Repositories\PaymentStatus\PaymentStatusRepository;
 use App\Http\Requests\Validations\CreatePaymentStatusRequest;
 use App\Http\Requests\Validations\UpdatePaymentStatusRequest;
 
@@ -14,12 +13,15 @@ class PaymentStatusController extends Controller
 
     private $model_name;
 
+    private $paymentStatus;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(PaymentStatusRepository $paymentStatus)
     {
         $this->model_name = trans('app.model.payment_status');
+        $this->paymentStatus = $paymentStatus;
     }
 
     /**
@@ -29,11 +31,11 @@ class PaymentStatusController extends Controller
      */
     public function index()
     {
-        $data['statuses'] = PaymentStatus::all();
+        $statuses = $this->paymentStatus->all();
 
-        $data['trashes'] = PaymentStatus::onlyTrashed()->get();
+        $trashes = $this->paymentStatus->trashOnly();
 
-        return view('admin.payment-status.index', $data);
+        return view('admin.payment-status.index', compact('statuses', 'trashes'));
     }
 
     /**
@@ -54,9 +56,7 @@ class PaymentStatusController extends Controller
      */
     public function store(CreatePaymentStatusRequest $request)
     {
-        $payment_status = new PaymentStatus($request->all());
-
-        $payment_status->save();
+        $this->paymentStatus->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -64,11 +64,13 @@ class PaymentStatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  PaymentStatus $paymentStatus
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(PaymentStatus $paymentStatus)
+    public function edit($id)
     {
+        $paymentStatus = $this->paymentStatus->find($id);
+
         return view('admin.payment-status._edit', compact('paymentStatus'));
     }
 
@@ -76,12 +78,12 @@ class PaymentStatusController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  PaymentStatus $paymentStatus
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePaymentStatusRequest $request, PaymentStatus $paymentStatus)
+    public function update(UpdatePaymentStatusRequest $request, $id)
     {
-        $paymentStatus->update($request->all());
+        $this->paymentStatus->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -90,12 +92,12 @@ class PaymentStatusController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  PaymentStatus $paymentStatus
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, PaymentStatus $paymentStatus)
+    public function trash(Request $request, $id)
     {
-        $paymentStatus->delete();
+        $this->paymentStatus->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -109,7 +111,7 @@ class PaymentStatusController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        PaymentStatus::onlyTrashed()->where('id',$id)->restore();
+        $this->paymentStatus->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -123,7 +125,7 @@ class PaymentStatusController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        PaymentStatus::onlyTrashed()->find($id)->forceDelete();
+        $this->paymentStatus->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

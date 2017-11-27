@@ -1,10 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\OrderStatus;
-use App\EmailTemplate;
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\OrderStatus\OrderStatusRepository;
 use App\Http\Requests\Validations\CreateOrderStatusRequest;
 use App\Http\Requests\Validations\UpdateOrderStatusRequest;
 
@@ -14,12 +13,15 @@ class OrderStatusController extends Controller
 
     private $model_name;
 
+    private $orderStatus;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(OrderStatusRepository $orderStatus)
     {
         $this->model_name = trans('app.model.order_status');
+        $this->orderStatus = $orderStatus;
     }
 
     /**
@@ -29,11 +31,11 @@ class OrderStatusController extends Controller
      */
     public function index()
     {
-        $data['statuses'] = OrderStatus::all();
+        $statuses = $this->orderStatus->all();
 
-        $data['trashes'] = OrderStatus::onlyTrashed()->get();
+        $trashes = $this->orderStatus->trashOnly();
 
-        return view('admin.order-status.index', $data);
+        return view('admin.order-status.index', compact('statuses', 'trashes'));
     }
 
     /**
@@ -54,9 +56,7 @@ class OrderStatusController extends Controller
      */
     public function store(CreateOrderStatusRequest $request)
     {
-        $order_status = new OrderStatus($request->all());
-
-        $order_status->save();
+        $this->orderStatus->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -67,8 +67,10 @@ class OrderStatusController extends Controller
      * @param  OrderStatus  $orderStatus
      * @return \Illuminate\Http\Response
      */
-    public function edit(OrderStatus $orderStatus)
+    public function edit($id)
     {
+        $orderStatus = $this->orderStatus->find($id);
+
         return view('admin.order-status._edit', compact('orderStatus'));
     }
 
@@ -79,9 +81,9 @@ class OrderStatusController extends Controller
      * @param  OrderStatus  $orderStatus
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOrderStatusRequest $request, OrderStatus $orderStatus)
+    public function update(UpdateOrderStatusRequest $request, $id)
     {
-        $orderStatus->update($request->all());
+        $this->orderStatus->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -90,12 +92,12 @@ class OrderStatusController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  OrderStatus  $orderStatus
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, $orderStatus)
+    public function trash(Request $request, $id)
     {
-        $orderStatus->delete();
+        $this->orderStatus->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -109,7 +111,7 @@ class OrderStatusController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        OrderStatus::onlyTrashed()->where('id', $id)->restore();
+        $this->orderStatus->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -123,7 +125,7 @@ class OrderStatusController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        OrderStatus::onlyTrashed()->find($id)->forceDelete();
+        $this->orderStatus->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

@@ -3,12 +3,13 @@
 namespace App;
 
 use Carbon\Carbon;
+use App\Common\Taggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Blog extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Taggable;
 
     /**
      * The database table used by the model.
@@ -29,14 +30,22 @@ class Blog extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'slug', 'excerpt', 'content', 'published_at', 'user_id', 'status'];
+    protected $fillable = [
+                    'title',
+                    'slug',
+                    'excerpt',
+                    'content',
+                    'published_at',
+                    'user_id',
+                    'status'
+                ];
 
     /**
-     * Get the User associated with the blog post.
+     * Get the author associated with the blog post.
      */
-    public function user()
+    public function author()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'user_id');
     }
 
 	/**
@@ -48,14 +57,6 @@ class Blog extends Model
     }
 
     /**
-     * Get all of the tags for the blog.
-     */
-    public function tags()
-    {
-        return $this->morphToMany('App\Tag', 'taggable');
-    }
-
-    /**
      * Scope a query to only include published blogs.
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -63,16 +64,6 @@ class Blog extends Model
     public function scopePublished($query)
     {
         return $query->where('status', 1)->where('approved', 1);
-    }
-
-    /**
-     * Get tag list for the post.
-     *
-     * @return array
-     */
-    public function getTagListAttribute()
-    {
-         if (count($this->tags)) return $this->tags->pluck('id')->toArray();
     }
 
     /**

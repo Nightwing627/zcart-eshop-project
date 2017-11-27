@@ -35,7 +35,7 @@
 						<td>
 							<h5>{{ $payment_method->name }}</h5>
 				          	@if($payment_method->description)
-					          	<p class="excerpt-td small">{!! str_limit($payment_method->description, 150) !!}</p>
+					          	<span class="excerpt-td small">{!! str_limit($payment_method->description, 150) !!}</span>
 				          	@endif
 						</td>
 						<td>{{ $payment_method->company_name }}</td>
@@ -50,6 +50,7 @@
 
 					        @can('update', $payment_method)
 								<a href="{{ route('admin.setting.paymentMethod.edit', $payment_method->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+							@endcan
 
 					        @can('delete', $payment_method)
 								{!! Form::open(['route' => ['admin.setting.paymentMethod.trash', $payment_method->id], 'method' => 'delete', 'class' => 'data-form']) !!}

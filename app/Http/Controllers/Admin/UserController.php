@@ -1,15 +1,10 @@
-<?php
+<?php namespace App\Http\Controllers\Admin;
 
-namespace App\Http\Controllers\Admin;
-
-use App\User;
-use App\Address;
-use App\Helpers\ListHelper;
-use App\Helpers\ImageHelper;
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Repositories\User\UserRepository;
 use App\Http\Requests\Validations\CreateUserRequest;
 use App\Http\Requests\Validations\UpdateUserRequest;
 
@@ -19,12 +14,16 @@ class UserController extends Controller
 
     private $model_name;
 
+    private $user;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(UserRepository $user)
     {
         $this->model_name = trans('app.model.user');
+
+        $this->user = $user;
     }
 
     /**
@@ -34,19 +33,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        // if(Auth::user()->isFromPlatform())
-        // {
-        //     $data['users'] = User::with('shop', 'role', 'primaryAddress')->get();
-        // }else
-        // {
-        //     $data['users'] = User::mine()->with('shop', 'role', 'primaryAddress')->get();
-        // }
+        $users = $this->user->all();
 
-        $data['users'] = User::notSuperAdmin()->mine()->with('role', 'primaryAddress')->get();
+        $trashes = $this->user->trashOnly();
 
-        $data['trashes'] = User::mine()->onlyTrashed()->get();
-
-        return view('admin.user.index', $data);
+        return view('admin.user.index', compact('users', 'trashes'));
     }
 
     /**
@@ -67,18 +58,7 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $user = new User($request->all());
-
-        $user->save();
-
-        $address = new Address($request->all());
-
-        $user->addresses()->save($address);
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'users', $user->id);
-        }
+        $this->user->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -89,19 +69,23 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
+        $user = $this->user->find($id);
+
         return view('admin.user._show', compact('user'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  User $user
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function profile(User $user)
+    public function profile($id)
     {
+        $user = $this->user->profile($id);
+
         return view('admin.user.profile', compact('user'));
     }
 
@@ -111,8 +95,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
+        $user = $this->user->find($id);
+
         return view('admin.user._edit', compact('user'));
     }
 
@@ -120,22 +106,12 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  User $user
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, $id)
     {
-        $user->update($request->all());
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'users', $user->id);
-        }
-
-        if ($request->input('delete_image') == 1)
-        {
-            ImageHelper::RemoveImages('users', $user->id);
-        }
+        $this->user->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -144,12 +120,12 @@ class UserController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  User $user
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, User $user)
+    public function trash(Request $request, $id)
     {
-        $user->delete();
+        $this->user->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -163,7 +139,7 @@ class UserController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        User::onlyTrashed()->where('id',$id)->restore();
+        $this->user->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -177,13 +153,7 @@ class UserController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $user = User::onlyTrashed()->find($id);
-
-        $user->addresses()->delete();
-
-        $user->forceDelete();
-
-        ImageHelper::RemoveImages('users', $id);
+        $this->user->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

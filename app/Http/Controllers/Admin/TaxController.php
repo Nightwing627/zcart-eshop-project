@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Tax;
-use App\Country;
+// use App\Tax;
+// use App\Country;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Repositories\Tax\TaxRepository;
 use App\Http\Requests\Validations\CreateTaxRequest;
 use App\Http\Requests\Validations\UpdateTaxRequest;
 
@@ -16,12 +17,16 @@ class TaxController extends Controller
 
     private $model_name;
 
+    private $tax;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(TaxRepository $tax)
     {
         $this->model_name = trans('app.model.tax');
+
+        $this->tax = $tax;
     }
 
     /**
@@ -31,11 +36,11 @@ class TaxController extends Controller
      */
     public function index()
     {
-        $data['taxes'] = Tax::mine()->with('country', 'state')->get();
+        $taxes = $this->tax->all();
 
-        $data['trashes'] = Tax::mine()->onlyTrashed()->get();
+        $trashes = $this->tax->trashOnly();
 
-        return view('admin.tax.index', $data);
+        return view('admin.tax.index', compact('taxes', 'trashes'));
     }
 
     /**
@@ -56,11 +61,7 @@ class TaxController extends Controller
      */
     public function store(CreateTaxRequest $request)
     {
-        $request->merge( array( 'shop_id' => $request->user()->shop_id ) ); //Set shop_id
-
-        $tax = new Tax($request->all());
-
-        $tax->save();
+        $this->tax->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -68,11 +69,13 @@ class TaxController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Tax $tax
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tax $tax)
+    public function edit($id)
     {
+        $tax = $this->tax->find($id);
+
         return view('admin.tax._edit', compact('tax'));
     }
 
@@ -80,12 +83,12 @@ class TaxController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Tax $tax
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTaxRequest $request, Tax $tax)
+    public function update(UpdateTaxRequest $request, $id)
     {
-        $tax->update($request->all());
+        $this->tax->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -94,12 +97,12 @@ class TaxController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Tax $tax
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Tax $tax)
+    public function trash(Request $request, $id)
     {
-        $tax->delete();
+        $this->tax->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -113,7 +116,7 @@ class TaxController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Tax::onlyTrashed()->where('id', $id)->restore();
+        $this->tax->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -127,7 +130,7 @@ class TaxController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        Tax::onlyTrashed()->find($id)->forceDelete();
+        $this->tax->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

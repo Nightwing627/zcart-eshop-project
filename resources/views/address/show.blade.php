@@ -19,12 +19,14 @@
 	        <span class="admin-user-widget-text text-muted">
 	            {{ trans('app.email') . ': ' . $addressable->email }}
 	        </span>
-	        <span class="admin-user-widget-text text-muted">
-	            {{ trans('app.phone') . ': ' . $addressable->primaryAddress->phone }}
-	        </span>
-	        <span class="admin-user-widget-text text-muted">
-	            {{ trans('app.zip_code') . ': ' . $addressable->primaryAddress->zip_code }}
-	        </span>
+	        @if($addressable->primaryAddress)
+		        <span class="admin-user-widget-text text-muted">
+		            {{ trans('app.phone') . ': ' . $addressable->primaryAddress->phone }}
+		        </span>
+		        <span class="admin-user-widget-text text-muted">
+		            {{ trans('app.zip_code') . ': ' . $addressable->primaryAddress->zip_code }}
+		        </span>
+	        @endif
 	        <a href="{{ route('admin.admin.' . $addressable_type . '.show', $addressable->id) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ trans('app.view_detail') }}</a>
 
 	        <span class="pull-right" style="margin-top: -60px;margin-right: 30px;font-size: 40px; color: rgba(0, 0, 0, 0.2);">
@@ -43,7 +45,6 @@
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
 	    	@foreach($addresses as $address)
-
 		        <div class="row">
 			        <div class="col-md-5">
 				        {!! $address->toHtml() !!}

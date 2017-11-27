@@ -86,7 +86,7 @@
 					          	<p class="excerpt-td small">{!! $trash->description !!}</p>
 				          	@endif
 						</td>
-						<td>{{ ($trash->public) ? trans('app.public') : trans('app.restricted') }}</td>
+						<td>{{ ($trash->public) ? trans('app.merchant') : trans('app.platform') }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('delete', $trash)

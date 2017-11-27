@@ -1,11 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Packaging;
-use App\Http\Requests;
-use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Repositories\Packaging\PackagingRepository;
 use App\Http\Requests\Validations\CreatePackagingRequest;
 use App\Http\Requests\Validations\UpdatePackagingRequest;
 
@@ -15,12 +13,15 @@ class PackagingController extends Controller
 
     private $model_name;
 
+    private $packaging;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(PackagingRepository $packaging)
     {
         $this->model_name = trans('app.model.packaging');
+        $this->packaging = $packaging;
     }
 
    /**
@@ -30,11 +31,11 @@ class PackagingController extends Controller
      */
     public function index()
     {
-        $data['packagings'] = Packaging::mine()->get();
+        $packagings = $this->packaging->all();
 
-        $data['trashes'] = Packaging::mine()->onlyTrashed()->get();
+        $trashes = $this->packaging->trashOnly();
 
-        return view('admin.packaging.index', $data);
+        return view('admin.packaging.index', compact('packagings', 'trashes'));
     }
 
     /**
@@ -55,14 +56,7 @@ class PackagingController extends Controller
      */
     public function store(CreatePackagingRequest $request)
     {
-        $packaging = new Packaging($request->all());
-
-        $packaging->save();
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'packagings', $packaging->id);
-        }
+        $this->packaging->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -73,8 +67,10 @@ class PackagingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Packaging $packaging)
+    public function edit($id)
     {
+        $packaging = $this->packaging->find($id);
+
         return view('admin.packaging._edit', compact('packaging'));
     }
 
@@ -82,22 +78,12 @@ class PackagingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Packaging $packaging
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePackagingRequest $request, Packaging $packaging)
+    public function update(UpdatePackagingRequest $request, $id)
     {
-        $packaging->update($request->all());
-
-        if ($request->input('delete_image') == 1)
-        {
-            ImageHelper::RemoveImages('packagings', $packaging->id);
-        }
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'packagings', $packaging->id);
-        }
+        $this->packaging->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -109,9 +95,9 @@ class PackagingController extends Controller
      * @param  Packaging  $packaging
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Packaging $packaging)
+    public function trash(Request $request, $id)
     {
-        $packaging->delete();
+        $this->packaging->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -125,7 +111,7 @@ class PackagingController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Packaging::onlyTrashed()->find($id)->restore();
+        $this->packaging->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -139,9 +125,7 @@ class PackagingController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        Packaging::onlyTrashed()->find($id)->forceDelete();
-
-        ImageHelper::RemoveImages('packagings', $id);
+        $this->packaging->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

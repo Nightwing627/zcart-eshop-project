@@ -223,7 +223,7 @@ if ( ! function_exists('setAdditionalCartInfo') )
         $grand_total =  ($total - $discount + $tax + $shipping);
 
         $request->merge([
-            'shop_id' => $request->user()->shop_id,
+            'shop_id' => $request->user()->merchantId(),
             'item_count' => count($request->input('cart') ),
             'quantity' => array_sum(array_column($request->input('cart'), 'quantity') ),
             'total' => $total,

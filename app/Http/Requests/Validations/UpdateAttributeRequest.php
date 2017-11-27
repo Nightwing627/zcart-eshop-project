@@ -23,7 +23,7 @@ class UpdateAttributeRequest extends Request
      */
     public function rules()
     {
-        $shop_id = Request::user()->shop_id; //Get current user's shop_id
+        $shop_id = Request::user()->merchantId(); //Get current user's shop_id
         $ignore = Request::segment(count(Request::segments())); //Current model ID
 
         return [

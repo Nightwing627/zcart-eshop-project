@@ -8,9 +8,7 @@
 
 @section('content')
 
-    @can('view', $product)
-        @include('admin.partials._product_widget')
-    @endcan
+    @include('admin.partials._product_widget')
 
     <div class="box">
         <div class="box-header with-border">

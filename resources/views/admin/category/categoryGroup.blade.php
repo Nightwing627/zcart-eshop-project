@@ -32,14 +32,10 @@
 			          <td>
 			          	<h5>{{ $categoryGrp->name }}</h5>
 			          	@if($categoryGrp->description)
-				          	<p class="excerpt-td small">{!! str_limit($categoryGrp->description, 150) !!}</p>
+				          	<span class="excerpt-td small">{!! str_limit($categoryGrp->description, 150) !!}</span>
 			          	@endif
 			          </td>
-			          <td>
-			          	@foreach($categoryGrp->subGroups as $subGroup)
-				          	<span class="label label-outline">{{ $subGroup->name }}</span>
-				        @endforeach
-			          </td>
+			          <td>{{ $categoryGrp->sub_groups_count }}</td>
 			          <td>{{ ($categoryGrp->active) ? trans('app.active') : trans('app.inactive') }}</td>
 			          <td class="row-options">
 						@can('update', $categoryGrp)
@@ -84,11 +80,7 @@
 		        @foreach($trashes as $trash )
 			        <tr>
 			          <td>{{ $trash->name }}</td>
-			          <td>
-			          	@foreach($trash->subGroups as $subGroup)
-				          	<span class="label label-outline">{{ $subGroup->name }}</span>
-				        @endforeach
-			          </td>
+			          <td>{{ $trash->sub_groups_count }}</td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 			          <td class="row-options">
 						@can('delete', $trash)

@@ -45,13 +45,23 @@ class ListHelper
     public static function roles()
     {
         $roles = \DB::table('roles')
-                ->where('id', '!=', 1)
-                ->where('deleted_at', Null);
+                ->whereNull('deleted_at');
 
-        if (Auth::user()->isFromPlatform())
-            $roles->where('public', '!=', 1);
-        else
-            $roles->where('public', 1)->orWhere('shop_id', Auth::user()->merchantId());
+        if (Auth::user()->isFromPlatform()){
+            $roles->where('public', '!=', 1)->where(
+                function ($query) {
+                    $query->whereNull('level')
+                        ->orWhere('level', '>', Auth::user()->role->level);
+                });
+        }
+        else{
+            $roles->where('public', 1)->orWhere(
+                function ($query) {
+                    $query->where('shop_id', Auth::user()->merchantId())
+                        ->whereNull('level')
+                        ->orWhere('level', '>', Auth::user()->role->level);
+                });
+        }
 
         return $roles->orderBy('name', 'asc')->pluck('name', 'id');
     }
@@ -296,7 +306,7 @@ class ListHelper
      */
     public static function address_types()
     {
-        return \DB::table('address_types')->orderBy('id', 'asc')->where('type', '!=', 'Primary')->pluck('type', 'type');
+        return \DB::table('address_types')->orderBy('id', 'asc')->pluck('type', 'type');
     }
 
     /**
@@ -349,7 +359,7 @@ class ListHelper
      */
     public static function attributes()
     {
-        return \DB::table('attributes')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('attributes')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -369,7 +379,7 @@ class ListHelper
      */
     public static function attribute_types()
     {
-        return \DB::table('attribute_types')->where('deleted_at', Null)->orderBy('type', 'asc')->pluck('type', 'id');
+        return \DB::table('attribute_types')->orderBy('type', 'asc')->pluck('type', 'id');
     }
 
     /**

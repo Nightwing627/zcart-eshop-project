@@ -23,6 +23,8 @@ class CreateCustomerRequest extends Request
      */
     public function rules()
     {
+        Request::merge( [ 'address_title' => Request::input('name') ] ); //Set the address title
+
         return [
            'name' => 'required|max:255',
            'email' =>  'required|email|max:255|unique:customers',

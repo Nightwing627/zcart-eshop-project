@@ -68,5 +68,4 @@ class Tag extends Model
         return $this->morphedByMany('App\Blog', 'taggable');
     }
 
-
 }

@@ -31,7 +31,7 @@
 			          <td>
 			          	<h5>{{ $categorySubGrp->name }}</h5>
 			          	@if($categorySubGrp->description)
-				          	<p class="excerpt-td small">{!! str_limit($categorySubGrp->description, 150) !!}</p>
+				          	<span class="excerpt-td small">{!! str_limit($categorySubGrp->description, 150) !!}</span>
 			          	@endif
 			          </td>
 			          <td>{{ $categorySubGrp->group->name or ''}}</td>

@@ -5,7 +5,7 @@
         <a href="{{ route('admin.stock.inventory.index') }}" class="btn btn-new btn-flat">{{ trans('app.back_to_inventory') }}</a>
     @endcan
     @can('create', App\Inventory::class)
-        <a href="{{ route('admin.stock.inventory.search') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
+        <a href="{{ route('admin.stock.inventory.showSearchForm') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
     @endcan
 
     @can('create', App\Product::class)

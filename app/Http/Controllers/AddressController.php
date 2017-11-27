@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\State;
 use App\Address;
 use Illuminate\Http\Request;
+use App\Repositories\Address\AddressRepository;
 use App\Http\Requests\Validations\CreateAddressRequest;
 use App\Http\Requests\Validations\UpdateAddressRequest;
 
@@ -12,12 +13,15 @@ class AddressController extends Controller
 {
     private $model_name;
 
+    private $address;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(AddressRepository $address)
     {
         $this->model_name = trans('app.model.address');
+        $this->address = $address;
     }
 
     /**
@@ -27,13 +31,7 @@ class AddressController extends Controller
      */
     public function addresses($addressable_type, $addressable_id)
     {
-        $addressable = $this->getAddressableModel($addressable_type, $addressable_id);
-
-        $data['addressable_type'] = strtolower(class_basename($addressable));
-
-        $data['addressable'] = $addressable;
-
-        $data['addresses'] = $addressable->addresses()->with('country', 'state')->get();
+        $data = $this->address->addresses($addressable_type, $addressable_id);
 
         return view('address.show', $data);
     }
@@ -58,13 +56,9 @@ class AddressController extends Controller
      */
     public function store(CreateAddressRequest $request)
     {
-        $address = new Address($request->all());
+        $this->address->store($request);
 
-        $address->save();
-
-        $request->session()->flash('success', trans('messages.created', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**
@@ -73,8 +67,10 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Address $address)
+    public function edit($id)
     {
+        $address = $this->address->find($id);
+
         return view('address._edit', compact('address'));
     }
 
@@ -87,13 +83,9 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request, $id)
     {
-        $address = Address::findOrFail($id);
+        $this->address->update($request, $id);
 
-        $address->update($request->all());
-
-        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -104,42 +96,19 @@ class AddressController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $address = Address::findOrFail($id);
+        $this->address->destroy($id);
 
-        $address->delete();
-
-        $request->session()->flash('success', trans('messages.deleted', ['model' => $this->model_name]));
-
-        return back();
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model_name]));
     }
 
-    /**
-     * Get Addressable Model
-     *
-     * @param  string $type model name
-     * @param  int $model id
-     *
-     * @return collection
-     */
-    private function getAddressableModel($addressable_type, $addressable_id)
-    {
-        $addressableClass = get_qualified_model($addressable_type);
-
-        $addressable = new $addressableClass();
-
-        return $addressable->find($addressable_id);
-    }
 
     /**
      * Response AJAX call to return states of a give country
      */
     public function ajaxCountryStates(Request $request)
     {
-        if ($request->ajax())
-        {
-            $id = $request->input('id');
-
-            $states = State::where('country_id', $id)->orderBy('name', 'asc')->pluck('name', 'id');
+        if ($request->ajax()){
+            $states = $this->address->getStates($request->input('id'));
 
             return response($states, 200);
         }

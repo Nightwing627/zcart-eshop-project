@@ -1,9 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\GiftCard;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Repositories\GiftCard\GiftCardRepository;
 use App\Http\Requests\Validations\CreateGiftCardRequest;
 use App\Http\Requests\Validations\UpdateGiftCardRequest;
 
@@ -13,12 +13,16 @@ class GiftCardController extends Controller
 
     private $model_name;
 
+    private $giftCard;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(GiftCardRepository $giftCard)
     {
         $this->model_name = trans('app.model.gift_card');
+
+        $this->giftCard = $giftCard;
     }
 
     /**
@@ -28,11 +32,11 @@ class GiftCardController extends Controller
      */
     public function index()
     {
-        $data['gift_cards'] = GiftCard::all();
+        $gift_cards = $this->giftCard->all();
 
-        $data['trashes'] = GiftCard::onlyTrashed()->get();
+        $trashes = $this->giftCard->trashOnly();
 
-        return view('admin.gift-card.index', $data);
+        return view('admin.gift-card.index', compact('gift_cards', 'trashes'));
     }
 
     /**
@@ -53,9 +57,7 @@ class GiftCardController extends Controller
      */
     public function store(CreateGiftCardRequest $request)
     {
-        $gift_card = new GiftCard($request->all());
-
-        $gift_card->save();
+        $this->giftCard->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -63,22 +65,26 @@ class GiftCardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  GiftCard  $giftCard
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(GiftCard $giftCard)
+    public function show($id)
     {
+        $giftCard = $this->giftCard->find($id);
+
         return view('admin.gift-card._show', compact('giftCard'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  GiftCard $giftCard
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(GiftCard $giftCard)
+    public function edit($id)
     {
+        $giftCard = $this->giftCard->find($id);
+
         return view('admin.gift-card._edit', compact('giftCard'));
     }
 
@@ -86,12 +92,12 @@ class GiftCardController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  GiftCard $giftCard
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGiftCardRequest $request, GiftCard $giftCard)
+    public function update(UpdateGiftCardRequest $request, $id)
     {
-        $giftCard->update($request->all());
+        $this->giftCard->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -100,12 +106,12 @@ class GiftCardController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  GiftCard $giftCard
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, GiftCard $giftCard)
+    public function trash(Request $request, $id)
     {
-        $giftCard->delete();
+        $this->giftCard->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -119,7 +125,7 @@ class GiftCardController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        GiftCard::onlyTrashed()->where('id',$id)->restore();
+        $this->giftCard->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -133,7 +139,7 @@ class GiftCardController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        GiftCard::onlyTrashed()->find($id)->forceDelete();
+        $this->giftCard->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

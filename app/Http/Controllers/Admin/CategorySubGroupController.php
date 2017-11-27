@@ -1,11 +1,13 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\CategorySubGroup;
+namespace App\Http\Controllers\Admin;
+
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateCategorySubGroupRequest;
 use App\Http\Requests\Validations\UpdateCategorySubGroupRequest;
+use App\Repositories\CategorySubGroup\CategorySubGroupRepository;
 
 class CategorySubGroupController extends Controller
 {
@@ -13,12 +15,15 @@ class CategorySubGroupController extends Controller
 
     private $model_name;
 
+    private $categorySubGroup;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(CategorySubGroupRepository $categorySubGroup)
     {
         $this->model_name = trans('app.model.category_group');
+        $this->categorySubGroup = $categorySubGroup;
     }
 
     /**
@@ -28,11 +33,11 @@ class CategorySubGroupController extends Controller
      */
     public function index()
     {
-        $data['categorySubGrps'] = CategorySubGroup::with('group')->get();
+        $categorySubGrps = $this->categorySubGroup->all();
 
-        $data['trashes'] = CategorySubGroup::onlyTrashed()->get();
+        $trashes = $this->categorySubGroup->trashOnly();
 
-        return view('admin.category.categorySubGroup', $data);
+        return view('admin.category.categorySubGroup', compact('categorySubGrps', 'trashes'));
     }
 
     /**
@@ -53,9 +58,7 @@ class CategorySubGroupController extends Controller
      */
     public function store(CreateCategorySubGroupRequest $request)
     {
-        $category = new CategorySubGroup($request->all());
-
-        $category->save();
+        $this->categorySubGroup->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -63,11 +66,13 @@ class CategorySubGroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  CategorySubGroup  $categorySubGroup
+     * @param  int  $categorySubGroup
      * @return \Illuminate\Http\Response
      */
-    public function edit(CategorySubGroup $categorySubGroup)
+    public function edit($id)
     {
+        $categorySubGroup = $this->categorySubGroup->find($id);
+
         return view('admin.category._editSubGrp', compact('categorySubGroup'));
     }
 
@@ -75,12 +80,12 @@ class CategorySubGroupController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  CategorySubGroup $categorySubGroup
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategorySubGroupRequest $request, CategorySubGroup $categorySubGroup)
+    public function update(UpdateCategorySubGroupRequest $request, $id)
     {
-        $categorySubGroup->update($request->all());
+        $this->categorySubGroup->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -89,12 +94,12 @@ class CategorySubGroupController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  CategorySubGroup $categorySubGroup
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, CategorySubGroup $categorySubGroup)
+    public function trash(Request $request, $id)
     {
-        $categorySubGroup->delete();
+        $this->categorySubGroup->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -108,7 +113,7 @@ class CategorySubGroupController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        CategorySubGroup::onlyTrashed()->where('id',$id)->restore();
+        $this->categorySubGroup->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -121,7 +126,7 @@ class CategorySubGroupController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        CategorySubGroup::onlyTrashed()->find($id)->forceDelete();
+        $this->categorySubGroup->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

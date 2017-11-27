@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Validations;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Request;
 
-class UpdateBlogRequest extends FormRequest
+class UpdateBlogRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,8 @@ class UpdateBlogRequest extends FormRequest
      */
     public function rules()
     {
-        $id = FormRequest::segment(count(FormRequest::segments())); //Current model ID
+        $id = Request::segment(count(Request::segments())); //Current model ID
+
         return [
            'title' => 'required',
            'excerpt' => 'required|max:555',

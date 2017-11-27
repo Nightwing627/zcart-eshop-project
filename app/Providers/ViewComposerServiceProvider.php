@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Cart;
+use App\Module;
 use App\Inventory;
 use App\Helpers\ListHelper;
 use Illuminate\Support\Facades\View;
@@ -28,6 +29,8 @@ class ViewComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->composeRoleForm();
+
+        $this->composeRoleShow();
 
         $this->composeUserForm();
 
@@ -83,6 +86,21 @@ class ViewComposerServiceProvider extends ServiceProvider
         View::composer(
 
                 'admin.role._form',
+
+                function($view)
+                {
+                    $view->with('modules', ListHelper::modulesWithPermissions());
+                });
+    }
+
+    /**
+     * compose partial view of role
+     */
+    private function composeRoleShow()
+    {
+        View::composer(
+
+                'admin.role._show',
 
                 function($view)
                 {

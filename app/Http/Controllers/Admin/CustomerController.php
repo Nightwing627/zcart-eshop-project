@@ -1,11 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Address;
-use App\Customer;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
-use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
+use App\Repositories\Customer\CustomerRepository;
 use App\Http\Requests\Validations\CreateCustomerRequest;
 use App\Http\Requests\Validations\UpdateCustomerRequest;
 
@@ -15,12 +13,16 @@ class CustomerController extends Controller
 
     private $model_name;
 
+    private $customer;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(CustomerRepository $customer)
     {
         $this->model_name = trans('app.model.customer');
+
+        $this->customer = $customer;
     }
 
     /**
@@ -30,11 +32,11 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $data['customers'] = Customer::all();
+        $customers = $this->customer->all();
 
-        $data['trashes'] = Customer::onlyTrashed()->get();
+        $trashes = $this->customer->trashOnly();
 
-        return view('admin.customer.index', $data);
+        return view('admin.customer.index', compact('customers', 'trashes'));
     }
 
     /**
@@ -55,21 +57,7 @@ class CustomerController extends Controller
      */
     public function store(CreateCustomerRequest $request)
     {
-        $customer = new Customer($request->all());
-
-        $customer->save();
-
-        // Add the primary address
-        $request->merge( [ 'address_title' => $request->input('name') ] ); //Set the address title
-
-        $address = new Address($request->all());
-
-        $customer->addresses()->save($address);
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'customers', $customer->id);
-        }
+        $this->customer->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -77,48 +65,54 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  customer  $customer
+     * @param  int  $custidomer
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show($id)
     {
+        $customer = $this->customer->find($id);
+
         return view('admin.customer._show', compact('customer'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Customer  $customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function addresses(Customer $customer)
+    public function addresses($id)
     {
-        $data['customer'] = $customer;
+        $customer = $this->customer->find($id);
 
-        $data['addresses'] = $customer->addresses()->get();
+        $addresses = $this->customer->addresses($customer);
 
-        return view('address.show', $data);
+        return view('address.show', compact('customer', 'addresses'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Customer  $customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function profile(Customer $customer)
+    public function profile($id)
     {
+        $customer = $this->customer->profile($id);
+
         return view('admin.customer.profile', compact('customer'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Customer  $customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Customer $customer)
+    public function edit($id)
     {
+        $customer = $this->customer->find($id);
+
         return view('admin.customer._edit', compact('customer'));
     }
 
@@ -126,22 +120,12 @@ class CustomerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Customer  $customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCustomerRequest $request, Customer $customer)
+    public function update(UpdateCustomerRequest $request, $id)
     {
-        $customer->update($request->all());
-
-        if($request->input('delete_image') == 1)
-        {
-            ImageHelper::RemoveImages('customers', $customer->id);
-        }
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'customers', $customer->id);
-        }
+        $this->customer->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -150,12 +134,12 @@ class CustomerController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Customer  $customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Customer $customer)
+    public function trash(Request $request, $id)
     {
-        $customer->delete();
+        $this->customer->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -169,7 +153,7 @@ class CustomerController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Customer::onlyTrashed()->find($id)->restore();
+        $this->customer->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -183,15 +167,8 @@ class CustomerController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $customer = Customer::onlyTrashed()->find($id);
-
-        $customer->flushAddresses();
-
-        $customer->forceDelete();
-
-        ImageHelper::RemoveImages('customers', $id);
+        $this->customer->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
-
 }

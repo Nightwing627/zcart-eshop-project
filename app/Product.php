@@ -2,12 +2,15 @@
 
 namespace App;
 
+use Auth;
+use App\Common\Taggable;
+use App\Scopes\MineScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Taggable;
 
     /**
      * The database table used by the model.
@@ -103,14 +106,6 @@ class Product extends Model
     }
 
     /**
-     * Get all of the tags for the product.
-     */
-    public function tags()
-    {
-        return $this->morphToMany('App\Tag', 'taggable');
-    }
-
-    /**
      * Set the requires_shipping for the Product.
      */
     public function setHasVariantAttribute($value)
@@ -145,16 +140,6 @@ class Product extends Model
     }
 
     /**
-     * Get the tag list.
-     *
-     * @return array
-     */
-    public function getTagListAttribute()
-    {
-         if (count($this->tags)) return $this->tags->pluck('id')->toArray();
-    }
-
-    /**
      * Get the formate decimal.
      *
      * @return array
@@ -166,6 +151,28 @@ class Product extends Model
     public function getMaxPriceAttribute($attribute)
     {
          return get_formated_decimal($attribute);
+    }
+
+    /**
+     * Scope a query to only include active products.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearch($query, $match)
+    {
+        return $query->where('gtin', $match)
+                    ->orWhere('model_number', 'LIKE', '%'. $match .'%')
+                    ->orWhere('name', 'LIKE', '%'. $match .'%');
+    }
+
+    /**
+     * Scope a query to only include records from the users shop.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMine($query)
+    {
+        return $query->where('shop_id', Auth::user()->merchantId());
     }
 
     /**

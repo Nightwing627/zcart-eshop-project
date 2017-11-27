@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Role;
-use App\Module;
-use App\Permission;
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Role\RoleRepository;
 use App\Http\Requests\Validations\CreateRoleRequest;
 use App\Http\Requests\Validations\UpdateRoleRequest;
 
@@ -17,12 +15,16 @@ class RoleController extends Controller
 
     private $model_name;
 
+    private $role;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(RoleRepository $role)
     {
         $this->model_name = trans('app.model.role');
+
+        $this->role = $role;
     }
 
     /**
@@ -32,11 +34,11 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $data['roles'] = Role::withCount('users')->get();
+        $roles = $this->role->all();
 
-        $data['trashes'] = Role::onlyTrashed()->get();
+        $trashes = $this->role->trashOnly();
 
-        return view('admin.role.index', $data);
+        return view('admin.role.index', compact('roles', 'trashes'));
     }
 
     /**
@@ -46,9 +48,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $modules = Module::active()->with('permissions')->orderBy('name', 'asc')->get();
-
-        return view('admin.role._create', compact('modules'));
+        return view('admin.role._create');
     }
 
     /**
@@ -59,11 +59,7 @@ class RoleController extends Controller
      */
     public function store(CreateRoleRequest $request)
     {
-        $role = new Role($request->all());
-
-        $role->save();
-
-        $role->permissions()->sync($request->input('permissions', []));
+        $this->role->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -74,13 +70,13 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show($id)
     {
-        $modules = Module::active()->with('permissions')->orderBy('name', 'asc')->get();
+        $role = $this->role->find($id);
 
-        $role_permissions = $role->permissions()->pluck('module_id', 'slug')->toArray();
+        $role_permissions = $this->role->getPermissions($role);
 
-        return view('admin.role._show', compact('role','modules','role_permissions'));
+        return view('admin.role._show', compact('role', 'role_permissions'));
     }
 
     /**
@@ -89,8 +85,10 @@ class RoleController extends Controller
      * @param  Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit($id)
     {
+        $role = $this->role->find($id);
+
         return view('admin.role._edit', compact('role'));
     }
 
@@ -101,11 +99,9 @@ class RoleController extends Controller
      * @param  Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoleRequest $request, Role $role)
+    public function update(UpdateRoleRequest $request, $id)
     {
-        $role->update($request->all());
-
-        $role->permissions()->sync($request->input('permissions', []));
+        $this->role->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -114,12 +110,12 @@ class RoleController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Role $role
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Role $role)
+    public function trash(Request $request, $id)
     {
-        $role->delete();
+        $this->role->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -133,7 +129,7 @@ class RoleController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Role::onlyTrashed()->where('id',$id)->restore();
+        $this->role->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -147,9 +143,7 @@ class RoleController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $role = Role::onlyTrashed()->find($id);
-
-        $role->forceDelete();
+        $this->role->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

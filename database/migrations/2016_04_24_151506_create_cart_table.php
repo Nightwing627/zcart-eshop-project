@@ -44,16 +44,14 @@ class CreateCartTable extends Migration
         Schema::create('cart_items', function (Blueprint $table) {
 
             $table->bigInteger('cart_id')->unsigned()->index();
-            $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
-
             $table->bigInteger('inventory_id')->unsigned()->index();
-            $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
-
             $table->longtext('item_description');
             $table->integer('quantity')->unsigned();
             $table->decimal('unit_price', 20, 6);
-
             $table->timestamps();
+
+            $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
+            $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
         });
 
     }

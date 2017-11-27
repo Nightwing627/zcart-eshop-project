@@ -23,7 +23,7 @@ class CreateEmailTemplateRequest extends Request
      */
     public function rules()
     {
-        $shop_id = Request::user()->shop_id; //Get current user's shop_id
+        $shop_id = Request::user()->merchantId(); //Get current user's shop_id
         Request::merge( array( 'shop_id' => $shop_id ) ); //Set shop_id
 
         return [

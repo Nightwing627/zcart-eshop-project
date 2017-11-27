@@ -98,7 +98,7 @@
 						<td>{{ $trash->tracking_url }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
-							@can('delete()', $trash)
+							@can('delete', $trash)
 								<a href="{{ route('admin.shipping.carrier.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
 
 								{!! Form::open(['route' => ['admin.shipping.carrier.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}

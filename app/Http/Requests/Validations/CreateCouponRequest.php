@@ -23,7 +23,7 @@ class CreateCouponRequest extends Request
      */
     public function rules()
     {
-        $shop_id = Request::user()->shop_id; //Get current user's shop_id
+        $shop_id = Request::user()->merchantId(); //Get current user's shop_id
         Request::merge( array( 'shop_id' => $shop_id ) ); //Set shop_id
 
         return [
@@ -36,7 +36,6 @@ class CreateCouponRequest extends Request
            'quantity_per_customer' => 'nullable|integer',
            'starting_time' => 'required|nullable|date|after_or_equal:now',
            'ending_time' => 'required|nullable|date|after:starting_time',
-           'limited' => 'boolean',
            'active' => 'required|boolean',
         ];
     }

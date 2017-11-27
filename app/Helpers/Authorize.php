@@ -32,10 +32,25 @@ class Authorize
 	{
 		// Auth::loginUsingId(1, true);
 
+		return true; //FOR TEMPORARY TEST
+
 		if($this->isExceptional())
 			return true;
 
+		if(isset($this->model) && ! Auth::user()->isFromPlatform() && ! $this->merchantAuth())
+			return false;
+
         return in_array($this->slug, $this->permissionSlugs());
+	}
+
+	/**
+	 * Some case in special conditions you may allow all actions for the user
+	 *
+	 * @return boolean
+	 */
+	private function merchantAuth()
+	{
+		return isset($this->model->shop_id) && $this->model->shop_id == $this->user->merchantId();
 	}
 
 	/**

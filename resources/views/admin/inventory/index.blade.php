@@ -2,9 +2,7 @@
 
 @section('buttons')
 	@can('create', App\Inventory::class)
-		<a href="{{ route('admin.exim', 'inventories') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
-
-		<a href="{{ route('admin.stock.inventory.search') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_inventory') }}</a>
+		<a href="{{ route('admin.stock.inventory.showSearchForm') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_inventory') }}</a>
 	@endcan
 @endsection
 

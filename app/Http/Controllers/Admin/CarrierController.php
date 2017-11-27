@@ -1,12 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Tax;
-use App\Carrier;
-use App\Http\Requests;
-use App\Helpers\ImageHelper;
-use Illuminate\Http\Request;
 use App\Common\Authorizable;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Carrier\CarrierRepository;
 use App\Http\Requests\Validations\CreateCarrierRequest;
 use App\Http\Requests\Validations\UpdateCarrierRequest;
 
@@ -16,12 +13,15 @@ class CarrierController extends Controller
 
     private $model_name;
 
+    private $carrier;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(CarrierRepository $carrier)
     {
         $this->model_name = trans('app.model.carrier');
+        $this->carrier = $carrier;
     }
 
    /**
@@ -31,11 +31,11 @@ class CarrierController extends Controller
      */
     public function index()
     {
-        $data['carriers'] = Carrier::mine()->get();
+        $carriers = $this->carrier->all();
 
-        $data['trashes'] = Carrier::mine()->onlyTrashed()->get();
+        $trashes = $this->carrier->trashOnly();
 
-        return view('admin.carrier.index', $data);
+        return view('admin.carrier.index', compact('carriers', 'trashes'));
     }
 
     /**
@@ -56,14 +56,7 @@ class CarrierController extends Controller
      */
     public function store(CreateCarrierRequest $request)
     {
-        $carrier = new Carrier($request->all());
-
-        $carrier->save();
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'carriers', $carrier->id);
-        }
+        $this->carrier->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -74,19 +67,23 @@ class CarrierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Carrier $carrier)
+    public function show($id)
     {
+        $carrier = $this->carrier->find($id);
+
         return view('admin.carrier._show', compact('carrier'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Carrier $carrier
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Carrier $carrier)
+    public function edit($id)
     {
+        $carrier = $this->carrier->find($id);
+
         return view('admin.carrier._edit', compact('carrier'));
     }
 
@@ -94,22 +91,12 @@ class CarrierController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Carrier  $carrier
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCarrierRequest $request, Carrier $carrier)
+    public function update(UpdateCarrierRequest $request, $id)
     {
-        $carrier->update($request->all());
-
-        if ($request->input('delete_image') == 1)
-        {
-            ImageHelper::RemoveImages('carriers', $carrier->id);
-        }
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'carriers', $carrier->id);
-        }
+        $this->carrier->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -118,12 +105,12 @@ class CarrierController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Carrier $carrier
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Carrier $carrier)
+    public function trash(Request $request, $id)
     {
-        $carrier->delete();
+        $this->carrier->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -137,7 +124,7 @@ class CarrierController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Carrier::onlyTrashed()->find($id)->restore();
+        $this->carrier->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -151,9 +138,7 @@ class CarrierController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        Carrier::onlyTrashed()->find($id)->forceDelete();
-
-        ImageHelper::RemoveImages('carriers', $id);
+        $this->carrier->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

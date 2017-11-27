@@ -1,9 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Attribute;
-use App\Common\Authorizable;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Repositories\Attribute\AttributeRepository;
 use App\Http\Requests\Validations\CreateAttributeRequest;
 use App\Http\Requests\Validations\UpdateAttributeRequest;
 
@@ -13,12 +13,16 @@ class AttributeController extends Controller
 
     private $model_name;
 
+    private $attribute;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(AttributeRepository $attribute)
     {
         $this->model_name = trans('app.model.attribute');
+
+        $this->attribute = $attribute;
     }
 
     /**
@@ -28,11 +32,11 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        $data['attributes'] = Attribute::with('attributeType')->withCount('attributeValues')->get();
+        $attributes = $this->attribute->all();
 
-        $data['trashes'] = Attribute::onlyTrashed()->get();
+        $trashes = $this->attribute->trashOnly();
 
-        return view('admin.attribute.index', $data);
+        return view('admin.attribute.index', compact('attributes', 'trashes'));
     }
 
     /**
@@ -53,9 +57,7 @@ class AttributeController extends Controller
      */
     public function store(CreateAttributeRequest $request)
     {
-        $attribute = new Attribute($request->all());
-
-        $attribute->save();
+        $this->attribute->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -63,26 +65,26 @@ class AttributeController extends Controller
     /**
      * Display all Attribute Values the specified Attribute.
      *
-     * @param  Attribute  $attribute
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function entities(Attribute $attribute)
+    public function entities($id)
     {
-        $attributeValues = $attribute->attributeValues()->get();
+        $entities = $this->attribute->entities($id);
 
-        $trashes = $attribute->attributeValues()->onlyTrashed()->get();
-
-        return view('admin.attribute.entities', compact('attribute', 'attributeValues', 'trashes'));
+        return view('admin.attribute.entities', $entities);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $attribute
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Attribute $attribute)
+    public function edit($id)
     {
+        $attribute = $this->attribute->find($id);
+
         return view('admin.attribute._edit', compact('attribute'));
     }
 
@@ -90,12 +92,12 @@ class AttributeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Attribute  $attribute
+     * @param  Attribute  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAttributeRequest $request, Attribute $attribute)
+    public function update(UpdateAttributeRequest $request, $id)
     {
-        $attribute->update($request->all());
+        $this->attribute->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -104,12 +106,12 @@ class AttributeController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Attribute  $attribute
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Attribute $attribute)
+    public function trash(Request $request, $id)
     {
-        $attribute->delete();
+        $this->attribute->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -123,7 +125,7 @@ class AttributeController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Attribute::onlyTrashed()->find($id)->restore();
+        $this->attribute->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -136,7 +138,7 @@ class AttributeController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        Attribute::onlyTrashed()->find($id)->forceDelete();
+        $this->attribute->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
@@ -146,10 +148,7 @@ class AttributeController extends Controller
      */
     public function reorder(Request $request)
     {
-        foreach ($request->all() as $index => $order)
-        {
-            Attribute::where('id', $index)->update(['order' => $order]);
-        }
+        $this->attribute->reorder($request->all());
 
         return response('success!', 200);
     }
@@ -159,16 +158,14 @@ class AttributeController extends Controller
      */
     public function ajaxGetParrentAttributeType(Request $request)
     {
-        if ($request->ajax())
-        {
-            $id = $request->input('id');
+        if ($request->ajax()){
+            $type_id = $this->attribute->getAttributeTypeId($request->input('id'));
 
-            $type_id = Attribute::findOrFail($id)->attribute_type_id;
-
-            return response("$type_id", 200);
+            if($type_id)
+                return response("$type_id", 200);
         }
 
-        return response('Not allowed!', 404);
+        return response('Not found!', 404);
     }
 
 }

@@ -93,7 +93,7 @@
     <div class="form-group">
       <div class="input-group">
         {{ Form::hidden('exclude_tax_n_shipping', 0) }}
-        {!! Form::checkbox('exclude_tax_n_shipping', null, !isset($gift_card) ? 1 : null, ['id' => 'exclude_tax_n_shipping', 'class' => 'icheckbox_line']) !!}
+        {!! Form::checkbox('exclude_tax_n_shipping', null, null, ['id' => 'exclude_tax_n_shipping', 'class' => 'icheckbox_line']) !!}
         {!! Form::label('exclude_tax_n_shipping', trans('app.form.exclude_tax_n_shipping')) !!}
         <span class="input-group-addon" id="">
           <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.exclude_tax_n_shipping') }}"></i>
@@ -106,7 +106,7 @@
     <div class="form-group">
       <div class="input-group">
         {{ Form::hidden('exclude_offer_items', 0) }}
-        {!! Form::checkbox('exclude_offer_items', null, !isset($gift_card) ? 1 : null, ['class' => 'icheckbox_line']) !!}
+        {!! Form::checkbox('exclude_offer_items', null, null, ['class' => 'icheckbox_line']) !!}
         {!! Form::label('exclude_offer_items', trans('app.form.exclude_offer_items')) !!}
         <span class="input-group-addon" id="">
           <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.exclude_offer_items') }}"></i>
@@ -119,7 +119,7 @@
     <div class="form-group">
       <div class="input-group">
         {{ Form::hidden('partial_use', 0) }}
-        {!! Form::checkbox('partial_use', null, !isset($gift_card) ? 1 : null, ['id' => 'partial_use', 'class' => 'icheckbox_line']) !!}
+        {!! Form::checkbox('partial_use', null, null, ['id' => 'partial_use', 'class' => 'icheckbox_line']) !!}
         {!! Form::label('partial_use', trans('app.form.allow_partial_use')) !!}
         <span class="input-group-addon" id="">
           <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.gift_card_partial_use') }}"></i>

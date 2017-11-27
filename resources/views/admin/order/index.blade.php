@@ -45,9 +45,9 @@
 								<a href="{{ route('admin.order.order.show', $order->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 
-							@can('archive', $trash)
-								{!! Form::open(['route' => ['admin.order.order.trash', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+							@can('archive', $order)
+								{!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.order_archive'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 								{!! Form::close() !!}
 							@endcan
 						</td>
@@ -89,7 +89,7 @@
 						<td>{{ $archive->payment_method }}</td>
 						<td>{{ $archive->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
-							@can('archive', $trash)
+							@can('archive', $archive)
 								<a href="{{ route('admin.order.order.restore', $archive->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>
 							@endcan
 						</td>

@@ -24,10 +24,11 @@ class Coupon extends Model
      * @var array
      */
     protected $casts = [
-        'partial_use' => 'boolean',
-        'exclude_offer_items' => 'boolean',
+        'partial_use'           => 'boolean',
+        'exclude_offer_items'   => 'boolean',
+        'limited'               => 'boolean',
         'exclude_tax_n_shipping' => 'boolean',
-        'active' => 'boolean',
+        'active'                 => 'boolean',
     ];
 
     /**
@@ -178,6 +179,6 @@ class Coupon extends Model
      */
     public function scopeMine($query)
     {
-        return $query->where('shop_id', Auth::user()->shop_id);
+        return $query->where('shop_id', Auth::user()->merchantId());
     }
 }

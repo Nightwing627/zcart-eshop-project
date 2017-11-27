@@ -4,9 +4,9 @@
 
 	Route::get('inventory/{inventory}/restore', 'InventoryController@restore')->name('inventory.restore');
 
-	Route::get('inventory/search', 'InventoryController@search')->name('inventory.search');
+	Route::get('inventory/showSearchForm', 'InventoryController@showSearchForm')->name('inventory.showSearchForm');
 
-	Route::get('inventory/find', 'InventoryController@find')->name('inventory.find');
+	Route::get('inventory/search', 'InventoryController@search')->name('inventory.search');
 
 	Route::get('inventory/setVariant/{inventory}', 'InventoryController@setVariant')->name('inventory.setVariant');
 

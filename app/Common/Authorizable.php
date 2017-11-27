@@ -13,18 +13,25 @@ use App\Helpers\Authorize;
 trait Authorizable
 {
     private $abilities = [
-        'dashboard' => 'dashboard',
-        'index' => 'view',
-        'show' => 'view',
-        'staffs' => 'view',
-        'entities' => 'view',
-        'edit' => 'edit',
-        'update' => 'edit',
-        'create' => 'add',
-        'store' => 'add',
-        'restore' => 'add',
-        'trash' => 'delete',
-        'destroy' => 'delete'
+        'dashboard'         => 'dashboard',
+        'index'             => 'view',
+        'show'              => 'view',
+        'staffs'            => 'view',
+        'entities'          => 'view',
+        'edit'              => 'edit',
+        'update'            => 'edit',
+        'create'            => 'add',
+        'add'               => 'add',
+        'store'             => 'add',
+        'find'              => 'add',
+        'addWithVariant'    => 'add',
+        'storeWithVariant'  => 'add',
+        'showSearchForm'    => 'add',
+        'search'            => 'add',
+        'restore'           => 'add',
+        'trash'             => 'delete',
+        'archive'           => 'archive',
+        'destroy'           => 'delete'
     ];
 
     /**

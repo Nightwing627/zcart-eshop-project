@@ -1,6 +1,6 @@
 <div class="modal-dialog modal-md">
     <div class="modal-content">
-        {!! Form::open(['route' => 'admin.stock.inventory.find', 'method' => 'get', 'id' => 'form', 'data-toggle' => 'validator']) !!}
+        {!! Form::open(['route' => 'admin.stock.inventory.search', 'method' => 'get', 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         	{{ trans('app.form.search') }}

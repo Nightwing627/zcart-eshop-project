@@ -35,7 +35,7 @@
 			          	<strong>{!! $blog->title !!}</strong>
 			          	<span class="excerpt-td">{!! $blog->excerpt !!}</span>
 			          </td>
-			          <td>{{ $blog->user->nice_name }}</td>
+			          <td>{{ $blog->author->nice_name }}</td>
 			          <td>{{ $blog->comments_count }}</td>
 			          <td>{{ ($blog->status) ? trans('app.published') : trans('app.draft') }}</td>
 			          <td>{{ $blog->published_at ? $blog->published_at->toDayDateTimeString() : trans('app.never') }}</td>

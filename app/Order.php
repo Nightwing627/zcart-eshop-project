@@ -149,7 +149,6 @@ class Order extends Model
     public function paymentStatus()
     {
         return $this->belongsTo('App\PaymentStatus');
-        // return $this->invoice->paymentMethod;
     }
 
     /**
@@ -187,7 +186,7 @@ class Order extends Model
      */
     public function scopeMine($query)
     {
-        return $query->where('shop_id', Auth::user()->shop_id);
+        return $query->where('shop_id', Auth::user()->merchantId());
     }
 
     /**

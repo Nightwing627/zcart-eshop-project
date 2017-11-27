@@ -109,81 +109,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if the user is the super admin
-     *
-     * @return bool
-     */
-    public function isSuperAdmin()
-    {
-        if($this->role_id === 1)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if the user is from main platform or not
-     *
-     * @return bool
-     */
-    public function isFromPlatform()
-    {
-        if(! $this->shop_id )
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if the user is a Merchant
-     *
-     * @return bool
-     */
-    public function isMerchant()
-    {
-        if($this->role_id === 3)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if the user is the super admin
-     *
-     * @return bool
-     */
-    public function scopeNotSuperAdmin($query)
-    {
-        return $query->where('role_id', '!=', 1);
-    }
-
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMerchant($query)
-    {
-        return $query->where('role_id', 3);
-    }
-
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->shop_id);
-    }
-
-    /**
      * Get role list for the user.
      *
      * @return array
@@ -213,5 +138,87 @@ class User extends Authenticatable
         return $this->shop_id;
     }
 
+    /**
+     * Check if the user is the super admin
+     *
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return $this->role_id === 1;
+    }
+
+    /**
+     * Check if the user is from main platform or not
+     *
+     * @return bool
+     */
+    public function isFromPlatform()
+    {
+        return ! $this->shop_id;
+    }
+
+    /**
+     * Check if the user is a Merchant
+     *
+     * @return bool
+     */
+    public function isMerchant()
+    {
+        return $this->role_id === 3;
+    }
+
+    /**
+     * Check if the user is the super admin
+     *
+     * @return bool
+     */
+    public function scopeNotSuperAdmin($query)
+    {
+        return $query->where('role_id', '!=', 1);
+    }
+
+    /**
+     * Scope a query to only include records from the users shop.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMerchant($query)
+    {
+        return $query->where('role_id', 3);
+    }
+
+    /**
+     * Scope a query to only include records with lower privilege than the logged in user.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeLevel($query)
+    {
+        return $query->whereHas('role', function($q)
+        {
+            return $q->where('level', '>', Auth::user()->role->level)->orWhere('level', Null);
+        });
+    }
+
+    /**
+     * Scope a query to only include records from the users shop.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithMerchant($query)
+    {
+        return $query->where('role_id', 3)->orWhere('shop_id', Auth::user()->merchantId());
+    }
+
+    /**
+     * Scope a query to only include records from the users shop.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMine($query)
+    {
+        return $query->where('shop_id', Auth::user()->merchantId());
+    }
 
 }

@@ -12,18 +12,21 @@
 						<th class="text-right">{{ trans('app.name') }}:</th>
 						<td style="width: 75%;"><span class="lead">{{ $product->name }}</span></td>
 					</tr>
+
 		            @if($product->brand)
 		                <tr>
 		                	<th class="text-right">{{ trans('app.brand') }}: </th>
 		                	<td style="width: 75%;">{{ $product->brand }}</td>
 		                </tr>
 		            @endif
+
 		            @if($product->model_number)
-					<tr>
-						<th class="text-right">{{ trans('app.model_number') }}:</th>
-						<td style="width: 75%;">{{ $product->model_number }}</td>
-					</tr>
+						<tr>
+							<th class="text-right">{{ trans('app.model_number') }}:</th>
+							<td style="width: 75%;">{{ $product->model_number }}</td>
+						</tr>
 					@endif
+
 	                <tr>
 	                	<th class="text-right">{{ trans('app.status') }}: </th>
 	                	<td style="width: 75%;">{{ $product->active ? trans('app.active') : trans('app.inactive') }}</td>
@@ -59,10 +62,12 @@
 								<th>{{ trans('app.requires_shipping') }}:</th>
 								<td>{{ $product->requires_shipping ? trans('app.yes') : trans('app.no') }}</td>
 							</tr>
+
 							<tr>
 								<th>{{ trans('app.downloadable') }}:</th>
 								<td>{{ $product->downloadable ? trans('app.yes') : trans('app.no') }}</td>
 							</tr>
+
 							<tr>
 								<th>{{ trans('app.has_variant') }}:</th>
 								<td>{{ $product->has_variant ? trans('app.yes') : trans('app.no') }}</td>
@@ -74,34 +79,37 @@
 				                	<td>{{ $product->manufacturer->name }}</td>
 				                </tr>
 				            @endif
+
 				            @if($product->origin)
 				                <tr>
 				                	<th>{{ trans('app.origin') }}: </th>
 				                	<td>{{ $product->origin->name }}</td>
 				                </tr>
 				            @endif
+
 				            @if($product->gtin_type && $product->gtin )
 				                <tr>
 				                	<th>{{ $product->gtin_type }}: </th>
 				                	<td>{{ $product->gtin }}</td>
 				                </tr>
 				            @endif
+
 				            @if($product->mpn)
 				                <tr>
 				                	<th>{{ trans('app.mpn') }}: </th>
 				                	<td>{{ $product->mpn }}</td>
 				                </tr>
 				            @endif
-				            @if($product->categories)
-				                <tr>
-				                	<th>{{ trans('app.categories') }}: </th>
-				                	<td>
+
+			                <tr>
+			                	<th>{{ trans('app.categories') }}: </th>
+			                	<td>
 						          	@foreach($product->categories as $category)
 							          	<span class="label label-outline">{{ $category->name }}</span>
 							        @endforeach
 				                </td>
 				            </tr>
-				            @endif
+
 				            @if($product->min_price && $product->min_price != 0)
 				                <tr>
 				                	<th>{{ trans('app.min_price') }}: </th>
@@ -129,6 +137,16 @@
 				    <!-- /.tab-pane -->
 				    <div class="tab-pane" id="tab_3">
 				        <table class="table">
+				            @if($product->tags)
+				                <tr>
+				                	<th>{{ trans('app.tags') }}: </th>
+				                	<td>
+							          	@foreach($product->tags as $tag)
+								          	<span class="label label-outline">{{ $tag->name }}</span>
+								        @endforeach
+				                	</td>
+				                </tr>
+				            @endif
 				            @if($product->slug)
 				                <tr>
 				                	<th>{{ trans('app.slug') }}: </th>

@@ -28,7 +28,7 @@
                         <td>{{ get_formated_currency($cart_list->grand_total) }}</td>
                         <td class="row-options">
                             <div class="btn-group">
-                                @if(Gate::allows('create', App\Order::class) || Gate::allows('update', $cart))
+                                @if(Gate::allows('create', App\Order::class) || Gate::allows('update', $cart_list))
                                     {!! Form::open(['route' => ['admin.order.order.create'], 'method' => 'get', 'style' => 'display:inline;']) !!}
                                         {{ Form::hidden('customer_id',$cart_list->customer->id) }}
                                         {{ Form::hidden('cart_id',$cart_list->id) }}
@@ -37,12 +37,12 @@
                                         </button>
                                     {!! Form::close() !!}
                                 @endif
-                                @can('view', $cart)
+                                @can('view', $cart_list)
                                     <a href="{{ Route('admin.order.cart.show', $cart_list->id) }}" class="btn btn-sm btn-default" data-target="myDynamicModal" data-toggle="modal">
                                         <i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i>
                                     </a>
                                 @endcan
-                                @can('delete', $cart)
+                                @can('delete', $cart_list)
                                     {!! Form::open(['route' => ['admin.order.cart.trash', $cart_list->id], 'method' => 'delete', 'style' => 'display:inline;']) !!}
                                         <button type="submit" class="btn btn-sm btn-default confirm ajax-silent">
                                             <i data-toggle="tooltip" data-placement="top" title="{{ trans('app.trash') }}" class="fa fa-trash-o"></i>

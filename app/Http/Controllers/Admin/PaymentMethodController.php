@@ -1,10 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\PaymentMethod;
-use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Repositories\PaymentMethod\PaymentMethodRepository;
 use App\Http\Requests\Validations\CreatePaymentMethodRequest;
 use App\Http\Requests\Validations\UpdatePaymentMethodRequest;
 
@@ -14,12 +13,15 @@ class PaymentMethodController extends Controller
 
     private $model_name;
 
+    private $paymentMethod;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(PaymentMethodRepository $paymentMethod)
     {
         $this->model_name = trans('app.model.payment_method');
+        $this->paymentMethod = $paymentMethod;
     }
 
     /**
@@ -29,11 +31,11 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
-        $data['payment_methods'] = PaymentMethod::all();
+        $payment_methods = $this->paymentMethod->all();
 
-        $data['trashes'] = PaymentMethod::onlyTrashed()->get();
+        $trashes = $this->paymentMethod->trashOnly();
 
-        return view('admin.payment-method.index', $data);
+        return view('admin.payment-method.index', compact('payment_methods', 'trashes'));
     }
 
     /**
@@ -54,14 +56,7 @@ class PaymentMethodController extends Controller
      */
     public function store(CreatePaymentMethodRequest $request)
     {
-        $payment_method = new PaymentMethod($request->all());
-
-        $payment_method->save();
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'payment-methods', $payment_method->id);
-        }
+        $this->paymentMethod->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -72,8 +67,10 @@ class PaymentMethodController extends Controller
      * @param  PaymentMethod  $paymentMethod
      * @return \Illuminate\Http\Response
      */
-    public function edit(PaymentMethod $paymentMethod)
+    public function edit($id)
     {
+        $paymentMethod = $this->paymentMethod->find($id);
+
         return view('admin.payment-method._edit', compact('paymentMethod'));
     }
 
@@ -84,19 +81,9 @@ class PaymentMethodController extends Controller
      * @param  PaymentMethod  $paymentMethod
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePaymentMethodRequest $request, PaymentMethod $paymentMethod)
+    public function update(UpdatePaymentMethodRequest $request, $id)
     {
-        $paymentMethod->update($request->all());
-
-        if ($request->input('delete_image') == 1)
-        {
-            ImageHelper::RemoveImages('payment-methods', $paymentMethod->id);
-        }
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'payment-methods', $paymentMethod->id);
-        }
+        $this->paymentMethod->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -105,12 +92,12 @@ class PaymentMethodController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  PaymentMethod $paymentMethod
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, PaymentMethod $paymentMethod)
+    public function trash(Request $request, $id)
     {
-        $paymentMethod->delete();
+        $this->paymentMethod->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -124,7 +111,7 @@ class PaymentMethodController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        PaymentMethod::onlyTrashed()->where('id', $id)->restore();
+        $this->paymentMethod->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -138,9 +125,7 @@ class PaymentMethodController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        PaymentMethod::onlyTrashed()->find($id)->forceDelete();
-
-        ImageHelper::RemoveImages('payment-methods', $id);
+        $this->paymentMethod->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

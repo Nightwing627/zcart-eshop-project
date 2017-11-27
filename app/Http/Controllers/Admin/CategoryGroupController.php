@@ -1,9 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\CategoryGroup;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Repositories\CategoryGroup\CategoryGroupRepository;
 use App\Http\Requests\Validations\CreateCategoryGroupRequest;
 use App\Http\Requests\Validations\UpdateCategoryGroupRequest;
 
@@ -13,12 +13,15 @@ class CategoryGroupController extends Controller
 
     private $model_name;
 
+    private $categoryGroup;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(CategoryGroupRepository $categoryGroup)
     {
         $this->model_name = trans('app.model.category_group');
+        $this->categoryGroup = $categoryGroup;
     }
 
     /**
@@ -28,11 +31,11 @@ class CategoryGroupController extends Controller
      */
     public function index()
     {
-        $data['categoryGrps'] = CategoryGroup::with('subGroups')->get();
+        $categoryGrps = $this->categoryGroup->all();
 
-        $data['trashes'] = CategoryGroup::onlyTrashed()->with('subGroups')->get();
+        $trashes = $this->categoryGroup->trashOnly();
 
-        return view('admin.category.categoryGroup', $data);
+        return view('admin.category.categoryGroup', compact('categoryGrps', 'trashes'));
     }
 
     /**
@@ -53,9 +56,7 @@ class CategoryGroupController extends Controller
      */
     public function store(CreateCategoryGroupRequest $request)
     {
-        $category = new CategoryGroup($request->all());
-
-        $category->save();
+        $this->categoryGroup->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -63,11 +64,13 @@ class CategoryGroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  CategoryGroup $categoryGroup
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(CategoryGroup $categoryGroup)
+    public function edit($id)
     {
+        $categoryGroup = $this->categoryGroup->find($id);
+
         return view('admin.category._editGrp', compact('categoryGroup'));
     }
 
@@ -75,12 +78,12 @@ class CategoryGroupController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  CategoryGroup $categoryGroup
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryGroupRequest $request, CategoryGroup $categoryGroup)
+    public function update(UpdateCategoryGroupRequest $request, $id)
     {
-        $categoryGroup->update($request->all());
+        $this->categoryGroup->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -89,12 +92,12 @@ class CategoryGroupController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  CategoryGroup $categoryGroup
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, CategoryGroup $categoryGroup)
+    public function trash(Request $request, $id)
     {
-        $categoryGroup->delete();
+        $this->categoryGroup->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -108,7 +111,7 @@ class CategoryGroupController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        CategoryGroup::onlyTrashed()->where('id',$id)->restore();
+        $this->categoryGroup->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -121,7 +124,7 @@ class CategoryGroupController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        CategoryGroup::onlyTrashed()->find($id)->forceDelete();
+        $this->categoryGroup->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

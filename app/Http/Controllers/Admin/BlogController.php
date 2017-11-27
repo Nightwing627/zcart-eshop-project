@@ -1,11 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use Auth;
-use App\Tag;
-use App\Blog;
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Blog\BlogRepository;
 use App\Http\Requests\Validations\CreateBlogRequest;
 use App\Http\Requests\Validations\UpdateBlogRequest;
 
@@ -15,12 +13,15 @@ class BlogController extends Controller
 
     private $model_name;
 
+    private $blog;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(BlogRepository $blog)
     {
         $this->model_name = trans('app.model.blog');
+        $this->blog = $blog;
     }
 
     /**
@@ -30,11 +31,11 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $data['blogs'] = Blog::with('user')->withCount('comments')->get();
+        $blogs = $this->blog->all();
 
-        $data['trashes'] = Blog::onlyTrashed()->get();
+        $trashes = $this->blog->trashOnly();
 
-        return view('admin.blog.index', $data);
+        return view('admin.blog.index', compact('blogs', 'trashes'));
     }
 
     /**
@@ -55,14 +56,7 @@ class BlogController extends Controller
      */
     public function store(CreateBlogRequest $request)
     {
-        $blog = new Blog($request->all());
-
-        Auth::user()->blogs()->save($blog);
-
-        if ($request->input('tag_list'))
-        {
-            $this->syncTags($blog, $request->input('tag_list'));
-        }
+        $this->blog->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -81,11 +75,13 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Blog  $blog
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Blog $blog)
+    public function edit($id)
     {
+        $blog = $this->blog->find($id);
+
         return view('admin.blog._edit', compact('blog'));
     }
 
@@ -93,17 +89,12 @@ class BlogController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Blog  $blog
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBlogRequest $request, Blog $blog)
+    public function update(UpdateBlogRequest $request, $id)
     {
-        $blog->update($request->all());
-
-        if ($request->input('tag_list'))
-        {
-            $this->syncTags($blog, $request->input('tag_list'));
-        }
+        $this->blog->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -112,12 +103,12 @@ class BlogController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Blog  $blog
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Blog $blog)
+    public function trash(Request $request, $id)
     {
-        $blog->delete();
+        $this->blog->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -131,7 +122,7 @@ class BlogController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Blog::onlyTrashed()->where('id',$id)->restore();
+        $this->blog->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -144,41 +135,8 @@ class BlogController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $blog = Blog::onlyTrashed()->find($id);
-
-        $blog->forceDelete();
-
-        $this->syncTags($blog, []);
+        $this->blog->destroy($id);
 
         return back()->with('success', trans('messages.deleted', ['model' => $this->model_name]));
     }
-
-    /**
-     * Sync up the tag list for blog post create new tags if not exist
-     *
-     * @param  Blog $blog
-     * @param  array $tagIds
-     * @return void
-     */
-    public function syncTags(Blog $blog, array $tagIds)
-    {
-        $tagArr = [];
-
-        foreach ($tagIds as $tag)
-        {
-            $oldTagId = Tag::find($tag);
-
-            if ($oldTagId){
-                $tagArr[] =  $tag;
-            }else{
-                // if the tag not numeric thats meaninig that its new tag and we should create it
-                $newTag = Tag::create(['name' => $tag]);
-
-                $tagArr[] = $newTag->id;
-            }
-        }
-
-        $blog->tags()->sync($tagArr);
-    }
-
 }

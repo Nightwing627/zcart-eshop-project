@@ -87,11 +87,11 @@
 				            @endif
 			                <tr>
 			                	<th>{{ trans('app.active_from') }}: </th>
-			                	<td>{{ $coupon->starting_time->toDayDateTimeString() }}</td>
+			                	<td>{{ $coupon->starting_time ? $coupon->starting_time->toDayDateTimeString() : ''}}</td>
 			                </tr>
 			                <tr>
 			                	<th>{{ trans('app.active_till') }}: </th>
-			                	<td>{{ $coupon->ending_time->toDayDateTimeString() }}</td>
+			                	<td>{{ $coupon->ending_time ? $coupon->ending_time->toDayDateTimeString() : ''}}</td>
 			                </tr>
 				            @if($coupon->min_order_amount && $coupon->min_order_amount != 0)
 				                <tr>

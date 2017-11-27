@@ -77,6 +77,7 @@
 	        <thead>
 	        <tr>
 	          <th>{{ trans('app.name') }}</th>
+  			  <th>{{ trans('app.type') }}</th>
 	          <th>{{ trans('app.deleted_at') }}</th>
 	          <th>{{ trans('app.option') }}</th>
 	        </tr>
@@ -85,6 +86,7 @@
 		        @foreach($trashes as $trash )
 			        <tr>
 			          <td>{{ $trash->name }}</td>
+					  <td>{{ $trash->attributeType->type }}</td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 			          <td class="row-options">
 						@can('delete', $trash)

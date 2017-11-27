@@ -179,6 +179,7 @@ return [
     'use' => 'Use',
     'active' => 'Active',
     'inactive' => 'Inactive',
+    'order_archive' => 'Move to archived',
     'delete_permanently' => 'Delete permanently',
     'sex' => 'Gender',
     'male' => 'Male',

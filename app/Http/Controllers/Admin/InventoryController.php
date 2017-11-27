@@ -1,18 +1,13 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Product;
-use App\Inventory;
-use App\Attribute;
-use App\AttributeValue;
-use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\SearchRequest;
+use App\Repositories\Inventory\InventoryRepository;
 use App\Http\Requests\Validations\CreateInventoryRequest;
 use App\Http\Requests\Validations\UpdateInventoryRequest;
 use App\Http\Requests\Validations\CreateInventoryWithVariantRequest;
-
 
 class InventoryController extends Controller
 {
@@ -20,12 +15,16 @@ class InventoryController extends Controller
 
     private $model_name;
 
+    private $inventory;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(InventoryRepository $inventory)
     {
         $this->model_name = trans('app.model.inventory');
+
+        $this->inventory = $inventory;
     }
 
     /**
@@ -35,11 +34,11 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        $data['inventories'] = Inventory::mine()->with('product', 'tax')->get();
+        $inventories = $this->inventory->all();
 
-        $data['trashes'] = Inventory::mine()->onlyTrashed()->get();
+        $trashes = $this->inventory->trashOnly();
 
-        return view('admin.inventory.index', $data);
+        return view('admin.inventory.index', compact('inventories', 'trashes'));
     }
 
     /**
@@ -47,9 +46,9 @@ class InventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function showSearchForm()
     {
-        return view('admin.inventory._search');
+        return view('admin.inventory._search_form');
     }
 
     /**
@@ -57,19 +56,12 @@ class InventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function find(SearchRequest $request)
+    public function search(SearchRequest $request)
     {
-        $query = $request->input('search');
-
-        $products = Product::where('gtin', $query)
-                ->orWhere('model_number', 'LIKE', '%'. $query .'%')
-                ->orWhere('name', 'LIKE', '%'. $query .'%')
-                ->get();
+        $products = $this->inventory->search($request);
 
         if($products->isEmpty())
-        {
             return back()->with('warning', trans('messages.nofound', ['model' => trans('app.model.product')]));
-        }
 
         return view('admin.inventory.found', compact('products', $products));
     }
@@ -91,16 +83,14 @@ class InventoryController extends Controller
      */
     public function add(Request $request, $id)
     {
-        $exist = Inventory::where('product_id', $id)->mine()->first();
+        $inInventory = $this->inventory->checkInveoryExist($id);
 
-        if($exist)
-        {
-            return redirect(route('admin.stock.inventory.edit', $exist->id))->with('warning', trans('messages.inventory_exist'));
-        }
+        if($inInventory)
+            return redirect()->route('admin.stock.inventory.edit', $inInventory->id)->with('warning', trans('messages.inventory_exist'));
 
-        $data['product'] = Product::findOrFail($id);
+        $product = $this->inventory->findProduct($id);
 
-        return view('admin.inventory.create', $data);
+        return view('admin.inventory.create', compact('product'));
     }
 
     /**
@@ -110,15 +100,15 @@ class InventoryController extends Controller
      */
     public function addWithVariant(Request $request, $id)
     {
-        $variants = $this->confirmAttributes($request->except('_token'));
+        $variants = $this->inventory->confirmAttributes($request->except('_token'));
 
-        $data['combinations'] = generate_combinations($variants);
+        $combinations = generate_combinations($variants);
 
-        $data['attributes'] = Attribute::find(array_keys($variants))->pluck('name', 'id');
+        $attributes = $this->inventory->getAttributeList(array_keys($variants));
 
-        $data['product'] = Product::findOrFail($id);
+        $product = $this->inventory->findProduct($id);
 
-        return view('admin.inventory.createWithVariant', $data);
+        return view('admin.inventory.createWithVariant', compact('combinations', 'attributes', 'product'));
     }
 
     /**
@@ -127,24 +117,9 @@ class InventoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
     public function store(CreateInventoryRequest $request)
     {
-        $inventory = new Inventory($request->all());
-
-        $inventory->save();
-
-        $this->setAttributes($inventory, $request->input('variants'));
-
-        if ($request->input('carrier_list'))
-        {
-            $inventory->carriers()->sync($request->input('carrier_list'));
-        }
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'inventories', $inventory->id);
-        }
+        $this->inventory->store($request);
 
         return redirect()->route('admin.stock.inventory.index')->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -158,106 +133,7 @@ class InventoryController extends Controller
     // public function store(Request $request)
     public function storeWithVariant(CreateInventoryWithVariantRequest $request)
     {
-        // Common informations
-        $commonInfo['user_id'] = $request->user()->id; //Set user_id
-
-        $commonInfo['shop_id'] = $request->user()->shop_id; //Set shop_id
-
-        $commonInfo['product_id'] = $request->input('product_id');
-
-        $commonInfo['warehouse_id'] = $request->input('warehouse_id');
-
-        $commonInfo['supplier_id'] = $request->input('supplier_id');
-
-        $commonInfo['packaging_id'] = $request->input('packaging_id');
-
-        $commonInfo['shipping_width'] = $request->input('shipping_width');
-
-        $commonInfo['shipping_height'] = $request->input('shipping_height');
-
-        $commonInfo['shipping_depth'] = $request->input('shipping_depth');
-
-        $commonInfo['shipping_weight'] = $request->input('shipping_weight');
-
-        $commonInfo['available_from'] = $request->input('available_from');
-
-        $commonInfo['active'] = $request->input('active');
-
-        $commonInfo['tax_id'] = $request->input('tax_id');
-
-        $commonInfo['min_order_quantity'] = $request->input('min_order_quantity');
-
-        $commonInfo['alert_quantity'] = $request->input('alert_quantity');
-
-        $commonInfo['description'] = $request->input('description');
-
-        // Arrays
-        $skus = $request->input('sku');
-
-        $conditions = $request->input('condition');
-
-        $stock_quantities = $request->input('stock_quantity');
-
-        $purchase_prices = $request->input('purchase_price');
-
-        $sale_prices = $request->input('sale_price');
-
-        $offer_prices = $request->input('offer_price');
-
-        $images = $request->file('image');
-
-        // Relations
-        $carrier_lists = $request->input('carrier_list');
-
-        $variants = $request->input('variants');
-
-        //Preparing data and insert records.
-        $dynamicInfo = [];
-        foreach ($skus as $key => $sku)
-        {
-            $dynamicInfo['sku'] = $skus[$key];
-
-            $dynamicInfo['condition'] = $conditions[$key];
-
-            $dynamicInfo['stock_quantity'] = $stock_quantities[$key];
-
-            $dynamicInfo['purchase_price'] = $purchase_prices[$key];
-
-            $dynamicInfo['sale_price'] = $sale_prices[$key];
-
-            $dynamicInfo['offer_price'] = ($offer_prices[$key]) ? $offer_prices[$key] : NULL ;
-
-            $dynamicInfo['offer_start'] = ($offer_prices[$key]) ? $request->input('offer_start') : NULL ;
-
-            $dynamicInfo['offer_end'] = ($offer_prices[$key]) ? $request->input('offer_end') : NULL ;
-
-            // Merge the common info and dynamic info to data array
-            $data = array_merge($dynamicInfo, $commonInfo);
-
-            // Insert the record
-            $inventory = Inventory::create($data);
-
-            // Sync Carriers
-            if ($carrier_lists)
-            {
-                $inventory->carriers()->sync($carrier_lists);
-            }
-
-            // Sync Attributes
-            if ($variants[$key])
-            {
-                $this->setAttributes($inventory, $variants[$key]);
-            }
-
-            // Save Images
-            if ($images[$key])
-            {
-                $images[$key]->move('assets/images/inventories/', $inventory->id.'.png');
-
-                ImageHelper::CreateThumbnails('inventories', $inventory->id);
-            }
-
-        }
+        $this->inventory->storeWithVariant($request);
 
         return redirect()->route('admin.stock.inventory.index')->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -268,8 +144,10 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Inventory $inventory)
+    public function show($id)
     {
+        $inventory = $this->inventory->find($id);
+
         return view('admin.inventory._show', compact('inventory'));
     }
 
@@ -279,9 +157,11 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Inventory $inventory)
+    public function edit($id)
     {
-        $product = Product::findOrFail($inventory->product_id);
+        $inventory = $this->inventory->find($id);
+
+        $product = $this->inventory->findProduct($inventory->product_id);
 
         return view('admin.inventory.edit', compact('inventory', 'product'));
     }
@@ -295,26 +175,7 @@ class InventoryController extends Controller
      */
     public function update(UpdateInventoryRequest $request, $id)
     {
-        $inventory = Inventory::findOrFail($id);
-
-        $inventory->update($request->all());
-
-        $this->setAttributes($inventory, $request->input('variants'));
-
-        if ($request->input('carrier_list'))
-        {
-            $inventory->carriers()->sync($request->input('carrier_list'));
-        }
-
-        if ($request->input('delete_image') == 1)
-        {
-            ImageHelper::RemoveImages('inventories', $id);
-        }
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'inventories', $inventory->id);
-        }
+        $this->inventory->update($request, $id);
 
         return redirect()->route('admin.stock.inventory.index')->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -323,12 +184,12 @@ class InventoryController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Inventory $inventory
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Inventory $inventory)
+    public function trash(Request $request, $id)
     {
-        $inventory->delete();
+        $this->inventory->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -342,7 +203,7 @@ class InventoryController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Inventory::onlyTrashed()->where('id', $id)->restore();
+        $this->inventory->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -356,68 +217,9 @@ class InventoryController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        Inventory::onlyTrashed()->find($id)->forceDelete();
-
-        ImageHelper::RemoveImages('inventories', $id);
+        $this->inventory->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
 
-    /**
-     * Set attribute pivot table for the product variants like color, size and more
-     * @param obj $inventory
-     * @param array $attributes
-     */
-    private function setAttributes($inventory, $attributes)
-    {
-        $attributes = array_filter($attributes);        // remove empty elements
-
-        $temp = [];
-        foreach ($attributes as $attribute_id => $attribute_value_id)
-        {
-            $temp[$attribute_id] = ['attribute_value_id' => $attribute_value_id];
-        }
-
-        if (!empty($temp))
-        {
-            $inventory->attributes()->sync($temp);
-        }
-
-        return true;
-    }
-
-    /**
-     * Check the list of attribute values and add new if need
-     * @param  [type] $attribute
-     * @param  array  $values
-     * @return array
-     */
-    private function confirmAttributes($attributeWithValues)
-    {
-        $results = array();
-
-        foreach ($attributeWithValues as $attribute => $values)
-        {
-            foreach ($values as $value)
-            {
-                $oldValueId = AttributeValue::find($value);
-
-                $oldValueName = AttributeValue::where('value', $value)->where('attribute_id', $attribute)->first();
-
-                if ($oldValueId || $oldValueName)
-                {
-                    $results[$attribute][($oldValueId) ? $oldValueId->id : $oldValueName->id] = ($oldValueId) ? $oldValueId->value : $oldValueName->value;
-                }else{
-                    // if the value not numeric thats meaninig that its new value and we need to create it
-                    $newID = AttributeValue::insertGetId(['attribute_id' => $attribute, 'value' => $value]);
-
-                    $newAttrValue = AttributeValue::find($newID);
-
-                    $results[$attribute][$newAttrValue->id] = $newAttrValue->value;
-                }
-            }
-        }
-
-        return $results;
-    }
 }

@@ -22,7 +22,7 @@ class CreateCartRequest extends Request
      * @return array
      */
     public function rules()
-    {        
+    {
         return [
             'cart.*.inventory_id' => 'required',
             'cart.*.item_description' => 'required',

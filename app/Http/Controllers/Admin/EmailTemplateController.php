@@ -1,9 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\EmailTemplate;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Repositories\EmailTemplate\EmailTemplateRepository;
 use App\Http\Requests\Validations\CreateEmailTemplateRequest;
 use App\Http\Requests\Validations\UpdateEmailTemplateRequest;
 
@@ -13,12 +13,16 @@ class EmailTemplateController extends Controller
 
     private $model_name;
 
+    private $emailTemplate;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(EmailTemplateRepository $emailTemplate)
     {
         $this->model_name = trans('app.model.email_template');
+
+        $this->emailTemplate = $emailTemplate;
     }
 
     /**
@@ -28,11 +32,11 @@ class EmailTemplateController extends Controller
      */
     public function index()
     {
-        $data['templates'] = EmailTemplate::all();
+        $templates = $this->emailTemplate->all();
 
-        $data['trashes'] = EmailTemplate::onlyTrashed()->get();
+        $trashes = $this->emailTemplate->trashOnly();
 
-        return view('admin.email-template.index', $data);
+        return view('admin.email-template.index', compact('templates', 'trashes'));
     }
 
     /**
@@ -53,9 +57,7 @@ class EmailTemplateController extends Controller
      */
     public function store(CreateEmailTemplateRequest $request)
     {
-        $email_template = new EmailTemplate($request->all());
-
-        $email_template->save();
+        $this->emailTemplate->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -63,11 +65,13 @@ class EmailTemplateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  EmailTemplate $emailTemplate
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(EmailTemplate $emailTemplate)
+    public function edit($id)
     {
+        $emailTemplate = $this->emailTemplate->find($id);
+
         return view('admin.email-template._edit', compact('emailTemplate'));
     }
 
@@ -75,12 +79,12 @@ class EmailTemplateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  EmailTemplate $emailTemplate
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEmailTemplateRequest $request, EmailTemplate $emailTemplate)
+    public function update(UpdateEmailTemplateRequest $request, $id)
     {
-        $emailTemplate->update($request->all());
+        $this->emailTemplate->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -89,12 +93,12 @@ class EmailTemplateController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  EmailTemplate $emailTemplate
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, EmailTemplate $emailTemplate)
+    public function trash(Request $request, $id)
     {
-        $emailTemplate->delete();
+        $this->emailTemplate->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -108,7 +112,7 @@ class EmailTemplateController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        EmailTemplate::onlyTrashed()->where('id', $id)->restore();
+        $this->emailTemplate->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -122,7 +126,7 @@ class EmailTemplateController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        EmailTemplate::onlyTrashed()->find($id)->forceDelete();
+        $this->emailTemplate->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

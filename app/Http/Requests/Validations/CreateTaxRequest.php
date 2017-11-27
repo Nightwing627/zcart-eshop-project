@@ -23,6 +23,8 @@ class CreateTaxRequest extends Request
      */
     public function rules()
     {
+        Request::merge( array( 'shop_id' => Request::user()->merchantId() ) ); //Set shop_id
+
         return [
            'name' => 'required',
            'taxrate' => 'required|numeric',

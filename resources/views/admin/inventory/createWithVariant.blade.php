@@ -4,7 +4,7 @@
     @can('create', App\Category::class)
         <a href="{{ route('admin.import', 'inventories') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 
-        <a href="{{ route('admin.stock.inventory.search') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
+        <a href="{{ route('admin.stock.inventory.showSearchForm') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
     @endcan
 
     @can('create', App\Product::class)

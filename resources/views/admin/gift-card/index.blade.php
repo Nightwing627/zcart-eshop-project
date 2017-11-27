@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-	@can('create', App\GifCard::class)
+	@can('create', App\GiftCard::class)
 		<a href="{{ route('admin.exim', 'gift-card') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 
 		<a href="{{ route('admin.promotion.giftCard.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_gift_card') }}</a>
@@ -38,8 +38,10 @@
 						<td>{{ $card->pin_code }}</td>
 						<td>{{ $card->serial_number }}</td>
 						<td>{{ get_formated_currency($card->value) }}</td>
-						<td>{{ $card->activation_time->toDayDateTimeString() }}</td>
-						<td>{{ $card->expiry_time->toDayDateTimeString() }}</td>
+						<td>
+							{{ $card->activation_time ? $card->activation_time->toDayDateTimeString() : '' }}
+						</td>
+						<td>{{ $card->expiry_time ? $card->expiry_time->toDayDateTimeString() : '' }}</td>
 						<td>
 							@if($card->expiry_time < \Carbon\Carbon::now())
 								{{ trans('app.expired') }}

@@ -62,9 +62,9 @@
 </div>
 <div class="form-group">
 	<label for="exampleInputFile"> {{ trans('app.form.logo') }}</label>
-	@if(isset($payment_method) && File::exists(image_path('payment-methods') . $payment_method->id . '_150x150.png'))
+	@if(isset($paymentMethod) && File::exists(image_path('payment-methods') . $paymentMethod->id . '_150x150.png'))
 	<label>
-		<img src="{{ get_image_src($payment_method->id, 'payment-methods', '150x150') }}" width="80px" alt="{{ trans('app.image') }}">
+		<img src="{{ get_image_src($paymentMethod->id, 'payment-methods', '150x150') }}" width="80px" alt="{{ trans('app.image') }}">
 		<span style="margin-left: 10px;">
 		  {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
 		</span>

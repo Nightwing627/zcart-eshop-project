@@ -37,7 +37,7 @@ class demoSeeder extends Seeder
 
             });
 
-        factory(App\Shop::class, $this->tinycount)
+        factory(App\Shop::class, $this->longCount)
             ->create()
             ->each(function($shop){
                 $shop->addresses()->save(factory(App\Address::class)->make(['address_title' => $shop->name, 'address_type' => 'Primary']));
@@ -243,6 +243,12 @@ class demoSeeder extends Seeder
         factory('App\Blog', $this->tinycount)->create();
 
         factory('App\BlogComment', $this->longCount)->create();
+
+        factory('App\Tag', $this->longCount)->create();
+
+        factory(App\GiftCard::class, $this->longCount)->create();
+
+        factory(App\Coupon::class, $this->longCount)->create();
 
         // factory('App\Address', $this->longLongCount)->create();
 

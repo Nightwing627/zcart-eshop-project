@@ -36,8 +36,8 @@
 						<td>
 							{{ $coupon->type == 'amount' ? get_formated_currency($coupon->value) : get_formated_decimal($coupon->value) . ' ' . trans('app.percent') }}
 						</td>
-						<td>{{ $coupon->starting_time->toDayDateTimeString() }}</td>
-						<td>{{ $coupon->ending_time->toDayDateTimeString() }}</td>
+						<td>{{ $coupon->starting_time ? $coupon->starting_time->toDayDateTimeString() : '' }}</td>
+						<td>{{ $coupon->ending_time ? $coupon->ending_time->toDayDateTimeString() : '' }}</td>
 						<td>
 							@if($coupon->ending_time < \Carbon\Carbon::now())
 								{{ trans('app.expired') }}
@@ -91,7 +91,7 @@
 					<tr>
 						<td>{{ $trash->name }}</td>
 						<td>
-							{{ $coupon->code }}
+							{{ $trash->code }}
 							@if($trash->ending_time < \Carbon\Carbon::now())
 								({{ trans('app.expired') }})
 							@endif

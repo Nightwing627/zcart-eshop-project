@@ -70,11 +70,11 @@
 			                </tr>
 			                <tr>
 			                	<th>{{ trans('app.active_from') }}: </th>
-			                	<td>{{ $giftCard->activation_time->toDayDateTimeString() }}</td>
+			                	<td>{{ $giftCard->activation_time ? $giftCard->activation_time->toDayDateTimeString() : ''}}</td>
 			                </tr>
 			                <tr>
 			                	<th>{{ trans('app.active_till') }}: </th>
-			                	<td>{{ $giftCard->expiry_time->toDayDateTimeString() }}</td>
+			                	<td>{{ $giftCard->expiry_time ? $giftCard->expiry_time->toDayDateTimeString() : ''}}</td>
 			                </tr>
 				        </table>
 				    </div>

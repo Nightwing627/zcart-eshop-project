@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Shop;
-use App\Address;
-use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Repositories\Shop\ShopRepository;
 use App\Http\Requests\Validations\CreateShopRequest;
 use App\Http\Requests\Validations\UpdateShopRequest;
 
@@ -17,12 +15,16 @@ class ShopController extends Controller
 
     private $model_name;
 
+    private $shop;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(ShopRepository $shop)
     {
         $this->model_name = trans('app.model.shop');
+
+        $this->shop = $shop;
     }
 
     /**
@@ -32,11 +34,11 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $data['shops'] = Shop::with('owner', 'primaryAddress')->get();
+        $shops = $this->shop->all();
 
-        $data['trashes'] = Shop::onlyTrashed()->get();
+        $trashes = $this->shop->trashOnly();
 
-        return view('admin.shop.index', $data);
+        return view('admin.shop.index', compact('shops', 'trashes'));
     }
 
     /**
@@ -45,11 +47,13 @@ class ShopController extends Controller
      * @param  Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function staffs(Shop $shop)
+    public function staffs($id)
     {
-        $staffs = $shop->staffs()->with('role', 'primaryAddress')->get();
+        $shop = $this->shop->find($id);
 
-        $trashes = $shop->staffs()->onlyTrashed()->get();
+        $staffs = $this->shop->staffs($shop);
+
+        $trashes = $this->shop->staffsTrashOnly($shop);
 
         return view('admin.shop.staffs', compact('shop', 'staffs', 'trashes'));
     }
@@ -72,18 +76,7 @@ class ShopController extends Controller
      */
     public function store(CreateShopRequest $request)
     {
-        $shop = new Shop($request->all());
-
-        $shop->save();
-
-        $address = new Address($request->all());
-
-        $shop->addresses()->save($address);
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'shops', $shop->id);
-        }
+        $this->shop->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -94,19 +87,23 @@ class ShopController extends Controller
      * @param  Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function show(Shop $shop)
+    public function show($id)
     {
+        $shop = $this->shop->find($id);
+
         return view('admin.shop._show', compact('shop'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Shop $shop
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Shop $shop)
+    public function edit($id)
     {
+        $shop = $this->shop->find($id);
+
         return view('admin.shop._edit', compact('shop'));
     }
 
@@ -114,22 +111,12 @@ class ShopController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Shop $shop
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateShopRequest $request, Shop $shop)
+    public function update(UpdateShopRequest $request, $id)
     {
-        $shop->update($request->all());
-
-        if ($request->input('delete_image') == 1)
-        {
-            ImageHelper::RemoveImages('shops', $shop->id);
-        }
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'shops', $shop->id);
-        }
+        $this->shop->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -138,12 +125,12 @@ class ShopController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Shop $shop
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Shop $shop)
+    public function trash(Request $request, $id)
     {
-        $shop->delete();
+        $this->shop->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -157,7 +144,7 @@ class ShopController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Shop::onlyTrashed()->where('id',$id)->restore();
+        $this->shop->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -171,15 +158,7 @@ class ShopController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $shop = Shop::onlyTrashed()->find($id);
-
-        $shop->flushAddresses();
-
-        $shop->staffs()->forceDelete();
-
-        $shop->forceDelete();
-
-        ImageHelper::RemoveImages('shops', $id);
+        $this->shop->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

@@ -1,11 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Tag;
-use App\Product;
-use App\Helpers\ImageHelper;
-use Illuminate\Http\Request;
 use App\Common\Authorizable;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Product\ProductRepository;
 use App\Http\Requests\Validations\CreateProductRequest;
 use App\Http\Requests\Validations\UpdateProductRequest;
 
@@ -13,14 +11,17 @@ class ProductController extends Controller
 {
     use Authorizable;
 
-    private $model_name;
+    private $model;
+
+    private $product;
 
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(ProductRepository $product)
     {
-        $this->model_name = trans('app.model.product');
+        $this->model = trans('app.model.product');
+        $this->product = $product;
     }
 
     /**
@@ -30,11 +31,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data['products'] = Product::with('categories')->get();
+        $products = $this->product->all();
 
-        $data['trashes'] = Product::onlyTrashed()->get();
+        $trashes = $this->product->trashOnly();
 
-        return view('admin.product.index', $data);
+        return view('admin.product.index', compact('products', 'trashes'));
     }
 
     /**
@@ -55,23 +56,9 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request)
     {
-        $product = new Product($request->except('image', 'category_list', 'tag_list'));
+        $this->product->store($request);
 
-        $product->save();
-
-        $this->syncCategories($product, $request->input('category_list'));
-
-        if ($request->input('tag_list'))
-        {
-            $this->syncTags($product, $request->input('tag_list'));
-        }
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'products', $product->id);
-        }
-
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));;
+        return back()->with('success', trans('messages.created', ['model' => $this->model]));;
     }
 
     /**
@@ -80,19 +67,23 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
+        $product = $this->product->find($id);
+
         return view('admin.product._show', compact('product'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Product $product
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
+        $product = $this->product->find($id);
+
         return view('admin.product._edit', compact('product'));
     }
 
@@ -100,45 +91,28 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Product $product
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, $id)
     {
-        $product->update($request->except('image', 'category_list', 'tag_list', 'delete_image'));
+        $this->product->update($request, $id);
 
-        $this->syncCategories($product, $request->input('category_list'));
-
-        if ($request->input('tag_list'))
-        {
-            $this->syncTags($product, $request->input('tag_list'));
-        }
-
-        if ($request->hasFile('image'))
-        {
-            ImageHelper::UploadImages($request, 'products', $id);
-        }
-
-        if ($request->input('delete_image') == 1)
-        {
-            ImageHelper::RemoveImages('products', $product->id);
-        }
-
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Product $product
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Product $product)
+    public function trash(Request $request, $id)
     {
-        $product->delete();
+        $this->product->trash($id);
 
-        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
     }
 
     /**
@@ -150,9 +124,9 @@ class ProductController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Product::onlyTrashed()->where('id',$id)->restore();
+        $this->product->restore($id);
 
-        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
     }
 
     /**
@@ -164,49 +138,9 @@ class ProductController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        Product::onlyTrashed()->find($id)->forceDelete();
+        $this->product->destroy($id);
 
-        ImageHelper::RemoveImages('products', $id);
-
-        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
-    }
-
-    /**
-     * Sync up the list of categories for specified product
-     * @param  product $product
-     * @param  array $catIds
-     * @return void
-     */
-    public function syncCategories(Product $product, array $catIds)
-    {
-        $product->categories()->sync($catIds);
-    }
-
-    /**
-     * Sync up the list of tags for specified product
-     * @param  product $product
-     * @param  array $tagIds
-     * @return void
-     */
-    public function syncTags(Product $product, array $tagIds)
-    {
-        $tagArr = [];
-        foreach ($tagIds as $tag)
-        {
-            if (is_numeric($tag))
-            {
-                $tagArr[] =  $tag;
-            }
-            else
-            {
-                // if the tag not numeric thats meaninig that its new tag and we should create it
-                $newTag = Tag::create(['name' => $tag]);
-
-                $tagArr[] = $newTag->id;
-            }
-        }
-
-        $product->tags()->sync($tagArr);
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model]));
     }
 
 }

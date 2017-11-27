@@ -1,9 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Coupon;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Repositories\Coupon\CouponRepository;
 use App\Http\Requests\Validations\CreateCouponRequest;
 use App\Http\Requests\Validations\UpdateCouponRequest;
 
@@ -13,12 +13,15 @@ class CouponController extends Controller
 
     private $model_name;
 
+    private $coupon;
+
     /**
      * construct
      */
-    public function __construct()
+    public function __construct(CouponRepository $coupon)
     {
         $this->model_name = trans('app.model.coupon');
+        $this->coupon = $coupon;
     }
 
     /**
@@ -28,11 +31,11 @@ class CouponController extends Controller
      */
     public function index()
     {
-        $data['coupons'] = Coupon::mine()->get();
+        $coupons = $this->coupon->all();
 
-        $data['trashes'] = Coupon::mine()->onlyTrashed()->get();
+        $trashes = $this->coupon->trashOnly();
 
-        return view('admin.coupon.index', $data);
+        return view('admin.coupon.index', compact('coupons', 'trashes'));
     }
 
     /**
@@ -53,11 +56,7 @@ class CouponController extends Controller
      */
     public function store(CreateCouponRequest $request)
     {
-        $coupon = new Coupon($request->all());
-
-        $coupon->save();
-
-        $coupon->customers()->sync($request->input('customer_list'));
+        $this->coupon->store($request);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -68,19 +67,23 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Coupon $coupon)
+    public function show($id)
     {
+        $coupon = $this->coupon->find($id);
+
         return view('admin.coupon._show', compact('coupon'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Coupon $coupon
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Coupon $coupon)
+    public function edit($id)
     {
+        $coupon = $this->coupon->find($id);
+
         return view('admin.coupon._edit', compact('coupon'));
     }
 
@@ -91,11 +94,9 @@ class CouponController extends Controller
      * @param  Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCouponRequest $request, Coupon $coupon)
+    public function update(UpdateCouponRequest $request, $id)
     {
-        $coupon->update($request->all());
-
-        $coupon->customers()->sync($request->input('customer_list'));
+        $this->coupon->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -104,12 +105,12 @@ class CouponController extends Controller
      * Trash the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Coupon $coupon
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, Coupon $coupon)
+    public function trash(Request $request, $id)
     {
-        $coupon->delete();
+        $this->coupon->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -123,7 +124,7 @@ class CouponController extends Controller
      */
     public function restore(Request $request, $id)
     {
-        Coupon::onlyTrashed()->where('id', $id)->restore();
+        $this->coupon->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
     }
@@ -137,7 +138,7 @@ class CouponController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        Coupon::onlyTrashed()->find($id)->forceDelete();
+        $this->coupon->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }

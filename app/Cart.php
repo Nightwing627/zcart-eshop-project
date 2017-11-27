@@ -109,6 +109,6 @@ class Cart extends Model
      */
     public function scopeMine($query)
     {
-        return $query->where('shop_id', Auth::user()->shop_id);
+        return $query->where('shop_id', Auth::user()->merchantId());
     }
 }
