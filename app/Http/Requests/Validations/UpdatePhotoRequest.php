@@ -4,7 +4,7 @@ namespace App\Http\Requests\Validations;
 
 use App\Http\Requests\Request;
 
-class UpdateCustomerRequest extends Request
+class UpdatePhotoRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateCustomerRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return \Auth::check();
     }
 
     /**
@@ -23,13 +23,20 @@ class UpdateCustomerRequest extends Request
      */
     public function rules()
     {
-        $id = Request::segment(count(Request::segments())); //Current model ID
-
         return [
-           'name' => 'required|max:255',
-           'email' =>  'required|email|max:255|composite_unique:customers, '.$id,
-           'active' => 'required',
-           'image' => 'mimes:jpeg,png',
+           'image' => 'required|mimes:jpeg,png',
+        ];
+    }
+
+   /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'image.required' => trans('validation.avatar_required'),
         ];
     }
 }

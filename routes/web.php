@@ -15,8 +15,16 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 {
 	// Dashboard
 	Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
+	Route::get('secretLogin/{user}', 'DashboardController@secretLogin')->name('user.secretLogin');
+	Route::get('secretLogout', 'DashboardController@secretLogout')->name('secretLogout');
 
 	include('admin/Blog.php');
+
+	// Merchant Routs for Admin
+	Route::group(['as' => 'profile.', 'prefix' => 'profile'], function()
+	{
+		include('admin/Profile.php');
+	});
 
 	// Merchant Routs for Admin
 	Route::group(['as' => 'admin.', 'prefix' => 'admin'], function()

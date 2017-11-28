@@ -21,6 +21,11 @@ return [
     'nofound'           => ':model is not exist! try another search.',
     'action_failed'     => 'The action has been failed to unknown reason!',
     'archived'          => ':model has been archived successfully!',
+    'secret_logged_in'  => 'Impersonated successfully.',
+    'secret_logged_out' => 'Logged out from secret account.',
+    'profile_updated'  => 'You account has been updated successfully!',
+    'password_updated'  => 'You account password has been updated successfully!',
+    'incorrect_current_password' => 'Your current password is not correct. Please try again!',
 
     // 'failed'    => [
     //     'create'   => 'Create :model has been failed!',

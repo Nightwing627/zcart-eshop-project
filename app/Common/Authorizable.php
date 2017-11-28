@@ -13,7 +13,6 @@ use App\Helpers\Authorize;
 trait Authorizable
 {
     private $abilities = [
-        'dashboard'         => 'dashboard',
         'index'             => 'view',
         'show'              => 'view',
         'staffs'            => 'view',
@@ -31,7 +30,8 @@ trait Authorizable
         'restore'           => 'add',
         'trash'             => 'delete',
         'archive'           => 'archive',
-        'destroy'           => 'delete'
+        'destroy'           => 'delete',
+        'secretLogin'       => 'login'
     ];
 
     /**
@@ -54,9 +54,8 @@ trait Authorizable
      */
     public function callAction($method, $parameters)
     {
-        if (! $this->checkPermission() ){
+        if (! $this->checkPermission() )
             return view('errors.forbidden');
-        }
 
         return parent::callAction($method, $parameters);
     }
@@ -77,9 +76,6 @@ trait Authorizable
 
         $slug = (bool) $slug ? $slug : $this->getSlug();
 
-        if($slug == 'dashboard')
-            return true;
-
         return (new Authorize(Auth::user(), $slug))->check();
     }
 
@@ -95,11 +91,9 @@ trait Authorizable
         $action = array_slice($temp1, -1, 1)[0];
 
         if($this->isUtility($module))
-        {
             return $this->abilities[$action] . '_utility';
-        }
 
-        return $action == 'dashboard' ? $action : $this->abilities[$action] . '_' . snake_case($module);
+        return array_key_exists($action, $this->abilities) ? $this->abilities[$action] . '_' . snake_case($module) : $action;
     }
 
     /**

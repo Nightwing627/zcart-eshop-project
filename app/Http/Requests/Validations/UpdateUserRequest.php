@@ -31,7 +31,7 @@ class UpdateUserRequest extends Request
            'email' =>  'nullable|email|max:255|composite_unique:users, '.$id,
            'role_id' => 'required',
            'active' => 'required',
-           'avatar' => 'mimes:jpeg,png',
+           'image' => 'mimes:jpeg,png',
         ];
     }
 }

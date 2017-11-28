@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Auth;
 use Closure;
+use Request;
 use App\Helpers\ListHelper; // TEMPORARY
 
 class InitSettings
@@ -23,6 +24,10 @@ class InitSettings
 
         if(Auth::check())
         {
+            // Check if the user has impersonated
+            if(Request::session()->has('impersonated'))
+                Auth::onceUsingId(Request::session()->get('impersonated'));
+
             // Set all authorization slugs into the session to check permission very fast
             $permissions = ListHelper::authorizations();
             config()->set('permissions', $permissions);

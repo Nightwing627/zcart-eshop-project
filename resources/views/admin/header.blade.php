@@ -196,14 +196,15 @@
 
                 <small>{{ trans('app.member_since') . ' ' . Auth::user()->created_at->diffForHumans() }}</small>
               </p>
+
             </li>
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="{{ route('admin.admin.user.profile', Auth::user()) }}" class="btn btn-default btn-flat">{{ trans('app.profile') }}</a>
+                <a href="{{ route('admin.profile.profile') }}" class="btn btn-default btn-flat">{{ trans('app.profile') }}</a>
               </div>
               <div class="pull-right">
-                <a href="{{ route('logout') }}" class="btn btn-default btn-flat">{{ trans('app.log_out') }}</a>
+                <a href="{{ Request::session()->has('impersonated') ? route('admin.secretLogout') : route('logout') }}" class="btn btn-default btn-flat">{{ trans('app.log_out') }}</a>
               </div>
             </li>
           </ul>

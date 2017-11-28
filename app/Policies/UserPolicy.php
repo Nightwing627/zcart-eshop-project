@@ -67,4 +67,16 @@ class UserPolicy
     {
         return (new Authorize($user, 'delete_user', $model))->check();
     }
+
+    /**
+     * Determine whether the user can secreatly login as user.
+     *
+     * @param  \App\User  $user
+     * @param  \App\User  $model
+     * @return mixed
+     */
+    public function secretLogin(User $user, User $model)
+    {
+        return (new Authorize($user, 'login_user', $model))->check();
+    }
 }

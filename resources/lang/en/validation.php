@@ -111,6 +111,7 @@ return [
     'brand_logo_max'                => 'The brand logo may not be greater than :max kilobytes.',
     'brand_logo_mimes'              => 'The brand logo must be a file of type: :values.',
     'uploaded'                      => 'The file size exceeded the maximum upload limit on your server. Please check the php.ini file.',
+    'avatar_required'               => 'Choose an avatar.',
 
     /*
     |--------------------------------------------------------------------------

@@ -44,5 +44,4 @@ class CreateAttributeRequest extends Request
             'attribute_type_id.required' => trans('validation.attribute_type_id_required'),
         ];
     }
-
 }

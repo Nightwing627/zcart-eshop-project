@@ -31,7 +31,7 @@ class CreateCustomerRequest extends Request
            'password' =>  'required|confirmed|min:6',
            'dob' => 'nullable|date',
            'active' => 'required',
-           'avatar' => 'mimes:jpg,jpeg,png',
+           'image' => 'mimes:jpg,jpeg,png',
         ];
     }
 }

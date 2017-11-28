@@ -77,19 +77,6 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function profile($id)
-    {
-        $user = $this->user->profile($id);
-
-        return view('admin.user.profile', compact('user'));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

@@ -34,6 +34,9 @@ return [
     'warehouses' => 'Warehouses',
 
     'utilities' => 'Utilities',
+    'support' => 'Support desk',
+    'customer_support' => 'Customer',
+    'return_n_refund' => 'Return/Refund',
     'user_roles' => 'User roles',
     'taxes' => 'Taxes',
     'shipping' => 'Shipping',

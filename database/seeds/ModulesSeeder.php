@@ -142,7 +142,7 @@ class ModulesSeeder extends Seeder
 
         'User' => [
             'access' => 'Common',
-            'actions' => 'view,add,edit,delete'
+            'actions' => 'view,add,edit,delete,login'
         ],
 
         'Utility' => [

@@ -34,11 +34,6 @@ class EloquentUser extends EloquentRepository implements BaseRepository, UserRep
         return $this->model->level()->withMerchant()->onlyTrashed()->get();
     }
 
-    public function profile($id)
-    {
-        return $this->model->findOrFail($id);
-    }
-
     public function addresses($user)
     {
         return $user->addresses()->get();

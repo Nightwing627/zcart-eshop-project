@@ -47,7 +47,7 @@ class User extends Authenticatable
                     'email',
                     'password',
                     'dob',
-                    'bio',
+                    'description',
                     'sex',
                     'active',
                 ];
@@ -155,7 +155,7 @@ class User extends Authenticatable
      */
     public function isFromPlatform()
     {
-        return ! $this->shop_id;
+        return ! $this->isMerchant() && ! $this->merchantId();
     }
 
     /**

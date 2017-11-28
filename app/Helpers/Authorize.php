@@ -30,9 +30,7 @@ class Authorize
 	 */
 	public function check()
 	{
-		// Auth::loginUsingId(1, true);
-
-		return true; //FOR TEMPORARY TEST
+		// return true; //FOR TEMPORARY TEST
 
 		if($this->isExceptional())
 			return true;
@@ -60,6 +58,10 @@ class Authorize
 	 */
 	private function isExceptional()
 	{
+		// Some routes only shows personalized information and allow access
+        if(in_array($this->slug, ['dashboard', 'profile', 'secretLogout']))
+            return true;
+
 		// The Super admin will not required to check authorization.
 		// Just avoid the merchant modules to keep the dashboard clean
 		if(Auth::user()->isSuperAdmin())

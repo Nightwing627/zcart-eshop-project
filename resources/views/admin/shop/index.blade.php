@@ -44,6 +44,10 @@
 								<a href="{{ route('admin.merchant.shop.staffs', $shop->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.staffs') }}" class="fa fa-users"></i></a>&nbsp;
 							@endcan
 
+							@can('secretLogin', $shop->owner)
+								<a href="{{ route('admin.user.secretLogin', $shop->owner->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.secret_login_merchant') }}" class="fa fa-user-secret"></i></a>&nbsp;
+							@endcan
+
 							@can('update', $shop)
 								<a href="{{ route('admin.merchant.shop.edit', $shop->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 

@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 
 interface UserRepository
 {
-    public function profile($id);
-
     public function addresses($user);
 
     public function saveAdrress(array $address, $user);

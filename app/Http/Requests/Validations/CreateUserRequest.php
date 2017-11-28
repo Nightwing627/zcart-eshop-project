@@ -33,7 +33,7 @@ class CreateUserRequest extends Request
            'role_id' => 'required',
            'dob' => 'nullable|date',
            'active' => 'required',
-           'avatar' => 'mimes:jpeg,png',
+           'image' => 'mimes:jpeg,png',
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Validations;
 
 use App\Http\Requests\Request;
 
-class UpdateCustomerRequest extends Request
+class UpdatePasswordRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateCustomerRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return \Auth::check();
     }
 
     /**
@@ -23,13 +23,9 @@ class UpdateCustomerRequest extends Request
      */
     public function rules()
     {
-        $id = Request::segment(count(Request::segments())); //Current model ID
-
         return [
-           'name' => 'required|max:255',
-           'email' =>  'required|email|max:255|composite_unique:customers, '.$id,
-           'active' => 'required',
-           'image' => 'mimes:jpeg,png',
+           'current_password' =>  'required',
+           'password' =>  'required|confirmed|min:6',
         ];
     }
 }

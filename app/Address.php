@@ -149,33 +149,27 @@ class Address extends Model
     public function toHtml($separator = '<br />')
     {
         $html = [];
+
         if ('App\Customer' == $this->addressable_type)
-        {
             $html [] = '<strong class="pull-right">' . strtoupper($this->address_type) . '</strong>';
-        }
 
         if(config('system_settings.show_address_title'))
-        {
             $html [] = $this->address_title;
-        }
 
-        $html [] = $this->address_line_1;
-        $html [] = $this->address_line_2;
+        if(strlen($this->address_line_1))
+            $html [] = $this->address_line_1;
+
+        if(strlen($this->address_line_2))
+            $html [] = $this->address_line_2;
 
         if(strlen($this->city))
-        {
             $html []= sprintf('%s, %s %s', e($this->city), e($this->state_id ? $this->state->name : $this->state_name), e($this->zip_code));
-        }
 
         if(config('system_settings.address_show_country'))
-        {
             $html []= e($this->country->name);
-        }
 
         if(strlen($this->phone))
-        {
             $html [] = '<abbr title="' . trans('app.phone') . '">P:</abbr> ' . e($this->phone);
-        }
 
         $addressStr = implode($separator, $html);
 
@@ -195,8 +189,11 @@ class Address extends Model
             $str [] = $this->address_title;
         }
 
-        $str []= $this->address_line_1;
-        $str []= $this->address_line_2;
+        if(strlen($this->address_line_1))
+            $str [] = $this->address_line_1;
+
+        if(strlen($this->address_line_2))
+            $str [] = $this->address_line_2;
 
         if(strlen($this->city))
         {

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
-// use App\Common\Authorizable;
-use Illuminate\Http\Request;
+use Auth;
+use Request;
+use App\User;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
-    // use Authorizable;
+    use Authorizable;
 
     /**
      * construct
@@ -27,5 +28,34 @@ class DashboardController extends Controller
     public function index()
     {
         return view('admin.dashboard.index');
+    }
+
+
+    /**
+     * Display the secret_login.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function secretLogin($id)
+    {
+        session(['impersonated' => $id, 'secretUrl' => \URL::previous()]);
+
+        return redirect()->route('admin.admin.dashboard')->with('success', trans('messages.secret_logged_in'));
+    }
+
+    /**
+     * Display the secret_login.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function secretLogout()
+    {
+        $secret_url = Request::session()->get('secretUrl');
+
+        Request::session()->forget('impersonated', 'secretUrl');
+
+        return $secret_url ?
+            redirect()->to($secret_url)->with('success', trans('messages.secret_logged_out')) :
+            redirect()->route('admin.admin.dashboard');
     }
 }

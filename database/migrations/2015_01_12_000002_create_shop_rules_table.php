@@ -17,7 +17,6 @@ class CreateShopRulesTable extends Migration
             $table->integer('shop_id')->unsigned()->unique();
             $table->text('shipping')->nullable();
             $table->text('return_refund')->nullable();
-
             $table->timestamps();
 
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');;
