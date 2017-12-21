@@ -80,6 +80,11 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,add,edit,delete'
         ],
 
+        'Message' => [
+            'access' => 'Common',
+            'actions' => 'view,update,reply,delete'
+        ],
+
         'Module' => [
             'access' => 'Super Admin',
             'actions' => 'view,add,edit,delete'
@@ -133,6 +138,11 @@ class ModulesSeeder extends Seeder
         'Tax' => [
             'access' => 'Common',
             'actions' => 'view,add,edit,delete'
+        ],
+
+        'Ticket' => [
+            'access' => 'Platform',
+            'actions' => 'view,update,reply,assign'
         ],
 
         'Warehouse' => [

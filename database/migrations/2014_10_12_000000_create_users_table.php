@@ -33,6 +33,17 @@ class CreateUsersTable extends Migration
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');;
         });
 
+        Schema::create('user_settings', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id')->unsigned();
+            $table->string('messages_signature')->nullable();
+            $table->boolean('new_support_message_notification')->default(true);
+            $table->boolean('support_message_assigned_notification')->default(true);
+            $table->boolean('support_message_updated_notification')->default(true);
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
     }
 
     /**
@@ -42,6 +53,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::dropIfExists('user_settings');
+        Schema::dropIfExists('users');
     }
 }

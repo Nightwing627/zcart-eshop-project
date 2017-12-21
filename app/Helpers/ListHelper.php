@@ -4,6 +4,8 @@ namespace App\Helpers;
 use Auth;
 use App\User;
 use App\Module;
+use App\Ticket;
+use App\Message;
 use App\Attribute;
 use App\Permission;
 
@@ -13,6 +15,38 @@ use App\Permission;
 
 class ListHelper
 {
+    public static function ticket_categories()
+    {
+        return \DB::table('ticket_categories')->orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
+    public static function ticket_priorities()
+    {
+        return  [
+            Ticket::PRIORITY_LOW      => trans("app.priorities.low"),
+            Ticket::PRIORITY_NORMAL   => trans("app.priorities.normal"),
+            Ticket::PRIORITY_HIGH     => trans("app.priorities.high"),
+            Ticket::PRIORITY_CRITICAL => trans("app.priorities.critical"),
+        ];
+    }
+
+    public static function ticket_statuses_new()
+    {
+        return  [
+            Ticket::STATUS_NEW      => trans("app.statuses.new"),
+            Ticket::STATUS_OPEN     => trans("app.statuses.open"),
+            Ticket::STATUS_PENDING  => trans("app.statuses.pending"),
+        ];
+    }
+
+    public static function ticket_statuses_all()
+    {
+        return  self::ticket_statuses_new() + [
+            Ticket::STATUS_CLOSED   => trans("app.statuses.closed"),
+            Ticket::STATUS_SOLVED   => trans("app.statuses.solved"),
+            Ticket::STATUS_SPAM     => trans("app.statuses.spam"),
+        ];
+    }
 
     /**
      * Get ssystem ettings.
@@ -161,6 +195,16 @@ class ListHelper
     public static function users()
     {
         return \DB::table('users')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
+    /**
+     * Get users list for form dropdown.
+     *
+     * @return array
+     */
+    public static function platform_users()
+    {
+        return \DB::table('users')->where('shop_id', Null)->where('role_id', '!=', 3)->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**

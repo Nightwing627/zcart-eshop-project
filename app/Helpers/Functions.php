@@ -1,4 +1,23 @@
 <?php
+if ( ! function_exists('gravatar') )
+{
+    /**
+     * Get the path to the image folder.
+     *
+     * @return string
+     */
+    function gravatar($email, $size = 30)
+    {
+        $email = md5(strtolower(trim($email)));
+
+        $defaultImage = urlencode('https://raw.githubusercontent.com/BadChoice/handesk/master/public/images/default-avatar.png');
+
+        $gravatarURL  = 'https://www.gravatar.com/avatar/'.$email.'?s='.$size."&default={$defaultImage}";
+
+        return '<img id = '.$email.''.$size.' class="gravatar" src="'.$gravatarURL.'" width="'.$size.'">';
+    }
+}
+
 if ( ! function_exists('get_qualified_model') )
 {
     /**
@@ -9,6 +28,32 @@ if ( ! function_exists('get_qualified_model') )
     function get_qualified_model($class_name = '')
     {
         return 'App\\' . str_singular(studly_case($class_name));
+    }
+}
+
+if ( ! function_exists('attachment_storage_path') )
+{
+    /**
+     * Get the path to the image folder.
+     *
+     * @return string
+     */
+    function attachment_storage_path()
+    {
+        return 'public/attachments/';
+    }
+}
+
+if ( ! function_exists('attachment_real_path') )
+{
+    /**
+     * Get the path to the image folder.
+     *
+     * @return string
+     */
+    function attachment_real_path($filename)
+    {
+        return storage_path() . '/app/' . attachment_storage_path() . $filename;
     }
 }
 
@@ -444,6 +489,27 @@ if ( ! function_exists('generate_combinations') )
 
         return $all;
     }
+}
 
+if ( ! function_exists('get_msg_folder_name_from_label') )
+{
+    /**
+     * get_msg_folder_name_from_label
+     *
+     * @param  int $label
+     *
+     * @return str
+     */
+    function get_msg_folder_name_from_label($label = 1)
+    {
+        switch ($label) {
+            case \App\Message::LABEL_INBOX: return trans("app.message_labels.inbox");
+            case \App\Message::LABEL_SENT: return trans("app.message_labels.sent");
+            case \App\Message::LABEL_DRAFT: return trans("app.message_labels.draft");
+            case \App\Message::LABEL_SPAM: return trans("app.message_labels.spam");
+            case \App\Message::LABEL_TRASH: return trans("app.message_labels.trash");
+            default: return trans("app.message_labels.inbox");
+        }
+    }
 }
 

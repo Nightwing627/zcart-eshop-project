@@ -28,6 +28,16 @@ class CreateCustomersTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        Schema::create('customer_settings', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('customer_id')->unsigned();
+            $table->string('messages_signature')->nullable();
+            $table->boolean('support_message_updated_notification')->default(true);
+            $table->timestamps();
+
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+        });
     }
 
     /**
@@ -37,6 +47,7 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('customers');
+        Schema::dropIfExists('customer_settings');
+        Schema::dropIfExists('customers');
     }
 }

@@ -112,6 +112,12 @@ return [
     'brand_logo_mimes'              => 'The brand logo must be a file of type: :values.',
     'uploaded'                      => 'The file size exceeded the maximum upload limit on your server. Please check the php.ini file.',
     'avatar_required'               => 'Choose an avatar.',
+    'subject_required_without'      => 'The subject is required if you dont use a template.',
+    'message_required_without'      => 'The message is required if you dont use a template.',
+    'template_id_required_without_all'=> 'Select a template or composer a new message.',
+    'customer_required'             => 'Select a customer.',
+    'reply_required_without' => 'The reply filed is required.',
+    'template_id_required_without'=> 'Select a template is required when repling with template.',
 
     /*
     |--------------------------------------------------------------------------

@@ -1,0 +1,255 @@
+@extends('admin.layouts.master')
+
+@section('buttons')
+	@if(!Auth::user()->isFromPlatform())
+		<a href="{{ route('admin.support.ticket.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.create_ticket') }}</a>
+	@endif
+@endsection
+
+@section('content')
+	@if($myTickets->count())
+		<div class="box">
+			<div class="box-header with-border">
+				<h3 class="box-title">{{ trans('app.my_tickets') }}</h3>
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+				</div>
+			</div> <!-- /.box-header -->
+			<div class="box-body">
+				<table class="table table-hover table-option">
+					<thead>
+						<tr>
+							<th>{{ trans('app.merchant') }}</th>
+							<th>{{ trans('app.subject') }}</th>
+							<th>{{ trans('app.priority') }}</th>
+							<th>{{ trans('app.replies') }}</th>
+							<th>{{ trans('app.assigned_to') }}</th>
+							<th>{{ trans('app.updated_at') }}</th>
+							<th>{{ trans('app.option') }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($myTickets as $ticket )
+						<tr>
+							<td>
+								<img src="{{ get_image_src($ticket->shop_id, 'shops', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}"> &nbsp;
+								<span class="label label-outline">{{ $ticket->shop->name }}</span> <br/>
+								<strong>
+									{{ $ticket->user->name }}
+								</strong>
+							</td>
+							<td>
+								{!! $ticket->statusName() !!}
+								<span class="label label-outline"> {{ $ticket->category->name }} </span> &nbsp;
+								{{ $ticket->subject }}
+							</td>
+							<td>{!! $ticket->priorityLevel() !!}</td>
+							<td><span class="label label-default">{{ $ticket->replies_count }}</span></td>
+							<td>{{ ($ticket->assigned_to) ? $ticket->assignedTo->name : '-' }}</td>
+				          	<td>{{ $ticket->updated_at->diffForHumans() }}</td>
+							<td class="row-options">
+								@can('view', $ticket)
+									<a href="{{ route('admin.support.ticket.show', $ticket->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								@endcan
+
+								@can('reply', $ticket)
+									<a href="{{ route('admin.support.ticket.reply', $ticket) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
+								@endcan
+
+								@can('update', $ticket)
+									<a href="{{ route('admin.support.ticket.edit', $ticket->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
+								@endcan
+
+								@can('assign', $ticket)
+									<a href="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
+								@endcan
+							</td>
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</div> <!-- /.box-body -->
+		</div> <!-- /.box -->
+	@endif
+
+	@if($assigned->count())
+		<div class="box">
+			<div class="box-header with-border">
+				<h3 class="box-title">{{ trans('app.assigned_to_me') }}</h3>
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+				</div>
+			</div> <!-- /.box-header -->
+			<div class="box-body">
+				<table class="table table-hover table-option">
+					<thead>
+						<tr>
+							<th>{{ trans('app.merchant') }}</th>
+							<th>{{ trans('app.subject') }}</th>
+							<th>{{ trans('app.priority') }}</th>
+							<th>{{ trans('app.replies') }}</th>
+							<th>{{ trans('app.assigned_to') }}</th>
+							<th>{{ trans('app.updated_at') }}</th>
+							<th>{{ trans('app.option') }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($assigned as $ticket )
+						<tr>
+							<td>
+								<img src="{{ get_image_src($ticket->shop_id, 'shops', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}"> &nbsp;
+								<span class="label label-outline">{{ $ticket->shop->name }}</span> <br/>
+								<strong>
+									{{ $ticket->user->name }}
+								</strong>
+							</td>
+							<td>
+								{!! $ticket->statusName() !!}
+								<span class="label label-outline"> {{ $ticket->category->name }} </span> &nbsp;
+								{{ $ticket->subject }}
+							</td>
+							<td>{!! $ticket->priorityLevel() !!}</td>
+							<td><span class="label label-default">{{ $ticket->replies_count }}</span></td>
+							<td>{{ ($ticket->assigned_to) ? $ticket->assignedTo->name : '-' }}</td>
+				          	<td>{{ $ticket->updated_at->diffForHumans() }}</td>
+							<td class="row-options">
+								@can('view', $ticket)
+									<a href="{{ route('admin.support.ticket.show', $ticket->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								@endcan
+
+								@can('reply', $ticket)
+									<a href="{{ route('admin.support.ticket.reply', $ticket) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
+								@endcan
+
+								@can('update', $ticket)
+									<a href="{{ route('admin.support.ticket.edit', $ticket->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
+								@endcan
+
+								@can('assign', $ticket)
+									<a href="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
+								@endcan
+							</td>
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</div> <!-- /.box-body -->
+		</div> <!-- /.box -->
+	@endif
+
+	<div class="box">
+		<div class="box-header with-border">
+			<h3 class="box-title">{{ trans('app.tickets') }}</h3>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+				<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+			</div>
+		</div> <!-- /.box-header -->
+		<div class="box-body">
+			<table class="table table-hover table-option">
+				<thead>
+					<tr>
+						<th>{{ trans('app.merchant') }}</th>
+						<th>{{ trans('app.subject') }}</th>
+						<th>{{ trans('app.priority') }}</th>
+						<th>{{ trans('app.replies') }}</th>
+						<th>{{ trans('app.assigned_to') }}</th>
+						<th>{{ trans('app.updated_at') }}</th>
+						<th>{{ trans('app.option') }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($tickets as $ticket )
+					<tr>
+						<td>
+							<img src="{{ get_image_src($ticket->shop_id, 'shops', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}"> &nbsp;
+							<span class="label label-outline">{{ $ticket->shop->name }}</span> <br/>
+							<strong>
+								{{ $ticket->user->name }}
+							</strong>
+						</td>
+						<td>
+							{!! $ticket->statusName() !!}
+							<span class="label label-outline"> {{ $ticket->category->name }} </span> &nbsp;
+							{{ $ticket->subject }}
+						</td>
+						<td>{!! $ticket->priorityLevel() !!}</td>
+						<td><span class="label label-default">{{ $ticket->replies_count }}</span></td>
+						<td>{{ ($ticket->assigned_to) ? $ticket->assignedTo->name : '-' }}</td>
+			          	<td>{{ $ticket->updated_at->diffForHumans() }}</td>
+						<td class="row-options">
+							@can('view', $ticket)
+								<a href="{{ route('admin.support.ticket.show', $ticket->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+							@endcan
+
+							@can('reply', $ticket)
+								<a href="{{ route('admin.support.ticket.reply', $ticket) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
+							@endcan
+
+							@can('update', $ticket)
+								<a href="{{ route('admin.support.ticket.edit', $ticket->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
+							@endcan
+
+							@can('assign', $ticket)
+								<a href="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
+							@endcan
+						</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div> <!-- /.box-body -->
+	</div> <!-- /.box -->
+
+	<div class="box collapsed-box">
+		<div class="box-header with-border">
+			<h3 class="box-title">{{ trans('app.closed_tickets') }}</h3>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+				<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+			</div>
+		</div> <!-- /.box-header -->
+		<div class="box-body">
+			<table class="table table-hover table-option">
+				<thead>
+					<tr>
+						<th>{{ trans('app.shop') }}</th>
+						<th>{{ trans('app.subject') }}</th>
+						<th>{{ trans('app.priority') }}</th>
+						<th>{{ trans('app.assigned_to') }}</th>
+						<th>{{ trans('app.updated_at') }}</th>
+						<th>{{ trans('app.option') }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($closed as $ticket )
+					<tr>
+						<td>{{ $ticket->shop->name }}</td>
+						<td>
+							{!! $ticket->statusName() !!}
+							<span class="label label-outline"> {{ $ticket->category->name }} </span> &nbsp;
+							{{ $ticket->subject }}
+						</td>
+						<td>{!! $ticket->priorityLevel() !!}</td>
+						<td>{{ ($ticket->assigned_to) ? $ticket->assignedTo->name : '-' }}</td>
+			          	<td>{{ $ticket->updated_at->diffForHumans() }}</td>
+						<td class="row-options">
+							@can('view', $ticket)
+								<a href="{{ route('admin.support.ticket.show', $ticket->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+							@endcan
+
+							@can('update', $ticket)
+			                    {!! Form::open(['route' => ['admin.support.ticket.reopen', $ticket->id], 'method' => 'POST', 'class' => 'data-form']) !!}
+			                        {!! Form::button('<i class="glyphicon glyphicon-refresh"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.reopen'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endcan
+						</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div> <!-- /.box-body -->
+	</div> <!-- /.box -->
+@endsection

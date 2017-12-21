@@ -26,7 +26,7 @@ trait Addressable {
 	 */
 	public function addresses()
 	{
-        return $this->morphMany('App\Address', 'addressable');
+        return $this->morphMany(\App\Address::class, 'addressable');
 	}
 
 	/**
@@ -36,7 +36,7 @@ trait Addressable {
 	 */
 	public function primaryAddress()
 	{
-        return $this->morphOne('App\Address', 'addressable')->where('address_type', 'Primary');
+        return $this->morphOne(\App\Address::class, 'addressable')->where('address_type', 'Primary');
 	}
 
 	/**
@@ -46,7 +46,7 @@ trait Addressable {
 	 */
 	public function billingAddress()
 	{
-        return $this->morphOne('App\Address', 'addressable')->where('address_type', 'Billing');
+        return $this->morphOne(\App\Address::class, 'addressable')->where('address_type', 'Billing');
 	}
 
 	/**
@@ -56,7 +56,7 @@ trait Addressable {
 	 */
 	public function shippingAddress()
 	{
-        return $this->morphOne('App\Address', 'addressable')->where('address_type', 'Shipping');
+        return $this->morphOne(\App\Address::class, 'addressable')->where('address_type', 'Shipping');
 	}
 
 	/**
@@ -68,5 +68,4 @@ trait Addressable {
 	{
 		return $this->addresses()->delete();
 	}
-
 }

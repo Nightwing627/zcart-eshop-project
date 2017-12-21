@@ -31,6 +31,13 @@ class PaymentMethodsSeeder extends Seeder
             'updated_at' => Carbon::Now(),
         ]);
         DB::table('payment_methods')->insert([
+            'name' => 'Bank Wire Transfer',
+            'company_name' => 'Pay by bank wire transfer',
+            'description' => 'Pay by bank wire transfer,  transfer the invoice amount via wire tranfer to the marchant account and confirm manually. After payment confirmation the goods will be shipped.',
+            'created_at' => Carbon::Now(),
+            'updated_at' => Carbon::Now(),
+        ]);
+        DB::table('payment_methods')->insert([
             'name' => 'COD',
             'company_name' => 'Cash on Delivery',
             'description' => 'Cash on delivery (COD), sometimes called collect on delivery, is the sale of goods by mail order where payment is made on delivery rather than in advance.',

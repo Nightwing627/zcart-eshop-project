@@ -57,7 +57,7 @@ class User extends Authenticatable
      */
     public function country()
     {
-        return $this->hasManyThrough('App\Country', 'App\Address', 'addressable_id', 'country_name');
+        return $this->hasManyThrough(Country::class, Address::class, 'addressable_id', 'country_name');
     }
 
     /**
@@ -65,7 +65,7 @@ class User extends Authenticatable
      */
     public function role()
     {
-        return $this->belongsTo('App\Role');
+        return $this->belongsTo(Role::class);
     }
 
     /**
@@ -73,7 +73,7 @@ class User extends Authenticatable
     */
     public function shop()
     {
-        return $this->belongsTo('App\Shop');
+        return $this->belongsTo(Shop::class);
     }
 
     /**
@@ -81,7 +81,7 @@ class User extends Authenticatable
     */
     public function owns()
     {
-        return $this->hasOne('App\Shop', 'owner_id');
+        return $this->hasOne(Shop::class, 'owner_id');
     }
 
     /**
@@ -89,7 +89,7 @@ class User extends Authenticatable
      */
     public function warehouses()
     {
-        return $this->belongsToMany('App\Warehouse')->withTimestamps();
+        return $this->belongsToMany(Warehouse::class)->withTimestamps();
     }
 
     /**
@@ -97,7 +97,32 @@ class User extends Authenticatable
      */
     public function incharges()
     {
-        return $this->hasMany('App\Warehouse', 'incharge');
+        return $this->hasMany(Warehouse::class, 'incharge');
+    }
+
+    public function assignedTickets()
+    {
+        return $this->hasMany(Ticket::class, 'assigned_to');
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function openTickets()
+    {
+        return $this->tickets()->where('status', '<', Ticket::STATUS_SOLVED);
+    }
+
+    public function solvedTickets()
+    {
+        return $this->tickets()->where('status', '=', Ticket::STATUS_SOLVED);
+    }
+
+    public function closedTickets()
+    {
+        return $this->tickets()->where('status', '=', Ticket::STATUS_CLOSED);
     }
 
     /**
@@ -105,7 +130,7 @@ class User extends Authenticatable
      */
     public function blogs()
     {
-        return $this->hasMany('App\Blog');
+        return $this->hasMany(Blog::class);
     }
 
     /**
@@ -126,6 +151,16 @@ class User extends Authenticatable
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    /**
+     * Get name the user.
+     *
+     * @return mix
+     */
+    public function getName()
+    {
+        return $this->nice_name ?: $this->name;
     }
 
     /**
@@ -176,6 +211,16 @@ class User extends Authenticatable
     public function scopeNotSuperAdmin($query)
     {
         return $query->where('role_id', '!=', 1);
+    }
+
+    /**
+     * Scope a query to only include records from the users shop.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFromPlatform($query)
+    {
+        return $query->where('role_id', '!=', 3)->where('shop_id', Null);
     }
 
     /**

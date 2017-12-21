@@ -60,11 +60,10 @@ class CreateOrderTable extends Migration
             $table->boolean('send_invoice_to_customer')->nullable();
             $table->text('admin_note')->nullable();
             $table->boolean('approved')->nullable();
-            // $table->boolean('fulfilled')->nullable();
+            $table->boolean('disputed')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
-            // $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
             $table->foreign('payment_status_id')->references('id')->on('payment_statuses')->onDelete('set null');
             $table->foreign('order_status_id')->references('id')->on('order_statuses')->onDelete('set null');

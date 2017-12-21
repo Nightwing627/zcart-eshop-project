@@ -55,6 +55,7 @@
       // Initialise all plugins
       initDatatables();
       initAppPlugins();
+      initMassActions();
 
       // Support for AJAX loaded modal window.
       $('[data-toggle="modal"]').click(function(e) {
@@ -95,7 +96,6 @@
           });
         }
       });
-
     })
   }(window.jQuery, window, document));
 
@@ -162,7 +162,6 @@
     });
 
     $(".dataTables_length select").addClass('select2-normal'); //Make the data-table length dropdown like select 2
-
   }
 
   function initAppPlugins()
@@ -353,7 +352,6 @@
       $('.note-modal').modal('hide');
     });
 
-
     //Datemask dd/mm/yyyy
     // $(".datemask").inputmask("yyyy-mm-dd", {"placeholder": "yyyy-mm-dd"});
 
@@ -541,9 +539,89 @@
       var couponCode = getFromPHPHelper(func);
       $('#'+id).closest( ".code-field" ).find( "input.code" ).val(couponCode);
     });
-
   }
 
+  //Mass selection and action section
+  function initMassActions()
+  {
+    //Enable iCheck plugin for checkboxes
+    //iCheck for checkbox and radio inputs
+    $('#massSelectArea input[type="checkbox"]').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass: 'iradio_flat-blue'
+    });
+
+    //Enable check and uncheck all functionality
+    $(".checkbox-toggle").click(function () {
+      var clicks = $(this).data('clicks');
+      if (clicks) {
+        unCheckAll(); //Uncheck all checkboxes
+      } else {
+        checkAll();  //Check all checkboxes
+      }
+      $(this).data("clicks", !clicks);
+    });
+
+    //Trigger the mass action functionality
+    $('.massAction').on('click', function(e) {
+      e.preventDefault();
+
+      var doAfter = $(this).data('doafter');
+
+      var allVals = [];
+      $(".massCheck:checked").each(function() {
+          allVals.push($(this).attr('id'));
+      });
+
+      if(allVals.length <= 0){
+          notie.alert(3, "{{ trans('responses.select_some_item') }}", 2);
+      } else {
+          $.ajax({
+              url: $(this).attr('href'),
+              type: 'POST',
+              data: {
+                  "_token": "{{ csrf_token() }}",
+                  "ids": allVals,
+              },
+              success: function (data) {
+                  if (data['success']) {
+                      notie.alert(1, data['success'], 2);
+                      switch(doAfter){
+                        case 'reload':
+                            window.location.reload();
+                            break;
+                        case 'remove':
+                            $(".massCheck:checked").each(function() {
+                              $(this).parents("tr").remove();
+                            });
+                            break;
+                        default:
+                          unCheckAll(); //Uncheck all checkboxes
+                      }
+                  } else if (data['error']) {
+                      notie.alert(3, data['error'], 2);
+                  } else {
+                      notie.alert(3, "{{ trans('responses.failed') }}", 2);
+                  }
+              },
+              error: function (data) {
+                  alert(data.responseText);
+              }
+          });
+      }
+    });
+  }
+
+  function checkAll(){
+    $("#massSelectArea input[type='checkbox']").iCheck("check");
+    $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+  }
+
+  function unCheckAll(){
+    $("#massSelectArea input[type='checkbox']").iCheck("uncheck");
+    $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+  }
+  //End Mass selection and action section
 
   /*************************************
   *** END Initialise application plugins ***

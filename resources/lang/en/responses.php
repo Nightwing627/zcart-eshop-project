@@ -16,6 +16,7 @@ return [
 
     'success' => 'Success!',
     'failed' => 'Action failed! Something went wrong!!',
+    'select_some_item' => 'Select first',
 
     '404' => 'This content is not availeble or you don\'t have permission to access this area',
     'error' => 'Action failed! There is something wrong on server side',

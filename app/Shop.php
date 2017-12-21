@@ -46,7 +46,7 @@ class Shop extends Model
      */
     public function owner()
     {
-        return $this->belongsTo('App\User', 'owner_id');
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     /**
@@ -54,7 +54,7 @@ class Shop extends Model
      */
     public function staffs()
     {
-        return $this->hasMany('App\User');
+        return $this->hasMany(User::class);
     }
 
     /**
@@ -62,7 +62,7 @@ class Shop extends Model
      */
     public function setting()
     {
-        return $this->hasOne('App\Setting');
+        return $this->hasOne(Setting::class);
     }
 
     /**
@@ -70,7 +70,7 @@ class Shop extends Model
      */
     public function rules()
     {
-        return $this->hasOne('App\ShopRule');
+        return $this->hasOne(ShopRule::class);
     }
 
     /**
@@ -78,7 +78,7 @@ class Shop extends Model
      */
     public function warehouses()
     {
-        return $this->hasMany('App\Warehouse');
+        return $this->hasMany(Warehouse::class);
     }
 
     /**
@@ -86,7 +86,7 @@ class Shop extends Model
      */
     public function carriers()
     {
-        return $this->hasMany('App\Carrier');
+        return $this->hasMany(Carrier::class);
     }
 
     /**
@@ -94,7 +94,7 @@ class Shop extends Model
      */
     public function products()
     {
-        return $this->hasMany('App\Product');
+        return $this->hasMany(Product::class);
     }
 
     /**
@@ -102,7 +102,7 @@ class Shop extends Model
      */
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany(Order::class);
     }
 
     /**
@@ -110,7 +110,7 @@ class Shop extends Model
      */
     public function carts()
     {
-        return $this->hasMany('App\Cart');
+        return $this->hasMany(Cart::class);
     }
 
     /**
@@ -118,7 +118,7 @@ class Shop extends Model
      */
     public function coupons()
     {
-        return $this->belongsToMany('App\Coupon')->withTimestamps();
+        return $this->belongsToMany(Coupon::class)->withTimestamps();
     }
 
     /**
@@ -126,7 +126,7 @@ class Shop extends Model
      */
     public function gift_cards()
     {
-        return $this->hasMany('App\GiftCard');
+        return $this->hasMany(GiftCard::class);
     }
 
     /**
@@ -134,7 +134,7 @@ class Shop extends Model
      */
     public function payment_methods()
     {
-        return $this->belongsToMany('App\PaymentMethod', 'shop_payment_methods')
+        return $this->belongsToMany(PaymentMethod::class, 'shop_payment_methods')
                     ->withPivot('api_key', 'api_secret')
                     ->withTimestamps();
     }
@@ -144,7 +144,7 @@ class Shop extends Model
      */
     public function invoices()
     {
-        return $this->hasMany('App\Invoice');
+        return $this->hasMany(Invoice::class);
     }
 
     /**
@@ -152,7 +152,7 @@ class Shop extends Model
      */
     public function taxes()
     {
-        return $this->hasMany('App\Tax');
+        return $this->hasMany(Tax::class);
     }
 
     /**
@@ -160,7 +160,27 @@ class Shop extends Model
      */
     public function suppliers()
     {
-        return $this->hasMany('App\Supplier');
+        return $this->hasMany(Supplier::class);
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function openTickets()
+    {
+        return $this->tickets()->where('status', '<', Ticket::STATUS_SOLVED);
+    }
+
+    public function solvedTickets()
+    {
+        return $this->tickets()->where('status', '=', Ticket::STATUS_SOLVED);
+    }
+
+    public function closedTickets()
+    {
+        return $this->tickets()->where('status', '=', Ticket::STATUS_CLOSED);
     }
 
     /**

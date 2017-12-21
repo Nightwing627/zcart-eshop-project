@@ -43,6 +43,8 @@ return [
         'gift_card' => 'Gift card',
         'packaging' => 'Packaging',
         'email_template' => 'Email template',
+        'ticket' => 'Ticket',
+        'message' => 'Message',
     ],
 
     // Application Levels
@@ -152,6 +154,10 @@ return [
 
     'blog' => 'Blog',
     'blogs' => 'Blogs',
+    'ticket' => 'Ticket',
+    'tickets' => 'Support tickets',
+    'closed_tickets' => 'Closed tickets',
+    'my_tickets' => 'My tickets',
     'category_name' => 'Category name',
     'map_location' => 'Map shows approximate location.',
     'blog_title' => 'Blog title',
@@ -178,6 +184,11 @@ return [
     'update' => 'Update',
     'edit' => 'Edit',
     'restore' => 'Restore',
+    'reopen' => 'Reopen',
+    'reply' => 'Reply',
+    'replies' => 'Replies',
+    'assign' => 'Assign',
+    'assigned_to_me' => 'Assigned to me',
     'use' => 'Use',
     'active' => 'Active',
     'inactive' => 'Inactive',
@@ -315,6 +326,16 @@ return [
     'has_variant' => 'Has variant',
     'requires_shipping' => 'Requires shipping',
     'downloadable' => 'Downloadable',
+    'priority' => 'Priority',
+    'ticket_category' => 'Category',
+    'assigned_to' => 'Assigned to',
+    'conversations' => 'Conversations',
+    'other_conversations' => 'Other conversations',
+    'messages' => 'Messages',
+    'sender' => 'Sender',
+    'compose' => 'Compose new message',
+    'new_message_with_template' => 'Send a template',
+    'folders' => 'Folders',
 
     'seconds' => 'Second|Seconds',
     'minutes' => 'Minute|Minutes',
@@ -364,6 +385,26 @@ return [
     'cancel' => 'Cancel',
     'save_n_back' => 'Save and back',
     'update_n_back' => 'Update and back',
+    'create_ticket' => 'Create ticket',
+    'print'     => 'Print',
+    'mark_as_unread' => 'Mark as unread',
+    'mark_as_spam' => 'Mark as spam',
+    'move_to_inbox' => 'Move to inbox',
+    'reply_with_template' => 'With a template',
+
+    'message' => 'Message',
+    'attachments' => 'Attachments',
+    'refresh' => 'Refresh',
+    'select_all' => 'Select all',
+    'inbox'      => 'Inbox',
+    'read'      => 'Read',
+    'unread'    => 'Unread',
+    'spam'      => 'Spam',
+    'spams'      => 'Spams',
+    'sent'      => 'Sent',
+    'drafts'     => 'Drafts',
+    'trash'     => 'Trash',
+    'from'   => 'From',
 
     'update_inventory' => 'Update inventory',
     'back_to_inventory' => 'Back to inventory',
@@ -373,6 +414,7 @@ return [
 
     'search_again' => 'Search again',
     'search_result' => 'Search result',
+    'back' => 'Back',
     'new' => 'New',
     'used' => 'Used',
     'refurbished' => 'Refurbished',
@@ -383,6 +425,32 @@ return [
 
     'are_you_sure' => 'Are you sure?',
     'im_sure' => 'I\'m sure',
+
+    'message_labels' => [
+        'inbox'     => 'Inbox',
+        'sent'      => 'Sent',
+        'draft'     => 'Draft',
+        'spam'      => 'Spam',
+        'trash'     => 'Trash',
+    ],
+
+    'statuses' => [
+        'new'       => 'New',
+        'read'      => 'Read',
+        'unread'    => 'Unread',
+        'open'      => 'Open',
+        'pending'   => 'Pending',
+        'closed'    => 'Closed',
+        'solved'    => 'Solved',
+        'spam'      => 'Spam',
+    ],
+
+    'priorities' => [
+        'low'       => 'Low',
+        'normal'    => 'Normal',
+        'high'      => 'High',
+        'critical'  => 'Critical',
+    ],
 
     'form' => [
         'logo' => 'Brand logo',
@@ -435,6 +503,7 @@ return [
         'attribute_value_code' => 'Attribute value code',
         'list_order' => 'List order',
         'description' => 'Description',
+        'message' => 'Message',
         'option' => 'Option',
         'options' => 'Options',
         'category' => 'Category',
@@ -553,12 +622,16 @@ return [
         'exclude_offer_items' => 'Exclude discounted items',
         'coupon_limited' => 'Limited to customers',
         'coupon_limited_to' => 'Coupon limited to',
+        'attachments' => 'Attachments',
+        'ticket_category' => 'Ticket category',
+        'reply' => 'Reply',
+        'assign_to' => 'Assign to',
+        'priority' => 'Priority',
 
         // Filter
         'by_customer' => 'By customer',
         'by_status' => 'By status',
         'by_payments' => 'By payments',
-
     ],
 
     'placeholder' => [
@@ -694,7 +767,10 @@ return [
         'ending_time' => 'Ending time',
         'activation_time' => 'Activation time',
         'expiry_time' => 'Expiry time',
-
+        'attachment' => 'Attachment',
+        'ticket_categories' => 'Ticket categories',
+        'subject' => 'Subject',
+        'reply' => 'Reply',
 
         'filter_by_customer' => 'Filter by customer',
         'filter_by_status' => 'Filter by payment status',

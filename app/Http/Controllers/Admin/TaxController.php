@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-// use App\Tax;
-// use App\Country;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;

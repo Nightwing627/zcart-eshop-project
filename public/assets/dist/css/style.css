@@ -5426,6 +5426,7 @@ div.dataTables_paginate ul.pagination {
  */
 @media print {
   .no-print,
+  .box-tools,
   .main-sidebar,
   .left-side,
   .main-header,

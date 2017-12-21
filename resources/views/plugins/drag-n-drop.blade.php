@@ -53,11 +53,8 @@
 					if (index >= min && index <= max)
 					{
 						$( this ).find("span.order").text(index); //Update the reordered index
-
 						order[ $( this ).attr('id') ] = index;
-
 					}
-
 				});
 
 				// Update the database using AJAX

@@ -14,7 +14,7 @@
 
 			    </div>
 			    <div class="card-info">
-			        <span class="card-title">{{ $customer->name or $customer->nice_name }}</span>
+			        <span class="card-title">{{ $customer->getName() }}</span>
 			    </div>
 			</div>
 

@@ -26,6 +26,7 @@ return [
     'profile_updated'  => 'You account has been updated successfully!',
     'password_updated'  => 'You account password has been updated successfully!',
     'incorrect_current_password' => 'Your current password is not correct. Please try again!',
+    'file_not_exist' => 'Requested file does not exist!',
 
     // 'failed'    => [
     //     'create'   => 'Create :model has been failed!',

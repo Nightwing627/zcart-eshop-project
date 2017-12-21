@@ -253,7 +253,7 @@ return [
 
     'shipping_weight' => 'The weight of the item after packaging',
 
-    'search_customer' => 'Find the customer to make an order. Customer\'s email address, nice name or full name anything will do the job.',
+    'search_customer' => 'Find the customer by email address, nice name or full name.',
 
     'coupon_quantity' => 'Total number of avaliable coupons',
 

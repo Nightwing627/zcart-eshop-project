@@ -286,6 +286,39 @@ $factory->define(App\Coupon::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(App\Message::class, function (Faker $faker) {
+    return [
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
+        'customer_id' => $faker->randomElement(\DB::table('customers')->pluck('id')->toArray()),
+        'subject' => $faker->sentence,
+        'message' => $faker->paragraph,
+        'status' => rand(1, 3),
+        'label' => rand(1, 5),
+    ];
+});
+
+$factory->define(App\Ticket::class, function (Faker $faker) {
+    return [
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
+        'user_id' => $faker->randomElement(\DB::table('users')->pluck('id')->toArray()),
+        'category_id' => $faker->randomElement(\DB::table('ticket_categories')->pluck('id')->toArray()),
+        'subject' => $faker->sentence,
+        'message' => $faker->paragraph,
+        'status' => rand(1, 6),
+        'priority' => rand(1, 4),
+    ];
+});
+
+$factory->define(App\Reply::class, function (Faker $faker) {
+    return [
+        'user_id' => $faker->randomElement(\DB::table('users')->pluck('id')->toArray()),
+        'reply' => $faker->paragraph,
+        'read' => $faker->boolean,
+        'repliable_id' => rand(1, 15),
+        'repliable_type' => rand(0, 1) == 1 ? 'App\Ticket' : 'App\Message',
+    ];
+});
+
 $factory->define(App\Tag::class, function (Faker $faker) {
     return [
         'name' => $faker->word,

@@ -6,14 +6,7 @@
         	{{ trans('app.form.search') }}
         </div>
         <div class="modal-body">
-            <div class="form-group">
-                {!! Form::label('search', trans('app.form.search_customer')) !!}
-                <div class="input-group">
-                  {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.search_customer'), 'required']) !!}
-                  <span class="input-group-addon" id="basic-addon1" data-toggle="tooltip" data-placement="left" title="{{ trans('help.search_customer') }}"><i class="fa fa-question-circle"></i></span>
-                </div>
-              <div class="help-block with-errors"></div>
-            </div>
+            @include('admin.partials._search_customer')
         </div>
         <div class="modal-footer">
             {!! Form::submit(trans('app.form.proceed'), ['class' => 'btn btn-flat btn-new']) !!}

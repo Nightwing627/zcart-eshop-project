@@ -208,11 +208,11 @@ class demoSeeder extends Seeder
             ]
         ]);
 
-        factory('App\CategoryGroup', $this->count)->create();
+        factory(App\CategoryGroup::class, $this->count)->create();
 
-        factory('App\CategorySubGroup', $this->count)->create();
+        factory(App\CategorySubGroup::class, $this->count)->create();
 
-        factory('App\Category', $this->count)->create();
+        factory(App\Category::class, $this->count)->create();
 
         factory(App\Supplier::class, $this->longCount)
             ->create()
@@ -220,11 +220,11 @@ class demoSeeder extends Seeder
                 $supplier->addresses()->save(factory(App\Address::class)->make(['address_title' => $supplier->name, 'address_type' => 'Primary']));
             });
 
-        factory('App\AttributeValue', $this->longLongCount)->create();
+        factory(App\AttributeValue::class, $this->longLongCount)->create();
 
-        factory('App\Manufacturer', $this->count)->create();
+        factory(App\Manufacturer::class, $this->count)->create();
 
-        factory('App\Product', $this->longCount)->create();
+        factory(App\Product::class, $this->longCount)->create();
 
         factory(App\Warehouse::class, $this->longCount)
             ->create()
@@ -232,25 +232,32 @@ class demoSeeder extends Seeder
                 $warehouse->addresses()->save(factory(App\Address::class)->make(['address_title' => $warehouse->name, 'address_type' => 'Primary']));
             });
 
-        factory('App\Tax', $this->longCount)->create();
+        factory(App\Tax::class, $this->longCount)->create();
 
-        factory('App\Carrier', $this->longCount)->create();
+        factory(App\Carrier::class, $this->longCount)->create();
 
-        factory('App\Packaging', $this->longCount)->create();
+        factory(App\Packaging::class, $this->longCount)->create();
 
-        factory('App\Inventory', $this->longCount)->create();
+        factory(App\Inventory::class, $this->longCount)->create();
 
-        factory('App\Blog', $this->tinycount)->create();
+        factory(App\Blog::class, $this->tinycount)->create();
 
-        factory('App\BlogComment', $this->longCount)->create();
+        factory(App\BlogComment::class, $this->longCount)->create();
 
-        factory('App\Tag', $this->longCount)->create();
+        factory(App\Tag::class, $this->longCount)->create();
 
         factory(App\GiftCard::class, $this->longCount)->create();
 
         factory(App\Coupon::class, $this->longCount)->create();
 
-        // factory('App\Address', $this->longLongCount)->create();
+        factory(App\Message::class, $this->longCount)->create();
+
+        factory(App\Ticket::class, $this->longCount)->create();
+
+        factory(App\Reply::class, $this->longLongCount)->create();
+
+
+        // factory(App\Address::class, $this->longLongCount)->create();
 
         //PIVOT TABLE SEEDERS
 

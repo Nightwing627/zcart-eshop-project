@@ -19,7 +19,7 @@
   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.order_status_send_email') }}"></i>
   {!! Form::select('send_email_to_customer', ['1' => trans('app.yes'), '0' => trans('app.no')], null, ['class' => 'form-control select2-normal', 'id' => 'send_email', 'placeholder' => trans('app.placeholder.send_email_to_customer')]) !!}
 </div>
-<div id="option_email_template"  class="form-group
+<div id="option_email_template"  class="
   {{ (
       (!isset($status)) ||
       ($status->send_email_to_customer != 1)
@@ -27,10 +27,8 @@
     ? 'hidden' : 'show'
   }}">
 
-  {!! Form::label('email_template_id', trans('app.form.email_template').'*', ['class' => 'with-help']) !!}
-  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.order_status_email_template') }}"></i>
-  {!! Form::select('email_template_id', $email_templates , null, ['class' => 'form-control select2', 'id' => 'email_template', 'placeholder' => trans('app.placeholder.email_template')]) !!}
-  <div class="help-block with-errors"></div>
+  @include('admin.partials._email_template_id_field')
+
 </div>
 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>
 

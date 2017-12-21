@@ -54,6 +54,10 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Customer\EloquentCustomer::class
         );
         $this->app->singleton(
+            \App\Repositories\Dispute\DisputeRepository::class,
+            \App\Repositories\Dispute\EloquentDispute::class
+        );
+        $this->app->singleton(
             \App\Repositories\EmailTemplate\EmailTemplateRepository::class,
             \App\Repositories\EmailTemplate\EloquentEmailTemplate::class
         );
@@ -68,6 +72,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             \App\Repositories\Manufacturer\ManufacturerRepository::class,
             \App\Repositories\Manufacturer\EloquentManufacturer::class
+        );
+        $this->app->singleton(
+            \App\Repositories\Message\MessageRepository::class,
+            \App\Repositories\Message\EloquentMessage::class
         );
         $this->app->singleton(
             \App\Repositories\Order\OrderRepository::class,
@@ -112,6 +120,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             \App\Repositories\Tax\TaxRepository::class,
             \App\Repositories\Tax\EloquentTax::class
+        );
+        $this->app->singleton(
+            \App\Repositories\Ticket\TicketRepository::class,
+            \App\Repositories\Ticket\EloquentTicket::class
         );
         $this->app->singleton(
             \App\Repositories\User\UserRepository::class,

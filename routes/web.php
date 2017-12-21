@@ -7,6 +7,7 @@ Route::get('/', 'HomeController@index');
 // Common
 Route::group(['middleware' => ['auth']], function()
 {
+	include('Attachment.php');
 	include('Address.php');
 });
 
@@ -108,6 +109,13 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		include('admin/GiftCard.php');
 	});
 
+	// Support Routs for Admin
+	Route::group(['as' => 'support.', 'prefix' => 'support'], function()
+	{
+		include('admin/Message.php');
+		include('admin/Ticket.php');
+	});
+
 	// Export/Import Models
 	Route::get('exim/{table}', 'EximController@index')->name('exim');
 	Route::post('export', 'EximController@export')->name('export');
@@ -120,6 +128,8 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 	// AJAX routes
 	Route::group(['middleware' => 'ajax'], function()
 	{
+	    // Route::post('message/massUpdate/{statusOrLabel}/{type?}', 'MessageController@massUpdate')->name('support.message.massUpdate');
+
 		Route::get('catalog/ajax/getParrentAttributeType', 'AttributeController@ajaxGetParrentAttributeType')->name('ajax.getParrentAttributeType');
 
 		Route::get('order/ajax/getTaxRate', 'OrderController@ajaxGetTaxRate')->name('ajax.getTaxRate');

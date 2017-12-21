@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call('EmailTemplateSeeder');
         $this->call('OrderStatusesSeeder');
         $this->call('AddressTypesSeeder');
-        $this->call('MessageTypesSeeder');
+        $this->call('TicketCategoriesSeeder');
         $this->call('PaymentStatusesSeeder');
         $this->call('TaxesSeeder');
         $this->call('demoSeeder');

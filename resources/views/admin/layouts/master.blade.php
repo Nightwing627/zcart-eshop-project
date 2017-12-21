@@ -53,17 +53,20 @@
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <h1>
-            {{ $page_title or '' }}
-            <small>{{ $page_description or '' }}</small>
-          </h1>
-          <span class='opt-button'>
+        @if (View::hasSection('buttons') || isset($page_title))
+          <section class="content-header">
+            <h1>
+              {{ $page_title or '' }}
+              <small>{{ $page_description or '' }}</small>
+            </h1>
+            <span class='opt-button'>
 
-            @yield("buttons")
+              @yield("buttons")
 
-          </span>
-        </section>
+            </span>
+          </section>
+        @endif
+
         <!-- Main content -->
         <section class="content">
 

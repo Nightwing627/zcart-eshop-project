@@ -49,16 +49,16 @@
     </span>
   </label>
   @endif
-	<div class="row">
-        <div class="col-md-9 nopadding-right">
+  <div class="row">
+    <div class="col-md-9 nopadding-right">
 			<input id="uploadFile" placeholder="{{ trans('app.placeholder.logo') }}" class="form-control" disabled="disabled" style="height: 28px;" />
-        </div>
-        <div class="col-md-3 nopadding-left">
+    </div>
+    <div class="col-md-3 nopadding-left">
 			<div class="fileUpload btn btn-primary btn-block btn-flat">
 			    <span>{{ trans('app.form.upload') }}</span>
 			    <input type="file" name="image" id="uploadBtn" class="upload" />
 			</div>
-        </div>
     </div>
+  </div>
 </div>
 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>

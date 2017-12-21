@@ -1,6 +1,5 @@
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
-    	<?php //echo "<pre/>"; print_r($nice_name); ?>
     	{!! Form::open(['route' => 'admin.blog.store', 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
         	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

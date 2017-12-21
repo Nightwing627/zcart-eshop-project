@@ -94,6 +94,16 @@ class Customer extends Authenticatable
     }
 
     /**
+     * Get name the user.
+     *
+     * @return mix
+     */
+    public function getName()
+    {
+        return $this->nice_name ?: $this->name;
+    }
+
+    /**
      * Set password for the user.
      *
      * @return array

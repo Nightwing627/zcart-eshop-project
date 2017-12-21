@@ -35,7 +35,9 @@ return [
 
     'utilities' => 'Utilities',
     'support' => 'Support desk',
-    'customer_support' => 'Customer',
+    'support_messages' => 'Messages',
+    'disputes' => 'Disputes',
+    'support_tickets' => 'Tickets',
     'return_n_refund' => 'Return/Refund',
     'user_roles' => 'User roles',
     'taxes' => 'Taxes',

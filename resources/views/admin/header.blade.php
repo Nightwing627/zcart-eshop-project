@@ -176,7 +176,7 @@
             <!-- The user image in the navbar-->
             <img src="{{ get_image_src(Auth::user()->id, 'users', '35x35') }}" class="user-image" alt="{{ trans('app.avatar') }}">
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-            <span class="hidden-xs">{{Auth::user()->nice_name ?: Auth::user()->name}}</span>
+            <span class="hidden-xs">{{ Auth::user()->getName() }}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->

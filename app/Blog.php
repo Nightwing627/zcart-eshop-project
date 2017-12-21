@@ -45,7 +45,7 @@ class Blog extends Model
      */
     public function author()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 	/**
@@ -53,7 +53,7 @@ class Blog extends Model
      */
     public function comments()
     {
-        return $this->hasMany('App\BlogComment');
+        return $this->hasMany(BlogComment::class);
     }
 
     /**

@@ -54,10 +54,6 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeTaxForm();
 
-        $this->composeOrderStatusForm();
-
-        $this->composePaymentStatusForm();
-
         $this->composeManufacturerForm();
 
         $this->composeWarehouseForm();
@@ -73,6 +69,14 @@ class ViewComposerServiceProvider extends ServiceProvider
         $this->composeCreateOrderForm();
 
         $this->composeCouponForm();
+
+        $this->composeTicketCreateForm();
+
+        $this->composeTicketStatusForm();
+
+        $this->composeTicketAssignForm();
+
+        $this->composeEmailTemplatePartialForm();
 
         $this->composeBlogForm();
 
@@ -309,28 +313,13 @@ class ViewComposerServiceProvider extends ServiceProvider
     }
 
     /**
-     * compose partial view of Order Status form
+     * compose partial view of Email template partial form
      */
-    private function composeOrderStatusForm()
+    private function composeEmailTemplatePartialForm()
     {
         View::composer(
 
-                'admin.order-status._form',
-
-                function($view)
-                {
-                    $view->with('email_templates', ListHelper::email_templates());
-                });
-    }
-
-    /**
-     * compose partial view of Payment Status form
-     */
-    private function composePaymentStatusForm()
-    {
-        View::composer(
-
-                'admin.payment-status._form',
+                'admin.partials._email_template_id_field',
 
                 function($view)
                 {
@@ -510,6 +499,56 @@ class ViewComposerServiceProvider extends ServiceProvider
             function($view)
             {
                 $view->with('customers', ListHelper::customers());
+            }
+        );
+    }
+
+    /**
+     * compose partial view of ticket create form
+     */
+    private function composeTicketCreateForm()
+    {
+        View::composer(
+
+            'admin.ticket._create',
+
+            function($view)
+            {
+                $view->with('ticket_categories', ListHelper::ticket_categories());
+                $view->with('priorities', ListHelper::ticket_priorities());
+            }
+        );
+    }
+
+    /**
+     * compose partial view of ticket status form
+     */
+    private function composeTicketStatusForm()
+    {
+        View::composer(
+
+            'admin.ticket._status_form',
+
+            function($view)
+            {
+                $view->with('priorities', ListHelper::ticket_priorities());
+                $view->with('statuses', ListHelper::ticket_statuses_all());
+            }
+        );
+    }
+
+    /**
+     * compose partial view of ticket status form
+     */
+    private function composeTicketAssignForm()
+    {
+        View::composer(
+
+            'admin.ticket._assign',
+
+            function($view)
+            {
+                $view->with('users', ListHelper::platform_users());
             }
         );
     }
