@@ -14,6 +14,7 @@ return [
     */
 
     'created'           => ':model has been created successfully!',
+    'sent'              => ':model has been sent successfully!',
     'updated'           => ':model has been updated successfully!',
     'trashed'           => ':model has been moved to trash!',
     'restored'          => ':model has been restored successfully!',

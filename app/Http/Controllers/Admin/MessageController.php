@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 // use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Repositories\Message\MessageRepository;
+use App\Http\Requests\Validations\DraftSendRequest;
 use App\Http\Requests\Validations\ReplyMessageRequest;
 use App\Http\Requests\Validations\CreateMessageRequest;
 use App\Http\Requests\Validations\UpdateMessageRequest;
@@ -76,6 +77,23 @@ class MessageController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param int id
+     * @return \Illuminate\Http\Response
+     */
+    public function draftSend(DraftSendRequest $request, $id)
+    {
+        $this->message->update($request, $id);
+
+        if($request->has('draft'))
+            return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+
+        return back()->with('success', trans('messages.sent', ['model' => $this->model_name]));
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -89,6 +107,19 @@ class MessageController extends Controller
         $this->message->markAsRead($request, $message);
 
         return view('admin.message.show', compact('message'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $message = $this->message->find($id);
+
+        return view('admin.message._edit', compact('message'));
     }
 
     /**

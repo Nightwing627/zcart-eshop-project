@@ -21,18 +21,18 @@ class EloquentMessage extends EloquentRepository implements BaseRepository, Mess
 
     public function labelOf($label)
     {
-        if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->labelOf($label)->with('customer')->withCount('replies')->get();
+        // if (!Auth::user()->isFromPlatform())
+            return $this->model->mine()->labelOf($label)->with('customer')->withCount('replies')->paginate(config('shop_settings.pagination'));
 
-        return $this->model->labelOf($label)->with('customer')->withCount('replies')->get();
+        // return $this->model->labelOf($label)->with('customer')->withCount('replies')->paginate(config('system_settings.pagination'));
     }
 
     public function statusOf($status)
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->statusOf($status)->with('customer')->withCount('replies')->get();
+            return $this->model->mine()->statusOf($status)->with('customer')->withCount('replies')->paginate(config('shop_settings.pagination'));
 
-        return $this->model->statusOf($status)->with('customer')->withCount('replies')->get();
+        return $this->model->statusOf($status)->with('customer')->withCount('replies')->paginate(config('system_settings.pagination'));
     }
 
     public function updateStatusOrLabel(Request $request, $message, $statusOrLabel, $type)
@@ -79,6 +79,18 @@ class EloquentMessage extends EloquentRepository implements BaseRepository, Mess
         return $this->model->with(['replies' => function($query){
             $query->with('attachments', 'user')->orderBy('id', 'desc');
         }])->find($id);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $message = $this->model->find($id);
+
+        $message->update($request->all());
+
+        if ($request->hasFile('attachment'))
+            Attachment::storeAttachmentFromRequest($request, $message);
+
+        return $message;
     }
 
     public function storeReply(Request $request, $id)

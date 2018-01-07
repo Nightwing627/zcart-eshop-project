@@ -1,19 +1,20 @@
 <div class="modal-dialog modal-md">
     <div class="modal-content">
-    	{!! Form::open(['route' => 'admin.support.message.store', 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
+    	{!! Form::open(['route' => ['admin.support.message.draftSend', $message], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
         	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         	{{ trans('app.form.form') }}
         </div>
         <div class="modal-body">
+            @php
+                $customer = $message->customer;
+            @endphp
 
             @include('admin.partials._search_customer')
 
-            @if($template)
-              @include('admin.partials._email_template_id_field')
-            @else
-              @include('admin.partials._compose_a_message')
-            @endif
+            @include('admin.partials._compose_a_message')
+
+            @include('admin.message._view_attachments')
 
             @include('admin.partials._attachment_upload_field')
 

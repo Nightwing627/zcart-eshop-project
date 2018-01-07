@@ -5,12 +5,11 @@
             <a href="{{ route('admin.admin.user.show', $reply->user_id) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ trans('app.view_detail') }}</a>
 		@endcan
 	</div>
+
 	<div class="col-md-11">
 		<blockquote style="font-size: 1em;">
     		{!! $reply->reply !!}
-
 			<footer>{{ $reply->user->getName() }} | {{ $reply->updated_at->diffForHumans() }}
-
 				@if(count($reply->attachments))
 					<div class="pull-right no-print">
 						{{ trans('app.attachments') . ': ' }}

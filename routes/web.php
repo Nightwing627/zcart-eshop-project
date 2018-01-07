@@ -9,6 +9,7 @@ Route::group(['middleware' => ['auth']], function()
 {
 	include('Attachment.php');
 	include('Address.php');
+	include('Search.php');
 });
 
 // Admin

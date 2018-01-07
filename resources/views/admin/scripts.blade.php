@@ -285,6 +285,22 @@
 
     $(".select2").not(".dataTables_length .select2").css('width', '100%');
 
+    //Customer Seach
+    $('.searchCustomer').select2({
+      ajax: {
+        delay: 250, // wait 250 milliseconds before triggering the request
+        url : "{{ route('search.customer') }}",
+        dataType: 'json',
+        processResults: function (data) {
+          return {
+            results: data
+          };
+        }
+      },
+      placeholder: 'Search for a repository',
+    });
+    //End Customer Seach
+
     /* bootstrap-select */
     $(".selectpicker").selectpicker();
 
@@ -515,7 +531,23 @@
       };
     }
 
-    //Radom code tring maker
+    //SEARCH OPTIONS
+    // $('#searchBox').on('keyup', function(){
+    //   var str=  $("#searchBox").val();
+    //    // if(str == "") {
+    //            $( "#textHint" ).html("<b>Blogs information will be listed here...</b>");
+    //    // }else {
+    //            $.get( "{{ url('demos/livesearch?id=') }}"+str, function( data ) {
+    //                $( "#textHint" ).html( data );
+    //         });
+    //    // }
+
+    //   // var slugstr = convertToSlug(this.value);
+    //   // $('.slug').val(slugstr);
+    // });
+    //END SEARCH OPTIONS
+
+    //Radom code string maker
     /**
      * generate Code
      */
@@ -555,8 +587,10 @@
     $(".checkbox-toggle").click(function () {
       var clicks = $(this).data('clicks');
       if (clicks) {
+        $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
         unCheckAll(); //Uncheck all checkboxes
       } else {
+        $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
         checkAll();  //Check all checkboxes
       }
       $(this).data("clicks", !clicks);
@@ -614,12 +648,10 @@
 
   function checkAll(){
     $("#massSelectArea input[type='checkbox']").iCheck("check");
-    $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
   }
 
   function unCheckAll(){
     $("#massSelectArea input[type='checkbox']").iCheck("uncheck");
-    $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
   }
   //End Mass selection and action section
 

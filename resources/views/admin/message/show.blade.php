@@ -71,6 +71,12 @@
 			                  	@endcan
 
 							@else
+								@if($message->label == \App\Message::LABEL_DRAFT)
+									<a href="{{ route('admin.support.message.edit', $message) }}" class="btn btn-default btn-sm" data-target="myDynamicModal" data-toggle="modal">
+										<i class="fa fa-send"></i> {{ trans('app.open') }}
+									</a>
+			                  	@endif
+
 								@if($message->label > \App\Message::LABEL_DRAFT)
 									@can('update', $message)
 										<a href="{{ route('admin.support.message.update', [$message, \App\Message::LABEL_INBOX]) }}" class="btn btn-default btn-sm">
@@ -103,34 +109,23 @@
 
             	@if($message->attachments->count())
 		            <div class="box-footer">
-		              <ul class="mailbox-attachments clearfix">
-		              	@foreach($message->attachments as $attachment)
-			                <li>
-			                  <span class="mailbox-attachment-icon"><i class="fa fa-paperclip"></i></span>
-			                  <div class="mailbox-attachment-info">
-			                    <a href="#" class="mailbox-attachment-name"><i class="fa fa-file"></i> {{ $attachment->path }}</a>
-			                        <span class="mailbox-attachment-size">
-			                          {{ $attachment->size }}
-			                          <a href="{{ route('attachment.download', $attachment->path) }}" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-			                        </span>
-			                  </div>
-			                </li>
-		              	@endforeach
-		              </ul>
+			            @include('admin.message._view_attachments')
 		            </div>
 	            	<!-- /.box-footer -->
 	            @endif
 
-	            <div class="box-footer">
-					<div class="form-group">
-					  	<label>{{ trans('app.replies') }}</label>
-					</div>
+				@unless($message->label == \App\Message::LABEL_DRAFT)
+		            <div class="box-footer">
+						<div class="form-group">
+						  	<label>{{ trans('app.replies') }}</label>
+						</div>
 
-			        @foreach($message->replies as $reply)
-						@include('admin.partials._reply_conversations')
-			        @endforeach
-				</div>
-	            <!-- /.box-footer -->
+				        @foreach($message->replies as $reply)
+							@include('admin.partials._reply_conversations')
+				        @endforeach
+					</div>
+		            <!-- /.box-footer -->
+		        @endunless
 
 	            <div class="box-footer no-print">
 					@if($message->label < \App\Message::LABEL_DRAFT)

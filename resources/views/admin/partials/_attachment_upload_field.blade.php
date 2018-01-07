@@ -4,8 +4,8 @@
     </div>
     <div class="col-md-3 nopadding-left">
         <div class="fileUpload btn btn-primary btn-block btn-flat">
-          <span>{{ trans('app.form.upload') }}</span>
+          	<span>{{ trans('app.form.upload') }}</span>
             <input type="file" name="attachment" id="uploadBtn" class="upload" />
-      </div>
+      	</div>
     </div>
 </div>

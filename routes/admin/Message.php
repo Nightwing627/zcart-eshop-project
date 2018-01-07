@@ -2,6 +2,8 @@
 	// Support messages
     Route::get('message/labelOf/{label}', 'MessageController@labelOf')->name('message.labelOf');
 
+    Route::post('message/draftSend/{draft}', 'MessageController@draftSend')->name('message.draftSend');
+
     Route::get('message/{message}/update/{statusOrLabel}/{type?}', 'MessageController@update')->name('message.update');
 
     Route::post('message/massUpdate/{statusOrLabel}/{type?}', 'MessageController@massUpdate')->name('message.massUpdate');
@@ -14,8 +16,6 @@
 
     Route::post('message/{message}/storeReply', 'MessageController@storeReply')->name('message.storeReply');
 
-    Route::get('message/search/{text}', 'MessageController@search')->name('message.search');
-
     Route::get('message/create/{template?}', 'MessageController@create')->name('message.create');
 
-	Route::resource('message', 'MessageController', ['except' => ['index', 'create', 'edit', 'update', 'delete']]);
+	Route::resource('message', 'MessageController', ['except' => ['index', 'create', 'update', 'delete']]);

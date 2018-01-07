@@ -26,6 +26,7 @@ class CreateSettingsTable extends Migration
             $table->string('order_number_prefix')->nullable();
             $table->string('order_number_suffix')->nullable();
 
+            $table->integer('pagination')->unsigned()->default(10);
             $table->string('default_sender_email_address')->nullable();
             $table->string('default_email_sender_name')->nullable();
             $table->integer('default_tax_id_for_inventory')->unsigned()->nullable();

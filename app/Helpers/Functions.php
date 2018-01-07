@@ -1,11 +1,6 @@
 <?php
 if ( ! function_exists('gravatar') )
 {
-    /**
-     * Get the path to the image folder.
-     *
-     * @return string
-     */
     function gravatar($email, $size = 30)
     {
         $email = md5(strtolower(trim($email)));
@@ -18,13 +13,25 @@ if ( ! function_exists('gravatar') )
     }
 }
 
+if ( ! function_exists('highlightWords') )
+{
+    function highlightWords($content, $words = null)
+     {
+        if($words == null) return $content;
+
+        if(is_array($words)){
+            foreach ( $words as $word )
+                $content = str_ireplace($word, '<mark>'.$word.'</mark>', $content);
+
+            return $content;
+        }
+
+        return str_ireplace($words, '<mark>'.$words.'</mark>', $content);
+     }
+}
+
 if ( ! function_exists('get_qualified_model') )
 {
-    /**
-     * Get the path to the image folder.
-     *
-     * @return string
-     */
     function get_qualified_model($class_name = '')
     {
         return 'App\\' . str_singular(studly_case($class_name));
@@ -33,11 +40,6 @@ if ( ! function_exists('get_qualified_model') )
 
 if ( ! function_exists('attachment_storage_path') )
 {
-    /**
-     * Get the path to the image folder.
-     *
-     * @return string
-     */
     function attachment_storage_path()
     {
         return 'public/attachments/';
@@ -46,11 +48,6 @@ if ( ! function_exists('attachment_storage_path') )
 
 if ( ! function_exists('attachment_real_path') )
 {
-    /**
-     * Get the path to the image folder.
-     *
-     * @return string
-     */
     function attachment_real_path($filename)
     {
         return storage_path() . '/app/' . attachment_storage_path() . $filename;
@@ -59,11 +56,6 @@ if ( ! function_exists('attachment_real_path') )
 
 if ( ! function_exists('image_path') )
 {
-    /**
-     * Get the path to the image folder.
-     *
-     * @return string
-     */
     function image_path($path = '')
     {
         return 'assets/images/' . $path .'/';
@@ -73,15 +65,6 @@ if ( ! function_exists('image_path') )
 
 if ( ! function_exists('get_image_src') )
 {
-    /**
-     * Get image file path for a given model.
-     *
-     * @param  int $image      image id
-     * @param  str $model_name name of the model
-     * @param  string $size
-     *
-     * @return str             full image path
-     */
     function get_image_src($image = null, $dir = null, $size = null)
     {
         if(! $image || ! $dir)
@@ -104,11 +87,6 @@ if ( ! function_exists('get_image_src') )
 
 if ( ! function_exists('generateCouponCode') )
 {
-    /**
-     * Generate unique coupon code.
-     *
-     * @return string
-     */
     function generateCouponCode()
     {
         $unique = TRUE;
@@ -130,11 +108,6 @@ if ( ! function_exists('generateCouponCode') )
 
 if ( ! function_exists('generatePinCode') )
 {
-    /**
-     * Generate unique pin code.
-     *
-     * @return string
-     */
     function generatePinCode()
     {
         $unique = TRUE;
@@ -156,11 +129,6 @@ if ( ! function_exists('generatePinCode') )
 
 if ( ! function_exists('generateSerialNumber') )
 {
-    /**
-     * Generate unique pin code.
-     *
-     * @return string
-     */
     function generateSerialNumber()
     {
         $unique = TRUE;

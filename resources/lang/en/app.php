@@ -405,6 +405,7 @@ return [
     'drafts'     => 'Drafts',
     'trash'     => 'Trash',
     'from'   => 'From',
+    'open' => 'Open',
 
     'update_inventory' => 'Update inventory',
     'back_to_inventory' => 'Back to inventory',
@@ -412,8 +413,10 @@ return [
     'update_the_order' => 'Update the order',
     'change_password' => 'Change password',
 
+    'no_data_found' => 'No data found!',
     'search_again' => 'Search again',
     'search_result' => 'Search result',
+    'search_result_for' => 'Search result for',
     'back' => 'Back',
     'new' => 'New',
     'used' => 'Used',
@@ -504,6 +507,8 @@ return [
         'list_order' => 'List order',
         'description' => 'Description',
         'message' => 'Message',
+        'send' => 'Send',
+        'save_as_draft' => 'Save as draft',
         'option' => 'Option',
         'options' => 'Options',
         'category' => 'Category',
@@ -771,6 +776,7 @@ return [
         'ticket_categories' => 'Ticket categories',
         'subject' => 'Subject',
         'reply' => 'Reply',
+        'search' => 'Search',
 
         'filter_by_customer' => 'Filter by customer',
         'filter_by_status' => 'Filter by payment status',
