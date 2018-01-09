@@ -27,7 +27,8 @@ class ResponseDisputeRequest extends Request
         Request::merge(['user_id' => Auth::id()]); //Set shop_id
 
         return [
-           'reply' => 'required',
+            'status' => 'required',
+            'reply' => 'required',
         ];
     }
 }

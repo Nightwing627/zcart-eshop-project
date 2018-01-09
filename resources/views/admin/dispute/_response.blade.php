@@ -3,7 +3,7 @@
         {!! Form::model($dispute, ['method' => 'POST', 'route' => ['admin.support.dispute.storeResponse', $dispute->id], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
         	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            {{ trans('app.reply') }}
+            {{ trans('app.response') }}
         </div>
         <div class="modal-body">
 

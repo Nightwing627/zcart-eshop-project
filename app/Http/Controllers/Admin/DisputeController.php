@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-// use App\Common\Authorizable;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Repositories\Dispute\DisputeRepository;
 use App\Http\Requests\Validations\ResponseDisputeRequest;
 use App\Http\Requests\Validations\CreateDisputeRequest;
-use App\Http\Requests\Validations\UpdateDisputeRequest;
 
 class DisputeController extends Controller
 {
-    // use Authorizable;
+    use Authorizable;
 
     private $model_name;
 
@@ -99,33 +98,6 @@ class DisputeController extends Controller
     public function storeResponse(ResponseDisputeRequest $request, $id)
     {
         $this->dispute->storeResponse($request, $id);
-
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
-    }
-
-    /**
-     * Display the edit form.
-     *
-     * @param int id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $dispute = $this->dispute->find($id);
-
-        return view('admin.dispute._edit', compact('dispute'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param int id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateDisputeRequest $request, $id)
-    {
-        $this->dispute->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
