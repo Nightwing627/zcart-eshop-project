@@ -190,22 +190,30 @@
           </li>
         @endif
 
-        <li class="treeview {{ Request::is('admin/support*') ? 'active' : '' }}">
-          <a href="#">
-            <i class="fa fa-support"></i>
-            <span>{{ trans('nav.support') }}</span>
-            <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li class=" {{ Request::is('admin/support/message*') ? 'active' : '' }}"><a href="{{ url('admin/support/message/labelOf/'. App\Message::LABEL_INBOX) }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.support_messages') }}</a></li>
+        @if(Gate::allows('index', App\Message::class) || Gate::allows('index', App\Ticket::class))
+          <li class="treeview {{ Request::is('admin/support*') ? 'active' : '' }}">
+            <a href="#">
+              <i class="fa fa-support"></i>
+              <span>{{ trans('nav.support') }}</span>
+              <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+              @can('index', App\Message::class)
+                <li class=" {{ Request::is('admin/support/message*') ? 'active' : '' }}"><a href="{{ url('admin/support/message/labelOf/'. App\Message::LABEL_INBOX) }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.support_messages') }}</a></li>
+              @endcan
 
-            <li class=" {{ Request::is('admin/support/ticket*') ? 'active' : '' }}"><a href="{{ url('admin/support/ticket') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.support_tickets') }}</a></li>
+              @can('index', App\Ticket::class)
+                <li class=" {{ Request::is('admin/support/ticket*') ? 'active' : '' }}"><a href="{{ url('admin/support/ticket') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.support_tickets') }}</a></li>
+              @endcan
 
-            <li class=" {{ Request::is('admin/support/dispute*') ? 'active' : '' }}"><a href="{{ url('admin/support/dispute') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.disputes') }}</a></li>
+              {{-- @can('index', App\Ticket::class) --}}
+                <li class=" {{ Request::is('admin/support/dispute*') ? 'active' : '' }}"><a href="{{ url('admin/support/dispute') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.disputes') }}</a></li>
+              {{-- @endcan --}}
 
-            <li class=" {{ Request::is('admin/support/return*') ? 'active' : '' }}"><a href="{{ url('admin/support/return') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.return_n_refund') }}</a></li>
-          </ul>
-        </li>
+              <li class=" {{ Request::is('admin/support/return*') ? 'active' : '' }}"><a href="{{ url('admin/support/return') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.return_n_refund') }}</a></li>
+            </ul>
+          </li>
+        @endif
 
 
         @can('index', App\Blog::class)

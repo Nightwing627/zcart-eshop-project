@@ -76,6 +76,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeTicketAssignForm();
 
+        $this->composeDisputeResponseForm();
+
         $this->composeEmailTemplatePartialForm();
 
         $this->composeBlogForm();
@@ -549,6 +551,22 @@ class ViewComposerServiceProvider extends ServiceProvider
             function($view)
             {
                 $view->with('users', ListHelper::platform_users());
+            }
+        );
+    }
+
+    /**
+     * compose partial view of dispute status form
+     */
+    private function composeDisputeResponseForm()
+    {
+        View::composer(
+
+            'admin.dispute._response',
+
+            function($view)
+            {
+                $view->with('statuses', ListHelper::dispute_statuses());
             }
         );
     }

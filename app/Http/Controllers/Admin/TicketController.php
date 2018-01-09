@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-// use App\Common\Authorizable;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Repositories\Ticket\TicketRepository;
 use App\Http\Requests\Validations\ReplyTicketRequest;
@@ -12,7 +12,7 @@ use App\Http\Requests\Validations\UpdateTicketRequest;
 
 class TicketController extends Controller
 {
-    // use Authorizable;
+    use Authorizable;
 
     private $model_name;
 

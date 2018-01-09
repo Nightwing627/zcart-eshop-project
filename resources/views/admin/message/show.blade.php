@@ -115,15 +115,17 @@
 	            @endif
 
 				@unless($message->label == \App\Message::LABEL_DRAFT)
-		            <div class="box-footer">
-						<div class="form-group">
-						  	<label>{{ trans('app.replies') }}</label>
-						</div>
+					@if($message->replies->count())
+			            <div class="box-footer">
+							<div class="form-group">
+							  	<label>{{ trans('app.replies') }}</label>
+							</div>
 
-				        @foreach($message->replies as $reply)
-							@include('admin.partials._reply_conversations')
-				        @endforeach
-					</div>
+					        @foreach($message->replies as $reply)
+								@include('admin.partials._reply_conversations')
+					        @endforeach
+						</div>
+			        @endif
 		            <!-- /.box-footer -->
 		        @endunless
 

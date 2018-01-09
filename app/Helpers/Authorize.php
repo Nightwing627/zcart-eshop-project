@@ -31,7 +31,6 @@ class Authorize
 	public function check()
 	{
 		// return true; //FOR TEMPORARY TEST
-
 		if($this->isExceptional())
 			return true;
 
@@ -85,7 +84,6 @@ class Authorize
 	{
 		if( Auth::user()->id == $this->user->id )
 	        return config('permissions');
-
         return $this->user->role->permissions()->pluck('slug')->toArray();
 	}
 }

@@ -20,7 +20,5 @@ interface MessageRepository{
 
     public function storeReply(Request $request, $message);
 
-    public function search($text);
-
     public function massDestroy($ids);
 }

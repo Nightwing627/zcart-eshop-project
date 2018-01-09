@@ -183,6 +183,26 @@ class Shop extends Model
         return $this->tickets()->where('status', '=', Ticket::STATUS_CLOSED);
     }
 
+    public function disputes()
+    {
+        return $this->hasMany(Dispute::class);
+    }
+
+    public function openDisputes()
+    {
+        return $this->disputes()->where('status', '<', Dispute::STATUS_SOLVED);
+    }
+
+    public function solvedDisputes()
+    {
+        return $this->disputes()->where('status', '=', Dispute::STATUS_SOLVED);
+    }
+
+    public function closedDisputes()
+    {
+        return $this->disputes()->where('status', '=', Dispute::STATUS_CLOSED);
+    }
+
     /**
      * Scope a query to only include active shops.
      *

@@ -76,13 +76,15 @@
 					  </div>
 					@endif
 
-					<div class="form-group">
-					  	<label>{{ trans('app.conversations') }}</label>
-					</div>
+			        @if($ticket->replies->count())
+						<div class="form-group">
+						  	<label>{{ trans('app.conversations') }}</label>
+						</div>
 
-			        @foreach($ticket->replies as $reply)
-						@include('admin.partials._reply_conversations')
-			        @endforeach
+				        @foreach($ticket->replies as $reply)
+							@include('admin.partials._reply_conversations')
+				        @endforeach
+			        @endif
 			  	</div>
 
 			  	<div class="col-md-3">

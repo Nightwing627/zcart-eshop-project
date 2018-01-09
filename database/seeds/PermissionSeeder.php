@@ -48,7 +48,7 @@ class PermissionSeeder extends Seeder
                 );
             }
 
-            if ($module->access == 'Merchant'){
+            if ($module->access != 'Platform'){
                 DB::table('permission_role')->insert([
                     'permission_id' => $permission_id,
                     'role_id' => config('installation.seed.merchant_role_id')?:3,

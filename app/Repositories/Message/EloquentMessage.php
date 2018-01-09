@@ -21,18 +21,12 @@ class EloquentMessage extends EloquentRepository implements BaseRepository, Mess
 
     public function labelOf($label)
     {
-        // if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->labelOf($label)->with('customer')->withCount('replies')->paginate(config('shop_settings.pagination'));
-
-        // return $this->model->labelOf($label)->with('customer')->withCount('replies')->paginate(config('system_settings.pagination'));
+        return $this->model->mine()->labelOf($label)->with('customer')->withCount('replies')->paginate(getPaginationValue());
     }
 
     public function statusOf($status)
     {
-        if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->statusOf($status)->with('customer')->withCount('replies')->paginate(config('shop_settings.pagination'));
-
-        return $this->model->statusOf($status)->with('customer')->withCount('replies')->paginate(config('system_settings.pagination'));
+        return $this->model->mine()->statusOf($status)->with('customer')->withCount('replies')->paginate(getPaginationValue());
     }
 
     public function updateStatusOrLabel(Request $request, $message, $statusOrLabel, $type)
@@ -105,13 +99,6 @@ class EloquentMessage extends EloquentRepository implements BaseRepository, Mess
             Attachment::storeAttachmentFromRequest($request, $reply);
 
         return $reply;
-    }
-
-    public function search($text)
-    {
-        return $this->model->where(function ($query) use ($text) {
-            $query->where('subject', 'like', "%{$text}%")->orWhere('message', 'like', "%{$text}%");
-        })->get();
     }
 
     public function destroy($message)

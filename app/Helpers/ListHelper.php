@@ -6,6 +6,7 @@ use App\User;
 use App\Module;
 use App\Ticket;
 use App\Message;
+use App\Dispute;
 use App\Attribute;
 use App\Permission;
 
@@ -45,6 +46,23 @@ class ListHelper
             Ticket::STATUS_CLOSED   => trans("app.statuses.closed"),
             Ticket::STATUS_SOLVED   => trans("app.statuses.solved"),
             Ticket::STATUS_SPAM     => trans("app.statuses.spam"),
+        ];
+    }
+
+    /**
+     * Get dispute statuses list for form dropdown.
+     *
+     * @return array
+     */
+    public static function dispute_statuses()
+    {
+        return  [
+            Dispute::STATUS_NEW      => trans("app.statuses.new"),
+            Dispute::STATUS_OPEN     => trans("app.statuses.open"),
+            Dispute::STATUS_WAITING  => trans("app.statuses.waiting"),
+            Dispute::STATUS_APPEALED     => trans("app.statuses.appealed"),
+            Dispute::STATUS_SOLVED   => trans("app.statuses.solved"),
+            Dispute::STATUS_CLOSED   => trans("app.statuses.closed"),
         ];
     }
 

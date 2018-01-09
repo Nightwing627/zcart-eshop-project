@@ -44,6 +44,7 @@ return [
         'packaging' => 'Packaging',
         'email_template' => 'Email template',
         'ticket' => 'Ticket',
+        'dispute' => 'Dispute',
         'message' => 'Message',
     ],
 
@@ -156,7 +157,11 @@ return [
     'blogs' => 'Blogs',
     'ticket' => 'Ticket',
     'tickets' => 'Support tickets',
+    'dispute' => 'Dispute',
+    'disputes' => 'Disputes',
+    'total_disputes' => 'Total Disputes',
     'closed_tickets' => 'Closed tickets',
+    // 'closed_disputes' => 'Closed disputes',
     'my_tickets' => 'My tickets',
     'category_name' => 'Category name',
     'map_location' => 'Map shows approximate location.',
@@ -344,6 +349,10 @@ return [
     'months' => 'Month|Months',
     'years' => 'Year|Years',
 
+    'latest_hrs' => 'Last :hrs hours',
+    'latest_days' => 'Last :days days',
+    'latest_months' => 'Last :months months',
+
     'move' => 'Move',
     'public' => 'Public',
     'restricted' => 'Restricted',
@@ -391,6 +400,7 @@ return [
     'mark_as_spam' => 'Mark as spam',
     'move_to_inbox' => 'Move to inbox',
     'reply_with_template' => 'With a template',
+    'response' => 'Response',
 
     'message' => 'Message',
     'attachments' => 'Attachments',
@@ -443,6 +453,8 @@ return [
         'unread'    => 'Unread',
         'open'      => 'Open',
         'pending'   => 'Pending',
+        'waiting'   => 'Waiting',
+        'appealed'  => 'Appealed',
         'closed'    => 'Closed',
         'solved'    => 'Solved',
         'spam'      => 'Spam',

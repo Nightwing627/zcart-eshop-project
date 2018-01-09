@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call('AddressTypesSeeder');
         $this->call('TicketCategoriesSeeder');
         $this->call('PaymentStatusesSeeder');
+        $this->call('DisputeTypesSeeder');
         $this->call('TaxesSeeder');
         $this->call('demoSeeder');
         $this->command->info('Seeding complete!');

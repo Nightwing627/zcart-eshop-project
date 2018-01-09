@@ -38,16 +38,6 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
         return $this->model->archived()->get();
     }
 
-    public function findCustomer(Request $request)
-    {
-        $query = $request->input('search');
-
-        return Customer::select('id')->where('email', $query)
-                ->orWhere('nice_name', $query)
-                ->orWhere('name', $query)
-                ->get()->first();
-    }
-
     public function getCart($id)
     {
         return Cart::findOrFail($id);

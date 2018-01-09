@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-// use App\Common\Authorizable;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Repositories\Message\MessageRepository;
 use App\Http\Requests\Validations\DraftSendRequest;
@@ -13,7 +13,7 @@ use App\Http\Requests\Validations\UpdateMessageRequest;
 
 class MessageController extends Controller
 {
-    // use Authorizable;
+    use Authorizable;
 
     private $model_name;
 

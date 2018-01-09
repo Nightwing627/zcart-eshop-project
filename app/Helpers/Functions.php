@@ -13,6 +13,14 @@ if ( ! function_exists('gravatar') )
     }
 }
 
+if ( ! function_exists('getPaginationValue') )
+{
+    function getPaginationValue()
+    {
+        return auth()->user()->isFromPlatform() ? config('system_settings.pagination') : config('shop_settings.pagination');
+    }
+}
+
 if ( ! function_exists('highlightWords') )
 {
     function highlightWords($content, $words = null)

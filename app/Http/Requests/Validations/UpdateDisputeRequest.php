@@ -4,7 +4,7 @@ namespace App\Http\Requests\Validations;
 
 use App\Http\Requests\Request;
 
-class SearchRequest extends Request
+class UpdateDisputeRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class SearchRequest extends Request
     public function rules()
     {
         return [
-           'search' => 'required',
+           'priority' => 'required',
+           'status' => 'required',
         ];
     }
 }

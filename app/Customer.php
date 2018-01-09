@@ -85,6 +85,11 @@ class Customer extends Authenticatable
         return $this->belongsToMany('App\Coupon')->withTimestamps();
     }
 
+    public function disputes()
+    {
+        return $this->hasMany(Dispute::class);
+    }
+
     /**
      * Get the user gift_cards.
      */

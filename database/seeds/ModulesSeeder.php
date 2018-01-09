@@ -60,6 +60,11 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,add,edit,delete'
         ],
 
+        'Dispute' => [
+            'access' => 'Common',
+            'actions' => 'view,update,response'
+        ],
+
         'Email Template' => [
             'access' => 'Platform',
             'actions' => 'view,add,edit,delete'
@@ -82,7 +87,7 @@ class ModulesSeeder extends Seeder
 
         'Message' => [
             'access' => 'Common',
-            'actions' => 'view,update,reply,delete'
+            'actions' => 'view,add,update,delete,reply'
         ],
 
         'Module' => [

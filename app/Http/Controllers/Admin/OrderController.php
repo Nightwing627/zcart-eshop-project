@@ -4,9 +4,9 @@ use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Order\OrderRepository;
-use App\Http\Requests\Validations\SearchRequest;
 use App\Http\Requests\Validations\CreateOrderRequest;
 use App\Http\Requests\Validations\UpdateOrderRequest;
+use App\Http\Requests\Validations\CustomerSearchRequest;
 
 class OrderController extends Controller
 {
@@ -47,20 +47,6 @@ class OrderController extends Controller
     public function searchCutomer()
     {
         return view('admin.order._search_customer');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function find(SearchRequest $request)
-    {
-        $customer_id = $this->order->findCustomer($request);
-        if (!$customer_id)
-            return back()->with('warning', trans('messages.nofound', ['model' => trans('app.model.customer')]));
-
-        return redirect(route('admin.order.order.create',['customer_id' => $customer_id]));
     }
 
     /**
