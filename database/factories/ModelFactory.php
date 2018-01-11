@@ -232,6 +232,30 @@ $factory->define(App\Inventory::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(App\Order::class, function (Faker $faker) {
+    $num = $faker->randomFloat($nbMaxDecimals = NULL, $min = 100, $max = 400);
+    $num1 = $faker->randomFloat($nbMaxDecimals = NULL, $min = 100, $max = 400);
+    $num2 = rand(1,9);
+    return [
+        'shop_id' => rand(1, 30),
+        'order_number' => get_formated_order_number(),
+        'customer_id' => $faker->randomElement(\DB::table('customers')->pluck('id')->toArray()),
+        'carrier_id' => $faker->randomElement(\DB::table('carriers')->pluck('id')->toArray()),
+        'packaging_id' => $faker->randomElement(\DB::table('packagings')->pluck('id')->toArray()),
+        'tax_id' => $faker->randomElement(\DB::table('taxes')->pluck('id')->toArray()),
+        'item_count' => $num2,
+        'quantity' => $num2,
+        'total' => $num,
+        'shipping' => $num2,
+        'grand_total' => $num2 + $num,
+        'billing_address' => $faker->address(),
+        'shipping_address' => $faker->address(),
+        'payment_method_id' => $faker->randomElement(\DB::table('payment_methods')->pluck('id')->toArray()),
+        'payment_status_id' => rand(1, 3),
+        'order_status_id' => rand(1, 3),
+    ];
+});
+
 $factory->define(App\Blog::class, function (Faker $faker) {
     return [
     	'title' => $faker->realText,

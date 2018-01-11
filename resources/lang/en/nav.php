@@ -38,7 +38,7 @@ return [
     'support_messages' => 'Messages',
     'disputes' => 'Disputes',
     'support_tickets' => 'Tickets',
-    'return_n_refund' => 'Return/Refund',
+    'refunds' => 'Refunds',
     'user_roles' => 'User roles',
     'taxes' => 'Taxes',
     'shipping' => 'Shipping',

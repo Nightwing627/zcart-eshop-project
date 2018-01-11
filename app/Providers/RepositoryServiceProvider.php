@@ -106,6 +106,10 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Product\EloquentProduct::class
         );
         $this->app->singleton(
+            \App\Repositories\Refund\RefundRepository::class,
+            \App\Repositories\Refund\EloquentRefund::class
+        );
+        $this->app->singleton(
             \App\Repositories\Role\RoleRepository::class,
             \App\Repositories\Role\EloquentRole::class
         );

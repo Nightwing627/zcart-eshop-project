@@ -34,7 +34,7 @@
 				<tbody>
 					@foreach($orders as $order )
 					<tr>
-						<td>{{ $order->order_number }}</td>
+						<td>{{ get_formated_order_number($order->order_number) }}</td>
 				        <td>{{ $order->created_at->toDayDateTimeString() }}</td>
 						<td>{{ $order->customer->name }}</td>
 						<td>{{ get_formated_currency($order->grand_total )}}</td>

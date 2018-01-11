@@ -206,11 +206,13 @@
                 <li class=" {{ Request::is('admin/support/ticket*') ? 'active' : '' }}"><a href="{{ url('admin/support/ticket') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.support_tickets') }}</a></li>
               @endcan
 
-              {{-- @can('index', App\Ticket::class) --}}
+              @can('index', App\Dispute::class)
                 <li class=" {{ Request::is('admin/support/dispute*') ? 'active' : '' }}"><a href="{{ url('admin/support/dispute') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.disputes') }}</a></li>
-              {{-- @endcan --}}
+              @endcan
 
-              <li class=" {{ Request::is('admin/support/return*') ? 'active' : '' }}"><a href="{{ url('admin/support/return') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.return_n_refund') }}</a></li>
+              @can('index', App\Refund::class)
+                <li class=" {{ Request::is('admin/support/refund*') ? 'active' : '' }}"><a href="{{ url('admin/support/refund') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.refunds') }}</a></li>
+              @endcan
             </ul>
           </li>
         @endif

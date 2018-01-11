@@ -467,6 +467,21 @@ if ( ! function_exists('generate_combinations') )
     }
 }
 
+if ( ! function_exists('get_yes_or_no') )
+{
+    /**
+     * Return YES or No tring for views base on a given bool value
+     *
+     * @param  bool $value
+     *
+     * @return str
+     */
+    function get_yes_or_no($value = null)
+    {
+        return $value ? trans('app.yes') : trans('app.no');
+    }
+}
+
 if ( ! function_exists('get_msg_folder_name_from_label') )
 {
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Validations;
 
 use App\Http\Requests\Request;
 
-class CreateRoleRequest extends Request
+class InitiateRefundRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,9 @@ class CreateRoleRequest extends Request
         Request::merge( array( 'shop_id' => $shop_id ) ); //Set shop_id
 
         return [
-           'name' => 'bail|required|unique:roles',
-           'public' => 'required',
+           'order_id' => 'required',
+           'status' => 'required',
+           'amount' => 'required|numeric',
         ];
     }
 
@@ -40,7 +41,7 @@ class CreateRoleRequest extends Request
     public function messages()
     {
         return [
-            'public.required' => trans('validation.role_type_required'),
+            'order_id.required' => trans('validation.refund_order_id_required'),
         ];
     }
 }

@@ -4,14 +4,14 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
 
             <div class="col-md-3 nopadding" style="margin-top: 10px;">
-				<img src="{{ get_image_src($order->customer->id, 'customers', '150x150') }}" class="thumbnail" width="80%" alt="{{ trans('app.avatar') }}">
+				<img src="{{ get_image_src($order->customer_id, 'customers', '150x150') }}" class="thumbnail" width="80%" alt="{{ trans('app.avatar') }}">
 			</div>
             <div class="col-md-9 nopadding">
         	    <dir class="spacer20"></dir>
 				<table class="table no-border">
 					<tr>
 						<th class="text-right">{{ trans('app.customer') }}: </th>
-						<td style="width: 75%;">{{ $order->customer->name }}</td>
+						<td style="width: 75%;">{{ $order->customer->getName() }}</td>
 					</tr>
 					<tr>
 						<th class="text-right">{{ trans('app.email') }}:</th>
@@ -27,6 +27,7 @@
 					</tr>
 				</table>
 			</div>
+
 			<div class="clearfix"></div>
 
 			<div class="row">

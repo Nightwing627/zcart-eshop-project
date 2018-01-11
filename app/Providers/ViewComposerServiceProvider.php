@@ -80,6 +80,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeEmailTemplatePartialForm();
 
+        $this->composeRefundInitiationForm();
+
         $this->composeBlogForm();
 
     }
@@ -567,6 +569,20 @@ class ViewComposerServiceProvider extends ServiceProvider
             function($view)
             {
                 $view->with('statuses', ListHelper::dispute_statuses());
+            }
+        );
+    }
+
+    private function composeRefundInitiationForm()
+    {
+        View::composer(
+
+            'admin.refund._initiate',
+
+            function($view)
+            {
+                $view->with('orders', ListHelper::orders());
+                $view->with('statuses', ListHelper::refund_statuses());
             }
         );
     }

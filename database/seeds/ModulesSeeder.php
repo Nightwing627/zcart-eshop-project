@@ -62,7 +62,7 @@ class ModulesSeeder extends Seeder
 
         'Dispute' => [
             'access' => 'Common',
-            'actions' => 'view,update,response'
+            'actions' => 'view,response'
         ],
 
         'Email Template' => [
@@ -113,6 +113,11 @@ class ModulesSeeder extends Seeder
         'Payment Method' => [
             'access' => 'Platform',
             'actions' => 'view,add,edit,delete'
+        ],
+
+        'Refund' => [
+            'access' => 'Merchant',
+            'actions' => 'view,initiate,update,approve'
         ],
 
         'Role' => [

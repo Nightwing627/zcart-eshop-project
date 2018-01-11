@@ -6,6 +6,7 @@ use App\User;
 use App\Module;
 use App\Ticket;
 use App\Message;
+use App\Refund;
 use App\Dispute;
 use App\Attribute;
 use App\Permission;
@@ -60,9 +61,24 @@ class ListHelper
             Dispute::STATUS_NEW      => trans("app.statuses.new"),
             Dispute::STATUS_OPEN     => trans("app.statuses.open"),
             Dispute::STATUS_WAITING  => trans("app.statuses.waiting"),
-            Dispute::STATUS_APPEALED     => trans("app.statuses.appealed"),
+            Dispute::STATUS_APPEALED => trans("app.statuses.appealed"),
             Dispute::STATUS_SOLVED   => trans("app.statuses.solved"),
             Dispute::STATUS_CLOSED   => trans("app.statuses.closed"),
+        ];
+    }
+
+    /**
+     * Get refund statuses list for form dropdown.
+     *
+     * @return array
+     */
+    public static function refund_statuses()
+    {
+        return  [
+            Refund::STATUS_NEW      => trans("app.statuses.new"),
+            Refund::STATUS_PENDING     => trans("app.statuses.pending"),
+            Refund::STATUS_APPROVED  => trans("app.statuses.approved"),
+            Refund::STATUS_DECLINED => trans("app.statuses.declined"),
         ];
     }
 
@@ -339,6 +355,20 @@ class ListHelper
     public static function customers()
     {
         return \DB::table('customers')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
+    /**
+     * Get orders list for form dropdown.
+     *
+     * @return array
+     */
+    public static function orders()
+    {
+        $orders = \DB::table('orders')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->orderBy('order_number', 'asc')->pluck('order_number', 'id')->toArray();
+
+        return array_map(function($order){
+                    return get_formated_order_number($order);
+                }, $orders);
     }
 
     /**

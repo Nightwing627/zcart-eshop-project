@@ -62,7 +62,6 @@ class Order extends Model
                         'payment_status_id',
                         'order_status_id',
                         'approved',
-                        // 'fulfilled',
                     ];
 
     /**
@@ -70,7 +69,7 @@ class Order extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('App\Customer');
+        return $this->belongsTo(Customer::class);
     }
 
     /**
@@ -78,7 +77,7 @@ class Order extends Model
      */
     public function shop()
     {
-        return $this->belongsTo('App\Shop');
+        return $this->belongsTo(Shop::class);
     }
 
     /**
@@ -86,7 +85,7 @@ class Order extends Model
      */
     public function tax()
     {
-        return $this->belongsTo('App\Tax');
+        return $this->belongsTo(Tax::class);
     }
 
     /**
@@ -94,7 +93,7 @@ class Order extends Model
      */
     public function carrier()
     {
-        return $this->belongsTo('App\Carrier');
+        return $this->belongsTo(Carrier::class);
     }
 
     /**
@@ -102,7 +101,7 @@ class Order extends Model
      */
     public function products()
     {
-        // return $this->hasManyThrough('App\Product', 'App\Inventory');
+        // return $this->hasManyThrough(Product::class, Inventory::class);
         // $products = Product::
             //join('incentories', 'incentories.product_id', '=', 'products.id')
             // ->join('order_items', 'incentories.id', '=', 'order_items.inventory_id')
@@ -121,9 +120,19 @@ class Order extends Model
      */
     public function inventories()
     {
-        return $this->belongsToMany('App\Inventory', 'order_items')
+        return $this->belongsToMany(Inventory::class, 'order_items')
                     ->withPivot('item_description', 'quantity', 'unit_price')
                     ->withTimestamps();
+    }
+
+    /**
+     * Return collection of refunds related to the order
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function refunds()
+    {
+        return $this->hasMany(Refund::class);
     }
 
     /**
@@ -131,8 +140,7 @@ class Order extends Model
      */
     public function paymentMethod()
     {
-        return $this->belongsTo('App\PaymentMethod');
-        // return $this->invoice->paymentMethod;
+        return $this->belongsTo(PaymentMethod::class);
     }
 
     /**
@@ -140,7 +148,7 @@ class Order extends Model
      */
     public function packaging()
     {
-        return $this->belongsTo('App\Packaging');
+        return $this->belongsTo(Packaging::class);
     }
 
     /**
@@ -148,7 +156,7 @@ class Order extends Model
      */
     public function paymentStatus()
     {
-        return $this->belongsTo('App\PaymentStatus');
+        return $this->belongsTo(PaymentStatus::class);
     }
 
     /**
@@ -156,7 +164,7 @@ class Order extends Model
      */
     public function status()
     {
-        return $this->belongsTo('App\OrderStatus', 'order_status_id');
+        return $this->belongsTo(OrderStatus::class, 'order_status_id');
     }
 
     /**

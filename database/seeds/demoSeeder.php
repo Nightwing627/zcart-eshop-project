@@ -238,7 +238,9 @@ class demoSeeder extends Seeder
 
         factory(App\Packaging::class, $this->longCount)->create();
 
-        factory(App\Inventory::class, $this->longCount)->create();
+        factory(App\Inventory::class, $this->longLongCount)->create();
+
+        factory(App\Order::class, $this->longLongCount)->create();
 
         factory(App\Blog::class, $this->tinycount)->create();
 

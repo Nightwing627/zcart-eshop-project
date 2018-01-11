@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class EmailTemplateSeeder extends Seeder
@@ -20,7 +21,9 @@ class EmailTemplateSeeder extends Seeder
                 'sender_name' => Null,
                 'subject' => 'Welcome to {platform_name}',
                 'body' => '<table class="m_886163020439323843footer" width="700" height="165" bgcolor="#efefef" align="center" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td valign="bottom" style="color:#999;line-height:18px;font-size:11px;font-family:arial">Site Access: <a href="http://d.incevio.com/http://www.incevio.com/?tracelog=rowan&amp;rowan_id1=sellerLeaveFeedbackToBuyer_en_US_2017-10-22&amp;rowan_msg_id=c063bc521feb4649a25121ff130ac482&amp;ck=in_edm_other" style="color:#999;text-decoration:underline;font-size:11px;font-family:arial" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://d.incevio.com/http://www.incevio.com/?tracelog%3Drowan%26rowan_id1%3DsellerLeaveFeedbackToBuyer_en_US_2017-10-22%26rowan_msg_id%3Dc063bc521feb4649a25121ff130ac482%26ck%3Din_edm_other&amp;source=gmail&amp;ust=1508835770795000&amp;usg=AFQjCNFswRI--_oSylG_TCSI9jMZfEgJFw">Homepage</a> <span style="color:#999">|</span> <a href="http://d.incevio.com/http://trade.incevio.com?tracelog=rowan&amp;rowan_id1=sellerLeaveFeedbackToBuyer_en_US_2017-10-22&amp;rowan_msg_id=c063bc521feb4649a25121ff130ac482&amp;ck=in_edm_other" style="color:#999;text-decoration:underline;font-size:11px;font-family:arial" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://d.incevio.com/http://trade.incevio.com?tracelog%3Drowan%26rowan_id1%3DsellerLeaveFeedbackToBuyer_en_US_2017-10-22%26rowan_msg_id%3Dc063bc521feb4649a25121ff130ac482%26ck%3Din_edm_other&amp;source=gmail&amp;ust=1508835770795000&amp;usg=AFQjCNHs5u0lVvXx_IxyFnkfBFEuVdacig">My Orders</a> <span style="color:#999">|</span> <a href="http://d.incevio.com/http://www.incevio.com/buyerprotection/index.html?tracelog=rowan&amp;rowan_id1=sellerLeaveFeedbackToBuyer_en_US_2017-10-22&amp;rowan_msg_id=c063bc521feb4649a25121ff130ac482&amp;ck=in_edm_other" style="color:#999;text-decoration:underline;font-size:11px;font-family:arial" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://d.incevio.com/http://www.incevio.com/buyerprotection/index.html?tracelog%3Drowan%26rowan_id1%3DsellerLeaveFeedbackToBuyer_en_US_2017-10-22%26rowan_msg_id%3Dc063bc521feb4649a25121ff130ac482%26ck%3Din_edm_other&amp;source=gmail&amp;ust=1508835770795000&amp;usg=AFQjCNFgBGjO2cWQlMNn3ok1sdo9FEI0PQ">Buyer Protection</a> <span style="color:#999">|</span> <a href="http://help.incevio.com/?tracelog=rowan&amp;rowan_id1=sellerLeaveFeedbackToBuyer_en_US_2017-10-22&amp;rowan_msg_id=c063bc521feb4649a25121ff130ac482&amp;ck=in_edm_other" style="color:#999;text-decoration:underline;font-size:11px;font-family:arial" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://help.incevio.com/?tracelog%3Drowan%26rowan_id1%3DsellerLeaveFeedbackToBuyer_en_US_2017-10-22%26rowan_msg_id%3Dc063bc521feb4649a25121ff130ac482%26ck%3Din_edm_other&amp;source=gmail&amp;ust=1508835770795000&amp;usg=AFQjCNEY6uWlpV61xJ2EWu_OnR1ImK1k8A">Help Center</a> <span style="color:#999">|</span> <a href="http://www.incevio.com/help/home.html#contact?tracelog=rowan&amp;rowan_id1=sellerLeaveFeedbackToBuyer_en_US_2017-10-22&amp;rowan_msg_id=c063bc521feb4649a25121ff130ac482&amp;ck=in_edm_other" style="color:#999;text-decoration:underline;font-size:11px;font-family:arial" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://www.incevio.com/help/home.html%23contact?tracelog%3Drowan%26rowan_id1%3DsellerLeaveFeedbackToBuyer_en_US_2017-10-22%26rowan_msg_id%3Dc063bc521feb4649a25121ff130ac482%26ck%3Din_edm_other&amp;source=gmail&amp;ust=1508835770795000&amp;usg=AFQjCNFrHNdxDedZiwv6L-zLA4_5jthBKw">Contact Us</a><br><a href="http://us.my.incevio.com/user/company/forget_password_input_email.htm?edm_src=wto&amp;edm_type=ifm&amp;edm_cta=footer&amp;tracelog=rowan&amp;rowan_id1=sellerLeaveFeedbackToBuyer_en_US_2017-10-22&amp;rowan_msg_id=c063bc521feb4649a25121ff130ac482&amp;ck=in_edm_other" style="color:#999;text-decoration:underline" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://us.my.incevio.com/user/company/forget_password_input_email.htm?edm_src%3Dwto%26edm_type%3Difm%26edm_cta%3Dfooter%26tracelog%3Drowan%26rowan_id1%3DsellerLeaveFeedbackToBuyer_en_US_2017-10-22%26rowan_msg_id%3Dc063bc521feb4649a25121ff130ac482%26ck%3Din_edm_other&amp;source=gmail&amp;ust=1508835770795000&amp;usg=AFQjCNGl36Hq7gk2E4ZfaHgnp8lgblu0Hw">Forgot your password?</a> <br>This email was sent to <a href="http://d.incevio.com/mailto:?tracelog=rowan&amp;rowan_id1=sellerLeaveFeedbackToBuyer_en_US_2017-10-22&amp;rowan_msg_id=c063bc521feb4649a25121ff130ac482&amp;ck=in_edm_other" style="color:#999;text-decoration:underline" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://d.incevio.com/mailto:?tracelog%3Drowan%26rowan_id1%3DsellerLeaveFeedbackToBuyer_en_US_2017-10-22%26rowan_msg_id%3Dc063bc521feb4649a25121ff130ac482%26ck%3Din_edm_other&amp;source=gmail&amp;ust=1508835770795000&amp;usg=AFQjCNF57ZGzDDxPVbiErICMxd6_6wJH0Q"></a>. <br>You are receiving this email because you are a registered member of <a href="http://d.incevio.com/http://www.incevio.com?tracelog=rowan&amp;rowan_id1=sellerLeaveFeedbackToBuyer_en_US_2017-10-22&amp;rowan_msg_id=c063bc521feb4649a25121ff130ac482&amp;ck=in_edm_other" style="color:#999;text-decoration:underline" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://d.incevio.com/http://www.incevio.com?tracelog%3Drowan%26rowan_id1%3DsellerLeaveFeedbackToBuyer_en_US_2017-10-22%26rowan_msg_id%3Dc063bc521feb4649a25121ff130ac482%26ck%3Din_edm_other&amp;source=gmail&amp;ust=1508835770795000&amp;usg=AFQjCNEV-vw0uLnpfTBy2KjLmMrSWfquEA">www.<span class="il">incevio</span>.com</a>, powered by incevio.com. <br>Read our <a href="http://www.incevio.com/help/safety_security/policies_rules/others/001.html?tracelog=rowan&amp;rowan_id1=sellerLeaveFeedbackToBuyer_en_US_2017-10-22&amp;rowan_msg_id=c063bc521feb4649a25121ff130ac482&amp;ck=in_edm_other" style="color:#999;text-decoration:underline" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://www.incevio.com/help/safety_security/policies_rules/others/001.html?tracelog%3Drowan%26rowan_id1%3DsellerLeaveFeedbackToBuyer_en_US_2017-10-22%26rowan_msg_id%3Dc063bc521feb4649a25121ff130ac482%26ck%3Din_edm_other&amp;source=gmail&amp;ust=1508835770795000&amp;usg=AFQjCNHhvncoIuRqRpPKKTgyRYpiV6Z5vg">Privacy Policy</a> and <a href="http://www.incevio.com/help/safety_security/policies_rules/others/002.html?tracelog=rowan&amp;rowan_id1=sellerLeaveFeedbackToBuyer_en_US_2017-10-22&amp;rowan_msg_id=c063bc521feb4649a25121ff130ac482&amp;ck=in_edm_other" style="color:#999;text-decoration:underline" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://www.incevio.com/help/safety_security/policies_rules/others/002.html?tracelog%3Drowan%26rowan_id1%3DsellerLeaveFeedbackToBuyer_en_US_2017-10-22%26rowan_msg_id%3Dc063bc521feb4649a25121ff130ac482%26ck%3Din_edm_other&amp;source=gmail&amp;ust=1508835770795000&amp;usg=AFQjCNGdCuw2_Z7MHkHP5eKVE0mPoK_ysA">Terms of Use</a> if you have any questions. <br><span class="il">incevio</span> Service Center: <a href="http://d.incevio.com/mailto:buyer@incevio.com?tracelog=rowan&amp;rowan_id1=sellerLeaveFeedbackToBuyer_en_US_2017-10-22&amp;rowan_msg_id=c063bc521feb4649a25121ff130ac482&amp;ck=in_edm_other" style="color:#999;text-decoration:underline" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://d.incevio.com/mailto:buyer@incevio.com?tracelog%3Drowan%26rowan_id1%3DsellerLeaveFeedbackToBuyer_en_US_2017-10-22%26rowan_msg_id%3Dc063bc521feb4649a25121ff130ac482%26ck%3Din_edm_other&amp;source=gmail&amp;ust=1508835770795000&amp;usg=AFQjCNEZo5gjjdfsNWKIaeuOQoM6rxxuNQ">buyer@<span class="il">incevio</span>.com</a> <br>incevio.com Hong Kong Limited, 26/F Tower One, Times Square1 Matheson Street Causeway Bay, Hong Kong.</td></tr><tr><td height="20">&nbsp;</td></tr></tbody></table>',
-                'template_for' => 'Platform'
+                'template_for' => 'Platform',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
             ],[
                 'name' => 'Welcome Merchant',
                 'type' => 'HTML',
@@ -29,7 +32,9 @@ class EmailTemplateSeeder extends Seeder
                 'sender_name' => Null,
                 'subject' => 'Welcome to {platform_name}',
                 'body' => 'Welcome to {platform_name}',
-                'template_for' => 'Platform'
+                'template_for' => 'Platform',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
             ],[
                 'name' => 'Welcome User',
                 'type' => 'HTML',
@@ -172,7 +177,9 @@ class EmailTemplateSeeder extends Seeder
                 </body>
                 </html>
                 ',
-                'template_for' => 'Platform'
+                'template_for' => 'Platform',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
             ],[
                 'name' => 'Welcome Customer',
                 'type' => 'HTML',
@@ -315,7 +322,9 @@ class EmailTemplateSeeder extends Seeder
 </body>
 </html>
 ',
-                'template_for' => 'Platform'
+                'template_for' => 'Platform',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
             ],[
                 'name' => 'User account updated',
                 'type' => 'HTML',
@@ -449,7 +458,9 @@ class EmailTemplateSeeder extends Seeder
 </body>
 </html>
 ',
-                'template_for' => 'Platform'
+                'template_for' => 'Platform',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
             ]
 
         ]);

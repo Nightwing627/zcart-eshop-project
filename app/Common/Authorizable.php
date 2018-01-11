@@ -29,7 +29,12 @@ trait Authorizable
         'showSearchForm'    => 'add',
         'search'            => 'add',
         'restore'           => 'add',
-        'storeReply'        => 'add',
+        'initiate'          => 'initiate',
+        'form'    => 'initiate',
+        'approve'           => 'approve',
+        'decline'           => 'approve',
+        'storeReply'        => 'reply',
+        'storeResponse'     => 'response',
         'edit'              => 'edit',
         'update'            => 'edit',
         'massUpdate'        => 'edit',
@@ -81,7 +86,7 @@ trait Authorizable
             return TRUE;
 
         $slug = (bool) $slug ? $slug : $this->getSlug();
-
+// echo "<pre>"; print_r($slug); echo "</pre>"; exit();
         return (new Authorize(Auth::user(), $slug))->check();
     }
 

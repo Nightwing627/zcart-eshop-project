@@ -14,7 +14,7 @@ class Address extends Model
      */
     protected $table = 'addresses';
 
-/**
+    /**
      * The relations to eager load on every query.
      *
      * @var array

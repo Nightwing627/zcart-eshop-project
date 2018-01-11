@@ -95,7 +95,7 @@ class Coupon extends Model
     }
 
     /**
-     * Set the starting_time for the packaging.
+     * Set the starting_time
      */
     public function setStartingTimeAttribute($value)
     {
@@ -103,7 +103,7 @@ class Coupon extends Model
     }
 
     /**
-     * Set the ending_time for the packaging.
+     * Set the ending_time
      */
     public function setEndingTimeAttribute($value)
     {
@@ -111,7 +111,7 @@ class Coupon extends Model
     }
 
     /**
-     * Set the partial_use for the packaging.
+     * Set the partial_use
      */
     public function setPartialUseAttribute($value)
     {
@@ -119,7 +119,7 @@ class Coupon extends Model
     }
 
     /**
-     * Set the limited for the packaging.
+     * Set the limited
      */
     public function setLimitedAttribute($value)
     {
@@ -127,7 +127,7 @@ class Coupon extends Model
     }
 
     /**
-     * Set the exclude_offer_items for the packaging.
+     * Set the exclude_offer_items
      */
     public function setExcludeOfferItemsAttribute($value)
     {
@@ -135,7 +135,7 @@ class Coupon extends Model
     }
 
     /**
-     * Set the exclude_tax_n_shipping for the packaging.
+     * Set the exclude_tax_n_shipping
      */
     public function setExcludeTaxNShippingAttribute($value)
     {

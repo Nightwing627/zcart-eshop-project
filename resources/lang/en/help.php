@@ -253,6 +253,12 @@ return [
 
     'shipping_weight' => 'The weight of the item after packaging',
 
+    'refund_select_order' => 'Select the order you want to refund',
+
+    'refund_order_received' => 'Is the order received by the customer?',
+
+    'refund_return_goods' => 'Is the item returned to you?',
+
     'search_customer' => 'Find the customer by email address, nice name or full name.',
 
     'coupon_quantity' => 'Total number of avaliable coupons',

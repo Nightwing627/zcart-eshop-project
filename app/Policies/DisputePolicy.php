@@ -45,4 +45,17 @@ class DisputePolicy
     {
         return (new Authorize($user, 'response_dispute', $dispute))->check();
     }
+
+    /**
+     * Determine whether the user can reply the Ticket.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Dispute  $dispute
+     * @return mixed
+     */
+    public function storeResponse(User $user, Dispute $dispute)
+    {
+        return (new Authorize($user, 'response_dispute', $dispute))->check();
+    }
+
 }

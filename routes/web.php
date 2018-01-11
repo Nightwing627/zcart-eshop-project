@@ -116,6 +116,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		include('admin/Message.php');
 		include('admin/Ticket.php');
 		include('admin/Dispute.php');
+		include('admin/Refund.php');
 	});
 
 	// Export/Import Models

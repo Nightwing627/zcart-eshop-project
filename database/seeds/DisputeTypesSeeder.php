@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Carbon\Carbon;
 
 class DisputeTypesSeeder extends Seeder
 {
