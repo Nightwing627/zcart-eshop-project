@@ -16,7 +16,7 @@ trait Taggable {
      */
     public function tags()
     {
-        return $this->morphToMany(App\Tag::class, 'taggable');
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     /**

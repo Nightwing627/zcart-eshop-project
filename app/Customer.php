@@ -58,7 +58,7 @@ class Customer extends Authenticatable
      */
     public function country()
     {
-        return $this->hasManyThrough('App\Country', 'App\Address', 'addressable_id', 'country_name');
+        return $this->hasManyThrough(Country::class, Address::class, 'addressable_id', 'country_name');
     }
 
     /**
@@ -66,7 +66,15 @@ class Customer extends Authenticatable
      */
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Get the user latest_orders.
+     */
+    public function latest_orders()
+    {
+        return $this->orders()->orderBy('created_at', 'desc')->limit(5);
     }
 
     /**
@@ -74,7 +82,7 @@ class Customer extends Authenticatable
      */
     public function cart()
     {
-        return $this->hasOne('App\Cart');
+        return $this->hasOne(Cart::class);
     }
 
     /**
@@ -82,7 +90,7 @@ class Customer extends Authenticatable
      */
     public function coupons()
     {
-        return $this->belongsToMany('App\Coupon')->withTimestamps();
+        return $this->belongsToMany(Coupon::class)->withTimestamps();
     }
 
     public function disputes()
@@ -95,7 +103,7 @@ class Customer extends Authenticatable
      */
     public function gift_cards()
     {
-        return $this->hasMany('App\GiftCard');
+        return $this->hasMany(GiftCard::class);
     }
 
     /**

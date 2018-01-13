@@ -17,7 +17,7 @@ class EloquentCategorySubGroup extends EloquentRepository implements BaseReposit
 
     public function all()
     {
-        return $this->model->with('group')->get();
+        return $this->model->with('group')->withCount('categories')->get();
     }
 
 }

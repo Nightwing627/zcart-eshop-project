@@ -2,10 +2,10 @@
 
 @section('buttons')
 	@can('create', App\AttributeValue::class)
-		<a href="{{ route('admin.catalog.attributeValue.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_attribute_value') }} </a>
+		<a href="{{ route('admin.catalog.attributeValue.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_attribute_value') }} </a>
 	@endcan
 	@can('create', App\Attribute::class)
-		<a href="{{ route('admin.catalog.attribute.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_attribute') }} </a>
+		<a href="{{ route('admin.catalog.attribute.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_attribute') }} </a>
 	@endcan
 @endsection
 
@@ -41,7 +41,7 @@
 						</td>
 						<td>{{ $attribute->name }}</td>
 						<td>
-							<span class="label label-primary">{{ $attribute->attribute_values_count }}</span>
+							<span class="label label-default">{{ $attribute->attribute_values_count }}</span>
 						</td>
 						<td>{{ $attribute->attributeType->type }}</td>
 						<td class="row-options">
@@ -49,7 +49,7 @@
 								<a href="{{ route('admin.catalog.attribute.entities', $attribute->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.entities') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 							@can('update', $attribute)
-								<a href="{{ route('admin.catalog.attribute.edit', $attribute->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.catalog.attribute.edit', $attribute->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 							@can('delete', $attribute)
 								{!! Form::open(['route' => ['admin.catalog.attribute.trash', $attribute->id], 'method' => 'delete', 'class' => 'data-form']) !!}

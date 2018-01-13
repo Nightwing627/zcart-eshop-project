@@ -21,9 +21,9 @@ class EloquentManufacturer extends EloquentRepository implements BaseRepository,
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('country')->get();
+            return $this->model->mine()->with('country')->withCount('products')->get();
 
-        return $this->model->with('country')->get();
+        return $this->model->with('country')->withCount('products')->get();
     }
 
     public function trashOnly()

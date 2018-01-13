@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@can('create', App\CategoryGroup::class)
-		<a href="{{ route('admin.catalog.categoryGroup.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_category_group') }}</a>
+		<a href="{{ route('admin.catalog.categoryGroup.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_category_group') }}</a>
 	@endcan
 @endsection
 
@@ -35,11 +35,13 @@
 				          	<span class="excerpt-td small">{!! str_limit($categoryGrp->description, 150) !!}</span>
 			          	@endif
 			          </td>
-			          <td>{{ $categoryGrp->sub_groups_count }}</td>
+			          <td>
+				          	<span class="label label-default">{{ $categoryGrp->sub_groups_count }}</span>
+				      </td>
 			          <td>{{ ($categoryGrp->active) ? trans('app.active') : trans('app.inactive') }}</td>
 			          <td class="row-options">
 						@can('update', $categoryGrp)
-	                	    <a href="{{ route('admin.catalog.categoryGroup.edit', $categoryGrp->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+	                	    <a href="{{ route('admin.catalog.categoryGroup.edit', $categoryGrp->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 						@endcan
 
 						@can('delete', $categoryGrp)

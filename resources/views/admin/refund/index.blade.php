@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@can('initiate', App\Refund::class)
-		<a href="{{ route('admin.support.refund.form') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.initiate_refund') }}</a>
+		<a href="{{ route('admin.support.refund.form') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.initiate_refund') }}</a>
 	@endcan
 @endsection
 
@@ -43,15 +43,15 @@
 				          	<td>{{ $refund->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
 					            @can('index', App\Order::class)
-									<a href="{{ route('admin.order.order.show', $refund->order_id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.order_detail') }}" class="fa fa-shopping-cart"></i></a>&nbsp;
+									<a href="{{ route('admin.order.order.show', $refund->order_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.order_detail') }}" class="fa fa-shopping-cart"></i></a>&nbsp;
 								@endcan
 
 					            @can('index', App\Customer::class)
-									<a href="{{ route('admin.admin.customer.show', $refund->order->customer_id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.customer') }}" class="fa fa-user"></i></a>&nbsp;
+									<a href="{{ route('admin.admin.customer.show', $refund->order->customer_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.customer') }}" class="fa fa-user"></i></a>&nbsp;
 								@endcan
 
 								@can('approve', $refund)
-									<a href="{{ route('admin.support.refund.response', $refund) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-random"></i></a>&nbsp;
+									<a href="{{ route('admin.support.refund.response', $refund) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-random"></i></a>&nbsp;
 								@endcan
 							</td>
 						</tr>
@@ -95,11 +95,11 @@
 				          	<td>{{ $refund->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
 					            @can('index', App\Order::class)
-									<a href="{{ route('admin.order.order.show', $refund->order_id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.order_detail') }}" class="fa fa-shopping-cart"></i></a>&nbsp;
+									<a href="{{ route('admin.order.order.show', $refund->order_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.order_detail') }}" class="fa fa-shopping-cart"></i></a>&nbsp;
 								@endcan
 
 					            @can('index', App\Customer::class)
-									<a href="{{ route('admin.admin.customer.show', $refund->order->customer_id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.customer') }}" class="fa fa-user"></i></a>&nbsp;
+									<a href="{{ route('admin.admin.customer.show', $refund->order->customer_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.customer') }}" class="fa fa-user"></i></a>&nbsp;
 								@endcan
 							</td>
 						</tr>

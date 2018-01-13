@@ -19,7 +19,7 @@
         </span>
 
         @can('view', $customer)
-            <a href="{{ route('admin.admin.customer.show', $customer->id) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ trans('app.view_detail') }}</a>
+            <a href="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
         @endcan
 
         <span class="pull-right" style="margin-top: -60px;margin-right: 30px;font-size: 40px; color: rgba(0, 0, 0, 0.2);">

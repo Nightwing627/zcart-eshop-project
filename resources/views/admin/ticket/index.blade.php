@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@if(!Auth::user()->isFromPlatform())
-		<a href="{{ route('admin.support.ticket.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.create_ticket') }}</a>
+		<a href="{{ route('admin.support.ticket.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.create_ticket') }}</a>
 	@endif
 @endsection
 
@@ -54,15 +54,15 @@
 								@endcan
 
 								@can('reply', $ticket)
-									<a href="{{ route('admin.support.ticket.reply', $ticket) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
+									<a href="{{ route('admin.support.ticket.reply', $ticket) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
 								@endcan
 
 								@can('update', $ticket)
-									<a href="{{ route('admin.support.ticket.edit', $ticket->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
+									<a href="{{ route('admin.support.ticket.edit', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
 								@endcan
 
 								@can('assign', $ticket)
-									<a href="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
+									<a href="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
 								@endcan
 							</td>
 						</tr>
@@ -120,15 +120,15 @@
 								@endcan
 
 								@can('reply', $ticket)
-									<a href="{{ route('admin.support.ticket.reply', $ticket) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
+									<a href="{{ route('admin.support.ticket.reply', $ticket) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
 								@endcan
 
 								@can('update', $ticket)
-									<a href="{{ route('admin.support.ticket.edit', $ticket->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
+									<a href="{{ route('admin.support.ticket.edit', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
 								@endcan
 
 								@can('assign', $ticket)
-									<a href="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
+									<a href="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
 								@endcan
 							</td>
 						</tr>
@@ -141,7 +141,7 @@
 
 	<div class="box">
 		<div class="box-header with-border">
-			<h3 class="box-title">{{ trans('app.tickets') }}</h3>
+			<h3 class="box-title">{{ trans('app.open_tickets') }}</h3>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 				<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -185,15 +185,15 @@
 							@endcan
 
 							@can('reply', $ticket)
-								<a href="{{ route('admin.support.ticket.reply', $ticket) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
+								<a href="{{ route('admin.support.ticket.reply', $ticket) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
 							@endcan
 
 							@can('update', $ticket)
-								<a href="{{ route('admin.support.ticket.edit', $ticket->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.support.ticket.edit', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('assign', $ticket)
-								<a href="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
+								<a href="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
 							@endcan
 						</td>
 					</tr>

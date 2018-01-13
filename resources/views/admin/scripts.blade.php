@@ -58,7 +58,8 @@
       initMassActions();
 
       // Support for AJAX loaded modal window.
-      $('[data-toggle="modal"]').click(function(e) {
+      // $('[data-toggle="modal"]').on('click', function(e) {
+      $('body').on('click', '.ajax-modal-btn', function(e) {
         e.preventDefault();
         $('.loader').show();
         $(".wrapper").addClass('blur-filter');
@@ -77,7 +78,6 @@
             if (typeof initAppPlugins == 'function') {
               initAppPlugins();
             }
-
           })
           .done(function()
           {
@@ -88,8 +88,7 @@
             if (401 === response.status)
             {
               window.location = "{{ route('login') }}";
-            }
-            else
+            } else
             {
               alert("{{ trans('responses.error') }}");
             }
@@ -103,7 +102,7 @@
   function initDatatables()
   {
     $(".table-2nd-short").DataTable({
-      "iDisplayLength": 25,
+      "iDisplayLength": {{ getPaginationValue() }},
       "aaSorting": [[ 1, "asc" ]],
       "oLanguage": {
           "sInfo": "_START_ to _END_ of _TOTAL_ entries",
@@ -128,7 +127,7 @@
     });
 
     $(".table-option").DataTable({
-      "iDisplayLength": 25,
+      "iDisplayLength": {{ getPaginationValue() }},
       "oLanguage": {
           "sInfo": "_START_ to _END_ of _TOTAL_ entries",
           "sLengthMenu": "Show _MENU_",

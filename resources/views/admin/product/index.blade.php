@@ -2,9 +2,9 @@
 
 @section('buttons')
 	@can('create', App\Product::class)
-		<a href="{{ route('admin.exim', 'products') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
+		<a href="{{ route('admin.exim', 'products') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 
-		<a href="{{ route('admin.catalog.product.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_product') }}</a>
+		<a href="{{ route('admin.catalog.product.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_product') }}</a>
 	@endcan
 @endsection
 
@@ -26,6 +26,7 @@
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.model_number') }}</th>
 						<th>{{ trans('app.category') }}</th>
+						<th>{{ trans('app.listing') }}</th>
 						<th>{{ trans('app.status') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -44,14 +45,17 @@
 								<span class="label label-outline">{{ $category->name }}</span>
 							@endforeach
 						</td>
+						<td>
+							<span class="label label-default">{{ $product->inventories_count }}</span>
+						</td>
 						<td>{{ ($product->active) ? trans('app.active') : trans('app.inactive') }}</td>
 						<td class="row-options">
 							@can('view', $product)
-								<a href="{{ route('admin.catalog.product.show', $product->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="{{ route('admin.catalog.product.show', $product->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 
 							@can('update', $product)
-								<a href="{{ route('admin.catalog.product.edit', $product->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.catalog.product.edit', $product->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $product)

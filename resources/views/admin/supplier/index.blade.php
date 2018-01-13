@@ -2,9 +2,9 @@
 
 @section('buttons')
 	@can('create', App\Supplier::class)
-		<a href="{{ route('admin.exim', 'suppliers') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
+		<a href="{{ route('admin.exim', 'suppliers') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 
-		<a href="{{ route('admin.stock.supplier.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_supplier') }}</a>
+		<a href="{{ route('admin.stock.supplier.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_supplier') }}</a>
 	@endcan
 @endsection
 
@@ -41,16 +41,16 @@
 						<td>{{ ($supplier->active) ? trans('app.active') : trans('app.inactive') }}</td>
 						<td class="row-options">
 							@can('view', $supplier)
-								<a href="{{ route('admin.stock.supplier.show', $supplier->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="{{ route('admin.stock.supplier.show', $supplier->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 
 							@can('update', $supplier)
-								<a href="{{ route('admin.stock.supplier.edit', $supplier->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.stock.supplier.edit', $supplier->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 
 								@if($supplier->primaryAddress)
-									<a href="{{ route('address.edit', $supplier->primaryAddress->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
+									<a href="{{ route('address.edit', $supplier->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
 								@else
-									<a href="{{ route('address.create', ['supplier', $supplier->id]) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
+									<a href="{{ route('address.create', ['supplier', $supplier->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
 								@endif
 							@endcan
 

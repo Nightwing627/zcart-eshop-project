@@ -5,7 +5,7 @@
 		<a href="{{ route('admin.support.ticket.index') }}" class="btn btn-default btn-flat">{{ trans('app.back') }}</a>
 	@endcan
 	@can('reply', $ticket)
-		<a href="{{ route('admin.support.ticket.reply', $ticket) }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.reply') }}</a>
+		<a href="{{ route('admin.support.ticket.reply', $ticket) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.reply') }}</a>
 	@endcan
 @endsection
 
@@ -26,9 +26,8 @@
 						<p>
 							<span class="lead"> {{ $ticket->shop->name }} </span>
 							<br/>
-
 							@can('view', $ticket->shop)
-				            	<a href="{{ route('admin.merchant.shop.show', $ticket->shop_id) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ trans('app.view_detail') }}</a>
+				            	<a href="{{ route('admin.merchant.shop.show', $ticket->shop_id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 							@endcan
 
 							<img src="{{ get_image_src($ticket->shop_id, 'shops', '150x150') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
@@ -40,7 +39,7 @@
 							<span class="lead">{{ $ticket->user->getName() }}</span>
 							<br/>
 							@can('view', $ticket->user)
-					            <a href="{{ route('admin.admin.user.show', $ticket->user_id) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ trans('app.view_detail') }}</a>
+					            <a href="{{ route('admin.admin.user.show', $ticket->user_id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 							@endcan
 				        </p>
 
@@ -98,13 +97,13 @@
 								</span>
 								<br/>
 								@can('view', $ticket->assignedTo)
-					            	<a href="{{ route('admin.admin.user.show', $ticket->assigned_to) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ trans('app.view_detail') }}</a>
+					            	<a href="{{ route('admin.admin.user.show', $ticket->assigned_to) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 								@endcan
 							</p>
 						@endif
 
 						@can('assign', $ticket)
-							<a class="btn btn-default" href="{{ route('admin.support.ticket.showAssignForm', $ticket) }}" data-target="myDynamicModal" data-toggle="modal"><i class="fa fa-hashtag"></i> {{ trans('app.assign') }}</a>
+							<a class="btn btn-default" href="{{ route('admin.support.ticket.showAssignForm', $ticket) }}" class="ajax-modal-btn"><i class="fa fa-hashtag"></i> {{ trans('app.assign') }}</a>
 						@endcan
 				  	</div>
 

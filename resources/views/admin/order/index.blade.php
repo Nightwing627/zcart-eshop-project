@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@can('create', App\Order::class)
-		<a href="{{ route('admin.order.order.searchCutomer') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_order') }}</a>
+		<a href="{{ route('admin.order.order.searchCutomer') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_order') }}</a>
 	@endcan
 @endsection
 
@@ -42,7 +42,7 @@
 						<td>{{ $order->status->name }}</td>
 						<td class="row-options">
 							@can('view', $order)
-								<a href="{{ route('admin.order.order.show', $order->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="{{ route('admin.order.order.show', $order->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 
 							@can('archive', $order)

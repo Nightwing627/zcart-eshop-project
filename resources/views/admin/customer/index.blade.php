@@ -2,9 +2,9 @@
 
 @section('buttons')
 	@can('create', App\Customer::class)
-		<a href="{{ route('admin.exim', 'customers') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
+		<a href="{{ route('admin.exim', 'customers') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 
-		<a href="{{ route('admin.admin.customer.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_customer') }}</a>
+		<a href="{{ route('admin.admin.customer.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_customer') }}</a>
 	@endcan
 @endsection
 
@@ -25,33 +25,38 @@
 	          <th>{{ trans('app.nice_name') }}</th>
 	          <th>{{ trans('app.full_name') }}</th>
 	          <th>{{ trans('app.email') }}</th>
+	          <th>{{ trans('app.orders') }}</th>
 	          <th>{{ trans('app.status') }}</th>
 	          <th>{{ trans('app.option') }}</th>
 	        </tr>
 	        </thead>
 	        <tbody>
 		        @foreach($customers as $customer )
-			          <td>
+				<tr>
+					<td>
 						<img src="{{ get_image_src($customer->id, 'customers', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-			          </td>
-			          <td>{{ $customer->nice_name }}</td>
-			          <td>{{ $customer->name }}</td>
-			          <td>{{ $customer->email }}</td>
-			          <td>{{ ($customer->active) ? trans('app.active') : trans('app.inactive') }}</td>
-			          <td class="row-options">
+					</td>
+					<td>{{ $customer->nice_name }}</td>
+			        <td>{{ $customer->name }}</td>
+			        <td>{{ $customer->email }}</td>
+					<td>
+						<span class="label label-default">{{ $customer->orders_count }}</span>
+					</td>
+			        <td>{{ ($customer->active) ? trans('app.active') : trans('app.inactive') }}</td>
+			        <td class="row-options">
 						@can('view', $customer)
-		                    <a href="{{ route('admin.admin.customer.show', $customer->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.profile') }}" class="fa fa-user-secret"></i></a>&nbsp;
+		                    <a href="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.profile') }}" class="fa fa-user-secret"></i></a>&nbsp;
 						@endcan
 
 						@can('update', $customer)
-		                    <a href="{{ route('admin.admin.customer.edit', $customer->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+		                    <a href="{{ route('admin.admin.customer.edit', $customer->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 						@endcan
 
 						@can('view', $customer)
 							@if($customer->hasAddress())
 								<a href="{{ route('address.addresses', ['customer', $customer->id]) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.show_addresses') }}" class="fa fa-address-card-o"></i></a>&nbsp;
 							@else
-								<a href="{{ route('address.create', ['customer', $customer->id]) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
+								<a href="{{ route('address.create', ['customer', $customer->id]) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
 							@endif
 						@endcan
 
@@ -60,8 +65,8 @@
 		                        {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 							{!! Form::close() !!}
 						@endcan
-			          </td>
-			        </tr>
+			        </td>
+			    </tr>
 		        @endforeach
 	        </tbody>
 	      </table>

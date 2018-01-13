@@ -2,9 +2,9 @@
 
 @section('buttons')
 	@can('create', App\Carrier::class)
-		<a href="{{ route('admin.exim', 'carriers') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
+		<a href="{{ route('admin.exim', 'carriers') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 
-		<a href="{{ route('admin.shipping.carrier.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_carrier') }}</a>
+		<a href="{{ route('admin.shipping.carrier.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_carrier') }}</a>
 	@endcan
 @endsection
 
@@ -49,10 +49,10 @@
 						</td>
 						<td class="row-options">
 							@can('view', $carrier)
-								<a href="{{ route('admin.shipping.carrier.show', $carrier->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="{{ route('admin.shipping.carrier.show', $carrier->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 							@can('update', $carrier)
-								<a href="{{ route('admin.shipping.carrier.edit', $carrier->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.shipping.carrier.edit', $carrier->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 							@can('delete', $carrier)
 								{!! Form::open(['route' => ['admin.shipping.carrier.trash', $carrier->id], 'method' => 'delete', 'class' => 'data-form']) !!}

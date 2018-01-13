@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@can('create', App\Inventory::class)
-		<a href="{{ route('admin.stock.inventory.showSearchForm') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_inventory') }}</a>
+		<a href="{{ route('admin.stock.inventory.showSearchForm') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_inventory') }}</a>
 	@endcan
 @endsection
 
@@ -64,7 +64,7 @@
 						<td>{{ ($inventory->active) ? trans('app.active') : trans('app.inactive') }}</td>
 						<td class="row-options">
 							@can('view', $inventory)
-								<a href="{{ route('admin.stock.inventory.show', $inventory->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="{{ route('admin.stock.inventory.show', $inventory->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 
 							@can('update', $inventory)

@@ -24,9 +24,9 @@ class EloquentProduct extends EloquentRepository implements BaseRepository, Prod
 	public function all()
 	{
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('categories')->get();
+            return $this->model->mine()->with('categories')->withCount('inventories')->get();
 
-		return $this->model->with('categories')->get();
+		return $this->model->with('categories')->withCount('inventories')->get();
 	}
 
 	public function trashOnly()

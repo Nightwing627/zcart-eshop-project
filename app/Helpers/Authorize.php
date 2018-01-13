@@ -34,14 +34,15 @@ class Authorize
 		if($this->isExceptional())
 			return true;
 
-		if(isset($this->model) && ! Auth::user()->isFromPlatform() && ! $this->merchantAuth())
+		// Deny the action immediately if the model has shop_id field and user from different shop
+		if(isset($this->model) && array_key_exists('shop_id', $this->model) && ! Auth::user()->isFromPlatform() && ! $this->merchantAuth())
 			return false;
 
         return in_array($this->slug, $this->permissionSlugs());
 	}
 
 	/**
-	 * Some case in special conditions you may allow all actions for the user
+	 * Check if the user's shop_id and model's shop_id is same
 	 *
 	 * @return boolean
 	 */
@@ -84,6 +85,7 @@ class Authorize
 	{
 		if( Auth::user()->id == $this->user->id )
 	        return config('permissions');
+
         return $this->user->role->permissions()->pluck('slug')->toArray();
 	}
 }

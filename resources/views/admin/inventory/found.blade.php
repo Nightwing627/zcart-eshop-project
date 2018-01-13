@@ -5,11 +5,11 @@
         <a href="{{ route('admin.stock.inventory.index') }}" class="btn btn-new btn-flat">{{ trans('app.back_to_inventory') }}</a>
     @endcan
     @can('create', App\Inventory::class)
-        <a href="{{ route('admin.stock.inventory.showSearchForm') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
+        <a href="{{ route('admin.stock.inventory.showSearchForm') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
     @endcan
 
     @can('create', App\Product::class)
-        <a href="{{ route('admin.catalog.product.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_product') }}</a>
+        <a href="{{ route('admin.catalog.product.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_product') }}</a>
     @endcan
 @endsection
 
@@ -48,12 +48,12 @@
                         </span>
 
                         @can('view', $product)
-                            <a href="{{ route('admin.catalog.product.show', $product->id) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ trans('app.view_detail') }}</a>
+                            <a href="{{ route('admin.catalog.product.show', $product->id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
                         @endcan
 
                         <span class="option-btn" style=" margin-top: -50px;">
                             @if($product->has_variant)
-                                <a href="{{ route('admin.stock.inventory.setVariant', $product->id) }}" data-target="myDynamicModal" data-toggle="modal" class="btn bg-olive btn-flat">{{ trans('app.add_to_inventory_with_variant') }}</a>
+                                <a href="{{ route('admin.stock.inventory.setVariant', $product->id) }}" class="ajax-modal-btn btn bg-olive btn-flat">{{ trans('app.add_to_inventory_with_variant') }}</a>
                             @endif
 
                             <a href="{{ route('admin.stock.inventory.add', $product->id) }}" class="btn bg-purple btn-flat">{{ trans('app.add_to_inventory') }}</a>

@@ -2,9 +2,9 @@
 
 @section('buttons')
 	@can('create', App\GiftCard::class)
-		<a href="{{ route('admin.exim', 'gift-card') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
+		<a href="{{ route('admin.exim', 'gift-card') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 
-		<a href="{{ route('admin.promotion.giftCard.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_gift_card') }}</a>
+		<a href="{{ route('admin.promotion.giftCard.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_gift_card') }}</a>
 	@endcan
 @endsection
 
@@ -51,11 +51,11 @@
 						</td>
 						<td class="row-options">
 							@can('view', $card)
-								<a href="{{ route('admin.promotion.giftCard.show', $card->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="{{ route('admin.promotion.giftCard.show', $card->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 
 							@can('update', $card)
-								<a href="{{ route('admin.promotion.giftCard.edit', $card->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.promotion.giftCard.edit', $card->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $card)

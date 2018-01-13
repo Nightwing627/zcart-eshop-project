@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@can('create', App\Packaging::class)
-		<a href="{{ route('admin.shipping.packaging.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_packaging') }}</a>
+		<a href="{{ route('admin.shipping.packaging.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_packaging') }}</a>
 	@endcan
 @endsection
 
@@ -39,7 +39,7 @@
 						</td>
 						<td class="row-options">
 							@can('update', $packaging)
-								<a href="{{ route('admin.shipping.packaging.edit', $packaging->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.shipping.packaging.edit', $packaging->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $packaging)

@@ -2,7 +2,7 @@
 
 @section('buttons')
   @can('create', App\Order::class)
-    <a href="{{ route('admin.order.order.searchCutomer') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
+    <a href="{{ route('admin.order.order.searchCutomer') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
   @endcan
 
   @can('index', App\Order::class)

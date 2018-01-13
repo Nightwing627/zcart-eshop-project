@@ -46,7 +46,7 @@
 				          <td>{{ ($user->active) ? trans('app.active') : trans('app.inactive') }}</td>
 				          <td class="row-options">
 							@can('view', $user)
-				        	    <a href="{{ route('admin.admin.user.show', $user->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
+				        	    <a href="{{ route('admin.admin.user.show', $user->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
 							@endcan
 
 							@can('secretLogin', $user)
@@ -54,12 +54,12 @@
 							@endcan
 
 							@can('update', $user)
-				            	<a href="{{ route('admin.admin.user.edit', $user->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+				            	<a href="{{ route('admin.admin.user.edit', $user->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 
 								@if($user->primaryAddress)
-									<a href="{{ route('address.edit', $user->primaryAddress->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
+									<a href="{{ route('address.edit', $user->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
 								@else
-									<a href="{{ route('address.create', ['user', $user->id]) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
+									<a href="{{ route('address.create', ['user', $user->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
 								@endif
 							@endcan
 

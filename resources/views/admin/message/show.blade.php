@@ -25,7 +25,7 @@
 		              		<div class="col-md-1">
 								<img src="{{ get_image_src($message->customer_id, 'customers', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 								@can('view', $message->customer)
-					            	<a href="{{ route('admin.admin.customer.show', $message->customer) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ trans('app.view_detail') }}</a>
+					            	<a href="{{ route('admin.admin.customer.show', $message->customer) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 								@endcan
 							</div>
 		              		<div class="col-md-11 nopadding-left">
@@ -45,11 +45,11 @@
 		                <div class="btn-group">
 							@if($message->label < \App\Message::LABEL_DRAFT)
 								@can('reply', $message)
-									<a href="{{ route('admin.support.message.reply', $message) }}" class="btn btn-default btn-sm" data-target="myDynamicModal" data-toggle="modal">
+									<a href="{{ route('admin.support.message.reply', $message) }}" class="ajax-modal-btn btn btn-default btn-sm">
 										<i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i> {{ trans('app.reply') }}
 									</a>
 
-									<a href="{{ route('admin.support.message.reply', [$message, true]) }}" class="btn btn-default btn-sm" data-target="myDynamicModal" data-toggle="modal">
+									<a href="{{ route('admin.support.message.reply', [$message, true]) }}" class="ajax-modal-btn btn btn-default btn-sm">
 					                	<i class="fa fa-reply"></i> {{ trans('app.reply_with_template') }}
 					                </a>
 			                  	@endcan
@@ -72,7 +72,7 @@
 
 							@else
 								@if($message->label == \App\Message::LABEL_DRAFT)
-									<a href="{{ route('admin.support.message.edit', $message) }}" class="btn btn-default btn-sm" data-target="myDynamicModal" data-toggle="modal">
+									<a href="{{ route('admin.support.message.edit', $message) }}" class="ajax-modal-btn btn btn-default btn-sm">
 										<i class="fa fa-send"></i> {{ trans('app.open') }}
 									</a>
 			                  	@endif
@@ -133,11 +133,11 @@
 					@if($message->label < \App\Message::LABEL_DRAFT)
 		              	<div class="pull-right">
 							@can('reply', $message)
-								<a href="{{ route('admin.support.message.reply', $message) }}" class="btn btn-default btn-sm" data-target="myDynamicModal" data-toggle="modal">
+								<a href="{{ route('admin.support.message.reply', $message) }}" class="ajax-modal-btn btn btn-default btn-sm">
 				                	<i class="fa fa-reply"></i> {{ trans('app.reply') }}
 				                </a>
 
-								<a href="{{ route('admin.support.message.reply', [$message, true]) }}" class="btn btn-default btn-sm" data-target="myDynamicModal" data-toggle="modal">
+								<a href="{{ route('admin.support.message.reply', [$message, true]) }}" class="ajax-modal-btn btn btn-default btn-sm">
 				                	<i class="fa fa-reply"></i> {{ trans('app.reply_with_template') }}
 				                </a>
 							@endcan

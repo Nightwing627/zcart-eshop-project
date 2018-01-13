@@ -2,9 +2,8 @@
 
 @section('buttons')
 	@can('create', App\Manufacturer::class)
-		<a href="{{ route('admin.exim', 'manufacturers') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
-
-		<a href="{{ route('admin.catalog.manufacturer.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_manufacturer') }}</a>
+		<a href="{{ route('admin.exim', 'manufacturers') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
+		<a href="{{ route('admin.catalog.manufacturer.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_manufacturer') }}</a>
 	@endcan
 @endsection
 
@@ -26,6 +25,7 @@
 						<th>{{ trans('app.phone') }}</th>
 						<th>{{ trans('app.email') }}</th>
 						<th>{{ trans('app.country') }}</th>
+						<th>{{ trans('app.products') }}</th>
 						<th>{{ trans('app.status') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -40,14 +40,17 @@
 						<td>{{ $manufacturer->phone }}</td>
 						<td>{{ $manufacturer->email }}</td>
 						<td>{{ $manufacturer->country->name or '' }}</td>
+						<td>
+							<span class="label label-default">{{ $manufacturer->products_count }}</span>
+						</td>
 						<td>{{ ($manufacturer->active) ? trans('app.active') : trans('app.inactive') }}</td>
 						<td class="row-options">
 							@can('view', $manufacturer)
-								<a href="{{ route('admin.catalog.manufacturer.show', $manufacturer->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="{{ route('admin.catalog.manufacturer.show', $manufacturer->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 
 							@can('update', $manufacturer)
-								<a href="{{ route('admin.catalog.manufacturer.edit', $manufacturer->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.catalog.manufacturer.edit', $manufacturer->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $manufacturer)

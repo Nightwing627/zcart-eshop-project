@@ -70,7 +70,7 @@ class Product extends Model
      */
     public function origin()
     {
-        return $this->belongsTo('App\Country', 'origin_country');
+        return $this->belongsTo(Country::class, 'origin_country');
     }
 
     /**
@@ -78,7 +78,7 @@ class Product extends Model
      */
     public function manufacturer()
     {
-        return $this->belongsTo('App\Manufacturer');
+        return $this->belongsTo(Manufacturer::class);
     }
 
     /**
@@ -86,7 +86,7 @@ class Product extends Model
      */
     public function shop()
     {
-        return $this->belongsTo('App\Shop');
+        return $this->belongsTo(Shop::class);
     }
 
     /**
@@ -94,7 +94,7 @@ class Product extends Model
      */
     public function categories()
     {
-        return $this->belongsToMany('App\Category')->withTimestamps();
+        return $this->belongsToMany(Category::class)->withTimestamps();
     }
 
     /**
@@ -102,7 +102,7 @@ class Product extends Model
      */
     public function inventories()
     {
-        return $this->hasMany('App\Inventory');
+        return $this->hasMany(Inventory::class);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@can('create', App\Role::class)
-		<a href="{{ route('admin.setting.role.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_role') }}</a>
+		<a href="{{ route('admin.setting.role.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_role') }}</a>
 	@endcan
 @endsection
 
@@ -39,11 +39,11 @@
 						<td><span class="label label-default">{{ $role->level }}</span></td>
 						<td class="row-options">
 							@can('view', $role)
-								<a href="{{ route('admin.setting.role.show', $role->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="{{ route('admin.setting.role.show', $role->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 
 							@can('update', $role)
-								<a href="{{ route('admin.setting.role.edit', $role) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.setting.role.edit', $role) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $role)

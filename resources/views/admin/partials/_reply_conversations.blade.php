@@ -2,7 +2,7 @@
 	<div class="col-md-1 no-print">
 		<img src="{{ get_image_src($reply->user_id, 'users', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 		@if(Gate::allows('view', $reply->user))
-            <a href="{{ route('admin.admin.user.show', $reply->user_id) }}" data-target="myDynamicModal" data-toggle="modal" class="small">{{ $reply->user->getName() }}</a>
+            <a href="{{ route('admin.admin.user.show', $reply->user_id) }}" class="ajax-modal-btn small">{{ $reply->user->getName() }}</a>
 		@else
 			<span class="small">{{ $reply->user->getName() }}</span>
 		@endif

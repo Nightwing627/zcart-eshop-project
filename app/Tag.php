@@ -25,7 +25,7 @@ class Tag extends Model
      */
     public function customers()
     {
-        return $this->morphedByMany('App\Customer', 'taggable');
+        return $this->morphedByMany(App\Customer::class, 'taggable');
     }
 
     /**
@@ -33,7 +33,7 @@ class Tag extends Model
      */
     public function shops()
     {
-        return $this->morphedByMany('App\Shop', 'taggable');
+        return $this->morphedByMany(App\Shop::class, 'taggable');
     }
 
     /**
@@ -41,7 +41,7 @@ class Tag extends Model
      */
     public function suppliers()
     {
-        return $this->morphedByMany('App\Supplier', 'taggable');
+        return $this->morphedByMany(App\Supplier::class, 'taggable');
     }
 
     /**
@@ -49,7 +49,7 @@ class Tag extends Model
      */
     public function products()
     {
-        return $this->morphedByMany('App\Product', 'taggable');
+        return $this->morphedByMany(App\Product::class, 'taggable');
     }
 
     /**
@@ -57,7 +57,7 @@ class Tag extends Model
      */
     public function manufacturers()
     {
-        return $this->morphedByMany('App\Manufacturer', 'taggable');
+        return $this->morphedByMany(App\Manufacturer::class, 'taggable');
     }
 
     /**
@@ -65,7 +65,7 @@ class Tag extends Model
      */
     public function blogs()
     {
-        return $this->morphedByMany('App\Blog', 'taggable');
+        return $this->morphedByMany(App\Blog::class, 'taggable');
     }
 
 }

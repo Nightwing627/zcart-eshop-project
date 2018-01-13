@@ -4,14 +4,10 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
 			<div class="card hovercard">
 			    <div class="card-background">
-
 					<img src="{{ get_image_src($customer->id, 'customers', '150x150') }}" class="card-bkimg img-circle" alt="{{ trans('app.avatar') }}">
-
 			    </div>
 			    <div class="useravatar">
-
 					<img src="{{ get_image_src($customer->id, 'customers', '150x150') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-
 			    </div>
 			    <div class="card-info">
 			        <span class="card-title">{{ $customer->getName() }}</span>
@@ -29,6 +25,9 @@
 				  </a></li>
 				  <li><a href="#tab_3" data-toggle="tab">
 				  	{{ trans('app.addresses') }}
+				  </a></li>
+				  <li><a href="#tab_4" data-toggle="tab">
+				  	{{ trans('app.latest_orders') }}
 				  </a></li>
 				</ul>
 				<div class="tab-content">
@@ -98,6 +97,30 @@
 					        </div>
 					        <div class="help-block" style="margin-bottom: -10px;"><i class="fa fa-warning"></i> {{ trans('app.map_location') }}</div>
 				       	@endif
+				    </div> <!-- /.tab-pane -->
+				    <div class="tab-pane" id="tab_4">
+						<table class="table table-hover table-2nd-short">
+							<thead>
+								<tr>
+									<th>{{ trans('app.order_number') }}</th>
+									<th>{{ trans('app.grand_total') }}</th>
+									<th>{{ trans('app.payment') }}</th>
+									<th>{{ trans('app.status') }}</th>
+									<th>{{ trans('app.order_date') }}</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach($customer->latest_orders as $order )
+									<tr>
+										<td>{{ get_formated_order_number($order->order_number) }}</td>
+										<td>{{ get_formated_currency($order->grand_total )}}</td>
+										<td>{{ $order->paymentStatus->name }}</td>
+										<td>{{ $order->status->name }}</td>
+								        <td>{{ $order->created_at->toFormattedDateString() }}</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
 				    </div> <!-- /.tab-pane -->
 				</div> <!-- /.tab-content -->
 			</div>

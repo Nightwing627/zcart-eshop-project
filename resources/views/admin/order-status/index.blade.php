@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@can('create', App\OrderStatus::class)
-		<a href="{{ route('admin.utility.orderStatus.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_status') }}</a>
+		<a href="{{ route('admin.utility.orderStatus.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_status') }}</a>
 	@endcan
 @endsection
 
@@ -43,7 +43,7 @@
 						<td>{{ ($status->email_template_id) ? $status->emailTemplate->name : '' }}</td>
 						<td class="row-options">
 							@can('update', $status)
-								<a href="{{ route('admin.utility.orderStatus.edit', $status->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.utility.orderStatus.edit', $status->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $status)

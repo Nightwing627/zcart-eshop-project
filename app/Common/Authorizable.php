@@ -30,7 +30,7 @@ trait Authorizable
         'search'            => 'add',
         'restore'           => 'add',
         'initiate'          => 'initiate',
-        'form'    => 'initiate',
+        'form'              => 'initiate',
         'approve'           => 'approve',
         'decline'           => 'approve',
         'storeReply'        => 'reply',

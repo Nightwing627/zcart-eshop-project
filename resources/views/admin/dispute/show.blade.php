@@ -5,7 +5,7 @@
 		<a href="{{ route('admin.support.dispute.index') }}" class="btn btn-default btn-flat">{{ trans('app.back') }}</a>
 	@endcan
 	@can('response', $dispute)
-		<a href="{{ route('admin.support.dispute.response', $dispute) }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.response') }}</a>
+		<a href="{{ route('admin.support.dispute.response', $dispute) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.response') }}</a>
 	@endcan
 @endsection
 
@@ -25,7 +25,7 @@
 					  	<label>{{ trans('app.merchant') }}</label>
 						<p>
 							@if(Gate::allows('view', $dispute->shop))
-				            	<a href="{{ route('admin.merchant.shop.show', $dispute->shop_id) }}" data-target="myDynamicModal" data-toggle="modal" class="small"><span class="lead"> {{ $dispute->shop->name }} </span></a>
+				            	<a href="{{ route('admin.merchant.shop.show', $dispute->shop_id) }}" class="ajax-modal-btn small"><span class="lead"> {{ $dispute->shop->name }} </span></a>
 							@else
 								<span class="lead">{{ $dispute->shop->name }}</span>
 							@endif
@@ -45,7 +45,7 @@
 							<p>
 								<img src="{{ get_image_src($dispute->shop->owner_id, 'users', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 								@if(Gate::allows('view', $dispute->shop->owner))
-						            <a href="{{ route('admin.admin.user.show', $dispute->shop->owner_id) }}" data-target="myDynamicModal" data-toggle="modal" class="small"><span class="lead">{{ $dispute->shop->owner->getName() }}</span></a>
+						            <a href="{{ route('admin.admin.user.show', $dispute->shop->owner_id) }}" class="ajax-modal-btn small"><span class="lead">{{ $dispute->shop->owner->getName() }}</span></a>
 								@else
 									<span class="small">{{ $dispute->shop->owner->getName() }}</span>
 								@endif
@@ -89,7 +89,7 @@
 							<img src="{{ get_image_src($dispute->product_id, 'products', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 
 							@if(Gate::allows('view', $dispute->product))
-					            <a href="{{ route('admin.catalog.product.show', $dispute->product_id) }}" data-target="myDynamicModal" data-toggle="modal" class="small"><span class="lead">{{ $dispute->product->name }}</span></a>
+					            <a href="{{ route('admin.catalog.product.show', $dispute->product_id) }}" class="ajax-modal-btn small"><span class="lead">{{ $dispute->product->name }}</span></a>
 							@else
 								<span class="lead">{{ $dispute->product->name }}</span>
 							@endif
@@ -101,7 +101,7 @@
 						<p>
 							<img src="{{ get_image_src($dispute->customer_id, 'customers', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							@if(Gate::allows('view', $dispute->customer))
-					            <a href="{{ route('admin.admin.customer.show', $dispute->customer_id) }}" data-target="myDynamicModal" data-toggle="modal" class="small"><span class="lead">{{ $dispute->customer->getName() }}</span></a>
+					            <a href="{{ route('admin.admin.customer.show', $dispute->customer_id) }}" class="ajax-modal-btn small"><span class="lead">{{ $dispute->customer->getName() }}</span></a>
 							@else
 								<span class="lead">{{ $dispute->customer->getName() }}</span>
 							@endif

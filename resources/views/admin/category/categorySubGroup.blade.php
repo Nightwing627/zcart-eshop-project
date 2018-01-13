@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@can('create', App\CategorySubGroup::class)
-		<a href="{{ route('admin.catalog.categorySubGroup.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_category_sub_group') }} </a>
+		<a href="{{ route('admin.catalog.categorySubGroup.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_category_sub_group') }} </a>
 	@endcan
 @endsection
 
@@ -21,6 +21,7 @@
 	        <tr>
 	          <th>{{ trans('app.category_sub_group') }}</th>
 	          <th>{{ trans('app.parents') }}</th>
+	          <th>{{ trans('app.categories') }}</th>
 	          <th>{{ trans('app.status') }}</th>
 	          <th>{{ trans('app.option') }}</th>
 	        </tr>
@@ -34,11 +35,16 @@
 				          	<span class="excerpt-td small">{!! str_limit($categorySubGrp->description, 150) !!}</span>
 			          	@endif
 			          </td>
-			          <td>{{ $categorySubGrp->group->name or ''}}</td>
+			          <td>
+				          	<span class="label label-outline">{{ $categorySubGrp->group->name }}</span>
+			          </td>
+			          <td>
+				          	<span class="label label-default">{{ $categorySubGrp->categories_count }}</span>
+				      </td>
 			          <td>{{ ($categorySubGrp->active) ? trans('app.active') : trans('app.inactive') }}</td>
 			          <td class="row-options">
 						@can('update', $categorySubGrp)
-	                	    <a href="{{ route('admin.catalog.categorySubGroup.edit', $categorySubGrp->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="Edit" class="fa fa-edit"></i></a>&nbsp;
+	                	    <a href="{{ route('admin.catalog.categorySubGroup.edit', $categorySubGrp->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="Edit" class="fa fa-edit"></i></a>&nbsp;
 						@endcan
 
 						@can('delete', $categorySubGrp)

@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@can('create', App\Category::class)
-		<a href="{{ route('admin.catalog.category.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_category') }}</a>
+		<a href="{{ route('admin.catalog.category.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_category') }}</a>
 	@endcan
 @endsection
 
@@ -45,11 +45,13 @@
 				          	<span class="label label-outline">{{ $subGroup->name }}</span>
 				        @endforeach
 			          </td>
-			          <td>{{ $category->products_count }}</td>
+			          <td>
+				          	<span class="label label-default">{{ $category->products_count }}</span>
+			          </td>
 			          <td>{{ ($category->active) ? trans('app.active') : trans('app.inactive') }}</td>
 			          <td class="row-options">
 						@can('update', $category)
-	                	    <a href="{{ route('admin.catalog.category.edit', $category->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+	                	    <a href="{{ route('admin.catalog.category.edit', $category->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
                 	    @endcan
 						@can('delete', $category)
 		                    {!! Form::open(['route' => ['admin.catalog.category.trash', $category->id], 'method' => 'delete', 'class' => 'data-form']) !!}

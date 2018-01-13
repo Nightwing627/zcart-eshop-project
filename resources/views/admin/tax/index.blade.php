@@ -2,9 +2,9 @@
 
 @section('buttons')
 	@can('create', App\Tax::class)
-		<a href="{{ route('admin.exim', 'taxes') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.exim') }}</a>
+		<a href="{{ route('admin.exim', 'taxes') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 
-		<a href="{{ route('admin.setting.tax.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_tax') }}</a>
+		<a href="{{ route('admin.setting.tax.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_tax') }}</a>
 	@endcan
 @endsection
 
@@ -42,7 +42,7 @@
 						<td>{{ ($tax->active) ? trans('app.active') : trans('app.inactive') }}</td>
 						<td class="row-options">
 							@can('update', $tax)
-								<a href="{{ route('admin.setting.tax.edit', $tax->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.setting.tax.edit', $tax->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $tax)

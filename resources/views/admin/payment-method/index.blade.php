@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@can('create', App\PaymentMethod::class)
-		<a href="{{ route('admin.setting.paymentMethod.create') }}" data-target="myDynamicModal" data-toggle="modal" class="btn btn-new btn-flat">{{ trans('app.add_payment_method') }}</a>
+		<a href="{{ route('admin.setting.paymentMethod.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_payment_method') }}</a>
 	@endcan
 @endsection
 
@@ -49,7 +49,7 @@
 				          	@endif
 
 					        @can('update', $payment_method)
-								<a href="{{ route('admin.setting.paymentMethod.edit', $payment_method->id) }}" data-target="myDynamicModal" data-toggle="modal"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.setting.paymentMethod.edit', $payment_method->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 					        @can('delete', $payment_method)

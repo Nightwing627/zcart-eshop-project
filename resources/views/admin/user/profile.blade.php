@@ -87,14 +87,14 @@
 
 		        			{!! $profile->primaryAddress->toHtml() !!}
 
-							<a class="btn btn-default" href="{{ route('address.edit', $profile->primaryAddress->id) }}" data-target="myDynamicModal" data-toggle="modal"><i class="fa fa-map-marker"></i> {{ trans('app.update_address') }}</a>
+							<a class="btn btn-default" href="{{ route('address.edit', $profile->primaryAddress->id) }}" class="ajax-modal-btn"><i class="fa fa-map-marker"></i> {{ trans('app.update_address') }}</a>
 						@else
-							<a class="btn btn-default" href="{{ route('address.create', ['user', $profile->id]) }}" data-target="myDynamicModal" data-toggle="modal"><i class="fa fa-plus-square-o"></i> {{ trans('app.add_address') }}</a>
+							<a class="btn btn-default" href="{{ route('address.create', ['user', $profile->id]) }}" class="ajax-modal-btn"><i class="fa fa-plus-square-o"></i> {{ trans('app.add_address') }}</a>
 						@endif
 				  	</div>
 
 					<div class="form-group">
-						<a class="btn btn-default" href="{{ route('admin.profile.showChangePasswordForm') }}" data-target="myDynamicModal" data-toggle="modal"><i class="fa fa-lock"></i> {{ trans('app.change_password') }}</a>
+						<a class="btn btn-default" href="{{ route('admin.profile.showChangePasswordForm') }}" class="ajax-modal-btn"><i class="fa fa-lock"></i> {{ trans('app.change_password') }}</a>
 					</div>
 
 				    @unless($profile->isFromPlatform())
