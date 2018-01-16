@@ -27,6 +27,14 @@ class demoSeeder extends Seeder
 
             });
 
+        factory(App\Merchant::class, $this->longCount)
+            ->create()
+            ->each(function($merchant){
+                $merchant->addresses()->save(
+                    factory(App\Address::class)->make(['address_title' => $merchant->name, 'address_type' => 'Primary'])
+                );
+            });
+
         factory(App\Customer::class, $this->longCount)
             ->create()
             ->each(function($customer){

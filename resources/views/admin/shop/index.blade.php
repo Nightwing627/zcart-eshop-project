@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@can('create', App\Shop::class)
-		<a href="{{ route('admin.merchant.shop.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_shop') }}</a>
+		<a href="{{ route('admin.vendor.shop.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_shop') }}</a>
 	@endcan
 @endsection
 
@@ -39,9 +39,9 @@
 						<td>{{ ($shop->active) ? trans('app.active') : trans('app.inactive') }}</td>
 						<td class="row-options">
 							@can('view', $shop)
-								<a href="{{ route('admin.merchant.shop.show', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="{{ route('admin.vendor.shop.show', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 
-								<a href="{{ route('admin.merchant.shop.staffs', $shop->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.staffs') }}" class="fa fa-users"></i></a>&nbsp;
+								<a href="{{ route('admin.vendor.shop.staffs', $shop->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.staffs') }}" class="fa fa-users"></i></a>&nbsp;
 							@endcan
 
 							@can('secretLogin', $shop->owner)
@@ -49,7 +49,7 @@
 							@endcan
 
 							@can('update', $shop)
-								<a href="{{ route('admin.merchant.shop.edit', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.vendor.shop.edit', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 
 								@if($shop->primaryAddress)
 									<a href="{{ route('address.edit', $shop->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
@@ -59,7 +59,7 @@
 							@endcan
 
 							@can('delete', $shop)
-								{!! Form::open(['route' => ['admin.merchant.shop.trash', $shop->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+								{!! Form::open(['route' => ['admin.vendor.shop.trash', $shop->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 								{!! Form::close() !!}
 							@endcan
@@ -101,9 +101,9 @@
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('delete', $trash)
-								<a href="{{ route('admin.merchant.shop.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+								<a href="{{ route('admin.vendor.shop.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
 
-								{!! Form::open(['route' => ['admin.merchant.shop.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+								{!! Form::open(['route' => ['admin.vendor.shop.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 									{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 								{!! Form::close() !!}
 							@endcan

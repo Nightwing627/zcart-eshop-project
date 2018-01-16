@@ -46,6 +46,17 @@ trait Authorizable
     ];
 
     /**
+     * List of modules thar grouped into a common module named vendor modules
+     * This will help to set the role permissions
+     *
+     * @var arr
+     */
+    private $vendor_modules = [
+        'shop',
+        'merchant',
+    ];
+
+    /**
      * List of modules thar grouped into a common module named utility modules
      * This will help to set the role permissions
      *
@@ -86,7 +97,7 @@ trait Authorizable
             return TRUE;
 
         $slug = (bool) $slug ? $slug : $this->getSlug();
-// echo "<pre>"; print_r($slug); echo "</pre>"; exit();
+
         return (new Authorize(Auth::user(), $slug))->check();
     }
 
@@ -101,10 +112,25 @@ trait Authorizable
         $module = array_slice($temp1, -2, 1)[0];
         $action = array_slice($temp1, -1, 1)[0];
 
+        if($this->isVendor($module))
+            return $this->abilities[$action] . '_vendor';
+
         if($this->isUtility($module))
             return $this->abilities[$action] . '_utility';
 
         return array_key_exists($action, $this->abilities) ? $this->abilities[$action] . '_' . snake_case($module) : $action;
+    }
+
+    /**
+     * Check if module is an Vendor module.
+     *
+     * @param  str  $module
+     *
+     * @return boolean
+     */
+    private function isVendor($module)
+    {
+        return in_array($module, $this->vendor_modules);
     }
 
     /**

@@ -119,16 +119,19 @@
           </li>
         @endif
 
-        @if(Gate::allows('index', App\Shop::class))
-          <li class="treeview {{ Request::is('admin/merchant*') ? 'active' : '' }}">
+        @if(Gate::allows('index', App\Merchant::class) || Gate::allows('index', App\Shop::class))
+          <li class="treeview {{ Request::is('admin/vendor*') ? 'active' : '' }}">
             <a href="#">
               <i class="fa fa-map-marker"></i>
-              <span>{{ trans('nav.merchants') }}</span>
+              <span>{{ trans('nav.vendors') }}</span>
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
               @can('index', App\Shop::class)
-                <li class=" {{ Request::is('admin/merchant/shop*') ? 'active' : '' }}"><a href="{{ url('admin/merchant/shop') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.shops') }}</a></li>
+                <li class=" {{ Request::is('admin/vendor/merchant*') ? 'active' : '' }}"><a href="{{ url('admin/vendor/merchant') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.merchants') }}</a></li>
+              @endcan
+              @can('index', App\Shop::class)
+                <li class=" {{ Request::is('admin/vendor/shop*') ? 'active' : '' }}"><a href="{{ url('admin/vendor/shop') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.shops') }}</a></li>
               @endcan
             </ul>
           </li>

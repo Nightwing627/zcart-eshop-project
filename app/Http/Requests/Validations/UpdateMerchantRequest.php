@@ -4,7 +4,7 @@ namespace App\Http\Requests\Validations;
 
 use App\Http\Requests\Request;
 
-class UpdateUserRequest extends Request
+class UpdateMerchantRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateUserRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return Request::user()->isFromPlatform();
     }
 
     /**
@@ -28,7 +28,7 @@ class UpdateUserRequest extends Request
         return [
            'name' => 'bail|required|max:255',
            'email' =>  'email|max:255|composite_unique:users, '.$id,
-           'role_id' => 'required',
+           // 'role_id' => 'required',
            'active' => 'required',
            'image' => 'mimes:jpeg,png',
         ];

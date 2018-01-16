@@ -33,14 +33,14 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 	{
 		include('admin/User.php');
 		include('admin/Customer.php');
-
 	});
 
-	// Merchant Routs for Admin
-	Route::group(['as' => 'merchant.', 'prefix' => 'merchant'], function()
+	// Vendors Routs for Admin
+	Route::group(['as' => 'vendor.', 'prefix' => 'vendor'], function()
 	{
-		include('admin/Shops.php');
+		include('admin/Merchant.php');
 
+		include('admin/Shop.php');
 	});
 
 	// Catalog Routs for Admin
@@ -52,9 +52,9 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 
 		include('admin/Category.php');
 
-		include('admin/Products.php');
+		include('admin/Product.php');
 
-		include('admin/Attributes.php');
+		include('admin/Attribute.php');
 
 		include('admin/AttributeValues.php');
 
@@ -83,15 +83,15 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 	// Order Routs for Admin/Merchant
 	Route::group(['as' => 'order.', 'prefix' => 'order'], function()
 	{
-		include('admin/Orders.php');
-		include('admin/Carts.php');
+		include('admin/Order.php');
+		include('admin/Cart.php');
 	});
 
 	// Utility Routs for Admin/Merchant
 	Route::group(['as' => 'utility.', 'prefix' => 'utility'], function()
 	{
-		include('admin/OrderStatuses.php');
-		include('admin/PaymentStatuses.php');
+		include('admin/OrderStatus.php');
+		include('admin/PaymentStatus.php');
 	});
 
 	// Settings Routs for Admin/Merchant
@@ -99,8 +99,8 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 	{
 		include('admin/UserRole.php');
 		include('admin/Tax.php');
-		include('admin/EmailTemplates.php');
-		include('admin/PaymentMethods.php');
+		include('admin/EmailTemplate.php');
+		include('admin/PaymentMethod.php');
 	});
 
 	// Promotions Routs for Admin

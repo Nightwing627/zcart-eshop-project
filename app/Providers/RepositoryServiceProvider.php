@@ -74,6 +74,10 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Manufacturer\EloquentManufacturer::class
         );
         $this->app->singleton(
+            \App\Repositories\Merchant\MerchantRepository::class,
+            \App\Repositories\Merchant\EloquentMerchant::class
+        );
+        $this->app->singleton(
             \App\Repositories\Message\MessageRepository::class,
             \App\Repositories\Message\EloquentMessage::class
         );

@@ -33,7 +33,7 @@ class ProfileController extends Controller
     {
         $profile = $this->profile->profile();
 
-        return view('admin.user.profile', compact('profile'));
+        return view('admin.profile.profile', compact('profile'));
     }
 
     /**
@@ -44,7 +44,7 @@ class ProfileController extends Controller
      */
     public function showChangePasswordForm()
     {
-        return view('admin.user._change_password');
+        return view('admin.profile._change_password');
     }
 
     /**

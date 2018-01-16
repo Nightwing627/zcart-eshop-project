@@ -14,13 +14,29 @@ $factory->define(App\Role::class, function (Faker $faker) {
 $factory->define(App\User::class, function (Faker $faker) {
     return [
         'shop_id' => rand(0,1) == 1 ? rand(1, 30) : Null,
-        'role_id' => $faker->randomElement(\DB::table('roles')->where('id', '!=', 1)->pluck('id')->toArray()),
+        'role_id' => $faker->randomElement(\DB::table('roles')->whereNotIn('id', [1,3])->pluck('id')->toArray()),
     	'nice_name' => $faker->lastName,
         'name' => $faker->name,
         'email' => $faker->email,
         'password' => bcrypt(123456),
         'dob' => $faker->date,
-        'sex' => $faker->randomElement(['Male', 'Female']),
+        'sex' => $faker->randomElement(['app.male', 'app.female']),
+        'description' => $faker->text(500),
+        'active' => $faker->boolean,
+        'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(App\Merchant::class, function (Faker $faker) {
+    return [
+        'shop_id' => rand(0,1) == 1 ? rand(1, 30) : Null,
+        'role_id' => 3,
+        'nice_name' => $faker->lastName,
+        'name' => $faker->name,
+        'email' => $faker->email,
+        'password' => bcrypt(123456),
+        'dob' => $faker->date,
+        'sex' => $faker->randomElement(['app.male', 'app.female']),
         'description' => $faker->text(500),
         'active' => $faker->boolean,
         'remember_token' => str_random(10),
@@ -34,7 +50,7 @@ $factory->define(App\Customer::class, function (Faker $faker) {
         'email' => $faker->email,
         'password' => bcrypt(123456),
         'dob' => $faker->date,
-        'sex' => $faker->randomElement(['Male', 'Female', 'Other']),
+        'sex' => $faker->randomElement(['app.male', 'app.female', 'Other']),
         'description' => $faker->text(500),
         'active' => $faker->boolean,
         'remember_token' => str_random(10),

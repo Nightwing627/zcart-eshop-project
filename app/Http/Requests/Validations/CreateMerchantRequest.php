@@ -4,7 +4,7 @@ namespace App\Http\Requests\Validations;
 
 use App\Http\Requests\Request;
 
-class UpdateUserRequest extends Request
+class CreateMerchantRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateUserRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return Request::user()->isFromPlatform();
     }
 
     /**
@@ -23,12 +23,13 @@ class UpdateUserRequest extends Request
      */
     public function rules()
     {
-        $id = Request::segment(count(Request::segments())); //Current model ID
+        Request::merge(['role_id' => \App\Role::MERCHANT]); //Set role_id
 
         return [
-           'name' => 'bail|required|max:255',
-           'email' =>  'email|max:255|composite_unique:users, '.$id,
-           'role_id' => 'required',
+           'name' => 'required|max:255',
+           'email' =>  'required|email|max:255|unique:users',
+           'password' =>  'required|confirmed|min:6',
+           'dob' => 'nullable|date',
            'active' => 'required',
            'image' => 'mimes:jpeg,png',
         ];

@@ -23,7 +23,7 @@ class EloquentUser extends EloquentRepository implements BaseRepository, UserRep
         if (!Auth::user()->isFromPlatform())
             return $this->model->level()->mine()->with('role', 'primaryAddress')->get();
 
-        return $this->model->level()->withMerchant()->with('role', 'primaryAddress')->get();
+        return $this->model->level()->fromPlatform()->with('role', 'primaryAddress')->get();
     }
 
     public function trashOnly()
@@ -31,7 +31,7 @@ class EloquentUser extends EloquentRepository implements BaseRepository, UserRep
         if (!Auth::user()->isFromPlatform())
             return $this->model->level()->mine()->onlyTrashed()->get();
 
-        return $this->model->level()->withMerchant()->onlyTrashed()->get();
+        return $this->model->level()->fromPlatform()->onlyTrashed()->get();
     }
 
     public function addresses($user)

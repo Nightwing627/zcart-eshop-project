@@ -27,7 +27,7 @@
 							<span class="lead"> {{ $ticket->shop->name }} </span>
 							<br/>
 							@can('view', $ticket->shop)
-				            	<a href="{{ route('admin.merchant.shop.show', $ticket->shop_id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
+				            	<a href="{{ route('admin.vendor.shop.show', $ticket->shop_id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 							@endcan
 
 							<img src="{{ get_image_src($ticket->shop_id, 'shops', '150x150') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">

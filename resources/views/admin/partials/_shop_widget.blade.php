@@ -19,7 +19,7 @@
         </span>
 
         @can('view', $shop)
-            <a href="{{ route('admin.merchant.shop.show', $shop->id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
+            <a href="{{ route('admin.vendor.shop.show', $shop->id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
         @endcan
 
         <span class="pull-right" style="margin-top: -60px;margin-right: 30px;font-size: 40px; color: rgba(0, 0, 0, 0.2);">

@@ -11,6 +11,10 @@ class Role extends Model
 {
     use SoftDeletes;
 
+    const SUPER_ADMIN   = 1; //Dont change it
+    const ADMIN         = 2; //Dont change it
+    const MERCHANT      = 3; //Dont change it
+
     /**
      * The database table used by the model.
      *

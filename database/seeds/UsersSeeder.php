@@ -70,7 +70,7 @@ class UsersSeeder extends Seeder
             'updated_at' => Carbon::Now(),
         ],[
             'address_type' => 'Primary',
-            'addressable_type' => 'App\User',
+            'addressable_type' => 'App\Merchant',
             'addressable_id' => 3,
             'address_title' => 'Primary Address',
             'state_id' => 1221,

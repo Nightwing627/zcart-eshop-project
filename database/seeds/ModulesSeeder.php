@@ -130,11 +130,6 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,add,edit,delete'
         ],
 
-        'Shop' => [
-            'access' => 'Platform',
-            'actions' => 'view,add,edit,delete'
-        ],
-
         'Setting' => [
             'access' => 'Merchant',
             'actions' => 'view,edit'
@@ -153,6 +148,11 @@ class ModulesSeeder extends Seeder
         'Ticket' => [
             'access' => 'Platform',
             'actions' => 'view,update,reply,assign'
+        ],
+
+        'Vendor' => [
+            'access' => 'Platform',
+            'actions' => 'view,add,edit,delete,login'
         ],
 
         'Warehouse' => [

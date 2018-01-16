@@ -2,7 +2,7 @@
 
 @section('buttons')
 	@can('index', App\Shop::class)
-		<a href="{{ route('admin.merchant.shop.index') }}" class="btn btn-new btn-flat">{{ trans('app.shops') }}</a>
+		<a href="{{ route('admin.vendor.shop.index') }}" class="btn btn-new btn-flat">{{ trans('app.shops') }}</a>
 	@endcan
 @endsection
 

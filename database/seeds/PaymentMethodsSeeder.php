@@ -33,7 +33,7 @@ class PaymentMethodsSeeder extends Seeder
         DB::table('payment_methods')->insert([
             'name' => 'Bank Wire Transfer',
             'company_name' => 'Pay by bank wire transfer',
-            'description' => 'Pay by bank wire transfer,  transfer the invoice amount via wire tranfer to the marchant account and confirm manually. After payment confirmation the goods will be shipped.',
+            'description' => 'Pay by bank wire transfer,  transfer the invoice amount via wire tranfer to the merchant account and confirm manually. After payment confirmation the goods will be shipped.',
             'created_at' => Carbon::Now(),
             'updated_at' => Carbon::Now(),
         ]);

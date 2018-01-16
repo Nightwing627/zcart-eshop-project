@@ -25,7 +25,7 @@
 					  	<label>{{ trans('app.merchant') }}</label>
 						<p>
 							@if(Gate::allows('view', $dispute->shop))
-				            	<a href="{{ route('admin.merchant.shop.show', $dispute->shop_id) }}" class="ajax-modal-btn small"><span class="lead"> {{ $dispute->shop->name }} </span></a>
+				            	<a href="{{ route('admin.vendor.shop.show', $dispute->shop_id) }}" class="ajax-modal-btn small"><span class="lead"> {{ $dispute->shop->name }} </span></a>
 							@else
 								<span class="lead">{{ $dispute->shop->name }}</span>
 							@endif

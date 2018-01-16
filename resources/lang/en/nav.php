@@ -19,6 +19,7 @@ return [
     'customers' => 'Customers',
     'shops' => 'Shops',
     'suppliers' => 'Suppliers',
+    'vendors' => 'Vendors',
     'merchants' => 'Merchants',
     'manufacturers' => 'Manufacturers',
     'blogs' => 'Blogs',
