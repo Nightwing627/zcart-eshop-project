@@ -11,10 +11,10 @@ return [
     |
     */
 
-    'seed' => [
-        'superadmin_role_id' => 1,
-        'admin_role_id' => 2,
-        'merchant_role_id' => 3,
-    ],
+    // 'seed' => [
+    //     'superadmin_role_id' => 1,
+    //     'admin_role_id' => 2,
+    //     'merchant_role_id' => 3,
+    // ],
 
 ];

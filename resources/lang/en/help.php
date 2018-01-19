@@ -15,9 +15,11 @@ return [
 
     'role_name' => 'The title of the user role',
 
-    'role_type' => 'Restricted: The role only available for the main platform, a merchant can\'t use this role. Public: The role will available when a merchant will add a new user.',
+    'role_type' => 'Platform and Merchant. The role type platform only available for the main platform user, a merchant can\'t use this role. The Merchant role type will available when a merchant will add a new user.',
 
     'role_level' => 'Role level will be use determine who can control who. Example: An user with role level 2 can\'t modify any the user with role level 1. Keep emty if the role is for end level users.',
+
+    'you_cant_set_role_level' => 'Only top-level users can set this value.',
 
     'cant_edit_special_role' => 'This role type is not editable. Be careful to modify the permissions of this role.',
 
@@ -301,5 +303,5 @@ return [
 
     'gift_card_partial_use' => 'Allow partial use of total card value',
 
-
+    'number_between' => 'Between :min and :max',
 ];

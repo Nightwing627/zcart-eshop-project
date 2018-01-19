@@ -24,7 +24,7 @@ class CreateAttributeRequest extends Request
     public function rules()
     {
         $shop_id = Request::user()->merchantId(); //Get current user's shop_id
-        Request::merge( array( 'shop_id' => $shop_id ) ); //Set shop_id
+        Request::merge(['shop_id' => $shop_id]); //Set shop_id
 
         return [
            'attribute_type_id' => 'required',

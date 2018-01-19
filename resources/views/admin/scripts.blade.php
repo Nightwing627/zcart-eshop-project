@@ -296,7 +296,7 @@
           };
         }
       },
-      placeholder: 'Search for a repository',
+      placeholder: "{{ trans('app.placeholder.search_customer') }}",
     });
     //End Customer Seach
 
@@ -681,5 +681,4 @@
       });
       return result;
   }
-
 </script>

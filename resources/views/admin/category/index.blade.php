@@ -31,34 +31,38 @@
 	        <tbody>
 		        @foreach($categories as $category )
 			        <tr>
-			          <td>
-						<img src="{{ get_image_src($category->id, 'categories', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
-			          </td>
-			          <td>
-			          	<h5>{{ $category->name }}</h5>
-			          	@if($category->description)
-				          	<span class="excerpt-td small">{!! str_limit($category->description, 150) !!}</span>
-			          	@endif
-			          </td>
-			          <td>
-			          	@foreach($category->subGroups as $subGroup)
-				          	<span class="label label-outline">{{ $subGroup->name }}</span>
-				        @endforeach
-			          </td>
-			          <td>
+			          	<td>
+							<img src="{{ get_image_src($category->id, 'categories', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+			          	</td>
+			          	<td>
+			          		<h5>{{ $category->name }}</h5>
+			          		@if($category->description)
+				          		<span class="excerpt-td small">
+				          			{!! str_limit($category->description, 150) !!}
+				          		</span>
+				          	@endif
+			          	</td>
+			          	<td>
+			          		@foreach($category->subGroups as $subGroup)
+				          		<span class="label label-outline">{{ $subGroup->name }}</span>
+				        	@endforeach
+			          	</td>
+			          	<td>
 				          	<span class="label label-default">{{ $category->products_count }}</span>
-			          </td>
-			          <td>{{ ($category->active) ? trans('app.active') : trans('app.inactive') }}</td>
-			          <td class="row-options">
-						@can('update', $category)
-	                	    <a href="{{ route('admin.catalog.category.edit', $category->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
-                	    @endcan
-						@can('delete', $category)
-		                    {!! Form::open(['route' => ['admin.catalog.category.trash', $category->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-		                        {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
-						@endcan
-			          </td>
+			          	</td>
+			          	<td>
+			          		{{ ($category->active) ? trans('app.active') : trans('app.inactive') }}
+			          	</td>
+				        <td class="row-options">
+							@can('update', $category)
+		                	    <a href="{{ route('admin.catalog.category.edit', $category->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+	                	    @endcan
+							@can('delete', $category)
+			                    {!! Form::open(['route' => ['admin.catalog.category.trash', $category->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+			                        {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endcan
+						</td>
 			        </tr>
 		        @endforeach
 	        </tbody>

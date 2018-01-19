@@ -1,12 +1,12 @@
 <!-- Main Header -->
 <header class="main-header">
-
   <!-- Logo -->
   <a href="{{ url('/') }}" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini">In.</span>
+    <span class="logo-mini">{{ str_limit(get_shop_title(), 2, '.') }}</span>
+
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg">{{ config('system_settings.name') ?: config('app.name') }}</span>
+    <span class="logo-lg">{{ get_shop_title() }}</span>
   </a>
 
   <!-- Header Navbar -->
@@ -187,16 +187,17 @@
                 @if(Auth::user()->isSuperAdmin())
                   {{ trans('app.super_admin') }}
                 @else
-                  {{ Auth::user()->role->name }}
+                  @if(Auth::user()->isFromPlatform())
+                    {{ Auth::user()->role->name }}
+                  @elseif(Auth::user()->isMerchant())
+                    {{ Auth::user()->owns ? Auth::user()->owns->name : Auth::user()->role->name }}
+                  @else
+                    {{ Auth::user()->role->name . ' | ' . Auth::user()->shop->name }}
+                  @endif
                 @endif
-
-                @unless(Auth::user()->isFromPlatform())
-                  {{ ' | ' . Auth::user()->shop->name }}
-                @endunless
 
                 <small>{{ trans('app.member_since') . ' ' . Auth::user()->created_at->diffForHumans() }}</small>
               </p>
-
             </li>
             <!-- Menu Footer-->
             <li class="user-footer">

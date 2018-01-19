@@ -73,7 +73,7 @@ class Role extends Model
      */
     public function isSuperAdmin()
     {
-         return $this->id === 1;
+        return $this->id === static::SUPER_ADMIN;
     }
 
     /**
@@ -93,13 +93,53 @@ class Role extends Model
     }
 
     /**
+     * Check if the role is a special kind
+     *
+     * @return bool
+     */
+    public function isSpecial()
+    {
+        return $this->id <= static::MERCHANT;
+    }
+
+    /**
      * Scope a query to only include records from the users shop.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeLowerPrivileged($query)
     {
-        return $query->where('level', Null)->orWhere('level', '>', Auth::user()->role->level);
+        if (Auth::user()->isFromPlatform()){
+            if (Auth::user()->role->level)
+                return $query->whereNull('level')->orWhere('level', '>', Auth::user()->role->level);
+
+            return $query->whereNull('level');
+        }
+
+        if (Auth::user()->role->level)
+            return $query->where('shop_id', Auth::user()->merchantId())->whereNull('level')->orWhere('level', '>', Auth::user()->role->level);
+
+        return $query->where('shop_id', Auth::user()->merchantId())->whereNull('level');
+    }
+
+    /**
+     * Scope a query to only include public roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePublic($query)
+    {
+        return $query->where('public', 1)->whereNull('shop_id');
+    }
+
+    /**
+     * Scope a query to only include non public roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNotPublic($query)
+    {
+        return $query->where('public', '!=', 1);
     }
 
     /**

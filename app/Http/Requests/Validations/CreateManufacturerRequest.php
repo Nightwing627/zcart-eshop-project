@@ -23,8 +23,7 @@ class CreateManufacturerRequest extends Request
      */
     public function rules()
     {
-        $shop_id = Request::user()->merchantId(); //Get current user's shop_id
-        Request::merge( array( 'shop_id' => $shop_id ) ); //Set shop_id
+        Request::merge(['shop_id' => Request::user()->merchantId()]); //Set shop_id
 
         return [
            'name' => 'bail|required|unique:manufacturers',

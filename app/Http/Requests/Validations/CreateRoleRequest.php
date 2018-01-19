@@ -23,13 +23,23 @@ class CreateRoleRequest extends Request
      */
     public function rules()
     {
-        $shop_id = Request::user()->merchantId(); //Get current user's shop_id
-        Request::merge( array( 'shop_id' => $shop_id ) ); //Set shop_id
+        $rules = [];
+        $rules['name'] = 'bail|required|unique:roles';
 
-        return [
-           'name' => 'bail|required|unique:roles',
-           'public' => 'required',
-        ];
+        $shop_id = Request::user()->merchantId(); //Get current user's shop_id
+
+        if ($shop_id)
+            Request::merge(['shop_id' => $shop_id]); //Set merhant related info
+        else
+            $rules['public'] = 'required';
+
+        if (Request::user()->accessLevel())
+            $rules['level'] = 'nullable|integer|between:'.Request::user()->accessLevel().','.config('system_settings.max_role_level');
+
+        if (Request::input('level') && !Request::user()->accessLevel())
+            Request::replace(['level' => Null]); //Reset the level
+
+        return $rules;
     }
 
     /**

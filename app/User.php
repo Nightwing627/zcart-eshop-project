@@ -180,7 +180,7 @@ class User extends Authenticatable
      */
     public function isSuperAdmin()
     {
-        return $this->role_id === 1;
+        return $this->role_id === Role::SUPER_ADMIN;
     }
 
     /**
@@ -194,13 +194,33 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if the user is from a Merchant or not
+     *
+     * @return bool
+     */
+    public function isFromMerchant()
+    {
+        return $this->isMerchant() || $this->merchantId();
+    }
+
+    /**
      * Check if the user is a Merchant
      *
      * @return bool
      */
     public function isMerchant()
     {
-        return $this->role_id === 3;
+        return $this->role_id === Role::MERCHANT;
+    }
+
+    /**
+     * Check if access level the user
+     *
+     * @return bool
+     */
+    public function accessLevel()
+    {
+        return $this->role->level ? $this->role->level + 1 : Null;
     }
 
     /**
@@ -210,7 +230,7 @@ class User extends Authenticatable
      */
     public function scopeNotSuperAdmin($query)
     {
-        return $query->where('role_id', '!=', 1);
+        return $query->where('role_id', '!=', Role::SUPER_ADMIN);
     }
 
     /**
@@ -220,7 +240,7 @@ class User extends Authenticatable
      */
     public function scopeFromPlatform($query)
     {
-        return $query->where('role_id', '!=', 3)->where('shop_id', Null);
+        return $query->where('role_id', '!=', Role::MERCHANT)->where('shop_id', Null);
     }
 
     /**
@@ -230,7 +250,7 @@ class User extends Authenticatable
      */
     public function scopeMerchant($query)
     {
-        return $query->where('role_id', 3);
+        return $query->where('role_id', Role::MERCHANT);
     }
 
     /**
@@ -242,18 +262,21 @@ class User extends Authenticatable
     {
         return $query->whereHas('role', function($q)
         {
-            return $q->where('level', '>', Auth::user()->role->level)->orWhere('level', Null);
+            if (Auth::user()->role->level)
+                return $q->where('level', '>', Auth::user()->role->level)->orWhere('level', Null);
+
+            return $q->whereNull('level');
         });
     }
 
     /**
-     * Scope a query to only include records from the users shop.
+     * Scope a query to also include merchant records.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithMerchant($query)
     {
-        return $query->where('role_id', 3)->orWhere('shop_id', Auth::user()->merchantId());
+        return $query->where('role_id', Role::MERCHANT)->orWhere('shop_id', Auth::user()->merchantId());
     }
 
     /**

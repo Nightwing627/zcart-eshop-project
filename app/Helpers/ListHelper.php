@@ -3,6 +3,7 @@ namespace App\Helpers;
 
 use Auth;
 use App\User;
+use App\Role;
 use App\Module;
 use App\Ticket;
 use App\Message;
@@ -112,22 +113,16 @@ class ListHelper
      */
     public static function roles()
     {
-        $roles = \DB::table('roles')
-                ->whereNull('deleted_at');
+        $roles = Role::lowerPrivileged();
 
         if (Auth::user()->isFromPlatform()){
-            $roles->where('public', '!=', 1)->where(
-                function ($query) {
-                    $query->whereNull('level')
-                        ->orWhere('level', '>', Auth::user()->role->level);
-                });
+            $roles->whereNull('shop_id')->notPublic();
         }
         else{
-            $roles->where('public', 1)->orWhere(
-                function ($query) {
-                    $query->where('shop_id', Auth::user()->merchantId())
-                        ->whereNull('level')
-                        ->orWhere('level', '>', Auth::user()->role->level);
+            $roles->orWhere(
+                function($query){
+                    $query->whereNull('shop_id')
+                        ->where('public', 1);
                 });
         }
 
@@ -337,7 +332,7 @@ class ListHelper
     public static function taxes()
     {
         return \DB::table('taxes')
-                ->where('active',1)
+                ->where('active', 1)
                 ->where('deleted_at', Null)
                 ->where( function ($query) {
                     $query->where('public', 1)

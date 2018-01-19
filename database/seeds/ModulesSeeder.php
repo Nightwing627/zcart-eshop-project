@@ -56,7 +56,7 @@ class ModulesSeeder extends Seeder
         ],
 
         'Customer' => [
-            'access' => 'Common',
+            'access' => 'Platform',
             'actions' => 'view,add,edit,delete'
         ],
 

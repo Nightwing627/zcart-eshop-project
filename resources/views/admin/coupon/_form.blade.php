@@ -143,12 +143,9 @@
     )
     ? 'show' : 'hidden'
   }}">
-  <div class="form-group">
-    {!! Form::label('customer_list', trans('app.form.coupon_limited_to').'*', ['class' => 'with-help']) !!}
-    <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.coupon_limited_to') }}"></i>
-    {!! Form::select('customer_list[]', $customers , null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
-    <div class="help-block with-errors"></div>
-  </div>
+
+  @include('admin.partials._search_customer_multiple')
+
 </div>
 
 <div class="row">

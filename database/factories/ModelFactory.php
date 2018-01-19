@@ -58,10 +58,11 @@ $factory->define(App\Customer::class, function (Faker $faker) {
 });
 
 $factory->define(App\Shop::class, function (Faker $faker) {
+    $company = $faker->unique->company;
     return [
-        'owner_id' => $faker->randomElement(\DB::table('users')->where('role_id', 3)->pluck('id')->toArray()),
-        'name' => $faker->unique->company,
-        'legal_name' => $faker->unique->company,
+        'owner_id' => $faker->randomElement(\DB::table('users')->where('role_id', 3)->where('id', '!=', 3)->pluck('id')->toArray()),
+        'name' => $company,
+        'legal_name' => $company,
         'email' => $faker->email,
         'currency_id' => $faker->randomElement(\DB::table('currencies')->pluck('id')->toArray()),
         'description' => $faker->text(500),

@@ -25,6 +25,17 @@ class EloquentCoupon extends EloquentRepository implements BaseRepository, Coupo
         return parent::all();
     }
 
+    public function customer_list($coupon)
+    {
+        $customers = $coupon->customers;
+
+        $results = [];
+        foreach ($customers as $customer)
+            $results[$customer->id] = get_formated_cutomer_str($customer);
+
+        return $results;
+    }
+
     public function trashOnly()
     {
         if (!Auth::user()->isFromPlatform())

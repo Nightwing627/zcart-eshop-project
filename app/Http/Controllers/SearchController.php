@@ -24,7 +24,7 @@ class SearchController extends Controller
                 ->take(5)->get();
 
         foreach ($customers as $customer)
-		    $results[] = ['text' => $customer->nice_name . ' | ' . $customer->name . ' | ' . $customer->email , 'id' => $customer->id];
+		    $results[] = ['text' => get_formated_cutomer_str($customer) , 'id' => $customer->id];
 
 		return Response::json($results);
     }

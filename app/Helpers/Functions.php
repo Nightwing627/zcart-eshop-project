@@ -1,4 +1,18 @@
 <?php
+if ( ! function_exists('get_shop_title') )
+{
+    /**
+     * Return shop title or the application title
+     */
+    function get_shop_title()
+    {
+        if(auth()->user()->isFromMerchant() && auth()->user()->shop)
+            return auth()->user()->shop->name;
+
+        return config('system_settings.name') ?: config('app.name');
+    }
+}
+
 if ( ! function_exists('gravatar') )
 {
     function gravatar($email, $size = 30)
@@ -17,7 +31,10 @@ if ( ! function_exists('getPaginationValue') )
 {
     function getPaginationValue()
     {
-        return auth()->user()->isFromPlatform() ? config('system_settings.pagination') : config('shop_settings.pagination');
+        if(auth()->user()->isFromPlatform())
+            return config('system_settings.pagination') ?: 10;
+
+        return config('shop_settings.pagination') ?: 10;
     }
 }
 
@@ -190,6 +207,24 @@ if ( ! function_exists('get_age') )
     function get_age($dob)
     {
         return date_diff(date_create($dob), date_create('today') )->y . ' years old';
+    }
+}
+
+if ( ! function_exists('get_formated_cutomer_str') )
+{
+    /**
+     * Get the formated customer string.
+     *
+     * @param  object|array $customer
+     *
+     * @return str      formated customer string
+     */
+    function get_formated_cutomer_str($customer)
+    {
+        if (is_array($customer))
+            return  $customer['nice_name'] . ' | ' . $customer['name'] . ' | ' . $customer['email'];
+
+        return  $customer->nice_name . ' | ' . $customer->name . ' | ' . $customer->email;
     }
 }
 
@@ -397,7 +432,6 @@ if ( ! function_exists('getShippingCostWithHandlingFee') )
 
         return getShippingCostWithTaxForCarrier($carrier) + $handling_cost;
     }
-
 }
 
 if ( ! function_exists('find_string_in_array') )
@@ -464,6 +498,50 @@ if ( ! function_exists('generate_combinations') )
         }
 
         return $all;
+    }
+}
+
+if ( ! function_exists('userLevelCompare') )
+{
+    /**
+     * Compare two user access level and
+     * return true is $user can access the $comparable users information
+     *
+     * @param  mix $compare
+     * @param   $user request user
+     *
+     * @return bool
+     */
+    function userLevelCompare($compare, $user = Null)
+    {
+        if (!$user)
+            $user = auth()->user();
+
+        if ($user->isSuperAdmin())
+            return true;
+
+        if (! $compare instanceof \App\User )
+            $compare = \App\User::findorFail($compare);
+
+        // If the comparable user is from a shop and the request user is the owner of the shop
+        if (
+            $compare->merchantId() && $user->isMerchant() &&
+            $user->merchantId() === $compare->merchantId()
+        )
+            return true;
+
+        //Return if the user is from a shop and the compare user is not from the same shop
+        if (!$user->isFromPlatform() && $user->merchantId() !== $compare->merchantId())
+            return false;
+
+        //Return true, If comparable user role level not set
+        //and requesr user from platform or same shop
+        if (!$compare->role->level)
+            return $user->isFromPlatform() || $user->merchantId() == $compare->merchantId();
+
+        //If the comparable user role have level.
+        //Then the request user must have role level set and have to be an user level user
+        return $user->role->level && $compare->role->level > $user->role->level;
     }
 }
 

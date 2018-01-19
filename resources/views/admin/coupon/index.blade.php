@@ -24,6 +24,7 @@
 						<th>{{ trans('app.value') }}</th>
 						<th>{{ trans('app.starting_time') }}</th>
 						<th>{{ trans('app.ending_time') }}</th>
+						<th>{{ trans('app.restricted') }}</th>
 						<th>{{ trans('app.status') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -36,8 +37,13 @@
 						<td>
 							{{ $coupon->type == 'amount' ? get_formated_currency($coupon->value) : get_formated_decimal($coupon->value) . ' ' . trans('app.percent') }}
 						</td>
-						<td>{{ $coupon->starting_time ? $coupon->starting_time->toDayDateTimeString() : '' }}</td>
-						<td>{{ $coupon->ending_time ? $coupon->ending_time->toDayDateTimeString() : '' }}</td>
+						<td>
+							{{ $coupon->starting_time ? $coupon->starting_time->toDayDateTimeString() : '' }}
+						</td>
+						<td>
+							{{ $coupon->ending_time ? $coupon->ending_time->toDayDateTimeString() : '' }}
+						</td>
+						<td>{{ get_yes_or_no($coupon->limited) }}</td>
 						<td>
 							@if($coupon->ending_time < \Carbon\Carbon::now())
 								{{ trans('app.expired') }}

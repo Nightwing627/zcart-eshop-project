@@ -67,6 +67,7 @@ class CreateSystemsTable extends Migration
             $table->integer('address_default_state')->nullable();
 
             // Genaral Settings
+            $table->integer('max_role_level')->unsigned()->default(99);
             $table->integer('pagination')->unsigned()->default(10);
             $table->integer('merchant_logo_max_size_limit_kb')->default(2000);
             $table->integer('coupon_code_size')->default(8);

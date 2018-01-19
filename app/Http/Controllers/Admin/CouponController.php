@@ -84,7 +84,9 @@ class CouponController extends Controller
     {
         $coupon = $this->coupon->find($id);
 
-        return view('admin.coupon._edit', compact('coupon'));
+        $customer_list = $this->coupon->customer_list($coupon);
+
+        return view('admin.coupon._edit', compact('coupon', 'customer_list'));
     }
 
     /**

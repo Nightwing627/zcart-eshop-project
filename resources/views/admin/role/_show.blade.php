@@ -11,7 +11,7 @@
 					</tr>
 					<tr>
 						<th class="text-right">{{ trans('app.description') }}:</th>
-						<td style="width: 75%;">{{ $role->description }}</td>
+						<td style="width: 75%;">{!! $role->description !!}</td>
 					</tr>
 		            <tr>
 		            	<th class="text-right">{{ trans('app.type') }}: </th>

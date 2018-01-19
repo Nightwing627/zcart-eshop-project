@@ -7,6 +7,7 @@ use Request;
 use App\User;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SecretLoginRequest;
 
 class DashboardController extends Controller
 {
@@ -36,7 +37,7 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function secretLogin($id)
+    public function secretLogin(SecretLoginRequest $request, $id)
     {
         session(['impersonated' => $id, 'secretUrl' => \URL::previous()]);
 

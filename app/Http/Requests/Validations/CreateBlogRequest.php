@@ -23,7 +23,7 @@ class CreateBlogRequest extends Request
      */
     public function rules()
     {
-        Request::merge(['user_id' => Auth()->user()->id]); //Set user_id
+        Request::merge(['user_id' => Request::user()->id]); //Set user_id
 
         return [
            'title' => 'required',

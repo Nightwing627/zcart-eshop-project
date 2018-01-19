@@ -40,17 +40,17 @@ class Merchant extends Authenticatable
      * @var array
      */
     protected $fillable = [
-                    'shop_id',
-                    'role_id',
-                    'name',
-                    'nice_name',
-                    'email',
-                    'password',
-                    'dob',
-                    'description',
-                    'sex',
-                    'active',
-                ];
+                            'shop_id',
+                            'role_id',
+                            'name',
+                            'nice_name',
+                            'email',
+                            'password',
+                            'dob',
+                            'description',
+                            'sex',
+                            'active',
+                        ];
 
     /**
      * Get all of the country for the country.

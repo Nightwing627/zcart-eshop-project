@@ -31,7 +31,7 @@
 		        @foreach($attributeValues as $attributeValue )
 			        <tr id="{{ $attributeValue->id }}">
 			        	<td>
-							<i data-toggle="tooltip" data-placement="top" title="{{ trans('app.move') }}" class="fa fa-arrows sort-handler"></i>&nbsp;
+							<i data-toggle="tooltip" data-placement="top" title="{{ trans('app.move') }}" class="fa fa-arrows sort-handler"></i>
 			        	</td>
 						<td><span class="order"> {{ $attributeValue->order }} </span></td>
 						<td>{{ $attributeValue->value }}</td>

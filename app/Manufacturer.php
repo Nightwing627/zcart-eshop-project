@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Common\Taggable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -29,7 +30,16 @@ class Manufacturer extends Model
      *
      * @var array
      */
-    protected $fillable = ['shop_id', 'name', 'email', 'url', 'phone', 'bio', 'country_id', 'active'];
+    protected $fillable = [
+                            'shop_id',
+                            'name',
+                            'email',
+                            'url',
+                            'phone',
+                            'description',
+                            'country_id',
+                            'active'
+                        ];
 
     /**
      * Get the country for the manufacturer.
@@ -45,6 +55,16 @@ class Manufacturer extends Model
     public function products()
     {
         return $this->hasMany('App\Product');
+    }
+
+    /**
+     * Scope a query to only include records from the users shop.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMine($query)
+    {
+        return $query->where('shop_id', Auth::user()->merchantId());
     }
 
     /**

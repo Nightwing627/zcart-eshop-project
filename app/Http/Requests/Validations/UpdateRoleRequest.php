@@ -26,21 +26,15 @@ class UpdateRoleRequest extends Request
         $shop_id = Request::user()->merchantId(); //Get current user's shop_id
         $id = Request::segment(count(Request::segments())); //Current model ID
 
-        return [
-           'name' => 'bail|required|composite_unique:roles,shop_id:'.$shop_id.', '.$id,
-           'public' => 'required',
-        ];
-    }
+        $rules = [];
+        $rules['name'] = 'bail|required|composite_unique:roles,shop_id:'.$shop_id.', '.$id;
 
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'public.required' => trans('validation.role_type_required'),
-        ];
+        if (Request::user()->accessLevel())
+            $rules['level'] = 'nullable|integer|between:'.Request::user()->accessLevel().','.config('system_settings.max_role_level');
+
+        if (Request::input('level') && !Request::user()->accessLevel())
+            Request::replace(['level' => Null]); //Reset the level
+
+        return $rules;
     }
 }

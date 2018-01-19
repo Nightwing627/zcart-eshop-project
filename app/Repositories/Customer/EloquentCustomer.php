@@ -20,18 +20,7 @@ class EloquentCustomer extends EloquentRepository implements BaseRepository, Cus
 
     public function all()
     {
-        if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->withCount('orders')->get();
-
         return $this->model->withCount('orders')->get();
-    }
-
-    public function trashOnly()
-    {
-        if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->onlyTrashed()->get();
-
-        return parent::trashOnly();
     }
 
     public function profile($id)

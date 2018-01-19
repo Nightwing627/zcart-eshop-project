@@ -1,5 +1,11 @@
+@php
+  $user = auth()->user();
+  $merchant_user = $user->merchantId();
+  $special_role = isset($role) && $role->isSpecial() ? TRUE : FALSE;
+@endphp
+
 <div class="row">
-  <div class="col-md-6 nopadding-right">
+  <div class="col-md-{{ $merchant_user ? '8' : '5' }} nopadding-right">
     <div class="form-group">
       {!! Form::label('name', trans('app.form.name').'*', ['class' => 'with-help']) !!}
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('help.role_name') }}"></i>
@@ -7,22 +13,28 @@
       <div class="help-block with-errors"></div>
     </div>
   </div>
-  <div class="col-md-3 nopadding">
+
+  @unless($merchant_user)
+    <div class="col-md-3 nopadding">
+      <div class="form-group">
+        {!! Form::label('public', trans('app.form.role_type').'*', ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ $special_role ? trans('help.cant_edit_special_role') : trans('help.role_type') }}">
+        </i>
+        {{ Form::hidden('public', Null) }}
+        {!! Form::select('public', ['0' => trans('app.platform'), '1' => trans('app.merchant')], Null, ['id' => $special_role ? '' : 'user-role-status', 'class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), $special_role ? 'disabled' : 'required' ]) !!}
+        <div class="help-block with-errors"></div>
+      </div>
+    </div>
+  @endunless
+
+  <div class="col-md-4 nopadding-left">
     <div class="form-group">
       {!! Form::label('level', trans('app.form.role_level'), ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('help.role_level') }}"></i>
-      {!! Form::text('level', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.role_level')]) !!}
-    </div>
-  </div>
-  @php
-    $special_role = isset($role) && $role->id <= 3 ? TRUE : FALSE;
-  @endphp
-  <div class="col-md-3 nopadding-left">
-    <div class="form-group">
-      {!! Form::label('public', trans('app.form.role_type').'*', ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ $special_role ? trans('help.cant_edit_special_role') : trans('help.role_type') }}"></i>
-      {{ Form::hidden('public', Null) }}
-      {!! Form::select('public', ['0' => trans('app.platform'), '1' => trans('app.merchant')], null, ['id' => 'user-role-status', 'class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), $special_role ? 'disabled' : 'required' ]) !!}
+      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ $user->accessLevel() ? trans('help.role_level') : trans('help.you_cant_set_role_level') }}"></i>
+      @if($user->accessLevel())
+        <div class="pull-right"> <i class="fa fa-info"></i> {{ trans('help.number_between', ['min' => $user->accessLevel(), 'max' => config('system_settings.max_role_level')]) }}</div>
+      @endif
+      {!! Form::number('level', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.role_level'), 'min' => $user->accessLevel(), 'max' => config('system_settings.max_role_level'), $user->accessLevel() ? '' : 'disabled']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -61,7 +73,7 @@
           @endphp
           <tr class="{{ $access_level . '-module'}}"
             {{
-              ('common' == $access_level ||
+              ('common' == $access_level || ('merchant' == $access_level && $merchant_user) ||
                 isset($role) &&
                 (
                   ($role->public == 1 && 'merchant' == $access_level) ||

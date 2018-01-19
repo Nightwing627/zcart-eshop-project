@@ -68,8 +68,6 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeCreateOrderForm();
 
-        $this->composeCouponForm();
-
         $this->composeTicketCreateForm();
 
         $this->composeTicketStatusForm();
@@ -487,22 +485,6 @@ class ViewComposerServiceProvider extends ServiceProvider
                 $view->with('products', isset($items) ? $items : []);
                 $view->with('inventories', isset($product_info) ? $product_info : []);
 
-            }
-        );
-    }
-
-    /**
-     * compose partial view of coupon form
-     */
-    private function composeCouponForm()
-    {
-        View::composer(
-
-            'admin.coupon._form',
-
-            function($view)
-            {
-                $view->with('customers', ListHelper::customers());
             }
         );
     }

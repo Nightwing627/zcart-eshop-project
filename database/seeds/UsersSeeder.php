@@ -37,7 +37,7 @@ class UsersSeeder extends Seeder
             'updated_at' => Carbon::Now(),
         ],[
             'id' => 3,
-            'shop_id' => Null,
+            'shop_id' => 1,
             'role_id' => 3,
             'nice_name' => 'Marchent.',
             'name' => 'Marchent',

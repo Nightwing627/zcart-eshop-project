@@ -40,23 +40,21 @@ class PermissionSeeder extends Seeder
 
             if ($module->access != 'Merchant'){
                 DB::table('permission_role')->insert([
-                        'permission_id' => $permission_id,
-                        'role_id' => config('installation.seed.admin_role_id')?:2,
-                        'created_at' => Carbon::Now(),
-                        'updated_at' => Carbon::Now(),
-                    ]
-                );
+                    'permission_id' => $permission_id,
+                    'role_id' => \App\Role::ADMIN,
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ]);
             }
 
             if ($module->access != 'Platform'){
                 DB::table('permission_role')->insert([
                     'permission_id' => $permission_id,
-                    'role_id' => config('installation.seed.merchant_role_id')?:3,
+                    'role_id' => \App\Role::MERCHANT,
                     'created_at' => Carbon::Now(),
                     'updated_at' => Carbon::Now(),
                 ]);
             }
         }
-
     }
 }
