@@ -35,7 +35,7 @@ class EloquentCart extends EloquentRepository implements BaseRepository, CartRep
 
     public function store(Request $request)
     {
-        $this->setAdditionalCartInfo($request); //Set some system information using helper function
+        setAdditionalCartInfo($request); //Set some system information using helper function
 
         $cart = parent::store($request);
 
@@ -46,24 +46,13 @@ class EloquentCart extends EloquentRepository implements BaseRepository, CartRep
 
     public function update(Request $request, $id)
     {
-        $this->setAdditionalCartInfo($request); //Set some system information using helper function
+        setAdditionalCartInfo($request); //Set some system information using helper function
 
         $cart = parent::update($request, $id);
 
         $this->syncCartItems($cart, $request->input('cart'));
 
         return $cart;
-    }
-
-    /**
-     * Push some extra information into the request
-     *
-     * @param $request
-     * @return $request
-     */
-    public function setAdditionalCartInfo(Request $request)
-    {
-        return setAdditionalCartInfo($request); //Set some system information using helper function
     }
 
     /**

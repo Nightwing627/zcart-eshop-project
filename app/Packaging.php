@@ -54,6 +54,14 @@ class Packaging extends Model
     }
 
     /**
+     * Get the inventories for the packaging.
+     */
+    public function inventories()
+    {
+        return $this->belongsToMany(Inventory::class)->withTimestamps();
+    }
+
+    /**
      * Set the charge_customer for the packaging.
      */
     public function setChargeCustomerAttribute($value)

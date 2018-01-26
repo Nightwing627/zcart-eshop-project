@@ -21,6 +21,14 @@ class CreatePackagingsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        Schema::create('inventory_packaging', function (Blueprint $table) {
+            $table->integer('packaging_id')->unsigned()->index();
+            $table->foreign('packaging_id')->references('id')->on('packagings')->onDelete('cascade');
+            $table->bigInteger('inventory_id')->unsigned()->index();
+            $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -30,6 +38,7 @@ class CreatePackagingsTable extends Migration
      */
     public function down()
     {
+        Schema::drop('inventory_packaging');
         Schema::drop('packagings');
     }
 }

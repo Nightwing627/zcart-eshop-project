@@ -50,7 +50,7 @@ class demoSeeder extends Seeder
             ->each(function($shop){
                 $shop->addresses()->save(factory(App\Address::class)->make(['address_title' => $shop->name, 'address_type' => 'Primary']));
 
-                $shop->setting()->save(factory(App\Setting::class)->make());
+                $shop->config()->save(factory(App\Config::class)->make());
             });
 
         // Demo Categories with real text

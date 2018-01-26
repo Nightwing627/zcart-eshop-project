@@ -332,7 +332,6 @@
 				</div>
 				<!-- /.tab-content -->
 			</div>
-
         </div>
     </div> <!-- / .modal-content -->
 </div> <!-- / .modal-dialog -->

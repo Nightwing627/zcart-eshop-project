@@ -3,7 +3,7 @@
     <div class="form-group">
       {!! Form::label('name', trans('app.form.name').'*', ['class' => 'with-help']) !!}
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shop_name') }}"></i>
-      {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.shop_name'), 'required']) !!}
+      {!! Form::text('name', null, ['class' => 'form-control makeSlug', 'placeholder' => trans('app.placeholder.shop_name'), 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -52,13 +52,32 @@
   <div class="col-md-6 nopadding-left">
     <div class="form-group">
       {!! Form::label('external_url', trans('app.form.external_url'), ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.external_url') }}"></i>
+      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shop_external_url') }}"></i>
       {!! Form::text('external_url', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.external_url')]) !!}
     </div>
   </div>
 </div>
 
 @unless(isset($shop))
+  <div class="row">
+    <div class="col-md-6 nopadding-right">
+      <div class="form-group">
+        {!! Form::label('slug', trans('app.form.slug').'*', ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shop_slug') }}"></i>
+        {!! Form::text('slug', null, ['class' => 'form-control slug', 'placeholder' => trans('app.slug'), 'required']) !!}
+        <div class="help-block with-errors"></div>
+      </div>
+    </div>
+    <div class="col-md-6 nopadding-left">
+      <div class="form-group">
+        {!! Form::label('timezone_id', trans('app.form.timezone'). '*', ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shop_timezone') }}"></i>
+        {!! Form::select('timezone_id', $timezones , null, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.timezone'), 'required']) !!}
+        <div class="help-block with-errors"></div>
+      </div>
+    </div>
+  </div>
+
   @include('address._form')
 @endunless
 

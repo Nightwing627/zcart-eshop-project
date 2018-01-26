@@ -51,7 +51,7 @@ class Inventory extends Model
                         'offer_price',
                         'offer_start',
                         'offer_end',
-                        'packaging_id',
+                        // 'packaging_id',
                         'shipping_width',
                         'shipping_height',
                         'shipping_depth',
@@ -67,7 +67,7 @@ class Inventory extends Model
      */
     public function warehouse()
     {
-        return $this->belongsTo('App\Warehouse');
+        return $this->belongsTo(Warehouse::class);
     }
 
     /**
@@ -75,7 +75,7 @@ class Inventory extends Model
      */
     public function product()
     {
-        return $this->belongsTo('App\Product');
+        return $this->belongsTo(Product::class);
     }
 
     /**
@@ -83,7 +83,7 @@ class Inventory extends Model
      */
     public function supplier()
     {
-        return $this->belongsTo('App\Supplier');
+        return $this->belongsTo(Supplier::class);
     }
 
     /**
@@ -91,15 +91,15 @@ class Inventory extends Model
      */
     public function carriers()
     {
-        return $this->belongsToMany('App\Carrier')->withTimestamps();
+        return $this->belongsToMany(Carrier::class)->withTimestamps();
     }
 
     /**
-     * Get the packaging for the order.
+     * Get the packagings for the order.
      */
-    public function packaging()
+    public function packagings()
     {
-        return $this->belongsTo('App\Packaging');
+        return $this->belongsToMany(Packaging::class)->withTimestamps();
     }
 
     /**
@@ -107,7 +107,7 @@ class Inventory extends Model
      */
     public function attributes()
     {
-        return $this->belongsToMany('App\Attribute', 'attribute_inventory')
+        return $this->belongsToMany(Attribute::class, 'attribute_inventory')
                     ->withPivot('attribute_value_id')
                     ->withTimestamps();
     }
@@ -117,7 +117,7 @@ class Inventory extends Model
      */
     public function attributeValues()
     {
-        return $this->belongsToMany('App\AttributeValue', 'attribute_inventory')
+        return $this->belongsToMany(AttributeValue::class, 'attribute_inventory')
                     ->withPivot('attribute_id')
                     ->withTimestamps();
     }
@@ -127,7 +127,7 @@ class Inventory extends Model
      */
     public function carts()
     {
-        return $this->belongsToMany('App\Cart', 'cart_items')
+        return $this->belongsToMany(Cart::class, 'cart_items')
                     ->withPivot('item_description', 'quantity', 'unit_price')
                     ->withTimestamps();
     }
@@ -137,7 +137,7 @@ class Inventory extends Model
      */
     public function orders()
     {
-        return $this->belongsToMany('App\Order', 'order_items')
+        return $this->belongsToMany(Order::class, 'order_items')
                     ->withPivot('item_description', 'quantity', 'unit_price')
                     ->withTimestamps();
     }
@@ -147,7 +147,7 @@ class Inventory extends Model
      */
     public function tax()
     {
-        return $this->belongsTo('App\Tax');
+        return $this->belongsTo(Tax::class);
     }
 
     /**
@@ -158,6 +158,16 @@ class Inventory extends Model
     public function getCarrierListAttribute()
     {
         if (count($this->carriers)) return $this->carriers->pluck('id')->toArray();
+    }
+
+    /**
+     * Get the packaging list for the inventory.
+     *
+     * @return array
+     */
+    public function getPackagingListAttribute()
+    {
+        if (count($this->packagings)) return $this->packagings->pluck('id')->toArray();
     }
 
     /**

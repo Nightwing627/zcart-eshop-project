@@ -40,6 +40,9 @@
 <!-- bootstrap color picker -->
 <script src="{{ asset("assets/plugins/colorpicker/bootstrap-colorpicker.min.js") }}"></script>
 
+<!-- Handle/Toggle Button -->
+<link rel="stylesheet" href="{{ asset("assets/plugins/handle-btn/handle-btn.css") }}" />
+
 <!-- App -->
 <script src="{{ asset("assets/dist/js/app.min.js") }}"></script>
 
@@ -98,7 +101,7 @@
     })
   }(window.jQuery, window, document));
 
-
+  //DataTables
   function initDatatables()
   {
     $(".table-2nd-short").DataTable({
@@ -150,6 +153,31 @@
         ]
     });
 
+    $(".table-desc").DataTable({
+      "iDisplayLength": {{ getPaginationValue() }},
+      "aaSorting": [[ 0, "desc" ]],
+      "oLanguage": {
+          "sInfo": "_START_ to _END_ of _TOTAL_ entries",
+          "sLengthMenu": "Show _MENU_",
+          "sSearch": "",
+          "sEmptyTable": "No data found!",
+          "oPaginate": {
+            "sNext": '<i class="fa fa-hand-o-right"></i>',
+            "sPrevious": '<i class="fa fa-hand-o-left"></i>',
+          },
+      },
+      "aoColumnDefs": [
+        {
+          "bSortable": false,
+          "aTargets": [ -1 ]
+        }
+      ],
+      dom: 'Bfrtip',
+      buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+
     $('.table-no-option').DataTable({
       "sLength": "",
       "paging": true,
@@ -162,7 +190,9 @@
 
     $(".dataTables_length select").addClass('select2-normal'); //Make the data-table length dropdown like select 2
   }
+  //END DataTables
 
+  //App plugins
   function initAppPlugins()
   {
     $(".confirm").confirmation({
@@ -327,7 +357,7 @@
         ['table', ['table']],
       ],
     });
-    $('.summernote-without-tootbar').summernote({
+    $('.summernote-without-toolbar').summernote({
       placeholder: "{{ trans('app.placeholder.start_here') }}",
       toolbar: [],
     });
@@ -512,12 +542,13 @@
     });
 
     function convertToSlug(Text){
-        return Text
-            .toLowerCase()
-            .replace(/[^\w ]+/g, '')
-            .replace(/ +/g, '-')
-            ;
+      return Text
+        .toLowerCase()
+        .replace(/[^\w ]+/g, '')
+        .replace(/ +/g, '-')
+        ;
     }
+    //END Slug URL Maker
 
     //Timepicker
     // $(".timepicker").timepicker({
@@ -546,7 +577,7 @@
     // });
     //END SEARCH OPTIONS
 
-    //Radom code string maker
+    //Random code string maker
     /**
      * generate Code
      */
@@ -570,7 +601,85 @@
       var couponCode = getFromPHPHelper(func);
       $('#'+id).closest( ".code-field" ).find( "input.code" ).val(couponCode);
     });
+    //END Random code string maker
+
+    // Toggle button
+    $('.btn-toggle').on("click", function(e){
+        e.preventDefault();
+        var node = $( this );
+        $.ajax({
+            url: node.attr('href'),
+            type: 'POST',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "_method": "PUT",
+            },
+            success: function (data) {
+              if (data == 'success'){
+                notie.alert(1, "{{ trans('responses.success') }}", 2);
+              }
+              else{
+                notie.alert(3, "{{ trans('responses.failed') }}", 2);
+                node.toggleClass('active');
+              }
+            },
+            error: function (data) {
+              if (data.status == 403){
+                notie.alert(2, "{{ trans('responses.denied') }}", 2);
+              }
+              else{
+                notie.alert(3, "{{ trans('responses.error') }}", 2);
+              }
+              node.toggleClass('active');
+            }
+        });
+    });
+    // END Toggle button
+
+    // Ajax Form Submit
+    $('.ajax-submit-btn').on("click", function(e){
+        // console.log('btn');
+        return;
+    });
+
+    $('.ajax-form').submit(function(e){
+        e.preventDefault();
+        //Return false and abort the action if the form validation failed
+        if($(this).find('input[type=submit]').hasClass('disabled')){
+          notie.alert(3, "{{ trans('responses.form_validation_failed') }}", 5);
+          return;
+        }
+
+        var action = this.action;
+        var data = $( this ).serialize();
+
+        $.ajax({
+            url: action,
+            type: 'POST',
+            data: data,
+            success: function (data) {
+              if (data == 'success'){
+                notie.alert(1, "{{ trans('responses.success') }}", 3);
+              }
+              else{
+                notie.alert(3, "{{ trans('responses.failed') }}", 3);
+                node.toggleClass('active');
+              }
+            },
+            error: function (data) {
+              if (data.status == 403){
+                notie.alert(2, "{{ trans('responses.denied') }}", 3);
+              }
+              else{
+                notie.alert(3, "{{ trans('responses.error') }}", 3);
+              }
+              node.toggleClass('active');
+            }
+        });
+    });
+    // END Ajax Form Submit
   }
+  //END App plugins
 
   //Mass selection and action section
   function initMassActions()
@@ -638,7 +747,7 @@
                   }
               },
               error: function (data) {
-                  alert(data.responseText);
+                notie.alert(3, "{{ trans('responses.error') }}", 2);
               }
           });
       }

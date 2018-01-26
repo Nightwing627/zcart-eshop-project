@@ -22,6 +22,8 @@ interface InventoryRepository
 
     public function syncCarriers($inventory, array $ids);
 
+    public function syncPackagings($inventory, array $ids);
+
     public function uploadImages(Request $request, $id);
 
     public function removeImages($id);

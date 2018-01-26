@@ -39,7 +39,13 @@ return [
         ]
     ],
 
-    'slug' => 'Slugs are usually a URL friendly version of the title',
+    'slug' => 'Slug are usually a search engine friendly URL',
+
+    'shop_slug' => 'Slug are usually a search engine friendly URL, You can not change it later. Be creative to choose the slug for your shop',
+
+    'shop_url' => 'The complete path to the shop\'s landing page. You can\'t change the url.',
+
+    'shop_timezone' => 'The timezone will not effect the shop or marketplace. Its for just to know more about your shop',
 
     'website' => 'Homepage link',
 
@@ -51,17 +57,19 @@ return [
 
     'brand' => 'The brand of the product. Not required but recommended',
 
-    'shop_name' => 'The brand name of the shop',
+    'shop_name' => 'The brand or display name of the shop',
 
     'shop_status' => 'If active, the shop will be live immediately.',
 
-    'shop_email' => 'The official email address of the shop.',
+    'maintenance_mode_handle' => 'If maintenance mode is on, the shop will be offline and the maintenance mode flag will be shown on the shop\'s landing page.',
+
+    'shop_email' => 'All notifications will be send to this email address(inventories, orders, tickets, disputs etc.) accept customer support emails(if set)',
 
     'shop_legal_name' => 'The legal name of the shop',
 
     'shop_owner_id' => 'The owner and super admin of the shop. A user registered as a Merchant can own a shop. You can\'t change this later.',
 
-    'shop_owner_cant_change' => 'The owner of the shop can\'t be changed. Instead you can delete the shop and creat a new one.',
+    'shop_owner_cant_change' => 'The owner of the shop can\'t be changed. Instead you can delete the shop and create a new one.',
 
     'shop_description' => 'The brand description of the shop, this information will be visible on the shop\'s homepage.',
 
@@ -75,7 +83,9 @@ return [
 
     'list_order' => 'Viewing order on the list.',
 
-    'external_url' => 'If you own a website you can put the external link here',
+    // 'external_url' => 'If you own a website you can put the external link here',
+
+    'shop_external_url' => 'If you own a website you can put the external link here, the url can be set as shop\'s landing page.',
 
     'model_number' => 'An identifier of a product given by its manufacturer. Not required but recommended',
 
@@ -133,7 +143,9 @@ return [
 
     'select_tax' => 'The TAX will be added with the sale/offer price',
 
-    'select_carriers' => 'List of available carriers to ship the product',
+    'select_carriers' => 'List of available carriers to ship the product. Leave blank to if the item doesn\'t require shipping',
+
+    'select_packagings' => 'List of available packaging options to ship the product. Leave blank to disable packaging option',
 
     'available_from' => 'The date when the stock will be available. Default = immediately',
 
@@ -151,7 +163,7 @@ return [
 
     'seller_inventory_status' => 'Is the item is open to sale? Choose active for yes',
 
-    'stock_quantity' => 'Stock you have',
+    'stock_quantity' => 'Put 0 if the item is downloadable and doesn\'t require shipping',
 
     'alert_quantity' => 'A notification email will be send when item goes below the alert quantity',
 
@@ -255,6 +267,12 @@ return [
 
     'shipping_weight' => 'The weight of the item after packaging',
 
+    'order_number_prefix_suffix' => 'The prefix and suffix will be added autometically to formate all order numbers. Leave it blank if you don\'t want to formate order numbers.',
+
+    // 'order_number_prefix' => 'The prefix will be added autometically to formate all order numbers. Leave it blank if you don\'t want to formate order numbers.',
+
+    // 'order_number_suffix' => 'The suffix will be added to the end of all order numbers. Leave it blank if you don\'t want to formate order numbers.',
+
     'refund_select_order' => 'Select the order you want to refund',
 
     'refund_order_received' => 'Is the order received by the customer?',
@@ -304,4 +322,41 @@ return [
     'gift_card_partial_use' => 'Allow partial use of total card value',
 
     'number_between' => 'Between :min and :max',
+
+    'default_tax_for_inventory' => 'Default tax profile will be preselected when add new inventory',
+
+    'default_tax_id_for_order' => 'Default tax profile will be preselected when create new order',
+
+    'default_payment_method_id' => 'If selected, The payment method will be preselected when create new order',
+
+    'config_order_handling_cost' => 'For some particular shipping carriers, you may want to add some additional order handling cost with each order. You can choose which carrier will be applicable to this charge when you add a carrier',
+
+    'default_carrier' => 'Default carrier will be preselected when placing a new order. It\'ll help to faster the checkout process',
+
+    // 'default_packaging' => 'Set a default packing, if you want to enable the packing options on order., then this default value will help to faster the checkout process',
+
+    'default_warehouse' => 'Default warehouse will be preselected when add new inventory',
+
+    'default_supplier' => 'Default supplier will be preselected when add new inventory',
+
+    'default_carrier_ids_for_inventory' => 'Default carriers will be preselected when add new inventory. This will help you to add inventory faster.',
+
+    'default_packaging_ids_for_inventory' => 'Default packagings will be preselected when add new inventory. This will help you to add inventory faster',
+
+    'free_shipping_starts' => 'The shipping charge will be free if the total order amount is equal or more than this value. Leave it blank to disable the feature',
+
+    'config_pagination' => 'How many list items you want to view per page on the data tables',
+
+    'support_phone' => 'Customer will contact this number for support and query',
+
+    'support_email' => 'You\'ll get all support email to this address',
+
+    'support_phone_toll_free' => 'If you have a toll free number for customer support',
+
+    'default_sender_email_address' => 'All autometed emails to customers will be sent from this email address. And also when a sender email address can\'t set while sending an email',
+
+    'default_email_sender_name' => 'This name will be used as the sender of email send from default sender email address',
+
+    'google_analytics_id' => 'The tracking ID from google analytics. It looks something like "UA-XXXXX-XX".',
+
 ];

@@ -43,6 +43,7 @@ class Cart extends Model
                         'quantity',
                         'total',
                         'shipping',
+                        'packaging_cost',
                         'discount',
                         'tax_amount',
                         'grand_total',
@@ -57,7 +58,7 @@ class Cart extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('App\Customer');
+        return $this->belongsTo(Customer::class);
     }
 
     /**
@@ -65,7 +66,7 @@ class Cart extends Model
      */
     public function shop()
     {
-        return $this->belongsTo('App\Shop');
+        return $this->belongsTo(Shop::class);
     }
 
     /**
@@ -73,7 +74,7 @@ class Cart extends Model
      */
     public function tax()
     {
-        return $this->belongsTo('App\Tax');
+        return $this->belongsTo(Tax::class);
     }
 
     /**
@@ -81,7 +82,15 @@ class Cart extends Model
      */
     public function carrier()
     {
-        return $this->belongsTo('App\Carrier');
+        return $this->belongsTo(Carrier::class);
+    }
+
+    /**
+     * Get the packaging for the order.
+     */
+    public function packaging()
+    {
+        return $this->belongsTo(Packaging::class);
     }
 
     /**
@@ -89,7 +98,7 @@ class Cart extends Model
      */
     // public function products()
     // {
-    //     return $this->hasManyThrough('App\Product', 'App\Inventory');
+    //     return $this->hasManyThrough(Product::class, Inventory::class);
     // }
 
     /**
@@ -97,7 +106,7 @@ class Cart extends Model
      */
     public function inventories()
     {
-        return $this->belongsToMany('App\Inventory', 'cart_items')
+        return $this->belongsToMany(Inventory::class, 'cart_items')
                     ->withPivot('item_description', 'quantity', 'unit_price')
                     ->withTimestamps();
     }

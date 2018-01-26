@@ -74,8 +74,6 @@ class OrderController extends Controller
      */
     public function store(CreateOrderRequest $request)
     {
-        setAdditionalCartInfo($request); //Set some system information using helper function
-
         $this->order->store($request);
 
         return redirect()->route('admin.order.order.index')->with('success', trans('messages.created', ['model' => $this->model_name]));
@@ -131,9 +129,10 @@ class OrderController extends Controller
      */
     public function ajaxGetTaxRate(Request $request)
     {
-        if ($request->ajax())
-        {
-            return getTaxRate($request->input('ID'));
+        if ($request->ajax()){
+            $taxrate = getTaxRate($request->input('ID'));
+
+            return get_formated_decimal($taxrate);
         }
 
         return false;
@@ -164,5 +163,4 @@ class OrderController extends Controller
 
         return false;
     }
-
 }

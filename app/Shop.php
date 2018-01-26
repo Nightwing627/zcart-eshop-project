@@ -35,9 +35,10 @@ class Shop extends Model
                     'name',
                     'legal_name',
                     'email',
-                    'currency',
-                    'currency_id',
-                    'bio',
+                    'slug',
+                    'description',
+                    'external_url',
+                    'timezone_id',
                     'active',
                 ];
 
@@ -58,11 +59,11 @@ class Shop extends Model
     }
 
     /**
-     * Get the setting for the shop.
+     * Get the config for the shop.
      */
-    public function setting()
+    public function config()
     {
-        return $this->hasOne(Setting::class);
+        return $this->hasOne(Config::class);
     }
 
     /**
@@ -161,6 +162,14 @@ class Shop extends Model
     public function suppliers()
     {
         return $this->hasMany(Supplier::class);
+    }
+
+    /**
+     * Get the timezone the shop.
+     */
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
     }
 
     public function tickets()

@@ -55,6 +55,10 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
 
     public function store(Request $request)
     {
+        // echo "<pre>Before:"; print_r($request->all()); echo "</pre>"; //exit();
+        setAdditionalCartInfo($request); //Set some system information using helper function
+        // echo "<pre>After:"; print_r($request->all()); echo "</pre>"; exit();
+
         $order = parent::store($request);
 
         $this->syncInventory($order, $request->input('cart'));

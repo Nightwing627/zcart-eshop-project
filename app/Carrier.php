@@ -63,7 +63,7 @@ class Carrier extends Model
      */
     public function tax()
     {
-        return $this->belongsTo('App\Tax');
+        return $this->belongsTo(Tax::class);
     }
 
     /**
@@ -71,31 +71,31 @@ class Carrier extends Model
      */
     public function shop()
     {
-        return $this->belongsTo('App\Shop');
+        return $this->belongsTo(Shop::class);
     }
 
     /**
-     * Get the inventories for the supplier.
+     * Get the inventories for the carrier.
      */
     public function inventories()
     {
-        return $this->belongsToMany('App\Inventory')->withTimestamps();
+        return $this->belongsToMany(Inventory::class)->withTimestamps();
     }
 
     /**
-     * Get the carts for the supplier.
+     * Get the carts for the carrier.
      */
     public function carts()
     {
-        return $this->hasMany('App\Cart');
+        return $this->hasMany(Cart::class);
     }
 
     /**
-     * Get the orders for the supplier.
+     * Get the orders for the carrier.
      */
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany(Order::class);
     }
 
     /**
@@ -133,5 +133,4 @@ class Carrier extends Model
     {
         return $query->where('shop_id', Auth::user()->merchantId());
     }
-
 }

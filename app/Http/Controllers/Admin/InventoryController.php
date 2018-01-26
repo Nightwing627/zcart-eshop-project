@@ -3,8 +3,8 @@
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Validations\SearchRequest;
 use App\Repositories\Inventory\InventoryRepository;
+use App\Http\Requests\Validations\ProductSearchRequest;
 use App\Http\Requests\Validations\CreateInventoryRequest;
 use App\Http\Requests\Validations\UpdateInventoryRequest;
 use App\Http\Requests\Validations\CreateInventoryWithVariantRequest;
@@ -56,7 +56,7 @@ class InventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search(SearchRequest $request)
+    public function search(ProductSearchRequest $request)
     {
         $products = $this->inventory->search($request);
 

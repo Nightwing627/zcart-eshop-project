@@ -15,6 +15,7 @@ trait Authorizable
     private $abilities = [
         'index'             => 'view',
         'show'              => 'view',
+        'view'              => 'view',
         'staffs'            => 'view',
         'entities'          => 'view',
         'labelOf'           => 'view',
@@ -38,6 +39,7 @@ trait Authorizable
         'edit'              => 'edit',
         'update'            => 'edit',
         'massUpdate'        => 'edit',
+        'delete'            => 'delete',
         'trash'             => 'delete',
         'archive'           => 'archive',
         'destroy'           => 'delete',

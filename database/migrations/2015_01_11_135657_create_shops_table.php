@@ -14,14 +14,15 @@ class CreateShopsTable extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->increments('id');
+            // $table->integer('subcription_id')->nullable();
             $table->bigInteger('owner_id')->unsigned();
             $table->text('name')->nullable();
             $table->text('legal_name')->nullable();
+            $table->string('slug', 200)->unique();
             $table->string('email')->unique();
-            $table->string('currency')->nullable();
-            $table->integer('currency_id')->nullable();
-            // $table->integer('total_staff')->default(1)->nullable();
             $table->longtext('description')->nullable();
+            $table->string('external_url')->nullable();
+            $table->integer('timezone_id')->nullable();
             $table->boolean('active')->default(1);
             $table->softDeletes();
             $table->timestamps();

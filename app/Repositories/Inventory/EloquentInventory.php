@@ -54,7 +54,10 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
         $this->setAttributes($inventory, $request->input('variants'));
 
         if ($request->input('carrier_list'))
-            $this->syncCarriers($request->input('carrier_list'));
+            $this->syncCarriers($inventory, $request->input('carrier_list'));
+
+        if ($request->input('packaging_list'))
+            $this->syncPackagings($inventory, $request->input('packaging_list'));
 
         if ($request->hasFile('image'))
             $this->uploadImages($request, $inventory->id);
@@ -169,7 +172,10 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
         $this->setAttributes($inventory, $request->input('variants'));
 
         if ($request->input('carrier_list'))
-            $this->syncCarriers($request->input('carrier_list'));
+            $this->syncCarriers($inventory, $request->input('carrier_list'));
+
+        if ($request->input('packaging_list'))
+            $this->syncPackagings($inventory, $request->input('packaging_list'));
 
         if ($request->input('delete_image') == 1)
             $this->removeImages($inventory->id);
@@ -260,6 +266,11 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
     public function syncCarriers($inventory, array $ids)
     {
         $inventory->carriers()->sync($ids);
+    }
+
+    public function syncPackagings($inventory, array $ids)
+    {
+        $inventory->packagings()->sync($ids);
     }
 
     public function uploadImages(Request $request, $id)

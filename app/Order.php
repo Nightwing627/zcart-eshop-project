@@ -42,6 +42,7 @@ class Order extends Model
                         'quantity',
                         'total',
                         'shipping',
+                        'packaging_cost',
                         'discount',
                         'tax_amount',
                         'grand_total',

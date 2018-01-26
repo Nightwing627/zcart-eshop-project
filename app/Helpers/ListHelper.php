@@ -101,7 +101,7 @@ class ListHelper
     public static function shop_settings($shop = null)
     {
         $shop = $shop ?: Auth::user()->merchantId(); //Get current user's shop_id
-        return (array) \DB::table('settings')->where('shop_id', $shop)->first();
+        return (array) \DB::table('configs')->where('shop_id', $shop)->first();
     }
 
     /**
@@ -302,6 +302,16 @@ class ListHelper
     public static function suppliers()
     {
         return \DB::table('suppliers')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
+    /**
+     * Get timezones list for form dropdown.
+     *
+     * @return array
+     */
+    public static function timezones()
+    {
+        return \DB::table('timezones')->pluck('text', 'id');
     }
 
     /**

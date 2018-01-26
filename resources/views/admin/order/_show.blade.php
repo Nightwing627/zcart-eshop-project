@@ -7,8 +7,11 @@
 				<img src="{{ get_image_src($order->customer_id, 'customers', '150x150') }}" class="thumbnail" width="80%" alt="{{ trans('app.avatar') }}">
 			</div>
             <div class="col-md-9 nopadding">
-        	    <dir class="spacer20"></dir>
 				<table class="table no-border">
+					<tr>
+						<th class="text-right">{{ trans('app.order_number') }}: </th>
+						<td style="width: 75%;"><span class="lead">{{ $order->order_number }}</span></td>
+					</tr>
 					<tr>
 						<th class="text-right">{{ trans('app.customer') }}: </th>
 						<td style="width: 75%;">{{ $order->customer->getName() }}</td>
@@ -38,23 +41,61 @@
 				</div>
 			</div>
 
-    	    <dir class="spacer30"></dir>
+    	    <dir class="spacer10"></dir>
 
 			<!-- Custom Tabs -->
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs nav-justified">
-				  <li class="active"><a href="#tab_1" data-toggle="tab">
-					{{ trans('app.items') }}
-				  </a></li>
-				  <li><a href="#tab_2" data-toggle="tab">
+				  <li class="active"><a href="#info" data-toggle="tab">
 					{{ trans('app.additional_info') }}
 				  </a></li>
-				  <li><a href="#tab_3" data-toggle="tab">
+				  <li><a href="#items" data-toggle="tab">
+					{{ trans('app.items') }}
+				  </a></li>
+				  <li><a href="#shpping" data-toggle="tab">
 					{{ trans('app.shipping') }}
 				  </a></li>
 				</ul>
 				<div class="tab-content">
-				    <div class="tab-pane active" id="tab_1">
+				    <div class="tab-pane active" id="info">
+						<table class="table no-border">
+							<tr>
+								<th class="text-right">{{ trans('app.order_date') }}:</th>
+								<td style="width: 75%;">{{ $order->created_at->toDayDateTimeString() }}</td>
+							</tr>
+							<tr>
+								<th class="text-right">{{ trans('app.tax') }}:</th>
+								<td style="width: 75%;">{{ $order->tax->name }}</td>
+							</tr>
+							<tr>
+								<th class="text-right">{{ trans('app.payment_method') }}:</th>
+								<td style="width: 75%;">{{ $order->paymentMethod->name }}</td>
+							</tr>
+							<tr>
+								<th class="text-right">{{ trans('app.payment_status') }}:</th>
+								<td style="width: 75%;">{{ $order->paymentStatus->name }}</td>
+							</tr>
+							@if($order->message_to_customer)
+								<tr>
+									<th class="text-right">{{ trans('app.message_to_customer') }}: </th>
+									<td style="width: 75%;">{!! $order->message_to_customer !!}</td>
+								</tr>
+							@endif
+							@if($order->admin_note)
+								<tr>
+									<th class="text-right">{{ trans('app.admin_note') }}: </th>
+									<td style="width: 75%;">{!! $order->admin_note !!}</td>
+								</tr>
+							@endif
+							<tr>
+								<th class="text-right">{{ trans('app.billing_address') }}:</th>
+								<td style="width: 75%;">{{ $order->billing_address }}</td>
+							</tr>
+						</table>
+				    </div>
+				    <!-- /.tab-pane -->
+
+				    <div class="tab-pane" id="items">
 					    <table class="table table-sripe">
 					      <thead>
 					        <tr>
@@ -89,49 +130,27 @@
 					    </table>
 				    </div>
 				    <!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_2">
+
+				    <div class="tab-pane" id="shpping">
 						<table class="table no-border">
-							<tr>
-								<th class="text-right">{{ trans('app.created_at') }}:</th>
-								<td style="width: 75%;">{{ $order->created_at->toDayDateTimeString() }}</td>
-							</tr>
-							<tr>
-								<th class="text-right">{{ trans('app.tax') }}:</th>
-								<td style="width: 75%;">{{ $order->tax->name }}</td>
-							</tr>
-							<tr>
-								<th class="text-right">{{ trans('app.carrier') }}:</th>
-								<td style="width: 75%;">{{ $order->carrier->name }}</td>
-							</tr>
-							<tr>
-								<th class="text-right">{{ trans('app.payment_method') }}:</th>
-								<td style="width: 75%;">{{ $order->paymentMethod->name }}</td>
-							</tr>
-							<tr>
-								<th class="text-right">{{ trans('app.payment_status') }}:</th>
-								<td style="width: 75%;">{{ $order->paymentStatus->name }}</td>
-							</tr>
-							@if($order->message_to_customer)
+							@if($order->carrier)
 								<tr>
-									<th class="text-right">{{ trans('app.message_to_customer') }}: </th>
-									<td style="width: 75%;">{!! $order->message_to_customer !!}</td>
+									<th class="text-right">{{ trans('app.carrier') }}:</th>
+									<td style="width: 75%;">{{ $order->carrier->name }}</td>
 								</tr>
 							@endif
-							@if($order->admin_note)
+							@if($order->shipping_date)
 								<tr>
-									<th class="text-right">{{ trans('app.admin_note') }}: </th>
-									<td style="width: 75%;">{!! $order->admin_note !!}</td>
+									<th class="text-right">{{ trans('app.shipping_date') }}:</th>
+									<td style="width: 75%;">{{ $order->shipping_date }}</td>
 								</tr>
 							@endif
-							<tr>
-								<th class="text-right">{{ trans('app.billing_address') }}:</th>
-								<td style="width: 75%;">{{ $order->billing_address }}</td>
-							</tr>
-						</table>
-				    </div>
-				    <!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_3">
-						<table class="table no-border">
+							@if($order->packaging)
+								<tr>
+									<th class="text-right">{{ trans('app.packaging') }}:</th>
+									<td style="width: 75%;">{{ $order->packaging->name }}</td>
+								</tr>
+							@endif
 							<tr>
 								<th class="text-right">{{ trans('app.shipping_address') }}: </th>
 								<td style="width: 75%;">{{ $order->shipping_address }}</td>

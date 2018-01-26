@@ -73,7 +73,7 @@
 
 						<div class="form-group">
 						  {!! Form::label('description', trans('app.form.description')) !!}
-						  {!! Form::textarea('description', Null, ['class' => 'form-control summernote-without-tootbar', 'rows' => '2', 'placeholder' => trans('app.placeholder.description')]) !!}
+						  {!! Form::textarea('description', Null, ['class' => 'form-control summernote-without-toolbar', 'rows' => '2', 'placeholder' => trans('app.placeholder.description')]) !!}
 						</div>
 
 			            {!! Form::submit(trans('app.update'), ['class' => 'btn btn-flat btn-new']) !!}

@@ -36,6 +36,7 @@ class CreateOrderTable extends Migration
 
             $table->decimal('total', 20, 6)->nullable();
             $table->decimal('shipping', 20, 6)->nullable();
+            $table->decimal('packaging_cost', 20, 6)->nullable();
             $table->decimal('discount', 20, 6)->nullable();
             $table->decimal('tax_amount', 20, 6)->nullable();
             $table->decimal('grand_total', 20, 6)->nullable();

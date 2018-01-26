@@ -21,7 +21,7 @@
 		            <tr>
 		            	<th class="text-right">{{ trans('app.status') }}: </th>
 		            	<td style="width: 75%;">
-		            		@if($shop->setting->maintenance_mode)
+		            		@if($shop->config->maintenance_mode)
 					          	<span class="label label-warning">{{ trans('app.maintenance_mode') }}</span>
 		            		@else
 			            		{{ ($shop->active) ? trans('app.active') : trans('app.inactive') }}
@@ -43,74 +43,121 @@
 			<!-- Custom Tabs -->
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs nav-justified">
-				  <li class="active"><a href="#tab_1" data-toggle="tab">
+				  <li class="active"><a href="#basic" data-toggle="tab">
+					{{ trans('app.basic_info') }}
+				  </a></li>
+				  <li><a href="#config" data-toggle="tab">
 					{{ trans('app.configs') }}
 				  </a></li>
-				  <li><a href="#tab_2" data-toggle="tab">
+				  <li><a href="#description" data-toggle="tab">
 					{{ trans('app.description') }}
 				  </a></li>
-				  <li><a href="#tab_3" data-toggle="tab">
+				  <li><a href="#contact" data-toggle="tab">
 					{{ trans('app.contact') }}
 				  </a></li>
 				</ul>
 				<div class="tab-content">
-				    <div class="tab-pane active" id="tab_1">
+				    <div class="tab-pane active" id="basic">
+					  	<div class="box-body">
+				        	<table class="table">
+								<tr>
+									<th class="text-right">{{ trans('app.legal_name') }}:</th>
+									<td style="width: 75%;">{{ $shop->legal_name }}</td>
+								</tr>
+								<tr>
+									<th class="text-right">{{ trans('app.slug') }}:</th>
+									<td style="width: 75%;">{{ $shop->slug }}</td>
+								</tr>
+								<tr>
+									<th class="text-right">{{ trans('app.time_zone') }}:</th>
+									<td style="width: 75%;">{{ $shop->timezone->text }}</td>
+								</tr>
+					            @if($shop->external_url)
+									<tr>
+										<th class="text-right">{{ trans('app.external_url') }}:</th>
+										<td style="width: 75%;">{{ $shop->external_url }}</td>
+									</tr>
+								@endif
+
+							</table>
+						</div>
+					</div>
+				    <div class="tab-pane" id="config">
 					  <div class="box-body">
 				        <table class="table">
-							<tr>
-								<th class="text-right">{{ trans('app.time_zone') }}:</th>
-								<td style="width: 75%;">{{ $shop->setting->time_zone }}</td>
-							</tr>
-							<tr>
-								<th class="text-right">{{ trans('app.slug') }}:</th>
-								<td style="width: 75%;">{{ $shop->setting->slug }}</td>
-							</tr>
-				            @if($shop->setting->flat_shipping_cost)
-							<tr>
-								<th class="text-right">{{ trans('app.flat_shipping_cost') }}:</th>
-								<td style="width: 75%;">{{ get_formated_currency($shop->setting->flat_shipping_cost) }}</td>
-							</tr>
-							@endif
-				            @if($shop->setting->order_handling_cost)
-							<tr>
-								<th class="text-right">{{ trans('app.order_handling_cost') }}:</th>
-								<td style="width: 75%;">{{ get_formated_currency($shop->setting->order_handling_cost) }}</td>
-							</tr>
+				            @if($shop->config->flat_shipping_cost)
+								<tr>
+									<th class="text-right">{{ trans('app.flat_shipping_cost') }}:</th>
+									<td style="width: 75%;">
+										{{ get_formated_currency($shop->config->flat_shipping_cost) }}
+							            @if($shop->config->free_shipping_starts)
+								            {{ '(' . trans('app.free_shipping_starts') . ': ' . get_formated_currency($shop->config->free_shipping_starts) . ')' }}
+										@endif
+									</td>
+								</tr>
 							@endif
 
-				            @if($shop->setting->external_url)
 							<tr>
-								<th class="text-right">{{ trans('app.external_url') }}:</th>
-								<td style="width: 75%;">{{ $shop->setting->external_url }}</td>
+								<th class="text-right">{{ trans('app.order_handling_cost') }}:</th>
+								<td style="width: 75%;">{{ get_formated_currency($shop->config->order_handling_cost) }}</td>
 							</tr>
+
+							@if($shop->config->carrier)
+								<tr>
+									<th class="text-right">{{ trans('app.default_carrier') }}:</th>
+									<td style="width: 75%;">{{ $shop->config->carrier->name }}</td>
+								</tr>
 							@endif
+
+							@if($shop->config->tax)
+								<tr>
+									<th class="text-right">{{ trans('app.default_tax') }}:</th>
+									<td style="width: 75%;">{{ $shop->config->tax->name }}</td>
+								</tr>
+							@endif
+
+							@if($shop->config->paymentMethod)
+								<tr>
+									<th class="text-right">{{ trans('app.default_payment_method') }}:</th>
+									<td style="width: 75%;">{{ $shop->config->paymentMethod->name }}</td>
+								</tr>
+							@endif
+
+							<tr>
+								<th class="text-right">{{ trans('app.google_analytics_id') }}:</th>
+								<td style="width: 75%;">{{ $shop->config->google_analytics_id }}</td>
+							</tr>
+
 							<tr>
 								<th class="text-right">{{ trans('app.support_phone') }}:</th>
-								<td style="width: 75%;">{{ $shop->setting->support_phone }}</td>
+								<td style="width: 75%;">{{ $shop->config->support_phone }}</td>
 							</tr>
-				            @if($shop->setting->support_phone_toll_free)
-							<tr>
-								<th class="text-right">{{ trans('app.support_phone_toll_free') }}:</th>
-								<td style="width: 75%;">{{ $shop->setting->support_phone_toll_free }}</td>
-							</tr>
+
+				            @if($shop->config->support_phone_toll_free)
+								<tr>
+									<th class="text-right">{{ trans('app.support_phone_toll_free') }}:</th>
+									<td style="width: 75%;">{{ $shop->config->support_phone_toll_free }}</td>
+								</tr>
 							@endif
+
 							<tr>
 								<th class="text-right">{{ trans('app.support_email') }}:</th>
-								<td style="width: 75%;">{{ $shop->setting->support_email }}</td>
+								<td style="width: 75%;">{{ $shop->config->support_email }}</td>
 							</tr>
+
 							<tr>
 								<th class="text-right">{{ trans('app.config_updated_at') }}:</th>
-								<td style="width: 75%;">{{ $shop->setting->updated_at->toDayDateTimeString() }}</td>
+								<td style="width: 75%;">{{ $shop->config->updated_at->toDayDateTimeString() }}</td>
 							</tr>
 				        </table>
 					  </div>
 				    </div>
 				    <!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_2">
+				    <div class="tab-pane" id="description">
 			            {!! $shop->description or trans('app.description_not_available') !!}
 				    </div>
 				    <!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_3">
+				    <div class="tab-pane" id="contact">
 					  <div class="box-body">
 				        <table class="table">
 				            @if($shop->email)
@@ -134,7 +181,6 @@
 				</div>
 				<!-- /.tab-content -->
 			</div>
-
         </div>
     </div> <!-- / .modal-content -->
 </div> <!-- / .modal-dialog -->

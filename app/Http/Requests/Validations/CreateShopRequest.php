@@ -27,8 +27,11 @@ class CreateShopRequest extends Request
 
         return [
            'name' => 'required',
+           'legal_name' => 'required',
+           'slug' => 'required|unique:shops',
            'email' =>  'required|email|max:255|unique:shops',
            'owner_id' => 'bail|required|composite_unique:shops,owner_id:'.$owner_id,
+           'external_url' => 'nullable|url',
            'image' => 'max:' . config('system_settings.merchant_logo_max_size_limit_kb') . '|mimes:jpg,jpeg,png,gif',
         ];
     }

@@ -3,10 +3,10 @@
   <!-- Logo -->
   <a href="{{ url('/') }}" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini">{{ str_limit(get_shop_title(), 2, '.') }}</span>
+    <span class="logo-mini">{{ str_limit(get_site_title(), 2, '.') }}</span>
 
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg">{{ get_shop_title() }}</span>
+    <span class="logo-lg">{{ get_site_title() }}</span>
   </a>
 
   <!-- Header Navbar -->

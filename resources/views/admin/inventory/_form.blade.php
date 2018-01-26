@@ -179,10 +179,9 @@
     <div class="row">
       <div class="col-md-4 col-sm-12 nopadding-right">
         <div class="form-group">
-          {!! Form::label('packaging_id', trans('app.form.packaging'), ['class' => 'with-help']) !!}
-          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_packaging') }}"></i>
-          {!! Form::select('packaging_id', $packagings, isset($inventory) ? $inventory->packaging_id : config('shop_settings.default_packaging_id'), ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select')]) !!}
-          <div class="help-block with-errors"></div>
+          {!! Form::label('packaging_list[]', trans('app.form.packagings'), ['class' => 'with-help']) !!}
+          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_packagings') }}"></i>
+          {!! Form::select('packaging_list[]', $packagings , null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
         </div>
       </div>
       <div class="col-md-2 col-sm-6 nopadding-right">

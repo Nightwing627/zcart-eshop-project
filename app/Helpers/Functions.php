@@ -1,15 +1,32 @@
 <?php
-if ( ! function_exists('get_shop_title') )
+if ( ! function_exists('get_site_title') )
 {
     /**
      * Return shop title or the application title
      */
-    function get_shop_title()
+    function get_site_title()
     {
         if(auth()->user()->isFromMerchant() && auth()->user()->shop)
             return auth()->user()->shop->name;
 
         return config('system_settings.name') ?: config('app.name');
+    }
+}
+
+if ( ! function_exists('get_shop_url') )
+{
+    /**
+     * Return shop title or the application title
+     */
+    function get_shop_url($id = null)
+    {
+        $slug = '';
+        if(auth()->user()->isFromMerchant() && auth()->user()->shop)
+            $slug = auth()->user()->shop->slug;
+        else if(auth()->user()->isFromPlatform() && $id)
+            $slug = \DB::table('shops')->find($id)->slug;
+
+        return url('/shop/' . $slug);
     }
 }
 
@@ -92,19 +109,14 @@ if ( ! function_exists('get_image_src') )
 {
     function get_image_src($image = null, $dir = null, $size = null)
     {
-        if(! $image || ! $dir)
-        {
-            return;
-        }
+        if(! $image || ! $dir)  return;
 
         $size = $size ? '_' . $size : '';
 
         $image_path = image_path($dir) . $image . $size . '.png';
 
         if(! file_exists($image_path))
-        {
             return asset(image_path($dir) . 'default.png');
-        }
 
         return asset($image_path);
     }
@@ -117,8 +129,7 @@ if ( ! function_exists('generateCouponCode') )
         $unique = TRUE;
         $size = config('system_settings.coupon_code_size');
 
-        do
-        {
+        do{
             $code = generateUniqueSrt($size);
 
             $check = \DB::table('coupons')->where('code', $code)->first();
@@ -138,8 +149,7 @@ if ( ! function_exists('generatePinCode') )
         $unique = TRUE;
         $size = config('system_settings.gift_card_pin_size');
 
-        do
-        {
+        do{
             $code = generateUniqueSrt($size);
 
             $check = \DB::table('gift_cards')->where('pin_code', $code)->first();
@@ -159,8 +169,7 @@ if ( ! function_exists('generateSerialNumber') )
         $unique = TRUE;
         $size = config('system_settings.gift_card_serial_number_size');
 
-        do
-        {
+        do{
             $code = generateUniqueSrt($size);
 
             $check = \DB::table('gift_cards')->where('serial_number', $code)->first();
@@ -276,6 +285,8 @@ if ( ! function_exists('setAdditionalCartInfo') )
 
         $shipping = getShippingCostWithHandlingFee($request->input('carrier_id'));
 
+        $packaging_cost = getPackagingCost($request->input('packaging_id'));
+
         $grand_total =  ($total - $discount + $tax + $shipping);
 
         $request->merge([
@@ -284,6 +295,7 @@ if ( ! function_exists('setAdditionalCartInfo') )
             'quantity' => array_sum(array_column($request->input('cart'), 'quantity') ),
             'total' => $total,
             'shipping' => $shipping ?: null,
+            'packaging_cost' => $packaging ?: null,
             'discount' => $discount ?: null,
             'tax_amount' => $tax ?: null,
             'grand_total' => $grand_total,
@@ -348,12 +360,22 @@ if ( ! function_exists('get_formated_currency') )
      */
     function get_formated_currency($value = 0)
     {
-        $value = get_formated_decimal($value);
+        return get_formated_currency_symbol() . get_formated_decimal($value);
+    }
+}
 
+if ( ! function_exists('get_formated_currency_symbol') )
+{
+    /**
+     * Get the formated currency symbol.
+     *
+     * @return str   currency symbol
+     */
+    function get_formated_currency_symbol()
+    {
         return
             (config('system_settings.show_currency_symbol') ? config('system_settings.currency_symbol') : '') .
-            (config('system_settings.show_space_after_symbol') ? ' ' : '') .
-            $value;
+            (config('system_settings.show_space_after_symbol') ? ' ' : '');
     }
 }
 
@@ -374,11 +396,9 @@ if ( ! function_exists('getTaxRate') )
      *
      * @param $request
      */
-    function getTaxRate($id)
+    function getTaxRate($tax)
     {
-        $taxrate = \DB::table('taxes')->find($id)->taxrate;
-
-        return get_formated_decimal($taxrate);
+        return \DB::table('taxes')->select('taxrate')->where('id', $tax)->first()->taxrate;
     }
 }
 
@@ -392,19 +412,23 @@ if ( ! function_exists('getShippingCostWithTaxForCarrier') )
     function getShippingCostWithTaxForCarrier($carrier)
     {
         //Check if the given carrier is an object
-        if( ! is_object($carrier))
-        {
-            $carrier = \DB::table('carriers')->find($carrier);
+        if( is_object($carrier) && ( ! isset($carrier->tax_id) || ! isset($carrier->flat_shipping_cost)) ){
+            $carrier = \DB::table('carriers')->select('tax_id', 'flat_shipping_cost')->where('id', $carrier->id)->first();
+        }
+        else{
+            $carrier = \DB::table('carriers')->select('tax_id', 'flat_shipping_cost')->where('id', $carrier)->first();
         }
 
-        if($carrier->tax_id)
-        {
-            $taxrate = \DB::table('taxes')->find($carrier->tax_id)->taxrate;
-        }
+        if( $carrier->tax_id )
+            $taxrate = getTaxRate($carrier->tax_id);
 
-        $tax = ($carrier->tax_id) ? ($carrier->flat_shipping_cost * ($taxrate / 100)) : 0;
+        if( isset($taxrate) && $taxrate > 0 )
+            $tax = ($carrier->tax_id) ? ($carrier->flat_shipping_cost * ($taxrate / 100)) : 0;
 
-        return $carrier->flat_shipping_cost + $tax;
+        if( isset($tax) && $tax > 0 )
+            return $carrier->flat_shipping_cost + $tax;
+
+        return $carrier->flat_shipping_cost ?: 0;
     }
 }
 
@@ -419,21 +443,33 @@ if ( ! function_exists('getShippingCostWithHandlingFee') )
     {
         //Check if the given carrier is an object
         if( ! is_object($carrier))
-        {
-            $carrier = \DB::table('carriers')->find($carrier);
-        }
+            $carrier = \DB::table('carriers')->select('id', 'is_free', 'handling_cost')->where('id', $carrier)->first();
 
         $handling_cost = $carrier->handling_cost ? config('shop_settings.order_handling_cost') : 0;
 
         if($carrier->is_free)
-        {
             return $handling_cost;
-        }
 
         return getShippingCostWithTaxForCarrier($carrier) + $handling_cost;
     }
 }
 
+if ( ! function_exists('getPackagingCost') )
+{
+    /**
+     * Return Shipping Cost and Handling fee for the given carrier
+     *
+     * @param $request
+     */
+    function getPackagingCost($packaging)
+    {
+        //Check if the given packaging is an object
+        if( ! is_object($packaging))
+            $packaging = \DB::table('packagings')->select('charge_customer', 'cost')->where('id', $packaging)->first();
+
+        return $packaging->charge_customer ? $packaging->cost : 0;
+    }
+}
 if ( ! function_exists('find_string_in_array') )
 {
     /**
@@ -474,24 +510,19 @@ if ( ! function_exists('generate_combinations') )
             $group[$key][$k] = $value;
         }
 
-        if ($i >= count($data))
-        {
+        if ($i >= count($data)){
             array_push($all, $group);
-
-        } else {
-
+        }
+        else {
             $currentKey = $keys[$i];
 
             $currentElement = $data[$currentKey];
 
-            if(count($currentElement) <= 0)
-            {
+            if(count($currentElement) <= 0){
                	generate_combinations($data, $all, $group, null, null, $i + 1, $currentKey);
-
-            } else
-            {
-                foreach ($currentElement as $k => $val)
-                {
+            }
+            else{
+                foreach ($currentElement as $k => $val){
                     generate_combinations($data, $all, $group, $k, $val, $i + 1, $currentKey);
                 }
             }
@@ -542,6 +573,28 @@ if ( ! function_exists('userLevelCompare') )
         //If the comparable user role have level.
         //Then the request user must have role level set and have to be an user level user
         return $user->role->level && $compare->role->level > $user->role->level;
+    }
+}
+
+if ( ! function_exists('get_value_from') )
+{
+    /**
+     * Get value from a given table and id
+     *
+     * @param  int $id    The primary key
+     * @param  str $table
+     * @param  mix $field
+     *
+     * @return mix
+     */
+    function get_value_from($id, $table, $field)
+    {
+        $value = \DB::table($table)->find($id);
+
+        if(!empty($value) && isset($value->$field))
+            return $value->$field;
+
+        return null;
     }
 }
 

@@ -101,6 +101,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		include('admin/Tax.php');
 		include('admin/EmailTemplate.php');
 		include('admin/PaymentMethod.php');
+		include('admin/Config.php');
 	});
 
 	// Promotions Routs for Admin
@@ -141,7 +142,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 
 		Route::get('order/ajax/getPackagingCost', 'OrderController@ajaxGetPackagingCost')->name('ajax.getPackagingCost');
 
-		Route::get('system/ajax/getFromPHPHelper', 'SettingController@ajaxGetFromPHPHelper')->name('ajax.getFromPHPHelper');
+		Route::get('system/ajax/getFromPHPHelper', 'AjaxController@ajaxGetFromPHPHelper')->name('ajax.getFromPHPHelper');
 	});
 
 });

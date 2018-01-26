@@ -19,7 +19,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-short">
+			<table class="table table-hover table-desc">
 				<thead>
 					<tr>
 						<th>{{ trans('app.order_number') }}</th>
@@ -33,25 +33,25 @@
 				</thead>
 				<tbody>
 					@foreach($orders as $order )
-					<tr>
-						<td>{{ get_formated_order_number($order->order_number) }}</td>
-				        <td>{{ $order->created_at->toDayDateTimeString() }}</td>
-						<td>{{ $order->customer->name }}</td>
-						<td>{{ get_formated_currency($order->grand_total )}}</td>
-						<td>{{ $order->paymentStatus->name }}</td>
-						<td>{{ $order->status->name }}</td>
-						<td class="row-options">
-							@can('view', $order)
-								<a href="{{ route('admin.order.order.show', $order->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
-							@endcan
+						<tr>
+							<td>{{ $order->order_number }}</td>
+					        <td>{{ $order->created_at->toDayDateTimeString() }}</td>
+							<td>{{ $order->customer->name }}</td>
+							<td>{{ get_formated_currency($order->grand_total )}}</td>
+							<td>{{ $order->paymentStatus->name }}</td>
+							<td>{{ $order->status->name }}</td>
+							<td class="row-options">
+								@can('view', $order)
+									<a href="{{ route('admin.order.order.show', $order->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								@endcan
 
-							@can('archive', $order)
-								{!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.order_archive'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-								{!! Form::close() !!}
-							@endcan
-						</td>
-					</tr>
+								@can('archive', $order)
+									{!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+										{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.order_archive'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+									{!! Form::close() !!}
+								@endcan
+							</td>
+						</tr>
 					@endforeach
 				</tbody>
 			</table>
@@ -82,7 +82,7 @@
 				<tbody>
 					@foreach($archives as $archive )
 					<tr>
-						<td>{{ get_formated_order_number($archive->id) }}</td>
+						<td>{{ $archive->id }}</td>
 				        <td>{{ $archive->created_at->toDayDateTimeString() }}</td>
 						<td>{{ $archive->customer->name }}</td>
 						<td>{{ $archive->amount_total }}</td>

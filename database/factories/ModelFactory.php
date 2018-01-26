@@ -63,28 +63,29 @@ $factory->define(App\Shop::class, function (Faker $faker) {
         'owner_id' => $faker->randomElement(\DB::table('users')->where('role_id', 3)->where('id', '!=', 3)->pluck('id')->toArray()),
         'name' => $company,
         'legal_name' => $company,
+        'slug' => $faker->slug,
         'email' => $faker->email,
-        'currency_id' => $faker->randomElement(\DB::table('currencies')->pluck('id')->toArray()),
         'description' => $faker->text(500),
+        'external_url' => $faker->url,
+        'timezone_id' => $faker->randomElement(\DB::table('timezones')->pluck('id')->toArray()),
         'active' => $faker->boolean,
     ];
 });
 
-$factory->define(App\Setting::class, function (Faker $faker) {
+$factory->define(App\Config::class, function (Faker $faker) {
     return [
-        'display_name' => $faker->company,
         'support_email' => $faker->email,
+        'default_sender_email_address' => $faker->email,
+        'default_email_sender_name' => $faker->name,
         'support_phone' => $faker->phoneNumber,
         'support_phone_toll_free' => $faker->boolean ? $faker->tollFreePhoneNumber : NULL,
-        'slug' => $faker->slug,
-        'external_url' => $faker->url,
-        'time_zone' => $faker->timezone,
         'order_number_prefix' => '#',
         'default_tax_id_for_inventory' => rand(1, 5),
         'default_tax_id_for_order' => rand(1, 5),
         'default_carrier_id' => rand(1, 5),
-        'default_packaging_id' => rand(1, 5),
-        'flat_shipping_cost' => $faker->randomDigit,
+        'default_carrier_ids_for_inventory' => serialize(array_rand(range(1,30), rand(1,4))),
+        'default_packaging_ids' => serialize(array_rand(range(1,30), rand(1,4))),
+        // 'flat_shipping_cost' => $faker->randomDigit,
         'order_handling_cost' => $faker->randomDigit,
         'free_shipping_starts' => $faker->randomDigit,
         'maintenance_mode' => $faker->boolean,
@@ -119,7 +120,7 @@ $factory->define(App\Category::class, function (Faker $faker) {
 
 $factory->define(App\AttributeValue::class, function (Faker $faker) {
     return [
-        'shop_id' => rand(1, 30),
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'value' => $faker->word,
         'color' => $faker->hexcolor,
         'attribute_id' => $faker->randomElement(\DB::table('attributes')->pluck('id')->toArray()),
@@ -130,7 +131,7 @@ $factory->define(App\AttributeValue::class, function (Faker $faker) {
 
 $factory->define(App\Manufacturer::class, function (Faker $faker) {
     return [
-        'shop_id' => rand(1, 30),
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'name' => $faker->unique->company,
         'email' => $faker->unique->email,
         'url' => $faker->unique->url,
@@ -164,7 +165,7 @@ $factory->define(App\Product::class, function (Faker $faker) {
 
 $factory->define(App\Warehouse::class, function (Faker $faker) {
     return [
-        'shop_id' => rand(1, 30),
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'incharge' => $faker->randomElement(\DB::table('users')->pluck('id')->toArray()),
         'name' => $faker->company,
         'email' => $faker->email,
@@ -175,7 +176,7 @@ $factory->define(App\Warehouse::class, function (Faker $faker) {
 
 $factory->define(App\Supplier::class, function (Faker $faker) {
     return [
-        'shop_id' => rand(1, 30),
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'name' => $faker->company,
         'email' => $faker->email,
         'contact_person' => $faker->name,
@@ -191,7 +192,7 @@ $factory->define(App\Tax::class, function (Faker $faker) {
     $state_id = $faker->randomElement(\DB::table('states')->where('country_id', $country_id)->pluck('id')->toArray());
 
     return [
-        'shop_id' => rand(1, 30),
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'name' => $faker->word . ' ' . round($num, 2) . '%',
         'country_id' => $country_id,
         'state_id' => $state_id,
@@ -202,7 +203,7 @@ $factory->define(App\Tax::class, function (Faker $faker) {
 
 $factory->define(App\Carrier::class, function (Faker $faker) {
     return [
-        'shop_id' => rand(1, 30),
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'tax_id' => $faker->randomElement(\DB::table('taxes')->pluck('id')->toArray()),
         'name' => $faker->company,
         'email' => $faker->email,
@@ -222,7 +223,7 @@ $factory->define(App\Carrier::class, function (Faker $faker) {
 
 $factory->define(App\Packaging::class, function (Faker $faker) {
     return [
-        'shop_id' => rand(1, 30),
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'name' => $faker->word,
         'cost' => rand(1,20),
         'charge_customer' => 1,
@@ -232,7 +233,7 @@ $factory->define(App\Packaging::class, function (Faker $faker) {
 $factory->define(App\Inventory::class, function (Faker $faker) {
     $num = $faker->randomFloat($nbMaxDecimals = NULL, $min = 100, $max = 400);
     return [
-        'shop_id' => rand(1, 30),
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'sku' => $faker->word,
         'condition' => 'New',
         'condition_note' => $faker->realText,
@@ -256,7 +257,7 @@ $factory->define(App\Order::class, function (Faker $faker) {
     $num1 = $faker->randomFloat($nbMaxDecimals = NULL, $min = 100, $max = 400);
     $num2 = rand(1,9);
     return [
-        'shop_id' => rand(1, 30),
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'order_number' => get_formated_order_number(),
         'customer_id' => $faker->randomElement(\DB::table('customers')->pluck('id')->toArray()),
         'carrier_id' => $faker->randomElement(\DB::table('carriers')->pluck('id')->toArray()),
@@ -313,7 +314,7 @@ $factory->define(App\GiftCard::class, function (Faker $faker) {
 
 $factory->define(App\Coupon::class, function (Faker $faker) {
     return [
-        'shop_id' => rand(1, 30),
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'name' => $faker->word,
         'code' => $faker->unique->randomNumber(),
         'description' => $faker->text(1500),

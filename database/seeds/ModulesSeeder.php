@@ -45,6 +45,11 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,add,edit,delete'
         ],
 
+        'Config' => [
+            'access' => 'Merchant',
+            'actions' => 'view,edit'
+        ],
+
         'Coupon' => [
             'access' => 'Merchant',
             'actions' => 'view,add,edit,delete'
@@ -128,11 +133,6 @@ class ModulesSeeder extends Seeder
         'Supplier' => [
             'access' => 'Merchant',
             'actions' => 'view,add,edit,delete'
-        ],
-
-        'Setting' => [
-            'access' => 'Merchant',
-            'actions' => 'view,edit'
         ],
 
         'Shop Rule' => [

@@ -252,15 +252,13 @@
               <li class=" {{ Request::is('admin/setting/emailTemplate*') ? 'active' : '' }}"><a href="{{ url('admin/setting/emailTemplate') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.email_templates') }}</a></li>
             @endcan
 
+            @can('view', App\Config::class)
+              <li class=" {{ Request::is('admin/setting/config*') ? 'active' : '' }}"><a href="{{ url('admin/setting/config') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}</a></li>
+            @endcan
+
             <li class=" {{ Request::is('settings*') ? 'active' : '' }}"><a href="{{ url('admin/user') }}"> System settings</a></li>
 
-            <li class=" {{ Request::is('settings*') ? 'active' : '' }}"><a href="{{ url('admin/user') }}"> Checkout</a></li>
-
-            <li class=" {{ Request::is('settings*') ? 'active' : '' }}"><a href="{{ url('admin/user') }}"> Configurations</a></li>
-
             <li class=" {{ Request::is('settings*') ? 'active' : '' }}"><a href="{{ url('admin/user') }}"> Notifications</a></li>
-
-            <li class=" {{ Request::is('settings*') ? 'active' : '' }}"><a href="{{ url('admin/user') }}"> Email settings</a></li>
 
             <li class=" {{ Request::is('settings*') ? 'active' : '' }}"><a href="{{ url('admin/user') }}"> Backup</a></li>
 

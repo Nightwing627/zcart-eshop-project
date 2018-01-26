@@ -4,7 +4,7 @@ namespace App\Http\Requests\Validations;
 
 use App\Http\Requests\Request;
 
-class UpdateShopRequest extends Request
+class UpdateBasicConfigRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateShopRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return Request::user()->shop_id == Request::route('shop');
     }
 
     /**
@@ -23,7 +23,7 @@ class UpdateShopRequest extends Request
      */
     public function rules()
     {
-        $id = Request::segment(count(Request::segments())); //Current model ID
+        $id = Request::route('shop'); //Current model ID
 
         return [
            'name' => 'required',

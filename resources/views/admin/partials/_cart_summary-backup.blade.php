@@ -47,7 +47,7 @@
           </small>
         @endif
         <span id="summary-packaging-cost"><small>+
-          {{ trans('app.packaging') . '(' . get_formated_currency_symbol() }}
+          {{ trans('app.packaging') . '(' }}@if(config('system_settings.show_currency_symbol')){{config('system_settings.currency_symbol') . (config('system_settings.show_space_after_symbol') ? ' ' : '') }}@endif
           <span id="summary-packaging-cost-value"></span>)</small>
         </span>
       </h4>

@@ -78,7 +78,7 @@
 
 <div class="form-group">
   {!! Form::label('description', trans('app.form.description')) !!}
-  {!! Form::textarea('description', null, ['class' => 'form-control summernote-without-tootbar', 'placeholder' => trans('app.placeholder.description')]) !!}
+  {!! Form::textarea('description', null, ['class' => 'form-control summernote-without-toolbar', 'placeholder' => trans('app.placeholder.description')]) !!}
 </div>
 
 <div class="row">

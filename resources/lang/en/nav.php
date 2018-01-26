@@ -49,7 +49,7 @@ return [
     'payment_statuses' => 'Payment statuses',
     'payment_methods' => 'Payment methods',
     'email_templates' => 'Email templates',
-
+    'config' => 'Configuration',
     'orders' => 'Orders',
     'carts' => 'Carts',
     'invoices' => 'Invoices',

@@ -28,45 +28,51 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->composeRoleForm();
-
-        $this->composeRoleShow();
-
-        $this->composeUserForm();
+        $this->composeAddressForm();
 
         $this->composeAttributeForm();
 
         $this->composeAttributeValueForm();
 
+        $this->composeBlogForm();
+
+        $this->composeCarrierForm();
+
         $this->composeCategoryForm();
 
         $this->composeCategorySubGroupForm();
 
-        $this->composeShopForm();
+        $this->composeConfigPage();
 
-        $this->composeProductForm();
+        $this->composeCreateOrderForm();
+
+        $this->composeDisputeResponseForm();
+
+        $this->composeEmailTemplatePartialForm();
 
         $this->composeInventoryForm();
 
         $this->composeInventoryVariantForm();
 
-        $this->composeSetVariantForm();
-
-        $this->composeTaxForm();
-
         $this->composeManufacturerForm();
 
-        $this->composeWarehouseForm();
+        $this->composeProductForm();
 
-        $this->composeCarrierForm();
+        $this->composeRefundInitiationForm();
 
-        $this->composeAddressForm();
+        $this->composeRoleForm();
+
+        $this->composeRoleShow();
 
         $this->composeSearchFilterForm();
 
         // $this->composeSearchCustomerForm();
 
-        $this->composeCreateOrderForm();
+        $this->composeSetVariantForm();
+
+        $this->composeShopForm();
+
+        $this->composeTaxForm();
 
         $this->composeTicketCreateForm();
 
@@ -74,13 +80,9 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeTicketAssignForm();
 
-        $this->composeDisputeResponseForm();
+        $this->composeUserForm();
 
-        $this->composeEmailTemplatePartialForm();
-
-        $this->composeRefundInitiationForm();
-
-        $this->composeBlogForm();
+        $this->composeWarehouseForm();
 
     }
 
@@ -201,6 +203,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 function($view)
                 {
                     $view->with('merchants', ListHelper::new_merchants());
+                    $view->with('timezones', ListHelper::timezones());
                 });
     }
 
@@ -567,6 +570,27 @@ class ViewComposerServiceProvider extends ServiceProvider
                 $view->with('statuses', ListHelper::refund_statuses());
             }
         );
+    }
+
+    /**
+     * compose partial view of Config Page
+     */
+    private function composeConfigPage()
+    {
+        View::composer(
+
+                'admin.config.index',
+
+                function($view)
+                {
+                    $view->with('timezones', ListHelper::timezones());
+                    $view->with('taxes', ListHelper::taxes());
+                    $view->with('suppliers', ListHelper::suppliers());
+                    $view->with('warehouses', ListHelper::warehouses());
+                    $view->with('carriers', ListHelper::carriers());
+                    $view->with('packagings', ListHelper::packagings());
+                    $view->with('payment_methods', ListHelper::payment_methods());
+                });
     }
 
     /**

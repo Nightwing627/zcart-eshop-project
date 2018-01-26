@@ -251,27 +251,24 @@
     ;(function($, window, document) {
 
         var cart = "{{ isset($cart) ? TRUE : FALSE }}";
-        if(cart)
-        {
-            setPackagingCost({{ isset($cart) ? $cart->packaging_id : NULL }});
-        }else
-        {
-            setDefaultValues();
+        if(cart){
+          setPackagingCost({{ isset($cart) ? $cart->packaging_id : NULL }});
+        }
+        else{
+          setDefaultValues();
         }
 
         // Make billing and shipping address same.
         $('#same_address').change(function()
         {
-            if (this.checked)
-            {
+            if (this.checked){
                 var billing_address = $('#billing_address').val();
 
                 $('#shipping_address').val(billing_address);
 
                 $('#shipping_address').attr('disabled', 'disabled');
-
-            }else
-            {
+            }
+            else{
                 $('#shipping_address').removeAttr('disabled');
             }
         });
@@ -535,8 +532,7 @@
 
     function setPackagingCost(ID = NULL)
     {
-        if(!ID)
-        {
+        if(!ID){
             var shipping = Number($("#summary-shipping").text()) - Number($("#summary-packaging-cost-value").text());
             $("#summary-shipping").text(getFromPHPHelper('get_formated_decimal', shipping));
             $("#summary-packaging-cost").hide(); // Hide the packaging cost section
@@ -552,29 +548,22 @@
             success: function(result)
             {
                 if( Boolean(result) && result > 0 )
-                {
                     $("#summary-packaging-cost").show(); // Show the packaging cost section
-                }else
-                {
+                else
                     $("#summary-packaging-cost").hide(); // Hide the packaging cost section
-                }
 
                 var prsent_packaging_cost = $("#summary-packaging-cost-value").text();
                 var present_shipping_cost = $("#summary-shipping").text();
 
-                if (present_shipping_cost == prsent_packaging_cost)
-                {
+                if (present_shipping_cost == prsent_packaging_cost){
                     var shipping = getFromPHPHelper('get_formated_decimal', Number(result));
                 }
-                else if(present_shipping_cost > prsent_packaging_cost)
-                {
+                else if(present_shipping_cost > prsent_packaging_cost){
                     var shipping = getFromPHPHelper('get_formated_decimal', Number(present_shipping_cost) - Number(prsent_packaging_cost) + Number(result));
                 }
-                else
-                {
+                else{
                     var shipping = getFromPHPHelper('get_formated_decimal', Number(present_shipping_cost) + Number(result));
                 }
-
 
                 $("#summary-packaging-cost-value").text( result );
 
