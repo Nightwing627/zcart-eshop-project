@@ -331,7 +331,7 @@ class ListHelper
      */
     public static function carriers()
     {
-        return \DB::table('carriers')->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('carriers')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**

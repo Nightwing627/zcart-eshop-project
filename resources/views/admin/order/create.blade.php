@@ -220,43 +220,38 @@
     // Save the cart action
     function saveTheCart(e)
     {
-        var cart = $("input#cart_id").val();
+      var cart = $("input#cart_id").val();
 
-        var order = <?=isset($order_cart) ? 1 : 0?>;
+      var order = <?=isset($order_cart) ? 1 : 0?>;
 
-        // console.log(order);
-        if (order)
-        {
-            var method = '<input name="_method" type="hidden" value="PUT">';
-            var url = "{{ url('admin/order/order/') }}/"+ cart;
+      // console.log(order);
+      if (order){
+        var method = '<input name="_method" type="hidden" value="PUT">';
+        var url = "{{ url('admin/order/order/') }}/"+ cart;
 
-            $("form#form").append(method);
-        }
-        else if (cart)
-        {
-            var method = '<input name="_method" type="hidden" value="PUT">';
-            var url = "{{ url('admin/order/cart/') }}/"+ cart;
+        $("form#form").append(method);
+      }
+      else if (cart){
+        var method = '<input name="_method" type="hidden" value="PUT">';
+        var url = "{{ url('admin/order/cart/') }}/"+ cart;
 
-            $("form#form").append(method);
-        }
-        else
-        {
-            var url = "{{ url('admin/order/cart') }}";
-        }
+        $("form#form").append(method);
+      }
+      else{
+        var url = "{{ url('admin/order/cart') }}";
+      }
 
-        $("form#form").attr('action', url);
-        $("form#form").submit();
+      $("form#form").attr('action', url);
+      $("form#form").submit();
     }
 
     ;(function($, window, document) {
-
+      $(document).ready(function(){
         var cart = "{{ isset($cart) ? TRUE : FALSE }}";
-        if(cart){
+        if(cart)
           setPackagingCost({{ isset($cart) ? $cart->packaging_id : NULL }});
-        }
-        else{
+        else
           setDefaultValues();
-        }
 
         // Make billing and shipping address same.
         $('#same_address').change(function()
@@ -401,7 +396,7 @@
                     setPackagingCost(ID);
                 }
         );
-
+      })
     }(window.jQuery, window, document));
 
     /**
@@ -409,23 +404,19 @@
      */
     function setDefaultValues()
     {
+        $("#summary-packaging-cost").hide(); // Hide the packaging cost section
+
         var defaultTaxId = "{{ config('shop_settings.default_tax_id_for_order') ?: false }}" ;
         if( defaultTaxId )
-        {
-            setTax(defaultTaxId);
-        }
+          setTax(defaultTaxId);
 
         var defaultCarrierId = "{{ config('shop_settings.default_carrier_id') ?: false }}" ;
         if( defaultCarrierId )
-        {
-            setShippingCost(defaultCarrierId);
-        }
+          setShippingCost(defaultCarrierId);
 
-        var defaultPackagingId = "{{ config('shop_settings.default_packaging_id') ?: false }}" ;
-        if( defaultPackagingId )
-        {
-            setPackagingCost(defaultPackagingId);
-        }
+        // var defaultPackagingId = "{{ config('shop_settings.default_packaging_id') ?: false }}" ;
+        // if( defaultPackagingId )
+        //   setPackagingCost(defaultPackagingId);
     }
 
     function generateOrderSummary()

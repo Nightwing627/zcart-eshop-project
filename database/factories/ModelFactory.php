@@ -96,7 +96,7 @@ $factory->define(App\CategoryGroup::class, function (Faker $faker) {
     return [
         'name' => $faker->company,
         'description' => $faker->text(500),
-        'active' => $faker->boolean,
+        'active' => 1,
     ];
 });
 
@@ -105,7 +105,7 @@ $factory->define(App\CategorySubGroup::class, function (Faker $faker) {
         'category_group_id' => $faker->randomElement(\DB::table('category_groups')->pluck('id')->toArray()),
         'name' => $faker->company,
         'description' => $faker->text(500),
-        'active' => $faker->boolean,
+        'active' => 1,
     ];
 });
 
@@ -114,7 +114,7 @@ $factory->define(App\Category::class, function (Faker $faker) {
         'name' => $faker->unique->company,
         'slug' => $faker->slug,
         'description' => $faker->text(500),
-        'active' => $faker->boolean,
+        'active' => 1,
     ];
 });
 
@@ -138,7 +138,7 @@ $factory->define(App\Manufacturer::class, function (Faker $faker) {
         'phone' => $faker->phoneNumber,
         'country_id' => $faker->randomElement(\DB::table('countries')->pluck('id')->toArray()),
         'description' => $faker->text(500),
-        'active' => $faker->boolean,
+        'active' => 1,
     ];
 });
 
@@ -170,7 +170,7 @@ $factory->define(App\Warehouse::class, function (Faker $faker) {
         'name' => $faker->company,
         'email' => $faker->email,
         'description' => $faker->text(500),
-        'active' => $faker->boolean,
+        'active' => 1,
     ];
 });
 
@@ -182,7 +182,7 @@ $factory->define(App\Supplier::class, function (Faker $faker) {
         'contact_person' => $faker->name,
         'url' => $faker->url,
         'description' => $faker->text(500),
-        'active' => $faker->boolean,
+        'active' => 1,
     ];
 });
 
@@ -197,7 +197,7 @@ $factory->define(App\Tax::class, function (Faker $faker) {
         'country_id' => $country_id,
         'state_id' => $state_id,
         'taxrate' => $num,
-        'active' => $faker->boolean,
+        'active' => 1,
     ];
 });
 
@@ -217,7 +217,7 @@ $factory->define(App\Carrier::class, function (Faker $faker) {
         'is_free' => $faker->boolean,
         'handling_cost' => $faker->boolean,
         'tracking_url' => $faker->url.'/@',
-        'active' => $faker->boolean,
+        'active' => 1,
     ];
 });
 
@@ -225,7 +225,7 @@ $factory->define(App\Packaging::class, function (Faker $faker) {
     return [
         'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'name' => $faker->word,
-        'cost' => rand(1,20),
+        'cost' => rand(1,10),
         'charge_customer' => 1,
     ];
 });
@@ -248,7 +248,7 @@ $factory->define(App\Inventory::class, function (Faker $faker) {
         'sale_price' => $num+15,
         'available_from' => $faker->date,
         'min_order_quantity' => 1,
-        'active' => $faker->boolean,
+        'active' => 1,
     ];
 });
 

@@ -93,7 +93,7 @@ return [
 
     'mpn' => 'Manufacturer Part Number (MPN) is an unique identifier issued by the manufacturer. You can obtain MPNs from the manufacturer. Not required but recommended',
 
-    'sku' => 'SKU is the seller specific identifier. It will help to manage your inventory',
+    'sku' => 'SKU (Stock Keeping Unit) is the seller specific identifier. It will help to manage your inventory',
 
     'isbn' => 'The International Standard Book Number (ISBN) is a unique commercial book identifier barcode. Each ISBN code identifies uniquely a book. ISBN have either 10 or 13 digits. All ISBN assigned after 1 Jan 2007 have 13 digits. Typically, the ISBN is printed on the back cover of the book',
 
