@@ -3,6 +3,9 @@
   border: none;
   height: auto;
 }
+.handle.horizontal{
+  margin: 1rem auto;
+}
 .handle .btn-toggle {
   top: 50%;
   transform: translateY(-50%);
@@ -102,6 +105,9 @@
 }
 .btn-toggle.active {
   background-color: #29b5a8;
+}
+.horizontal .btn-toggle.btn-sm,.horizontal .btn-toggle.btn-md{
+  margin-top: -0.5em;
 }
 .btn-toggle.btn-lg {
   margin: 0 5rem;

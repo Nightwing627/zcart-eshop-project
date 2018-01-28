@@ -34,15 +34,24 @@ class ConfigController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function view()
+    public function viewGeneralSetting()
     {
         $shop = Shop::findOrFail(Auth::user()->shop_id);
 
-        $config = $shop->config;
-
-        return view('admin.config.index', compact('shop', 'config'));
+        return view('admin.config.general', compact('shop'));
     }
 
+   /**
+     * Display the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function view()
+    {
+        $config = Config::findOrFail(Auth::user()->shop_id);
+
+        return view('admin.config.index', compact('config'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -75,6 +84,27 @@ class ConfigController extends Controller
         $this->authorize('update', $config); // Check permission
 
         if($config->update($request->all()))
+            return response("success", 200);
+
+        return response('error', 405);
+    }
+
+    /**
+     * Toggle Maintenance Mode of the given id, Its uses the ajax middleware
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  str  $node
+     * @return \Illuminate\Http\Response
+     */
+    public function toggleNotification(Request $request, $node)
+    {
+        $config = Config::findOrFail($request->user()->shop_id);
+
+        $this->authorize('update', $config); // Check permission
+
+        $config->$node = !$config->$node;
+
+        if($config->save())
             return response("success", 200);
 
         return response('error', 405);

@@ -253,6 +253,8 @@
             @endcan
 
             @can('view', App\Config::class)
+              <li class=" {{ Request::is('admin/setting/general*') ? 'active' : '' }}"><a href="{{ url('admin/setting/general') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.general') }}</a></li>
+
               <li class=" {{ Request::is('admin/setting/config*') ? 'active' : '' }}"><a href="{{ url('admin/setting/config') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}</a></li>
             @endcan
 

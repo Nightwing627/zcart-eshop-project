@@ -14,6 +14,7 @@ class PaymentMethodsSeeder extends Seeder
     {
         DB::table('payment_methods')->insert([
             'name' => 'PayPal',
+            'type' => 'PayPal',
             'company_name' => 'PayPal Inc.',
             'website' => 'https://www.paypal.com/',
             'help_doc_link' => 'https://www.paypal.com/us/webapps/mpp/express-checkout',
@@ -23,6 +24,7 @@ class PaymentMethodsSeeder extends Seeder
         ]);
         DB::table('payment_methods')->insert([
             'name' => 'Srtip',
+            'type' => 'Accept credit cards',
             'company_name' => 'Srtip Inc.',
             'website' => 'https://stripe.com/',
             'help_doc_link' => 'https://stripe.com/docs/checkout/tutorial',
@@ -32,6 +34,7 @@ class PaymentMethodsSeeder extends Seeder
         ]);
         DB::table('payment_methods')->insert([
             'name' => 'Bank Wire Transfer',
+            'type' => 'Manual payment',
             'company_name' => 'Pay by bank wire transfer',
             'description' => 'Pay by bank wire transfer,  transfer the invoice amount via wire tranfer to the merchant account and confirm manually. After payment confirmation the goods will be shipped.',
             'created_at' => Carbon::Now(),
@@ -39,6 +42,7 @@ class PaymentMethodsSeeder extends Seeder
         ]);
         DB::table('payment_methods')->insert([
             'name' => 'COD',
+            'type' => 'Manual payment',
             'company_name' => 'Cash on Delivery',
             'description' => 'Cash on delivery (COD), sometimes called collect on delivery, is the sale of goods by mail order where payment is made on delivery rather than in advance.',
             'created_at' => Carbon::Now(),

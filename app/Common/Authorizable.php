@@ -20,6 +20,7 @@ trait Authorizable
         'entities'          => 'view',
         'labelOf'           => 'view',
         'statusOf'          => 'view',
+        'general'           => 'view',
         'create'            => 'add',
         'add'               => 'add',
         'store'             => 'add',

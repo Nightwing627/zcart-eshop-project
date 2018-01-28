@@ -8,11 +8,7 @@
 	<div class="box">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs nav-justified">
-				<li class="active"><a href="#basic_info" data-toggle="tab">
-					<i class="fa fa-file hidden-sm"></i>
-					{{ trans('app.basic_info') }}
-				</a></li>
-				<li><a href="#inventory" data-toggle="tab">
+				<li class="active"><a href="#inventory" data-toggle="tab">
 					<i class="fa fa-cubes hidden-sm"></i>
 					{{ trans('app.inventory') }}
 				</a></li>
@@ -36,161 +32,13 @@
 					<i class="fa fa-line-chart hidden-sm"></i>
 					{{ trans('app.analytics') }}
 				</a></li>
+				<li><a href="#notifications" data-toggle="tab">
+					<i class="fa fa-bell-o hidden-sm"></i>
+					{{ trans('app.notifications') }}
+				</a></li>
 			</ul>
 			<div class="tab-content">
-			    <div class="tab-pane active" id="basic_info">
-			    	<div class="row">
-				        {!! Form::model($shop, ['method' => 'PUT', 'route' => ['admin.setting.basic.config.update', $shop->id], 'files' => true, 'id' => 'form', 'class' => 'form-horizontal', 'data-toggle' => 'validator']) !!}
-					    	<div class="col-sm-9">
-								<div class="form-group">
-									{!! Form::label('name', '*' . trans('app.shop_name') . ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-							        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.shop_name') }}"></i>
-								  	<div class="col-sm-8 nopadding-left">
-								  		@if($can_update)
-								  			{!! Form::text('name', $shop->name, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.shop_name'), 'required']) !!}
-									  		<div class="help-block with-errors"></div>
-										@else
-											<span class="lead">{{ $shop->name }}</span>
-										@endif
-								  	</div>
-								</div>
-
-								<div class="form-group">
-									@if($shop->slug)
-										{!! Form::label('slug', trans('app.shop_url') . ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-							        	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.shop_url') }}"></i>
-									  	<div class="col-sm-8 nopadding-left">
-											<span> {{ get_shop_url($shop->id) }} </span>
-										</div>
-									@elseif($can_update)
-										{!! Form::label('slug', '*' . trans('app.form.slug') . ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-							        	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.shop_slug') }}"></i>
-									  	<div class="col-sm-8 nopadding-left">
-								  			{!! Form::text('slug', null, ['class' => 'form-control slug', 'placeholder' => trans('app.placeholder.slug'), 'required']) !!}
-									  		<div class="help-block with-errors"></div>
-										</div>
-									@endif
-								</div>
-
-								<div class="form-group">
-									{!! Form::label('legal_name', '*' . trans('app.shop_legal_name') . ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-							        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.shop_legal_name') }}"></i>
-								  	<div class="col-sm-8 nopadding-left">
-								  		@if($can_update)
-								  			{!! Form::text('legal_name', $shop->legal_name, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.shop_name'), 'required']) !!}
-									  		<div class="help-block with-errors"></div>
-										@else
-											<span>{{ $shop->legal_name }}</span>
-										@endif
-								  	</div>
-								</div>
-
-								<div class="form-group">
-									{!! Form::label('email', '*' . trans('app.form.email_address'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-							        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.shop_email') }}"></i>
-								  	<div class="col-sm-8 nopadding-left">
-								  		@if($can_update)
-											{!! Form::email('email', $shop->email, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.valid_email'), 'required']) !!}
-									  		<div class="help-block with-errors"></div>
-										@else
-											<span>{{ $shop->email }}</span>
-										@endif
-								  	</div>
-								</div>
-
-								<div class="form-group">
-								    {!! Form::label('external_url', trans('app.form.external_url') . ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-							        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.shop_external_url') }}"></i>
-								  	<div class="col-sm-8 nopadding-left">
-								  		@if($can_update)
-									    	{!! Form::text('external_url', $shop->external_url, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.external_url')]) !!}
-										@else
-											<span>{{ $shop->external_url }}</span>
-										@endif
-								  	</div>
-								</div>
-
-								<div class="form-group">
-							        {!! Form::label('timezone_id', '*' . trans('app.form.timezone'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.shop_timezone') }}"></i>
-								  	<div class="col-sm-8 nopadding-left">
-								  		@if($can_update)
-									        {!! Form::select('timezone_id', $timezones , $shop->timezone_id, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.timezone'), 'required']) !!}
-									  		<div class="help-block with-errors"></div>
-										@else
-											<span>{{ $shop->timezone->text }}</span>
-										@endif
-								  	</div>
-								</div>
-
-								<div class="form-group">
-									{!! Form::label('description', trans('app.form.description') . ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-								  	<div class="col-sm-8 nopadding-left">
-								  		@if($can_update)
-											{!! Form::textarea('description', $shop->description, ['class' => 'form-control summernote-min', 'placeholder' => trans('app.placeholder.description'), 'rows' => '3']) !!}
-										@else
-											<span>{{ $shop->description }}</span>
-										@endif
-									</div>
-								</div>
-						  		@if($can_update)
-									<div class="form-group">
-										<label for="exampleInputFile" class="with-help col-sm-3 control-label"> {{ trans('app.form.logo') }}</label>
-								      	<div class="col-md-6 nopadding">
-											<input id="uploadFile" placeholder="{{ trans('app.placeholder.logo') }}" class="form-control" disabled="disabled" style="height: 28px;" />
-								    	</div>
-									    <div class="col-md-2 nopadding-left">
-										  	<div class="fileUpload btn btn-primary btn-block btn-flat">
-										      <span>{{ trans('app.form.upload') }}</span>
-											    <input type="file" name="image" id="uploadBtn" class="upload" />
-									      	</div>
-									    </div>
-									</div>
-								@endif
-
-								<p class="help-block">* {{ trans('app.form.required_fields') }}</p>
-
-						  		@if($can_update)
-									<div class="col-md-offset-3">
-							            {!! Form::submit(trans('app.update'), ['class' => 'btn btn-lg btn-flat btn-new']) !!}
-							        </div>
-						  		@endif
-					    	</div>
-
-					        <div class="col-sm-3">
-						    	@if($can_update)
-									<div class="form-group text-center">
-										{!! Form::label('maintenance_mode', trans('app.form.maintenance_mode'), ['class' => 'control-label with-help']) !!}
-									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.maintenance_mode_handle') }}"></i>
-
-									  	<div class="handle">
-											<a href="{{ route('admin.setting.config.maintenanceMode.toggle', $shop) }}" type="button" class="btn btn-lg btn-secondary btn-toggle {{ $config->maintenance_mode == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->maintenance_mode == 1 ? 'true' : 'false' }}" autocomplete="off">
-												<div class="btn-handle"></div>
-											</a>
-									  	</div>
-									</div>
-							        <div class="spacer50"></div>
-						        @endif
-
-						  		@if(isset($shop) && File::exists(image_path('shops') . $shop->id . '_150x150.png'))
-									<div class="form-group text-center">
-										<label for="exampleInputFile" class="with-help control-label"> {{ trans('app.logo') }}</label>
-								    	<img src="{{ get_image_src($shop->id, 'shops') }}" width="100%" alt="{{ trans('app.image') }}">
-
-								        <div class="spacer20"></div>
-
-										<label>
-									    	{!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_logo') }}
-										</label>
-									</div>
-							  	@endif
-							</div>
-				        {!! Form::close() !!}
-			    	</div>
-			    </div>
-			    <!-- /.tab-pane -->
-
-			    <div class="tab-pane" id="inventory">
+			    <div class="tab-pane active" id="inventory">
 			    	<div class="row">
 				        {!! Form::model($config, ['method' => 'PUT', 'route' => ['admin.setting.config.update', $config], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
 					    	<div class="col-sm-12">
@@ -545,6 +393,128 @@
 			    </div>
 			    <!-- /.tab-pane -->
 
+			    <div class="tab-pane" id="notifications">
+			    	<div class="row">
+				    	<div class="col-sm-6">
+				    		<fieldset>
+				    			<legend>{{ trans('app.inventory') }}</legend>
+						    	<div class="row">
+							    	<div class="col-sm-6 text-right">
+										<div class="form-group">
+									        {!! Form::label('notify_new_message', trans('app.notify_new_message'). ':', ['class' => 'with-help control-label']) !!}
+										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_new_message') }}"></i>
+										</div>
+									</div>
+							    	<div class="col-sm-6">
+								  		@if($can_update)
+										  	<div class="handle horizontal">
+												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_new_message') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_new_message == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_new_message == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<div class="btn-handle"></div>
+												</a>
+										  	</div>
+										@else
+											<span>{{ $config->notify_new_message == 1 ? trans('app.on') : trans('app.off') }}</span>
+										@endif
+									</div>
+							  	</div>
+							    <!-- /.row -->
+
+						    	<div class="row">
+							    	<div class="col-sm-6 text-right">
+										<div class="form-group">
+									        {!! Form::label('notify_alert_quantity', trans('app.notify_alert_quantity'). ':', ['class' => 'with-help control-label']) !!}
+										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_alert_quantity') }}"></i>
+										</div>
+									</div>
+							    	<div class="col-sm-6">
+								  		@if($can_update)
+										  	<div class="handle horizontal">
+												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_alert_quantity') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_alert_quantity == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_alert_quantity == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<div class="btn-handle"></div>
+												</a>
+										  	</div>
+										@else
+											<span>{{ $config->notify_alert_quantity == 1 ? trans('app.on') : trans('app.off') }}</span>
+										@endif
+									</div>
+							  	</div>
+							    <!-- /.row -->
+
+						    	<div class="row">
+							    	<div class="col-sm-6 text-right">
+										<div class="form-group">
+									        {!! Form::label('notify_inventory_out', trans('app.notify_inventory_out'). ':', ['class' => 'with-help control-label']) !!}
+										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_inventory_out') }}"></i>
+										</div>
+									</div>
+							    	<div class="col-sm-6">
+								  		@if($can_update)
+										  	<div class="handle horizontal">
+												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_inventory_out') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_inventory_out == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_inventory_out == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<div class="btn-handle"></div>
+												</a>
+										  	</div>
+										@else
+											<span>{{ $config->notify_inventory_out == 1 ? trans('app.on') : trans('app.off') }}</span>
+										@endif
+									</div>
+							  	</div>
+							    <!-- /.row -->
+							</fieldset>
+					  	</div>
+					    <!-- /.col-sm-6 -->
+
+					  	<div class="col-sm-6">
+				    		<fieldset>
+				    			<legend>{{ trans('app.order') }}</legend>
+						    	<div class="row">
+							    	<div class="col-sm-6 text-right">
+										<div class="form-group">
+									        {!! Form::label('notify_new_order', trans('app.notify_new_order'). ':', ['class' => 'with-help control-label']) !!}
+										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_new_order') }}"></i>
+										</div>
+									</div>
+							    	<div class="col-sm-6">
+								  		@if($can_update)
+										  	<div class="handle horizontal">
+												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_new_order') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_new_order == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_new_order == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<div class="btn-handle"></div>
+												</a>
+										  	</div>
+										@else
+											<span>{{ $config->notify_new_order == 1 ? trans('app.on') : trans('app.off') }}</span>
+										@endif
+									</div>
+							  	</div>
+							    <!-- /.row -->
+
+						    	<div class="row">
+							    	<div class="col-sm-6 text-right">
+										<div class="form-group">
+									        {!! Form::label('notify_abandoned_checkout', trans('app.notify_abandoned_checkout'). ':', ['class' => 'with-help control-label']) !!}
+										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_abandoned_checkout') }}"></i>
+										</div>
+									</div>
+							    	<div class="col-sm-6">
+								  		@if($can_update)
+										  	<div class="handle horizontal">
+												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_abandoned_checkout') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_abandoned_checkout == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_abandoned_checkout == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<div class="btn-handle"></div>
+												</a>
+										  	</div>
+										@else
+											<span>{{ $config->notify_abandoned_checkout == 1 ? trans('app.on') : trans('app.off') }}</span>
+										@endif
+									</div>
+							  	</div>
+							    <!-- /.row -->
+							</fieldset>
+					  	</div>
+					    <!-- /.col-sm-6 -->
+			    	</div>
+				    <!-- /.row -->
+			    </div>
+			    <!-- /.tab-pane -->
 			</div>
 			<!-- /.tab-content -->
 		</div>

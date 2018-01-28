@@ -50,6 +50,7 @@ return [
     'payment_methods' => 'Payment methods',
     'email_templates' => 'Email templates',
     'config' => 'Configuration',
+    'general' => 'General config',
     'orders' => 'Orders',
     'carts' => 'Carts',
     'invoices' => 'Invoices',

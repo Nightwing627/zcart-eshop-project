@@ -165,7 +165,7 @@ class Address extends Model
         if(strlen($this->city))
             $html []= sprintf('%s, %s %s', e($this->city), e($this->state_id ? $this->state->name : $this->state_name), e($this->zip_code));
 
-        if(config('system_settings.address_show_country'))
+        if(config('system_settings.address_show_country') && $this->country)
             $html []= e($this->country->name);
 
         if(strlen($this->phone))
@@ -201,10 +201,8 @@ class Address extends Model
             $str []= sprintf('%s, %s %s', $this->city, $state_name, $this->zip_code);
         }
 
-        if(config('system_settings.address_show_country'))
-        {
+        if(config('system_settings.address_show_country') && $this->country)
             $str []= $this->country->name;
-        }
 
         return implode(', ', $str);
     }
@@ -224,7 +222,8 @@ class Address extends Model
         $address['city'] = $this->city;
         $address['state'] = $this->state->name;
         $address['zip_code'] = $this->zip_code;
-        $address['country'] = $this->country->name;
+        if($this->country)
+            $address['country'] = $this->country->name;
         $address['phone'] = $this->phone;
         $address['latitude'] = $this->latitude;
         $address['longitude'] = $this->longitude;

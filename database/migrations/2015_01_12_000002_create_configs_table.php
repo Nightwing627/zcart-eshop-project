@@ -48,6 +48,13 @@ class CreateConfigsTable extends Migration
             // Analytics
             $table->string('google_analytics_id')->nullable();
 
+            // Notification Settings
+            $table->boolean('notify_new_message')->nullable();
+            $table->boolean('notify_alert_quantity')->nullable();
+            $table->boolean('notify_inventory_out')->nullable();
+            $table->boolean('notify_new_order')->nullable();
+            $table->boolean('notify_abandoned_checkout')->nullable();
+
             $table->boolean('maintenance_mode')->nullable();
             $table->timestamps();
 

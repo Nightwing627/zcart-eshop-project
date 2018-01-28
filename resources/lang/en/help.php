@@ -129,6 +129,8 @@ return [
 
     // 'supplier_address' => 'The system will use this address to create invoice.',
 
+    'shop_address' => 'The physical address of the shop.',
+
     'search_product' => 'You can use any GTIN identifier like UPC, ISBN, EAN, JAN or ITF. You can also use name and model number OR part of name or model number.',
 
     'seller_description' => 'This is seller specific description of the product',
@@ -358,5 +360,15 @@ return [
     'default_email_sender_name' => 'This name will be used as the sender of email send from default sender email address',
 
     'google_analytics_id' => 'The tracking ID from google analytics. It looks something like "UA-XXXXX-XX".',
+
+    'notify_new_message' => 'Send me a notification when a new message arrived',
+
+    'notify_alert_quantity' => 'Send me a notification when any item on my inventory reach the aler quanlity value',
+
+    'notify_inventory_out' => 'Send me a notification when any item on my inventory stock out',
+
+    'notify_new_order' => 'Send me a notification when a new order has been placed on my store',
+
+    'notify_abandoned_checkout' => 'Send me a notification when customer abandoned checkout of my item',
 
 ];

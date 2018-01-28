@@ -12,9 +12,16 @@ class CreatePaymentMethodsTable extends Migration
      */
     public function up()
     {
+        Schema::create('payment_method_types', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type');
+            $table->text('description')->nullable();
+        });
+
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('type');
             $table->string('company_name')->nullable();
             $table->text('website')->nullable();
             $table->text('help_doc_link')->nullable();
@@ -44,6 +51,8 @@ class CreatePaymentMethodsTable extends Migration
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
             $table->text('api_key')->nullable();
             $table->text('api_secret')->nullable();
+            $table->text('additional_details')->nullable();
+            $table->text('payment_instructions')->nullable();
             $table->timestamps();
         });
 
@@ -56,6 +65,7 @@ class CreatePaymentMethodsTable extends Migration
      */
     public function down()
     {
+        Schema::drop('payment_method_types');
         Schema::drop('shop_payment_methods');
         Schema::drop('payment_statuses');
         Schema::drop('payment_methods');

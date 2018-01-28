@@ -44,6 +44,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeConfigPage();
 
+        $this->composeGeneralConfigPage();
+
         $this->composeCreateOrderForm();
 
         $this->composeDisputeResponseForm();
@@ -583,13 +585,27 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                 function($view)
                 {
-                    $view->with('timezones', ListHelper::timezones());
                     $view->with('taxes', ListHelper::taxes());
                     $view->with('suppliers', ListHelper::suppliers());
                     $view->with('warehouses', ListHelper::warehouses());
                     $view->with('carriers', ListHelper::carriers());
                     $view->with('packagings', ListHelper::packagings());
                     $view->with('payment_methods', ListHelper::payment_methods());
+                });
+    }
+
+    /**
+     * compose partial view of GeneralConfig Page
+     */
+    private function composeGeneralConfigPage()
+    {
+        View::composer(
+
+                'admin.config.general',
+
+                function($view)
+                {
+                    $view->with('timezones', ListHelper::timezones());
                 });
     }
 
