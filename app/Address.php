@@ -68,7 +68,7 @@ class Address extends Model
      */
     public function country()
     {
-        return $this->belongsTo('App\Country');
+        return $this->belongsTo(Country::class);
     }
 
     /**
@@ -76,7 +76,7 @@ class Address extends Model
      */
     public function state()
     {
-        return $this->belongsTo('App\State');
+        return $this->belongsTo(State::class);
     }
 
     /**

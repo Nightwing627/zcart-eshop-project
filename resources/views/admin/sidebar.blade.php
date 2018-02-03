@@ -220,7 +220,6 @@
           </li>
         @endif
 
-
         @can('index', App\Blog::class)
           <li class=" {{ Request::is('admin/blog*') ? 'active' : '' }}">
             <a href="{{ url('admin/blog') }}">
@@ -258,9 +257,11 @@
               <li class=" {{ Request::is('admin/setting/config*') ? 'active' : '' }}"><a href="{{ url('admin/setting/config') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}</a></li>
             @endcan
 
-            <li class=" {{ Request::is('settings*') ? 'active' : '' }}"><a href="{{ url('admin/user') }}"> System settings</a></li>
+            @can('view', App\System::class)
+              <li class=" {{ Request::is('admin/setting/system/general*') ? 'active' : '' }}"><a href="{{ url('admin/setting/system/general') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.system_settings') }}</a></li>
 
-            <li class=" {{ Request::is('settings*') ? 'active' : '' }}"><a href="{{ url('admin/user') }}"> Notifications</a></li>
+              <li class=" {{ Request::is('admin/setting/system/config*') ? 'active' : '' }}"><a href="{{ url('admin/setting/system/config') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}</a></li>
+            @endcan
 
             <li class=" {{ Request::is('settings*') ? 'active' : '' }}"><a href="{{ url('admin/user') }}"> Backup</a></li>
 

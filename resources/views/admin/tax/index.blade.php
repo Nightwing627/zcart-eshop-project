@@ -79,21 +79,21 @@
 				</thead>
 				<tbody>
 					@foreach($trashes as $trash )
-					<tr>
-						<td>{{ $trash->name }}</td>
-						<td>{{ $trash->taxrate }} {{ trans('app.%') }}</td>
-						<td>{{ $tax->country->name }}</td>
-						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
-						<td class="row-options">
-							@can('delete', $trash)
-								<a href="{{ route('admin.setting.tax.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+						<tr>
+							<td>{{ $trash->name }}</td>
+							<td>{{ $trash->taxrate }} {{ trans('app.%') }}</td>
+							<td>{{ $tax->country->name }}</td>
+							<td>{{ $trash->deleted_at->diffForHumans() }}</td>
+							<td class="row-options">
+								@can('delete', $trash)
+									<a href="{{ route('admin.setting.tax.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
 
-								{!! Form::open(['route' => ['admin.setting.tax.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-									{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-								{!! Form::close() !!}
-							@endcan
-						</td>
-					</tr>
+									{!! Form::open(['route' => ['admin.setting.tax.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+										{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+									{!! Form::close() !!}
+								@endcan
+							</td>
+						</tr>
 					@endforeach
 				</tbody>
 			</table>

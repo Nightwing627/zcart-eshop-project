@@ -74,6 +74,10 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeShopForm();
 
+        $this->composeSystemGeneralPage();
+
+        $this->composeSystemConfigPage();
+
         $this->composeTaxForm();
 
         $this->composeTicketCreateForm();
@@ -595,6 +599,22 @@ class ViewComposerServiceProvider extends ServiceProvider
     }
 
     /**
+     * compose partial view of SystemConfig Page
+     */
+    private function composeSystemConfigPage()
+    {
+        View::composer(
+
+                'admin.system.config',
+
+                function($view)
+                {
+                    $view->with('countries', ListHelper::countries());
+                    $view->with('states', ListHelper::states());
+                });
+    }
+
+    /**
      * compose partial view of GeneralConfig Page
      */
     private function composeGeneralConfigPage()
@@ -606,6 +626,22 @@ class ViewComposerServiceProvider extends ServiceProvider
                 function($view)
                 {
                     $view->with('timezones', ListHelper::timezones());
+                });
+    }
+
+    /**
+     * compose partial view of General System Config Page
+     */
+    private function composeSystemGeneralPage()
+    {
+        View::composer(
+
+                'admin.system.general',
+
+                function($view)
+                {
+                    $view->with('timezones', ListHelper::timezones());
+                    $view->with('currencies', ListHelper::currencies());
                 });
     }
 

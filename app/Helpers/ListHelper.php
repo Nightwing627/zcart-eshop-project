@@ -450,6 +450,23 @@ class ListHelper
     }
 
     /**
+     * Get currency list for form dropdown.
+     *
+     * @return array
+     */
+    public static function currencies()
+    {
+        $currencies = \DB::table('currencies')->select('name', 'iso_code', 'id')->where('active', 1)->orderBy('name', 'asc')->get();
+        // $currencies = \DB::table('currencies')->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+
+        $result = [];
+        foreach ($currencies as $id => $currency)
+            $result[$id] = $currency->name . ' (' . $currency->iso_code . ')';
+
+        return $result;
+    }
+
+    /**
      * Get attributes list for form dropdown.
      *
      * @return array

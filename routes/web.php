@@ -102,6 +102,8 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		include('admin/EmailTemplate.php');
 		include('admin/PaymentMethod.php');
 		include('admin/Config.php');
+		include('admin/System.php');
+		include('admin/SystemConfig.php');
 	});
 
 	// Promotions Routs for Admin

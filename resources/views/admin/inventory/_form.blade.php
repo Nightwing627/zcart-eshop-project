@@ -26,106 +26,103 @@
   </div>
 
   <div class="col-lg-3 col-md-6 nopadding-right">
-    <div class="form-group">
-      {!! Form::label('condition', trans('app.form.condition').'*', ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_product_condition') }}"></i>
-      {!! Form::select('condition', ['New' => trans('app.new'), 'Used' => trans('app.used'), 'Refurbished' => trans('app.refurbished')], null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
-      <div class="help-block with-errors"></div>
-    </div>
+    @if( (isset($inventory) && $inventory->product->requires_shipping) || $product->requires_shipping)
+      <div class="form-group">
+        {!! Form::label('condition', trans('app.form.condition').'*', ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_product_condition') }}"></i>
+        {!! Form::select('condition', ['New' => trans('app.new'), 'Used' => trans('app.used'), 'Refurbished' => trans('app.refurbished')], isset($inventory) ? $inventory->condition : 'New', ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+        <div class="help-block with-errors"></div>
+      </div>
+    @else
+      @include('admin.inventory._sale_price_field')
+    @endif
   </div>
 
   <div class="col-lg-3 col-md-6 nopadding-left">
     <div class="form-group">
       {!! Form::label('active', trans('app.form.status').'*', ['class' => 'with-help']) !!}
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_inventory_status') }}"></i>
-      {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+      {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], isset($inventory) ? $inventory->active : 1, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-lg-3 col-md-6 nopadding-right">
-    <div class="form-group">
-      {!! Form::label('warehouse_id', trans('app.form.warehouse'), ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_warehouse') }}"></i>
-      {!! Form::select('warehouse_id', $warehouses, null, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
+@if( (isset($inventory) && $inventory->product->requires_shipping) || $product->requires_shipping)
+  <div class="row">
+    <div class="col-lg-3 col-md-6 nopadding-right">
+      <div class="form-group">
+        {!! Form::label('warehouse_id', trans('app.form.warehouse'), ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_warehouse') }}"></i>
+        {!! Form::select('warehouse_id', $warehouses, null, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 nopadding-left">
+      <div class="form-group">
+        {!! Form::label('supplier_id', trans('app.form.supplier'), ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_supplier') }}"></i>
+        {!! Form::select('supplier_id', $suppliers, null, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 nopadding-right">
+      <div class="form-group">
+        {!! Form::label('min_order_quantity', trans('app.form.min_order_quantity'), ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.min_order_quantity') }}"></i>
+        {!! Form::number('min_order_quantity', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.min_order_quantity')]) !!}
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 nopadding-left">
+      <div class="form-group">
+        {!! Form::label('alert_quantity', trans('app.form.alert_quantity'), ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.alert_quantity') }}"></i>
+        {!! Form::number('alert_quantity', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.alert_quantity')]) !!}
+      </div>
     </div>
   </div>
 
-  <div class="col-lg-3 col-md-6 nopadding-left">
-    <div class="form-group">
-      {!! Form::label('supplier_id', trans('app.form.supplier'), ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_supplier') }}"></i>
-      {!! Form::select('supplier_id', $suppliers, null, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
+  <div class="row">
+    <div class="col-lg-3 col-md-6 nopadding-right">
+      @include('admin.inventory._sale_price_field')
     </div>
-  </div>
 
-  <div class="col-lg-3 col-md-6 nopadding-right">
-    <div class="form-group">
-      {!! Form::label('min_order_quantity', trans('app.form.min_order_quantity'), ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.min_order_quantity') }}"></i>
-      {!! Form::number('min_order_quantity', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.min_order_quantity')]) !!}
-    </div>
-  </div>
-
-  <div class="col-lg-3 col-md-6 nopadding-left">
-    <div class="form-group">
-      {!! Form::label('alert_quantity', trans('app.form.alert_quantity'), ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.alert_quantity') }}"></i>
-      {!! Form::number('alert_quantity', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.alert_quantity')]) !!}
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-3 col-md-6 nopadding-right">
-    <div class="form-group">
-        {!! Form::label('sale_price', trans('app.form.sale_price').'*', ['class' => 'with-help']) !!}
-        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.sale_price') }}"></i>
+    <div class="col-lg-3 col-md-6 nopadding-left">
+      <div class="form-group">
+        {!! Form::label('purchase_price', trans('app.form.purchase_price'), ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.purchase_price') }}"></i>
         <div class="input-group">
           <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
-          {!! Form::number('sale_price', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.sale_price'), 'required']) !!}
+          {!! Form::number('purchase_price', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.purchase_price')]) !!}
         </div>
-        <div class="help-block with-errors"></div>
-    </div>
-  </div>
-
-  <div class="col-lg-3 col-md-6 nopadding-left">
-    <div class="form-group">
-      {!! Form::label('purchase_price', trans('app.form.purchase_price').'*', ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.purchase_price') }}"></i>
-      <div class="input-group">
-        <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
-        {!! Form::number('purchase_price', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.purchase_price'), 'required']) !!}
       </div>
-      <div class="help-block with-errors"></div>
     </div>
-  </div>
 
-  <div class="col-lg-3 col-md-6 nopadding-right">
-    <div class="form-group">
-      {!! Form::label('stock_quantity', trans('app.form.stock_quantity').'*', ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.stock_quantity') }}"></i>
-      {!! Form::number('stock_quantity', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.stock_quantity'), 'required']) !!}
-      <div class="help-block with-errors"></div>
+    <div class="col-lg-3 col-md-6 nopadding-right">
+      <div class="form-group">
+        {!! Form::label('stock_quantity', trans('app.form.stock_quantity').'*', ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.stock_quantity') }}"></i>
+        {!! Form::number('stock_quantity', isset($inventory) ? $inventory->stock_quantity : 1, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.stock_quantity'), 'required']) !!}
+        <div class="help-block with-errors"></div>
+      </div>
     </div>
-  </div>
 
-  <div class="col-lg-3 col-md-6 nopadding-left">
-    <div class="form-group">
-      {!! Form::label('carrier_list[]', trans('app.form.carriers'), ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_carriers') }}"></i>
-      {!! Form::select('carrier_list[]', $carriers , null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
+    <div class="col-lg-3 col-md-6 nopadding-left">
+      <div class="form-group">
+        {!! Form::label('carrier_list[]', trans('app.form.carriers'), ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_carriers') }}"></i>
+        {!! Form::select('carrier_list[]', $carriers , null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
+      </div>
     </div>
   </div>
-</div>
+@endif
 
 <div class="row">
   <div class="col-lg-3 col-md-6 nopadding-right">
     <div class="form-group">
       {!! Form::label('tax_id', trans('app.form.tax').'*', ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_tax') }}"></i>
+      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.inventory_select_tax') }}"></i>
       {!! Form::select('tax_id', $taxes, isset($inventory) ? $inventory->tax_id : config('shop_settings.default_tax_id_for_inventory'), ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
@@ -173,7 +170,7 @@
   {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'placeholder' => trans('app.placeholder.description')]) !!}
 </div>
 
-@if(isset($inventory) && $inventory->product->requires_shipping || $product->requires_shipping)
+@if( (isset($inventory) && $inventory->product->requires_shipping) || $product->requires_shipping)
   <fieldset>
     <legend>{{ trans('app.shipping') }}</legend>
     <div class="row">
@@ -235,66 +232,68 @@
   </fieldset>
 @endif
 
-<?php
-  $attrCount = count($attributes); ?>
+@php
+  $attrCount = count($attributes);
+@endphp
 
 @if($attrCount)
 <fieldset>
   <legend>{{ trans('app.attributes') }}</legend>
-  <?php
-  if ($attrCount >= 4){
-    $col = 3; $chunk = 4;
-  }elseif ($attrCount == 3 ){
-    $col = 4; $chunk = 3;
-  }else{
-    $col = 6; $chunk = 2;
-  }
-  ?>
-    @foreach ($attributes->chunk($chunk) as $chunk)
-      <div class="row">
-        @foreach ($chunk as $attribute)
-          <div class="col-md-{{ $col }}
-            @if($loop->first)
-             {{ 'nopadding-right' }}
-            @elseif($loop->last && $loop->iteration != 3)
-             {{ 'nopadding-left' }}
-            @elseif($col == 4)
-             {{ 'nopadding' }}
-            @elseif($col == 3)
-              @if($loop->iteration == 2)
-                {{ 'nopadding-left' }}
-              @elseif($loop->iteration == 3)
-                {{ 'nopadding-right' }}
-              @endif
+  @php
+    if ($attrCount >= 4){
+      $col = 3; $chunk = 4;
+    }elseif ($attrCount == 3 ){
+      $col = 4; $chunk = 3;
+    }else{
+      $col = 6; $chunk = 2;
+    }
+  @endphp
+
+  @foreach ($attributes->chunk($chunk) as $chunk)
+    <div class="row">
+      @foreach ($chunk as $attribute)
+        <div class="col-md-{{ $col }}
+          @if($loop->first)
+           {{ 'nopadding-right' }}
+          @elseif($loop->last && $loop->iteration != 3)
+           {{ 'nopadding-left' }}
+          @elseif($col == 4)
+           {{ 'nopadding' }}
+          @elseif($col == 3)
+            @if($loop->iteration == 2)
+              {{ 'nopadding-left' }}
+            @elseif($loop->iteration == 3)
+              {{ 'nopadding-right' }}
             @endif
-          ">
-            <div class="form-group">
-              {!! Form::label($attribute->name, $attribute->name, ['class' => 'with-help']) !!}
+          @endif
+        ">
+          <div class="form-group">
+            {!! Form::label($attribute->name, $attribute->name, ['class' => 'with-help']) !!}
 
-              <select class = "form-control select2" id="{{ $attribute->name }}" name="variants[{{ $attribute->id }}]" placeholder = {{ trans('app.placeholder.select') }}>
+            <select class = "form-control select2" id="{{ $attribute->name }}" name="variants[{{ $attribute->id }}]" placeholder = {{ trans('app.placeholder.select') }}>
 
-                <option value="">{{ trans('app.placeholder.select') }}</option>
+              <option value="">{{ trans('app.placeholder.select') }}</option>
 
-                @foreach($attribute->attributeValues as $attributeValue)
+              @foreach($attribute->attributeValues as $attributeValue)
 
-                  <option value="{{ $attributeValue->id }}"
-                    @if(isset($inventory) && count($inventory->attributes))
-                      {{ in_array($attributeValue->id, $inventory->attributeValues->pluck('id')->toArray()) ? 'selected' : '' }}
-                    @endif
-                  >
+                <option value="{{ $attributeValue->id }}"
+                  @if(isset($inventory) && count($inventory->attributes))
+                    {{ in_array($attributeValue->id, $inventory->attributeValues->pluck('id')->toArray()) ? 'selected' : '' }}
+                  @endif
+                >
 
-                    {{ $attributeValue->value }}
+                  {{ $attributeValue->value }}
 
-                  </option>
+                </option>
 
-                @endforeach
+              @endforeach
 
-              </select>
-            </div>
+            </select>
           </div>
-        @endforeach
-      </div>
-    @endforeach
+        </div>
+      @endforeach
+    </div>
+  @endforeach
 </fieldset>
 @endif
 

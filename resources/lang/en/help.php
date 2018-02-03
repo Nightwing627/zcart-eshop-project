@@ -13,6 +13,10 @@ return [
     |
     */
 
+    'marketplace_name' => 'The name of the marketplace name. Visitors will see this name.',
+
+    'system_legal_name' => 'The legal name of the business',
+
     'role_name' => 'The title of the user role',
 
     'role_type' => 'Platform and Merchant. The role type platform only available for the main platform user, a merchant can\'t use this role. The Merchant role type will available when a merchant will add a new user.',
@@ -61,7 +65,69 @@ return [
 
     'shop_status' => 'If active, the shop will be live immediately.',
 
-    'maintenance_mode_handle' => 'If maintenance mode is on, the shop will be offline and the maintenance mode flag will be shown on the shop\'s landing page.',
+    'shop_maintenance_mode_handle' => 'If maintenance mode is on, the shop will be offline and the maintenance mode flag will be shown on the shop\'s landing page.',
+
+    'system_maintenance_mode_handle' => 'If maintenance mode is on, the marketplace will be offline and the maintenance mode flag will be shown to the visitors',
+
+    'system_physical_address' => 'The physical location of the marketplace/office',
+
+    'system_email' => 'All notifications will be send to this email address, accept support emails(if set)',
+
+    'system_timezone' => 'This system will use this timezone to operate.',
+
+    'system_currency' => 'The marketplace currency',
+
+    'system_slogan' => 'The tagline that describe your marketplace most',
+
+    'config_merchant_logo_max_size_limit_kb' => ' in kilobite',
+
+    'system_length_unit' => 'Unit of length will be use all over the marketplace.',
+
+    'system_weight_unit' => 'Unit of weight will be use all over the marketplace.',
+
+    'system_valume_unit' => 'Unit of valume will be use all over the marketplace.',
+
+    'ask_customer_for_email_subscription' => 'When a new customer register an account ask your customer if he/she want to get promotions and other notifications on email. Turning the option off will result in auto subscription. In that case, make the clear on the terms and condition section.',
+
+    'allow_guest_checkout' => 'This will allow customers to checkout without registering on the site.',
+
+    'system_pagination' => 'Set the pagination value for the data tables on the admin panel.',
+
+    'config_merchant_logo_max_size_limit_kb' => 'The maximum imagae size vendors can upload for inventory/logo/avatar. The limit in kilobytes.',
+
+    'config_address_default_country' => 'Set this value to fill the address form faster. Obviously, a user can change the value when adding new address.',
+
+    'config_address_default_state' => 'Set this value to fill the address form faster. Obviously, a user can change the value when adding new address.',
+
+    'config_show_address_title' => 'Show/Hide address title while view/print an address.',
+
+    'config_address_show_country' => 'Show/Hide country name while view/print an address. This is helpful if your marketplace within a small region.',
+
+    'config_address_geocode' => 'Generate geocode(latitude and longitude) when saving a new address. It is importand if you wa to show the location on the map.',
+
+    'system_date_format' => 'Set the date format for the marketplace. Example: 2018-05-13, 05-13-2018, 13-05-2018',
+
+    'config_date_separator' => 'Example: 2018-05-13, 2018.05.13, 2018/05/13',
+
+    'system_time_format' => 'Set the time format for the marketplace. Example: 01:00pm or 13:00',
+
+    'config_time_separator' => ' Example: 07:00am or 07.00am',
+
+    'config_show_currency_symbol' => 'Do you want to show currency symbol when reprenting a price?  Example: $123',
+
+    'config_show_space_after_symbol' => 'Want to formate the price by puting a space after the symbol. Example: $ 123',
+
+    'config_decimals' => 'How many digits you want to show after the decimal point? Example: 13.21, 13.123',
+
+    'config_decimalpoint' => 'Example: 13.21, 13,21',
+
+    'config_thousands_separator' => 'Example: 1,000, 1.000, 1 000',
+
+    'config_gift_card_pin_size' => 'How many digits you want to generate giftcard pin number. Default length 10',
+
+    'config_gift_card_serial_number_size' => 'How many digits you want to generate giftcard seria number. Default length 13',
+
+    'config_coupon_code_size' => 'How many digits you want to generate coupon code. Default length 8',
 
     'shop_email' => 'All notifications will be send to this email address(inventories, orders, tickets, disputs etc.) accept customer support emails(if set)',
 
@@ -143,7 +209,7 @@ return [
 
     'select_warehouse' => 'Choose the warehouse from where the product will be shipped. Keep blank if the inventory will manage centrally',
 
-    'select_tax' => 'The TAX will be added with the sale/offer price',
+    'inventory_select_tax' => 'The Tax will be added with the sale/offer price on the store. Orders created at back office will not apply the tax autometically. You need select the tax when create an order on back office. If your price inclusive the tax, then select -No Tax- option here',
 
     'select_carriers' => 'List of available carriers to ship the product. Leave blank to if the item doesn\'t require shipping',
 
@@ -151,7 +217,7 @@ return [
 
     'available_from' => 'The date when the stock will be available. Default = immediately',
 
-    'sale_price' => 'The price',
+    'sale_price' => 'The price without the tax. If you want to include tax with the price then select -No Tax- option on the tax dropdown.',
 
     'purchase_price' => 'Recommended field. This will helps to calculate profits and generate reports',
 
@@ -371,4 +437,9 @@ return [
 
     'notify_abandoned_checkout' => 'Send me a notification when customer abandoned checkout of my item',
 
+    'notify_when_vendor_registered' => 'Send me a notification when a new vendor has been registered',
+
+    'notify_new_ticket' => 'Send me a notification when a support ticket has been created on the system',
+
+    'notify_when_disput_appealed' => 'Send me a notification when a disput has been appealed to review by marketplace team',
 ];

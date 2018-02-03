@@ -28,9 +28,7 @@ class UpdateInventoryRequest extends Request
 
         return [
             'sku' => 'required|composite_unique:inventories,sku, '.$id,
-            'purchase_price' => 'required|numeric',
             'sale_price' => 'required|numeric',
-            'stock_quantity' => 'required|integer',
             'offer_price' => 'nullable|numeric',
             'available_from' => 'nullable|date',
             'offer_start' => 'nullable|date|required_with:offer_price|after_or_equal:now',

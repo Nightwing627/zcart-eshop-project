@@ -50,7 +50,7 @@
   <div class="col-lg-3 col-md-6 nopadding-left">
     <div class="form-group">
       {!! Form::label('tax_id', trans('app.form.tax').'*', ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_tax') }}"></i>
+      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.inventory_select_tax') }}"></i>
       {!! Form::select('tax_id', $taxes, config('shop_settings.default_tax_id_for_inventory'), ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>

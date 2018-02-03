@@ -61,5 +61,5 @@ return [
 
     'reports' => 'Reports',
     'sales_report' => 'Sales',
-
+    'system_settings' => 'System settings',
 ];

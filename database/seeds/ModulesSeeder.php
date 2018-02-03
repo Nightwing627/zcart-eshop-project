@@ -140,6 +140,16 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,add,edit,delete'
         ],
 
+        'System' => [
+            'access' => 'Super Admin',
+            'actions' => 'view,edit'
+        ],
+
+        'SystemConfig' => [
+            'access' => 'Platform',
+            'actions' => 'view,edit'
+        ],
+
         'Tax' => [
             'access' => 'Common',
             'actions' => 'view,add,edit,delete'

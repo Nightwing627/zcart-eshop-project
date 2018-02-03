@@ -28,7 +28,7 @@ class CreateInventoryTable extends Migration
             $table->integer('tax_id')->unsigned()->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
 
-            $table->decimal('purchase_price', 20, 6);
+            $table->decimal('purchase_price', 20, 6)->nullable();
             $table->decimal('sale_price', 20, 6);
             $table->decimal('offer_price', 20, 6)->nullable();
             $table->timestamp('offer_start')->nullable();

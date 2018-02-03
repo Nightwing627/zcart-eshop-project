@@ -29,16 +29,13 @@ class CreateInventoryRequest extends Request
 
         return [
             'sku' => 'required|unique:inventories,sku',
-            'purchase_price' => 'required|numeric',
             'sale_price' => 'required|numeric',
-            'stock_quantity' => 'required|integer',
             'offer_price' => 'nullable|numeric',
             'available_from' => 'nullable|date',
             'offer_start' => 'nullable|date|required_with:offer_price|after_or_equal:now',
             'offer_end' => 'nullable|date|required_with:offer_price|after:offer_start',
             'image' => 'mimes:jpeg,png',
         ];
-
     }
 
    /**

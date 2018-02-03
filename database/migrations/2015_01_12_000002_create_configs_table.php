@@ -39,14 +39,12 @@ class CreateConfigsTable extends Migration
             $table->integer('pagination')->unsigned()->default(10);
 
             // Inventory
+            $table->boolean('digital_goods_only')->nullable()->default(false);
             $table->integer('default_tax_id_for_inventory')->unsigned()->nullable();
             $table->integer('default_warehouse_id')->unsigned()->nullable();
             $table->integer('default_supplier_id')->unsigned()->nullable();
             $table->string('default_carrier_ids_for_inventory')->nullable();
             $table->string('default_packaging_ids')->nullable();
-
-            // Analytics
-            $table->string('google_analytics_id')->nullable();
 
             // Notification Settings
             $table->boolean('notify_new_message')->nullable();
@@ -54,6 +52,7 @@ class CreateConfigsTable extends Migration
             $table->boolean('notify_inventory_out')->nullable();
             $table->boolean('notify_new_order')->nullable();
             $table->boolean('notify_abandoned_checkout')->nullable();
+            $table->boolean('notify_new_disput')->nullable()->default(true);
 
             $table->boolean('maintenance_mode')->nullable();
             $table->timestamps();

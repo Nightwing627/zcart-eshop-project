@@ -14,37 +14,78 @@ class CreateSystemsTable extends Migration
     {
         Schema::create('systems', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->nullable();
-            $table->string('address_line_1')->nullable();
-            $table->string('address_line_2')->nullable();
-            $table->string('city')->nullable();
-            $table->string('zip_code')->nullable();
-            $table->string('state')->nullable();
-            $table->integer('state_id')->unsigned()->nullable();
-            $table->string('country')->nullable();
-            $table->integer('country_id')->unsigned()->nullable();
-            $table->string('phone')->nullable();
-            $table->boolean('is_multi_vendor')->nullable()->default(true);
-
+            $table->boolean('maintenance_mode')->nullable();
             // Mandatory Settings
+            $table->string('name')->default('Marketplace');
+            $table->text('slogan')->nullable();
+            $table->text('legal_name')->nullable();
+            $table->string('email')->nullable(); //Notifications, supports and other alert send to this email
+            // $table->longtext('description')->nullable();
+            $table->integer('timezone_id')->default(35);
+            $table->string('currency_code')->default('USD');
+            $table->string('currency_symbol')->default('$');
+            $table->integer('currency_id')->default(148);
+            $table->string('google_analytics_id')->nullable();
+
+            // Support
+            $table->string('support_phone')->nullable();
+            $table->string('support_phone_toll_free')->nullable();
+            $table->string('support_email');
+            $table->string('default_sender_email_address')->nullable();
+            $table->string('default_email_sender_name')->nullable();
+
+            // Units and Formating
+            $table->string('length_unit')->default('meter');
+            $table->string('weight_unit')->default('g');
+            $table->string('valume_unit')->default('liter');
+
             $table->enum('date_format', ['YYYY-MM-DD', 'DD-MM-YYYY', 'MM-DD-YYYY'])->default('YYYY-MM-DD');
-            $table->enum('date_separate', ['.', '-', '/'])->default('-');
+            $table->enum('date_separator', ['.', '-', '/'])->default('-');
             $table->enum('time_format', ['12h', '24h'])->default('12h');
-            $table->enum('time_separate', ['.', ':'])->default(':');
-            $table->string('time_zone')->nullable()->default('UTC');
-            $table->string('currency_code')->nullable();
-            $table->string('currency_symbol')->nullable();
-            $table->integer('currency_id')->nullable();
-            $table->string('length_unit')->nullable();
-            $table->string('weight_unit')->nullable();
-            $table->string('valume_unit')->nullable();
-            // $table->integer('decimals')->nullable()->default(2);
+            $table->enum('time_separator', ['.', ':'])->default(':');
+
             $table->enum('decimals', [2, 3, 4, 5, 6])->default(2);
             $table->enum('decimalpoint', [',', '.'])->default('.');
             $table->enum('thousands_separator', [',', '.', ' '])->default(',');
-            $table->boolean('show_currency_symbol')->nullable();
-            $table->boolean('show_space_after_symbol')->nullable();
-            $table->boolean('show_inactive_categories_also_when_create_category')->nullable();
+
+            // Currency
+            $table->boolean('show_currency_symbol')->default(1);
+            $table->boolean('show_space_after_symbol')->default(1);
+
+            // Promotions
+            $table->integer('coupon_code_size')->default(8);
+            $table->integer('gift_card_serial_number_size')->default(13);
+            $table->integer('gift_card_pin_size')->default(10);
+
+            $table->integer('merchant_logo_max_size_limit_kb')->default(2000);
+
+            // Views
+            $table->integer('pagination')->unsigned()->default(10);
+
+            // Address
+            $table->boolean('show_address_title')->nullable();
+            $table->boolean('address_show_country')->nullable();
+            $table->boolean('address_geocode')->nullable();
+            $table->integer('address_default_country')->nullable();
+            $table->integer('address_default_state')->nullable();
+
+            // Checkout
+            $table->boolean('allow_guest_checkout')->nullable()->default(false);
+            $table->boolean('auto_approve_order')->nullable()->default(false);
+
+            //Customer
+            $table->boolean('ask_customer_for_email_subscription')->nullable()->default(true);
+
+            // Notification Settings
+            $table->boolean('notify_when_vendor_registered')->nullable()->default(true);;
+            $table->boolean('notify_when_disput_appealed')->nullable()->default(true);
+            $table->boolean('notify_new_message')->nullable();
+            $table->boolean('notify_new_ticket')->nullable()->default(true);
+
+            //Hidden settings
+            $table->boolean('digital_goods_only')->nullable()->default(false);
+            $table->boolean('is_multi_vendor')->nullable()->default(true);
+            $table->integer('max_role_level')->unsigned()->default(99);
 
             // Vendot Settings
             // $table->boolean('merchant_can_create_category_group')->nullable();
@@ -58,21 +99,6 @@ class CreateSystemsTable extends Migration
             // $table->boolean('merchant_can_have_own_carriers')->nullable();
             // $table->boolean('merchant_can_have_own_gift_cards')->nullable();
             // $table->boolean('merchant_can_create_email_template')->nullable();
-
-            // Address
-            $table->boolean('address_geocode')->nullable();
-            $table->boolean('address_show_country')->nullable();
-            $table->boolean('show_address_title')->nullable();
-            $table->integer('address_default_country')->nullable();
-            $table->integer('address_default_state')->nullable();
-
-            // Genaral Settings
-            $table->integer('max_role_level')->unsigned()->default(99);
-            $table->integer('pagination')->unsigned()->default(10);
-            $table->integer('merchant_logo_max_size_limit_kb')->default(2000);
-            $table->integer('coupon_code_size')->default(8);
-            $table->integer('gift_card_serial_number_size')->default(13);
-            $table->integer('gift_card_pin_size')->default(10);
 
             $table->timestamps();
         });

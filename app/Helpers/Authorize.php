@@ -63,9 +63,13 @@ class Authorize
             return true;
 
 		// The Super admin will not required to check authorization.
-		// Just avoid the merchant modules to keep the dashboard clean
-		if(Auth::user()->isSuperAdmin())
-			return config('authSlugs')[$this->slug] != 'Merchant';
+		if(Auth::user()->isSuperAdmin()){
+			// Just avoid the merchant modules to keep the dashboard clean
+			if (isset(config('authSlugs')[$this->slug]))
+				return config('authSlugs')[$this->slug] != 'Merchant';
+
+			return true;
+		}
 
 		// The content creator always have the full permission
 		if(isset($this->model->user_id) && $this->model->user_id == $this->user->id)

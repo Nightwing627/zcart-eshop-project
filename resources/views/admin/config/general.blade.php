@@ -134,7 +134,7 @@
 				    	@if($can_update)
 							<div class="form-group text-center">
 								{!! Form::label('maintenance_mode', trans('app.form.maintenance_mode'), ['class' => 'control-label with-help']) !!}
-							  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.maintenance_mode_handle') }}"></i>
+							  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.shop_maintenance_mode_handle') }}"></i>
 
 							  	<div class="handle">
 									<a href="{{ route('admin.setting.config.maintenanceMode.toggle', $shop) }}" type="button" class="btn btn-lg btn-secondary btn-toggle {{ $shop->config->maintenance_mode == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $shop->config->maintenance_mode == 1 ? 'true' : 'false' }}" autocomplete="off">

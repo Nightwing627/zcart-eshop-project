@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
 
         //Seed the countries
         $this->call('SystemsSeeder');
+        $this->call('KeyValuesSeeder');
         $this->call('CountriesSeeder');
         $this->call('StatesSeeder');
         $this->call('TimezonesSeeder');
