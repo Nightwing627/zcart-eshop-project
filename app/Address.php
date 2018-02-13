@@ -49,9 +49,7 @@ class Address extends Model
         static::saving(function($address)
         {
             if(config('system_settings.address_geocode'))
-            {
                 $address->geocode();
-            }
         });
     }
 
@@ -106,30 +104,25 @@ class Address extends Model
         $query[] = $this->address_line_1 ?: '';
         $query[] = $this->address_line_2 ?: '';
         $query[] = $this->city ?: '';
-        $query[] = $this->state_name;
-        // $query[] = $this->state_id ? $this->state->name : $this->state_name;
+        if ($this->state_id)
+            $query[] = $this->state->name;
         $query[] = $this->zip_code ?: '';
-        $query[] = $this->country ? $this->country->name : '';
+        if ($this->country_id)
+            $query[] = $this->country->name;
         // build query string
         $query = trim( implode(', ', array_filter($query)) );
         $query = str_replace(' ', '+', $query);
 
-        if(empty($query) || $query == '')
-        {
-            return;
-        }
+        if(empty($query) || $query == '')   return;
 
         // build url
         $url = 'https://maps.google.com/maps/api/geocode/json?address='.$query.'&sensor=false';
         // try to get geo codes
-        if ( $geocode = file_get_contents($url) )
-        {
+        if ( $geocode = file_get_contents($url) ){
             $output = json_decode($geocode);
 
-            if ( count($output->results) && isset($output->results[0]) )
-            {
-                if ( $geo = $output->results[0]->geometry )
-                {
+            if ( count($output->results) && isset($output->results[0]) ){
+                if ( $geo = $output->results[0]->geometry ){
                     $this->latitude = $geo->location->lat;
                     $this->longitude = $geo->location->lng;
                 }
@@ -163,7 +156,7 @@ class Address extends Model
             $html [] = $this->address_line_2;
 
         if(strlen($this->city))
-            $html []= sprintf('%s, %s %s', e($this->city), e($this->state_id ? $this->state->name : $this->state_name), e($this->zip_code));
+            $html []= sprintf('%s, %s %s', e($this->city), e($this->state_id ? $this->state->name : ''), e($this->zip_code));
 
         if(config('system_settings.address_show_country') && $this->country)
             $html []= e($this->country->name);
@@ -195,8 +188,7 @@ class Address extends Model
         if(strlen($this->address_line_2))
             $str [] = $this->address_line_2;
 
-        if(strlen($this->city))
-        {
+        if(strlen($this->city)){
             $state_name = $this->state ? $this->state->name : '';
             $str []= sprintf('%s, %s %s', $this->city, $state_name, $this->zip_code);
         }
@@ -220,7 +212,8 @@ class Address extends Model
         $address['address_line_1'] = $this->address_line_1;
         $address['address_line_2'] = $this->address_line_2;
         $address['city'] = $this->city;
-        $address['state'] = $this->state->name;
+        if($this->state)
+            $address['state'] = $this->state->name;
         $address['zip_code'] = $this->zip_code;
         if($this->country)
             $address['country'] = $this->country->name;
@@ -230,10 +223,7 @@ class Address extends Model
 
         $address = array_filter($address);
 
-        if ( empty($address) )
-        {
-            return NULL;
-        }
+        if (empty($address)) return;
 
         return $address;
     }

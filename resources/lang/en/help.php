@@ -295,15 +295,27 @@ return [
 
     'payment_method_company_name' => 'The main company name',
 
-    'packaging_name' => 'Packaging title',
+    'packaging_name' => 'Customer will see this if the packaging option is available on order checkout',
 
-    'packaging_cost' => 'Packaging cost',
+    'packaging_cost' => 'The cost of packaging. You can chooose if you want to charge the cost to customers or not',
 
     'packaging_charge_customer' => 'If checked: the cost will be added with shipping when a customer place an order.',
 
     'shipping_carrier_name' => 'Name of the shipping carrier',
 
     'shipping_tax' => 'Shipping tax will be added to shipping cost while checkout. Leave empty if no tax applied.',
+
+    'shipping_zone_name' => 'Give a name of zone. Customer will not see this name.',
+
+    'shipping_rate_name' => 'Give a meaningful name. Customer will see this name at checkout. e. g. \'standard shipping\'',
+
+    'shipping_rate' => 'Check the \'Free shipping\' option or give 0 amount for free shipping',
+
+    'shipping_zone_tax' => 'This tax profile will be applicable when customer make a purchase from this shipping zone',
+
+    'shipping_zone_select_countries' => 'Select countries to this zone that you ship to. Check Rest of the world option for worldwide zone.',
+
+    'rest_of_the_world' => 'This zone includes any countries and regions not already defined in your other shipping zones.',
 
     'shipping_max_width' => 'Maximun package width handle by the carrier. Leave empty to disable.',
 
@@ -340,6 +352,10 @@ return [
     // 'order_number_prefix' => 'The prefix will be added autometically to formate all order numbers. Leave it blank if you don\'t want to formate order numbers.',
 
     // 'order_number_suffix' => 'The suffix will be added to the end of all order numbers. Leave it blank if you don\'t want to formate order numbers.',
+
+    'customer_not_see_this' => 'Customer will not see this',
+
+    'customer_will_see_this' => 'Customers will see this',
 
     'refund_select_order' => 'Select the order you want to refund',
 
@@ -440,6 +456,8 @@ return [
     'notify_when_vendor_registered' => 'Send me a notification when a new vendor has been registered',
 
     'notify_new_ticket' => 'Send me a notification when a support ticket has been created on the system',
+
+    'notify_new_disput' => 'Send me a notification when a customer submit a new disput',
 
     'notify_when_disput_appealed' => 'Send me a notification when a disput has been appealed to review by marketplace team',
 ];

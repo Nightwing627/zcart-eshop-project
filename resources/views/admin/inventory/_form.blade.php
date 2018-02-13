@@ -30,7 +30,7 @@
       <div class="form-group">
         {!! Form::label('condition', trans('app.form.condition').'*', ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_product_condition') }}"></i>
-        {!! Form::select('condition', ['New' => trans('app.new'), 'Used' => trans('app.used'), 'Refurbished' => trans('app.refurbished')], isset($inventory) ? $inventory->condition : 'New', ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+        {!! Form::select('condition', ['New' => trans('app.new'), 'Used' => trans('app.used'), 'Refurbished' => trans('app.refurbished')], isset($inventory) ? null : 'New', ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
         <div class="help-block with-errors"></div>
       </div>
     @else
@@ -42,7 +42,7 @@
     <div class="form-group">
       {!! Form::label('active', trans('app.form.status').'*', ['class' => 'with-help']) !!}
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_inventory_status') }}"></i>
-      {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], isset($inventory) ? $inventory->active : 1, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+      {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], isset($inventory) ? null : 1, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -54,7 +54,7 @@
       <div class="form-group">
         {!! Form::label('warehouse_id', trans('app.form.warehouse'), ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_warehouse') }}"></i>
-        {!! Form::select('warehouse_id', $warehouses, null, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
+        {!! Form::select('warehouse_id', $warehouses, isset($inventory) ? null : config('shop_settings.default_warehouse_id'), ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
       </div>
     </div>
 
@@ -62,7 +62,7 @@
       <div class="form-group">
         {!! Form::label('supplier_id', trans('app.form.supplier'), ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_supplier') }}"></i>
-        {!! Form::select('supplier_id', $suppliers, null, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
+        {!! Form::select('supplier_id', $suppliers, isset($inventory) ? null : config('shop_settings.default_supplier_id'), ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
       </div>
     </div>
 
@@ -103,7 +103,7 @@
       <div class="form-group">
         {!! Form::label('stock_quantity', trans('app.form.stock_quantity').'*', ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.stock_quantity') }}"></i>
-        {!! Form::number('stock_quantity', isset($inventory) ? $inventory->stock_quantity : 1, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.stock_quantity'), 'required']) !!}
+        {!! Form::number('stock_quantity', isset($inventory) ? null : 1, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.stock_quantity'), 'required']) !!}
         <div class="help-block with-errors"></div>
       </div>
     </div>
@@ -112,7 +112,7 @@
       <div class="form-group">
         {!! Form::label('carrier_list[]', trans('app.form.carriers'), ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_carriers') }}"></i>
-        {!! Form::select('carrier_list[]', $carriers , null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
+        {!! Form::select('carrier_list[]', $carriers , isset($inventory) ? null : config('shop_settings.default_carrier_ids_for_inventory'), ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
       </div>
     </div>
   </div>
@@ -123,7 +123,7 @@
     <div class="form-group">
       {!! Form::label('tax_id', trans('app.form.tax').'*', ['class' => 'with-help']) !!}
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.inventory_select_tax') }}"></i>
-      {!! Form::select('tax_id', $taxes, isset($inventory) ? $inventory->tax_id : config('shop_settings.default_tax_id_for_inventory'), ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+      {!! Form::select('tax_id', $taxes, isset($inventory) ? null : config('shop_settings.default_tax_id_for_inventory'), ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -178,7 +178,7 @@
         <div class="form-group">
           {!! Form::label('packaging_list[]', trans('app.form.packagings'), ['class' => 'with-help']) !!}
           <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_packagings') }}"></i>
-          {!! Form::select('packaging_list[]', $packagings , null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
+          {!! Form::select('packaging_list[]', $packagings , isset($inventory) ? null : config('shop_settings.default_packaging_ids'), ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
         </div>
       </div>
       <div class="col-md-2 col-sm-6 nopadding-right">

@@ -106,6 +106,7 @@
 								@endif
 							</div>
 						</div>
+
 				  		@if($can_update)
 							<div class="form-group">
 								<label for="exampleInputFile" class="with-help col-sm-3 control-label"> {{ trans('app.form.logo') }}</label>

@@ -46,7 +46,7 @@ class Supplier extends Model
      */
     public function inventories()
     {
-        return $this->hasMany('App\Inventory');
+        return $this->hasMany(Inventory::class);
     }
 
     /**
@@ -54,7 +54,7 @@ class Supplier extends Model
      */
     public function shop()
     {
-        return $this->belongsTo('App\Shop');
+        return $this->belongsTo(Shop::class);
     }
 
     /**

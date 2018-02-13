@@ -18,6 +18,7 @@ class CreatePackagingsTable extends Migration
             $table->string('name');
             $table->decimal('cost', 20, 6)->nullable();
             $table->boolean('charge_customer')->nullable();
+            $table->boolean('active')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

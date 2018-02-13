@@ -83,11 +83,27 @@ class Shop extends Model
     }
 
     /**
+     * Get the ShippingZones for the order.
+     */
+    public function shippingZones()
+    {
+        return $this->hasMany(ShippingZone::class);
+    }
+
+    /**
      * Get the carriers for the shop.
      */
     public function carriers()
     {
         return $this->hasMany(Carrier::class);
+    }
+
+    /**
+     * Get the user shipping_zones.
+     */
+    public function shipping_zones()
+    {
+        return $this->hasMany(ShippingZone::class);
     }
 
     /**
@@ -221,5 +237,4 @@ class Shop extends Model
     {
         return $query->where('active', 1);
     }
-
 }

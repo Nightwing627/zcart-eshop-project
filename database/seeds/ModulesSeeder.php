@@ -135,6 +135,16 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,add,edit,delete'
         ],
 
+        'Shipping Zone' => [
+            'access' => 'Merchant',
+            'actions' => 'view,add,edit,delete'
+        ],
+
+        'Shipping Rate' => [
+            'access' => 'Merchant',
+            'actions' => 'add,edit,delete'
+        ],
+
         'Shop Rule' => [
             'access' => 'Merchant',
             'actions' => 'view,add,edit,delete'

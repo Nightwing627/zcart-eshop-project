@@ -1,4 +1,37 @@
 <?php
+
+if ( ! function_exists('is_serialized') )
+{
+    /**
+     * Check if the given value is_serialized or not
+     */
+    function is_serialized( $data ) {
+        // if it isn't a string, it isn't serialized
+        if ( !is_string( $data ) )
+            return false;
+        $data = trim( $data );
+        if ( 'N;' == $data )
+            return true;
+        if ( !preg_match( '/^([adObis]):/', $data, $badions ) )
+            return false;
+        switch ( $badions[1] ) {
+            case 'a' :
+            case 'O' :
+            case 's' :
+                if ( preg_match( "/^{$badions[1]}:[0-9]+:.*[;}]\$/s", $data ) )
+                    return true;
+                break;
+            case 'b' :
+            case 'i' :
+            case 'd' :
+                if ( preg_match( "/^{$badions[1]}:[0-9.E-]+;\$/", $data ) )
+                    return true;
+                break;
+        }
+        return false;
+    }
+}
+
 if ( ! function_exists('get_site_title') )
 {
     /**
@@ -263,52 +296,6 @@ if ( ! function_exists('get_formated_gender') )
     }
 }
 
-if ( ! function_exists('setAdditionalCartInfo') )
-{
-    /**
-     * Push some extra information into the request
-     *
-     * @param $request
-     */
-    function setAdditionalCartInfo($request)
-    {
-        $total = 0;
-        $discount = 0;
-        $grand_total = 0;
-
-        foreach ($request->input('cart') as $cart)
-        {
-            $total = $total + ($cart['quantity'] * $cart['unit_price']);
-        }
-
-        $tax = ($total * getTaxRate($request->input('tax_id'))) / 100;
-
-        $shipping = getShippingCostWithHandlingFee($request->input('carrier_id'));
-
-        $packaging_cost = getPackagingCost($request->input('packaging_id'));
-
-        $grand_total =  ($total - $discount + $tax + $shipping);
-
-        $request->merge([
-            'shop_id' => $request->user()->merchantId(),
-            'item_count' => count($request->input('cart') ),
-            'quantity' => array_sum(array_column($request->input('cart'), 'quantity') ),
-            'total' => $total,
-            'shipping' => $shipping ?: null,
-            'packaging_cost' => $packaging ?: null,
-            'discount' => $discount ?: null,
-            'tax_amount' => $tax ?: null,
-            'grand_total' => $grand_total,
-            'shipping_address' => $request->input('same_as_billing_address')  ?
-                                $request->input('billing_address') :
-                                $request->input('shipping_address'),
-            'approved' => 1,
-        ]);
-
-        return $request;
-    }
-}
-
 if ( ! function_exists('get_formated_decimal') )
 {
     /**
@@ -328,8 +315,7 @@ if ( ! function_exists('get_formated_decimal') )
              config('system_settings.thousands_separator') ?: ', '
         );
 
-        if ($trim)
-        {
+        if ($trim){
             $dotPos = strrpos($value, '.');
             $commaPos = strrpos($value, ',');
             $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos :
@@ -366,16 +352,19 @@ if ( ! function_exists('get_formated_currency') )
 
 if ( ! function_exists('get_formated_currency_symbol') )
 {
-    /**
-     * Get the formated currency symbol.
-     *
-     * @return str   currency symbol
-     */
     function get_formated_currency_symbol()
     {
         return
             (config('system_settings.show_currency_symbol') ? config('system_settings.currency_symbol') : '') .
             (config('system_settings.show_space_after_symbol') ? ' ' : '');
+    }
+}
+
+if ( ! function_exists('get_formated_weight') )
+{
+    function get_formated_weight($value = 0)
+    {
+        return get_formated_decimal($value) . ' ' . config('system_settings.weight_unit');
     }
 }
 
@@ -389,12 +378,128 @@ if ( ! function_exists('get_formated_order_number') )
     }
 }
 
+if ( ! function_exists('get_formated_shipping_range_of') )
+{
+    /**
+     * get_formated_shipping_range_of given shipping rate
+     *
+     * @param $tax
+     */
+    function get_formated_shipping_range_of($rate){
+        if( !is_object($rate) )
+            $rate = \DB::table('shipping_rates')->find($rate);
+
+        if ($rate->based_on == 'weight') {
+            $lower = get_formated_weight($rate->minimum);
+            $upper = get_formated_weight($rate->maximum);
+        }
+        else{
+            $lower = get_formated_currency($rate->minimum);
+            $upper = get_formated_currency($rate->maximum);
+        }
+
+        $upper = get_formated_decimal($rate->maximum) > 0 ? ' - ' . $upper : ' and up';
+
+        return  $lower . $upper;
+    }
+}
+
+// COUNTRY
+if ( ! function_exists('get_countries_name_with_states') )
+{
+    /**
+     * Return taxe rate for the given tax id
+     *
+     * @param $country
+     */
+    function get_countries_name_with_states($ids){
+        if (is_array($ids)){
+            $countries = \DB::table('countries')->select('iso_3166_2', 'name', 'id')->whereIn('id', $ids)->get()->toArray();
+            $all_states = \DB::table('states')->whereIn('country_id', $ids)->pluck('country_id', 'id')->toArray();
+
+            if(!empty($countries)){
+                $result = [];
+                foreach ($countries as $country) {
+                    $states = array_filter($all_states, function ($value) use ($country) {
+                            return $value == $country->id;
+                        });
+
+                    $result[$country->id]['code'] = $country->iso_3166_2;
+                    $result[$country->id]['name'] = $country->name;
+                    $result[$country->id]['states'] = array_keys($states);
+                }
+                return $result;
+            }
+        }
+        else{
+            $country_data = \DB::table('countries')->select('iso_3166_2', 'name')->find($country);
+        }
+    }
+}
+
+if ( ! function_exists('get_formated_country_name') )
+{
+    /**
+     * Return taxe rate for the given tax id
+     *
+     * @param $country
+     */
+    function get_formated_country_name($country, $code = null){
+        if (is_numeric($country)){
+            $country_data = \DB::table('countries')->select('iso_3166_2', 'name')->find($country);
+            $country = $country_data->name;
+            $code = $country_data->iso_3166_2;
+        }
+
+        if($code){
+            $full_path = image_path('flags') . $code . '.png';
+
+            if(!file_exists($full_path))
+                $full_path = image_path('flags') . 'default.gif';
+
+            return '<img src="'. asset($full_path) .'" alt="'. $code .'"> <span class="indent5">' . $country . '</span>';
+        }
+
+        return $country;
+    }
+}
+
+if ( ! function_exists('get_state_count_of') )
+{
+    /**
+     * Return total number of states of given country
+     *
+     * @param $tax
+     */
+    function get_state_count_of($country){
+        return \DB::table('states')->where('country_id', $country)->count();
+    }
+}
+
+if ( ! function_exists('get_states_of') )
+{
+    /**
+     * Get states ids of given countries.
+     *
+     * @param  int $countries
+     *
+     * @return array
+     */
+    function get_states_of($countries)
+    {
+        if (is_array($countries))
+            return \DB::table('states')->whereIn('country_id', $countries)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+
+        return \DB::table('states')->where('country_id', $countries)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+    }
+}
+
 if ( ! function_exists('getTaxRate') )
 {
     /**
      * Return taxe rate for the given tax id
      *
-     * @param $request
+     * @param $tax
      */
     function getTaxRate($tax)
     {
@@ -581,18 +686,29 @@ if ( ! function_exists('get_value_from') )
     /**
      * Get value from a given table and id
      *
-     * @param  int $id    The primary key
+     * @param  int $ids    The primary keys
      * @param  str $table
      * @param  mix $field
      *
      * @return mix
      */
-    function get_value_from($id, $table, $field)
+    function get_value_from($ids, $table, $field)
     {
-        $value = \DB::table($table)->find($id);
-
-        if(!empty($value) && isset($value->$field))
-            return $value->$field;
+        if(is_array($ids)){
+            $values = \DB::table($table)->select($field)->whereIn('id', $ids)->get()->toArray();
+            if(!empty($values)){
+                $result = [];
+                foreach ($values as $value) {
+                    $result[] = $value->$field;
+                }
+                return $result;
+            }
+        }
+        else{
+            $value = \DB::table($table)->select($field)->where('id', $ids)->get();
+            if(!empty($value) && isset($value->$field))
+                return $value->$field;
+        }
 
         return null;
     }
@@ -635,3 +751,48 @@ if ( ! function_exists('get_msg_folder_name_from_label') )
     }
 }
 
+if ( ! function_exists('setAdditionalCartInfo') )
+{
+    /**
+     * Push some extra information into the request
+     *
+     * @param $request
+     */
+    function setAdditionalCartInfo($request)
+    {
+        $total = 0;
+        $discount = 0;
+        $grand_total = 0;
+
+        foreach ($request->input('cart') as $cart)
+        {
+            $total = $total + ($cart['quantity'] * $cart['unit_price']);
+        }
+
+        $tax = ($total * getTaxRate($request->input('tax_id'))) / 100;
+
+        $shipping = getShippingCostWithHandlingFee($request->input('carrier_id'));
+
+        $packaging = getPackagingCost($request->input('packaging_id'));
+
+        $grand_total =  ($total - $discount + $tax + $shipping);
+
+        $request->merge([
+            'shop_id' => $request->user()->merchantId(),
+            'item_count' => count($request->input('cart') ),
+            'quantity' => array_sum(array_column($request->input('cart'), 'quantity') ),
+            'total' => $total,
+            'shipping' => $shipping ?: null,
+            'packaging_cost' => $packaging ?: null,
+            'discount' => $discount ?: null,
+            'tax_amount' => $tax ?: null,
+            'grand_total' => $grand_total,
+            'shipping_address' => $request->input('same_as_billing_address')  ?
+                                $request->input('billing_address') :
+                                $request->input('shipping_address'),
+            'approved' => 1,
+        ]);
+
+        return $request;
+    }
+}

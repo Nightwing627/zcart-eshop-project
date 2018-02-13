@@ -18,6 +18,7 @@ return [
     'users' => 'Users',
     'customers' => 'Customers',
     'shops' => 'Shops',
+    'shipping_zones' => 'Shipping zones',
     'suppliers' => 'Suppliers',
     'vendors' => 'Vendors',
     'merchants' => 'Merchants',

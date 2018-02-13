@@ -40,14 +40,25 @@ class ShopsSeeder extends Seeder
             'default_sender_email_address' => 'noreply.shop@demo.com',
             'default_email_sender_name' => 'Support Agent',
             'order_number_prefix' => '#',
-            'default_tax_id_for_inventory' => rand(1, 5),
-            'default_tax_id_for_order' => rand(1, 5),
-            'default_carrier_id' => rand(1, 5),
-            'default_carrier_ids_for_inventory' => serialize(array_rand(range(1,30), rand(1,4))),
-            'default_packaging_ids' => serialize(array_rand(range(1,30), rand(1,4))),
+            'default_tax_id_for_inventory' => rand(1, 31),
+            'default_tax_id_for_order' => rand(1, 31),
+            'default_carrier_id' => rand(1, 30),
+            'default_carrier_ids_for_inventory' => serialize(array_rand(range(1,30), 3)),
+            'default_packaging_ids' => serialize(array_rand(range(1,30), 3)),
             // 'flat_shipping_cost' => 2,
             'order_handling_cost' => 2,
             'free_shipping_starts' => 20,
+        ]);
+
+        $country_ids = [ 50, 840];
+        $state_ids = \DB::table('states')->whereIn('country_id', $country_ids)->pluck('id')->toArray();
+
+        DB::table('shipping_zones')->insert([
+            'shop_id' => 1,
+            'name' => 'Domestic',
+            'tax_id' => rand(1, 31),
+            'country_ids' => serialize($country_ids),
+            'state_ids' => serialize($state_ids),
         ]);
     }
 }

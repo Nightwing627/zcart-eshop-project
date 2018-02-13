@@ -75,8 +75,9 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 	// Shipping Routs for Admin/Merchant
 	Route::group(['as' => 'shipping.', 'prefix' => 'shipping'], function()
 	{
+		include('admin/ShippingZone.php');
+		include('admin/ShippingRate.php');
 		include('admin/Carrier.php');
-
 		include('admin/Packaging.php');
 	});
 

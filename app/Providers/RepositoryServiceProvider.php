@@ -122,6 +122,14 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Shop\EloquentShop::class
         );
         $this->app->singleton(
+            \App\Repositories\ShippingRate\ShippingRateRepository::class,
+            \App\Repositories\ShippingRate\EloquentShippingRate::class
+        );
+        $this->app->singleton(
+            \App\Repositories\ShippingZone\ShippingZoneRepository::class,
+            \App\Repositories\ShippingZone\EloquentShippingZone::class
+        );
+        $this->app->singleton(
             \App\Repositories\Supplier\SupplierRepository::class,
             \App\Repositories\Supplier\EloquentSupplier::class
         );

@@ -24,6 +24,7 @@ class Packaging extends Model
      */
     protected $casts = [
         'charge_customer' => 'boolean',
+        'active' => 'boolean',
     ];
 
     /**
@@ -43,6 +44,7 @@ class Packaging extends Model
                     'name',
                     'cost',
                     'charge_customer',
+                    'active',
                  ];
 
     /**
@@ -50,7 +52,7 @@ class Packaging extends Model
      */
     public function shop()
     {
-        return $this->belongsTo('App\Shop');
+        return $this->belongsTo(Shop::class);
     }
 
     /**

@@ -72,6 +72,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeSetVariantForm();
 
+        $this->composeShippingZoneForm();
+
         $this->composeShopForm();
 
         $this->composeSystemGeneralPage();
@@ -196,6 +198,23 @@ class ViewComposerServiceProvider extends ServiceProvider
                     $view->with('catGroups', ListHelper::categoryGrps());
                 });
     }
+
+    /**
+     * compose partial view of shipping zone form
+     */
+    private function composeShippingZoneForm()
+    {
+        View::composer(
+
+                'admin.shipping_zone._form',
+
+                function($view)
+                {
+                    $view->with('taxes', ListHelper::taxes());
+                    $view->with('countries', ListHelper::countries());
+                });
+    }
+
 
     /**
      * compose partial view of shop form
@@ -451,29 +470,20 @@ class ViewComposerServiceProvider extends ServiceProvider
             function($view)
             {
                 $view->with('carriers', ListHelper::carriers());
-
                 $view->with('taxes', ListHelper::taxes());
-
                 $view->with('order_statuses', ListHelper::order_statuses());
-
                 $view->with('payment_statuses', ListHelper::payment_statuses());
-
                 $view->with('payment_methods', ListHelper::payment_methods());
-
                 $view->with('packagings', ListHelper::packagings());
-
                 // $cart_lists = Cart::where('customer_id', $customer_id)->with('inventories', 'customer', 'tax')->orderBy('created_at', 'desc')->get();
-
                 // $view->with('cart_lists', $cart_lists);
 
                 $inventories = Inventory::mine()->active()->with('product', 'attributeValues')->get();
 
-                foreach ($inventories as $inventory)
-                {
+                foreach ($inventories as $inventory){
                     $str = ' - ';
 
-                    foreach ($inventory->attributeValues as $k => $attrValue)
-                    {
+                    foreach ($inventory->attributeValues as $k => $attrValue){
                         $str .= $attrValue->value .' - ';
                     }
 
@@ -493,7 +503,6 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                 $view->with('products', isset($items) ? $items : []);
                 $view->with('inventories', isset($product_info) ? $product_info : []);
-
             }
         );
     }

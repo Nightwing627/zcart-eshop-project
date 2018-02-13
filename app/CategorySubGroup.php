@@ -48,5 +48,4 @@ class CategorySubGroup extends Model
     {
         return $query->where('active', 1);
     }
-
 }

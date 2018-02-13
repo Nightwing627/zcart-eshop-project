@@ -493,6 +493,25 @@
     });
     //END carrier form
 
+    //shipping zone
+    $('input#rest_of_the_world').on('ifChecked', function () {
+      $('select#country_ids').removeAttr('required').attr('disabled', 'disabled');
+      $('select#country_ids').select2('val', '');
+    });
+
+    $('input#rest_of_the_world').on('ifUnchecked', function () {
+      $('select#country_ids').removeAttr('disabled').attr('required', 'required');
+    });
+
+    $('input#free_shipping_checkbox').on('ifChecked', function () {
+      $('input#shipping_rate_amount').val(0.0).removeAttr('required').attr('disabled', 'disabled');
+    });
+
+    $('input#free_shipping_checkbox').on('ifUnchecked', function () {
+      $('input#shipping_rate_amount').removeAttr('disabled').attr('required', 'required');
+    });
+    //END shipping zone
+
     //User Role form
     $("#user-role-status").change(function()
     {
@@ -562,6 +581,15 @@
     }
 
     //SEARCH OPTIONS
+    var $search_rows = $('#search_table tr');
+    $('#search_this').keyup(function() {
+        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+        $search_rows.show().filter(function() {
+            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+            return !~text.indexOf(val);
+        }).hide();
+    });
+
     // $('#searchBox').on('keyup', function(){
     //   var str=  $("#searchBox").val();
     //    // if(str == "") {

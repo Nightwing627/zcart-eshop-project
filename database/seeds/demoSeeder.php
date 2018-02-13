@@ -51,6 +51,8 @@ class demoSeeder extends Seeder
                 $shop->addresses()->save(factory(App\Address::class)->make(['address_title' => $shop->name, 'address_type' => 'Primary']));
 
                 $shop->config()->save(factory(App\Config::class)->make());
+
+                $shop->shippingZones()->save(factory(App\ShippingZone::class)->make());
             });
 
         // Demo Categories with real text
@@ -266,6 +268,7 @@ class demoSeeder extends Seeder
 
         factory(App\Reply::class, $this->longLongCount)->create();
 
+        factory(App\ShippingRate::class, $this->longLongCount)->create();
 
         // factory(App\Address::class, $this->longLongCount)->create();
 

@@ -16,9 +16,9 @@
 					<i class="fa fa-shopping-cart hidden-sm"></i>
 					{{ trans('app.order') }}
 				</a></li>
-				<li><a href="#checkout" data-toggle="tab">
+				<li><a href="#payment_method" data-toggle="tab">
 					<i class="fa fa-credit-card hidden-sm"></i>
-					{{ trans('app.checkout') }}
+					{{ trans('app.payment_method') }}
 				</a></li>
 				<li><a href="#views" data-toggle="tab">
 					<i class="fa fa-laptop hidden-sm"></i>
@@ -27,10 +27,6 @@
 				<li><a href="#support" data-toggle="tab">
 					<i class="fa fa-phone hidden-sm"></i>
 					{{ trans('app.support') }}
-				</a></li>
-				<li><a href="#analytics" data-toggle="tab">
-					<i class="fa fa-line-chart hidden-sm"></i>
-					{{ trans('app.analytics') }}
 				</a></li>
 				<li><a href="#notifications" data-toggle="tab">
 					<i class="fa fa-bell-o hidden-sm"></i>
@@ -41,11 +37,11 @@
 			    <div class="tab-pane active" id="inventory">
 			    	<div class="row">
 				        {!! Form::model($config, ['method' => 'PUT', 'route' => ['admin.setting.config.update', $config], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
-					    	<div class="col-sm-12">
+					    	<div class="col-sm-9">
 								<div class="form-group">
-							        {!! Form::label('default_tax_id_for_inventory', trans('app.default_tax'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+							        {!! Form::label('default_tax_id_for_inventory', trans('app.default_tax'). ':', ['class' => 'with-help col-sm-4 control-label']) !!}
 								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_tax_for_inventory') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
+								  	<div class="col-sm-7 nopadding-left">
 								  		@if($can_update)
 									        {!! Form::select('default_tax_id_for_inventory', $taxes , $config->default_tax_id_for_inventory, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
 										@else
@@ -55,9 +51,9 @@
 								</div>
 
 								<div class="form-group">
-							        {!! Form::label('default_supplier_id', trans('app.default_supplier'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+							        {!! Form::label('default_supplier_id', trans('app.default_supplier'). ':', ['class' => 'with-help col-sm-4 control-label']) !!}
 								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_supplier') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
+								  	<div class="col-sm-7 nopadding-left">
 								  		@if($can_update)
 									        {!! Form::select('default_supplier_id', $suppliers , $config->default_supplier_id, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
 										@else
@@ -67,9 +63,9 @@
 								</div>
 
 								<div class="form-group">
-							        {!! Form::label('default_warehouse_id', trans('app.default_warehouse'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+							        {!! Form::label('default_warehouse_id', trans('app.default_warehouse'). ':', ['class' => 'with-help col-sm-4 control-label']) !!}
 								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_warehouse') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
+								  	<div class="col-sm-7 nopadding-left">
 								  		@if($can_update)
 									        {!! Form::select('default_warehouse_id', $warehouses , $config->default_warehouse_id, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
 										@else
@@ -79,9 +75,9 @@
 								</div>
 
 								<div class="form-group">
-							        {!! Form::label('default_carrier_ids_for_inventory', trans('app.default_carriers'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+							        {!! Form::label('default_carrier_ids_for_inventory', trans('app.default_carriers'). ':', ['class' => 'with-help col-sm-4 control-label']) !!}
 								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_carrier_ids_for_inventory') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
+								  	<div class="col-sm-7 nopadding-left">
 								  		@if($can_update)
 										    {!! Form::select('default_carrier_ids_for_inventory[]', $carriers , $config->default_carrier_ids_for_inventory, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
 										@else
@@ -93,9 +89,9 @@
 								</div>
 
 								<div class="form-group">
-							        {!! Form::label('default_packaging_ids', trans('app.default_packagings'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+							        {!! Form::label('default_packaging_ids', trans('app.default_packagings'). ':', ['class' => 'with-help col-sm-4 control-label']) !!}
 								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_packaging_ids_for_inventory') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
+								  	<div class="col-sm-7 nopadding-left">
 								  		@if($can_update)
 										    {!! Form::select('default_packaging_ids[]', $packagings , $config->default_packaging_ids, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
 										@else
@@ -107,11 +103,12 @@
 								</div>
 
 						  		@if($can_update)
-									<div class="col-md-offset-3">
+									<div class="col-md-offset-4">
 							            {!! Form::submit(trans('app.update'), ['class' => 'btn btn-lg btn-flat btn-new']) !!}
 							        </div>
 						  		@endif
 					    	</div>
+					    	<div class="col-sm-3">&nbsp;</div>
 				        {!! Form::close() !!}
 			    	</div>
 			    </div>
@@ -138,6 +135,33 @@
 								  			{!! Form::text('order_number_suffix', $config->order_number_suffix, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.order_number_suffix')]) !!}
 										@else
 											<span>{{ $config->order_number_suffix }}</span>
+										@endif
+								  	</div>
+								</div>
+
+								<div class="form-group">
+							        {!! Form::label('default_payment_method_id', trans('app.default_payment_method'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_payment_method_id') }}"></i>
+								  	<div class="col-sm-6 nopadding-left">
+								  		@if($can_update)
+										    {!! Form::select('default_payment_method_id', $payment_methods , $config->default_payment_method_id, ['class' => 'form-control select2-normal']) !!}
+										@else
+											<span>{{ $config->payment_method->name }}</span>
+										@endif
+								  	</div>
+								</div>
+
+								<div class="form-group">
+							        {!! Form::label('free_shipping_starts', trans('app.free_shipping_starts'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.free_shipping_starts') }}"></i>
+								  	<div class="col-sm-6 nopadding-left">
+								  		@if($can_update)
+										    <div class="input-group">
+									    	    {!! Form::number('free_shipping_starts', get_formated_decimal($config->free_shipping_starts)?:Null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.free_shipping_starts')]) !!}
+										        <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
+									    	</div>
+										@else
+											<span>{{ get_formated_decimal($config->free_shipping_starts)?:Null }}</span>
 										@endif
 								  	</div>
 								</div>
@@ -192,36 +216,10 @@
 			    </div>
 			    <!-- /.tab-pane -->
 
-			    <div class="tab-pane" id="checkout">
+			    <div class="tab-pane" id="payment_method">
 			    	<div class="row">
 				        {!! Form::model($config, ['method' => 'PUT', 'route' => ['admin.setting.config.update', $config], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
 					    	<div class="col-sm-12">
-								<div class="form-group">
-							        {!! Form::label('default_payment_method_id', trans('app.default_payment_method'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_payment_method_id') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
-								  		@if($can_update)
-										    {!! Form::select('default_payment_method_id', $payment_methods , $config->default_payment_method_id, ['class' => 'form-control select2-normal']) !!}
-										@else
-											<span>{{ $config->payment_method->name }}</span>
-										@endif
-								  	</div>
-								</div>
-
-								<div class="form-group">
-							        {!! Form::label('free_shipping_starts', trans('app.free_shipping_starts'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.free_shipping_starts') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
-								  		@if($can_update)
-										    <div class="input-group">
-									    	    {!! Form::number('free_shipping_starts', get_formated_decimal($config->free_shipping_starts)?:Null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.free_shipping_starts')]) !!}
-										        <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
-									    	</div>
-										@else
-											<span>{{ get_formated_decimal($config->free_shipping_starts)?:Null }}</span>
-										@endif
-								  	</div>
-								</div>
 
 						  		@if($can_update)
 									<div class="col-md-offset-3">
@@ -366,46 +364,19 @@
 			    </div>
 			  	<!-- /.tab-pane -->
 
-			    <div class="tab-pane" id="analytics">
-			    	<div class="row">
-				        {!! Form::model($config, ['method' => 'PUT', 'route' => ['admin.setting.config.update', $config], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
-					    	<div class="col-sm-12">
-								<div class="form-group">
-							        {!! Form::label('google_analytics_id', trans('app.google_analytics_id'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.google_analytics_id') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
-								  		@if($can_update)
-								    	    {!! Form::text('google_analytics_id', $config->google_analytics_id, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.google_analytics_id')]) !!}
-										@else
-											<span>{{ $config->google_analytics_id }}</span>
-										@endif
-								  	</div>
-								</div>
-
-						  		@if($can_update)
-									<div class="col-md-offset-3">
-							            {!! Form::submit(trans('app.update'), ['class' => 'btn btn-lg btn-flat btn-new']) !!}
-							        </div>
-						  		@endif
-						  	</div>
-				        {!! Form::close() !!}
-			    	</div>
-			    </div>
-			    <!-- /.tab-pane -->
-
 			    <div class="tab-pane" id="notifications">
 			    	<div class="row">
 				    	<div class="col-sm-6">
 				    		<fieldset>
 				    			<legend>{{ trans('app.inventory') }}</legend>
 						    	<div class="row">
-							    	<div class="col-sm-6 text-right">
+							    	<div class="col-sm-8 text-right">
 										<div class="form-group">
 									        {!! Form::label('notify_new_message', trans('app.notify_new_message'). ':', ['class' => 'with-help control-label']) !!}
 										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_new_message') }}"></i>
 										</div>
 									</div>
-							    	<div class="col-sm-6">
+							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
 												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_new_message') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_new_message == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_new_message == 1 ? 'true' : 'false' }}" autocomplete="off">
@@ -420,13 +391,13 @@
 							    <!-- /.row -->
 
 						    	<div class="row">
-							    	<div class="col-sm-6 text-right">
+							    	<div class="col-sm-8 text-right">
 										<div class="form-group">
 									        {!! Form::label('notify_alert_quantity', trans('app.notify_alert_quantity'). ':', ['class' => 'with-help control-label']) !!}
 										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_alert_quantity') }}"></i>
 										</div>
 									</div>
-							    	<div class="col-sm-6">
+							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
 												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_alert_quantity') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_alert_quantity == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_alert_quantity == 1 ? 'true' : 'false' }}" autocomplete="off">
@@ -441,13 +412,13 @@
 							    <!-- /.row -->
 
 						    	<div class="row">
-							    	<div class="col-sm-6 text-right">
+							    	<div class="col-sm-8 text-right">
 										<div class="form-group">
 									        {!! Form::label('notify_inventory_out', trans('app.notify_inventory_out'). ':', ['class' => 'with-help control-label']) !!}
 										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_inventory_out') }}"></i>
 										</div>
 									</div>
-							    	<div class="col-sm-6">
+							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
 												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_inventory_out') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_inventory_out == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_inventory_out == 1 ? 'true' : 'false' }}" autocomplete="off">
@@ -468,13 +439,13 @@
 				    		<fieldset>
 				    			<legend>{{ trans('app.order') }}</legend>
 						    	<div class="row">
-							    	<div class="col-sm-6 text-right">
+							    	<div class="col-sm-8 text-right">
 										<div class="form-group">
 									        {!! Form::label('notify_new_order', trans('app.notify_new_order'). ':', ['class' => 'with-help control-label']) !!}
 										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_new_order') }}"></i>
 										</div>
 									</div>
-							    	<div class="col-sm-6">
+							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
 												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_new_order') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_new_order == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_new_order == 1 ? 'true' : 'false' }}" autocomplete="off">
@@ -489,13 +460,13 @@
 							    <!-- /.row -->
 
 						    	<div class="row">
-							    	<div class="col-sm-6 text-right">
+							    	<div class="col-sm-8 text-right">
 										<div class="form-group">
 									        {!! Form::label('notify_abandoned_checkout', trans('app.notify_abandoned_checkout'). ':', ['class' => 'with-help control-label']) !!}
 										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_abandoned_checkout') }}"></i>
 										</div>
 									</div>
-							    	<div class="col-sm-6">
+							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
 												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_abandoned_checkout') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_abandoned_checkout == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_abandoned_checkout == 1 ? 'true' : 'false' }}" autocomplete="off">
@@ -504,6 +475,27 @@
 										  	</div>
 										@else
 											<span>{{ $config->notify_abandoned_checkout == 1 ? trans('app.on') : trans('app.off') }}</span>
+										@endif
+									</div>
+							  	</div>
+							    <!-- /.row -->
+
+						    	<div class="row">
+							    	<div class="col-sm-8 text-right">
+										<div class="form-group">
+									        {!! Form::label('notify_new_disput', trans('app.notify_new_disput'). ':', ['class' => 'with-help control-label']) !!}
+										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_new_disput') }}"></i>
+										</div>
+									</div>
+							    	<div class="col-sm-4">
+								  		@if($can_update)
+										  	<div class="handle horizontal">
+												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_new_disput') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_new_disput == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_new_disput == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<div class="btn-handle"></div>
+												</a>
+										  	</div>
+										@else
+											<span>{{ $config->notify_new_disput == 1 ? trans('app.on') : trans('app.off') }}</span>
 										@endif
 									</div>
 							  	</div>

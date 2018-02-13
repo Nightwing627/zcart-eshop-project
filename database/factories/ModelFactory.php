@@ -80,15 +80,37 @@ $factory->define(App\Config::class, function (Faker $faker) {
         'support_phone' => $faker->phoneNumber,
         'support_phone_toll_free' => $faker->boolean ? $faker->tollFreePhoneNumber : NULL,
         'order_number_prefix' => '#',
-        'default_tax_id_for_inventory' => rand(1, 5),
-        'default_tax_id_for_order' => rand(1, 5),
-        'default_carrier_id' => rand(1, 5),
-        'default_carrier_ids_for_inventory' => serialize(array_rand(range(1,30), rand(1,4))),
-        'default_packaging_ids' => serialize(array_rand(range(1,30), rand(1,4))),
+        'default_tax_id_for_inventory' => rand(1, 31),
+        'default_tax_id_for_order' => rand(1, 31),
+        'default_carrier_id' => rand(1, 30),
+        'default_carrier_ids_for_inventory' => array_rand(range(1,30), rand(1,4)),
+        'default_packaging_ids' => array_rand(range(1,30), rand(1,4)),
         // 'flat_shipping_cost' => $faker->randomDigit,
         'order_handling_cost' => $faker->randomDigit,
         'free_shipping_starts' => $faker->randomDigit,
         'maintenance_mode' => $faker->boolean,
+    ];
+});
+
+$factory->define(App\ShippingZone::class, function (Faker $faker) {
+    $country_ids = $faker->randomElements( \DB::table('countries')->pluck('id')->toArray(), 3 );
+    $state_ids = \DB::table('states')->whereIn('country_id', $country_ids)->pluck('id')->toArray();
+    return [
+        'name' => 'Domestic',
+        'tax_id' => $faker->randomElement(\DB::table('taxes')->pluck('id')->toArray()),
+        'country_ids' => $country_ids,
+        'state_ids' => $state_ids,
+    ];
+});
+
+$factory->define(App\ShippingRate::class, function (Faker $faker) {
+    return [
+        'name' => $faker->word,
+        'shipping_zone_id' => $faker->randomElement(\DB::table('shipping_zones')->pluck('id')->toArray()),
+        'based_on' => $faker->randomElement(['price', 'weight']),
+        'minimum' => rand(0,50),
+        'maximum' => rand(50,500),
+        'rate' => rand(0,20),
     ];
 });
 

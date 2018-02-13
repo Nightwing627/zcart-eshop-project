@@ -85,8 +85,7 @@ class Tax extends Model
      */
     public function setStateIdAttribute($value)
     {
-        if (!is_numeric($value) and $value != NULL)
-        {
+        if (!is_numeric($value) and $value != NULL){
             $state = State::create(['name' => $value, 'country_id' => \Request::input('country_id')]);
             $value = $state->id;
         }

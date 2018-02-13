@@ -43,7 +43,7 @@ class PaymentMethod extends Model
      */
     public function shops()
     {
-        return $this->belongsToMany('App\Shop', 'shop_payment_methods')
+        return $this->belongsToMany(Shop::class, 'shop_payment_methods')
                     ->withPivot('api_key', 'api_secret')
                     ->withTimestamps();
     }
@@ -53,7 +53,7 @@ class PaymentMethod extends Model
      */
     public function orders()
     {
-        return $this->hasManyThrough('App\Order', 'App\Invoice');
+        return $this->hasManyThrough(Order::class, Invoice::class);
     }
 
     /**
@@ -61,7 +61,7 @@ class PaymentMethod extends Model
      */
     public function invoices()
     {
-        return $this->hasMany('App\Invoice');
+        return $this->hasMany(Invoice::class);
     }
 
 

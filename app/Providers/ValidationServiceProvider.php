@@ -17,10 +17,8 @@ class ValidationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Validator::extend(
-            'composite_unique',
-            function ($attribute, $value, $parameters, $validator)
-            {
+        // composite_unique
+        Validator::extend('composite_unique', function ($attribute, $value, $parameters, $validator){
                 // Set the attribute value to use in feedback message
                 $this->attributeValue = $value;
 
@@ -71,6 +69,7 @@ class ValidationServiceProvider extends ServiceProvider
         {
             return str_replace(':value', $this->attributeValue, $message);
         });
+
     }
 
     /**

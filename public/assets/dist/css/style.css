@@ -5625,6 +5625,24 @@ div.dataTables_paginate ul.pagination {
 .spacer100 { height: 100px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
 .spacer200 { height: 200px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
 
+/*Indentation*/
+.indent5 { margin-left: 5px; display: inline-block; }
+.indent10 { margin-left: 10px; display: inline-block; }
+.indent15 { margin-left: 15px; display: inline-block; }
+.indent20 { margin-left: 20px; display: inline-block; }
+.indent40 { margin-left: 40px; display: inline-block; }
+.indent50 { margin-left: 50px; display: inline-block; }
+.indent100 { margin-left: 100px; display: inline-block; }
+
+/* hr tag */
+hr.style1 { width: 100%; border-top: 1px solid #8c8b8b; }
+hr.style2 { width: 100%; border-top: 3px double #8c8b8b; }
+hr.style3 { width: 100%; border-top: 1px dotted #8c8b8b; }
+hr.style4 { width: 100%; border-top: 1px dashed #8c8b8b; border-bottom: 1px dashed #fff; }
+hr.style5 { width: 100%; background-color: #fff; border-top: 2px dashed #8c8b8b; }
+hr.style6 { width: 100%; background-color: #fff; border-top: 2px dotted #8c8b8b; }
+
+
 /*
  * Blog content
  *

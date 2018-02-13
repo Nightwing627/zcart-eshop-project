@@ -118,6 +118,13 @@ return [
     'customer_required'             => 'Select a customer.',
     'reply_required_without' => 'The reply filed is required.',
     'template_id_required_without'=> 'Select a template is required when repling with template.',
+    'shipping_zone_tax_id_required' => 'Select the tax profile for the zone',
+    'shipping_zone_country_ids_required' => 'Select at least one country',
+    'rest_of_the_world_composite_unique' => 'The rest of the world shipping zone already exists.',
+    'something_went_wrong' => 'Something is not right. Please check and try again.',
+    'shipping_rate_required_unless' => 'Give a shipping rate or select \'Free shipping\' option',
+    'shipping_range_minimum_min' => 'Minimum range can\'t be negative value',
+    'shipping_range_maximum_min' => 'Maximum range can\'t be less than minimum value',
 
     /*
     |--------------------------------------------------------------------------

@@ -47,16 +47,6 @@ class Category extends Model
     }
 
     /**
-     * Scope a query to only include active categories.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', 1);
-    }
-
-    /**
      * Get subGroups list for the category.
      *
      * @return array
@@ -66,4 +56,13 @@ class Category extends Model
         if (count($this->subGroups)) return $this->subGroups->pluck('id')->toArray();
     }
 
+    /**
+     * Scope a query to only include active categories.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
 }

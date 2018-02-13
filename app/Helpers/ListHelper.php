@@ -101,7 +101,15 @@ class ListHelper
     public static function shop_settings($shop = null)
     {
         $shop = $shop ?: Auth::user()->merchantId(); //Get current user's shop_id
-        return (array) \DB::table('configs')->where('shop_id', $shop)->first();
+        $settings = \DB::table('configs')->where('shop_id', $shop)->first();
+        $result = [];
+        foreach ($settings as $key => $value) {
+            if ( is_serialized($value) )
+                $result[$key] = unserialize($value);
+            else
+                $result[$key] = $value;
+        }
+        return $result;
     }
 
     /**
@@ -423,7 +431,7 @@ class ListHelper
      */
     public static function packagings()
     {
-        return \DB::table('packagings')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('packagings')->where('shop_id', Auth::user()->merchantId())->where('active', 1)->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**

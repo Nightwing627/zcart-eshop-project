@@ -169,6 +169,16 @@ class Order extends Model
     }
 
     /**
+     * Set tag date formate
+     */
+    public function setShippingDateAttribute($date){
+        $this->attributes['shipping_date'] = Carbon::createFromFormat('Y-m-d', $date);
+    }
+    public function setDeliveryDateAttribute($date){
+        $this->attributes['delivery_date'] = Carbon::createFromFormat('Y-m-d', $date);
+    }
+
+    /**
      * Scope a query to only include records from the users shop.
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -196,15 +206,5 @@ class Order extends Model
     public function scopeMine($query)
     {
         return $query->where('shop_id', Auth::user()->merchantId());
-    }
-
-    /**
-     * Set tag date formate
-     */
-    public function setShippingDateAttribute($date){
-        $this->attributes['shipping_date']= Carbon::createFromFormat('Y-m-d', $date);
-    }
-    public function setDeliveryDateAttribute($date){
-        $this->attributes['delivery_date']= Carbon::createFromFormat('Y-m-d', $date);
     }
 }

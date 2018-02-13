@@ -46,7 +46,7 @@ class Manufacturer extends Model
      */
     public function country()
     {
-        return $this->belongsTo('App\Country');
+        return $this->belongsTo(Country::class);
     }
 
     /**
@@ -54,7 +54,7 @@ class Manufacturer extends Model
      */
     public function products()
     {
-        return $this->hasMany('App\Product');
+        return $this->hasMany(Product::class);
     }
 
     /**

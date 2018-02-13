@@ -23,6 +23,7 @@
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.cost') }}</th>
 						<th class="text-center">{{ trans('app.packaging_charge_customer') }}</th>
+						<th class="text-center">{{ trans('app.active') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
@@ -35,7 +36,10 @@
 						<td>{{ $packaging->name }}</td>
 						<td>{{ get_formated_currency($packaging->cost) }}</td>
 						<td class="text-center">
-							{{ ($packaging->charge_customer) ? trans('app.yes') : '-'}}
+							{{ ($packaging->charge_customer) ? trans('app.yes') : trans('app.no')}}
+						</td>
+						<td class="text-center">
+							{{ ($packaging->active) ? trans('app.yes') : '-'}}
 						</td>
 						<td class="row-options">
 							@can('update', $packaging)

@@ -29,7 +29,6 @@ class CreateCartRequest extends Request
             'cart.*.quantity' => 'required',
             'cart.*.unit_price' => 'required',
             'customer_id' => 'required',
-            'carrier_id' => 'required',
             'tax_id' => 'required',
             'billing_address' => 'required',
         ];

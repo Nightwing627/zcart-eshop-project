@@ -22,14 +22,13 @@ class UpdateCartRequest extends Request
      * @return array
      */
     public function rules()
-    {        
+    {
         return [
             'cart.*.inventory_id' => 'required',
             'cart.*.item_description' => 'required',
             'cart.*.quantity' => 'required',
             'cart.*.unit_price' => 'required',
             'customer_id' => 'required',
-            'carrier_id' => 'required',
             'tax_id' => 'required',
             'billing_address' => 'required',
         ];

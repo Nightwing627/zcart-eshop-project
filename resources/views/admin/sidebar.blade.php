@@ -145,6 +145,10 @@
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
+              @can('index', App\ShippingZone::class)
+                <li class=" {{ Request::is('admin/shipping/shippingZone*') ? 'active' : '' }}"><a href="{{ url('admin/shipping/shippingZone') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.shipping_zones') }}</a></li>
+              @endcan
+
               @can('index', App\Carrier::class)
                 <li class=" {{ Request::is('admin/shipping/carrier*') ? 'active' : '' }}"><a href="{{ url('admin/shipping/carrier') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.carriers') }}</a></li>
               @endcan
@@ -262,11 +266,6 @@
 
               <li class=" {{ Request::is('admin/setting/system/config*') ? 'active' : '' }}"><a href="{{ url('admin/setting/system/config') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}</a></li>
             @endcan
-
-            <li class=" {{ Request::is('settings*') ? 'active' : '' }}"><a href="{{ url('admin/user') }}"> Backup</a></li>
-
-            <li class=" {{ Request::is('settings*') ? 'active' : '' }}"><a href="{{ url('admin/user') }}"> Account</a></li>
-
           </ul>
         </li>
 

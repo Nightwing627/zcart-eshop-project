@@ -44,7 +44,7 @@ class PaymentStatus extends Model
      */
     public function invoices()
     {
-        return $this->hasMany('App\Invoice');
+        return $this->hasMany(Invoice::class);
     }
 
     /**
@@ -52,7 +52,7 @@ class PaymentStatus extends Model
      */
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany(Order::class);
     }
 
     /**
@@ -60,7 +60,7 @@ class PaymentStatus extends Model
      */
     public function emailTemplate()
     {
-        return $this->belongsTo('App\EmailTemplate', 'email_template_id');
+        return $this->belongsTo(EmailTemplate::class, 'email_template_id');
     }
 
 }
