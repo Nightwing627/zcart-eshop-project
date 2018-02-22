@@ -39,13 +39,13 @@
 				        {!! Form::model($config, ['method' => 'PUT', 'route' => ['admin.setting.config.update', $config], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
 					    	<div class="col-sm-9">
 								<div class="form-group">
-							        {!! Form::label('default_tax_id_for_inventory', trans('app.default_tax'). ':', ['class' => 'with-help col-sm-4 control-label']) !!}
-								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_tax_for_inventory') }}"></i>
-								  	<div class="col-sm-7 nopadding-left">
+							        {!! Form::label('alert_quantity', trans('app.alert_quantity'). ':', ['class' => 'with-help col-sm-4 control-label']) !!}
+								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_alert_quantity') }}"></i>
+								  	<div class="col-sm-2 nopadding-left">
 								  		@if($can_update)
-									        {!! Form::select('default_tax_id_for_inventory', $taxes , $config->default_tax_id_for_inventory, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
+								        	{!! Form::number('alert_quantity', get_formated_decimal($config->alert_quantity), ['class' => 'form-control', 'placeholder' => trans('app.placeholder.alert_quantity')]) !!}
 										@else
-											<span>{{ $config->inventoryTax->name }}</span>
+											<span>{{ get_formated_decimal($config->alert_quantity) }}</span>
 										@endif
 								  	</div>
 								</div>
@@ -70,20 +70,6 @@
 									        {!! Form::select('default_warehouse_id', $warehouses , $config->default_warehouse_id, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
 										@else
 											<span>{{ $config->warehouse->name }}</span>
-										@endif
-								  	</div>
-								</div>
-
-								<div class="form-group">
-							        {!! Form::label('default_carrier_ids_for_inventory', trans('app.default_carriers'). ':', ['class' => 'with-help col-sm-4 control-label']) !!}
-								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_carrier_ids_for_inventory') }}"></i>
-								  	<div class="col-sm-7 nopadding-left">
-								  		@if($can_update)
-										    {!! Form::select('default_carrier_ids_for_inventory[]', $carriers , $config->default_carrier_ids_for_inventory, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
-										@else
-											@foreach($config->default_carrier_ids_for_inventory as $carrier)
-												<span class="label label-outline">{{ get_value_from($carrier, 'carriers', 'name') }}</span>
-											@endforeach
 										@endif
 								  	</div>
 								</div>
@@ -152,26 +138,11 @@
 								</div>
 
 								<div class="form-group">
-							        {!! Form::label('free_shipping_starts', trans('app.free_shipping_starts'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.free_shipping_starts') }}"></i>
+							        {!! Form::label('default_tax_id', trans('app.default_tax'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_tax_id') }}"></i>
 								  	<div class="col-sm-6 nopadding-left">
 								  		@if($can_update)
-										    <div class="input-group">
-									    	    {!! Form::number('free_shipping_starts', get_formated_decimal($config->free_shipping_starts)?:Null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.free_shipping_starts')]) !!}
-										        <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
-									    	</div>
-										@else
-											<span>{{ get_formated_decimal($config->free_shipping_starts)?:Null }}</span>
-										@endif
-								  	</div>
-								</div>
-
-								<div class="form-group">
-							        {!! Form::label('default_tax_id_for_order', trans('app.default_tax'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_tax_id_for_order') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
-								  		@if($can_update)
-									        {!! Form::select('default_tax_id_for_order', $taxes , $config->default_tax_id_for_order, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
+									        {!! Form::select('default_tax_id', $taxes , $config->default_tax_id, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
 										@else
 											<span>{{ $config->tax->name }}</span>
 										@endif
@@ -189,18 +160,6 @@
 											</div>
 										@else
 											<span>{{ get_formated_decimal($config->order_handling_cost) }}</span>
-										@endif
-								  	</div>
-								</div>
-
-								<div class="form-group">
-							        {!! Form::label('default_carrier_id', trans('app.default_carrier'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_carrier') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
-								  		@if($can_update)
-										    {!! Form::select('default_carrier_id', $carriers , $config->default_carrier_id, ['class' => 'form-control select2-normal']) !!}
-										@else
-											<span>{{ $config->carrier->name }}</span>
 										@endif
 								  	</div>
 								</div>

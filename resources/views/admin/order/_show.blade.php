@@ -7,14 +7,11 @@
 				<img src="{{ get_image_src($order->customer_id, 'customers', '150x150') }}" class="thumbnail" width="80%" alt="{{ trans('app.avatar') }}">
 			</div>
             <div class="col-md-9 nopadding">
+            	<div class="spacer10"></div>
 				<table class="table no-border">
 					<tr>
-						<th class="text-right">{{ trans('app.order_number') }}: </th>
-						<td style="width: 75%;"><span class="lead">{{ $order->order_number }}</span></td>
-					</tr>
-					<tr>
 						<th class="text-right">{{ trans('app.customer') }}: </th>
-						<td style="width: 75%;">{{ $order->customer->getName() }}</td>
+						<td style="width: 75%;"><span class="lead">{{ $order->customer->getName() }}</span></td>
 					</tr>
 					<tr>
 						<th class="text-right">{{ trans('app.email') }}:</th>
@@ -30,50 +27,50 @@
 					</tr>
 				</table>
 			</div>
-
 			<div class="clearfix"></div>
-
-			<div class="row">
-				<div class="col-md-12">
-
-	    	        @include('admin.partials._cart_summary')
-
-				</div>
-			</div>
-
-    	    <dir class="spacer10"></dir>
 
 			<!-- Custom Tabs -->
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs nav-justified">
-				  <li class="active"><a href="#info" data-toggle="tab">
-					{{ trans('app.additional_info') }}
+				  <li class="active"><a href="#info_tab" data-toggle="tab">
+					{{ trans('app.order_info') }}
 				  </a></li>
-				  <li><a href="#items" data-toggle="tab">
+				  <li><a href="#items_tab" data-toggle="tab">
 					{{ trans('app.items') }}
 				  </a></li>
-				  <li><a href="#shpping" data-toggle="tab">
+				  <li><a href="#invoice_tab" data-toggle="tab">
+					{{ trans('app.invoice') }}
+				  </a></li>
+				  @if($order->refunds)
+					  <li><a href="#refund_tab" data-toggle="tab">
+						{{ trans('app.refund') }}
+					  </a></li>
+				  @endif
+				  <li><a href="#shipping_tab" data-toggle="tab">
 					{{ trans('app.shipping') }}
 				  </a></li>
 				</ul>
 				<div class="tab-content">
-				    <div class="tab-pane active" id="info">
+				    <div class="tab-pane active" id="info_tab">
 						<table class="table no-border">
+							<tr>
+								<th class="text-right">{{ trans('app.order_number') }}: </th>
+								<td style="width: 75%;">
+									<span class="lead">{{ $order->order_number }}</span>
+									@if($order->disputed)
+										<span class="label label-danger indent10">{{ trans('app.statuses.disputed') }}</span>
+									@endif
+								</td>
+							</tr>
+							<tr>
+								<th class="text-right">{{ trans('app.status') }}:</th>
+								<td style="width: 75%;">
+									{{ $order->orderStatus ? $order->orderStatus->name : trans('app.statuses.new') }}
+								</td>
+							</tr>
 							<tr>
 								<th class="text-right">{{ trans('app.order_date') }}:</th>
 								<td style="width: 75%;">{{ $order->created_at->toDayDateTimeString() }}</td>
-							</tr>
-							<tr>
-								<th class="text-right">{{ trans('app.tax') }}:</th>
-								<td style="width: 75%;">{{ $order->tax->name }}</td>
-							</tr>
-							<tr>
-								<th class="text-right">{{ trans('app.payment_method') }}:</th>
-								<td style="width: 75%;">{{ $order->paymentMethod->name }}</td>
-							</tr>
-							<tr>
-								<th class="text-right">{{ trans('app.payment_status') }}:</th>
-								<td style="width: 75%;">{{ $order->paymentStatus->name }}</td>
 							</tr>
 							@if($order->message_to_customer)
 								<tr>
@@ -87,15 +84,11 @@
 									<td style="width: 75%;">{!! $order->admin_note !!}</td>
 								</tr>
 							@endif
-							<tr>
-								<th class="text-right">{{ trans('app.billing_address') }}:</th>
-								<td style="width: 75%;">{{ $order->billing_address }}</td>
-							</tr>
 						</table>
 				    </div>
 				    <!-- /.tab-pane -->
 
-				    <div class="tab-pane" id="items">
+				    <div class="tab-pane" id="items_tab">
 					    <table class="table table-sripe">
 					      <thead>
 					        <tr>
@@ -131,12 +124,93 @@
 				    </div>
 				    <!-- /.tab-pane -->
 
-				    <div class="tab-pane" id="shpping">
+				    <div class="tab-pane" id="invoice_tab">
 						<table class="table no-border">
-							@if($order->carrier)
+							<tr>
+								<th class="text-right">{{ trans('app.grand_total') }}:</th>
+								<td style="width: 75%;"><span class="lead"> {{ get_formated_currency($order->grand_total) }}</span></td>
+							</tr>
+							<tr>
+								<th class="text-right">{{ trans('app.total') }}:</th>
+								<td style="width: 75%;">{{ get_formated_currency($order->total) }}</td>
+							</tr>
+							<tr>
+								<th class="text-right">{{ trans('app.discount') }}:</th>
+								<td style="width: 75%;"> - {{ get_formated_currency($order->discount) }}</td>
+							</tr>
+							<tr>
+								<th class="text-right">{{ trans('app.shipping') }}:</th>
+								<td style="width: 75%;">{{ get_formated_currency($order->shipping) }}</td>
+							</tr>
+							<tr>
+								<th class="text-right">{{ trans('app.handling') }}:</th>
+								<td style="width: 75%;">{{ get_formated_currency($order->handling) }}</td>
+							</tr>
+							<tr>
+								<th class="text-right">{{ trans('app.taxes') }}:</th>
+								<td style="width: 75%;">{{ get_formated_currency($order->taxes) }}</td>
+							</tr>
+							<tr>
+								<th class="text-right">{{ trans('app.payment_method') }}:</th>
+								<td style="width: 75%;">{{ $order->paymentMethod->name }}</td>
+							</tr>
+							<tr>
+								<th class="text-right">{{ trans('app.payment_status') }}:</th>
+								<td style="width: 75%;">{{ $order->paymentStatus->name }}</td>
+							</tr>
+							<tr>
+								<th class="text-right">{{ trans('app.billing_address') }}:</th>
+								<td style="width: 75%;">{{ $order->billing_address }}</td>
+							</tr>
+						</table>
+					</div>
+				    <!-- /.tab-pane -->
+
+				    <div class="tab-pane" id="refund_tab">
+						<table class="table table-hover table-option">
+							<thead>
+								<tr>
+									<th>{{ trans('app.return_goods') }}</th>
+									<th>{{ trans('app.order_amount') }}</th>
+									<th>{{ trans('app.refund_amount') }}</th>
+									<th>{{ trans('app.status') }}</th>
+									<th>{{ trans('app.created_at') }}</th>
+									<th>{{ trans('app.updated_at') }}</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach($order->refunds as $refund )
+									<tr>
+										<td>{!! get_yes_or_no($refund->return_goods) !!}</td>
+										<td>{{ get_formated_currency($refund->order->total) }}</td>
+										<td>{{ get_formated_currency($refund->amount) }}</td>
+										<td>{!! $refund->statusName() !!}</td>
+							          	<td>{{ $refund->created_at->diffForHumans() }}</td>
+							          	<td>{{ $refund->updated_at->diffForHumans() }}</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+				    </div>
+				    <!-- /.tab-pane -->
+
+				    <div class="tab-pane" id="shipping_tab">
+						<table class="table no-border">
+							@if($order->shippingRate)
 								<tr>
 									<th class="text-right">{{ trans('app.carrier') }}:</th>
-									<td style="width: 75%;">{{ $order->carrier->name }}</td>
+									<td style="width: 75%;">
+										{{ $order->shippingRate->name }}
+										@if($order->carrier)
+									    	<small class="indent20"> {{ trans('app.by') . ' ' . $order->carrier->name }} </small>
+										@endif
+									</td>
+								</tr>
+							@endif
+							@if($order->shippingPackage)
+								<tr>
+									<th class="text-right">{{ trans('app.packaging') }}:</th>
+									<td style="width: 75%;">{{ $order->shippingPackage->name }}</td>
 								</tr>
 							@endif
 							@if($order->shipping_date)
@@ -145,12 +219,10 @@
 									<td style="width: 75%;">{{ $order->shipping_date }}</td>
 								</tr>
 							@endif
-							@if($order->packaging)
-								<tr>
-									<th class="text-right">{{ trans('app.packaging') }}:</th>
-									<td style="width: 75%;">{{ $order->packaging->name }}</td>
-								</tr>
-							@endif
+							<tr>
+								<th class="text-right">{{ trans('app.tracking_id') }}:</th>
+								<td style="width: 75%;">{{ $order->tracking_id }}</td>
+							</tr>
 							<tr>
 								<th class="text-right">{{ trans('app.shipping_address') }}: </th>
 								<td style="width: 75%;">{{ $order->shipping_address }}</td>

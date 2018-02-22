@@ -23,7 +23,6 @@
 						<th>{{ trans('app.sku') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.condition') }}</th>
-						<th>{{ trans('app.tax') }}</th>
 						<th>{{ trans('app.price') }} <small>( {{ trans('app.excl_tax') }} )</small> </th>
 						<th>{{ trans('app.quantity') }}</th>
 						<th>{{ trans('app.status') }}</th>
@@ -43,7 +42,6 @@
 						<td>{{ $inventory->sku }}</td>
 						<td>{{ $inventory->product->name }}</td>
 						<td>{{ $inventory->condition }}</td>
-						<td>{{ get_formated_decimal($inventory->tax->taxrate) . ' ' . trans('app.percent') }}</td>
 						<td>
 							@if(($inventory->offer_price > 0) && ($inventory->offer_end > \Carbon\Carbon::now()))
 								<?php $offer_price_help =

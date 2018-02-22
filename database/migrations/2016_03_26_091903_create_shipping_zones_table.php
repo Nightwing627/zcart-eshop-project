@@ -28,6 +28,7 @@ class CreateShippingZonesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('shipping_zone_id')->unsigned()->index();
+            $table->integer('carrier_id')->unsigned()->nullable();
             $table->enum('based_on', ['price', 'weight'])->default('price');
             $table->decimal('minimum', 20, 6)->nullable();
             $table->decimal('maximum', 20, 6)->nullable();

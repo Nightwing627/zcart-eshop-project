@@ -26,7 +26,9 @@ class CreateShippingZoneRequest extends Request
         $shop_id = Request::user()->merchantId(); //Get current user's shop_id
         Request::merge(['shop_id' => $shop_id]); //Set shop_id
 
-        if($this->has('country_ids')){
+        if ($this->has('rest_of_the_world')) {
+            Request::merge(['state_ids' => [], 'country_ids' => []]);
+        }else if($this->has('country_ids')){
             $state_ids = get_states_of($this->input('country_ids'));
             Request::merge(['state_ids' => array_keys($state_ids)]);
         }

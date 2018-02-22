@@ -16,8 +16,11 @@ class CreatePackagingsTable extends Migration
             $table->increments('id');
             $table->integer('shop_id')->unsigned()->nullable();
             $table->string('name');
+            $table->decimal('width', 20, 6)->nullable();
+            $table->decimal('height', 20, 6)->nullable();
+            $table->decimal('depth', 20, 6)->nullable();
             $table->decimal('cost', 20, 6)->nullable();
-            $table->boolean('charge_customer')->nullable();
+            $table->boolean('default')->nullable();
             $table->boolean('active')->default(1);
             $table->softDeletes();
             $table->timestamps();

@@ -22,5 +22,6 @@ return [
     'error' => 'Action failed! There is something wrong on server side',
     'timeout' => 'Action failed! The request timeout',
     'reordered' => 'Successfully reordered',
-    'form_validation_failed' => 'Failed: Please check all required inputs are filled and valid'
+    'form_validation_failed' => 'Failed: Please check all required inputs are filled and valid',
+
 ];

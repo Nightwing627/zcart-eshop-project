@@ -141,9 +141,9 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 
 		Route::get('order/ajax/getTaxRate', 'OrderController@ajaxGetTaxRate')->name('ajax.getTaxRate');
 
-		Route::get('order/ajax/getShippingCost', 'OrderController@ajaxGetShippingCost')->name('ajax.getShippingCost');
+		Route::get('order/ajax/filterShippingOptions', 'AjaxController@filterShippingOptions')->name('ajax.filterShippingOptions');
 
-		Route::get('order/ajax/getPackagingCost', 'OrderController@ajaxGetPackagingCost')->name('ajax.getPackagingCost');
+		// Route::get('order/ajax/getPackagingCost', 'OrderController@ajaxGetPackagingCost')->name('ajax.getPackagingCost');
 
 		Route::get('system/ajax/getFromPHPHelper', 'AjaxController@ajaxGetFromPHPHelper')->name('ajax.getFromPHPHelper');
 	});

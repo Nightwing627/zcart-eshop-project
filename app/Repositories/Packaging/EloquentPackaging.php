@@ -46,6 +46,9 @@ class EloquentPackaging extends EloquentRepository implements BaseRepository, Pa
 
     public function update(Request $request, $id)
     {
+        if ( (bool) $request->input('default') )
+            $this->removeDefault();
+
         $packaging = parent::update($request, $id);
 
         if ($request->input('delete_image') == 1)
@@ -62,6 +65,13 @@ class EloquentPackaging extends EloquentRepository implements BaseRepository, Pa
         $this->removeImages($id);
 
         return parent::destroy($id);
+    }
+
+    public function removeDefault()
+    {
+        $default = $this->model->where('default', 1)->mine()->first();
+
+        return $default ? $default->update(['default' => null]) : true;
     }
 
     public function uploadImages(Request $request, $id)

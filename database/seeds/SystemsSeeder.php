@@ -59,10 +59,13 @@ class SystemsSeeder extends Seeder
 
         DB::table('addresses')->insert([
             'address_type' => 'Primary',
-            'addressable_type' => 'App\System',
             'address_line_1' => 'Demo Platform Address',
+            'state_id' => 806,
+            'zip_code' => 63585,
+            'country_id' => 604,
             'city' => 'Hollywood',
             'addressable_id' => 1,
+            'addressable_type' => 'App\System',
             'created_at' => Carbon::Now(),
             'updated_at' => Carbon::Now(),
         ]);

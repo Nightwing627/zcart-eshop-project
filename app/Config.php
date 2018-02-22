@@ -49,15 +49,7 @@ class Config extends Model
      */
     public function tax()
     {
-        return $this->belongsTo(Tax::class, 'default_tax_id_for_order');
-    }
-
-    /**
-     * Get the tax for inventory.
-     */
-    public function inventoryTax()
-    {
-        return $this->belongsTo(Tax::class, 'default_tax_id_for_inventory');
+        return $this->belongsTo(Tax::class, 'default_tax_id');
     }
 
     /**
@@ -85,37 +77,8 @@ class Config extends Model
     }
 
     /**
-     * Get the carrier.
-     */
-    public function carrier()
-    {
-        return $this->belongsTo(Carrier::class, 'default_carrier_id');
-    }
-
-    /**
-     * Get the packaging.
-     */
-    public function packaging()
-    {
-        return $this->belongsTo(Packaging::class, 'default_packaging_id');
-    }
-
-    /**
-     * Get the carriersForInventory.
-     */
-    public function carriersForInventory()
-    {
-        return unserialize($this->default_carrier_ids_for_inventory);
-    }
-
-    /**
      * Setters
      */
-    public function setDefaultCarrierIdsForInventoryAttribute($value)
-    {
-        $this->attributes['default_carrier_ids_for_inventory'] = serialize($value);
-    }
-
     public function setDefaultPackagingIdsAttribute($value)
     {
         $this->attributes['default_packaging_ids'] = serialize($value);
@@ -124,11 +87,6 @@ class Config extends Model
     /**
      * Getters
      */
-    public function getDefaultCarrierIdsForInventoryAttribute($value)
-    {
-        return unserialize($value);
-    }
-
     public function getDefaultPackagingIdsAttribute($value)
     {
         return unserialize($value);

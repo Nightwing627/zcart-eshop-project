@@ -60,6 +60,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeProductForm();
 
+        $this->composePaymentMethodForm();
+
         $this->composeRefundInitiationForm();
 
         $this->composeRoleForm();
@@ -71,6 +73,8 @@ class ViewComposerServiceProvider extends ServiceProvider
         // $this->composeSearchCustomerForm();
 
         $this->composeSetVariantForm();
+
+        $this->composeShippingRateForm();
 
         $this->composeShippingZoneForm();
 
@@ -200,6 +204,21 @@ class ViewComposerServiceProvider extends ServiceProvider
     }
 
     /**
+     * compose partial view of shipping rate form
+     */
+    private function composeShippingRateForm()
+    {
+        View::composer(
+
+                'admin.shipping_rate._form',
+
+                function($view)
+                {
+                    $view->with('carriers', ListHelper::carriers());
+                });
+    }
+
+    /**
      * compose partial view of shipping zone form
      */
     private function composeShippingZoneForm()
@@ -215,7 +234,6 @@ class ViewComposerServiceProvider extends ServiceProvider
                 });
     }
 
-
     /**
      * compose partial view of shop form
      */
@@ -229,6 +247,21 @@ class ViewComposerServiceProvider extends ServiceProvider
                 {
                     $view->with('merchants', ListHelper::new_merchants());
                     $view->with('timezones', ListHelper::timezones());
+                });
+    }
+
+    /**
+     * compose partial view of PaymentMethodForm
+     */
+    private function composePaymentMethodForm()
+    {
+        View::composer(
+
+                'admin.payment-method._form',
+
+                function($view)
+                {
+                    $view->with('types', ListHelper::payment_types());
                 });
     }
 
@@ -270,7 +303,7 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                     $view->with('taxes', ListHelper::taxes());
 
-                    $view->with('carriers', ListHelper::carriers());
+                    // $view->with('carriers', ListHelper::carriers());
 
                     $view->with('packagings', ListHelper::packagings());
 
@@ -293,7 +326,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 {
                     $view->with('taxes', ListHelper::taxes());
 
-                    $view->with('carriers', ListHelper::carriers());
+                    // $view->with('carriers', ListHelper::carriers());
 
                     $view->with('packagings', ListHelper::packagings());
 
@@ -469,14 +502,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
             function($view)
             {
-                $view->with('carriers', ListHelper::carriers());
-                $view->with('taxes', ListHelper::taxes());
-                $view->with('order_statuses', ListHelper::order_statuses());
                 $view->with('payment_statuses', ListHelper::payment_statuses());
                 $view->with('payment_methods', ListHelper::payment_methods());
-                $view->with('packagings', ListHelper::packagings());
-                // $cart_lists = Cart::where('customer_id', $customer_id)->with('inventories', 'customer', 'tax')->orderBy('created_at', 'desc')->get();
-                // $view->with('cart_lists', $cart_lists);
 
                 $inventories = Inventory::mine()->active()->with('product', 'attributeValues')->get();
 
@@ -496,6 +523,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                         "salePrice" => round($inventory->sale_price, 2),
                         "offerPrice" => round($inventory->offer_price, 2),
                         "stockQtt" => $inventory->stock_quantity,
+                        "shipping_weight" => $inventory->shipping_weight,
                         "offerStart" => $inventory->offer_start,
                         "offerEnd" => $inventory->offer_end,
                     ];
@@ -601,7 +629,6 @@ class ViewComposerServiceProvider extends ServiceProvider
                     $view->with('taxes', ListHelper::taxes());
                     $view->with('suppliers', ListHelper::suppliers());
                     $view->with('warehouses', ListHelper::warehouses());
-                    $view->with('carriers', ListHelper::carriers());
                     $view->with('packagings', ListHelper::packagings());
                     $view->with('payment_methods', ListHelper::payment_methods());
                 });

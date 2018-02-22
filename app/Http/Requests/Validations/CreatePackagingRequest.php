@@ -27,6 +27,9 @@ class CreatePackagingRequest extends Request
 
         return [
             'name' => 'required',
+            'height' => 'required|numeric',
+            'width' => 'required|numeric',
+            'depth' => 'required|numeric',
             'cost' => 'numeric|nullable',
             'image' => 'max:' . config('system_settings.merchant_logo_max_size_limit_kb') ?:'1024' . '|mimes:jpg,jpeg,png,gif',
         ];

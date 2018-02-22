@@ -25,7 +25,7 @@
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.available_from') }}"></i>
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-        {!! Form::text('available_from', null, ['class' => 'form-control datepicker', 'style' => 'z-index: 900;', 'placeholder' => trans('app.placeholder.available_from')]) !!}
+        {!! Form::text('available_from', null, ['class' => 'form-control datetimepicker', 'placeholder' => trans('app.placeholder.available_from')]) !!}
       </div>
     </div>
   </div>
@@ -33,45 +33,41 @@
     <div class="form-group">
       {!! Form::label('active', trans('app.form.status').'*', ['class' => 'with-help']) !!}
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_inventory_status') }}"></i>
-      {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+      {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], 1, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-lg-3 col-md-6 nopadding-right">
-    <div class="form-group">
-      {!! Form::label('carrier_list[]', trans('app.form.carriers'), ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_carriers') }}"></i>
-      {!! Form::select('carrier_list[]', $carriers , null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
+@if($product->requires_shipping)
+  <div class="row">
+    <div class="col-lg-3 col-md-6 nopadding-right">
+      <div class="form-group">
+        {!! Form::label('min_order_quantity', trans('app.form.min_order_quantity'), ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.min_order_quantity') }}"></i>
+        {!! Form::number('min_order_quantity', isset($inventory) ? null : 1, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.min_order_quantity')]) !!}
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 nopadding-left">
+      <div class="form-group">
+        {!! Form::label('shipping_weight', trans('app.form.shipping_weight'), ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_weight') }}"></i>
+        <div class="input-group">
+          {!! Form::number('shipping_weight', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.shipping_weight')]) !!}
+          <span class="input-group-addon">{{ config('system_settings.weight_unit') ?: 'gm' }}</span>
+        </div>
+        <div class="help-block with-errors"></div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+      <div class="form-group">
+        {!! Form::label('packaging_list[]', trans('app.form.packaging'), ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_packagings') }}"></i>
+        {!! Form::select('packaging_list[]', $packagings , isset($inventory) ? null : config('shop_settings.default_packaging_ids'), ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
+      </div>
     </div>
   </div>
-  <div class="col-lg-3 col-md-6 nopadding-left">
-    <div class="form-group">
-      {!! Form::label('tax_id', trans('app.form.tax').'*', ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.inventory_select_tax') }}"></i>
-      {!! Form::select('tax_id', $taxes, config('shop_settings.default_tax_id_for_inventory'), ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
-      <div class="help-block with-errors"></div>
-    </div>
-  </div>
-  <div class="col-lg-3 col-md-6 nopadding-right">
-    <div class="form-group">
-      {!! Form::label('min_order_quantity', trans('app.form.min_order_quantity'), ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.min_order_quantity') }}"></i>
-      {!! Form::number('min_order_quantity', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.min_order_quantity')]) !!}
-    </div>
-  </div>
-  <div class="col-lg-3 col-md-6 nopadding-left">
-    <div class="form-group">
-      {!! Form::label('alert_quantity', trans('app.form.alert_quantity'), ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.alert_quantity') }}"></i>
-      {!! Form::number('alert_quantity', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.alert_quantity')]) !!}
-    </div>
-  </div>
-</div>
-
-<div class="spacer30"></div>
+@endif
 
 <fieldset>
   <legend>{{ trans('app.variants') }}</legend>
@@ -147,7 +143,7 @@
           </td>
           <td>
             <div class="form-group">
-              {!! Form::number('purchase_price['. $i .']', null, ['class' => 'form-control purchasePrice', 'step' => 'any', 'placeholder' => trans('app.placeholder.purchase_price'), 'required']) !!}
+              {!! Form::number('purchase_price['. $i .']', null, ['class' => 'form-control purchasePrice', 'step' => 'any', 'placeholder' => trans('app.placeholder.purchase_price')]) !!}
             </div>
           </td>
           <td>
@@ -207,70 +203,4 @@
   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_description') }}"></i>
   {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'placeholder' => trans('app.placeholder.description')]) !!}
 </div>
-
-@if($product->requires_shipping)
-  <fieldset>
-    <legend>{{ trans('app.shipping') }}</legend>
-    <div class="row">
-      <div class="col-md-4 col-sm-12 nopadding-right">
-        <div class="form-group">
-          {!! Form::label('packaging_id', trans('app.form.packaging'), ['class' => 'with-help']) !!}
-          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_packaging') }}"></i>
-          {!! Form::select('packaging_id', $packagings, config('shop_settings.default_packaging_id'), ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select')]) !!}
-          <div class="help-block with-errors"></div>
-        </div>
-      </div>
-      <div class="col-md-2 col-sm-6 nopadding-right">
-        <div class="form-group">
-            {!! Form::label('shipping_width', trans('app.form.shipping_width'), ['class' => 'with-help']) !!}
-            <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_width') }}"></i>
-            <div class="input-group">
-              {!! Form::number('shipping_width', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.shipping_width')]) !!}
-              <span class="input-group-addon">{{ config('system_settings.length_unit') ?: 'cm' }}</span>
-            </div>
-            <div class="help-block with-errors"></div>
-        </div>
-      </div>
-
-      <div class="col-md-2 col-sm-6 nopadding">
-        <div class="form-group">
-          {!! Form::label('shipping_height', trans('app.form.shipping_height'), ['class' => 'with-help']) !!}
-          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_height') }}"></i>
-          <div class="input-group">
-            {!! Form::number('shipping_height', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.shipping_height')]) !!}
-            <span class="input-group-addon">{{ config('system_settings.length_unit') ?: 'cm' }}</span>
-          </div>
-          <div class="help-block with-errors"></div>
-        </div>
-      </div>
-
-      <div class="col-md-2 col-sm-6 nopadding-right">
-        <div class="form-group">
-          {!! Form::label('shipping_depth', trans('app.form.shipping_depth'), ['class' => 'with-help']) !!}
-          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_depth') }}"></i>
-          <div class="input-group">
-            {!! Form::number('shipping_depth', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.shipping_depth')]) !!}
-            <span class="input-group-addon">{{ config('system_settings.length_unit') ?: 'cm' }}</span>
-          </div>
-          <div class="help-block with-errors"></div>
-        </div>
-      </div>
-
-      <div class="col-md-2 col-sm-6 nopadding-left">
-        <div class="form-group">
-          {!! Form::label('shipping_weight', trans('app.form.shipping_weight'), ['class' => 'with-help']) !!}
-          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_weight') }}"></i>
-          <div class="input-group">
-            {!! Form::number('shipping_weight', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.shipping_weight')]) !!}
-            <span class="input-group-addon">{{ config('system_settings.weight_unit') ?: 'gm' }}</span>
-          </div>
-          <div class="help-block with-errors"></div>
-        </div>
-      </div>
-    </div>
-  </fieldset>
-@endif
-
 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>
-
-

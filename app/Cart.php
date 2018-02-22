@@ -29,26 +29,24 @@ class Cart extends Model
      *
      * @var array
      */
-    protected $fillable =
-                    [
+    protected $fillable = [
                         'shop_id',
                         'customer_id',
-                        'carrier_id',
+                        'shipping_rate_id',
                         'packaging_id',
-                        'tax_id',
-                        'payment_method_id',
-                        'billing_address',
-                        'shipping_address',
                         'item_count',
                         'quantity',
                         'total',
-                        'shipping',
-                        'packaging_cost',
                         'discount',
-                        'tax_amount',
+                        'shipping',
+                        'packaging',
+                        'handling',
+                        'taxes',
                         'grand_total',
+                        'shipping_address',
+                        'billing_address',
+                        'payment_method_id',
                         'payment_status_id',
-                        'order_status_id',
                         'message_to_customer',
                         'admin_note',
                     ];
@@ -70,11 +68,19 @@ class Cart extends Model
     }
 
     /**
-     * Get the tax associated with the cart.
+     * Get the shippingRate for the order.
      */
-    public function tax()
+    public function shippingRate()
     {
-        return $this->belongsTo(Tax::class);
+        return $this->belongsTo(ShippingRate::class, 'shipping_rate_id');
+    }
+
+    /**
+     * Get the packaging for the order.
+     */
+    public function shippingPackage()
+    {
+        return $this->belongsTo(Packaging::class, 'packaging_id');
     }
 
     /**
@@ -82,24 +88,8 @@ class Cart extends Model
      */
     public function carrier()
     {
-        return $this->belongsTo(Carrier::class);
+        return $this->shippingRate->carrier();
     }
-
-    /**
-     * Get the packaging for the order.
-     */
-    public function packaging()
-    {
-        return $this->belongsTo(Packaging::class);
-    }
-
-    /**
-     * Get the products for the product.
-     */
-    // public function products()
-    // {
-    //     return $this->hasManyThrough(Product::class, Inventory::class);
-    // }
 
     /**
      * Get the inventories for the product.
@@ -109,6 +99,22 @@ class Cart extends Model
         return $this->belongsToMany(Inventory::class, 'cart_items')
                     ->withPivot('item_description', 'quantity', 'unit_price')
                     ->withTimestamps();
+    }
+
+    /**
+     * Get the paymentMethod for the order.
+     */
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
+
+    /**
+     * Get the paymentStatus for the order.
+     */
+    public function paymentStatus()
+    {
+        return $this->belongsTo(PaymentStatus::class);
     }
 
     /**

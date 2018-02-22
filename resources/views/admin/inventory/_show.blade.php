@@ -49,24 +49,21 @@
 			<!-- Custom Tabs -->
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs nav-justified">
-				  <li class="active"><a href="#tab_1" data-toggle="tab">
+				  <li class="active"><a href="#listing_tab" data-toggle="tab">
 					{{ trans('app.listing') }}
 				  </a></li>
-				  <li><a href="#productinfo" data-toggle="tab">
+				  <li><a href="#productinfo_tab" data-toggle="tab">
 					{{ trans('app.product') }}
 				  </a></li>
-				  <li><a href="#tab_2" data-toggle="tab">
+				  <li><a href="#description_tab" data-toggle="tab">
 					{{ trans('app.description') }}
 				  </a></li>
-				  <li><a href="#tab_4" data-toggle="tab">
+				  <li><a href="#offer_tab" data-toggle="tab">
 					{{ trans('app.offer') }}
-				  </a></li>
-				  <li><a href="#tab_5" data-toggle="tab">
-					{{ trans('app.shipping') }}
 				  </a></li>
 				</ul>
 				<div class="tab-content">
-				    <div class="tab-pane active" id="tab_1">
+				    <div class="tab-pane active" id="listing_tab">
 				        <table class="table">
 				            @if($inventory->sku)
 								<tr>
@@ -85,12 +82,10 @@
 								<td style="width: 75%;"> {{ $inventory->stock_quantity }} </td>
 							</tr>
 
-				            @if($inventory->min_order_quantity)
-								<tr>
-									<th class="text-right">{{ trans('app.min_order_quantity') }}:</th>
-									<td style="width: 75%;">{{ $inventory->min_order_quantity }}</td>
-								</tr>
-							@endif
+							<tr>
+								<th class="text-right">{{ trans('app.min_order_quantity') }}:</th>
+								<td style="width: 75%;">{{ $inventory->min_order_quantity }}</td>
+							</tr>
 
 					    	@php
 					    		$attributes = $inventory->attributes->toArray();
@@ -120,24 +115,27 @@
 								</tr>
 							@endif
 
+							@if($inventory->product->requires_shipping)
+								<tr>
+									<th class="text-right">{{ trans('app.shipping_weight') }}:</th>
+									<td style="width: 75%;">{{ get_formated_weight($inventory->shipping_weight) }}</td>
+								</tr>
+								<tr>
+									<th class="text-right">{{ trans('app.packagings') }}:</th>
+									<td style="width: 75%;">
+										@forelse($inventory->packagings as $packaging)
+											<label class="label label-outline">{{ $packaging->name }}</label>
+										@empty
+											<span>{{ trans('app.packaging_not_available') }}</span>
+										@endforelse
+									</td>
+								</tr>
+							@endif
+
 				            @if($inventory->puchase_price)
 								<tr>
 									<th class="text-right">{{ trans('app.puchase_price') }}:</th>
 									<td style="width: 75%;"> {{ get_formated_currency($inventory->puchase_price) }} </td>
-								</tr>
-							@endif
-
-							<tr>
-								<th class="text-right">{{ trans('app.tax') }}:</th>
-								<td style="width: 75%;">
-									{{ $inventory->tax->name . ' (' . get_formated_decimal($inventory->tax->taxrate) . trans('app.percent').')' }}
-								</td>
-							</tr>
-
-				            @if($inventory->alert_quantity)
-								<tr>
-									<th class="text-right">{{ trans('app.alert_quantity') }}:</th>
-									<td style="width: 75%;"> {{ $inventory->alert_quantity }} </td>
 								</tr>
 							@endif
 
@@ -165,7 +163,7 @@
 				    </div>
 				    <!-- /.tab-pane -->
 
-				    <div class="tab-pane" id="productinfo">
+				    <div class="tab-pane" id="productinfo_tab">
 				        <table class="table">
 			                <tr>
 			                	<th class="text-right">{{ trans('app.name') }}: </th>
@@ -228,13 +226,13 @@
 								</td>
 			                </tr>
 
-				            @if($inventory->product->min_price && $inventory->product->min_price != 0)
+				            @if($inventory->product->min_price && $inventory->product->min_price > 0)
 				                <tr>
 				                	<th class="text-right">{{ trans('app.min_price') }}: </th>
 				                	<td style="width: 75%;">{{ get_formated_currency($inventory->product->min_price) }}</td>
 				                </tr>
 				            @endif
-				            @if($inventory->product->max_price && $inventory->product->max_price != 0)
+				            @if($inventory->product->max_price && $inventory->product->max_price > 0)
 				                <tr>
 				                	<th class="text-right">{{ trans('app.max_price') }}: </th>
 				                	<td style="width: 75%;">{{ get_formated_currency($inventory->product->max_price) }}</td>
@@ -251,7 +249,7 @@
 				        </table>
 				    </div>
 				    <!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_2">
+				    <div class="tab-pane" id="description_tab">
 					  <div class="box-body">
 				        @if($inventory->description)
 				            {!! $inventory->description !!}
@@ -261,74 +259,35 @@
 					  </div>
 				    </div>
 				    <!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_4">
+				    <div class="tab-pane" id="offer_tab">
 				        <table class="table">
-				            @if($inventory->offer_price && $inventory->offer_price != 0)
-							<tr>
-								<th class="text-right">{{ trans('app.offer_price') }}:</th>
-								<td style="width: 75%;">{{ get_formated_currency($inventory->offer_price) }}</td>
-							</tr>
+				            @if($inventory->offer_price && $inventory->offer_price > 0)
+								<tr>
+									<th class="text-right">{{ trans('app.offer_price') }}:</th>
+									<td style="width: 75%;">{{ get_formated_currency($inventory->offer_price) }}</td>
+								</tr>
 					        @else
-							<tr>
-								<th>{{ trans('app.no_offer_available') }}</th>
-							</tr>
+								<tr>
+									<th>{{ trans('app.no_offer_available') }}</th>
+								</tr>
 							@endif
 				            @if($inventory->offer_start)
-							<tr>
-								<th class="text-right">{{ trans('app.offer_start') }}:</th>
-								<td style="width: 75%;">
-									{{ $inventory->offer_start->toDayDateTimeString() .' - '. $inventory->offer_start->diffForHumans() }}
-								</td>
-							</tr>
+								<tr>
+									<th class="text-right">{{ trans('app.offer_start') }}:</th>
+									<td style="width: 75%;">
+										{{ $inventory->offer_start->toDayDateTimeString() .' - '. $inventory->offer_start->diffForHumans() }}
+									</td>
+								</tr>
 							@endif
 				            @if($inventory->offer_end)
-							<tr>
-								<th class="text-right">{{ trans('app.offer_end') }}:</th>
-								<td style="width: 75%;">{{ $inventory->offer_end->toDayDateTimeString() .' - '. $inventory->offer_end->diffForHumans() }}</td>
-							</tr>
+								<tr>
+									<th class="text-right">{{ trans('app.offer_end') }}:</th>
+									<td style="width: 75%;">{{ $inventory->offer_end->toDayDateTimeString() .' - '. $inventory->offer_end->diffForHumans() }}</td>
+								</tr>
 							@endif
 				        </table>
 				    </div>
 				  	<!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_5">
-			            @if($inventory->product->requires_shipping)
-				        <table class="table">
-							<tr>
-								<th class="text-right">{{ trans('app.shipping_width') }}:</th>
-								<td style="width: 25%;">{{ get_formated_decimal($inventory->shipping_width)  . config('system_settings.length_unit') ?: 'cm' }}</td>
-								<th class="text-right">{{ trans('app.shipping_height') }}:</th>
-								<td style="width: 25%;"> {{ get_formated_decimal($inventory->shipping_height) . config('system_settings.length_unit') ?: 'cm' }} </td>
-							</tr>
-							<tr>
-								<th class="text-right">{{ trans('app.shipping_depth') }}:</th>
-								<td style="width: 25%;"> {{ get_formated_decimal($inventory->shipping_depth) . config('system_settings.length_unit') ?: 'cm' }} </td>
-								<th class="text-right">{{ trans('app.shipping_weight') }}:</th>
-								<td style="width: 25%;"> {{ get_formated_decimal($inventory->shipping_weight) . config('system_settings.weight_unit') ?: 'gm' }} </td>
-							</tr>
-				        </table>
-				        <br/><br/>
-						@endif
-
-				        <table class="table">
-							<tr>
-								<th>{{ trans('app.carrier') }}</th>
-								<th style="width: 35%;">{{ trans('app.tracking_url') }}</th>
-								<th>{{ trans('app.carrier_cost') }}</th>
-								<th>{{ trans('app.shipment_takes') }}</th>
-							</tr>
-				            @if($inventory->carriers)
-					          	@foreach($inventory->carriers as $carrier)
-								<tr>
-									<td>{{ $carrier->name }}</td>
-									<td>{{ $carrier->tracking_url }}</td>
-									<td>{{ '$$$' }}</td>
-									<td>{{ 'days' }}</td>
-								</tr>
-						        @endforeach
-							@endif
-				        </table>
-				    </div>
-				  <!-- /.tab-pane -->
 				</div>
 				<!-- /.tab-content -->
 			</div>

@@ -76,8 +76,7 @@ class EloquentCart extends EloquentRepository implements BaseRepository, CartRep
             ];
         }
 
-        if (!empty($temp))
-        {
+        if (!empty($temp)){
             $cart->inventories()->sync($temp);
         }
 

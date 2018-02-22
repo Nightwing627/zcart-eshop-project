@@ -42,17 +42,6 @@ class Address extends Model
                         'longitude',
                     ];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::saving(function($address)
-        {
-            if(config('system_settings.address_geocode'))
-                $address->geocode();
-        });
-    }
-
     /**
      * Get all of the owning addressable models.
      */
@@ -97,39 +86,21 @@ class Address extends Model
      *
      * @return $this
      */
-    public function geocode()
+    public function toGeocodeString()
     {
-        // build query string
-        $query = [];
-        $query[] = $this->address_line_1 ?: '';
-        $query[] = $this->address_line_2 ?: '';
-        $query[] = $this->city ?: '';
+        $data = [];
+        $data[] = $this->address_line_1 ?: '';
+        $data[] = $this->address_line_2 ?: '';
+        $data[] = $this->city ?: '';
         if ($this->state_id)
-            $query[] = $this->state->name;
-        $query[] = $this->zip_code ?: '';
+            $data[] = $this->state->name;
+        $data[] = $this->zip_code ?: '';
         if ($this->country_id)
-            $query[] = $this->country->name;
-        // build query string
-        $query = trim( implode(', ', array_filter($query)) );
-        $query = str_replace(' ', '+', $query);
+            $data[] = $this->country->name;
+        // build str string
+        $str = trim( implode(', ', array_filter($data)) );
 
-        if(empty($query) || $query == '')   return;
-
-        // build url
-        $url = 'https://maps.google.com/maps/api/geocode/json?address='.$query.'&sensor=false';
-        // try to get geo codes
-        if ( $geocode = file_get_contents($url) ){
-            $output = json_decode($geocode);
-
-            if ( count($output->results) && isset($output->results[0]) ){
-                if ( $geo = $output->results[0]->geometry ){
-                    $this->latitude = $geo->location->lat;
-                    $this->longitude = $geo->location->lng;
-                }
-            }
-        }
-
-        return $this;
+        return str_replace(' ', '+', $str);
     }
 
     /**
@@ -139,11 +110,11 @@ class Address extends Model
      *
      * @return str
      */
-    public function toHtml($separator = '<br />')
+    public function toHtml($separator = '<br />', $show_heading = true)
     {
         $html = [];
 
-        if ('App\Customer' == $this->addressable_type)
+        if ('App\Customer' == $this->addressable_type && $show_heading)
             $html [] = '<strong class="pull-right">' . strtoupper($this->address_type) . '</strong>';
 
         if(config('system_settings.show_address_title'))
@@ -177,8 +148,7 @@ class Address extends Model
     public function toString()
     {
         $str = array();
-        if(config('system_settings.show_address_title'))
-        {
+        if(config('system_settings.show_address_title')){
             $str [] = $this->address_title;
         }
 
@@ -227,5 +197,4 @@ class Address extends Model
 
         return $address;
     }
-
 }

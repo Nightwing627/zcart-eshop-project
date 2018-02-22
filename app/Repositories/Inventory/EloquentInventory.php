@@ -24,9 +24,9 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('product', 'tax')->get();
+            return $this->model->mine()->with('product')->get();
 
-        return $this->model->with('product', 'tax')->get();
+        return $this->model->with('product')->get();
     }
 
     public function trashOnly()

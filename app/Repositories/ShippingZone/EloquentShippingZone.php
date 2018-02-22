@@ -27,23 +27,26 @@ class EloquentShippingZone extends EloquentRepository implements BaseRepository,
     {
         $zone = $this->model->findOrFail($id);
 
-        $state_ids = [];
-
-        if($request->has('country_ids')){
-            $country_ids = $request->input('country_ids');
-            $old_country_ids = $zone->country_ids; //Current values
-
-            $kept_country_ids = array_intersect($old_country_ids, $country_ids); //Unchanged countries
-            $temp_states = get_states_of($kept_country_ids); //All states of unchanged countries
-            $kept_state_ids = array_intersect($zone->state_ids, array_keys($temp_states)); //States what will keep unchange
-
-            $new_country_ids = array_diff($country_ids, $old_country_ids); //If there is new countries
-            $new_state_ids = get_states_of($new_country_ids); //States of new countries
-
-            $state_ids = array_merge($kept_state_ids, array_keys($new_state_ids)); //Creating new and updated values
+        if ($request->has('rest_of_the_world') && $request->input('rest_of_the_world') == 1) {
+            $request->merge(['state_ids' => [], 'country_ids' => []]);
         }
+        else{
+            $state_ids = [];
+            if($request->has('country_ids')){
+                $country_ids = $request->input('country_ids');
+                $old_country_ids = $zone->country_ids; //Current values
 
-        $request->merge(['state_ids' => $state_ids]);
+                $kept_country_ids = array_intersect($old_country_ids, $country_ids); //Unchanged countries
+                $temp_states = get_states_of($kept_country_ids); //All states of unchanged countries
+                $kept_state_ids = array_intersect($zone->state_ids, array_keys($temp_states)); //States what will keep unchange
+
+                $new_country_ids = array_diff($country_ids, $old_country_ids); //If there is new countries
+                $new_state_ids = get_states_of($new_country_ids); //States of new countries
+
+                $state_ids = array_merge($kept_state_ids, array_keys($new_state_ids)); //Creating new and updated values
+            }
+            $request->merge(['state_ids' => $state_ids]);
+        }
 
         $zone->update($request->all());
 

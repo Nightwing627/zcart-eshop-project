@@ -21,14 +21,20 @@ class ShippingRate extends Model
     protected $fillable = [
                     'name',
                     'shipping_zone_id',
+                    'carrier_id',
                     'based_on',
                     'maximum',
                     'minimum',
                     'rate',
                     ];
 
-    public function ShippingZone()
+    public function shippingZone()
     {
         return $this->belongsTo(ShippingZone::class);
+    }
+
+    public function carrier()
+    {
+        return $this->belongsTo(Carrier::class);
     }
 }

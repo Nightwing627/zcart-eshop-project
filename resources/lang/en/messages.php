@@ -39,6 +39,12 @@ return [
 
     'inventory_exist'   => 'The product is already exist in your inventory. Please update the existing list instead of creating duplicate list.',
 
+    'notice' => [
+        'no_shipping_option_for_the_zone' => 'No shipping zone available for this area. Please create a new shipping zone or add this shipping area to an existing zone.',
+        'no_rate_for_the_shipping_zone' => 'The <strong> :zone </strong> shipping zone has no shipping rates. Please create shipping rates to accept orders from this zone.',
+        'cant_cal_weight_shipping_rate' => 'Can\'t calculate weight based shipping rate. Because weight are not set for some items.'
+    ],
+
     'permission'        => [
             'denied'        => 'Permission denied!',
     ],

@@ -33,27 +33,29 @@
 						<span class="indent50">{{ $shipping_zone->tax->name }}</span>
 
 						<div class="pull-right">
-							@can('create', $shipping_zone)
+							@can('create', App\ShippingRate::class)
 								<div class="btn-group">
 								  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								  	<i class="fa fa-plus-square-o"></i>
 								    {{ trans('app.add_shipping_rate') }} <span class="caret"></span>
 								  </button>
-								  <ul class="dropdown-menu">
-								    <li><a href="{{ route('admin.shipping.shippingRate.create', [$shipping_zone->id,'price']) }}" class="ajax-modal-btn"><i class="fa fa-money"></i> {{ trans('app.add_price_based_rate') }}</a></li>
+									  <ul class="dropdown-menu">
+									    <li><a href="{{ route('admin.shipping.shippingRate.create', [$shipping_zone->id,'price']) }}" class="ajax-modal-btn"><i class="fa fa-money"></i> {{ trans('app.add_price_based_rate') }}</a></li>
 
-									<li role="separator" class="divider"></li>
+										<li role="separator" class="divider"></li>
 
-								    <li><a href="{{ route('admin.shipping.shippingRate.create', [$shipping_zone->id, 'weight']) }}" class="ajax-modal-btn"><i class="fa fa-balance-scale"></i> {{ trans('app.add_weight_based_rate') }}</a></li>
-								  </ul>
+									    <li><a href="{{ route('admin.shipping.shippingRate.create', [$shipping_zone->id, 'weight']) }}" class="ajax-modal-btn"><i class="fa fa-balance-scale"></i> {{ trans('app.add_weight_based_rate') }}</a></li>
+									  </ul>
+								</div>
+							@endcan
 
-								  @unless($shipping_zone->rest_of_the_world)
+						  	@unless($shipping_zone->rest_of_the_world)
+								@can('create', App\ShippingZone::class)
 									<a href="{{ route('admin.shipping.shippingZone.edit', $shipping_zone->id) }}"  class="ajax-modal-btn btn btn-default btn-flat">
 										<i class="fa fa-plus-square-o"></i> {{ trans('app.add_shipping_country') }}
 								  	</a>
-								  @endunless
-								</div>
-							@endcan
+								@endcan
+						  	@endunless
 
 							@can('update', $shipping_zone)
 								<a href="{{ route('admin.shipping.shippingZone.edit', $shipping_zone->id) }}"  class="ajax-modal-btn btn btn-default btn-flat"><i class="fa fa-edit"></i> {{ trans('app.edit') }}</a>
@@ -129,10 +131,15 @@
 									  <li class="list-group-item">
 									    <h4 class="list-group-item-heading">
 									    	{{ $shipping->name }}
+									    	@if($shipping->carrier)
+										    	<small class="indent20"> {{ trans('app.by') . ' ' . $shipping->carrier->name }} </small>
+									    	@endif
 
-											{!! Form::open(['route' => ['admin.shipping.shippingRate.destroy', $shipping->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-												{!! Form::button('<i class="fa fa-times-circle"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent small text-muted pull-right', 'title' => trans('app.delete'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-											{!! Form::close() !!}
+											@can('delete', $shipping)
+												{!! Form::open(['route' => ['admin.shipping.shippingRate.destroy', $shipping->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+													{!! Form::button('<i class="fa fa-times-circle"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent small text-muted pull-right', 'title' => trans('app.delete'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+												{!! Form::close() !!}
+											@endcan
 										</h4>
 
 									    <p class="list-group-item-text">
@@ -140,9 +147,11 @@
 										  	<span class="badge indent20">
 										  		{{ $shipping->rate > 0 ? get_formated_currency($shipping->rate) : trans('app.free') }}
 										  	</span>
-											<small class="pull-right">
-												<a href="{{ route('admin.shipping.shippingRate.edit', $shipping->id) }}"  class="ajax-modal-btn"><i  class="fa fa-edit"></i> {{ trans('app.edit') }}</a>
-											</small>
+											@can('update', $shipping)
+												<small class="pull-right">
+													<a href="{{ route('admin.shipping.shippingRate.edit', $shipping->id) }}"  class="ajax-modal-btn"><i  class="fa fa-edit"></i> {{ trans('app.edit') }}</a>
+												</small>
+											@endcan
 									    </p>
 
 									  </li>

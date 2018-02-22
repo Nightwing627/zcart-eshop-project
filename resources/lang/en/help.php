@@ -93,6 +93,8 @@ return [
 
     'system_pagination' => 'Set the pagination value for the data tables on the admin panel.',
 
+    'config_alert_quantity' => 'A notification email will be send your inventory goes below the alert quantity',
+
     'config_merchant_logo_max_size_limit_kb' => 'The maximum imagae size vendors can upload for inventory/logo/avatar. The limit in kilobytes.',
 
     'config_address_default_country' => 'Set this value to fill the address form faster. Obviously, a user can change the value when adding new address.',
@@ -199,7 +201,7 @@ return [
 
     'search_product' => 'You can use any GTIN identifier like UPC, ISBN, EAN, JAN or ITF. You can also use name and model number OR part of name or model number.',
 
-    'seller_description' => 'This is seller specific description of the product',
+    'seller_description' => 'This is seller specific description of the product. Customer will see this',
 
     'seller_product_condition' => 'What is the current condition of the product?',
 
@@ -207,11 +209,11 @@ return [
 
     'select_supplier' => 'Recommended field. This will helps to generate reports',
 
-    'select_warehouse' => 'Choose the warehouse from where the product will be shipped. Keep blank if the inventory will manage centrally',
+    'select_warehouse' => 'Choose the warehouse from where the product will be shipped.',
 
-    'inventory_select_tax' => 'The Tax will be added with the sale/offer price on the store. Orders created at back office will not apply the tax autometically. You need select the tax when create an order on back office. If your price inclusive the tax, then select -No Tax- option here',
+    // 'inventory_select_tax' => 'The Tax will be added with the sale/offer price on the store. Orders created at back office will not apply the tax autometically. You need select the tax when create an order on back office. If your price inclusive the tax, then select -No Tax- option here',
 
-    'select_carriers' => 'List of available carriers to ship the product. Leave blank to if the item doesn\'t require shipping',
+    // 'select_carriers' => 'List of available carriers to ship the product. Leave blank to if the item doesn\'t require shipping',
 
     'select_packagings' => 'List of available packaging options to ship the product. Leave blank to disable packaging option',
 
@@ -231,9 +233,7 @@ return [
 
     'seller_inventory_status' => 'Is the item is open to sale? Choose active for yes',
 
-    'stock_quantity' => 'Put 0 if the item is downloadable and doesn\'t require shipping',
-
-    'alert_quantity' => 'A notification email will be send when item goes below the alert quantity',
+    'stock_quantity' => 'Number of items you have on your warehouse',
 
     'offer_starting_time' => 'Offer starting time',
 
@@ -297,17 +297,27 @@ return [
 
     'packaging_name' => 'Customer will see this if the packaging option is available on order checkout',
 
+    'width' => 'The width of the packaging',
+
+    'height' => 'The height of the packaging',
+
+    'depth' => 'The depth of the packaging',
+
     'packaging_cost' => 'The cost of packaging. You can chooose if you want to charge the cost to customers or not',
 
-    'packaging_charge_customer' => 'If checked: the cost will be added with shipping when a customer place an order.',
+    'set_as_default_packaging' => 'If checked: this packaging will be used as default shipping package',
+
+    // 'packaging_charge_customer' => 'If checked: the cost will be added with shipping when a customer place an order.',
 
     'shipping_carrier_name' => 'Name of the shipping carrier',
 
-    'shipping_tax' => 'Shipping tax will be added to shipping cost while checkout. Leave empty if no tax applied.',
+    // 'shipping_tax' => 'Shipping tax will be added to shipping cost while checkout.',
 
     'shipping_zone_name' => 'Give a name of zone. Customer will not see this name.',
 
     'shipping_rate_name' => 'Give a meaningful name. Customer will see this name at checkout. e. g. \'standard shipping\'',
+
+    'shipping_zone_carrier' => 'You can link the shipping carrier. Customer will see this at checkout.',
 
     'shipping_rate' => 'Check the \'Free shipping\' option or give 0 amount for free shipping',
 
@@ -319,33 +329,29 @@ return [
 
     'shipping_max_width' => 'Maximun package width handle by the carrier. Leave empty to disable.',
 
-    'shipping_tracking_url' => 'Example: \'http://example.com/track.php?num=@\' where \'@\' will be replaced by the tracking number',
+    'shipping_tracking_url' => ' \'@\' will be replaced by the dynamic tracking number',
 
-    'standard_delivery_time' => 'Standard delivery time',
+    'shipping_tracking_url_example' => 'e.g.: http://example.com/track.php?num=@',
 
-    'shipping_max_width' => 'Maximun package width handle by the carrier. Leave empty to disable.',
+    // 'standard_delivery_time' => 'Standard delivery time',
 
-    'shipping_max_height' => 'Maximun package height handle by the carrier. Leave empty to disable.',
+    // 'shipping_max_width' => 'Maximun package width handle by the carrier. Leave empty to disable.',
 
-    'shipping_max_depth' => 'Maximun package depth handle by the carrier. Leave empty to disable.',
+    // 'shipping_max_height' => 'Maximun package height handle by the carrier. Leave empty to disable.',
 
-    'shipping_max_weight' => 'Maximun package weight handle by the carrier. Leave empty to disable.',
+    // 'shipping_max_depth' => 'Maximun package depth handle by the carrier. Leave empty to disable.',
 
-    'shipping_standard_delivery_time' => 'Standard delivery time promised by the carrier',
+    // 'shipping_max_weight' => 'Maximun package weight handle by the carrier. Leave empty to disable.',
 
-    'shipping_is_free' => 'Do you want to enable this shipping carrier to free shipping?',
+    // 'shipping_standard_delivery_time' => 'Standard delivery time promised by the carrier',
 
-    'shipping_handling_cost' => 'If checked shipping handling cost will be included with the shipping cost as per you set on the setting page.',
+    // 'shipping_is_free' => 'Do you want to enable this shipping carrier to free shipping?',
 
-    'flat_shipping_cost' => 'Enter a flat shipping cost for each order',
+    // 'shipping_handling_cost' => 'If checked shipping handling cost will be included with the shipping cost as per you set on the setting page.',
 
-    'shipping_width' => 'The width of the item after packaging',
+    // 'flat_shipping_cost' => 'Enter a flat shipping cost for each order',
 
-    'shipping_height' => 'The height of the item after packaging',
-
-    'shipping_depth' => 'The depth of the item after packaging',
-
-    'shipping_weight' => 'The weight of the item after packaging',
+    'shipping_weight' => 'The will be used to calculate the shipping cost.',
 
     'order_number_prefix_suffix' => 'The prefix and suffix will be added autometically to formate all order numbers. Leave it blank if you don\'t want to formate order numbers.',
 
@@ -407,15 +413,15 @@ return [
 
     'number_between' => 'Between :min and :max',
 
-    'default_tax_for_inventory' => 'Default tax profile will be preselected when add new inventory',
+    // 'default_tax_id' => 'Default tax profile will be preselected when add new inventory',
 
-    'default_tax_id_for_order' => 'Default tax profile will be preselected when create new order',
+    'default_tax_id' => 'Default tax profile will be applied when the shipping zone not covered by any tax area.',
 
     'default_payment_method_id' => 'If selected, The payment method will be preselected when create new order',
 
-    'config_order_handling_cost' => 'For some particular shipping carriers, you may want to add some additional order handling cost with each order. You can choose which carrier will be applicable to this charge when you add a carrier',
+    'config_order_handling_cost' => 'This additional cost tille be added with the shipping cost of every orders. Leave it blank to disable order handling charge',
 
-    'default_carrier' => 'Default carrier will be preselected when placing a new order. It\'ll help to faster the checkout process',
+    // 'default_carrier' => 'Default carrier will be preselected when placing a new order. It\'ll help to faster the checkout process',
 
     // 'default_packaging' => 'Set a default packing, if you want to enable the packing options on order., then this default value will help to faster the checkout process',
 
@@ -423,11 +429,11 @@ return [
 
     'default_supplier' => 'Default supplier will be preselected when add new inventory',
 
-    'default_carrier_ids_for_inventory' => 'Default carriers will be preselected when add new inventory. This will help you to add inventory faster.',
+    // 'default_carrier_ids_for_inventory' => 'Default carriers will be preselected when add new inventory. This will help you to add inventory faster.',
 
     'default_packaging_ids_for_inventory' => 'Default packagings will be preselected when add new inventory. This will help you to add inventory faster',
 
-    'free_shipping_starts' => 'The shipping charge will be free if the total order amount is equal or more than this value. Leave it blank to disable the feature',
+    // 'free_shipping_starts' => 'The shipping charge will be free if the total order amount is equal or more than this value. Leave it blank to disable the feature',
 
     'config_pagination' => 'How many list items you want to view per page on the data tables',
 

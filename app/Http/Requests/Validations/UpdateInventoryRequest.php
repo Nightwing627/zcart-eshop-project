@@ -35,7 +35,6 @@ class UpdateInventoryRequest extends Request
             'offer_end' => 'nullable|date|required_with:offer_price|after:offer_start',
             'image' => 'mimes:jpeg,png',
         ];
-
     }
 
    /**
@@ -52,5 +51,4 @@ class UpdateInventoryRequest extends Request
             'offer_end.after' => trans('validation.offer_end_after'),
         ];
     }
-
 }

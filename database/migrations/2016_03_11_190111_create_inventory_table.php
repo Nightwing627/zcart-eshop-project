@@ -25,7 +25,7 @@ class CreateInventoryTable extends Migration
             $table->integer('stock_quantity')->default(0);
             $table->integer('damaged_quantity')->nullable();
 
-            $table->integer('tax_id')->unsigned()->nullable();
+            // $table->integer('tax_id')->unsigned()->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
 
             $table->decimal('purchase_price', 20, 6)->nullable();
@@ -35,14 +35,13 @@ class CreateInventoryTable extends Migration
             $table->timestamp('offer_end')->nullable();
 
             // $table->integer('packaging_id')->unsigned()->nullable();
-            $table->decimal('shipping_width', 20, 2)->nullable();
-            $table->decimal('shipping_height', 20, 2)->nullable();
-            $table->decimal('shipping_depth', 20, 2)->nullable();
+            // $table->decimal('shipping_width', 20, 2)->nullable();
+            // $table->decimal('shipping_height', 20, 2)->nullable();
+            // $table->decimal('shipping_depth', 20, 2)->nullable();
             $table->decimal('shipping_weight', 20, 2)->nullable();
 
-            $table->date('available_from');
+            $table->timestamp('available_from')->useCurrent();
             $table->integer('min_order_quantity')->default(1);
-            $table->integer('alert_quantity')->nullable();
             $table->boolean('active')->default(1);
             $table->softDeletes();
             $table->timestamps();

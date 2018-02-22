@@ -21,7 +21,6 @@ class ShippingZone extends Model
      */
     protected $casts = [
         'rest_of_the_world' => 'boolean',
-        'active' => 'boolean',
     ];
 
     /**
@@ -54,14 +53,6 @@ class ShippingZone extends Model
     {
         return $this->belongsTo(Tax::class);
     }
-
-    /**
-     * Get the orders associated with the order status.
-     */
-    // public function orders()
-    // {
-    //     return $this->hasManyThrough(Order::class, Invoice::class);
-    // }
 
     /**
      * Get the rates for the order.

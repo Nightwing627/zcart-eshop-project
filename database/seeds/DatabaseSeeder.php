@@ -17,13 +17,13 @@ class DatabaseSeeder extends Seeder
         // $this->call(UserTableSeeder::class);
 
         //Seed the countries
-        $this->call('SystemsSeeder');
-        $this->call('KeyValuesSeeder');
         $this->call('CountriesSeeder');
         $this->call('StatesSeeder');
         $this->call('TimezonesSeeder');
         $this->call('CurrenciesSeeder');
         $this->call('RolesSeeder');
+        $this->call('SystemsSeeder');
+        $this->call('KeyValuesSeeder');
         $this->call('UsersSeeder');
         $this->call('ShopsSeeder');
         $this->call('ModulesSeeder');

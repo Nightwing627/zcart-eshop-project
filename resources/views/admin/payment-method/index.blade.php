@@ -21,7 +21,7 @@
 					<tr>
 						<th>{{ trans('app.logo') }}</th>
 						<th>{{ trans('app.name') }}</th>
-						<th>{{ trans('app.company_name') }}</th>
+						<th>{{ trans('app.type') }}</th>
 						<th>{{ trans('app.status') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -38,7 +38,7 @@
 					          	<span class="excerpt-td small">{!! str_limit($payment_method->description, 150) !!}</span>
 				          	@endif
 						</td>
-						<td>{{ $payment_method->company_name }}</td>
+						<td>{{ $payment_method->type }}</td>
 						<td>{{ ($payment_method->active) ? trans('app.active') : trans('app.inactive') }}</td>
 						<td class="row-options">
 				          	@if($payment_method->website)

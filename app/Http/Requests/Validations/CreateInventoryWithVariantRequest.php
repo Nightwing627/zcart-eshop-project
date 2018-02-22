@@ -31,7 +31,6 @@ class CreateInventoryWithVariantRequest extends Request
         return [
             'variants.*' => 'required',
             'sku.*' => 'required|unique:inventories,sku',
-            'purchase_price.*' => 'bail|required|numeric',
             'sale_price.*' => 'bail|required|numeric',
             'stock_quantity.*' => 'bail|required|integer',
             'offer_price.*' => 'sometimes|nullable|numeric',
@@ -57,18 +56,14 @@ class CreateInventoryWithVariantRequest extends Request
             'offer_end.after' => trans('validation.offer_end_after'),
         ];
 
-        foreach($this->request->get('sku') as $key => $val)
-        {
+        foreach($this->request->get('sku') as $key => $val){
             $messages['sku.'.$key.'.unique'] = $val .' '. trans('validation.sku-unique');
         }
 
-        foreach($this->request->get('offer_price') as $key => $val)
-        {
+        foreach($this->request->get('offer_price') as $key => $val){
             $messages['offer_price.'.$key.'.numeric'] = $val .' '. trans('validation.offer_price-numeric');
         }
 
         return $messages;
-
     }
-
 }

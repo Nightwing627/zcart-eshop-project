@@ -137,30 +137,4 @@ class OrderController extends Controller
 
         return false;
     }
-
-    /**
-     * Return Shipping Cost
-     * @param  \Illuminate\Http\Request  $request
-     * @return string
-     */
-    public function ajaxGetShippingCost(Request $request)
-    {
-        if ($request->ajax())
-            return $this->order->getShippingCost($request);
-
-        return false;
-    }
-
-    /**
-     * Return Packaging Cost
-     * @param  \Illuminate\Http\Request  $request
-     * @return string
-     */
-    public function ajaxGetPackagingCost(Request $request)
-    {
-        if ($request->ajax())
-            return $this->order->getPackagingCost($request);
-
-        return false;
-    }
 }

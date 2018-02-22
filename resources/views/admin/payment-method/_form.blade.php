@@ -20,14 +20,25 @@
   </div>
 </div>
 
-<div class="form-group">
-  	{!! Form::label('company_name', trans('app.form.company_name')) !!}
-  	<div class="input-group">
-	 	{!! Form::text('company_name', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.company_name')]) !!}
-        <span class="input-group-addon" id="basic-addon1">
-          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.payment_method_company_name') }}"></i>
-        </span>
+<div class="row">
+  <div class="col-md-6 nopadding-right">
+	<div class="form-group">
+	  	{!! Form::label('company_name', trans('app.form.company_name')) !!}
+	  	<div class="input-group">
+		 	{!! Form::text('company_name', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.company_name')]) !!}
+	        <span class="input-group-addon" id="basic-addon1">
+	          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.payment_method_company_name') }}"></i>
+	        </span>
+		</div>
 	</div>
+  </div>
+  <div class="col-md-6 nopadding-left">
+	<div class="form-group">
+	  	{!! Form::label('type', trans('app.form.payment_method_type') . '*') !!}
+	  	{!! Form::select('type', $types, null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+		 <div class="help-block with-errors"></div>
+	</div>
+  </div>
 </div>
 
 <div class="row">

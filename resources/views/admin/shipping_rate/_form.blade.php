@@ -8,6 +8,13 @@
   <div class="help-block with-errors">{{ trans('help.customer_will_see_this') }}</div>
 </div>
 
+<div class="form-group">
+  {!! Form::label('carrier_id', trans('app.form.carrier'), ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('help.shipping_zone_carrier') }}"></i>
+  {!! Form::select('carrier_id', $carriers, null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.carrier')]) !!}
+  <div class="help-block with-errors"></div>
+</div>
+
 <div class="row">
   <div class="col-md-6 nopadding-right">
     <div class="form-group">

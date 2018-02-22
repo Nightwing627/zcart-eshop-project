@@ -377,11 +377,7 @@ class ListHelper
      */
     public static function orders()
     {
-        $orders = \DB::table('orders')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->orderBy('order_number', 'asc')->pluck('order_number', 'id')->toArray();
-
-        return array_map(function($order){
-                    return get_formated_order_number($order);
-                }, $orders);
+        return \DB::table('orders')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->orderBy('order_number', 'asc')->pluck('order_number', 'id')->toArray();
     }
 
     /**
@@ -512,6 +508,16 @@ class ListHelper
     public static function manufacturers()
     {
         return \DB::table('manufacturers')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
+    /**
+     * Get payment_types list for form dropdown.
+     *
+     * @return array
+     */
+    public static function payment_types()
+    {
+        return \DB::table('payment_method_types')->pluck('type', 'type');
     }
 
     /**

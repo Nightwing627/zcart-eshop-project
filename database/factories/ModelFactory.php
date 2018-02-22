@@ -80,14 +80,9 @@ $factory->define(App\Config::class, function (Faker $faker) {
         'support_phone' => $faker->phoneNumber,
         'support_phone_toll_free' => $faker->boolean ? $faker->tollFreePhoneNumber : NULL,
         'order_number_prefix' => '#',
-        'default_tax_id_for_inventory' => rand(1, 31),
-        'default_tax_id_for_order' => rand(1, 31),
-        'default_carrier_id' => rand(1, 30),
-        'default_carrier_ids_for_inventory' => array_rand(range(1,30), rand(1,4)),
+        'default_tax_id' => rand(1, 31),
         'default_packaging_ids' => array_rand(range(1,30), rand(1,4)),
-        // 'flat_shipping_cost' => $faker->randomDigit,
-        'order_handling_cost' => $faker->randomDigit,
-        'free_shipping_starts' => $faker->randomDigit,
+        'order_handling_cost' => rand(0, 1) ? rand(1, 5) : Null,
         'maintenance_mode' => $faker->boolean,
     ];
 });
@@ -230,14 +225,6 @@ $factory->define(App\Carrier::class, function (Faker $faker) {
         'name' => $faker->company,
         'email' => $faker->email,
         'phone' => $faker->phoneNumber,
-        'std_delivery_time' => rand(1,10),
-        'flat_shipping_cost' => rand(5,100),
-        'max_width' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 50),
-        'max_height' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 100),
-        'max_depth' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 40),
-        'max_weight' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 20),
-        'is_free' => $faker->boolean,
-        'handling_cost' => $faker->boolean,
         'tracking_url' => $faker->url.'/@',
         'active' => 1,
     ];
@@ -248,7 +235,9 @@ $factory->define(App\Packaging::class, function (Faker $faker) {
         'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'name' => $faker->word,
         'cost' => rand(1,10),
-        'charge_customer' => 1,
+        'width' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 50),
+        'height' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 60),
+        'depth' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 40),
     ];
 });
 
@@ -264,11 +253,9 @@ $factory->define(App\Inventory::class, function (Faker $faker) {
         'damaged_quantity' => 0,
         'product_id' => $faker->randomElement(\DB::table('products')->pluck('id')->toArray()),
         'supplier_id' => $faker->randomElement(\DB::table('suppliers')->pluck('id')->toArray()),
-        'tax_id' => $faker->randomElement(\DB::table('taxes')->pluck('id')->toArray()),
         'user_id' => $faker->randomElement(\DB::table('users')->pluck('id')->toArray()),
         'purchase_price' => $num,
         'sale_price' => $num+15,
-        'available_from' => $faker->date,
         'min_order_quantity' => 1,
         'active' => 1,
     ];
@@ -280,11 +267,10 @@ $factory->define(App\Order::class, function (Faker $faker) {
     $num2 = rand(1,9);
     return [
         'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
-        'order_number' => get_formated_order_number(),
+        'order_number' => '#' . str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT),
         'customer_id' => $faker->randomElement(\DB::table('customers')->pluck('id')->toArray()),
-        'carrier_id' => $faker->randomElement(\DB::table('carriers')->pluck('id')->toArray()),
+        'shipping_rate_id' => $faker->randomElement(\DB::table('shipping_rates')->pluck('id')->toArray()),
         'packaging_id' => $faker->randomElement(\DB::table('packagings')->pluck('id')->toArray()),
-        'tax_id' => $faker->randomElement(\DB::table('taxes')->pluck('id')->toArray()),
         'item_count' => $num2,
         'quantity' => $num2,
         'total' => $num,
@@ -294,7 +280,6 @@ $factory->define(App\Order::class, function (Faker $faker) {
         'shipping_address' => $faker->address(),
         'payment_method_id' => $faker->randomElement(\DB::table('payment_methods')->pluck('id')->toArray()),
         'payment_status_id' => rand(1, 3),
-        'order_status_id' => rand(1, 3),
     ];
 });
 

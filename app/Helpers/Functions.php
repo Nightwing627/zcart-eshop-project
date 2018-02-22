@@ -1,5 +1,4 @@
 <?php
-
 if ( ! function_exists('is_serialized') )
 {
     /**
@@ -74,6 +73,41 @@ if ( ! function_exists('gravatar') )
         $gravatarURL  = 'https://www.gravatar.com/avatar/'.$email.'?s='.$size."&default={$defaultImage}";
 
         return '<img id = '.$email.''.$size.' class="gravatar" src="'.$gravatarURL.'" width="'.$size.'">';
+    }
+}
+
+/**
+ * Get latitude and longitude of an address from Google API
+ */
+if ( ! function_exists('getGeocode') )
+{
+    function getGeocode($address)
+    {
+        if(is_object($address)){
+            $address = $address->toGeocodeString();
+        }
+        else if(is_numeric($address)){
+            $address = \DB::table('addresses')->find($address);
+            $address = $address->toGeocodeString();
+        }
+
+        $url = 'https://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false';
+
+        $result = [];
+
+        // try to get geo codes
+        if ( $geocode = file_get_contents($url) ){
+            $output = json_decode($geocode);
+
+            if ( count($output->results) && isset($output->results[0]) ){
+                if ( $geo = $output->results[0]->geometry ){
+                    $result['latitude'] = $geo->location->lat;
+                    $result['longitude'] = $geo->location->lng;
+                }
+            }
+        }
+
+        return $result;
     }
 }
 
@@ -282,13 +316,10 @@ if ( ! function_exists('get_formated_gender') )
     function get_formated_gender($sex)
     {
         $icon = '';
-
-        if ("Male" == $sex || "app.male" == $sex)
-        {
+        if ("Male" == $sex || "app.male" == $sex){
             $icon =  "<i class='fa fa-mars'></i> ";
         }
-        elseif ("Female" == $sex || "app.female" == $sex)
-        {
+        elseif ("Female" == $sex || "app.female" == $sex){
             $icon =  "<i class='fa fa-venus'></i> ";
         }
 
@@ -306,7 +337,7 @@ if ( ! function_exists('get_formated_decimal') )
      *
      * @return decimal
      */
-    function get_formated_decimal($value = 0, $trim = true)
+    function get_formated_decimal($value = 0, $trim = true, $decimal = null)
     {
         $value = number_format(
              $value,
@@ -331,6 +362,9 @@ if ( ! function_exists('get_formated_decimal') )
             );
         }
 
+        if ($decimal)
+            return number_format($value, $decimal);
+
         return $value;
     }
 }
@@ -344,9 +378,14 @@ if ( ! function_exists('get_formated_currency') )
      *
      * @return str        currency tring
      */
-    function get_formated_currency($value = 0)
+    function get_formated_currency($value = 0, $decimal = null)
     {
-        return get_formated_currency_symbol() . get_formated_decimal($value);
+        $value =  get_formated_decimal($value);
+
+        if ($decimal)
+            return get_formated_currency_symbol() . number_format($value, $decimal);
+
+        return get_formated_currency_symbol() . $value;
     }
 }
 
@@ -357,6 +396,19 @@ if ( ! function_exists('get_formated_currency_symbol') )
         return
             (config('system_settings.show_currency_symbol') ? config('system_settings.currency_symbol') : '') .
             (config('system_settings.show_space_after_symbol') ? ' ' : '');
+    }
+}
+
+if ( ! function_exists('get_formated_dimension') )
+{
+    function get_formated_dimension($packaging)
+    {
+        $dimension = get_formated_decimal($packaging->width) . ' x ' . get_formated_decimal($packaging->height);
+
+        if ($packaging->depth && $packaging->depth > 0)
+            $dimension .= ' x ' . get_formated_decimal($packaging->depth);
+
+        return $dimension . ' ' . config('system_settings.length_unit');
     }
 }
 
@@ -464,6 +516,45 @@ if ( ! function_exists('get_formated_country_name') )
     }
 }
 
+if ( ! function_exists('get_shipping_zone_of') )
+{
+    /**
+     * Return the shipping zone id of given shop and country and state
+     *
+     * @param $tax
+     */
+    function get_shipping_zone_of($shop, $country, $state = null){
+        $state_counts = get_state_count_of($country);
+
+        $zones = \DB::table('shipping_zones')->select(['id','name','tax_id','country_ids','state_ids','rest_of_the_world'])->where('shop_id', $shop)->where('active', 1)->get();
+
+        foreach ($zones as $zone) {
+            // Check the the shop has a worldwide shipping zone
+            if ($zone->rest_of_the_world == 1)
+                $worldwide = $zone;
+
+            $countries = unserialize($zone->country_ids);
+
+            if( empty($countries) ) continue;
+
+            if( ! in_array($country, $countries) ) continue;
+
+            // If the country has no states and the given country matched then return the zone
+            if ( $state_counts == 0 )
+                return $zone;
+
+            $states = unserialize($zone->state_ids);
+
+            if ( $state_counts > 0 && ! $state ) continue;
+
+            if( in_array($state, $states) )
+                return $zone;
+        }
+
+        return isset($worldwide) ? $worldwide : false;
+    }
+}
+
 if ( ! function_exists('get_state_count_of') )
 {
     /**
@@ -507,55 +598,86 @@ if ( ! function_exists('getTaxRate') )
     }
 }
 
-if ( ! function_exists('getShippingCostWithTaxForCarrier') )
+if ( ! function_exists('getShippingRates') )
 {
     /**
-     * Return Shipping Cost for the given carrier id
-     *
-     * @param $request
+     * Get shipping rates list for the given zone or shop.
      */
-    function getShippingCostWithTaxForCarrier($carrier)
+    function getShippingRates($zone = Null)
     {
-        //Check if the given carrier is an object
-        if( is_object($carrier) && ( ! isset($carrier->tax_id) || ! isset($carrier->flat_shipping_cost)) ){
-            $carrier = \DB::table('carriers')->select('tax_id', 'flat_shipping_cost')->where('id', $carrier->id)->first();
-        }
-        else{
-            $carrier = \DB::table('carriers')->select('tax_id', 'flat_shipping_cost')->where('id', $carrier)->first();
-        }
+        if($zone)
+            return \DB::table('shipping_rates')->where('shipping_zone_id', $zone)->orderBy('rate', 'asc')->get();
 
-        if( $carrier->tax_id )
-            $taxrate = getTaxRate($carrier->tax_id);
-
-        if( isset($taxrate) && $taxrate > 0 )
-            $tax = ($carrier->tax_id) ? ($carrier->flat_shipping_cost * ($taxrate / 100)) : 0;
-
-        if( isset($tax) && $tax > 0 )
-            return $carrier->flat_shipping_cost + $tax;
-
-        return $carrier->flat_shipping_cost ?: 0;
+        return \DB::table('shipping_zones')
+                    ->join('shipping_rates', 'shipping_zones.id', 'shipping_rates.shipping_zone_id')
+                    ->where('shipping_zones.shop_id', Auth::user()->merchantId())
+                    ->where('shipping_zones.active', 1)
+                    ->orderBy('shipping_rates.rate', 'asc')
+                    ->get();
     }
 }
 
-if ( ! function_exists('getShippingCostWithHandlingFee') )
+if ( ! function_exists('filterShippingOptions') )
 {
     /**
-     * Return Shipping Cost and Handling fee for the given carrier
+     * Return filtered shipping options for a given zone and price
      *
-     * @param $request
+     * @param $shop
+     * @param $price
+     * @param $weight
      */
-    function getShippingCostWithHandlingFee($carrier)
+    function filterShippingOptions($zone, $price, $weight = Null)
     {
-        //Check if the given carrier is an object
-        if( ! is_object($carrier))
-            $carrier = \DB::table('carriers')->select('id', 'is_free', 'handling_cost')->where('id', $carrier)->first();
+        $results = \DB::table('shipping_rates')->where('shipping_zone_id', $zone);
 
-        $handling_cost = $carrier->handling_cost ? config('shop_settings.order_handling_cost') : 0;
+        $results->where(function($query) use ($price, $weight){
+            $query->where('based_on', 'price')
+                ->where('minimum', '<=', $price)
+                ->where(function($q) use ($price){
+                    $q->where('maximum', '>=', $price)
+                    ->orWhereNull('maximum');
+                });
 
-        if($carrier->is_free)
-            return $handling_cost;
+            if ($weight) {
+                $query->orWhere(function($q) use ($weight){
+                    $q->where('based_on', 'weight')
+                        ->where('minimum', '<=', $weight)
+                        ->where('maximum', '>=', $weight);
+                });
+            }
+        });
 
-        return getShippingCostWithTaxForCarrier($carrier) + $handling_cost;
+        return $results->get();
+    }
+}
+
+if ( ! function_exists('getDefaultPackaging') )
+{
+    /**
+     * Return default packaging ID for given shop
+     *
+     * @param $int shop
+     */
+    function getDefaultPackaging($shop = null)
+    {
+        $shop = $shop ?: Auth::user()->merchantId();
+
+        return \DB::table('packagings')->select('id', 'name', 'cost')->where('shop_id', $shop)->where('default', 1)->where('active', 1)->whereNull('deleted_at')->first();
+    }
+}
+
+if ( ! function_exists('getPackagings') )
+{
+    /**
+     * Return Shipping options for perticulater shop
+     *
+     * @param $int shop
+     */
+    function getPackagings($shop = null)
+    {
+        $shop = $shop ?: Auth::user()->merchantId();
+
+        return \DB::table('packagings')->select('id', 'name', 'cost')->where('shop_id', $shop)->where('active', 1)->whereNull('deleted_at')->get();
     }
 }
 
@@ -564,17 +686,14 @@ if ( ! function_exists('getPackagingCost') )
     /**
      * Return Shipping Cost and Handling fee for the given carrier
      *
-     * @param $request
+     * @param $int packaging
      */
     function getPackagingCost($packaging)
     {
-        //Check if the given packaging is an object
-        if( ! is_object($packaging))
-            $packaging = \DB::table('packagings')->select('charge_customer', 'cost')->where('id', $packaging)->first();
-
-        return $packaging->charge_customer ? $packaging->cost : 0;
+        return \DB::table('packagings')->select('cost')->where('id', $packaging)->first()->cost;
     }
 }
+
 if ( ! function_exists('find_string_in_array') )
 {
     /**
@@ -761,35 +880,25 @@ if ( ! function_exists('setAdditionalCartInfo') )
     function setAdditionalCartInfo($request)
     {
         $total = 0;
-        $discount = 0;
+        $handling = config('shop_settings.order_handling_cost');
         $grand_total = 0;
 
-        foreach ($request->input('cart') as $cart)
-        {
+        foreach ($request->input('cart') as $cart){
             $total = $total + ($cart['quantity'] * $cart['unit_price']);
         }
 
-        $tax = ($total * getTaxRate($request->input('tax_id'))) / 100;
-
-        $shipping = getShippingCostWithHandlingFee($request->input('carrier_id'));
-
-        $packaging = getPackagingCost($request->input('packaging_id'));
-
-        $grand_total =  ($total - $discount + $tax + $shipping);
+        $grand_total =  ($total + $handling + $request->input('shipping') + $request->input('packaging') + $request->input('taxes')) - $request->input('discount');
 
         $request->merge([
             'shop_id' => $request->user()->merchantId(),
             'item_count' => count($request->input('cart') ),
             'quantity' => array_sum(array_column($request->input('cart'), 'quantity') ),
             'total' => $total,
-            'shipping' => $shipping ?: null,
-            'packaging_cost' => $packaging ?: null,
-            'discount' => $discount ?: null,
-            'tax_amount' => $tax ?: null,
+            'handling' => $handling,
             'grand_total' => $grand_total,
-            'shipping_address' => $request->input('same_as_billing_address')  ?
-                                $request->input('billing_address') :
-                                $request->input('shipping_address'),
+            'billing_address' => $request->input('same_as_shipping_address') ?
+                                $request->input('shipping_address') :
+                                $request->input('billing_address'),
             'approved' => 1,
         ]);
 

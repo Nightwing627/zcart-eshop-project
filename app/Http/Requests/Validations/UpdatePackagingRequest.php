@@ -25,6 +25,9 @@ class UpdatePackagingRequest extends Request
     {
         return [
             'name' => 'required',
+            'height' => 'required|numeric',
+            'width' => 'required|numeric',
+            'depth' => 'required|numeric',
             'cost' =>  'numeric|nullable',
             'image' => 'max:' . config('system_settings.merchant_logo_max_size_limit_kb') . '|mimes:jpg,jpeg,png,gif',
         ];

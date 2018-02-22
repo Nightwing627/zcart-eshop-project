@@ -481,18 +481,6 @@
     });
     //END coupon form
 
-    // carrier form
-    $('input#is_free').on('ifChecked', function () {
-      $('#flat_shipping_cost_field').removeClass('show').addClass('hidden');
-      $('#flat_shipping_cost').removeAttr('required');
-    })
-
-    $('input#is_free').on('ifUnchecked', function () {
-      $('#flat_shipping_cost_field').removeClass('hidden').addClass('show');
-      $('#flat_shipping_cost').attr('required', 'required');
-    });
-    //END carrier form
-
     //shipping zone
     $('input#rest_of_the_world').on('ifChecked', function () {
       $('select#country_ids').removeAttr('required').attr('disabled', 'disabled');
@@ -569,10 +557,19 @@
     }
     //END Slug URL Maker
 
-    //Timepicker
-    // $(".timepicker").timepicker({
-    //   showInputs: false
-    // });
+    //Popover
+    $('[data-toggle="popover"]').popover({
+        html: 'true',
+    });
+
+    $('[data-toggle="popover"]').on('click', function(){
+      $('[data-toggle="popover"]').not(this).popover('hide');
+    });
+
+    $(document).on("click", ".popover-submit-btn", function() {
+      $('[data-toggle="popover"]').popover('hide');
+    });
+    //END Popover
 
     if( $('#uploadBtn').length ){
       document.getElementById("uploadBtn").onchange = function () {
@@ -589,20 +586,6 @@
             return !~text.indexOf(val);
         }).hide();
     });
-
-    // $('#searchBox').on('keyup', function(){
-    //   var str=  $("#searchBox").val();
-    //    // if(str == "") {
-    //            $( "#textHint" ).html("<b>Blogs information will be listed here...</b>");
-    //    // }else {
-    //            $.get( "{{ url('demos/livesearch?id=') }}"+str, function( data ) {
-    //                $( "#textHint" ).html( data );
-    //         });
-    //    // }
-
-    //   // var slugstr = convertToSlug(this.value);
-    //   // $('.slug').val(slugstr);
-    // });
     //END SEARCH OPTIONS
 
     //Random code string maker

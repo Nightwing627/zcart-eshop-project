@@ -52,5 +52,4 @@ class CreateInventoryRequest extends Request
             'offer_end.after' => trans('validation.offer_end_after'),
         ];
     }
-
 }

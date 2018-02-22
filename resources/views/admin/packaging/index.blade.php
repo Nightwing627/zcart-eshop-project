@@ -16,13 +16,11 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-short">
+			<table class="table table-hover table-option">
 				<thead>
 					<tr>
-						<th>{{ trans('app.logo') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.cost') }}</th>
-						<th class="text-center">{{ trans('app.packaging_charge_customer') }}</th>
 						<th class="text-center">{{ trans('app.active') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -32,11 +30,18 @@
 					<tr>
 						<td>
 							<img src="{{ get_image_src($packaging->id, 'packagings', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+
+							<p class="indent10">
+								{{ $packaging->name }}
+								@if($packaging->default)
+									<label class="label label-default indent10">{{ trans('app.default') }}</label>
+								@endif
+								<br>
+								<small>{{ get_formated_dimension($packaging) }}</small>
+							</p>
 						</td>
-						<td>{{ $packaging->name }}</td>
-						<td>{{ get_formated_currency($packaging->cost) }}</td>
-						<td class="text-center">
-							{{ ($packaging->charge_customer) ? trans('app.yes') : trans('app.no')}}
+						<td>
+							{!! $packaging->cost && $packaging->cost > 0 ? get_formated_currency($packaging->cost) : '<label class="label label-primary">' . trans('app.free') . '</label>' !!}
 						</td>
 						<td class="text-center">
 							{{ ($packaging->active) ? trans('app.yes') : '-'}}
@@ -71,7 +76,6 @@
 			<table class="table table-hover table-2nd-short">
 				<thead>
 					<tr>
-						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.cost') }}</th>
 						<th>{{ trans('app.deleted_at') }}</th>
@@ -83,9 +87,14 @@
 					<tr>
 						<td>
 							<img src="{{ get_image_src($trash->id, 'packagings', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<p class="indent10">
+								{{ $trash->name }}<br>
+								<small>{{ get_formated_dimension($trash) }}</small>
+							</p>
 						</td>
-						<td>{{ $trash->name }}</td>
-						<td>{{ get_formated_currency($trash->cost) }}</td>
+						<td>
+							{!! $trash->cost && $trash->cost > 0 ? get_formated_currency($trash->cost) : '<label class="label label-primary">' . trans('app.free') . '</label>' !!}
+						</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('delete', $trash)

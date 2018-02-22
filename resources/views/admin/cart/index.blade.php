@@ -7,7 +7,6 @@
 @endsection
 
 @section('content')
-
 	@can('index', App\Cart::class)
 		@include('admin/partials/_cart_list')
 	@endcan
@@ -39,8 +38,8 @@
                         <td>{{ $trash->created_at->diffForHumans() }}</td>
                         <td>{{ $trash->customer->name }}</td>
                         <td>{{ $trash->item_count }}</td>
-                        <td>{{ $trash->quantity_count }}</td>
-                        <td>{{ number_format($trash->grand_total, 2) }}</td>
+                        <td>{{ $trash->quantity }}</td>
+                        <td>{{ get_formated_currency($trash->grand_total) }}</td>
                         <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('delete', $trash)

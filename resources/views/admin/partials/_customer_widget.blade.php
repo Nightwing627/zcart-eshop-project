@@ -11,12 +11,14 @@
         <span class="admin-user-widget-text text-muted">
             {{ trans('app.email') . ': ' . $customer->email }}
         </span>
-        <span class="admin-user-widget-text text-muted">
-            {{ trans('app.phone') . ': ' . $customer->primaryAddress->phone }}
-        </span>
-        <span class="admin-user-widget-text text-muted">
-            {{ trans('app.zip_code') . ': ' . $customer->primaryAddress->zip_code }}
-        </span>
+        @if($customer->primaryAddress)
+            <span class="admin-user-widget-text text-muted">
+                {{ trans('app.phone') . ': ' . $customer->primaryAddress->phone }}
+            </span>
+            <span class="admin-user-widget-text text-muted">
+                {{ trans('app.zip_code') . ': ' . $customer->primaryAddress->zip_code }}
+            </span>
+        @endif
 
         @can('view', $customer)
             <a href="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>

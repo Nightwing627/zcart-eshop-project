@@ -34,12 +34,17 @@
 				<tbody>
 					@foreach($orders as $order )
 						<tr>
-							<td>{{ $order->order_number }}</td>
+							<td>
+								{{ $order->order_number }}
+								@if($order->disputed)
+									<span class="label label-danger indent5">{{ trans('app.statuses.disputed') }}</span>
+								@endif
+							</td>
 					        <td>{{ $order->created_at->toDayDateTimeString() }}</td>
 							<td>{{ $order->customer->name }}</td>
 							<td>{{ get_formated_currency($order->grand_total )}}</td>
 							<td>{{ $order->paymentStatus->name }}</td>
-							<td>{{ $order->status->name }}</td>
+							<td>{{ $order->status ? $order->status->name : trans('app.statuses.new') }}</td>
 							<td class="row-options">
 								@can('view', $order)
 									<a href="{{ route('admin.order.order.show', $order->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;

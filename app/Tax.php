@@ -37,7 +37,7 @@ class Tax extends Model
      */
     public function country()
     {
-        return $this->belongsTo('App\Country');
+        return $this->belongsTo(Country::class);
     }
 
     /**
@@ -45,7 +45,7 @@ class Tax extends Model
      */
     public function state()
     {
-        return $this->belongsTo('App\State');
+        return $this->belongsTo(State::class);
     }
 
     /**
@@ -53,23 +53,23 @@ class Tax extends Model
      */
     public function shop()
     {
-        return $this->belongsTo('App\Shop');
+        return $this->belongsTo(Shop::class);
     }
 
-    /**
-     * Get the inventories for the supplier.
-     */
-    public function inventories()
-    {
-        return $this->hasMany('App\Inventory');
-    }
+    // /**
+    //  * Get the inventories for the supplier.
+    //  */
+    // public function inventories()
+    // {
+    //     return $this->hasMany(Inventory::class);
+    // }
 
     /**
      * Get the carts for the supplier.
      */
     public function carts()
     {
-        return $this->hasMany('App\Cart');
+        return $this->hasMany(Cart::class);
     }
 
     /**
@@ -77,7 +77,7 @@ class Tax extends Model
      */
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany(Order::class);
     }
 
     /**

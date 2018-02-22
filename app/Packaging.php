@@ -23,7 +23,7 @@ class Packaging extends Model
      * @var array
      */
     protected $casts = [
-        'charge_customer' => 'boolean',
+        'default' => 'boolean',
         'active' => 'boolean',
     ];
 
@@ -43,7 +43,10 @@ class Packaging extends Model
                     'shop_id',
                     'name',
                     'cost',
-                    'charge_customer',
+                    'height',
+                    'width',
+                    'depth',
+                    'default',
                     'active',
                  ];
 
@@ -64,11 +67,11 @@ class Packaging extends Model
     }
 
     /**
-     * Set the charge_customer for the packaging.
+     * Set the default for the packaging.
      */
-    public function setChargeCustomerAttribute($value)
+    public function setDefaultAttribute($value)
     {
-        $this->attributes['charge_customer'] = (bool) $value;
+        $this->attributes['default'] = (bool) $value;
     }
 
     /**
@@ -80,5 +83,4 @@ class Packaging extends Model
     {
         return $query->where('shop_id', Auth::user()->merchantId());
     }
-
 }

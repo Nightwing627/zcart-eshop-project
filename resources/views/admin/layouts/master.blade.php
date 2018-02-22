@@ -80,6 +80,14 @@
               </div>
           @endif
 
+          {{-- Global Notice --}}
+          <div id="global-alert-box" class="alert alert-warning alert-dismissible hidden">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-warning"></i> {{ trans('app.alert') }}</h4>
+            <p id="global-alert-msg"></p>
+          </div>
+          <!-- /#global-alert-box -->
+
           @yield("content")
 
         </section>

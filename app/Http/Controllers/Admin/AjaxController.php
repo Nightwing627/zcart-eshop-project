@@ -29,4 +29,18 @@ class AjaxController extends Controller
 
         return false;
     }
+
+    /**
+     * Return Shipping Options
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    public function filterShippingOptions(Request $request)
+    {
+        if ($request->ajax()){
+            return filterShippingOptions($request->input('zone'), $request->input('price'), $request->input('weight'));
+        }
+
+        return false;
+    }
 }

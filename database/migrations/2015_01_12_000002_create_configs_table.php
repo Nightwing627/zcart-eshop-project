@@ -26,24 +26,21 @@ class CreateConfigsTable extends Migration
             // Order
             $table->string('order_number_prefix')->nullable();
             $table->string('order_number_suffix')->nullable();
-            $table->integer('default_tax_id_for_order')->unsigned()->nullable();
-            $table->integer('default_carrier_id')->unsigned()->nullable();
+            $table->integer('default_tax_id')->unsigned()->nullable();
+            // $table->integer('default_carrier_id')->unsigned()->nullable();
             $table->decimal('order_handling_cost', 20, 6)->nullable();
 
             // Checkout
-            $table->decimal('free_shipping_starts', 20, 6)->nullable();
             $table->integer('default_payment_method_id')->unsigned()->nullable();
-            // $table->boolean('packaging_enabled')->nullable();
 
             // Views
             $table->integer('pagination')->unsigned()->default(10);
 
             // Inventory
+            $table->integer('alert_quantity')->nullable();
             $table->boolean('digital_goods_only')->nullable()->default(false);
-            $table->integer('default_tax_id_for_inventory')->unsigned()->nullable();
             $table->integer('default_warehouse_id')->unsigned()->nullable();
             $table->integer('default_supplier_id')->unsigned()->nullable();
-            $table->string('default_carrier_ids_for_inventory')->nullable();
             $table->string('default_packaging_ids')->nullable();
 
             // Notification Settings

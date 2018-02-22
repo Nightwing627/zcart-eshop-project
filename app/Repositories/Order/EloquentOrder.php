@@ -40,7 +40,7 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
 
     public function getCart($id)
     {
-        return Cart::findOrFail($id);
+        return Cart::find($id);
     }
 
     public function getCustomer($id)
@@ -50,14 +50,12 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
 
     public function getCartList($customerId)
     {
-        return Cart::mine()->where('customer_id', $customerId)->where('deleted_at', Null)->with('inventories', 'customer', 'tax')->orderBy('created_at', 'desc')->get();
+        return Cart::mine()->where('customer_id', $customerId)->where('deleted_at', Null)->with('inventories', 'customer')->orderBy('created_at', 'desc')->get();
     }
 
     public function store(Request $request)
     {
-        // echo "<pre>Before:"; print_r($request->all()); echo "</pre>"; //exit();
         setAdditionalCartInfo($request); //Set some system information using helper function
-        // echo "<pre>After:"; print_r($request->all()); echo "</pre>"; exit();
 
         $order = parent::store($request);
 
@@ -108,7 +106,6 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
 
                 if ($old_qtt > $item->quantity){
                     Inventory::find($id)->increment('stock_quantity', $old_qtt - $item->quantity);
-
                 }else if($old_qtt < $item->quantity){
                     Inventory::find($id)->decrement('stock_quantity', $item->quantity - $old_qtt);
                 }
@@ -116,39 +113,12 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
                 Inventory::find($id)->decrement('stock_quantity', $item->quantity);
             }
         }
+
         // Sync the pivot table
-        if (!empty($temp))
-        {
+        if (!empty($temp)){
             $order->inventories()->sync($temp);
         }
 
         return;
-    }
-
-    public function getPackagingCost(Request $request)
-    {
-        $packaging = Packaging::findOrFail($request->input('ID'));
-
-        return $packaging->charge_customer ? get_formated_decimal($packaging->cost) : 0;
-    }
-
-    public function getShippingCost(Request $request)
-    {
-        $carrier = Carrier::findOrFail($request->input('ID'));
-
-        $handling_cost = $carrier->handling_cost ? config('shop_settings.order_handling_cost') : 0;
-
-        $result['handling_cost'] = $carrier->handling_cost ? get_formated_currency($handling_cost) : 0;
-
-        if($carrier->is_free){
-            $result['shipping_cost'] = $handling_cost;
-            return $result;
-        }
-
-        $shipping_cost =  getShippingCostWithHandlingFee($carrier);
-
-        $result['shipping_cost'] = get_formated_decimal($shipping_cost);
-
-        return $result;
     }
 }

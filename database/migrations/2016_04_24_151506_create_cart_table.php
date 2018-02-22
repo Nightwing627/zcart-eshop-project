@@ -16,30 +16,31 @@ class CreateCartTable extends Migration
             $table->bigIncrements('id');
             $table->integer('shop_id')->unsigned()->nullable();
             $table->bigInteger('customer_id')->unsigned();
-            $table->integer('carrier_id')->unsigned()->nullable();
+            $table->integer('shipping_rate_id')->unsigned()->nullable();
             $table->integer('packaging_id')->unsigned()->nullable();
-            $table->integer('tax_id')->unsigned()->nullable();
-            $table->integer('payment_method_id')->unsigned();
-            $table->text('billing_address')->nullable();
-            $table->text('shipping_address')->nullable();
             $table->integer('item_count')->unsigned();
             $table->integer('quantity')->unsigned();
+
             $table->decimal('total', 20, 6)->nullable();
-            $table->decimal('shipping', 20, 6)->nullable();
-            $table->decimal('packaging_cost', 20, 6)->nullable();
             $table->decimal('discount', 20, 6)->nullable();
-            $table->decimal('tax_amount', 20, 6)->nullable();
+            $table->decimal('shipping', 20, 6)->nullable();
+            $table->decimal('packaging', 20, 6)->nullable();
+            $table->decimal('handling', 20, 6)->nullable();
+            $table->decimal('taxes', 20, 6)->nullable();
             $table->decimal('grand_total', 20, 6)->nullable();
+
+            $table->text('shipping_address')->nullable();
+            $table->text('billing_address')->nullable();
+
+            $table->integer('payment_method_id')->unsigned();
+            $table->integer('payment_status_id')->unsigned()->nullable();
             $table->text('message_to_customer')->nullable();
             $table->text('admin_note')->nullable();
-            $table->integer('payment_status_id')->unsigned()->nullable();
-            $table->integer('order_status_id')->unsigned()->nullable();
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->foreign('payment_status_id')->references('id')->on('payment_statuses')->onDelete('set null');
-            $table->foreign('order_status_id')->references('id')->on('order_statuses')->onDelete('set null');
         });
 
         Schema::create('cart_items', function (Blueprint $table) {

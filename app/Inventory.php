@@ -44,7 +44,7 @@ class Inventory extends Model
                         'description',
                         'stock_quantity',
                         'damaged_quantity',
-                        'tax_id',
+                        // 'tax_id',
                         'user_id',
                         'purchase_price',
                         'sale_price',
@@ -52,13 +52,13 @@ class Inventory extends Model
                         'offer_start',
                         'offer_end',
                         // 'packaging_id',
-                        'shipping_width',
-                        'shipping_height',
-                        'shipping_depth',
+                        // 'shipping_width',
+                        // 'shipping_height',
+                        // 'shipping_depth',
                         'shipping_weight',
                         'available_from',
                         'min_order_quantity',
-                        'alert_quantity',
+                        // 'alert_quantity',
                         'active'
                     ];
 
@@ -84,14 +84,6 @@ class Inventory extends Model
     public function supplier()
     {
         return $this->belongsTo(Supplier::class);
-    }
-
-    /**
-     * Get the carriers for the inventory.
-     */
-    public function carriers()
-    {
-        return $this->belongsToMany(Carrier::class)->withTimestamps();
     }
 
     /**
@@ -142,23 +134,23 @@ class Inventory extends Model
                     ->withTimestamps();
     }
 
-    /**
-     * Get the tax for the inventory.
-     */
-    public function tax()
-    {
-        return $this->belongsTo(Tax::class);
-    }
+    // /**
+    //  * Get the tax for the inventory.
+    //  */
+    // public function tax()
+    // {
+    //     return $this->belongsTo(Tax::class);
+    // }
 
-    /**
-     * Get the carrier list for the inventory.
-     *
-     * @return array
-     */
-    public function getCarrierListAttribute()
-    {
-        if (count($this->carriers)) return $this->carriers->pluck('id')->toArray();
-    }
+    // /**
+    //  * Get the carrier list for the inventory.
+    //  *
+    //  * @return array
+    //  */
+    // public function getCarrierListAttribute()
+    // {
+    //     if (count($this->carriers)) return $this->carriers->pluck('id')->toArray();
+    // }
 
     /**
      * Get the packaging list for the inventory.
@@ -179,14 +171,14 @@ class Inventory extends Model
         else $this->attributes['min_order_quantity'] = 1;
     }
 
-    /**
-     * Set the alert_quantity for the inventory.
-     */
-    public function setAlertQuantityAttribute($value)
-    {
-        if ($value > 1) $this->attributes['alert_quantity'] = $value;
-        else $this->attributes['alert_quantity'] = null;
-    }
+    // /**
+    //  * Set the alert_quantity for the inventory.
+    //  */
+    // public function setAlertQuantityAttribute($value)
+    // {
+    //     if ($value > 1) $this->attributes['alert_quantity'] = $value;
+    //     else $this->attributes['alert_quantity'] = null;
+    // }
 
     /**
      * Set the offer_price for the inventory.
@@ -220,8 +212,7 @@ class Inventory extends Model
      */
     public function setAvailableFromAttribute($value)
     {
-        if(!$value) $this->attributes['available_from'] = date('Y-m-d');
-        else $this->attributes['available_from'] = $value;
+        if($value) $this->attributes['offer_start'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
     }
 
     /**

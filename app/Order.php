@@ -30,31 +30,26 @@ class Order extends Model
      *
      * @var array
      */
-    protected $fillable =
-                    [
+    protected $fillable = [
                         'order_number',
                         'shop_id',
                         'customer_id',
-                        'carrier_id',
+                        'shipping_rate_id',
                         'packaging_id',
-                        'tax_id',
                         'item_count',
                         'quantity',
                         'total',
-                        'shipping',
-                        'packaging_cost',
                         'discount',
-                        'tax_amount',
+                        'shipping',
+                        'packaging',
+                        'handling',
+                        'taxes',
                         'grand_total',
                         'billing_address',
                         'shipping_address',
                         'shipping_date',
-                        'package_width',
-                        'package_height',
-                        'package_depth',
-                        'package_weight',
-                        'tracking_number',
                         'delivery_date',
+                        'tracking_id',
                         'message_to_customer',
                         'send_invoice_to_customer',
                         'admin_note',
@@ -63,6 +58,7 @@ class Order extends Model
                         'payment_status_id',
                         'order_status_id',
                         'approved',
+                        'disputed',
                     ];
 
     /**
@@ -86,7 +82,7 @@ class Order extends Model
      */
     public function tax()
     {
-        return $this->belongsTo(Tax::class);
+        return $this->shippingRate->shippingZone->tax();
     }
 
     /**
@@ -94,26 +90,7 @@ class Order extends Model
      */
     public function carrier()
     {
-        return $this->belongsTo(Carrier::class);
-    }
-
-    /**
-     * Get the products for the order.
-     */
-    public function products()
-    {
-        // return $this->hasManyThrough(Product::class, Inventory::class);
-        // $products = Product::
-            //join('incentories', 'incentories.product_id', '=', 'products.id')
-            // ->join('order_items', 'incentories.id', '=', 'order_items.inventory_id')
-            // ->join('products', 'order_items.product_id', '=', 'products.id')
-            // ->where('products.id', $this->id);
-
-        // $hasMany = new Illuminate\Database\Eloquent\Relations\HasMany(User::query(), $this, 'accounts.owner_id', 'id');
-
-        // $hasMany->matchMany(array($this), $products, 'products');
-
-        // return $products;
+        return $this->shippingRate->carrier();
     }
 
     /**
@@ -137,6 +114,14 @@ class Order extends Model
     }
 
     /**
+     * Get the shippingRate for the order.
+     */
+    public function shippingRate()
+    {
+        return $this->belongsTo(ShippingRate::class, 'shipping_rate_id');
+    }
+
+    /**
      * Get the paymentMethod for the order.
      */
     public function paymentMethod()
@@ -147,9 +132,9 @@ class Order extends Model
     /**
      * Get the packaging for the order.
      */
-    public function packaging()
+    public function shippingPackage()
     {
-        return $this->belongsTo(Packaging::class);
+        return $this->belongsTo(Packaging::class, 'packaging_id');
     }
 
     /**

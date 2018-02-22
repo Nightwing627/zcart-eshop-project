@@ -18,16 +18,6 @@ class Carrier extends Model
     protected $table = 'carriers';
 
     /**
-     * The attributes that should be casted to boolean types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'is_free' => 'boolean',
-        'handling_cost' => 'boolean',
-    ];
-
-    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -44,26 +34,32 @@ class Carrier extends Model
                     'name',
                     'email',
                     'phone',
-                    'std_delivery_time',
-                    'time_unit',
-                    'max_width',
-                    'max_height',
-                    'max_depth',
-                    'max_weight',
-                    'is_free',
-                    'flat_shipping_cost',
-                    'tax_id',
-                    'handling_cost',
                     'tracking_url',
                     'active'
                  ];
 
     /**
-     * Get the tax for the carrier.
+     * Get all of the shippingRates for the country.
      */
-    public function tax()
+    public function shippingRates()
     {
-        return $this->belongsTo(Tax::class);
+        return $this->hasMany(ShippingRate::class);
+    }
+
+    /**
+     * Get all of the shippingZones for the country.
+     */
+    public function shippingZones()
+    {
+        $shipping_zone_ids = $this->shippingRates->pluck('shipping_zone_id')->unique()->toArray();
+
+        $shippingZones = \DB::table('shipping_zones')->whereIn('id', $shipping_zone_ids)->pluck('name');
+
+        $zone_str = '';
+        foreach ($shippingZones as $zone)
+            $zone_str .= '<label class="label label-outline">' . $zone . '</label> ';
+
+        return $zone_str;
     }
 
     /**
@@ -72,14 +68,6 @@ class Carrier extends Model
     public function shop()
     {
         return $this->belongsTo(Shop::class);
-    }
-
-    /**
-     * Get the inventories for the carrier.
-     */
-    public function inventories()
-    {
-        return $this->belongsToMany(Inventory::class)->withTimestamps();
     }
 
     /**
@@ -96,22 +84,6 @@ class Carrier extends Model
     public function orders()
     {
         return $this->hasMany(Order::class);
-    }
-
-    /**
-     * Set the is_free for the Carrier.
-     */
-    public function setIsFreeAttribute($value)
-    {
-        $this->attributes['is_free'] = (bool) $value;
-    }
-
-    /**
-     * Set the handling_cost for the Carrier.
-     */
-    public function setHandlingCostAttribute($value)
-    {
-        $this->attributes['handling_cost'] = (bool) $value;
     }
 
     /**

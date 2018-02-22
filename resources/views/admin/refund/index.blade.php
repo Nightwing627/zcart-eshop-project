@@ -33,7 +33,7 @@
 					@foreach($refunds as $refund )
 						<tr>
 							<td>
-								<span class="label label-default">{{ get_formated_order_number($refund->order->order_number) }}</span>
+								<span class="label label-default">{{ $refund->order->order_number }}</span>
 							</td>
 							<td>{!! get_yes_or_no($refund->return_goods) !!}</td>
 							<td>{{ get_formated_currency($refund->order->total) }}</td>

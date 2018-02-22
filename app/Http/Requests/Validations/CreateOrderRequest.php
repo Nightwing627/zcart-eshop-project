@@ -23,7 +23,7 @@ class CreateOrderRequest extends Request
      */
     public function rules()
     {
-        Request::merge( array( 'order_number' => get_formated_order_number() ) ); //Set order number
+        Request::merge( ['order_number' => get_formated_order_number()] ); //Set order number
 
         return [
             'cart.*.inventory_id' => 'required',
@@ -31,9 +31,10 @@ class CreateOrderRequest extends Request
             'cart.*.quantity' => 'required',
             'cart.*.unit_price' => 'required',
             'customer_id' => 'required',
-            'order_status_id' => 'required',
+            // 'order_status_id' => 'required',
+            'payment_method_id' => 'required',
             'payment_status_id' => 'required',
-            'tax_id' => 'required',
+            // 'tax_id' => 'required',
             'billing_address' => 'required',
         ];
     }

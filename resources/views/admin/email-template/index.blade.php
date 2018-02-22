@@ -38,6 +38,9 @@
 						<td>{{ $template->type }}</td>
 						<td>{{ $template->template_for }}</td>
 						<td class="row-options">
+							@can('view', $template)
+								<a href="{{ route('admin.setting.emailTemplate.show', $template->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.preview') }}" class="fa fa-eye"></i></a>&nbsp;
+							@endcan
 							@can('update', $template)
 								<a href="{{ route('admin.setting.emailTemplate.edit', $template->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan

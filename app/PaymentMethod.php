@@ -31,12 +31,13 @@ class PaymentMethod extends Model
      */
     protected $fillable = [
                     'name',
+                    'type',
                     'company_name',
                     'website',
                     'help_doc_url',
                     'description',
                     'active',
-                    ];
+                ];
 
     /**
      * Get the shops for the inventory.
@@ -63,7 +64,6 @@ class PaymentMethod extends Model
     {
         return $this->hasMany(Invoice::class);
     }
-
 
     /**
      * Scope a query to only include records from the users shop.

@@ -10,34 +10,79 @@
   <div class="col-md-4 nopadding-left">
     <div class="form-group">
       {!! Form::label('active', trans('app.form.status').'*',  ['class' => 'with-help']) !!}
-      {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), 'required']) !!}
+      {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], isset($packaging) ? null : 1, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
 </div>
 
-<div class="form-group">
-  {!! Form::label('cost', trans('app.form.cost'), ['class' => 'with-help']) !!}
-  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.packaging_cost') }}"></i>
-  <div class="input-group">
-    <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
-    {!! Form::number('cost', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.packaging_cost')]) !!}
+<div class="row">
+  <div class="col-sm-4 col-xs-12 nopadding-right">
+    <div class="form-group">
+        {!! Form::label('width', trans('app.form.width').'*', ['class' => 'with-help']) !!}
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.width') }}"></i>
+        <div class="input-group">
+          {!! Form::number('width', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.width'), 'required']) !!}
+          <span class="input-group-addon">{{ config('system_settings.length_unit') ?: 'cm' }}</span>
+        </div>
+        <div class="help-block with-errors"></div>
+    </div>
+  </div>
+
+  <div class="col-sm-4 col-xs-12 nopadding">
+    <div class="form-group">
+      {!! Form::label('height', trans('app.form.height').'*', ['class' => 'with-help']) !!}
+      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.height') }}"></i>
+      <div class="input-group">
+        {!! Form::number('height', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.height'), 'required']) !!}
+        <span class="input-group-addon">{{ config('system_settings.length_unit') ?: 'cm' }}</span>
+      </div>
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+
+  <div class="col-sm-4 col-xs-12 nopadding-left">
+    <div class="form-group">
+      {!! Form::label('depth', trans('app.form.depth').'*', ['class' => 'with-help']) !!}
+      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.depth') }}"></i>
+      <div class="input-group">
+        {!! Form::number('depth', isset($packaging) ? null : 0, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.depth'), 'required']) !!}
+        <span class="input-group-addon">{{ config('system_settings.length_unit') ?: 'cm' }}</span>
+      </div>
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 nopadding-right">
+    <div class="form-group">
+      {!! Form::label('cost', trans('app.form.cost'), ['class' => 'with-help']) !!}
+      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.packaging_cost') }}"></i>
+      <div class="input-group">
+        <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
+        {!! Form::number('cost', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.packaging_cost')]) !!}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 nopadding-left">
+    <label class="with-help">&nbsp;</label>
+    <div class="form-group">
+      <div class="input-group">
+        {{ Form::hidden('default', 0) }}
+        {!! Form::checkbox('default', null, null, ['id' => 'default', 'class' => 'icheckbox_line']) !!}
+        {!! Form::label('default', trans('app.form.set_as_default_packaging')) !!}
+        <span class="input-group-addon" id="basic-addon1">
+          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.set_as_default_packaging') }}"></i>
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="form-group">
-  <div class="input-group">
-    {{ Form::hidden('charge_customer', 0) }}
-    {!! Form::checkbox('charge_customer', null, null, ['id' => 'charge_customer', 'class' => 'icheckbox_line']) !!}
-    {!! Form::label('charge_customer', trans('app.form.packaging_charge_customer')) !!}
-    <span class="input-group-addon" id="basic-addon1">
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.packaging_charge_customer') }}"></i>
-    </span>
-  </div>
-</div>
-
-<div class="form-group">
-	<label for="exampleInputFile">{{ trans('app.form.image') }}</label>
+  {!! Form::label('exampleInputFile', trans('app.form.image')) !!}
   @if(isset($packaging) && File::exists(image_path('packagings') . $packaging->id . '_150x150.png'))
   <label>
     <img src="{{ get_image_src($packaging->id, 'packagings', '150x150') }}" width="80px" alt="{{ trans('app.image') }}">
@@ -46,15 +91,15 @@
     </span>
   </label>
   @endif
-	<div class="row">
+  <div class="row">
     <div class="col-md-9 nopadding-right">
-			<input id="uploadFile" placeholder="{{ trans('app.placeholder.image') }}" class="form-control" disabled="disabled" style="height: 28px;" />
+      <input id="uploadFile" placeholder="{{ trans('app.placeholder.image') }}" class="form-control" disabled="disabled" style="height: 28px;" />
     </div>
     <div class="col-md-3 nopadding-left">
-			<div class="fileUpload btn btn-primary btn-block btn-flat">
-			    <span>{{ trans('app.form.upload') }}</span>
-			    <input type="file" name="image" id="uploadBtn" class="upload" />
-			</div>
+      <div class="fileUpload btn btn-primary btn-block btn-flat">
+          <span>{{ trans('app.form.upload') }}</span>
+          <input type="file" name="image" id="uploadBtn" class="upload" />
+      </div>
     </div>
   </div>
 </div>

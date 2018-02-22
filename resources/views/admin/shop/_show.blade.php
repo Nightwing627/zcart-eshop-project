@@ -85,29 +85,10 @@
 				    <div class="tab-pane" id="config">
 					  <div class="box-body">
 				        <table class="table">
-				            @if($shop->config->flat_shipping_cost)
-								<tr>
-									<th class="text-right">{{ trans('app.flat_shipping_cost') }}:</th>
-									<td style="width: 75%;">
-										{{ get_formated_currency($shop->config->flat_shipping_cost) }}
-							            @if($shop->config->free_shipping_starts)
-								            {{ '(' . trans('app.free_shipping_starts') . ': ' . get_formated_currency($shop->config->free_shipping_starts) . ')' }}
-										@endif
-									</td>
-								</tr>
-							@endif
-
 							<tr>
 								<th class="text-right">{{ trans('app.order_handling_cost') }}:</th>
 								<td style="width: 75%;">{{ get_formated_currency($shop->config->order_handling_cost) }}</td>
 							</tr>
-
-							@if($shop->config->carrier)
-								<tr>
-									<th class="text-right">{{ trans('app.default_carrier') }}:</th>
-									<td style="width: 75%;">{{ $shop->config->carrier->name }}</td>
-								</tr>
-							@endif
 
 							@if($shop->config->tax)
 								<tr>

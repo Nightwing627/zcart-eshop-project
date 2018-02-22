@@ -63,6 +63,19 @@ class EmailTemplateController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $emailTemplate = $this->emailTemplate->find($id);
+
+        return view('admin.email-template._show', compact('emailTemplate'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id

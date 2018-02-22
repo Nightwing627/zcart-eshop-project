@@ -18,14 +18,11 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-short">
+			<table class="table table-hover table-option">
 				<thead>
 					<tr>
-						<th>{{ trans('app.logo') }}</th>
 						<th>{{ trans('app.name') }}</th>
-						<th>{{ trans('app.standard_delivery_time') }}</th>
-						<th class="text-center">{{ trans('app.free_shipping') }}</th>
-						<th class="text-center">{{ trans('app.handling_cost') }}</th>
+						<th>{{ trans('app.shipping_zones') }}</th>
 						<th class="text-center">{{ trans('app.active') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -35,15 +32,11 @@
 					<tr>
 						<td>
 							<img src="{{ get_image_src($carrier->id, 'carriers', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<p class="indent10">
+								{{ $carrier->name }}
+							</p>
 						</td>
-						<td>{{ $carrier->name }}</td>
-						<td>{{ $carrier->std_delivery_time .' ' }} {{ ($carrier->std_delivery_time > 1) ? $carrier->time_unit : str_singular($carrier->time_unit) }}</td>
-						<td class="text-center">
-							{{ ($carrier->is_free) ? trans('app.yes') : '-'}}
-						</td>
-						<td class="text-center">
-							{{ ($carrier->handling_cost) ? trans('app.yes') : '-'}}
-						</td>
+						<td>{!! $carrier->shippingZones() !!}</td>
 						<td class="text-center">
 							{{ ($carrier->active) ? trans('app.yes') : '-'}}
 						</td>
@@ -79,10 +72,7 @@
 			<table class="table table-hover table-2nd-short">
 				<thead>
 					<tr>
-						<th>{{ trans('app.image') }}</th>
-						<th>{{ trans('app.email') }}</th>
 						<th>{{ trans('app.name') }}</th>
-						<th>{{ trans('app.tracking_url') }}</th>
 						<th>{{ trans('app.deleted_at') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -92,10 +82,10 @@
 					<tr>
 						<td>
 							<img src="{{ get_image_src($trash->id, 'carriers', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<p class="indent10">
+								{{ $trash->name }}
+							</p>
 						</td>
-						<td>{{ $trash->name }}</td>
-						<td>{{ $trash->email }}</td>
-						<td>{{ $trash->tracking_url }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('delete', $trash)
@@ -105,7 +95,7 @@
 									{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 								{!! Form::close() !!}
 							@endcan
-					</td>
+						</td>
 					</tr>
 					@endforeach
 				</tbody>
