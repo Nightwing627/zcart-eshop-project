@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Common\Addressable;
+use Laravel\Cashier\Billable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Merchant extends Authenticatable
 {
-    use SoftDeletes, Notifiable, Addressable;
+    use Billable, SoftDeletes, Notifiable, Addressable;
 
    /**
      * The database table used by the model.

@@ -13,7 +13,7 @@ class UpdateConfigRequest extends Request
      */
     public function authorize()
     {
-        return Request::user()->shop_id == Request::route('config');
+        return Request::user()->merchantId() == Request::route('config');
     }
 
     /**

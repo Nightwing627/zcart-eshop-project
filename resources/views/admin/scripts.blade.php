@@ -669,6 +669,7 @@
             type: 'POST',
             data: data,
             success: function (data) {
+              $('#myDynamicModal').modal('hide');
               if (data == 'success'){
                 notie.alert(1, "{{ trans('responses.success') }}", 3);
               }
@@ -678,6 +679,7 @@
               }
             },
             error: function (data) {
+              $('#myDynamicModal').modal('hide');
               if (data.status == 403){
                 notie.alert(2, "{{ trans('responses.denied') }}", 3);
               }

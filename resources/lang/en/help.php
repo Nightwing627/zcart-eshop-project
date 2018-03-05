@@ -51,11 +51,11 @@ return [
 
     'shop_timezone' => 'The timezone will not effect the shop or marketplace. Its for just to know more about your shop',
 
-    'website' => 'Homepage link',
+    // 'website' => 'Homepage link',
 
     'url' => 'Web address',
 
-    'help_doc_link' => 'Help document link',
+    // 'help_doc_link' => 'Help document link',
 
     'code' => 'Code',
 
@@ -219,7 +219,7 @@ return [
 
     'available_from' => 'The date when the stock will be available. Default = immediately',
 
-    'sale_price' => 'The price without the tax. If you want to include tax with the price then select -No Tax- option on the tax dropdown.',
+    'sale_price' => 'The price without any tax. Tax will be calculated autometically based on shipping zone.',
 
     'purchase_price' => 'Recommended field. This will helps to calculate profits and generate reports',
 
@@ -291,9 +291,9 @@ return [
 
     'template_sender_name' => 'This name will use as sender name',
 
-    'payment_method_name' => 'Name of the payment method',
+    // 'payment_method_name' => 'Name of the payment method',
 
-    'payment_method_company_name' => 'The main company name',
+    // 'payment_method_company_name' => 'The main company name',
 
     'packaging_name' => 'Customer will see this if the packaging option is available on order checkout',
 
@@ -434,6 +434,24 @@ return [
     'default_packaging_ids_for_inventory' => 'Default packagings will be preselected when add new inventory. This will help you to add inventory faster',
 
     // 'free_shipping_starts' => 'The shipping charge will be free if the total order amount is equal or more than this value. Leave it blank to disable the feature',
+
+    'config_enable_payment_method' => 'The system offers various types of payment gateways. You can enable/disable any payment gateway to control payment options vendor can use to accept payment from customers.',
+
+    'config_additional_details' => 'Displayed on the Payment method page, while the customer is choosing how to pay.',
+
+    'config_payment_instructions' => 'Displayed on the Thank you page, after the customer has placed their order.',
+
+    'config_stripe_publishable_key' => 'Publishable API keys are meant solely to identify your account with Stripe, they aren\'t secret. They can safely be published.',
+
+    'config_paypal_express_account' => 'Usually the email address of your PayPal application',
+
+    'config_paypal_express_client_id' => 'The Client ID is a long unique identifier of your application.',
+
+    'config_paypal_express_secret' => 'You\'ll find the API Secret Key on the My Apps & Credentials section on your PayPal dashboard',
+
+    // 'config_stripe_secret_key' => 'Secret API keys will be required to charge the customer while checkout.',
+
+    // 'config_paypal_express' => 'You must have a PayPal business account to activate this payment method.',
 
     'config_pagination' => 'How many list items you want to view per page on the data tables',
 

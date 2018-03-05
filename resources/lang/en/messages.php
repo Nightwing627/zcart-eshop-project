@@ -28,6 +28,10 @@ return [
     'password_updated'  => 'You account password has been updated successfully!',
     'incorrect_current_password' => 'Your current password is not correct. Please try again!',
     'file_not_exist' => 'Requested file does not exist!',
+    'payment_method_activation_success' => 'Activated successfully! Now you can accept payment using this method.',
+    'payment_method_activation_failed' => 'Payment method activation failed! Please try again.',
+    'payment_method_disconnect_success' => 'Disconnected successfully!',
+    'payment_method_disconnect_failed' => 'This application is not connected to the stripe account, or the account does not exist.',
 
     // 'failed'    => [
     //     'create'   => 'Create :model has been failed!',

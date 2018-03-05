@@ -1,8 +1,16 @@
-@if(isset($product))
+{{-- @if(isset($product))
   {{ Form::hidden('product_id', $product->id) }}
 @elseif($inventory)
   {{ Form::hidden('product_id', $inventory->product_id) }}
 @endif
+ --}}
+ @if(isset($inventory))
+   @php
+    $product = $inventory->product;
+   @endphp
+@endif
+
+{{ Form::hidden('product_id', $product->id) }}
 
 <div class="row">
   <div class="col-lg-3 col-md-6 nopadding-right">
@@ -70,7 +78,7 @@
       <div class="form-group">
         {!! Form::label('stock_quantity', trans('app.form.stock_quantity').'*', ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.stock_quantity') }}"></i>
-        {!! Form::number('stock_quantity', isset($inventory) ? null : 1, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.stock_quantity'), 'required']) !!}
+        {!! Form::number('stock_quantity', isset($inventory) ? null : 1, ['min' => 0, 'class' => 'form-control', 'placeholder' => trans('app.placeholder.stock_quantity'), 'required']) !!}
         <div class="help-block with-errors"></div>
       </div>
     </div>
@@ -79,7 +87,7 @@
       <div class="form-group">
         {!! Form::label('min_order_quantity', trans('app.form.min_order_quantity'), ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.min_order_quantity') }}"></i>
-        {!! Form::number('min_order_quantity', isset($inventory) ? null : 1, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.min_order_quantity')]) !!}
+        {!! Form::number('min_order_quantity', isset($inventory) ? null : 1, ['min' => 1, 'class' => 'form-control', 'placeholder' => trans('app.placeholder.min_order_quantity')]) !!}
       </div>
     </div>
   </div>
@@ -94,7 +102,7 @@
         {!! Form::label('shipping_weight', trans('app.form.shipping_weight'), ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shipping_weight') }}"></i>
         <div class="input-group">
-          {!! Form::number('shipping_weight', null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.shipping_weight')]) !!}
+          {!! Form::number('shipping_weight', null, ['class' => 'form-control', 'step' => 'any', 'min' => 0, 'placeholder' => trans('app.placeholder.shipping_weight')]) !!}
           <span class="input-group-addon">{{ config('system_settings.weight_unit') ?: 'gm' }}</span>
         </div>
         <div class="help-block with-errors"></div>
@@ -208,19 +216,14 @@
               <option value="">{{ trans('app.placeholder.select') }}</option>
 
               @foreach($attribute->attributeValues as $attributeValue)
-
                 <option value="{{ $attributeValue->id }}"
                   @if(isset($inventory) && count($inventory->attributes))
                     {{ in_array($attributeValue->id, $inventory->attributeValues->pluck('id')->toArray()) ? 'selected' : '' }}
                   @endif
                 >
-
                   {{ $attributeValue->value }}
-
                 </option>
-
               @endforeach
-
             </select>
           </div>
         </div>

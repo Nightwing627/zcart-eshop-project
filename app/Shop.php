@@ -147,12 +147,11 @@ class Shop extends Model
     }
 
     /**
-     * Get the payment_methods for the inventory.
+     * Get the paymentMethods for the shop.
      */
-    public function payment_methods()
+    public function paymentMethods()
     {
-        return $this->belongsToMany(PaymentMethod::class, 'shop_payment_methods')
-                    ->withPivot('api_key', 'api_secret')
+        return $this->belongsToMany(PaymentMethod::class, 'shop_payment_methods', 'shop_id', 'payment_method_id')
                     ->withTimestamps();
     }
 

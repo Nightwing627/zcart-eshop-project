@@ -23,6 +23,10 @@ class CreateUsersTable extends Migration
             $table->date('dob')->nullable();
             $table->string('sex')->nullable();
             $table->longtext('description')->nullable();
+            $table->string('stripe_id')->nullable();
+            $table->string('card_brand')->nullable();
+            $table->string('card_last_four')->nullable();
+            $table->timestamp('trial_ends_at')->nullable();
             $table->timestampTz('last_visited_on')->nullable();
             $table->ipAddress('last_visited_from')->nullable();
             $table->boolean('active')->default(1);
@@ -44,6 +48,18 @@ class CreateUsersTable extends Migration
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+
+        Schema::create('subscriptions', function ($table) {
+            $table->increments('id');
+            $table->bigInteger('merchant_id');
+            $table->string('name');
+            $table->string('stripe_id');
+            $table->string('stripe_plan');
+            $table->integer('quantity');
+            $table->timestamp('trial_ends_at')->nullable();
+            $table->timestamp('ends_at')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -53,6 +69,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('subscriptions');
         Schema::dropIfExists('user_settings');
         Schema::dropIfExists('users');
     }

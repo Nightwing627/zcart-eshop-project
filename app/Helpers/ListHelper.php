@@ -11,6 +11,7 @@ use App\Refund;
 use App\Dispute;
 use App\Attribute;
 use App\Permission;
+use App\PaymentMethod;
 
 /**
 * This is a helper class to process,upload and remove images from different models
@@ -21,6 +22,21 @@ class ListHelper
     public static function ticket_categories()
     {
         return \DB::table('ticket_categories')->orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
+
+    /**
+     * Get payment_method_types list for form dropdown.
+     *
+     * @return array
+     */
+    public static function payment_method_types()
+    {
+        return  [
+            PaymentMethod::TYPE_PAYPAL      => trans("app.payment_method_type.paypal.name"),
+            PaymentMethod::TYPE_CREDIT_CARD => trans("app.payment_method_type.credit_card.name"),
+            PaymentMethod::TYPE_MANUAL      => trans("app.payment_method_type.manual.name"),
+        ];
     }
 
     public static function ticket_priorities()
@@ -417,7 +433,7 @@ class ListHelper
      */
     public static function payment_methods()
     {
-        return \DB::table('payment_methods')->where('active', 1)->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('payment_methods')->where('enabled', 1)->get();
     }
 
     /**
@@ -508,16 +524,6 @@ class ListHelper
     public static function manufacturers()
     {
         return \DB::table('manufacturers')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
-    }
-
-    /**
-     * Get payment_types list for form dropdown.
-     *
-     * @return array
-     */
-    public static function payment_types()
-    {
-        return \DB::table('payment_method_types')->pluck('type', 'type');
     }
 
     /**

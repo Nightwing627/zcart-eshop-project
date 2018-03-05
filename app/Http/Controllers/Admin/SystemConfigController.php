@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 
 use App\SystemConfig;
+use App\PaymentMethod;
 use App\Http\Requests;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
@@ -49,7 +50,29 @@ class SystemConfigController extends Controller
     }
 
     /**
-     * Toggle Maintenance Mode of the given id, Its uses the ajax middleware
+     * Toggle payment method of the given id, Its uses the ajax middleware
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function togglePaymentMethod(UpdateSystemConfigRequest $request, $id)
+    {
+        // Check permission
+        $system = SystemConfig::orderBy('id', 'asc')->first();
+        $this->authorize('update', $system);
+
+        $paymentMethod = PaymentMethod::findOrFail($id);
+        $paymentMethod->enabled = !$paymentMethod->enabled;
+
+        if($paymentMethod->save())
+            return response("success", 200);
+
+        return response('error', 405);
+    }
+
+    /**
+     * Toggle notification of the given node, Its uses the ajax middleware
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  str  $node

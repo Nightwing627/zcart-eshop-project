@@ -31,6 +31,17 @@ if ( ! function_exists('is_serialized') )
     }
 }
 
+if ( ! function_exists('get_platform_title') )
+{
+    /**
+     * Return shop title or the application title
+     */
+    function get_platform_title()
+    {
+        return config('system_settings.name') ?: config('app.name');
+    }
+}
+
 if ( ! function_exists('get_site_title') )
 {
     /**
@@ -41,7 +52,7 @@ if ( ! function_exists('get_site_title') )
         if(auth()->user()->isFromMerchant() && auth()->user()->shop)
             return auth()->user()->shop->name;
 
-        return config('system_settings.name') ?: config('app.name');
+        return get_platform_title();
     }
 }
 
@@ -870,6 +881,35 @@ if ( ! function_exists('get_msg_folder_name_from_label') )
     }
 }
 
+if ( ! function_exists('get_payment_method_type') )
+{
+    function get_payment_method_type($id)
+    {
+        switch ($id) {
+            case \App\PaymentMethod::TYPE_PAYPAL:
+                return [
+                        'name' => trans('app.payment_method_type.paypal.name'),
+                        'description' => trans('app.payment_method_type.paypal.description'),
+                        'admin_description' => trans('app.payment_method_type.paypal.admin_description'),
+                    ];
+
+            case \App\PaymentMethod::TYPE_CREDIT_CARD:
+                return [
+                        'name' => trans('app.stpayment_method_type.credit_card.name'),
+                        'description' => trans('app.payment_method_type.credit_card.description'),
+                        'admin_description' => trans('app.payment_method_type.paypal.admin_description'),
+                    ];
+
+            case \App\PaymentMethod::TYPE_MANUAL:
+                return [
+                        'name' => trans('app.payment_method_type.manual.name'),
+                        'description' => trans('app.payment_method_type.manual.description'),
+                        'admin_description' => trans('app.payment_method_type.paypal.admin_description'),
+                    ];
+        }
+    }
+}
+
 if ( ! function_exists('setAdditionalCartInfo') )
 {
     /**
@@ -904,4 +944,17 @@ if ( ! function_exists('setAdditionalCartInfo') )
 
         return $request;
     }
+
+    // STRIPE Helper
+    // if ( ! function_exists('getStripeAuthorizeUrl') )
+    // {
+    //     /**
+    //      * Return authorize_url to Stripe connect authorization
+    //      */
+    //     function getStripeAuthorizeUrl()
+    //     {
+    //         return "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" . config('services.stripe.client_id') . "&scope=read_write&state=" . csrf_token();
+    //     }
+    // }
+
 }

@@ -7,11 +7,14 @@
     "require": {
         "php": ">=7.0.0",
         "fideloper/proxy": "~3.3",
+        "intervention/image": "^2.3",
+        "ixudra/curl": "^6.16",
+        "laracasts/flash": "^2.0",
+        "laravel/cashier": "~7.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
-        "intervention/image": "^2.3",
-        "laracasts/flash": "^2.0"
+        "stripe/stripe-php": "~5.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

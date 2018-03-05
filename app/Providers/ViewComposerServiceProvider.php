@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
-use App\Cart;
-use App\Module;
+// use App\Cart;
+// use App\Module;
+use App\Config;
 use App\Inventory;
+use App\PaymentMethod;
 use App\Helpers\ListHelper;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -60,8 +62,6 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeProductForm();
 
-        $this->composePaymentMethodForm();
-
         $this->composeRefundInitiationForm();
 
         $this->composeRoleForm();
@@ -93,6 +93,8 @@ class ViewComposerServiceProvider extends ServiceProvider
         $this->composeTicketAssignForm();
 
         $this->composeUserForm();
+
+        $this->composeViewPaymentMethodsPage();
 
         $this->composeWarehouseForm();
 
@@ -247,21 +249,6 @@ class ViewComposerServiceProvider extends ServiceProvider
                 {
                     $view->with('merchants', ListHelper::new_merchants());
                     $view->with('timezones', ListHelper::timezones());
-                });
-    }
-
-    /**
-     * compose partial view of PaymentMethodForm
-     */
-    private function composePaymentMethodForm()
-    {
-        View::composer(
-
-                'admin.payment-method._form',
-
-                function($view)
-                {
-                    $view->with('types', ListHelper::payment_types());
                 });
     }
 
@@ -482,10 +469,7 @@ class ViewComposerServiceProvider extends ServiceProvider
 
             function($view)
             {
-                $view->with('customers', ListHelper::customers());
-
                 $view->with('statuses', ListHelper::order_statuses());
-
                 $view->with('payments', ListHelper::payment_statuses());
             }
         );
@@ -630,7 +614,23 @@ class ViewComposerServiceProvider extends ServiceProvider
                     $view->with('suppliers', ListHelper::suppliers());
                     $view->with('warehouses', ListHelper::warehouses());
                     $view->with('packagings', ListHelper::packagings());
+                });
+    }
+
+    /**
+     * compose partial view of Config Page
+     */
+    private function composeViewPaymentMethodsPage()
+    {
+        View::composer(
+
+                'admin.config.payment-method.index',
+
+                function($view)
+                {
+                    $view->with('payment_method_types', ListHelper::payment_method_types());
                     $view->with('payment_methods', ListHelper::payment_methods());
+                    $view->with('config', Config::findOrFail(auth()->user()->merchantId()));
                 });
     }
 
@@ -647,6 +647,8 @@ class ViewComposerServiceProvider extends ServiceProvider
                 {
                     $view->with('countries', ListHelper::countries());
                     $view->with('states', ListHelper::states());
+                    $view->with('payment_method_types', ListHelper::payment_method_types());
+                    $view->with('payment_methods', PaymentMethod::all());
                 });
     }
 

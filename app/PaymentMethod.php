@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PaymentMethod extends Model
 {
-    use SoftDeletes;
+    const TYPE_PAYPAL       = 1;
+    const TYPE_CREDIT_CARD  = 2;
+    const TYPE_MANUAL       = 3;
 
     /**
      * The database table used by the model.
@@ -18,11 +19,13 @@ class PaymentMethod extends Model
     protected $table = 'payment_methods';
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be casted to native types.
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $casts = [
+        'enabled' => 'boolean',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -31,12 +34,12 @@ class PaymentMethod extends Model
      */
     protected $fillable = [
                     'name',
-                    'type',
                     'company_name',
                     'website',
                     'help_doc_url',
+                    'terms_conditions_link',
                     'description',
-                    'active',
+                    'enabled',
                 ];
 
     /**
@@ -44,34 +47,22 @@ class PaymentMethod extends Model
      */
     public function shops()
     {
-        return $this->belongsToMany(Shop::class, 'shop_payment_methods')
-                    ->withPivot('api_key', 'api_secret')
+        return $this->belongsToMany(Shop::class, 'shop_payment_methods', 'payment_method_id','shop_id')
                     ->withTimestamps();
     }
 
     /**
-     * Get the orders associated with the order status.
-     */
-    public function orders()
-    {
-        return $this->hasManyThrough(Order::class, Invoice::class);
-    }
-
-    /**
-     * Get the invoices for the order.
-     */
-    public function invoices()
-    {
-        return $this->hasMany(Invoice::class);
-    }
-
-    /**
-     * Scope a query to only include records from the users shop.
+     * Scope a query to only include active records.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeMine($query)
+    public function scopeActive($query)
     {
-        return $query->where('shop_id', Auth::user()->merchantId());
+        return $query->where('enabled', 1);
+    }
+
+    public function type()
+    {
+        return get_payment_method_type($this->type);
     }
 }

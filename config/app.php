@@ -173,6 +173,7 @@ return [
         'Intervention\Image\ImageServiceProvider',
         'Laracasts\Flash\FlashServiceProvider',
         Barryvdh\Debugbar\ServiceProvider::class,
+        Ixudra\Curl\CurlServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -245,6 +246,7 @@ return [
         'Image' => 'Intervention\Image\Facades\Image',
         'Flash' => 'Laracasts\Flash\Flash',
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Curl' => Ixudra\Curl\Facades\Curl::class,
 
     ],
 

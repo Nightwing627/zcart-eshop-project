@@ -2,7 +2,7 @@
 
 Route::auth();
 Route::get('/logout' , 'Auth\LoginController@logout');
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('homepage');
 
 // Common
 Route::group(['middleware' => ['auth']], function()
@@ -101,10 +101,10 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		include('admin/UserRole.php');
 		include('admin/Tax.php');
 		include('admin/EmailTemplate.php');
-		include('admin/PaymentMethod.php');
 		include('admin/Config.php');
 		include('admin/System.php');
 		include('admin/SystemConfig.php');
+		include('admin/PaymentConfig.php');
 	});
 
 	// Promotions Routs for Admin

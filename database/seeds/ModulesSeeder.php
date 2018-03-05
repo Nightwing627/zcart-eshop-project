@@ -115,10 +115,10 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,add,edit,delete'
         ],
 
-        'Payment Method' => [
-            'access' => 'Platform',
-            'actions' => 'view,add,edit,delete'
-        ],
+        // 'Payment Method' => [
+        //     'access' => 'Platform',
+        //     'actions' => 'view,add,edit,delete'
+        // ],
 
         'Refund' => [
             'access' => 'Merchant',
@@ -155,7 +155,7 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,edit'
         ],
 
-        'SystemConfig' => [
+        'System Config' => [
             'access' => 'Platform',
             'actions' => 'view,edit'
         ],

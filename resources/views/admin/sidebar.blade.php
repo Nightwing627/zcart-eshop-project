@@ -247,10 +247,6 @@
               <li class=" {{ Request::is('admin/setting/tax*') ? 'active' : '' }}"><a href="{{ url('admin/setting/tax') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.taxes') }}</a></li>
             @endcan
 
-            @can('index', App\PaymentMethod::class)
-              <li class=" {{ Request::is('admin/setting/paymentMethod*') ? 'active' : '' }}"><a href="{{ url('admin/setting/paymentMethod') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.payment_methods') }}</a></li>
-            @endcan
-
             @can('index', App\EmailTemplate::class)
               <li class=" {{ Request::is('admin/setting/emailTemplate*') ? 'active' : '' }}"><a href="{{ url('admin/setting/emailTemplate') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.email_templates') }}</a></li>
             @endcan
@@ -259,6 +255,8 @@
               <li class=" {{ Request::is('admin/setting/general*') ? 'active' : '' }}"><a href="{{ url('admin/setting/general') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.general') }}</a></li>
 
               <li class=" {{ Request::is('admin/setting/config*') ? 'active' : '' }}"><a href="{{ url('admin/setting/config') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}</a></li>
+
+              <li class=" {{ Request::is('admin/setting/paymentMethod*') ? 'active' : '' }}"><a href="{{ url('admin/setting/paymentMethod') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.payment_methods') }}</a></li>
             @endcan
 
             @can('view', App\System::class)

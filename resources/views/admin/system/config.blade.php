@@ -13,8 +13,12 @@
 					{{ trans('app.basic_settings') }}
 				</a></li>
 				<li><a href="#formats" data-toggle="tab">
-					<i class="fa fa-credit-card hidden-sm"></i>
+					<i class="fa fa-cog hidden-sm"></i>
 					{{ trans('app.config_formats') }}
+				</a></li>
+				<li><a href="#payment_method" data-toggle="tab">
+					<i class="fa fa-credit-card hidden-sm"></i>
+					{{ trans('app.payment_methods') }}
 				</a></li>
 				<li><a href="#support" data-toggle="tab">
 					<i class="fa fa-phone hidden-sm"></i>
@@ -449,6 +453,81 @@
 							</div>
 				        {!! Form::close() !!}
 			    	</div>
+			    </div>
+			    <!-- /.tab-pane -->
+
+			    <div class="tab-pane" id="payment_method">
+			    	<div class="jumbotron">
+			    		<p class="text-center">{{ trans('help.config_enable_payment_method') }}</p>
+			    	</div>
+	    			@foreach($payment_method_types as $type_id => $type)
+	    				@php
+	    					$payment_providers = $payment_methods->where('type', $type_id);
+	    					$logo_path = image_path('payment-method-types') . $type_id .'.svg';
+	    				@endphp
+				    	<div class="row">
+							<span class="spacer10"></span>
+					    	<div class="col-sm-6">
+					    		@if(file_exists($logo_path))
+									<img src="{{ asset($logo_path) }}" width="100" height="25" alt="{{ $type }}">
+									<span class="spacer10"></span>
+								@else
+						    		<p class="lead">{{ $type }}</p>
+								@endif
+					    		<p>{!! get_payment_method_type($type_id)['admin_description'] !!}</p>
+					    	</div>
+					    	<div class="col-sm-6">
+				    			@foreach($payment_providers as $payment_provider)
+				    				@php
+				    					$logo_path = image_path('payment-methods') . $payment_provider->code .'.png';
+				    				@endphp
+									<ul class="list-group">
+										<li class="list-group-item">
+								    		@if(file_exists($logo_path))
+												<img src="{{ asset($logo_path) }}" class="open-img-md" alt="{{ $type }}">
+											@else
+												<p class="list-group-item-heading inline lead">
+													{{ $payment_provider->name }}
+												</p>
+											@endif
+
+										  	<div class="handle inline pull-right no-margin">
+												<span class="spacer10"></span>
+												<a href="{{ route('admin.setting.system.paymentMethod.toggle', $payment_provider->id) }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $payment_provider->enabled == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $payment_provider->enabled == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<div class="btn-handle"></div>
+												</a>
+										  	</div>
+
+											<span class="spacer10"></span>
+
+											<p class="list-group-item-text">
+												{{--
+												@php
+												 	echo preg_replace_callback("~([a-z_]+)\(\)~",
+												     function ($m){
+												          return $m[1]();
+												     }, $payment_provider->admin_description);
+												 @endphp --}}
+
+												{!! $payment_provider->admin_description !!}
+											</p>
+
+											<span class="spacer15"></span>
+
+											@if($payment_provider->admin_help_doc_link)
+												<a href="{{ $payment_provider->admin_help_doc_link }}" class="btn btn-default" target="_blank"> {{ trans('app.documentation') }}</a>
+												<span class="spacer15"></span>
+											@endif
+										</li>
+						    		</ul>
+				    			@endforeach
+					    	</div>
+					    </div>
+
+					    @unless($loop->last)
+						    <hr>
+					    @endunless
+				    @endforeach
 			    </div>
 			    <!-- /.tab-pane -->
 

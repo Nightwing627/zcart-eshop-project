@@ -5600,18 +5600,10 @@ div.dataTables_paginate ul.pagination {
   zoom: 0.9;
 }
 
-/* Cart Summary */
-#cart-summary .box-cart-summary{
-  box-shadow: 0 0 1px #d3d3d3;
-  text-align: center;
-  letter-spacing: 1.4px;
-}
-
-#cart-summary .box-title {
-  text-transform: uppercase;
-  font-size: 20px;
-}
-
+img.open-img-xs { max-width: 50px; max-height: 50px;}
+img.open-img-sm { max-width: 100px; max-height: 100px;}
+img.open-img-md { max-width: 150px; max-height: 150px;}
+img.open-img-lg { max-width: 200px; max-height: 200px;}
 
 /* Spacer */
 .spacer5 { height: 5px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }

@@ -31,7 +31,7 @@ class CreateInventoryWithVariantRequest extends Request
         return [
             'variants.*' => 'required',
             'sku.*' => 'required|unique:inventories,sku',
-            'sale_price.*' => 'bail|required|numeric',
+            'sale_price.*' => 'bail|required|numeric|min:0',
             'stock_quantity.*' => 'bail|required|integer',
             'offer_price.*' => 'sometimes|nullable|numeric',
             'available_from' => 'nullable|date',

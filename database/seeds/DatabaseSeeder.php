@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
         $this->call('PermissionSeeder');
         $this->call('AttributeSeeder');
         $this->call('GtinSeeder');
-        $this->call('PaymentMethodTypesSeeder');
         $this->call('PaymentMethodsSeeder');
         $this->call('EmailTemplateSeeder');
         $this->call('OrderStatusesSeeder');

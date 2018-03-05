@@ -36,7 +36,6 @@ class AuthServiceProvider extends ServiceProvider
         \App\OrderStatus::class         => \App\Policies\OrderStatusPolicy::class,
         \App\OrderStatus::class         => \App\Policies\OrderStatusPolicy::class,
         \App\Packaging::class           => \App\Policies\PackagingPolicy::class,
-        \App\PaymentMethod::class       => \App\Policies\PaymentMethodPolicy::class,
         \App\PaymentStatus::class       => \App\Policies\PaymentStatusPolicy::class,
         \App\Permission::class          => \App\Policies\PermissionPolicy::class,
         \App\Product::class             => \App\Policies\ProductPolicy::class,

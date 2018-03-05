@@ -15,7 +15,7 @@
     $shipping_address = $customer->shippingAddress ? $customer->shippingAddress : $customer->primaryAddress;
     $billing_address = $customer->billingAddress ? $customer->billingAddress : $shipping_address;
     $shipping_zone = $shipping_address ?
-                    get_shipping_zone_of(Auth::user()->shop_id, $shipping_address->country_id, $shipping_address->state_id) : Null;
+                    get_shipping_zone_of(Auth::user()->merchantId(), $shipping_address->country_id, $shipping_address->state_id) : Null;
 
     $shipping_options = $shipping_zone ? getShippingRates($shipping_zone->id) : 'NaN';
     $packaging_options = getPackagings();

@@ -61,6 +61,41 @@ class Config extends Model
     }
 
     /**
+     * Get the paymentMethods for the shop.
+     */
+    public function paymentMethods()
+    {
+        return $this->belongsToMany(PaymentMethod::class, 'shop_payment_methods', 'shop_id', 'payment_method_id')
+                    ->withTimestamps();
+    }
+
+   /**
+     * Get the manualPaymentMethods for the shop.
+     */
+    public function manualPaymentMethods()
+    {
+        return $this->belongsToMany(PaymentMethod::class, 'config_manual_payments', 'shop_id', 'payment_method_id')
+                    ->withPivot('additional_details', 'payment_instructions')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Get the stripe for the shop.
+     */
+    public function stripe()
+    {
+        return $this->hasOne(ConfigStripe::class, 'shop_id');
+    }
+
+    /**
+     * Get the paypalExpress for the shop.
+     */
+    public function paypalExpress()
+    {
+        return $this->hasOne(ConfigPaypalExpress::class, 'shop_id');
+    }
+
+    /**
      * Get the supplier.
      */
     public function supplier()

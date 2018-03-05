@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Shop;
 use App\Config;
+use App\PaymentMethod;
 use App\Http\Requests;
 use App\Helpers\ImageHelper;
 use App\Common\Authorizable;
@@ -17,7 +18,7 @@ use App\Http\Requests\Validations\ToggleMaintenanceModeRequest;
 
 class ConfigController extends Controller
 {
-    use Authorizable;
+    // use Authorizable;
 
     private $model_name;
 
@@ -36,7 +37,7 @@ class ConfigController extends Controller
      */
     public function viewGeneralSetting()
     {
-        $shop = Shop::findOrFail(Auth::user()->shop_id);
+        $shop = Shop::findOrFail(Auth::user()->merchantId());
 
         return view('admin.config.general', compact('shop'));
     }
@@ -48,7 +49,7 @@ class ConfigController extends Controller
      */
     public function view()
     {
-        $config = Config::findOrFail(Auth::user()->shop_id);
+        $config = Config::findOrFail(Auth::user()->merchantId());
 
         return view('admin.config.index', compact('config'));
     }
@@ -98,7 +99,7 @@ class ConfigController extends Controller
      */
     public function toggleNotification(Request $request, $node)
     {
-        $config = Config::findOrFail($request->user()->shop_id);
+        $config = Config::findOrFail($request->user()->merchantId());
 
         $this->authorize('update', $config); // Check permission
 

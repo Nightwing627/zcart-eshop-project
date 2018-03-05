@@ -94,10 +94,6 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Packaging\EloquentPackaging::class
         );
         $this->app->singleton(
-            \App\Repositories\PaymentMethod\PaymentMethodRepository::class,
-            \App\Repositories\PaymentMethod\EloquentPaymentMethod::class
-        );
-        $this->app->singleton(
             \App\Repositories\PaymentStatus\PaymentStatusRepository::class,
             \App\Repositories\PaymentStatus\EloquentPaymentStatus::class
         );

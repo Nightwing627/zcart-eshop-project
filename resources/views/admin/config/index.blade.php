@@ -16,10 +16,6 @@
 					<i class="fa fa-shopping-cart hidden-sm"></i>
 					{{ trans('app.order') }}
 				</a></li>
-				<li><a href="#payment_method" data-toggle="tab">
-					<i class="fa fa-credit-card hidden-sm"></i>
-					{{ trans('app.payment_method') }}
-				</a></li>
 				<li><a href="#views" data-toggle="tab">
 					<i class="fa fa-laptop hidden-sm"></i>
 					{{ trans('app.views') }}
@@ -130,7 +126,7 @@
 								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_payment_method_id') }}"></i>
 								  	<div class="col-sm-6 nopadding-left">
 								  		@if($can_update)
-										    {!! Form::select('default_payment_method_id', $payment_methods , $config->default_payment_method_id, ['class' => 'form-control select2-normal']) !!}
+										    {{-- {!! Form::select('default_payment_method_id', $payment_methods , $config->default_payment_method_id, ['class' => 'form-control select2-normal']) !!} --}}
 										@else
 											<span>{{ $config->payment_method->name }}</span>
 										@endif
@@ -170,22 +166,6 @@
 							        </div>
 						  		@endif
 					    	</div>
-				        {!! Form::close() !!}
-			    	</div>
-			    </div>
-			    <!-- /.tab-pane -->
-
-			    <div class="tab-pane" id="payment_method">
-			    	<div class="row">
-				        {!! Form::model($config, ['method' => 'PUT', 'route' => ['admin.setting.config.update', $config], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
-					    	<div class="col-sm-12">
-
-						  		@if($can_update)
-									<div class="col-md-offset-3">
-							            {!! Form::submit(trans('app.update'), ['class' => 'btn btn-lg btn-flat btn-new']) !!}
-							        </div>
-						  		@endif
-							</div>
 				        {!! Form::close() !!}
 			    	</div>
 			    </div>

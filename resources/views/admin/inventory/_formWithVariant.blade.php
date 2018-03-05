@@ -1,8 +1,16 @@
-@if(isset($product))
+{{-- @if(isset($product))
   {{ Form::hidden('product_id', $product->id) }}
 @elseif($inventory)
   {{ Form::hidden('product_id', $inventory->product_id) }}
 @endif
+ --}}
+ @if(isset($inventory))
+   @php
+    $product = $inventory->product;
+   @endphp
+@endif
+
+{{ Form::hidden('product_id', $product->id) }}
 
 <div class="row">
   <div class="col-lg-3 col-md-6 nopadding-right">

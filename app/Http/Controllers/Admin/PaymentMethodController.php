@@ -1,27 +1,22 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
+namespace App\Http\Controllers\Admin;
+
+use App\Config;
+use App\PaymentMethod;
 use Illuminate\Http\Request;
-use App\Common\Authorizable;
+// use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
-use App\Repositories\PaymentMethod\PaymentMethodRepository;
-use App\Http\Requests\Validations\CreatePaymentMethodRequest;
-use App\Http\Requests\Validations\UpdatePaymentMethodRequest;
 
 class PaymentMethodController extends Controller
 {
-    use Authorizable;
+    // use Authorizable;
 
     private $model_name;
 
-    private $paymentMethod;
-
-    /**
-     * construct
-     */
-    public function __construct(PaymentMethodRepository $paymentMethod)
+    public function __construct()
     {
         $this->model_name = trans('app.model.payment_method');
-        $this->paymentMethod = $paymentMethod;
     }
 
     /**
@@ -31,103 +26,102 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
-        $payment_methods = $this->paymentMethod->all();
-
-        $trashes = $this->paymentMethod->trashOnly();
-
-        return view('admin.payment-method.index', compact('payment_methods', 'trashes'));
+        return view('admin.config.payment-method.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function activate(Request $request, $id)
     {
-        return view('admin.payment-method._create');
+        $config = $this->checkPermission($request);
+
+        $paymentMethod = PaymentMethod::findOrFail($id);
+
+        $config->paymentMethods()->syncWithoutDetaching($id);
+
+        switch ($paymentMethod->code) {
+            case 'stripe':
+                return redirect()->route('admin.setting.stripe.connect');
+                break;
+
+            case 'paypal-express':
+                return redirect()->route('admin.setting.paypalExpress.activate');
+                break;
+
+            case 'wire':
+            case 'cod':
+                return redirect()->route('admin.setting.manualPaymentMethod.activate', $paymentMethod->code);
+                break;
+
+            default:
+                return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+                break;
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CreatePaymentMethodRequest $request)
+    public function deactivate(Request $request, $id)
     {
-        $this->paymentMethod->store($request);
+        $config = $this->checkPermission($request);
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
-    }
+        $paymentMethod = PaymentMethod::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  PaymentMethod  $paymentMethod
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $paymentMethod = $this->paymentMethod->find($id);
-
-        return view('admin.payment-method._edit', compact('paymentMethod'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  PaymentMethod  $paymentMethod
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdatePaymentMethodRequest $request, $id)
-    {
-        $this->paymentMethod->update($request, $id);
+        $config->paymentMethods()->detach($id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
-    /**
-     * Trash the specified resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function trash(Request $request, $id)
-    {
-        $this->paymentMethod->trash($id);
 
-        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
+    public function activateManualPaymentMethod(Request $request, $code)
+    {
+        $config = $this->checkPermission($request);
+
+        $paymentMethod = PaymentMethod::where('code', $code)->firstOrFail();
+
+        $config->manualPaymentMethods()->syncWithoutDetaching($paymentMethod);
+
+        $paymentMethod = $config->manualPaymentMethods->find($paymentMethod);
+
+        return view('admin.config.payment-method.manual', compact('paymentMethod'));
     }
 
-    /**
-     * Restore the specified resource from soft delete.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function restore(Request $request, $id)
+    public function deactivateManualPaymentMethod(Request $request, $code)
     {
-        $this->paymentMethod->restore($id);
+        $config = $this->checkPermission($request);
 
-        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
+        $paymentMethod = PaymentMethod::where('code', $code)->firstOrFail();
+
+        $config->manualPaymentMethods()->detach($paymentMethod->id);
+
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request, $id)
+    public function updateManualPaymentMethod(Request $request, $code)
     {
-        $this->paymentMethod->destroy($id);
+        $config = $this->checkPermission($request);
 
-        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
+        $paymentMethod = PaymentMethod::where('code', $code)->firstOrFail();
+
+        $data = [
+            'additional_details' => $request->input('additional_details'),
+            'payment_instructions' => $request->input('payment_instructions'),
+        ];
+
+        $config->manualPaymentMethods()->updateExistingPivot($paymentMethod->id, $data);
+
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+    }
+
+
+    /**
+     * Check permission
+     *
+     * @return $config
+     */
+    private function checkPermission(Request $request)
+    {
+        $config = Config::findOrFail($request->user()->merchantId());
+
+        $this->authorize('update', $config);
+
+        return $config;
     }
 
 }

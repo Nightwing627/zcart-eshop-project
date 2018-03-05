@@ -24,12 +24,14 @@ class CreateInventoryRequest extends Request
     public function rules()
     {
         $user = Request::user(); //Get current user
-        Request::merge( [ 'shop_id' => $user->merchantId() ] ); //Set shop_id
-        Request::merge( [ 'user_id' => $user->id ] ); //Set user_id
+        Request::merge([
+            'shop_id' => $user->merchantId(),
+            'user_id' => $user->id
+            ]);
 
         return [
             'sku' => 'required|unique:inventories,sku',
-            'sale_price' => 'required|numeric',
+            'sale_price' => 'required|numeric|min:0',
             'offer_price' => 'nullable|numeric',
             'available_from' => 'nullable|date',
             'offer_start' => 'nullable|date|required_with:offer_price|after_or_equal:now',

@@ -9,6 +9,8 @@ use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SecretLoginRequest;
 
+use Rap2hpoutre\LaravelStripeConnect\StripeConnect;
+
 class DashboardController extends Controller
 {
     use Authorizable;
@@ -31,6 +33,21 @@ class DashboardController extends Controller
         return view('admin.dashboard.index');
     }
 
+
+    public function pay()
+    {
+        $customer = \App\Customer::find(2);
+        $vendor = User::find(3);
+        $token = 'test';
+
+        StripeConnect::transaction($token)
+            ->amount(1000, 'usd')
+            ->from($customer)
+            ->to($vendor)
+            ->create();
+
+        return redirect()->route('admin.admin.dashboard')->with('success', trans('messages.success'));
+    }
 
     /**
      * Display the secret_login.
