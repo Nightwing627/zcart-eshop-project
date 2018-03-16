@@ -52,7 +52,7 @@ trait Authorizable
     ];
 
     /**
-     * List of modules thar grouped into a common module named vendor modules
+     * List of modules that grouped into a common module named vendor modules
      * This will help to set the role permissions
      *
      * @var arr
@@ -63,7 +63,7 @@ trait Authorizable
     ];
 
     /**
-     * List of modules thar grouped into a common module named utility modules
+     * List of modules that grouped into a common module named utility modules
      * This will help to set the role permissions
      *
      * @var arr
@@ -71,6 +71,18 @@ trait Authorizable
     private $utility_modules = [
         'orderStatus',
         'paymentStatus',
+    ];
+
+    /**
+     * List of modules that has exceptional permission than the abilities above
+     * This will help to set the role permissions
+     *
+     * @var arr
+     */
+    private $update_exception_modules = [
+        'message',
+        'ticket',
+        'refund'
     ];
 
 	/**
@@ -104,6 +116,7 @@ trait Authorizable
 
         $slug = (bool) $slug ? $slug : $this->getSlug();
 
+        // echo "<pre>"; print_r($slug); echo "</pre>"; exit();
         return (new Authorize(Auth::user(), $slug))->check();
     }
 
@@ -123,6 +136,11 @@ trait Authorizable
 
         if($this->isUtility($module))
             return $this->abilities[$action] . '_utility';
+
+        if ('update' == $action) {
+            if($this->isUpdateException($module))
+                return $action . '_' . snake_case($module);
+        }
 
         return array_key_exists($action, $this->abilities) ? $this->abilities[$action] . '_' . snake_case($module) : $action;
     }
@@ -149,5 +167,17 @@ trait Authorizable
     private function isUtility($module)
     {
         return in_array($module, $this->utility_modules);
+    }
+
+    /**
+     * Check if module is an Support module.
+     *
+     * @param  str  $module
+     *
+     * @return boolean
+     */
+    private function isUpdateException($module)
+    {
+        return in_array($module, $this->update_exception_modules);
     }
 }

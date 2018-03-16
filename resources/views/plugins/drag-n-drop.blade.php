@@ -50,8 +50,7 @@
 		    	var min = Math.min(old_index, new_index);
 		    	var order = {};
 				$("#sortable tbody tr").each(function(index){
-					if (index >= min && index <= max)
-					{
+					if (index >= min && index <= max){
 						$( this ).find("span.order").text(index); //Update the reordered index
 						order[ $( this ).attr('id') ] = index;
 					}

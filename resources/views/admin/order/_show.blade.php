@@ -4,7 +4,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
 
             <div class="col-md-3 nopadding" style="margin-top: 10px;">
-				<img src="{{ get_image_src($order->customer_id, 'customers', '150x150') }}" class="thumbnail" width="80%" alt="{{ trans('app.avatar') }}">
+				<img src="{{ get_image_src($order->customer_id, 'customers', 'medium') }}" class="thumbnail" width="80%" alt="{{ trans('app.avatar') }}">
 			</div>
             <div class="col-md-9 nopadding">
             	<div class="spacer10"></div>
@@ -105,9 +105,9 @@
 									<tr>
 										<td>
 										  	@if(File::exists(image_path('inventories') . $item->pivot->inventory_id . '_35x35.png'))
-												<img src="{{ get_image_src($item->pivot->inventory_id, 'inventories', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+												<img src="{{ get_image_src($item->pivot->inventory_id, 'inventories', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 											@else
-												<img src="{{ get_image_src($item->product->id, 'products', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+												<img src="{{ get_image_src($item->product->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 											@endif
 										</td>
 										<td>{{ $item->pivot->item_description }}</td>

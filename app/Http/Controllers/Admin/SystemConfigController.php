@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use App\SystemConfig;
 use App\PaymentMethod;
 use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\UpdateSystemConfigRequest;

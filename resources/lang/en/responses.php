@@ -22,6 +22,7 @@ return [
     'error' => 'Action failed! There is something wrong on server side',
     'timeout' => 'Action failed! The request timeout',
     'reordered' => 'Successfully reordered',
+    'no_files_to_upload' => 'No files found for upload.',
     'form_validation_failed' => 'Failed: Please check all required inputs are filled and valid',
 
 ];

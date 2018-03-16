@@ -433,7 +433,7 @@ class ListHelper
      */
     public static function payment_methods()
     {
-        return \DB::table('payment_methods')->where('enabled', 1)->get();
+        return \DB::table('payment_methods')->where('enabled', 1)->pluck('name', 'id');
     }
 
     /**

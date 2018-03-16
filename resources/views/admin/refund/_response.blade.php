@@ -8,7 +8,7 @@
             <div class="col-md-3 nopadding-right" style="margin-top: 10px;">
                 <div class="form-group">
                     <label>{{ trans('app.customer') }}</label>
-                    <img src="{{ get_image_src($refund->order->customer_id, 'customers', '150x150') }}" class="thumbnail" width="100%" style="margin-bottom: 0px;" alt="{{ trans('app.avatar') }}">
+                    <img src="{{ get_image_src($refund->order->customer_id, 'customers', 'medium') }}" class="thumbnail" width="100%" style="margin-bottom: 0px;" alt="{{ trans('app.avatar') }}">
                     <p class="lead">{{ $refund->order->customer->getName() }}</p>
                 </div>
             </div>

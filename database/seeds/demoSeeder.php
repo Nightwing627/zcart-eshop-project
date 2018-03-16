@@ -53,6 +53,18 @@ class demoSeeder extends Seeder
                 $shop->config()->save(factory(App\Config::class)->make());
 
                 $shop->shippingZones()->save(factory(App\ShippingZone::class)->make());
+
+                $shop->shippingZones()->create(
+                    [
+                        'name' => 'Worldwide',
+                        'tax_id' => rand(1, 31),
+                        'country_ids' => [],
+                        'state_ids' => [],
+                        'rest_of_the_world' => true,
+                        'created_at' => Carbon::Now(),
+                        'updated_at' => Carbon::Now(),
+                    ]
+                );
             });
 
         // Demo Categories with real text

@@ -26,7 +26,7 @@ class CreateConfigsTable extends Migration
             // Order
             $table->string('order_number_prefix')->nullable();
             $table->string('order_number_suffix')->nullable();
-            $table->integer('default_tax_id')->unsigned()->nullable();
+            $table->integer('default_tax_id')->unsigned()->nullable()->default(1);
             // $table->integer('default_carrier_id')->unsigned()->nullable();
             $table->decimal('order_handling_cost', 20, 6)->nullable();
 

@@ -31,7 +31,7 @@
 					@foreach($carriers as $carrier )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($carrier->id, 'carriers', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_image_src($carrier->id, 'carriers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							<p class="indent10">
 								{{ $carrier->name }}
 							</p>
@@ -81,7 +81,7 @@
 					@foreach($trashes as $trash )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($trash->id, 'carriers', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_image_src($trash->id, 'carriers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							<p class="indent10">
 								{{ $trash->name }}
 							</p>

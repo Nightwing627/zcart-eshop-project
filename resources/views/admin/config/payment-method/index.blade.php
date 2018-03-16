@@ -4,7 +4,6 @@
 	$can_update = Gate::allows('update', $config) ?: Null;
 	$active_payment_methods = $config->paymentMethods->pluck('id')->toArray();
 	$has_config = FALSE;
-	// echo "<pre>"; print_r($config->stripe); echo "</pre>"; exit();
 @endphp
 
 @section('content')

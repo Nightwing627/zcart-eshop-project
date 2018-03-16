@@ -118,8 +118,8 @@
         <li class="dropdown tasks-menu">
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{{ get_image_src('US', 'flags') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
-            {{-- <img src="{{ asset('assets/images/flags/US.png') }}" style="width: 15px; vertical-align: inherit;" /> --}}
+            <img src="{{ asset('storage/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
+            {{-- <img src="{{ get_image_src('US', 'flags') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US"> --}}
           </a>
           <ul class="dropdown-menu" style="width: 100px;">
             <li>
@@ -128,7 +128,7 @@
                 <li><!-- Task item -->
                   <a href="#">
                     <h3>
-                      <img src="{{ get_image_src('BD', 'flags') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
+                      <img src="{{ asset('storage/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
                       {{-- <img src="{{ asset('assets/images/flags/US.png') }}" style="width: 15px; vertical-align: inherit;" /> --}}
                       English
                     </h3>
@@ -138,7 +138,7 @@
                 <li><!-- Task item -->
                   <a href="#">
                     <h3>
-                      <img src="{{ get_image_src('BD', 'flags') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
+                      <img src="{{ asset('storage/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
                       Bangla
                     </h3>
                   </a>
@@ -147,7 +147,7 @@
                 <li><!-- Task item -->
                   <a href="#">
                     <h3>
-                      <img src="{{ get_image_src('BD', 'flags') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
+                      <img src="{{ asset('storage/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
                       {{-- <img src="{{ asset('assets/images/flags/BD.png') }}" style="width: 15px; vertical-align: inherit;" /> --}}
                       English
                     </h3>
@@ -157,7 +157,7 @@
                 <li><!-- Task item -->
                   <a href="#">
                     <h3>
-                      <img src="{{ get_image_src('US', 'flags') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
+                      <img src="{{ asset('storage/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
                       {{-- <img src="{{ asset('assets/images/flags/US.png') }}" style="width: 15px; vertical-align: inherit;" /> --}}
                       English
                     </h3>
@@ -174,14 +174,14 @@
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <!-- The user image in the navbar-->
-            <img src="{{ get_image_src(Auth::user()->id, 'users', '35x35') }}" class="user-image" alt="{{ trans('app.avatar') }}">
+            <img src="{{ get_image_src(Auth::user()->id, 'users', 'small') }}" class="user-image" alt="{{ trans('app.avatar') }}">
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
             <span class="hidden-xs">{{ Auth::user()->getName() }}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->
             <li class="user-header">
-              <img src="{{ get_image_src(Auth::user()->id, 'users', '150x150') }}" class="user-image" alt="{{ trans('app.avatar') }}">
+              <img src="{{ get_image_src(Auth::user()->id, 'users', 'medium') }}" class="user-image" alt="{{ trans('app.avatar') }}">
               <h4>{{Auth::user()->name}}</h4>
               <p>
                 @if(Auth::user()->isSuperAdmin())

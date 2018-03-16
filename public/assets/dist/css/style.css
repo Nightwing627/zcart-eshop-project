@@ -5690,3 +5690,23 @@ label.img-btn-sm input[type="file"] {
 .input-lg .select2-selection__arrow{
   top: 8px !important;
 }
+
+/*Drad and Drop file upload hacks*/
+.krajee-default.file-preview-frame{
+  box-shadow: none !important;
+  margin: 3px !important;
+  padding: 0px !important;
+}
+
+.krajee-default.file-preview-frame .kv-file-content {
+    height: auto;
+    max-height: 160px !important;
+}
+
+.krajee-default.file-preview-frame .file-thumbnail-footer {
+    max-height: 70px;
+}
+
+.krajee-default.file-preview-frame .file-actions{
+  padding: 8px !important;
+}

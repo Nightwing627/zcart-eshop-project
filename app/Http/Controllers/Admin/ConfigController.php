@@ -18,7 +18,7 @@ use App\Http\Requests\Validations\ToggleMaintenanceModeRequest;
 
 class ConfigController extends Controller
 {
-    // use Authorizable;
+    use Authorizable;
 
     private $model_name;
 
@@ -50,6 +50,8 @@ class ConfigController extends Controller
     public function view()
     {
         $config = Config::findOrFail(Auth::user()->merchantId());
+
+        $this->authorize('view', $config); // Check permission
 
         return view('admin.config.index', compact('config'));
     }

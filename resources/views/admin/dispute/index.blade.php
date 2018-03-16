@@ -24,7 +24,7 @@
 					@foreach($disputes as $dispute )
 						<tr>
 							<td>
-								<img src="{{ get_image_src($dispute->customer_id, 'customers', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}"> &nbsp;
+								<img src="{{ get_image_src($dispute->customer_id, 'customers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}"> &nbsp;
 								<strong>
 									{{ $dispute->customer->name }}
 								</strong>

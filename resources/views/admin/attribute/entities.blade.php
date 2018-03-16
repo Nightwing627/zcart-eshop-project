@@ -43,7 +43,7 @@
 						</td>
 						<td>
 					 	  	@if(File::exists(image_path('patterns') . $attributeValue->id . '_35x35.png'))
-								<img src="{{ get_image_src($attributeValue->id, 'patterns', '35x35') }}" class="img-sm" alt="{{ trans('app.image') }}">
+								<img src="{{ get_image_src($attributeValue->id, 'patterns', 'small') }}" class="img-sm" alt="{{ trans('app.image') }}">
 							@endif
 						</td>
 						<td class="row-options">
@@ -97,7 +97,7 @@
 			          </td>
 					  <td>
 				 	  	@if(File::exists(image_path('patterns') . $trash->id . '_35x35.png'))
-							<img src="{{ get_image_src($trash->id, 'patterns', '35x35') }}" class="img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_image_src($trash->id, 'patterns', 'small') }}" class="img-sm" alt="{{ trans('app.image') }}">
 						@endif
 					  </td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
@@ -119,5 +119,5 @@
 @endsection
 
 @section('page-script')
-	@include('plugins/drag-n-drop')
+	@include('plugins.drag-n-drop')
 @endsection

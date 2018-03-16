@@ -15,9 +15,9 @@
 					<div class="form-group">
 					  	<label>{{ trans('app.form.avatar') }}</label>
 
-						<img src="{{ get_image_src($profile->id, 'users', '150x150') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
+						<img src="{{ get_image_src($profile->id, 'users', 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
 
-					  	@if(File::exists(image_path('users') . $profile->id . '_150x150.png'))
+					  	@if(File::exists(image_path('users') . $profile->id . 'medium.png'))
 							<a class="btn btn-xs btn-default confirm ajax-silent" type="submit" href="{{ route('admin.profile.deletePhoto') }}"><i class="fa fa-trash-o"></i> {{ trans('app.form.delete_avatar') }}</a>
 					  	@endif
 					</div>
@@ -104,7 +104,7 @@
 						  	<p class="lead">{{ $profile->shop->name }}</p>
 
 						  	<label>{{ trans('app.form.logo') }}</label>
-					        <img src="{{ get_image_src($profile->merchantId(), 'shops', '150x150') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
+					        <img src="{{ get_image_src($profile->merchantId(), 'shops', 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
 					  	</div>
 				    @endunless
 			  	</div>

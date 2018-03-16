@@ -43,7 +43,7 @@ class EloquentRefund extends EloquentRepository implements BaseRepository, Refun
         $refund = $this->model->create($request->all());
 
         if ($request->hasFile('attachment')) {
-            Attachment::storeAttachmentFromRequest($request, $refund);
+            Attachment::storeAttachmentFromRequest($request, $refund, 'attachments');
         }
 
         return $refund;

@@ -2,6 +2,8 @@
 
 namespace App\Common;
 
+use Illuminate\Support\Facades\Storage;
+
 /**
  * Attach this Trait to a User (or other model) for easier read/writes on Replies
  *
@@ -26,7 +28,7 @@ trait Attachable {
 	 */
 	public function attachments()
     {
-        return $this->morphMany(\App\Attachment::class, 'attachable');
+        return $this->morphMany(\App\Attachment::class, 'attachable')->orderBy('order', 'asc');
     }
 
 	/**
@@ -36,21 +38,37 @@ trait Attachable {
 	 */
 	public function flushAttachments()
 	{
-		$attachments = $this->attachments();
+		$attachments = $this->attachments()->get();
 
-		foreach ($attachments->get() as $attachment)
-			$this->removeAttachmentFileFromDisc($attachment);
+		foreach ($attachments as $attachment)
+	    	Storage::delete($attachment->path);
 
 		return $attachments->delete();
 	}
 
-    private function removeAttachmentFileFromDisc($attachment)
-    {
-    	$truePath = attachment_real_path($attachment->path);
+	/**
+	 * Prepare the previews for the dropzone
+	 *
+	 * @return array
+	 */
+	public function previewAttachments()
+	{
+		$urls = '';
+		$configs = '';
 
-        if (file_exists($truePath))
-            unlink($truePath);
+		$attachments = $this->attachments()->get();
 
-        return true;
-    }
+		foreach ($attachments as $attachment){
+	    	Storage::url($attachment->path);
+            $path = Storage::url($attachment->path);
+            $deleteUrl = route('attachment.delete', $attachment->id);
+            $urls .= '"' .$path . '",';
+            $configs .= '{caption:"' . $attachment->name . '", size:' . $attachment->size . ', url: "' . $deleteUrl . '", key:' . $attachment->id . '},';
+		}
+
+		return [
+			'urls' => rtrim($urls, ','),
+			'configs' => rtrim($configs, ',')
+		];
+	}
 }

@@ -83,9 +83,9 @@
 
 <div class="form-group">
   {!! Form::label('exampleInputFile', trans('app.form.image')) !!}
-  @if(isset($packaging) && File::exists(image_path('packagings') . $packaging->id . '_150x150.png'))
+  @if(isset($packaging) && File::exists(image_path('packagings') . $packaging->id . 'medium.png'))
   <label>
-    <img src="{{ get_image_src($packaging->id, 'packagings', '150x150') }}" width="80px" alt="{{ trans('app.image') }}">
+    <img src="{{ get_image_src($packaging->id, 'packagings', 'medium') }}" width="80px" alt="{{ trans('app.image') }}">
     <span style="margin-left: 10px;">
       {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
     </span>

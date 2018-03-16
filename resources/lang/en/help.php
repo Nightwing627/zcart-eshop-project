@@ -443,11 +443,11 @@ return [
 
     'config_stripe_publishable_key' => 'Publishable API keys are meant solely to identify your account with Stripe, they aren\'t secret. They can safely be published.',
 
-    'config_paypal_express_account' => 'Usually the email address of your PayPal application',
+    'config_paypal_express_account' => 'Usually the email address of your PayPal application. Create your PayPal application from here: https://developer.paypal.com/webapps/developer/applications/myapps',
 
-    'config_paypal_express_client_id' => 'The Client ID is a long unique identifier of your application.',
+    'config_paypal_express_client_id' => 'The Client ID is a long unique identifier of your PayPal application. You\'ll find this value on the My Apps & Credentials section on your PayPal dashboard.',
 
-    'config_paypal_express_secret' => 'You\'ll find the API Secret Key on the My Apps & Credentials section on your PayPal dashboard',
+    'config_paypal_express_secret' => 'The PayPal API Secret Key. You\'ll find this value on the My Apps & Credentials section on your PayPal dashboard.',
 
     // 'config_stripe_secret_key' => 'Secret API keys will be required to charge the customer while checkout.',
 

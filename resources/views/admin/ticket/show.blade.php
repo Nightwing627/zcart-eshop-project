@@ -30,11 +30,11 @@
 				            	<a href="{{ route('admin.vendor.shop.show', $ticket->shop_id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 							@endcan
 
-							<img src="{{ get_image_src($ticket->shop_id, 'shops', '150x150') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
+							<img src="{{ get_image_src($ticket->shop_id, 'shops', 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
 						</p>
 
 						<p>
-							<img src="{{ get_image_src($ticket->user_id, 'users', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_image_src($ticket->user_id, 'users', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 
 							<span class="lead">{{ $ticket->user->getName() }}</span>
 							<br/>
@@ -90,7 +90,7 @@
 					<div class="form-group">
 						@if($ticket->assignedTo)
 						  	<label>{{ trans('app.assigned_to') }}</label>
-							<img src="{{ get_image_src($ticket->assigned_to, 'users', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_image_src($ticket->assigned_to, 'users', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							<p>
 								<span class="lead">
 									{{ $ticket->assignedTo->getName() }}
@@ -103,7 +103,7 @@
 						@endif
 
 						@can('assign', $ticket)
-							<a class="btn btn-default" href="{{ route('admin.support.ticket.showAssignForm', $ticket) }}" class="ajax-modal-btn"><i class="fa fa-hashtag"></i> {{ trans('app.assign') }}</a>
+							<a class="btn btn-default ajax-modal-btn" href="{{ route('admin.support.ticket.showAssignForm', $ticket) }}"><i class="fa fa-hashtag"></i> {{ trans('app.assign') }}</a>
 						@endcan
 				  	</div>
 

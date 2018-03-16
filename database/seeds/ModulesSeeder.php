@@ -117,7 +117,7 @@ class ModulesSeeder extends Seeder
 
         // 'Payment Method' => [
         //     'access' => 'Platform',
-        //     'actions' => 'view,add,edit,delete'
+        //     'actions' => 'enable,disable'
         // ],
 
         'Refund' => [
@@ -161,7 +161,7 @@ class ModulesSeeder extends Seeder
         ],
 
         'Tax' => [
-            'access' => 'Common',
+            'access' => 'Merchant',
             'actions' => 'view,add,edit,delete'
         ],
 

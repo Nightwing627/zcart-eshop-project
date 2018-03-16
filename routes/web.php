@@ -3,6 +3,7 @@
 Route::auth();
 Route::get('/logout' , 'Auth\LoginController@logout');
 Route::get('/', 'HomeController@index')->name('homepage');
+// Route::get('welcome', 'HomeController@index')->name('welcome');
 
 // Common
 Route::group(['middleware' => ['auth']], function()

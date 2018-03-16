@@ -16,9 +16,9 @@
             <tr id="{{ $id }}">
               <td>
                 @if(File::exists(image_path('inventories') . $id . '_35x35.png'))
-                  <img src="{{ get_image_src($id, 'inventories', '35x35') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
+                  <img src="{{ get_image_src($id, 'inventories', 'small') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
                 @else
-                  <img src="{{ get_image_src($item->product->id, 'products', '35x35') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
+                  <img src="{{ get_image_src($item->product->id, 'products', 'small') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
                 @endif
               </td>
               <td class="nopadding-right" width="55%">

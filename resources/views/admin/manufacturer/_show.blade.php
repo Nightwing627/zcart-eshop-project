@@ -5,7 +5,7 @@
 
             <div class="col-md-3 nopadding" style="margin-top: 10px;">
 
-				<img src="{{ get_image_src($manufacturer->id, 'manufacturers', '150x150') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
+				<img src="{{ get_image_src($manufacturer->id, 'manufacturers', 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
 
 			</div>
 

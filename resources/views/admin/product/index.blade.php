@@ -4,7 +4,7 @@
 	@can('create', App\Product::class)
 		<a href="{{ route('admin.exim', 'products') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 
-		<a href="{{ route('admin.catalog.product.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_product') }}</a>
+		<a href="{{ route('admin.catalog.product.create') }}" class=" btn btn-new btn-flat">{{ trans('app.add_product') }}</a>
 	@endcan
 @endsection
 
@@ -35,7 +35,7 @@
 					@foreach($products as $product )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($product->id, 'products', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_image_src($product->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 						</td>
 						<td>{{ $product->gtin }}</td>
 						<td>{{ $product->name }}</td>
@@ -55,7 +55,7 @@
 							@endcan
 
 							@can('update', $product)
-								<a href="{{ route('admin.catalog.product.edit', $product->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="{{ route('admin.catalog.product.edit', $product->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $product)
@@ -94,7 +94,7 @@
 					@foreach($trashes as $trash )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($trash->id, 'products', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_image_src($trash->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 						</td>
 						<td>{{ $trash->name }}</td>
 						<td>{{ $trash->model_number }}</td>

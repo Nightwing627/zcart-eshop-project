@@ -81,10 +81,10 @@
           @endif
 
           {{-- Global Notice --}}
-          <div id="global-alert-box" class="alert alert-warning alert-dismissible hidden">
+          <div id="global-alert-box" class="alert alert-warning alert-dismissible {{ Session::has('global_msg') ? '' : 'hidden'}}">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <h4><i class="icon fa fa-warning"></i> {{ trans('app.alert') }}</h4>
-            <p id="global-alert-msg"></p>
+            <p id="global-alert-msg">{{ Session::get('global_msg') }}</p>
           </div>
           <!-- /#global-alert-box -->
 

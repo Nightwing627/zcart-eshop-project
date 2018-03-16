@@ -23,7 +23,7 @@
 	              	<div class="mailbox-read-info">
 	              		<div class="row">
 		              		<div class="col-md-1">
-								<img src="{{ get_image_src($message->customer_id, 'customers', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+								<img src="{{ get_image_src($message->customer_id, 'customers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 								@can('view', $message->customer)
 					            	<a href="{{ route('admin.admin.customer.show', $message->customer) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 								@endcan

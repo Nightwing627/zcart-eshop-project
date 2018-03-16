@@ -47,17 +47,34 @@ class ShopsSeeder extends Seeder
             'default_tax_id' => rand(1, 31),
             'default_packaging_ids' => serialize(array_rand(range(1,30), 3)),
             'order_handling_cost' => 2,
+            'maintenance_mode' => false,
+            'created_at' => Carbon::Now(),
+            'updated_at' => Carbon::Now(),
         ]);
 
         $country_ids = [ 50, 840];
         $state_ids = \DB::table('states')->whereIn('country_id', $country_ids)->pluck('id')->toArray();
 
         DB::table('shipping_zones')->insert([
-            'shop_id' => 1,
-            'name' => 'Domestic',
-            'tax_id' => rand(1, 31),
-            'country_ids' => serialize($country_ids),
-            'state_ids' => serialize($state_ids),
+            [
+                'shop_id' => 1,
+                'name' => 'Domestic',
+                'tax_id' => rand(1, 31),
+                'country_ids' => serialize($country_ids),
+                'state_ids' => serialize($state_ids),
+                'rest_of_the_world' => false,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'shop_id' => 1,
+                'name' => 'Worldwide',
+                'tax_id' => rand(1, 31),
+                'country_ids' => null,
+                'state_ids' => null,
+                'rest_of_the_world' => true,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ]
         ]);
     }
 }

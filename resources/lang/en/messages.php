@@ -13,6 +13,7 @@ return [
     |
     */
 
+    'canceled'          => 'Canceled!',
     'created'           => ':model has been created successfully!',
     'sent'              => ':model has been sent successfully!',
     'updated'           => ':model has been updated successfully!',
@@ -21,13 +22,16 @@ return [
     'deleted'           => ':model has been deleted permanently!',
     'nofound'           => ':model is not exist! try another search.',
     'action_failed'     => 'The action has been failed to unknown reason!',
+    'file_deleted'      => 'The file has been deleted successfully!',
     'archived'          => ':model has been archived successfully!',
+    'failed'            => 'Action has been failed! Something went wrong!!',
     'secret_logged_in'  => 'Impersonated successfully.',
     'secret_logged_out' => 'Logged out from secret account.',
-    'profile_updated'  => 'You account has been updated successfully!',
+    'profile_updated'   => 'You account has been updated successfully!',
     'password_updated'  => 'You account password has been updated successfully!',
     'incorrect_current_password' => 'Your current password is not correct. Please try again!',
     'file_not_exist' => 'Requested file does not exist!',
+    'img_upload_failed' => 'Image upload has been failed!',
     'payment_method_activation_success' => 'Activated successfully! Now you can accept payment using this method.',
     'payment_method_activation_failed' => 'Payment method activation failed! Please try again.',
     'payment_method_disconnect_success' => 'Disconnected successfully!',

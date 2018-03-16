@@ -5,12 +5,12 @@
 			<div class="card hovercard">
 			    <div class="card-background">
 
-					<img src="{{ get_image_src($merchant->id, 'users', '150x150') }}" class="card-bkimg img-circle" alt="{{ trans('app.avatar') }}">
+					<img src="{{ get_image_src($merchant->id, 'users', 'medium') }}" class="card-bkimg img-circle" alt="{{ trans('app.avatar') }}">
 
 			    </div>
 			    <div class="useravatar">
 
-					<img src="{{ get_image_src($merchant->id, 'users', '150x150') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+					<img src="{{ get_image_src($merchant->id, 'users', 'medium') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
 
 			    </div>
 			    <div class="card-info">

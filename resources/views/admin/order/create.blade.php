@@ -12,6 +12,7 @@
 
 @section('content')
   @php
+  // echo "<pre>"; print_r($payment_methods); echo "</pre>"; exit();
     $shipping_address = $customer->shippingAddress ? $customer->shippingAddress : $customer->primaryAddress;
     $billing_address = $customer->billingAddress ? $customer->billingAddress : $shipping_address;
     $shipping_zone = $shipping_address ?
@@ -187,7 +188,7 @@
           </div> <!-- /.box-header -->
           <div class="box-body">
             <p>
-              <img src="{{ get_image_src($customer->id, 'customers', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+              <img src="{{ get_image_src($customer->id, 'customers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 
               <span class="admin-user-widget-title indent5">
                   {{ $customer->getName() }}

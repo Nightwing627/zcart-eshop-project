@@ -55,7 +55,7 @@ class EloquentTicket extends EloquentRepository implements BaseRepository, Ticke
         $ticket = $this->model->create($request->all());
 
         if ($request->hasFile('attachment')) {
-            Attachment::storeAttachmentFromRequest($request, $ticket);
+            Attachment::storeAttachmentFromRequest($request, $ticket, 'attachments');
         }
 
         return $ticket;
@@ -77,7 +77,7 @@ class EloquentTicket extends EloquentRepository implements BaseRepository, Ticke
         $reply = $ticket->replies()->create($request->all());
 
         if ($request->hasFile('attachment')) {
-            Attachment::storeAttachmentFromRequest($request, $reply);
+            Attachment::storeAttachmentFromRequest($request, $reply, 'attachments');
         }
 
         return $reply;

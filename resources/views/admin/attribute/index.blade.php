@@ -106,5 +106,5 @@
 @endsection
 
 @section('page-script')
-	@include('plugins/drag-n-drop')
+	@include('plugins.drag-n-drop')
 @endsection

@@ -237,9 +237,9 @@
   <legend>{{ trans('app.images') }}</legend>
   <div class="form-group">
     <label for="exampleInputFile"> {{ trans('app.form.image') }}</label>
-    @if(isset($inventory) && File::exists(image_path('inventories') . $inventory->id . '_150x150.png'))
+    @if(isset($inventory) && File::exists(image_path('inventories') . $inventory->id . 'medium.png'))
     <label>
-      <img src="{{ get_image_src($inventory->id, 'inventories', '150x150') }}" width="80px" alt="{{ trans('app.image') }}">
+      <img src="{{ get_image_src($inventory->id, 'inventories', 'medium') }}" width="80px" alt="{{ trans('app.image') }}">
       <span style="margin-left: 10px;">
         {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
       </span>

@@ -3,6 +3,7 @@ namespace App\Helpers;
 
 use Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 /**
 * This is a helper class to process,upload and remove images from different models
@@ -15,62 +16,88 @@ class ImageHelper
      * Upload Images for the specified model.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  str  $directory
      * @param  int  $id
+     * @param mix $sizes   thumbnail sizes
+     *
      * @return void
      */
-    public static function UploadImages(Request $request, $directory, $id)
+    public static function UploadImages(Request $request, $directory, $id, $thumbnails = Null)
     {
-        if ($request->file('image')->isValid())
-        {
-            $request->file('image')->move(image_path($directory), $id . '.png');
+        if ($request->file('image')->isValid()){
+            Storage::putFileAs(image_path("{$directory}/{$id}"), $request->file('image'), "{$id}.png");
 
-            self::CreateThumbnails($directory, $id);
+            self::CreateThumbnails($request, $directory, $id);
         }
+
+        return;
     }
 
     /**
-     * Delete avatar for the specified model.
+     * Delete the whole image directory for the specified model.
      *
+     * @param str $directory the directory name of the model
      * @param  int  $id
-     * @return void
+     *
+     * @return bool
      */
     public static function RemoveImages($directory, $id)
     {
-        if (file_exists(image_path($directory) . $id . '.png'))
-        {
-            unlink(image_path($directory) . $id . '.png');
+        return Storage::deleteDirectory(image_path("{$directory}/{$id}"));
+    }
 
-            $mask = image_path($directory) . $id . '_*.*';
+    /**
+     * Create Thumbnails for given model and thumnails config
+     *
+     * @param string $directory the directory name of the model
+     * @param int $id   the model id
+     * @param mix $sizes   thumbnail sizes
+     *
+     * @return void
+     */
+    public static function CreateThumbnails(Request $request, $directory, $id, $sizes = Null)
+    {
+        $thumbnails = self::thumbnailConfigs($sizes);
 
-            array_map('unlink', glob($mask));
+        foreach ($thumbnails as $name => $thumbnail) {
+            $image = Image::make($request->file('image'))
+                    ->resize($thumbnail['width'], $thumbnail['height'],
+                        function ($constraint) use ($thumbnail) {
+                            if($thumbnail['aspectRatio'])
+                                $constraint->aspectRatio();
+
+                            $constraint->upsize();
+                        });
+            Storage::put(image_path("{$directory}/{$id}") . "{$name}.png", $image->stream());
         }
 
-        return true;
+        return;
     }
 
     /**
-     * Create Thumbnails for system use
-     * @param string $directory the directory name if the image
-     * @param int $id        the image ID
+     * Return thumbnail configs from config file
+     *
+     * @param  mix $thumbnails extra thumbnails with the primary config
+     *
+     * @return array
      */
-    public static function CreateThumbnails($directory, $id)
+    public static function thumbnailConfigs($thumbnails = Null)
     {
-        Image::make(image_path($directory) . $id . '.png')->resize(150, 150)->save(image_path($directory) . $id . '_150x150.png');
+        $configs = config('image.sizes.primary');
 
-        Image::make(image_path($directory) . $id . '_150x150.png')->resize(35, 35)->save(image_path($directory) . $id . '_35x35.png');
-    }
+        if(!$thumbnails) return $configs;
 
-    /**
-     * Resize Image from a give image directory and id
-     * @param string $directory the directory name if the image
-     * @param int $id        the image ID
-     * @param int $width     The result width of the image
-     * @param int $height    The result height of the image
-     */
-    public static function ResizeImage($directory, $id, $width = null, $height = null)
-    {
-        $height = $height ?: $width;
+        if( is_array($thumbnails) ){
+            foreach ($thumbnails as $thumbnail){
+                if(config('image.sizes.' . $thumbnail))
+                    $configs[$thumbnail] = config('image.sizes.' . $thumbnail);
+            }
+        }
+        else{
+            if(config('image.sizes.' . $thumbnails))
+                $configs = array_merge($configs, config('image.sizes.' . $thumbnails));
+        }
 
-        Image::make(image_path($directory) . $id . '.png')->resize($width, $height)->save(image_path($directory) . $id . '_' . $width . 'x' . $height . '.png');
+        return $configs;
     }
 }

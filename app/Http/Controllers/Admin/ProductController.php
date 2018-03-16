@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Common\Authorizable;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Repositories\Product\ProductRepository;
 use App\Http\Requests\Validations\CreateProductRequest;
@@ -45,7 +45,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.product._create');
+        return view('admin.product.create');
     }
 
     /**
@@ -56,9 +56,13 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request)
     {
-        $this->product->store($request);
+        $this->authorize('create', \App\Product::class); // Check permission
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model]));;
+        $product = $this->product->store($request);
+
+        $request->session()->flash('success', trans('messages.created', ['model' => $this->model]));
+
+        return response()->json($this->getJsonParams($product));
     }
 
     /**
@@ -84,7 +88,9 @@ class ProductController extends Controller
     {
         $product = $this->product->find($id);
 
-        return view('admin.product._edit', compact('product'));
+        $preview = $product->previewAttachments();
+
+        return view('admin.product.edit', compact('product', 'preview'));
     }
 
     /**
@@ -96,9 +102,13 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, $id)
     {
-        $this->product->update($request, $id);
+        $product = $this->product->update($request, $id);
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
+        $this->authorize('update', $product); // Check permission
+
+        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model]));
+
+        return response()->json($this->getJsonParams($product));
     }
 
     /**
@@ -143,4 +153,19 @@ class ProductController extends Controller
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model]));
     }
 
+    /**
+     * return json params to procceed the form
+     *
+     * @param  Product $product
+     *
+     * @return array
+     */
+    private function getJsonParams($product){
+        return [
+            'id' => $product->id,
+            'model' => 'product',
+            'path' => image_path("products/{$product->id}"),
+            'redirect' => route('admin.catalog.product.index')
+        ];
+    }
 }

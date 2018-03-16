@@ -158,45 +158,36 @@ if ( ! function_exists('get_qualified_model') )
     }
 }
 
-if ( ! function_exists('attachment_storage_path') )
+if ( ! function_exists('attachment_storage_dir') )
 {
-    function attachment_storage_path()
+    function attachment_storage_dir()
     {
-        return 'public/attachments/';
-    }
-}
-
-if ( ! function_exists('attachment_real_path') )
-{
-    function attachment_real_path($filename)
-    {
-        return storage_path() . '/app/' . attachment_storage_path() . $filename;
+        return 'attachments';
     }
 }
 
 if ( ! function_exists('image_path') )
 {
-    function image_path($path = '')
+    function image_path($dir = '')
     {
-        return 'assets/images/' . $path .'/';
-        // return base_path('assets/images').($path ? DIRECTORY_SEPARATOR.$path : $path);
+        return str_finish("images/{$dir}", '/');
     }
 }
 
 if ( ! function_exists('get_image_src') )
 {
-    function get_image_src($image = null, $dir = null, $size = null)
+    function get_image_src($id = null, $dir = null, $size = null)
     {
-        if(! $image || ! $dir)  return;
+        if(! $id )  return;
 
-        $size = $size ? '_' . $size : '';
+        $size = $size ?: $id;
 
-        $image_path = image_path($dir) . $image . $size . '.png';
+        $image_path = image_path("{$dir}/{$id}") . "{$size}.png";
 
-        if(! file_exists($image_path))
-            return asset(image_path($dir) . 'default.png');
+        if(Storage::exists($image_path))
+            return Storage::url($image_path);
 
-        return asset($image_path);
+        return Storage::url(image_path($dir) . 'default.png');
     }
 }
 
@@ -294,6 +285,26 @@ if ( ! function_exists('get_age') )
     function get_age($dob)
     {
         return date_diff(date_create($dob), date_create('today') )->y . ' years old';
+    }
+}
+
+if ( ! function_exists('get_formated_file_size') )
+{
+    /**
+     * Get the formated file size.
+     *
+     * @param  int $bytes
+     *
+     * @return str formated size string
+     */
+    function get_formated_file_size($bytes = 0, $precision = 2) {
+        $units = array('B', 'KB', 'MB', 'GB', 'TB');
+        $bytes = max($bytes, 0);
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+        $bytes /= pow(1024, $pow);
+
+        return round($bytes, $precision) . ' ' . $units[$pow];
     }
 }
 
@@ -673,7 +684,11 @@ if ( ! function_exists('getDefaultPackaging') )
     {
         $shop = $shop ?: Auth::user()->merchantId();
 
-        return \DB::table('packagings')->select('id', 'name', 'cost')->where('shop_id', $shop)->where('default', 1)->where('active', 1)->whereNull('deleted_at')->first();
+        $found = \DB::table('packagings')->select('id', 'name', 'cost')->where('shop_id', $shop)->where('default', 1)->where('active', 1)->whereNull('deleted_at')->first();
+
+        if ($found) return $found;
+
+        return \DB::table('packagings')->select('id', 'name', 'cost')->where('id', 1)->first();
     }
 }
 

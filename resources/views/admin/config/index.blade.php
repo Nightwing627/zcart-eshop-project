@@ -53,7 +53,7 @@
 								  		@if($can_update)
 									        {!! Form::select('default_supplier_id', $suppliers , $config->default_supplier_id, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
 										@else
-											<span>{{ $config->supplier->name }}</span>
+											<span>{{ optional($config->supplier)->name }}</span>
 										@endif
 								  	</div>
 								</div>
@@ -65,7 +65,7 @@
 								  		@if($can_update)
 									        {!! Form::select('default_warehouse_id', $warehouses , $config->default_warehouse_id, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
 										@else
-											<span>{{ $config->warehouse->name }}</span>
+											<span>{{ optional($config->warehouse)->name }}</span>
 										@endif
 								  	</div>
 								</div>
@@ -128,7 +128,7 @@
 								  		@if($can_update)
 										    {{-- {!! Form::select('default_payment_method_id', $payment_methods , $config->default_payment_method_id, ['class' => 'form-control select2-normal']) !!} --}}
 										@else
-											<span>{{ $config->payment_method->name }}</span>
+											<span>{{ optional($config->payment_method)->name }}</span>
 										@endif
 								  	</div>
 								</div>

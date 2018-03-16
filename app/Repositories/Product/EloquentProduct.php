@@ -4,6 +4,7 @@ namespace App\Repositories\Product;
 
 use Auth;
 use App\Product;
+use App\Attachment;
 use App\Common\Taggable;
 use Illuminate\Http\Request;
 use App\Helpers\ImageHelper;

@@ -33,7 +33,7 @@
 						@foreach($myTickets as $ticket )
 						<tr>
 							<td>
-								<img src="{{ get_image_src($ticket->shop_id, 'shops', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}"> &nbsp;
+								<img src="{{ get_image_src($ticket->shop_id, 'shops', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}"> &nbsp;
 								<span class="label label-outline">{{ $ticket->shop->name }}</span> <br/>
 								<strong>
 									{{ $ticket->user->name }}
@@ -99,7 +99,7 @@
 						@foreach($assigned as $ticket )
 						<tr>
 							<td>
-								<img src="{{ get_image_src($ticket->shop_id, 'shops', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}"> &nbsp;
+								<img src="{{ get_image_src($ticket->shop_id, 'shops', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}"> &nbsp;
 								<span class="label label-outline">{{ $ticket->shop->name }}</span> <br/>
 								<strong>
 									{{ $ticket->user->name }}
@@ -164,7 +164,7 @@
 					@foreach($tickets as $ticket )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($ticket->shop_id, 'shops', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}"> &nbsp;
+							<img src="{{ get_image_src($ticket->shop_id, 'shops', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}"> &nbsp;
 							<span class="label label-outline">{{ $ticket->shop->name }}</span> <br/>
 							<strong>
 								{{ $ticket->user->name }}

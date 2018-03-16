@@ -4,10 +4,10 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
 			<div class="card hovercard">
 			    <div class="card-background">
-					<img src="{{ get_image_src($customer->id, 'customers', '150x150') }}" class="card-bkimg img-circle" alt="{{ trans('app.avatar') }}">
+					<img src="{{ get_image_src($customer->id, 'customers', 'medium') }}" class="card-bkimg img-circle" alt="{{ trans('app.avatar') }}">
 			    </div>
 			    <div class="useravatar">
-					<img src="{{ get_image_src($customer->id, 'customers', '150x150') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+					<img src="{{ get_image_src($customer->id, 'customers', 'medium') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
 			    </div>
 			    <div class="card-info">
 			        <span class="card-title">{{ $customer->getName() }}</span>

@@ -22,6 +22,7 @@ class CreatePaymentMethodsTable extends Migration
             $table->text('help_doc_link')->nullable();
             $table->text('terms_conditions_link')->nullable();
             $table->text('description')->nullable();
+            $table->text('instructions')->nullable();
             $table->text('admin_description')->nullable();
             $table->text('admin_help_doc_link')->nullable();
             $table->boolean('enabled')->default(1);

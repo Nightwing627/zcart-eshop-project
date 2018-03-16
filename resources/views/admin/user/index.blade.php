@@ -31,15 +31,15 @@
 				<tbody>
 				    @foreach($users as $user )
 				        <tr>
-				          <td>
-							<img src="{{ get_image_src($user->id, 'users', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-				          </td>
-				          <td>{{ $user->nice_name }}</td>
-				          <td>{{ $user->name }}</td>
-				          <td>{{ $user->email }}</td>
-				          <td>
-					          	<span class="label label-outline">{{ $user->role->name or '' }}</span>
-				          </td>
+							<td>
+								<img src="{{ get_image_src($user->id, 'users', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+							</td>
+							<td>{{ $user->nice_name }}</td>
+							<td>{{ $user->name }}</td>
+							<td>{{ $user->email }}</td>
+							<td>
+								<span class="label label-outline">{{ optional($user->role)->name }}</span>
+							</td>
 				          <td>{{ ($user->active) ? trans('app.active') : trans('app.inactive') }}</td>
 				          <td class="row-options">
 							@can('view', $user)
@@ -98,7 +98,7 @@
 			        @foreach($trashes as $trash )
 				        <tr>
 				          	<td>
-								<img src="{{ get_image_src($trash->id, 'users', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+								<img src="{{ get_image_src($trash->id, 'users', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 							</td>
 					        <td>{{ $trash->nice_name }}</td>
 					        <td>{{ $trash->name }}</td>

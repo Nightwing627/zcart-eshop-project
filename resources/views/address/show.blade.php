@@ -8,7 +8,7 @@
 
 	<div class="admin-user-widget">
 	    <span class="admin-user-widget-img">
-	        <img src="{{ get_image_src($addressable->id, str_plural($addressable_type), '150x150') }}" class="thumbnail" alt="{{ trans('app.avatar') }}">
+	        <img src="{{ get_image_src($addressable->id, str_plural($addressable_type), 'medium') }}" class="thumbnail" alt="{{ trans('app.avatar') }}">
 	    </span>
 
 	    <div class="admin-user-widget-content">

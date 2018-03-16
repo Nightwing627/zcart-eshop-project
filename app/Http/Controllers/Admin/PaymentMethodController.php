@@ -24,8 +24,10 @@ class PaymentMethodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $config = $this->checkPermission($request, 'view');
+
         return view('admin.config.payment-method.index');
     }
 
@@ -109,17 +111,16 @@ class PaymentMethodController extends Controller
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
-
     /**
      * Check permission
      *
      * @return $config
      */
-    private function checkPermission(Request $request)
+    private function checkPermission(Request $request, $action = 'update')
     {
         $config = Config::findOrFail($request->user()->merchantId());
 
-        $this->authorize('update', $config);
+        $this->authorize($action, $config);
 
         return $config;
     }

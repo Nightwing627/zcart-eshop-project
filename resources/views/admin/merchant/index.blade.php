@@ -32,7 +32,7 @@
 				    @foreach($merchants as $merchant )
 				        <tr>
 				          <td>
-							<img src="{{ get_image_src($merchant->id, 'users', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+							<img src="{{ get_image_src($merchant->id, 'users', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 				          </td>
 				          <td>{{ $merchant->nice_name }}</td>
 				          <td>{{ $merchant->name }}</td>
@@ -40,7 +40,7 @@
 				          <td>
 				          	@if($merchant->owns)
 					            <a href="{{ route('admin.vendor.shop.show', $merchant->owns->id) }}" class="ajax-modal-btn">
-									<img src="{{ get_image_src($merchant->owns->id, 'shops', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">&nbsp;
+									<img src="{{ get_image_src($merchant->owns->id, 'shops', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">&nbsp;
 						          	<span class="label label-outline">{{ $merchant->owns->name }}</span>
 						          </a>
 				          	@endif
@@ -103,7 +103,7 @@
 			        @foreach($trashes as $trash )
 				        <tr>
 				          	<td>
-								<img src="{{ get_image_src($trash->id, 'users', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+								<img src="{{ get_image_src($trash->id, 'users', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 							</td>
 					        <td>{{ $trash->nice_name }}</td>
 					        <td>{{ $trash->name }}</td>

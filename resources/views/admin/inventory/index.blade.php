@@ -34,9 +34,9 @@
 					<tr>
 						<td>
 						  	@if(File::exists(image_path('inventories') . $inventory->id . '_35x35.png'))
-								<img src="{{ get_image_src($inventory->id, 'inventories', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<img src="{{ get_image_src($inventory->id, 'inventories', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							@else
-								<img src="{{ get_image_src($inventory->product->id, 'products', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<img src="{{ get_image_src($inventory->product->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							@endif
 						</td>
 						<td>{{ $inventory->sku }}</td>
@@ -109,9 +109,9 @@
 					<tr>
 						<td>
 						  	@if(File::exists(image_path('inventories') . $trash->id . '_35x35.png'))
-								<img src="{{ get_image_src($trash->id, 'inventories', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<img src="{{ get_image_src($trash->id, 'inventories', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							@else
-								<img src="{{ get_image_src($trash->product->id, 'products', '35x35') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<img src="{{ get_image_src($trash->product->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							@endif
 						</td>
 						<td>{{ $trash->sku }}</td>

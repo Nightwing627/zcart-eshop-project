@@ -1,12 +1,16 @@
 <!-- jQuery 2.1.4 -->
-<script src="{{asset("assets/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script>
+{{-- <script src="{{asset("assets/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script> --}}
+<!-- jQuery 3.2.1 -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="{{asset("assets/bootstrap/js/bootstrap.min.js") }}"></script>
 
 <!-- Notification -->
 @include('admin.notification')
 
+<!-- START Page Script -->
 @yield("page-script")
+<!-- END Page Script -->
 
 <!-- DataTables -->
 <script src="{{ asset("assets/plugins/datatables/jquery.dataTables.min.js") }}"></script>
@@ -47,6 +51,9 @@
 <script src="{{ asset("assets/dist/js/app.min.js") }}"></script>
 
 <!-- confirmation -->
+<link rel="stylesheet" href="{{ asset("assets/plugins/jquery-confirm/css/jquery-confirm.css") }}" />
+<script src="{{ asset("assets/plugins/jquery-confirm/js/jquery-confirm.js") }}" type="text/javascript"></script>
+
 <script src="{{ asset("assets/dist/js/confirmation.js") }}"></script>
 <script type="text/javascript">
 
@@ -207,7 +214,10 @@
     });
 
     $.ajaxSetup ({
-      cache: false
+      cache: false,
+      headers: {
+          'X-CSRF-TOKEN': "{{ csrf_token() }}"
+      }
     });
 
     //Initialize Select2 Elements
@@ -549,11 +559,7 @@
     });
 
     function convertToSlug(Text){
-      return Text
-        .toLowerCase()
-        .replace(/[^\w ]+/g, '')
-        .replace(/ +/g, '-')
-        ;
+      return Text.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-');
     }
     //END Slug URL Maker
 
@@ -780,14 +786,14 @@
   *** END Initialise application plugins ***
   **************************************/
 
- /*
- * Get result from PHP helper functions
- *
- * @param  {str} funcName The PHP function name will be called
- * @param  {mix} args     arguments need to pass into the PHP function
- *
- * @return {mix}
- */
+   /*
+   * Get result from PHP helper functions
+   *
+   * @param  {str} funcName The PHP function name will be called
+   * @param  {mix} args     arguments need to pass into the PHP function
+   *
+   * @return {mix}
+   */
   function getFromPHPHelper(funcName, args = null)
   {
       var url = "{{ url('admin/system/ajax/getFromPHPHelper') }}";

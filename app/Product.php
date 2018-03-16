@@ -4,13 +4,13 @@ namespace App;
 
 use Auth;
 use App\Common\Taggable;
-use App\Scopes\MineScope;
+use App\Common\Attachable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use SoftDeletes, Taggable;
+    use SoftDeletes, Taggable, Attachable;
 
     /**
      * The database table used by the model.
@@ -140,6 +140,22 @@ class Product extends Model
     }
 
     /**
+     * Set the Minimum price zero if the value is Null.
+     */
+    public function setMinPriceAttribute($value)
+    {
+        $this->attributes['min_price'] = $value ? $value : 0;
+    }
+
+    /**
+     * Set the Maximum price null if the value is zero.
+     */
+    public function setMaxPriceAttribute($value)
+    {
+        $this->attributes['max_price'] = (bool) $value ? $value : Null;
+    }
+
+    /**
      * Get the formate decimal.
      *
      * @return array
@@ -150,7 +166,7 @@ class Product extends Model
     }
     public function getMaxPriceAttribute($attribute)
     {
-         return get_formated_decimal($attribute);
+         return $attribute ? get_formated_decimal($attribute) : $attribute;
     }
 
     /**

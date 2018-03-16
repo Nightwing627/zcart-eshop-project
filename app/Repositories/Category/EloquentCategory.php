@@ -69,8 +69,7 @@ class EloquentCategory extends EloquentRepository implements BaseRepository, Cat
 
     public function uploadImages(Request $request, $id)
     {
-        ImageHelper::UploadImages($request, 'categories', $id);
-        ImageHelper::ResizeImage('categories', $id, 800, 200);
+        ImageHelper::UploadImages($request, 'categories', $id, 'category_banner');
     }
 
     public function removeImages($id)

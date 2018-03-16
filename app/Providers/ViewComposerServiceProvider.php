@@ -629,7 +629,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 function($view)
                 {
                     $view->with('payment_method_types', ListHelper::payment_method_types());
-                    $view->with('payment_methods', ListHelper::payment_methods());
+                    $view->with('payment_methods', PaymentMethod::where('enabled', 1)->get());
                     $view->with('config', Config::findOrFail(auth()->user()->merchantId()));
                 });
     }

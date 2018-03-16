@@ -20,7 +20,12 @@ class Attachment extends Model
      * @var array
      */
     protected $fillable = [
+                    'name',
                     'path',
+                    'extension',
+                    'size',
+                    'order',
+                    'featured',
                     'attachable_id',
                     'attachable_type',
                 ];
@@ -37,17 +42,20 @@ class Attachment extends Model
      * Save Attachments
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  str $attachable
+     * @param  model $attachable
      *
      * @return attachment model
      */
-    public static function storeAttachmentFromRequest($request, $attachable)
+    public static function storeAttachmentFromRequest($request, $attachable, $dir = 'attachments')
     {
-        $path = str_replace(' ', '_', $attachable->id.'_'.$request->file('attachment')->getClientOriginalName());
+        $file = Storage::put($dir, $request->file('attachment'));
 
-        $file = Storage::putFileAs(attachment_storage_path(), $request->file('attachment'), $path);
-
-        return $attachable->attachments()->create(['path' => $path]);
+        return $attachable->attachments()->create([
+            'path' => $file,
+            'name' => str_slug($request->file('attachment')->getClientOriginalName(), '-'),
+            'extension' => $request->file('attachment')->getClientOriginalExtension(),
+            'size' => $request->file('attachment')->getClientSize()
+        ]);
     }
 
     /**

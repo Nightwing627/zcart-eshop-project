@@ -5,7 +5,7 @@
 
             <div class="col-md-3 nopadding" style="margin-top: 10px;">
 
-				<img src="{{ get_image_src($supplier->id, 'suppliers', '150x150') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
+				<img src="{{ get_image_src($supplier->id, 'suppliers', 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
 
 			</div>
             <div class="col-md-9 nopadding">
@@ -83,7 +83,6 @@
 				</div>
 				<!-- /.tab-content -->
 			</div>
-
         </div>
     </div> <!-- / .modal-content -->
 </div> <!-- / .modal-dialog -->

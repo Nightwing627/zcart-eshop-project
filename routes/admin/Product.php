@@ -3,4 +3,8 @@
 
 	Route::get('product/{product}/restore', 'ProductController@restore')->name('product.restore');
 
-	Route::resource('product', 'ProductController');
+	Route::post('product/store', 'ProductController@store')->name('product.store')->middleware('ajax');
+
+	Route::post('product/{product}/update', 'ProductController@update')->name('product.update')->middleware('ajax');
+
+	Route::resource('product', 'ProductController', ['except' =>['store', 'update']]);
