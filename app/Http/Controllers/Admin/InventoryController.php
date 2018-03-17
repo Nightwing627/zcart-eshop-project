@@ -13,7 +13,7 @@ class InventoryController extends Controller
 {
     use Authorizable;
 
-    private $model_name;
+    private $model;
 
     private $inventory;
 
@@ -22,7 +22,7 @@ class InventoryController extends Controller
      */
     public function __construct(InventoryRepository $inventory)
     {
-        $this->model_name = trans('app.model.inventory');
+        $this->model = trans('app.model.inventory');
 
         $this->inventory = $inventory;
     }
@@ -119,9 +119,13 @@ class InventoryController extends Controller
      */
     public function store(CreateInventoryRequest $request)
     {
-        $this->inventory->store($request);
+        $this->authorize('create', \App\Inventory::class); // Check permission
 
-        return redirect()->route('admin.stock.inventory.index')->with('success', trans('messages.created', ['model' => $this->model_name]));
+        $inventory = $this->inventory->store($request);
+
+        $request->session()->flash('success', trans('messages.created', ['model' => $this->model]));
+
+        return response()->json($this->getJsonParams($inventory));
     }
 
     /**
@@ -135,7 +139,7 @@ class InventoryController extends Controller
     {
         $this->inventory->storeWithVariant($request);
 
-        return redirect()->route('admin.stock.inventory.index')->with('success', trans('messages.created', ['model' => $this->model_name]));
+        return redirect()->route('admin.stock.inventory.index')->with('success', trans('messages.created', ['model' => $this->model]));
     }
 
     /**
@@ -163,7 +167,9 @@ class InventoryController extends Controller
 
         $product = $this->inventory->findProduct($inventory->product_id);
 
-        return view('admin.inventory.edit', compact('inventory', 'product'));
+        $preview = $inventory->previewAttachments();
+
+        return view('admin.inventory.edit', compact('inventory', 'product', 'preview'));
     }
 
     /**
@@ -175,9 +181,13 @@ class InventoryController extends Controller
      */
     public function update(UpdateInventoryRequest $request, $id)
     {
-        $this->inventory->update($request, $id);
+        $inventory = $this->inventory->update($request, $id);
 
-        return redirect()->route('admin.stock.inventory.index')->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        $this->authorize('update', $inventory); // Check permission
+
+        $request->session()->flash('success', trans('messages.updated', ['model' => $this->model]));
+
+        return response()->json($this->getJsonParams($inventory));
     }
 
     /**
@@ -191,7 +201,7 @@ class InventoryController extends Controller
     {
         $this->inventory->trash($id);
 
-        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
     }
 
     /**
@@ -205,7 +215,7 @@ class InventoryController extends Controller
     {
         $this->inventory->restore($id);
 
-        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
     }
 
     /**
@@ -219,7 +229,22 @@ class InventoryController extends Controller
     {
         $this->inventory->destroy($id);
 
-        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model]));
     }
 
+    /**
+     * return json params to procceed the form
+     *
+     * @param  Product $product
+     *
+     * @return array
+     */
+    private function getJsonParams($inventory){
+        return [
+            'id' => $inventory->id,
+            'model' => 'inventory',
+            'path' => image_path("inventories/{$inventory->id}"),
+            'redirect' => route('admin.stock.inventory.index')
+        ];
+    }
 }

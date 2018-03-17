@@ -16,4 +16,8 @@
 
 	Route::post('inventory/storeWithVariant', 'InventoryController@storeWithVariant')->name('inventory.storeWithVariant');
 
-	Route::resource('inventory', 'InventoryController', ['except' =>['create']]);
+	Route::post('inventory/store', 'InventoryController@store')->name('inventory.store')->middleware('ajax');
+
+	Route::post('inventory/{inventory}/update', 'InventoryController@update')->name('inventory.update')->middleware('ajax');
+
+	Route::resource('inventory', 'InventoryController', ['except' =>['create', 'store', 'update']]);

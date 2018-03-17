@@ -57,10 +57,10 @@ class CreateSystemsTable extends Migration
             $table->integer('gift_card_serial_number_size')->default(13);
             $table->integer('gift_card_pin_size')->default(10);
 
-            $table->integer('merchant_logo_max_size_limit_kb')->default(2000);
-
             // Views
             $table->integer('pagination')->unsigned()->default(10);
+            $table->integer('merchant_logo_max_size_limit_kb')->default(2000);
+            $table->integer('max_number_of_inventory_imgs')->unsigned()->default(5);
 
             // Address
             $table->boolean('show_address_title')->nullable();

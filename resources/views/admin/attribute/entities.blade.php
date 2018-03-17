@@ -42,7 +42,7 @@
 							@endif
 						</td>
 						<td>
-					 	  	@if(File::exists(image_path('patterns') . $attributeValue->id . '_35x35.png'))
+					 	  	@if(Storage::exists(image_path("patterns/{$attributeValue->id}") . 'small.png'))
 								<img src="{{ get_image_src($attributeValue->id, 'patterns', 'small') }}" class="img-sm" alt="{{ trans('app.image') }}">
 							@endif
 						</td>
@@ -96,7 +96,7 @@
 			          	@endif
 			          </td>
 					  <td>
-				 	  	@if(File::exists(image_path('patterns') . $trash->id . '_35x35.png'))
+				 	  	@if(Storage::exists(image_path("patterns/{$trash->id}") . 'small.png'))
 							<img src="{{ get_image_src($trash->id, 'patterns', 'small') }}" class="img-sm" alt="{{ trans('app.image') }}">
 						@endif
 					  </td>

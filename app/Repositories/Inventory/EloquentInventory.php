@@ -7,6 +7,7 @@ use App\Product;
 use App\Inventory;
 use App\Attribute;
 use App\AttributeValue;
+use App\Common\Taggable;
 use Illuminate\Http\Request;
 use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
@@ -14,6 +15,8 @@ use App\Repositories\EloquentRepository;
 
 class EloquentInventory extends EloquentRepository implements BaseRepository, InventoryRepository
 {
+    use Taggable;
+
 	protected $model;
 
 	public function __construct(Inventory $inventory)
@@ -58,6 +61,9 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
 
         if ($request->input('packaging_list'))
             $this->syncPackagings($inventory, $request->input('packaging_list'));
+
+        if ($request->input('tag_list'))
+            $this->syncTags($inventory, $request->input('tag_list'));
 
         if ($request->hasFile('image'))
             $this->uploadImages($request, $inventory->id);
@@ -171,11 +177,11 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
 
         $this->setAttributes($inventory, $request->input('variants'));
 
-        if ($request->input('carrier_list'))
-            $this->syncCarriers($inventory, $request->input('carrier_list'));
+        $this->syncCarriers($inventory, $request->input('carrier_list', []));
 
-        if ($request->input('packaging_list'))
-            $this->syncPackagings($inventory, $request->input('packaging_list'));
+        $this->syncPackagings($inventory, $request->input('packaging_list', []));
+
+        $this->syncTags($inventory, $request->input('tag_list', []));
 
         if ($request->input('delete_image') == 1)
             $this->removeImages($inventory->id);
@@ -186,9 +192,15 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
         return $inventory;
     }
 
-    public function destroy($id)
+    public function destroy($inventory)
     {
-        $inventory = $this->model->onlyTrashed()->findOrFail($id);
+        if(! $inventory instanceof Inventory)
+            $inventory = $this->model->onlyTrashed()->findOrFail($inventory);
+
+        $this->detachTags($inventory->id, 'inventory');
+
+        if($inventory->hasAttachments())
+            $inventory->flushAttachments();
 
         $this->removeImages($inventory->id);
 
@@ -210,13 +222,11 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
         $attributes = array_filter($attributes);        // remove empty elements
 
         $temp = [];
-        foreach ($attributes as $attribute_id => $attribute_value_id)
-        {
+        foreach ($attributes as $attribute_id => $attribute_value_id){
             $temp[$attribute_id] = ['attribute_value_id' => $attribute_value_id];
         }
 
-        if (!empty($temp))
-        {
+        if (!empty($temp)){
             $inventory->attributes()->sync($temp);
         }
 
@@ -238,18 +248,16 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
     {
         $results = array();
 
-        foreach ($attributeWithValues as $attribute => $values)
-        {
-            foreach ($values as $value)
-            {
+        foreach ($attributeWithValues as $attribute => $values){
+            foreach ($values as $value){
                 $oldValueId = AttributeValue::find($value);
 
                 $oldValueName = AttributeValue::where('value', $value)->where('attribute_id', $attribute)->first();
 
-                if ($oldValueId || $oldValueName)
-                {
+                if ($oldValueId || $oldValueName){
                     $results[$attribute][($oldValueId) ? $oldValueId->id : $oldValueName->id] = ($oldValueId) ? $oldValueId->value : $oldValueName->value;
-                }else{
+                }
+                else{
                     // if the value not numeric thats meaninig that its new value and we need to create it
                     $newID = AttributeValue::insertGetId(['attribute_id' => $attribute, 'value' => $value]);
 

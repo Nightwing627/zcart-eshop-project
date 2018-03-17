@@ -4,8 +4,8 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
 
             <div class="col-md-12 nopadding" style="margin-top: 10px;">
- 	  			@if(File::exists(image_path('patterns') . $attributeValue->id . '.png'))
-					<img src="{{ get_image_src($attributeValue->id, 'patterns') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
+ 	  			@if(Storage::exists(image_path("patterns/{$attributeValue->id}") . 'large.png'))
+					<img src="{{ get_image_src($attributeValue->id, 'patterns', 'large') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
 				@elseif($attributeValue->color)
 					<div class="jumbotron" style="background-color: {{ $attributeValue->color }}">
 						<h3 class="text-center" style="color: #d3d3d3; font-weight: lighter;">{{ strtoupper($attributeValue->color) }}</h3>

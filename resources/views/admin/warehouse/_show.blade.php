@@ -65,7 +65,7 @@
 								@foreach($warehouse->inventories as $inventory )
 								<tr>
 									<td>
-									  	@if(File::exists(image_path('inventories') . $inventory->id . '_35x35.png'))
+									  	@if(Storage::exists(image_path("inventories/{$inventory->id}") . 'small.png'))
 											<img src="{{ get_image_src($inventory->id, 'inventories', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 										@else
 											<img src="{{ get_image_src($inventory->product->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
@@ -77,11 +77,13 @@
 									<td>{{ get_formated_decimal($inventory->tax->taxrate).' '. trans('app.percent') }}</td>
 									<td>
 										@if(($inventory->offer_price > 0) && ($inventory->offer_end > \Carbon\Carbon::now()))
-											<?php $offer_price_help =
+											@php
+												$offer_price_help =
 													trans('help.offer_starting_time').': '.
 													$inventory->offer_start->diffForHumans().' and '.
 													trans('help.offer_ending_time').': '.
-													$inventory->offer_end->diffForHumans(); ?>
+													$inventory->offer_end->diffForHumans();
+											@endphp
 
 											<small class="text-muted">{{ $inventory->sale_price }}</small><br/>
 											{{ get_formated_currency($inventory->offer_price) }}

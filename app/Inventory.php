@@ -3,6 +3,8 @@
 namespace App;
 
 use Carbon\Carbon;
+use App\Common\Taggable;
+use App\Common\Attachable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,7 +13,7 @@ use App\Scopes\ActiveScope;
 
 class Inventory extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Taggable, Attachable;
 
     /**
      * The database table used by the model.

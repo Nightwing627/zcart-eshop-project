@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use App\Attachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -46,9 +45,10 @@ class AttachmentController extends Controller
 						        ];
 			}
 
-        	$product = Product::find($request->input('model_id'));
+        	$model = get_qualified_model($request->input('model_name'));
+        	$attachable = (new $model)->find($request->input('model_id'));
 
-			if($product->attachments()->createMany($attachments)){
+			if($attachable->attachments()->createMany($attachments)){
 				return Response::json(['success' => trans('response.success')]);
 			}
 			else{

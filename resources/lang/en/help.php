@@ -79,8 +79,6 @@ return [
 
     'system_slogan' => 'The tagline that describe your marketplace most',
 
-    'config_merchant_logo_max_size_limit_kb' => ' in kilobite',
-
     'system_length_unit' => 'Unit of length will be use all over the marketplace.',
 
     'system_weight_unit' => 'Unit of weight will be use all over the marketplace.',
@@ -95,7 +93,9 @@ return [
 
     'config_alert_quantity' => 'A notification email will be send your inventory goes below the alert quantity',
 
-    'config_merchant_logo_max_size_limit_kb' => 'The maximum imagae size vendors can upload for inventory/logo/avatar. The limit in kilobytes.',
+    'config_merchant_logo_max_size_limit_kb' => 'The maximum image size vendors can upload for inventory/logo/avatar. The limit in kilobytes.',
+
+    'config_max_number_of_inventory_imgs' => 'Choose how many images can be uploaded for a single inventory item.',
 
     'config_address_default_country' => 'Set this value to fill the address form faster. Obviously, a user can change the value when adding new address.',
 
@@ -231,7 +231,7 @@ return [
 
     'offer_end' => 'An offer must have an end date. Required if offer price field is given',
 
-    'seller_inventory_status' => 'Is the item is open to sale? Choose active for yes',
+    'seller_inventory_status' => 'Is the item is open to sale? Inactive item will not be shown on the marketplace.',
 
     'stock_quantity' => 'Number of items you have on your warehouse',
 

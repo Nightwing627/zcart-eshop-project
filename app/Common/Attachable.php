@@ -40,10 +40,11 @@ trait Attachable {
 	{
 		$attachments = $this->attachments()->get();
 
-		foreach ($attachments as $attachment)
+		foreach ($attachments as $attachment){
 	    	Storage::delete($attachment->path);
+		}
 
-		return $attachments->delete();
+	    return \App\Attachment::destroy($attachments->pluck('id')->toArray());
 	}
 
 	/**

@@ -2,7 +2,7 @@
   <div class="col-md-8">
     <div class="box">
       <div class="box-header with-border">
-          <h3 class="box-title">{{ trans('app.add_product') }}</h3>
+          <h3 class="box-title">{{ isset($product) ? trans('app.update_product') : trans('app.add_product') }}</h3>
       </div> <!-- /.box-header -->
       <div class="box-body">
         <div class="row">
@@ -180,7 +180,7 @@
 
         <fieldset>
           <legend>{{ trans('app.featured_image') }}</legend>
-          @if(isset($product) && File::exists(image_path('products') . $product->id . '.png'))
+          @if(isset($product) && Storage::exists(image_path("products/{$product->id}") . '.png'))
             <img src="{{ get_image_src($product->id, 'products') }}" width="100%" alt="{{ trans('app.featured_image') }}">
             <label>
               <span style="margin-left: 10px;">

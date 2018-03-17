@@ -25,7 +25,7 @@ class EloquentAttributeValue extends EloquentRepository implements BaseRepositor
 
     public function store(Request $request)
     {
-        $attribute = parent::create($request);
+        $attribute = parent::store($request);
 
         if ($request->hasFile('image'))
             $this->uploadImages($request, $attribute->id);
@@ -54,6 +54,7 @@ class EloquentAttributeValue extends EloquentRepository implements BaseRepositor
     public function destroy($id)
     {
         $this->removeImages($id);
+
         return parent::destroy($id);
     }
 

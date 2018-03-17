@@ -17,7 +17,7 @@
 
 						<img src="{{ get_image_src($profile->id, 'users', 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
 
-					  	@if(File::exists(image_path('users') . $profile->id . 'medium.png'))
+					  	@if(Storage::exists(image_path("users/{$profile->id}") . 'medium.png'))
 							<a class="btn btn-xs btn-default confirm ajax-silent" type="submit" href="{{ route('admin.profile.deletePhoto') }}"><i class="fa fa-trash-o"></i> {{ trans('app.form.delete_avatar') }}</a>
 					  	@endif
 					</div>

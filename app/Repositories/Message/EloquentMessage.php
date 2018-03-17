@@ -47,7 +47,6 @@ class EloquentMessage extends EloquentRepository implements BaseRepository, Mess
         return $this->model->whereIn('id', $ids)->update([$type => $statusOrLabel]);
     }
 
-
     public function markAsRead(Request $request, $message)
     {
         return $this->updateStatusOrLabel($request, $message, Message::STATUS_READ, 'status');

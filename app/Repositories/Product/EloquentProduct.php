@@ -4,7 +4,6 @@ namespace App\Repositories\Product;
 
 use Auth;
 use App\Product;
-use App\Attachment;
 use App\Common\Taggable;
 use Illuminate\Http\Request;
 use App\Helpers\ImageHelper;
@@ -71,13 +70,19 @@ class EloquentProduct extends EloquentRepository implements BaseRepository, Prod
         return $product;
     }
 
-	public function destroy($id)
+	public function destroy($product)
 	{
-        $this->removeImages($id);
+        if(! $product instanceof Product)
+            $product = $this->model->onlyTrashed()->findOrFail($product);
 
-        $this->detachTags($id, 'product');
+        $this->detachTags($product->id, 'product');
 
-        return parent::destroy($id);
+        if($product->hasAttachments())
+            $product->flushAttachments();
+
+        $this->removeImages($product->id);
+
+        return $product->forceDelete();
 	}
 
     public function uploadImages(Request $request, $id)

@@ -441,8 +441,8 @@
               //Pick the string after the : to get the item description
               itemDescription = itemDescription.substring(itemDescription.indexOf(":") + 2);
 
-              var imgSrc = "{{ asset('') . image_path('inventories') }}" + ID + "_35x35.png";
-              var imgSrcAlt = "{{ asset('') . image_path('products') }}" + productObj[ID].id + "_35x35.png";
+              var imgSrc = "{{ asset('') . image_path('inventories') }}" + ID + "small.png";
+              var imgSrcAlt = "{{ asset('') . image_path('products') }}" + productObj[ID].id + "small.png";
 
               if (ImageExist(imgSrc))
                   var img = '<img src="' + imgSrc + '" class="img-circle img-md" alt="{{ trans('app.image') }}">';

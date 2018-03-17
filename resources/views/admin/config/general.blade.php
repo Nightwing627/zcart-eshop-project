@@ -163,7 +163,7 @@
 					        <div class="spacer30"></div>
 						</div>
 
-				  		@if(isset($shop) && File::exists(image_path('shops') . $shop->id . 'medium.png'))
+				  		@if(isset($shop) && Storage::exists(image_path("shops/{$shop->id}") . 'medium.png'))
 							<div class="form-group text-center">
 								<label class="with-help control-label"> {{ trans('app.logo') }}</label>
 						    	<img src="{{ get_image_src($shop->id, 'shops') }}" width="100%" alt="{{ trans('app.image') }}">

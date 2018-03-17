@@ -56,12 +56,15 @@
 
 <script src="{{ asset("assets/dist/js/confirmation.js") }}"></script>
 <script type="text/javascript">
-
   /*************************************
   *** Initialise application plugins ***
   **************************************/
   ;(function($, window, document) {
+    $(".ajax-modal-btn").hide(); // hide the ajax functional button untill the page load completely
+
     $(document).ready(function(){
+      $(".ajax-modal-btn").show(); // show the ajax functional button when the page loaded completely
+
       // Initialise all plugins
       initDatatables();
       initAppPlugins();
@@ -697,6 +700,33 @@
         });
     });
     // END Ajax Form Submit
+
+    // Offer Price form
+    var errHelp = '<div class="help-block with-errors"></div>';
+    $('#offer_price').keyup(
+        function(){
+            var offerPrice = this.value;
+            if (offerPrice !== ""){
+                $('#offer_start').attr('required', 'required');
+                $('#offer_end').attr('required', 'required');
+            }
+            else{
+                $('#offer_start').removeAttr('required');
+                $('#offer_end').removeAttr('required');
+            }
+        }
+    );
+    //END Offer Price form
+
+    // Collapsible fieldset
+    $(function () {
+        $('fieldset.collapsible > legend').prepend('<span class="btn-box-tool"><i class="fa fa-toggle-up"></i></span>');
+        $('fieldset.collapsible > legend').click(function () {
+            $(this).find('span i').toggleClass('fa-toggle-up fa-toggle-down');
+            var $divs = $(this).siblings().toggle("slow");
+        });
+    });
+    //END collapsible fieldset
   }
   //END App plugins
 

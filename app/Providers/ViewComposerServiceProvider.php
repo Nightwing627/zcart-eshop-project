@@ -288,15 +288,13 @@ class ViewComposerServiceProvider extends ServiceProvider
                 {
                     $view->with('attributes', ListHelper::attributeWithValues());
 
-                    $view->with('taxes', ListHelper::taxes());
-
-                    // $view->with('carriers', ListHelper::carriers());
-
                     $view->with('packagings', ListHelper::packagings());
 
                     $view->with('warehouses', ListHelper::warehouses());
 
                     $view->with('suppliers', ListHelper::suppliers());
+
+                    $view->with('tags', ListHelper::tags());
                 });
     }
 
@@ -311,15 +309,13 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                 function($view)
                 {
-                    $view->with('taxes', ListHelper::taxes());
-
-                    // $view->with('carriers', ListHelper::carriers());
-
                     $view->with('packagings', ListHelper::packagings());
 
                     $view->with('warehouses', ListHelper::warehouses());
 
                     $view->with('suppliers', ListHelper::suppliers());
+
+                    $view->with('tags', ListHelper::tags());
                 });
     }
 

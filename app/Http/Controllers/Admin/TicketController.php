@@ -14,7 +14,7 @@ class TicketController extends Controller
 {
     use Authorizable;
 
-    private $model_name;
+    private $model;
 
     private $ticket;
 
@@ -23,7 +23,7 @@ class TicketController extends Controller
      */
     public function __construct(TicketRepository $ticket)
     {
-        $this->model_name = trans('app.model.ticket');
+        $this->model = trans('app.model.ticket');
 
         $this->ticket = $ticket;
     }
@@ -66,7 +66,7 @@ class TicketController extends Controller
     {
         $this->ticket->store($request);
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
 
     /**
@@ -106,7 +106,7 @@ class TicketController extends Controller
     {
         $this->ticket->storeReply($request, $id);
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -133,7 +133,7 @@ class TicketController extends Controller
     {
         $this->ticket->assign($request, $id);
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -160,7 +160,7 @@ class TicketController extends Controller
     {
         $this->ticket->update($request, $id);
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -174,6 +174,6 @@ class TicketController extends Controller
     {
         $this->ticket->reopen($request, $id);
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 }

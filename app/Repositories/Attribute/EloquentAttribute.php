@@ -4,6 +4,7 @@ namespace App\Repositories\Attribute;
 
 use Auth;
 use App\Attribute;
+use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -58,4 +59,16 @@ class EloquentAttribute extends EloquentRepository implements BaseRepository, At
         return $this->model->findOrFail($attribute)->attribute_type_id;
     }
 
+    public function destroy($attribute)
+    {
+        if(! $attribute instanceof Attribute)
+            $attribute = $this->model->onlyTrashed()->findOrFail($attribute);
+
+        $attributeValues = $attribute->attributeValues()->get();
+
+        foreach ($attributeValues as $entity)
+            ImageHelper::RemoveImages('patterns', $entity->id);
+
+        return $attribute->forceDelete();
+    }
 }

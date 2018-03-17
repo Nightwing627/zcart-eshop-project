@@ -56,6 +56,7 @@
 	        showCaption: false,
 	        validateInitialCount: true,
 	        maxFilePreviewSize: 25600,
+	        maxFileCount: {{ getNumberOfInventoryImgs() }},
 	        allowedFileExtensions: ['jpg', 'jpeg', 'gif', 'png'],
 	        dragSettings: {
 	    		animation: 300,

@@ -83,15 +83,14 @@
 
 <div class="form-group">
   <label for="exampleInputFile">{{ trans('app.form.avatar') }}</label>
-  @if(isset($user) && File::exists(image_path('users') . $user->id . 'medium.png'))
-  <label>
+  @if(isset($user) && Storage::exists(image_path("users/{$user->id}") . 'medium.png'))
+    <label>
+      <img src="{{ get_image_src($user->id, 'users', 'medium') }}" width="80px" alt="{{ trans('app.avatar') }}">
 
-    <img src="{{ get_image_src($user->id, 'users', 'medium') }}" width="80px" alt="{{ trans('app.avatar') }}">
-
-    <span style="margin-left: 10px;">
-      {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_avatar') }}
-    </span>
-  </label>
+      <span style="margin-left: 10px;">
+        {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_avatar') }}
+      </span>
+    </label>
   @endif
   <div class="row">
     <div class="col-md-9 nopadding-right">

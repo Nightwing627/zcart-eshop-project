@@ -15,7 +15,7 @@ class MessageController extends Controller
 {
     use Authorizable;
 
-    private $model_name;
+    private $model;
 
     private $message;
 
@@ -24,7 +24,7 @@ class MessageController extends Controller
      */
     public function __construct(MessageRepository $message)
     {
-        $this->model_name = trans('app.model.message');
+        $this->model = trans('app.model.message');
 
         $this->message = $message;
     }
@@ -73,7 +73,7 @@ class MessageController extends Controller
     {
         $this->message->store($request);
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
 
     /**
@@ -88,9 +88,9 @@ class MessageController extends Controller
         $this->message->update($request, $id);
 
         if($request->has('draft'))
-            return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+            return back()->with('success', trans('messages.updated', ['model' => $this->model]));
 
-        return back()->with('success', trans('messages.sent', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.sent', ['model' => $this->model]));
     }
 
     /**
@@ -137,7 +137,7 @@ class MessageController extends Controller
 
         $this->message->updateStatusOrLabel($request, $message, $statusOrLabel, $type);
 
-        return redirect()->route('admin.support.message.labelOf', $backLabel)->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return redirect()->route('admin.support.message.labelOf', $backLabel)->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -151,7 +151,7 @@ class MessageController extends Controller
     {
         $this->message->massUpdate($request->ids, $statusOrLabel, $type);
 
-        return response()->json(['success' => trans('messages.updated', ['model' => $this->model_name])]);
+        return response()->json(['success' => trans('messages.updated', ['model' => $this->model])]);
     }
 
     /**
@@ -178,7 +178,7 @@ class MessageController extends Controller
     {
         $this->message->storeReply($request, $id);
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -196,13 +196,13 @@ class MessageController extends Controller
 
         $this->message->destroy($message);
 
-        return redirect()->route('admin.support.message.labelOf', $backLabel)->with('success', trans('messages.deleted', ['model' => $this->model_name]));
+        return redirect()->route('admin.support.message.labelOf', $backLabel)->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
 
     public function massDestroy(Request $request)
     {
         $this->message->massDestroy($request->ids);
 
-        return response()->json(['success' => trans('messages.deleted', ['model' => $this->model_name])]);
+        return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
     }
 }

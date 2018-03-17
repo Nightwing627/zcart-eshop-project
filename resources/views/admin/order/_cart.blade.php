@@ -15,7 +15,7 @@
 
             <tr id="{{ $id }}">
               <td>
-                @if(File::exists(image_path('inventories') . $id . '_35x35.png'))
+                @if(Storage::exists(image_path("inventories/{$id}") . 'small.png'))
                   <img src="{{ get_image_src($id, 'inventories', 'small') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
                 @else
                   <img src="{{ get_image_src($item->product->id, 'products', 'small') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">

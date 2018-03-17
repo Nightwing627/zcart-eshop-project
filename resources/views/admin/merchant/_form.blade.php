@@ -76,7 +76,7 @@
 
 <div class="form-group">
   <label for="exampleInputFile">{{ trans('app.form.avatar') }}</label>
-  @if(isset($merchant) && File::exists(image_path('merchants') . $merchant->id . 'medium.png'))
+  @if(isset($merchant) && Storage::exists(image_path("merchants/{$merchant->id}") . 'medium.png'))
   <label>
 
     <img src="{{ get_image_src($merchant->id, 'users', 'medium') }}" width="80px" alt="{{ trans('app.avatar') }}">

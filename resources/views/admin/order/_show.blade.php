@@ -104,7 +104,7 @@
 								@foreach($order->inventories as $item )
 									<tr>
 										<td>
-										  	@if(File::exists(image_path('inventories') . $item->pivot->inventory_id . '_35x35.png'))
+										  	@if(Storage::exists(image_path("inventories/{$item->pivot->inventory_id}") . 'small.png'))
 												<img src="{{ get_image_src($item->pivot->inventory_id, 'inventories', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 											@else
 												<img src="{{ get_image_src($item->product->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">

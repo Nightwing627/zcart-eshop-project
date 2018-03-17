@@ -33,7 +33,7 @@
 					@foreach($inventories as $inventory )
 					<tr>
 						<td>
-						  	@if(File::exists(image_path('inventories') . $inventory->id . '_35x35.png'))
+						  	@if(Storage::exists(image_path("inventories/{$inventory->id}") . 'small.png'))
 								<img src="{{ get_image_src($inventory->id, 'inventories', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							@else
 								<img src="{{ get_image_src($inventory->product->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
@@ -108,7 +108,7 @@
 					@foreach($trashes as $trash )
 					<tr>
 						<td>
-						  	@if(File::exists(image_path('inventories') . $trash->id . '_35x35.png'))
+						  	@if(Storage::exists(image_path("inventories/{$trash->id}") . 'small.png'))
 								<img src="{{ get_image_src($trash->id, 'inventories', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							@else
 								<img src="{{ get_image_src($trash->product->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">

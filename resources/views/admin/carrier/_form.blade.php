@@ -41,13 +41,13 @@
 
 <div class="form-group">
 	<label for="exampleInputFile">{{ trans('app.form.logo') }}</label>
-  @if(isset($carrier) && File::exists(image_path('carriers') . $carrier->id . 'medium.png'))
-  <label>
-    <img src="{{ get_image_src($carrier->id, 'carriers', 'medium') }}" width="80px" alt="{{ trans('app.image') }}">
-    <span style="margin-left: 10px;">
-      {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_logo') }}
-    </span>
-  </label>
+  @if(isset($carrier) && Storage::exists(image_path("carriers/{$carrier->id}") . 'medium.png'))
+    <label>
+      <img src="{{ get_image_src($carrier->id, 'carriers', 'medium') }}" width="80px" alt="{{ trans('app.image') }}">
+      <span style="margin-left: 10px;">
+        {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_logo') }}
+      </span>
+    </label>
   @endif
 	<div class="row">
     <div class="col-md-9 nopadding-right">

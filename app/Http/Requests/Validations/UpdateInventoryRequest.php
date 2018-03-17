@@ -23,8 +23,7 @@ class UpdateInventoryRequest extends Request
      */
     public function rules()
     {
-        $shop_id = Request::user()->merchantId(); //Get current user's shop_id
-        $id = Request::segment(count(Request::segments())); //Current model ID
+        $id = $this->route('inventory'); //Current model ID
 
         return [
             'sku' => 'required|composite_unique:inventories,sku, '.$id,

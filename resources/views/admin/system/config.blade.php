@@ -153,6 +153,19 @@
 											@endif
 									  	</div>
 									</div>
+
+									<div class="form-group">
+								        {!! Form::label('max_number_of_inventory_imgs', trans('app.max_number_of_inventory_imgs'). ':', ['class' => 'with-help col-sm-6 control-label']) !!}
+									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_max_number_of_inventory_imgs') }}"></i>
+									  	<div class="col-sm-5 nopadding-left">
+									  		@if($can_update)
+									    	    {!! Form::number('max_number_of_inventory_imgs', $system->max_number_of_inventory_imgs, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.max_number_of_inventory_imgs')]) !!}
+										      	<div class="help-block with-errors"></div>
+											@else
+												<span>{{ $system->max_number_of_inventory_imgs }}</span>
+											@endif
+									  	</div>
+									</div>
 					    		</fieldset>
 
 					    		<fieldset>
@@ -463,13 +476,13 @@
 	    			@foreach($payment_method_types as $type_id => $type)
 	    				@php
 	    					$payment_providers = $payment_methods->where('type', $type_id);
-	    					$logo_path = image_path('payment-method-types') . $type_id .'.svg';
+	    					$logo_path = image_path('payment-method-types') . "{$type_id}.svg";
 	    				@endphp
 				    	<div class="row">
 							<span class="spacer10"></span>
 					    	<div class="col-sm-6">
-					    		@if(file_exists($logo_path))
-									<img src="{{ asset($logo_path) }}" width="100" height="25" alt="{{ $type }}">
+					    		@if(Storage::exists($logo_path))
+									<img src="{{ Storage::url($logo_path) }}" width="100" height="25" alt="{{ $type }}">
 									<span class="spacer10"></span>
 								@else
 						    		<p class="lead">{{ $type }}</p>
@@ -479,12 +492,12 @@
 					    	<div class="col-sm-6">
 				    			@foreach($payment_providers as $payment_provider)
 				    				@php
-				    					$logo_path = image_path('payment-methods') . $payment_provider->code .'.png';
+				    					$logo_path = image_path('payment-methods') ."{$payment_provider->code}.png";
 				    				@endphp
 									<ul class="list-group">
 										<li class="list-group-item">
-								    		@if(file_exists($logo_path))
-												<img src="{{ asset($logo_path) }}" class="open-img-md" alt="{{ $type }}">
+								    		@if(Storage::exists($logo_path))
+												<img src="{{ Storage::url($logo_path) }}" class="open-img-md" alt="{{ $type }}">
 											@else
 												<p class="list-group-item-heading inline lead">
 													{{ $payment_provider->name }}

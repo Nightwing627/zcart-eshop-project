@@ -133,6 +133,17 @@ if ( ! function_exists('getPaginationValue') )
     }
 }
 
+if ( ! function_exists('getNumberOfInventoryImgs') )
+{
+    /**
+     * Return max_number_of_inventory_imgs allowed to upload per item
+     */
+    function getNumberOfInventoryImgs()
+    {
+        return config('system_settings.max_number_of_inventory_imgs') ?: 5;
+    }
+}
+
 if ( ! function_exists('highlightWords') )
 {
     function highlightWords($content, $words = null)
