@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-1 no-print">
-		<img src="{{ get_image_src($reply->user_id, 'users', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+        <img src="{{ get_storage_file_url(optional($reply->user->image)->path, 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 		@if(Gate::allows('view', $reply->user))
             <a href="{{ route('admin.admin.user.show', $reply->user_id) }}" class="ajax-modal-btn small">{{ $reply->user->getName() }}</a>
 		@else

@@ -1,7 +1,9 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Common\Authorizable;
+namespace App\Http\Controllers\Admin;
+
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Repositories\Carrier\CarrierRepository;
 use App\Http\Requests\Validations\CreateCarrierRequest;

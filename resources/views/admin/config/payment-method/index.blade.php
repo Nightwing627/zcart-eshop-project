@@ -19,7 +19,7 @@
 	    			@foreach($payment_method_types as $type_id => $type)
 	    				@php
 	    					$payment_providers = $payment_methods->where('type', $type_id);
-	    					$logo_path = image_path('payment-method-types') ."{$type_id}.svg";
+	    					$logo_path = sys_image_path('payment-method-types') ."{$type_id}.svg";
 	    				@endphp
 	    				@if($payment_providers->count())
 					    	<div class="row">
@@ -36,7 +36,7 @@
 						    	<div class="col-sm-7">
 					    			@foreach($payment_providers as $payment_provider)
 					    				@php
-					    					$logo_path = image_path('payment-methods') ."{$payment_provider->code}.png";
+					    					$logo_path = sys_image_path('payment-methods') ."{$payment_provider->code}.png";
 					    				@endphp
 										<ul class="list-group">
 											<li class="list-group-item">

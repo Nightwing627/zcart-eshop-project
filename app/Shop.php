@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Common\Imageable;
 use App\Common\Addressable;
 use App\Events\ShopCreated;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shop extends Model
 {
-    use SoftDeletes, Addressable;
+    use SoftDeletes, Addressable, Imageable;
 
     /**
      * The database table used by the model.

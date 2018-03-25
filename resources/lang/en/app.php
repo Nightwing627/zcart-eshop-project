@@ -416,7 +416,7 @@ return [
     'coupon_code_size' => 'Coupon code size',
     'config_promotions' => 'Promotions',
     'ask_customer_for_email_subscription' => 'Ask customer for email subscription',
-    'merchant_logo_max_size_limit_kb' => 'Image size limit in kb',
+    'max_img_size_limit_kb' => 'Image size limit in kb',
     'max_number_of_inventory_imgs' => 'Number of inventory images',
     'allow_guest_checkout' => 'Allow guest checkout',
     'date_format' => 'Date format',
@@ -991,7 +991,7 @@ return [
         'paypal_express_account' => 'Account/Email',
         'paypal_express_client_id' => 'API Client ID',
         'paypal_express_secret' => 'The API Secret Key',
-        'merchant_logo_max_size_limit_kb' => 'Image size limit in kb',
+        'max_img_size_limit_kb' => 'Limit the size of image files',
         'max_number_of_inventory_imgs' => 'Number of inventory images',
 
         // 'filter_by_customer' => 'Filter by customer',

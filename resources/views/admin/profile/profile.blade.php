@@ -14,10 +14,8 @@
 			  	<div class="col-md-3">
 					<div class="form-group">
 					  	<label>{{ trans('app.form.avatar') }}</label>
-
-						<img src="{{ get_image_src($profile->id, 'users', 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
-
-					  	@if(Storage::exists(image_path("users/{$profile->id}") . 'medium.png'))
+						<img src="{{ get_storage_file_url(optional($profile->image)->path, 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.avatar') }}">
+					  	@if($profile->image)
 							<a class="btn btn-xs btn-default confirm ajax-silent" type="submit" href="{{ route('admin.profile.deletePhoto') }}"><i class="fa fa-trash-o"></i> {{ trans('app.form.delete_avatar') }}</a>
 					  	@endif
 					</div>
@@ -104,7 +102,7 @@
 						  	<p class="lead">{{ $profile->shop->name }}</p>
 
 						  	<label>{{ trans('app.form.logo') }}</label>
-					        <img src="{{ get_image_src($profile->merchantId(), 'shops', 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
+					        <img src="{{ get_storage_file_url(optional($profile->shop->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.logo') }}">
 					  	</div>
 				    @endunless
 			  	</div>

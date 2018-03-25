@@ -12,6 +12,8 @@ interface BaseRepository
 
     public function find($id);
 
+    public function findTrash($id);
+
     public function findBy($column, $value);
 
     public function recent($limit);

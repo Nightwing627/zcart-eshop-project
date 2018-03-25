@@ -3,16 +3,12 @@
 namespace App\Repositories\Blog;
 
 use App\Blog;
-use App\Common\Taggable;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
 class EloquentBlog extends EloquentRepository implements BaseRepository, BlogRepository
 {
-    use Taggable;
-
 	protected $model;
 
 	public function __construct(Blog $blog)
@@ -22,18 +18,23 @@ class EloquentBlog extends EloquentRepository implements BaseRepository, BlogRep
 
     public function all()
     {
-        return $this->model->with('author')->withCount('comments')->get();
+        return $this->model->with('author','image')->withCount('comments')->get();
+    }
+
+    public function trashOnly()
+    {
+        return $this->model->with('image')->onlyTrashed()->get();
     }
 
     public function store(Request $request)
     {
         $blog = parent::store($request);
 
-        if ($request->input('tag_list'))
-            $this->syncTags($blog, $request->input('tag_list'));
-
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $blog->id);
+            $blog->saveImage($request->file('image'));
+
+        if ($request->input('tag_list'))
+            $blog->syncTags($blog, $request->input('tag_list'));
 
         return $blog;
     }
@@ -42,33 +43,25 @@ class EloquentBlog extends EloquentRepository implements BaseRepository, BlogRep
     {
         $blog = parent::update($request, $id);
 
-        if ($request->input('tag_list'))
-            $this->syncTags($blog, $request->input('tag_list'));
+        $blog->syncTags($blog, $request->input('tag_list', []));
 
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($blog->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $blog->deleteImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $blog->id);
+            $blog->saveImage($request->file('image'));
 
         return $blog;
     }
 
 	public function destroy($id)
 	{
-        $this->removeImages($id);
-        $this->detachTags($id, 'Blog');
-		return parent::destroy($id);
+        $blog = parent::findTrash($id);
+
+        $blog->detachTags($blog->id, 'blog');
+
+        $blog->flushImages();
+
+        return $blog->forceDelete();
 	}
-
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'blogs', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('blogs', $id);
-    }
-
 }

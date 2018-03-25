@@ -188,7 +188,11 @@
           </div> <!-- /.box-header -->
           <div class="box-body">
             <p>
-              <img src="{{ get_image_src($customer->id, 'customers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+              @if($customer->image)
+                <img src="{{ get_storage_file_url(optional($customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+              @else
+                <img src="{{ get_gravatar_url($customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+              @endif
 
               <span class="admin-user-widget-title indent5">
                   {{ $customer->getName() }}
@@ -441,20 +445,15 @@
               //Pick the string after the : to get the item description
               itemDescription = itemDescription.substring(itemDescription.indexOf(":") + 2);
 
-              var imgSrc = "{{ asset('') . image_path('inventories') }}" + ID + "small.png";
-              var imgSrcAlt = "{{ asset('') . image_path('products') }}" + productObj[ID].id + "small.png";
-
-              if (ImageExist(imgSrc))
-                  var img = '<img src="' + imgSrc + '" class="img-circle img-md" alt="{{ trans('app.image') }}">';
-              else if (ImageExist(imgSrcAlt))
-                  var img = '<img src="' + imgSrcAlt + '" class="img-circle img-md" alt="{{ trans('app.image') }}">';
+              if (productObj[ID].image)
+                var imgSrc = getFromPHPHelper('get_storage_file_url', productObj[ID].image);
               else
-                  var img = '<img src="{{ asset(image_path('products') . 'default.png') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">';
+                var imgSrc = getFromPHPHelper('get_placeholder_img', 'tiny');
 
               var numOfRows = $("tbody#items tr").length;
 
               var node = '<tr id="'+ ID +'">' +
-                  '<td>' + img + '</td>' +
+                  '<td><img src="' + imgSrc + '" class="img-circle img-sm" alt="{{ trans('app.image') }}"></td>' +
                   '<td class="nopadding-right" width="55%">' + itemDescription +
                       '<input type="hidden" name="cart['+ numOfRows +'][inventory_id]" value="'+ ID +'"></input>' +
                       '<input type="hidden" name="cart['+ numOfRows +'][item_description]" value="'+ itemDescription +'"></input>' +

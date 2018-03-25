@@ -62,6 +62,11 @@
   ;(function($, window, document) {
     $(".ajax-modal-btn").hide(); // hide the ajax functional button untill the page load completely
 
+    $('img').on('error', function(){
+      console.log('img not found');
+      // $(this).hide();
+    });
+
     $(document).ready(function(){
       $(".ajax-modal-btn").show(); // show the ajax functional button when the page loaded completely
 

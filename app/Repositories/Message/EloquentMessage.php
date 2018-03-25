@@ -62,7 +62,7 @@ class EloquentMessage extends EloquentRepository implements BaseRepository, Mess
         $message = $this->model->create($request->all());
 
         if ($request->hasFile('attachment'))
-            Attachment::storeAttachmentFromRequest($request, $message, 'attachments');
+            Attachment::storeAttachmentFromRequest($request->file('attachment'), $message, attachment_storage_dir());
 
         return $message;
     }
@@ -81,7 +81,7 @@ class EloquentMessage extends EloquentRepository implements BaseRepository, Mess
         $message->update($request->all());
 
         if ($request->hasFile('attachment'))
-            Attachment::storeAttachmentFromRequest($request, $message, 'attachments');
+            Attachment::storeAttachmentFromRequest($request, $message, attachment_storage_dir());
 
         return $message;
     }
@@ -95,7 +95,7 @@ class EloquentMessage extends EloquentRepository implements BaseRepository, Mess
         $reply = $message->replies()->create($request->all());
 
         if ($request->hasFile('attachment'))
-            Attachment::storeAttachmentFromRequest($request, $reply, 'attachments');
+            Attachment::storeAttachmentFromRequest($request, $reply, attachment_storage_dir());
 
         return $reply;
     }

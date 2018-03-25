@@ -35,7 +35,11 @@
 					@foreach($products as $product )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($product->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+						  	@if($product->featuredImage)
+								<img src="{{ get_storage_file_url(optional($product->featuredImage)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.featured_image') }}">
+							@else
+								<img src="{{ get_storage_file_url(optional($product->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							@endif
 						</td>
 						<td>{{ $product->gtin }}</td>
 						<td>{{ $product->name }}</td>
@@ -94,7 +98,7 @@
 					@foreach($trashes as $trash )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($trash->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 						</td>
 						<td>{{ $trash->name }}</td>
 						<td>{{ $trash->model_number }}</td>

@@ -2,12 +2,13 @@
 
 namespace App;
 
+use App\Common\Imageable;
 use App\Common\Addressable;
 use Illuminate\Database\Eloquent\Model;
 
 class System extends Model
 {
-    use Addressable;
+    use Addressable, Imageable;
 
     /**
      * The database table used by the model.

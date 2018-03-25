@@ -3,7 +3,6 @@
 @section('buttons')
 	@can('create', App\Warehouse::class)
 		<a href="{{ route('admin.exim', 'warehouse') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
-
 		<a href="{{ route('admin.stock.warehouse.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_warehouse') }}</a>
 	@endcan
 @endsection
@@ -21,7 +20,6 @@
 			<table class="table table-hover table-2nd-short">
 				<thead>
 					<tr>
-						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.email') }}</th>
 						<th>{{ trans('app.incharge') }}</th>
@@ -33,9 +31,11 @@
 					@foreach($warehouses as $warehouse )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($warehouse->id, 'warehouses', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($warehouse->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<p class="indent10">
+								{{ $warehouse->name }}
+							</p>
 						</td>
-						<td>{{ $warehouse->name }}</td>
 						<td>{{ $warehouse->email }}</td>
 						<td>{{ $warehouse->manager->name or '' }}</td>
 						<td>{{ ($warehouse->active) ? trans('app.active') : trans('app.inactive') }}</td>
@@ -79,7 +79,6 @@
 			<table class="table table-hover table-2nd-short">
 				<thead>
 					<tr>
-						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.email') }}</th>
 						<th>{{ trans('app.incharge') }}</th>
@@ -91,9 +90,11 @@
 					@foreach($trashes as $trash )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($trash->id, 'warehouses', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<p class="indent10">
+								{{ $trash->name }}
+							</p>
 						</td>
-						<td>{{ $trash->name }}</td>
 						<td>{{ $trash->email }}</td>
 						<td>{{ $trash->manager->name or '' }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>

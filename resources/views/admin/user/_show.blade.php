@@ -1,18 +1,17 @@
-
 <div class="modal-dialog modal-md">
     <div class="modal-content">
         <div class="modal-body" style="padding: 0px;">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
 			<div class="card hovercard">
 			    <div class="card-background">
-
-					<img src="{{ get_image_src($user->id, 'users', 'medium') }}" class="card-bkimg img-circle" alt="{{ trans('app.avatar') }}">
-
+					<img src="{{ get_storage_file_url(optional($user->image)->path, 'small') }}" class="card-bkimg img-circle" alt="{{ trans('app.avatar') }}">
 			    </div>
 			    <div class="useravatar">
-
-					<img src="{{ get_image_src($user->id, 'users', 'medium') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-
+		            @if($user->image)
+						<img src="{{ get_storage_file_url(optional($user->image)->path, 'small') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+		            @else
+	            		<img src="{{ get_gravatar_url($user->email, 'small') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+		            @endif
 			    </div>
 			    <div class="card-info">
 			        <span class="card-title">{{ $user->getName() }}</span>
@@ -108,4 +107,3 @@
         </div>
     </div> <!-- / .modal-content -->
 </div> <!-- / .modal-dialog -->
-

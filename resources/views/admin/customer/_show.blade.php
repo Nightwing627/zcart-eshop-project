@@ -4,10 +4,14 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
 			<div class="card hovercard">
 			    <div class="card-background">
-					<img src="{{ get_image_src($customer->id, 'customers', 'medium') }}" class="card-bkimg img-circle" alt="{{ trans('app.avatar') }}">
+					<img src="{{ get_storage_file_url(optional($customer->image)->path, 'medium') }}" class="card-bkimg img-circle" alt="{{ trans('app.avatar') }}">
 			    </div>
 			    <div class="useravatar">
-					<img src="{{ get_image_src($customer->id, 'customers', 'medium') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+		            @if($customer->image)
+						<img src="{{ get_storage_file_url(optional($customer->image)->path, 'small') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+		            @else
+	            		<img src="{{ get_gravatar_url($customer->email, 'small') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+		            @endif
 			    </div>
 			    <div class="card-info">
 			        <span class="card-title">{{ $customer->getName() }}</span>
@@ -114,8 +118,8 @@
 									<tr>
 										<td>{{ get_formated_order_number($order->order_number) }}</td>
 										<td>{{ get_formated_currency($order->grand_total )}}</td>
-										<td>{{ $order->paymentStatus->name }}</td>
-										<td>{{ $order->status->name }}</td>
+										<td>{{ optional($order->paymentStatus)->name }}</td>
+										<td>{{ optional($order->status)->name }}</td>
 								        <td>{{ $order->created_at->toFormattedDateString() }}</td>
 									</tr>
 								@endforeach

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Attachment;
+use League\Glide\Server;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
@@ -10,8 +11,11 @@ use Illuminate\Support\Facades\Response;
 class AttachmentController extends Controller
 {
 
-	public function show(Attachment $attachment)
+    public function show(Request $request, Server $server, $path)
 	{
+		dd($path);
+
+        // return $server->getImageResponse($path, $request->all());
 	}
 
 	/**

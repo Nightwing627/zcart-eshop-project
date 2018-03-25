@@ -30,9 +30,8 @@
             @forelse($products as $product )
                 <div class="admin-user-widget">
                     <span class="admin-user-widget-img">
-                        <img src="{{ get_image_src($product->id, 'products', 'medium') }}" class="thumbnail" alt="{{ trans('app.image') }}">
+                        <img src="{{ get_storage_file_url(optional($product->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.image') }}">
                     </span>
-
                     <div class="admin-user-widget-content">
                         <span class="admin-user-widget-title">
                             {{ $product->name }}

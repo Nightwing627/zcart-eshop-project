@@ -4,16 +4,14 @@ namespace App;
 
 use Carbon\Carbon;
 use App\Common\Taggable;
-use App\Common\Attachable;
+use App\Common\Imageable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Scopes\ActiveScope;
-
 class Inventory extends Model
 {
-    use SoftDeletes, Taggable, Attachable;
+    use SoftDeletes, Taggable, Imageable;
 
     /**
      * The database table used by the model.
@@ -46,17 +44,12 @@ class Inventory extends Model
                         'description',
                         'stock_quantity',
                         'damaged_quantity',
-                        // 'tax_id',
                         'user_id',
                         'purchase_price',
                         'sale_price',
                         'offer_price',
                         'offer_start',
                         'offer_end',
-                        // 'packaging_id',
-                        // 'shipping_width',
-                        // 'shipping_height',
-                        // 'shipping_depth',
                         'shipping_weight',
                         'available_from',
                         'min_order_quantity',
@@ -135,24 +128,6 @@ class Inventory extends Model
                     ->withPivot('item_description', 'quantity', 'unit_price')
                     ->withTimestamps();
     }
-
-    // /**
-    //  * Get the tax for the inventory.
-    //  */
-    // public function tax()
-    // {
-    //     return $this->belongsTo(Tax::class);
-    // }
-
-    // /**
-    //  * Get the carrier list for the inventory.
-    //  *
-    //  * @return array
-    //  */
-    // public function getCarrierListAttribute()
-    // {
-    //     if (count($this->carriers)) return $this->carriers->pluck('id')->toArray();
-    // }
 
     /**
      * Get the packaging list for the inventory.

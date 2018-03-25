@@ -22,6 +22,11 @@ abstract class EloquentRepository
 		return $this->model->findOrFail($id);
 	}
 
+	public function findTrash($id)
+	{
+		return $this->model->onlyTrashed()->findOrFail($id);
+	}
+
 	public function findBy($filed, $value)
 	{
 		return $this->model->where($filed, $value)->first();

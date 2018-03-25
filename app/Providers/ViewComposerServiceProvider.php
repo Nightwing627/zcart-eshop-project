@@ -498,8 +498,17 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                     $items[$inventory->id] = $inventory->sku .': '. $inventory->product->name . $str . ' - ' . $inventory->condition;
 
+                    if ($inventory->image)
+                        $img_path = optional($inventory->image)->path;
+                    else if ($inventory->product->featuredImage)
+                        $img_path = optional($inventory->product->featuredImage)->path;
+                    else
+                        $img_path = optional($inventory->product->image)->path;
+
+
                     $product_info[$inventory->id] = [
                         "id" => $inventory->product_id,
+                        "image" => $img_path,
                         "salePrice" => round($inventory->sale_price, 2),
                         "offerPrice" => round($inventory->offer_price, 2),
                         "stockQtt" => $inventory->stock_quantity,

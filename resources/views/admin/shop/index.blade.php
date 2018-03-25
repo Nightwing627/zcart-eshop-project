@@ -31,7 +31,7 @@
 					@foreach($shops as $shop )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($shop->id, 'shops', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($shop->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
 						</td>
 						<td>{{ $shop->name }}</td>
 						<td>{{ $shop->owner->name }}</td>
@@ -94,7 +94,7 @@
 					@foreach($trashes as $trash )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($trash->id, 'shops', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
 						</td>
 						<td>{{ $trash->name }}</td>
 						<td>{{ $trash->email }}</td>

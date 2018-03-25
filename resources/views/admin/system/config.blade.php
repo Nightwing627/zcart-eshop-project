@@ -142,14 +142,14 @@
 									</div>
 
 									<div class="form-group">
-								        {!! Form::label('merchant_logo_max_size_limit_kb', trans('app.merchant_logo_max_size_limit_kb'). ':', ['class' => 'with-help col-sm-6 control-label']) !!}
-									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_merchant_logo_max_size_limit_kb') }}"></i>
+								        {!! Form::label('max_img_size_limit_kb', trans('app.max_img_size_limit_kb'). ':', ['class' => 'with-help col-sm-6 control-label']) !!}
+									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_max_img_size_limit_kb') }}"></i>
 									  	<div class="col-sm-5 nopadding-left">
 									  		@if($can_update)
-									    	    {!! Form::number('merchant_logo_max_size_limit_kb', $system->merchant_logo_max_size_limit_kb, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.merchant_logo_max_size_limit_kb')]) !!}
+									    	    {!! Form::number('max_img_size_limit_kb', $system->max_img_size_limit_kb, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.max_img_size_limit_kb')]) !!}
 										      	<div class="help-block with-errors"></div>
 											@else
-												<span>{{ $system->merchant_logo_max_size_limit_kb }}</span>
+												<span>{{ $system->max_img_size_limit_kb }}</span>
 											@endif
 									  	</div>
 									</div>
@@ -476,13 +476,13 @@
 	    			@foreach($payment_method_types as $type_id => $type)
 	    				@php
 	    					$payment_providers = $payment_methods->where('type', $type_id);
-	    					$logo_path = image_path('payment-method-types') . "{$type_id}.svg";
+	    					$logo_path = sys_image_path('payment-method-types') . "{$type_id}.svg";
 	    				@endphp
 				    	<div class="row">
 							<span class="spacer10"></span>
 					    	<div class="col-sm-6">
-					    		@if(Storage::exists($logo_path))
-									<img src="{{ Storage::url($logo_path) }}" width="100" height="25" alt="{{ $type }}">
+					    		@if(File::exists($logo_path))
+									<img src="{{ asset($logo_path) }}" width="100" height="25" alt="{{ $type }}">
 									<span class="spacer10"></span>
 								@else
 						    		<p class="lead">{{ $type }}</p>
@@ -492,12 +492,12 @@
 					    	<div class="col-sm-6">
 				    			@foreach($payment_providers as $payment_provider)
 				    				@php
-				    					$logo_path = image_path('payment-methods') ."{$payment_provider->code}.png";
+				    					$logo_path = sys_image_path('payment-methods') ."{$payment_provider->code}.png";
 				    				@endphp
 									<ul class="list-group">
 										<li class="list-group-item">
-								    		@if(Storage::exists($logo_path))
-												<img src="{{ Storage::url($logo_path) }}" class="open-img-md" alt="{{ $type }}">
+								    		@if(File::exists($logo_path))
+												<img src="{{ asset($logo_path) }}" class="open-img-md" alt="{{ $type }}">
 											@else
 												<p class="list-group-item-heading inline lead">
 													{{ $payment_provider->name }}

@@ -1,4 +1,5 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
@@ -167,7 +168,7 @@ class InventoryController extends Controller
 
         $product = $this->inventory->findProduct($inventory->product_id);
 
-        $preview = $inventory->previewAttachments();
+        $preview = $inventory->previewImages();
 
         return view('admin.inventory.edit', compact('inventory', 'product', 'preview'));
     }
@@ -243,7 +244,7 @@ class InventoryController extends Controller
         return [
             'id' => $inventory->id,
             'model' => 'inventory',
-            'path' => image_path("inventories/{$inventory->id}"),
+            // 'path' => image_path("inventories/{$inventory->id}"),
             'redirect' => route('admin.stock.inventory.index')
         ];
     }

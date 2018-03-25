@@ -21,7 +21,6 @@
 	      <table class="table table-hover table-2nd-short">
 	        <thead>
 	        <tr>
-	          <th>{{ trans('app.avatar') }}</th>
 	          <th>{{ trans('app.nice_name') }}</th>
 	          <th>{{ trans('app.full_name') }}</th>
 	          <th>{{ trans('app.email') }}</th>
@@ -34,9 +33,15 @@
 		        @foreach($customers as $customer )
 				<tr>
 					<td>
-						<img src="{{ get_image_src($customer->id, 'customers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+			            @if($customer->image)
+							<img src="{{ get_storage_file_url(optional($customer->image)->path, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+			            @else
+		            		<img src="{{ get_gravatar_url($customer->email, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+			            @endif
+						<p class="indent10">
+							{{ $customer->nice_name }}
+						</p>
 					</td>
-					<td>{{ $customer->nice_name }}</td>
 			        <td>{{ $customer->name }}</td>
 			        <td>{{ $customer->email }}</td>
 					<td>
@@ -45,7 +50,7 @@
 			        <td>{{ ($customer->active) ? trans('app.active') : trans('app.inactive') }}</td>
 			        <td class="row-options">
 						@can('view', $customer)
-		                    <a href="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.profile') }}" class="fa fa-user-secret"></i></a>&nbsp;
+		                    <a href="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.profile') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
 						@endcan
 
 						@can('update', $customer)
@@ -85,7 +90,6 @@
 	      <table class="table table-hover table-2nd-short">
 	        <thead>
 	        <tr>
-	          <th>{{ trans('app.avatar') }}</th>
 	          <th>{{ trans('app.nice_name') }}</th>
 	          <th>{{ trans('app.full_name') }}</th>
 	          <th>{{ trans('app.email') }}</th>
@@ -97,9 +101,11 @@
 		        @foreach($trashes as $trash )
 			        <tr>
 			          <td>
-						<img src="{{ get_image_src($trash->id, 'customers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+						<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+						<p class="indent10">
+							{{ $trash->nice_name }}
+						</p>
 			          </td>
-			          <td>{{ $trash->nice_name }}</td>
 			          <td>{{ $trash->name }}</td>
 			          <td>{{ $trash->email }}</td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>

@@ -20,7 +20,6 @@
 			<table class="table table-hover table-2nd-short">
 				<thead>
 					<tr>
-						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.phone') }}</th>
 						<th>{{ trans('app.email') }}</th>
@@ -32,34 +31,36 @@
 				</thead>
 				<tbody>
 					@foreach($manufacturers as $manufacturer )
-					<tr>
-						<td>
-							<img src="{{ get_image_src($manufacturer->id, 'manufacturers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
-						</td>
-						<td>{{ $manufacturer->name }}</td>
-						<td>{{ $manufacturer->phone }}</td>
-						<td>{{ $manufacturer->email }}</td>
-						<td>{{ $manufacturer->country->name or '' }}</td>
-						<td>
-							<span class="label label-default">{{ $manufacturer->products_count }}</span>
-						</td>
-						<td>{{ ($manufacturer->active) ? trans('app.active') : trans('app.inactive') }}</td>
-						<td class="row-options">
-							@can('view', $manufacturer)
-								<a href="{{ route('admin.catalog.manufacturer.show', $manufacturer->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
-							@endcan
+						<tr>
+							<td>
+								<img src="{{ get_storage_file_url(optional($manufacturer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<p class="indent10">
+									{{ $manufacturer->name }}
+								</p>
+							</td>
+							<td>{{ $manufacturer->phone }}</td>
+							<td>{{ $manufacturer->email }}</td>
+							<td>{{ $manufacturer->country->name or '' }}</td>
+							<td>
+								<span class="label label-default">{{ $manufacturer->products_count }}</span>
+							</td>
+							<td>{{ ($manufacturer->active) ? trans('app.active') : trans('app.inactive') }}</td>
+							<td class="row-options">
+								@can('view', $manufacturer)
+									<a href="{{ route('admin.catalog.manufacturer.show', $manufacturer->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								@endcan
 
-							@can('update', $manufacturer)
-								<a href="{{ route('admin.catalog.manufacturer.edit', $manufacturer->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
-							@endcan
+								@can('update', $manufacturer)
+									<a href="{{ route('admin.catalog.manufacturer.edit', $manufacturer->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								@endcan
 
-							@can('delete', $manufacturer)
-								{!! Form::open(['route' => ['admin.catalog.manufacturer.trash', $manufacturer->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-								{!! Form::close() !!}
-							@endcan
-						</td>
-					</tr>
+								@can('delete', $manufacturer)
+									{!! Form::open(['route' => ['admin.catalog.manufacturer.trash', $manufacturer->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+										{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+									{!! Form::close() !!}
+								@endcan
+							</td>
+						</tr>
 					@endforeach
 				</tbody>
 			</table>
@@ -78,7 +79,6 @@
 			<table class="table table-hover table-2nd-short">
 				<thead>
 					<tr>
-						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.phone') }}</th>
 						<th>{{ trans('app.email') }}</th>
@@ -88,28 +88,29 @@
 				</thead>
 				<tbody>
 					@foreach($trashes as $trash )
-					<tr>
-						<td>
-							<img src="{{ get_image_src($trash->id, 'manufacturers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
-						</td>
-						<td>{{ $trash->name }}</td>
-						<td>{{ $trash->phone }}</td>
-						<td>{{ $trash->email }}</td>
-						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
-						<td class="row-options">
-							@can('delete', $trash)
-								<a href="{{ route('admin.catalog.manufacturer.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+						<tr>
+							<td>
+								<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<p class="indent10">
+									{{ $trash->name }}
+								</p>
+							</td>
+							<td>{{ $trash->phone }}</td>
+							<td>{{ $trash->email }}</td>
+							<td>{{ $trash->deleted_at->diffForHumans() }}</td>
+							<td class="row-options">
+								@can('delete', $trash)
+									<a href="{{ route('admin.catalog.manufacturer.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
 
-								{!! Form::open(['route' => ['admin.catalog.manufacturer.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-									{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-								{!! Form::close() !!}
-							@endcan
-						</td>
-					</tr>
+									{!! Form::open(['route' => ['admin.catalog.manufacturer.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+										{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+									{!! Form::close() !!}
+								@endcan
+							</td>
+						</tr>
 					@endforeach
 				</tbody>
 			</table>
 		</div> <!-- /.box-body -->
 	</div> <!-- /.box -->
 @endsection
-

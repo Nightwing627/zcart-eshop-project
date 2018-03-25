@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\System;
 use App\Http\Requests;
-use App\Helpers\ImageHelper;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\UpdateSystemRequest;
@@ -52,11 +51,11 @@ class SystemController extends Controller
 
         $system->update($request->except('image', 'delete_image'));
 
-        if ($request->hasFile('image'))
-            ImageHelper::UploadImages($request, 'brands', $system->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $system->deleteImage();
 
-        if ($request->input('delete_image') == 1)
-            ImageHelper::RemoveImages('brands', $system->id);
+        if ($request->hasFile('image'))
+            $system->saveImage($request->file('image'));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }

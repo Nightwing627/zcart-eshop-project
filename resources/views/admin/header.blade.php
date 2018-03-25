@@ -118,8 +118,7 @@
         <li class="dropdown tasks-menu">
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{{ asset('storage/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
-            {{-- <img src="{{ get_image_src('US', 'flags') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US"> --}}
+            <img src="{{ asset('assets/images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
           </a>
           <ul class="dropdown-menu" style="width: 100px;">
             <li>
@@ -128,8 +127,7 @@
                 <li><!-- Task item -->
                   <a href="#">
                     <h3>
-                      <img src="{{ asset('storage/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
-                      {{-- <img src="{{ asset('assets/images/flags/US.png') }}" style="width: 15px; vertical-align: inherit;" /> --}}
+                      <img src="{{ asset('assets/images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
                       English
                     </h3>
                   </a>
@@ -138,7 +136,7 @@
                 <li><!-- Task item -->
                   <a href="#">
                     <h3>
-                      <img src="{{ asset('storage/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
+                      <img src="{{ asset('assets/images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
                       Bangla
                     </h3>
                   </a>
@@ -147,8 +145,7 @@
                 <li><!-- Task item -->
                   <a href="#">
                     <h3>
-                      <img src="{{ asset('storage/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
-                      {{-- <img src="{{ asset('assets/images/flags/BD.png') }}" style="width: 15px; vertical-align: inherit;" /> --}}
+                      <img src="{{ asset('assets/images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
                       English
                     </h3>
                   </a>
@@ -157,8 +154,7 @@
                 <li><!-- Task item -->
                   <a href="#">
                     <h3>
-                      <img src="{{ asset('storage/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
-                      {{-- <img src="{{ asset('assets/images/flags/US.png') }}" style="width: 15px; vertical-align: inherit;" /> --}}
+                      <img src="{{ asset('assets/images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
                       English
                     </h3>
                   </a>
@@ -174,14 +170,24 @@
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <!-- The user image in the navbar-->
-            <img src="{{ get_image_src(Auth::user()->id, 'users', 'small') }}" class="user-image" alt="{{ trans('app.avatar') }}">
+
+            @if(Auth::user()->image)
+              <img src="{{ get_storage_file_url(Auth::user()->image->path, 'tiny') }}" class="user-image" alt="{{ trans('app.avatar') }}">
+            @else
+              <img src="{{ get_gravatar_url(Auth::user()->email, 'tiny') }}" class="user-image" alt="{{ trans('app.avatar') }}">
+            @endif
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
             <span class="hidden-xs">{{ Auth::user()->getName() }}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->
             <li class="user-header">
-              <img src="{{ get_image_src(Auth::user()->id, 'users', 'medium') }}" class="user-image" alt="{{ trans('app.avatar') }}">
+              @if(Auth::user()->image)
+                <img src="{{ get_storage_file_url(Auth::user()->image->path, 'small') }}" class="user-image" alt="{{ trans('app.avatar') }}">
+              @else
+                <img src="{{ get_gravatar_url(Auth::user()->email, 'small') }}" class="user-image" alt="{{ trans('app.avatar') }}">
+              @endif
+
               <h4>{{Auth::user()->name}}</h4>
               <p>
                 @if(Auth::user()->isSuperAdmin())

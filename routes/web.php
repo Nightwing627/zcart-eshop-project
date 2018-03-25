@@ -8,6 +8,7 @@ Route::get('/', 'HomeController@index')->name('homepage');
 // Common
 Route::group(['middleware' => ['auth']], function()
 {
+	include('Image.php');
 	include('Attachment.php');
 	include('Address.php');
 	include('Search.php');

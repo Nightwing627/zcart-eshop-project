@@ -32,6 +32,16 @@ trait Attachable {
     }
 
 	/**
+	 * Return the image related to the attachable
+	 *
+	 * @return Illuminate\Database\Eloquent\Collection
+	 */
+	public function image()
+    {
+        return $this->morphOne(\App\Attachment::class, 'attachable');
+    }
+
+	/**
 	 * Deletes all the attachments of this model.
 	 *
 	 * @return bool

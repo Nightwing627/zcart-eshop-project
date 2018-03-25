@@ -15,11 +15,11 @@ class CreateAttachmentsTable extends Migration
         Schema::create('attachments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('path');
-            $table->string('name')->nullable();
+            $table->text('name')->nullable();
             $table->string('extension')->nullable();
             $table->string('size')->nullable();
-            $table->integer('order')->default(0);
-            $table->boolean('featured')->nullable();
+            // $table->integer('order')->default(0);
+            // $table->boolean('featured')->nullable();
             $table->unsignedInteger('attachable_id');
             $table->string('attachable_type');
             $table->timestamps();

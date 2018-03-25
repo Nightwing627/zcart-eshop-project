@@ -5,7 +5,6 @@ namespace App\Repositories\Carrier;
 use Auth;
 use App\Carrier;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -21,17 +20,17 @@ class EloquentCarrier extends EloquentRepository implements BaseRepository, Carr
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->get();
+            return $this->model->mine()->with('image', 'shippingZones')->get();
 
-        return parent::all();
+        return $this->model->with('image', 'shippingZones')->all();
     }
 
     public function trashOnly()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->onlyTrashed()->get();
+            return $this->model->mine()->with('image')->onlyTrashed()->get();
 
-        return parent::trashOnly();
+        return $this->model->with('image')->onlyTrashed()->get();
     }
 
     public function store(Request $request)
@@ -39,7 +38,7 @@ class EloquentCarrier extends EloquentRepository implements BaseRepository, Carr
         $carrier = parent::store($request);
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $carrier->id);
+            $carrier->saveImage($request->file('image'));
 
         return $carrier;
     }
@@ -48,30 +47,21 @@ class EloquentCarrier extends EloquentRepository implements BaseRepository, Carr
     {
         $carrier = parent::update($request, $id);
 
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($carrier->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $carrier->deleteImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $carrier->id);
+            $carrier->saveImage($request->file('image'));
 
         return $carrier;
     }
 
 	public function destroy($id)
 	{
-        $this->removeImages($id);
+        $carrier = parent::findTrash($id);
 
-		return parent::destroy($id);
+        $carrier->flushImages();
+
+        return $carrier->forceDelete();
 	}
-
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'carriers', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('carriers', $id);
-    }
-
 }

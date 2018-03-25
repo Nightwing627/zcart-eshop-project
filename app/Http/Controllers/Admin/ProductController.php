@@ -88,7 +88,7 @@ class ProductController extends Controller
     {
         $product = $this->product->find($id);
 
-        $preview = $product->previewAttachments();
+        $preview = $product->previewImages();
 
         return view('admin.product.edit', compact('product', 'preview'));
     }
@@ -164,7 +164,6 @@ class ProductController extends Controller
         return [
             'id' => $product->id,
             'model' => 'product',
-            'path' => image_path("products/{$product->id}"),
             'redirect' => route('admin.catalog.product.index')
         ];
     }

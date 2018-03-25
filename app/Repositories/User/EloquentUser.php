@@ -5,7 +5,6 @@ namespace App\Repositories\User;
 use Auth;
 use App\User;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -21,17 +20,17 @@ class EloquentUser extends EloquentRepository implements BaseRepository, UserRep
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->level()->mine()->with('role', 'primaryAddress')->get();
+            return $this->model->level()->mine()->with('role', 'image', 'primaryAddress')->get();
 
-        return $this->model->level()->fromPlatform()->with('role', 'primaryAddress')->get();
+        return $this->model->level()->fromPlatform()->with('role', 'image', 'primaryAddress')->get();
     }
 
     public function trashOnly()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->level()->mine()->onlyTrashed()->get();
+            return $this->model->level()->mine()->onlyTrashed()->with('image')->get();
 
-        return $this->model->level()->fromPlatform()->onlyTrashed()->get();
+        return $this->model->level()->fromPlatform()->onlyTrashed()->with('image')->get();
     }
 
     public function addresses($user)
@@ -46,7 +45,7 @@ class EloquentUser extends EloquentRepository implements BaseRepository, UserRep
         $this->saveAdrress($request->all(), $user);
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $user->id);
+            $user->saveImage($request->file('image'));
 
         return $user;
     }
@@ -55,34 +54,24 @@ class EloquentUser extends EloquentRepository implements BaseRepository, UserRep
     {
         $user = parent::update($request, $id);
 
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($user->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $user->deleteImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $user->id);
+            $user->saveImage($request->file('image'));
 
         return $user;
     }
 
     public function destroy($id)
     {
-        $user = $this->model->onlyTrashed()->findOrFail($id);
+        $user = parent::findTrash($id);
 
         $user->flushAddresses();
 
-        $this->removeImages($user->id);
+        $user->flushImages();
 
         return $user->forceDelete();
-    }
-
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'users', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('users', $id);
     }
 
     public function saveAdrress(array $address, $user)

@@ -5,7 +5,6 @@ namespace App\Repositories\Customer;
 use Auth;
 use App\Customer;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -20,7 +19,12 @@ class EloquentCustomer extends EloquentRepository implements BaseRepository, Cus
 
     public function all()
     {
-        return $this->model->withCount('orders')->get();
+        return $this->model->with('image')->withCount('orders')->get();
+    }
+
+    public function trashOnly()
+    {
+        return $this->model->with('image')->onlyTrashed()->get();
     }
 
     public function profile($id)
@@ -40,7 +44,7 @@ class EloquentCustomer extends EloquentRepository implements BaseRepository, Cus
         $this->saveAdrress($request->all(), $customer);
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $customer->id);
+            $customer->saveImage($request->file('image'));
 
         return $customer;
     }
@@ -49,34 +53,24 @@ class EloquentCustomer extends EloquentRepository implements BaseRepository, Cus
     {
         $customer = parent::update($request, $id);
 
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($customer->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $customer->deleteImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $customer->id);
+            $customer->saveImage($request->file('image'));
 
         return $customer;
     }
 
     public function destroy($id)
     {
-        $customer = $this->model->onlyTrashed()->findOrFail($id);
+        $customer = parent::findTrash($id);
 
         $customer->flushAddresses();
 
-        $this->removeImages($customer->id);
+        $customer->flushImages();
 
         return $customer->forceDelete();
-    }
-
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'customers', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('customers', $id);
     }
 
     public function saveAdrress(array $address, $customer)

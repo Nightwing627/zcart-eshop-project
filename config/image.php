@@ -19,6 +19,39 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Image dir
+    |--------------------------------------------------------------------------
+    |
+    | Name the directory on the storage where all the images will be saved
+    | Dont change this if you're not sure
+    |
+    */
+    'dir' => 'images',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cache dir
+    |--------------------------------------------------------------------------
+    |
+    | Name the directory on the storage where all the manupulated cache images will be saved
+    | Dont change this if you're not sure
+    |
+    */
+    'cache_dir' => '.cache',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Maximum Image size
+    |--------------------------------------------------------------------------
+    |
+    | Specify the maximum size of image can be uploaded
+    | The size is Kilobyte or KB, Default = 5000KB = ~5MB
+    |
+    */
+    'max_size' => 5000,
+
+    /*
+    |--------------------------------------------------------------------------
     | Image sizes
     |--------------------------------------------------------------------------
     |
@@ -33,26 +66,33 @@ return [
         | Primary sizes
         |--------------------------------------------------------------------------
         |
-        | The system will create thumbnails autometically using this sizes
+        | The system will create thumbnails using this settings only.
+        | Any request for other than this sizes will return the original image.
         | Don't modify this values if you are not sure
+        | Sets how the image is fitted to its target dimensions.
+        | w = width, h = height. All values are in pixels
+        | fit = how the image is fitted to its target dimensions, Available values're "contain,max,fill,stretch,crop"
         |
         */
-        'primary' => [
-            'small' => [
-                'width' => 35,
-                'height' => 35,
-                'aspectRatio' => true
-            ],
-            'medium' => [
-                'width' => 150,
-                'height' => 150,
-                'aspectRatio' => true
-            ],
-            'large' => [
-                'width' => 300,
-                'height' => 300,
-                'aspectRatio' => true
-            ],
+        'tiny' => [
+            'w' => 30,
+            'h' => 30,
+            'fit' => 'contain'
+        ],
+        'small' => [
+            'w' => 100,
+            'h' => 100,
+            'fit' => 'contain'
+        ],
+        'medium' => [
+            'w' => 400,
+            'h' => 300,
+            'fit' => 'contain'
+        ],
+        'large' => [
+            'w' => 1200,
+            'h' => 900,
+            'fit' => 'contain'
         ],
 
         /*
@@ -65,10 +105,23 @@ return [
         |
         */
         'category_banner' => [
-            'width' => 800,
-            'height' => 200,
-            'aspectRatio' => true
+            'w' => 800,
+            'h' => 200,
+            'fit' => 'contain'
         ],
+
+        // Add your sizes here
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Background Color
+    |--------------------------------------------------------------------------
+    |
+    | You can set a background_color for transparent background images
+    | for full list of available color visit "http://glide.thephpleague.com/1.0/api/colors/"
+    |
+    */
+    'background_color' => 'red',
 
 ];

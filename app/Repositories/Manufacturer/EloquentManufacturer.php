@@ -5,7 +5,6 @@ namespace App\Repositories\Manufacturer;
 use Auth;
 use App\Manufacturer;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -21,17 +20,17 @@ class EloquentManufacturer extends EloquentRepository implements BaseRepository,
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('country')->withCount('products')->get();
+            return $this->model->mine()->with('country', 'image')->withCount('products')->get();
 
-        return $this->model->with('country')->withCount('products')->get();
+        return $this->model->with('country', 'image')->withCount('products')->get();
     }
 
     public function trashOnly()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->onlyTrashed()->get();
+            return $this->model->mine()->with('image')->onlyTrashed()->get();
 
-        return parent::trashOnly();
+        return $this->model->with('image')->onlyTrashed()->get();
     }
 
     public function store(Request $request)
@@ -39,7 +38,7 @@ class EloquentManufacturer extends EloquentRepository implements BaseRepository,
         $manufacturer = parent::store($request);
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $manufacturer->id);
+            $manufacturer->saveImage($request->file('image'));
 
         return $manufacturer;
     }
@@ -48,29 +47,21 @@ class EloquentManufacturer extends EloquentRepository implements BaseRepository,
     {
         $manufacturer = parent::update($request, $id);
 
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($manufacturer->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $manufacturer->deleteImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $manufacturer->id);
+            $manufacturer->saveImage($request->file('image'));
 
         return $manufacturer;
     }
 
     public function destroy($id)
     {
-        $this->removeImages($id);
+        $manufacturer = parent::findTrash($id);
 
-        return parent::destroy($id);
-    }
+        $manufacturer->flushImages();
 
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'manufacturers', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('manufacturers', $id);
+        return $manufacturer->forceDelete();
     }
 }

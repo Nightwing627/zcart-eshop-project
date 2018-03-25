@@ -38,12 +38,11 @@
 	      // console.log(initialPreviewConfig);
 
 	    $("#dropzone-input").fileinput({
-	        uploadUrl: "{{ route('attachment.upload') }}",
+	        uploadUrl: "{{ route('image.upload') }}",
 	        uploadExtraData: function () {
 	            var extra = {};
 	            extra['model_id'] = formData.get('model_id');
 	            extra['model_name'] = formData.get('model_name');
-	            extra['path'] = formData.get('path');
 	            return extra;
 	        },
 	        uploadAsync: false,
@@ -96,7 +95,7 @@
 	          notie.alert(1, "{{ trans('messages.file_deleted') }}", 3);
 	        }, 900);
 	    }).on('filesorted', function(event, params) {
-	    	var sortUrl = "{{ route('attachment.sort') }}";
+	    	var sortUrl = "{{ route('image.sort') }}";
 	    	var max = Math.max(params.oldIndex, params.newIndex);
 	    	var min = Math.min(params.oldIndex, params.newIndex);
 	    	var order = {};
@@ -140,7 +139,6 @@
 			.done(function(result){
 				formData.append('model_id', result.id);
 				formData.append('model_name', result.model);
-				formData.append('path', result.path);
 
 				$('#dropzone-input').fileinput('upload');
 

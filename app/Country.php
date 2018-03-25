@@ -18,7 +18,7 @@ class Country extends Model
      */
     public function states()
     {
-        return $this->hasMany('App\State');
+        return $this->hasMany(State::class);
     }
 
     /**
@@ -26,7 +26,7 @@ class Country extends Model
      */
     public function manufacturer()
     {
-        return $this->hasMany('App\Manufacturer');
+        return $this->hasMany(Manufacturer::class);
     }
 
     /**
@@ -34,7 +34,7 @@ class Country extends Model
      */
     public function products()
     {
-        return $this->hasMany('App\Product', 'origin_country');
+        return $this->hasMany(Product::class, 'origin_country');
     }
 
     /**
@@ -42,8 +42,8 @@ class Country extends Model
      */
     public function users()
     {
-        return $this->hasManyThrough('App\User', 'App\Address');
-        // return $this->hasManyThrough('App\User', 'App\Address', 'addressable_id', 'country_name');
+        return $this->hasManyThrough(User::class, Address::class);
+        // return $this->hasManyThrough(User', Address', 'addressable_id', 'country_name');
     }
 
     /**
@@ -51,8 +51,8 @@ class Country extends Model
      */
     public function customers()
     {
-        return $this->hasManyThrough('App\Customer', 'App\Address');
-        // return $this->hasManyThrough('App\Customer', 'App\Address', 'addressable_id', 'country_name');
+        return $this->hasManyThrough(Customer::class, Address::class);
+        // return $this->hasManyThrough(Customer::class, Address::class, 'addressable_id', 'country_name');
     }
 
     /**
@@ -60,8 +60,8 @@ class Country extends Model
     */
     public function addresses()
     {
-        // return $this->belongsTo('App\Address', 'country_name' , 'name');
-        return $this->hasMany('App\Address');
+        // return $this->belongsTo(Address', 'country_name' , 'name');
+        return $this->hasMany(Address::class);
     }
 
     /**

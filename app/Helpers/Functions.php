@@ -73,17 +73,18 @@ if ( ! function_exists('get_shop_url') )
     }
 }
 
-if ( ! function_exists('gravatar') )
+if ( ! function_exists('get_gravatar_url') )
 {
-    function gravatar($email, $size = 30)
+    function get_gravatar_url($email, $size = 'small')
     {
         $email = md5(strtolower(trim($email)));
 
-        $defaultImage = urlencode('https://raw.githubusercontent.com/BadChoice/handesk/master/public/images/default-avatar.png');
+        $size = config("image.sizes.{$size}");
 
-        $gravatarURL  = 'https://www.gravatar.com/avatar/'.$email.'?s='.$size."&default={$defaultImage}";
+        return "https://www.gravatar.com/avatar/{$email}?s={$size['w']}";
 
-        return '<img id = '.$email.''.$size.' class="gravatar" src="'.$gravatarURL.'" width="'.$size.'">';
+        // $defaultImage = urlencode('https://raw.githubusercontent.com/BadChoice/handesk/master/public/images/default-avatar.png');
+        // return "https://www.gravatar.com/avatar/" . $email . "?s={$size['w']}&default={$defaultImage}";
     }
 }
 
@@ -177,28 +178,61 @@ if ( ! function_exists('attachment_storage_dir') )
     }
 }
 
-if ( ! function_exists('image_path') )
+if ( ! function_exists('image_storage_dir') )
 {
-    function image_path($dir = '')
+    function image_storage_dir()
     {
-        return str_finish("images/{$dir}", '/');
+        return config('image.dir');
     }
 }
 
-if ( ! function_exists('get_image_src') )
+if ( ! function_exists('sys_image_path') )
 {
-    function get_image_src($id = null, $dir = null, $size = null)
+    function sys_image_path($dir = '')
     {
-        if(! $id )  return;
+        return str_finish("assets/images/{$dir}", '/');
+    }
+}
 
-        $size = $size ?: $id;
+if ( ! function_exists('image_storage_path') )
+{
+    function image_storage_path($path = Null)
+    {
+        $path = image_storage_dir() . '/' . $path;
+        return str_finish($path, '/');
+    }
+}
 
-        $image_path = image_path("{$dir}/{$id}") . "{$size}.png";
+if ( ! function_exists('image_cache_path') )
+{
+    function image_cache_path($path = Null)
+    {
+        $path = config('image.cache_dir') . '/' . $path;
+        return str_finish($path, '/');
+    }
+}
 
-        if(Storage::exists($image_path))
-            return Storage::url($image_path);
+if ( ! function_exists('get_storage_file_url') )
+{
+    function get_storage_file_url($path = null, $size = 'small')
+    {
+        if ( !$path )
+            return get_placeholder_img($size);
 
-        return Storage::url(image_path($dir) . 'default.png');
+        return url("image/{$path}?p={$size}");
+    }
+}
+
+if ( ! function_exists('get_placeholder_img') )
+{
+    function get_placeholder_img($size = 'small')
+    {
+        $size = config("image.sizes.{$size}");
+
+        if ($size && is_array($size))
+            return "http://placehold.it/{$size['w']}x{$size['h']}?text=No Img";
+
+        return "http://placehold.it/200?text=No Img";
     }
 }
 
@@ -537,10 +571,10 @@ if ( ! function_exists('get_formated_country_name') )
         }
 
         if($code){
-            $full_path = image_path('flags') . $code . '.png';
+            $full_path = sys_image_path('flags') . $code . '.png';
 
             if(!file_exists($full_path))
-                $full_path = image_path('flags') . 'default.gif';
+                $full_path = sys_image_path('flags') . 'default.gif';
 
             return '<img src="'. asset($full_path) .'" alt="'. $code .'"> <span class="indent5">' . $country . '</span>';
         }

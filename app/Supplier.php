@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Common\Taggable;
+use App\Common\Imageable;
 use App\Common\Addressable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Supplier extends Model
 {
-    use SoftDeletes, Taggable, Addressable;
+    use SoftDeletes, Addressable, Imageable;
 
     /**
      * The database table used by the model.

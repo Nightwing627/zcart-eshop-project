@@ -32,7 +32,11 @@
 				    @foreach($users as $user )
 				        <tr>
 							<td>
-								<img src="{{ get_image_src($user->id, 'users', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @if($user->image)
+									<img src="{{ get_storage_file_url(optional($user->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @else
+				            		<img src="{{ get_gravatar_url($user->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @endif
 							</td>
 							<td>{{ $user->nice_name }}</td>
 							<td>{{ $user->name }}</td>
@@ -43,7 +47,7 @@
 				          <td>{{ ($user->active) ? trans('app.active') : trans('app.inactive') }}</td>
 				          <td class="row-options">
 							@can('view', $user)
-					            <a href="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
+					            <a href="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.profile') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
 							@endcan
 
 							@can('secretLogin', $user)
@@ -98,7 +102,7 @@
 			        @foreach($trashes as $trash )
 				        <tr>
 				          	<td>
-								<img src="{{ get_image_src($trash->id, 'users', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+								<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 							</td>
 					        <td>{{ $trash->nice_name }}</td>
 					        <td>{{ $trash->name }}</td>

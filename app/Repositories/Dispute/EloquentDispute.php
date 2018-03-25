@@ -39,9 +39,8 @@ class EloquentDispute extends EloquentRepository implements BaseRepository, Disp
     {
         $dispute = $this->model->create($request->all());
 
-        if ($request->hasFile('attachment')) {
-            Attachment::storeAttachmentFromRequest($request, $dispute, 'attachments');
-        }
+        if ($request->hasFile('attachment'))
+            Attachment::storeAttachmentFromRequest($request, $dispute, attachment_storage_dir());
 
         return $dispute;
     }
@@ -61,9 +60,8 @@ class EloquentDispute extends EloquentRepository implements BaseRepository, Disp
 
         $response = $dispute->replies()->create($request->all());
 
-        if ($request->hasFile('attachment')) {
-            Attachment::storeAttachmentFromRequest($request, $response, 'attachments');
-        }
+        if ($request->hasFile('attachment'))
+            Attachment::storeAttachmentFromRequest($request, $response, attachment_storage_dir());
 
         return $response;
     }

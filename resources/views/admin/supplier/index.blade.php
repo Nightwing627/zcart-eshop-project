@@ -21,7 +21,6 @@
 			<table class="table table-hover table-2nd-short">
 				<thead>
 					<tr>
-						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.contact_person') }}</th>
 						<th>{{ trans('app.email') }}</th>
@@ -33,9 +32,11 @@
 					@foreach($suppliers as $supplier )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($supplier->id, 'suppliers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($supplier->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+							<p class="indent10">
+								{{ $supplier->name }}
+							</p>
 						</td>
-						<td>{{ $supplier->name }}</td>
 						<td>{{ $supplier->contact_person }}</td>
 						<td>{{ $supplier->email }}</td>
 						<td>{{ ($supplier->active) ? trans('app.active') : trans('app.inactive') }}</td>
@@ -79,7 +80,6 @@
 			<table class="table table-hover table-2nd-short">
 				<thead>
 					<tr>
-						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.contact_person') }}</th>
 						<th>{{ trans('app.email') }}</th>
@@ -91,9 +91,11 @@
 					@foreach($trashes as $trash )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($trash->id, 'suppliers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+							<p class="indent10">
+								{{ $trash->name }}
+							</p>
 						</td>
-						<td>{{ $trash->name }}</td>
 						<td>{{ $trash->contact_person }}</td>
 						<td>{{ $trash->email }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>

@@ -9,7 +9,6 @@ use App\Shop;
 use App\Config;
 use App\PaymentMethod;
 use App\Http\Requests;
-use App\Helpers\ImageHelper;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\UpdateConfigRequest;
@@ -71,11 +70,11 @@ class ConfigController extends Controller
 
         $config->shop->update($request->all());
 
-        if ($request->hasFile('image'))
-            ImageHelper::UploadImages($request, 'shops', $id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $config->shop->deleteImage();
 
-        if ($request->input('delete_image') == 1)
-            ImageHelper::RemoveImages('shops', $id);
+        if ($request->hasFile('image'))
+            $config->shop->saveImage($request->file('image'));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }

@@ -30,9 +30,9 @@ class UpdateInventoryRequest extends Request
             'sale_price' => 'required|numeric',
             'offer_price' => 'nullable|numeric',
             'available_from' => 'nullable|date',
-            'offer_start' => 'nullable|date|required_with:offer_price|after_or_equal:now',
+            'offer_start' => 'nullable|date|required_with:offer_price',
             'offer_end' => 'nullable|date|required_with:offer_price|after:offer_start',
-            'image' => 'mimes:jpeg,png',
+            'image' => 'mimes:jpg,jpeg,png,gif',
         ];
     }
 

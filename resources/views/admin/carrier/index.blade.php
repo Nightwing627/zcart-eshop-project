@@ -3,7 +3,6 @@
 @section('buttons')
 	@can('create', App\Carrier::class)
 		<a href="{{ route('admin.exim', 'carriers') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
-
 		<a href="{{ route('admin.shipping.carrier.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_carrier') }}</a>
 	@endcan
 @endsection
@@ -31,12 +30,16 @@
 					@foreach($carriers as $carrier )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($carrier->id, 'carriers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($carrier->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
 							<p class="indent10">
 								{{ $carrier->name }}
 							</p>
 						</td>
-						<td>{!! $carrier->shippingZones() !!}</td>
+						<td>
+							@foreach($carrier->shippingZones as $zone)
+        						<label class="label label-outline">{{$zone->name}}</label>
+							@endforeach
+						</td>
 						<td class="text-center">
 							{{ ($carrier->active) ? trans('app.yes') : '-'}}
 						</td>
@@ -81,7 +84,7 @@
 					@foreach($trashes as $trash )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($trash->id, 'carriers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
 							<p class="indent10">
 								{{ $trash->name }}
 							</p>

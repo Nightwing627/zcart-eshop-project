@@ -5,7 +5,6 @@ namespace App\Repositories\Warehouse;
 use Auth;
 use App\Warehouse;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -21,17 +20,17 @@ class EloquentWarehouse extends EloquentRepository implements BaseRepository, Wa
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('manager', 'primaryAddress')->get();
+            return $this->model->mine()->with('manager', 'image', 'primaryAddress')->get();
 
-        return $this->model->with('manager', 'primaryAddress')->get();
+        return $this->model->with('manager', 'image', 'primaryAddress')->get();
     }
 
     public function trashOnly()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->onlyTrashed()->get();
+            return $this->model->mine()->with('image')->onlyTrashed()->get();
 
-        return parent::trashOnly();
+        return $this->model->with('image')->onlyTrashed()->get();
     }
 
     public function store(Request $request)
@@ -41,7 +40,7 @@ class EloquentWarehouse extends EloquentRepository implements BaseRepository, Wa
         $this->saveAdrress($request->all(), $warehouse);
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $warehouse->id);
+            $warehouse->saveImage($request->file('image'));
 
         return $warehouse;
     }
@@ -50,22 +49,22 @@ class EloquentWarehouse extends EloquentRepository implements BaseRepository, Wa
     {
         $warehouse = parent::update($request, $id);
 
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($warehouse->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $warehouse->deleteImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $warehouse->id);
+            $warehouse->saveImage($request->file('image'));
 
         return $warehouse;
     }
 
     public function destroy($id)
     {
-        $warehouse = $this->model->onlyTrashed()->findOrFail($id);
+        $warehouse = parent::findTrash($id);
 
         $warehouse->flushAddresses();
 
-        $this->removeImages($id);
+        $warehouse->flushImages();
 
         return $warehouse->forceDelete();
     }
@@ -73,15 +72,5 @@ class EloquentWarehouse extends EloquentRepository implements BaseRepository, Wa
     public function saveAdrress(array $address, $warehouse)
     {
         $warehouse->addresses()->create($address);
-    }
-
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'warehouses', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('warehouses', $id);
     }
 }

@@ -4,7 +4,6 @@ namespace App\Repositories\Shop;
 
 use App\Shop;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -19,7 +18,12 @@ class EloquentShop extends EloquentRepository implements BaseRepository, ShopRep
 
     public function all()
     {
-        return $this->model->with('owner', 'primaryAddress')->get();
+        return $this->model->with('owner', 'image', 'primaryAddress')->get();
+    }
+
+    public function trashOnly()
+    {
+        return $this->model->with('image')->onlyTrashed()->get();
     }
 
     public function staffs($shop)
@@ -39,7 +43,7 @@ class EloquentShop extends EloquentRepository implements BaseRepository, ShopRep
         $this->saveAdrress($request->all(), $shop);
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $shop->id);
+            $shop->saveImage($request->file('image'));
 
         return $shop;
     }
@@ -48,24 +52,24 @@ class EloquentShop extends EloquentRepository implements BaseRepository, ShopRep
     {
         $shop = parent::update($request, $id);
 
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($shop->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $shop->deleteImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $shop->id);
+            $shop->saveImage($request->file('image'));
 
         return $shop;
     }
 
     public function destroy($id)
     {
-        $shop = $this->model->onlyTrashed()->findOrFail($id);
+        $shop = parent::findTrash($id);
 
         $shop->flushAddresses();
 
         $shop->staffs()->forceDelete();
 
-        $this->removeImages($shop->id);
+        $shop->flushImages();
 
         return $shop->forceDelete();
     }
@@ -73,15 +77,5 @@ class EloquentShop extends EloquentRepository implements BaseRepository, ShopRep
     public function saveAdrress(array $address, $shop)
     {
         $shop->addresses()->create($address);
-    }
-
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'shops', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('shops', $id);
     }
 }

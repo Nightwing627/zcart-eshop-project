@@ -1,10 +1,9 @@
 <div class="admin-user-widget">
     <span class="admin-user-widget-img">
-        <img src="{{ get_image_src($shop->id, 'shops', 'medium') }}" class="thumbnail" alt="{{ trans('app.image') }}">
+        <img src="{{ get_storage_file_url(optional($shop->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.logo') }}">
     </span>
 
     <div class="admin-user-widget-content">
-
         <span class="admin-user-widget-title">
             {{ trans('app.shop') . ': ' . $shop->name }}
         </span>

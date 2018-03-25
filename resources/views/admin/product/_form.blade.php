@@ -54,7 +54,7 @@
           <legend>{{ trans('app.form.images') }}</legend>
           <div class="form-group">
             <div class="file-loading">
-              <input id="dropzone-input" name="attachments[]" type="file" accept="image/*" multiple>
+              <input id="dropzone-input" name="images[]" type="file" accept="image/*" multiple>
             </div>
           </div>
         </fieldset>
@@ -180,8 +180,8 @@
 
         <fieldset>
           <legend>{{ trans('app.featured_image') }}</legend>
-          @if(isset($product) && Storage::exists(image_path("products/{$product->id}") . '.png'))
-            <img src="{{ get_image_src($product->id, 'products') }}" width="100%" alt="{{ trans('app.featured_image') }}">
+          @if(isset($product) && $product->featuredImage)
+            <img src="{{ get_storage_file_url($product->featuredImage->path, 'small') }}" alt="{{ trans('app.featured_image') }}">
             <label>
               <span style="margin-left: 10px;">
                 {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}

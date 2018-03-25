@@ -5,7 +5,6 @@ namespace App\Repositories\AttributeValue;
 use App\Attribute;
 use App\AttributeValue;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -27,8 +26,8 @@ class EloquentAttributeValue extends EloquentRepository implements BaseRepositor
     {
         $attribute = parent::store($request);
 
-        if ($request->hasFile('image'))
-            $this->uploadImages($request, $attribute->id);
+       if ($request->hasFile('image'))
+            $attribute->saveImage($request->file('image'));
 
         return $attribute;
     }
@@ -37,11 +36,11 @@ class EloquentAttributeValue extends EloquentRepository implements BaseRepositor
     {
         $attribute = parent::update($request, $id);
 
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($attribute->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $attribute->deleteImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $attribute->id);
+            $attribute->saveImage($request->file('image'));
 
         return $attribute;
     }
@@ -53,28 +52,18 @@ class EloquentAttributeValue extends EloquentRepository implements BaseRepositor
 
     public function destroy($id)
     {
-        $this->removeImages($id);
+        $attribute = parent::findTrash($id);
 
-        return parent::destroy($id);
+        $attribute->flushImages();
+
+        return $attribute->forceDelete();
     }
 
     public function reorder(array $attributeValues)
     {
         foreach ($attributeValues as $id => $order)
-        {
             $this->model->findOrFail($id)->update(['order' => $order]);
-        }
 
         return true;
-    }
-
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'patterns', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('patterns', $id);
     }
 }

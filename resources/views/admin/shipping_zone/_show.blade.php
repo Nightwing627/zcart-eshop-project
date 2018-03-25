@@ -2,11 +2,8 @@
     <div class="modal-content">
         <div class="modal-body" style="padding: 0px;">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
-
             <div class="col-md-3 nopadding" style="margin-top: 10px;">
-
-				<img src="{{ get_image_src($supplier->id, 'suppliers', 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
-
+				<img src="{{ get_storage_file_url(optional($supplier->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.logo') }}">
 			</div>
             <div class="col-md-9 nopadding">
 				<table class="table no-border">

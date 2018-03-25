@@ -42,8 +42,8 @@
 							@endif
 						</td>
 						<td>
-					 	  	@if(Storage::exists(image_path("patterns/{$attributeValue->id}") . 'small.png'))
-								<img src="{{ get_image_src($attributeValue->id, 'patterns', 'small') }}" class="img-sm" alt="{{ trans('app.image') }}">
+					 	  	@if($attributeValue->image)
+								<img src="{{ get_storage_file_url($attributeValue->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 							@endif
 						</td>
 						<td class="row-options">
@@ -96,8 +96,8 @@
 			          	@endif
 			          </td>
 					  <td>
-				 	  	@if(Storage::exists(image_path("patterns/{$trash->id}") . 'small.png'))
-							<img src="{{ get_image_src($trash->id, 'patterns', 'small') }}" class="img-sm" alt="{{ trans('app.image') }}">
+				 	  	@if($trash->image)
+							<img src="{{ get_storage_file_url($trash->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 						@endif
 					  </td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>

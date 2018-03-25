@@ -23,7 +23,12 @@
 	              	<div class="mailbox-read-info">
 	              		<div class="row">
 		              		<div class="col-md-1">
-								<img src="{{ get_image_src($message->customer_id, 'customers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @if($message->customer->image)
+									<img src="{{ get_storage_file_url(optional($message->customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @else
+				            		<img src="{{ get_gravatar_url($message->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @endif
+
 								@can('view', $message->customer)
 					            	<a href="{{ route('admin.admin.customer.show', $message->customer) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 								@endcan

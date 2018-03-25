@@ -20,6 +20,7 @@
 	      <table class="table table-hover table-option">
 	        <thead>
 	        <tr>
+	          <th>{{ trans('app.image') }}</th>
 	          <th>{{ trans('app.blog_title') }}</th>
 	          <th>{{ trans('app.author') }}</th>
 	          <th><i class="fa fa-comments"></i></th>
@@ -31,15 +32,17 @@
 		        @foreach($blogs as $blog )
 			        <tr>
 			          <td>
-			          	<strong>{!! $blog->title !!}</strong>
-			          	<span class="excerpt-td">{!! $blog->excerpt !!}</span>
+						<img src="{{ get_storage_file_url(optional($blog->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+			          </td>
+			          <td>
+				          	<strong>{!! $blog->title !!}</strong>
+				          	<span class="excerpt-td">{!! $blog->excerpt !!}</span>
 			          </td>
 			          <td>{{ $blog->author->getName() }}</td>
 			          <td>{{ $blog->comments_count }}</td>
 			          <td>
 			          	@if($blog->status)
 				          	{{ trans('app.published') }}
-				          	{{-- {{ $blog->published_at->toDayDateTimeString() }} --}}
 				        @else
 				          	 {{ trans('app.draft') }}
 				        @endif
@@ -73,6 +76,7 @@
 	      <table class="table table-hover table-2nd-short">
 	        <thead>
 	        <tr>
+	          <th>{{ trans('app.image') }}</th>
 	          <th>{{ trans('app.blog_title') }}</th>
 	          <th>{{ trans('app.author') }}</th>
 	          <th>{{ trans('app.deleted_at') }}</th>
@@ -83,8 +87,11 @@
 		        @foreach($trashes as $trash )
 			        <tr>
 			          <td>
-			          	<strong>{!! $trash->title !!}</strong>
-			          	<p>{!! $trash->excerpt !!}</p>
+						<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+			          </td>
+			          <td>
+				          	<strong>{!! $trash->title !!}</strong>
+				          	<span class="excerpt-td">{!! $trash->excerpt !!}</span>
 			          </td>
 			          <td>{{ $trash->user->getName() }}</td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>

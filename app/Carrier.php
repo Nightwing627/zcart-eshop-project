@@ -2,13 +2,14 @@
 
 namespace App;
 
+use App\Common\Imageable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Carrier extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Imageable;
 
     /**
      * The database table used by the model.
@@ -51,15 +52,7 @@ class Carrier extends Model
      */
     public function shippingZones()
     {
-        $shipping_zone_ids = $this->shippingRates->pluck('shipping_zone_id')->unique()->toArray();
-
-        $shippingZones = \DB::table('shipping_zones')->whereIn('id', $shipping_zone_ids)->pluck('name');
-
-        $zone_str = '';
-        foreach ($shippingZones as $zone)
-            $zone_str .= '<label class="label label-outline">' . $zone . '</label> ';
-
-        return $zone_str;
+        return $this->belongsToMany(ShippingZone::class, 'shipping_rates');
     }
 
     /**

@@ -131,7 +131,7 @@
 						        <tbody>
 							        @foreach($coupon->customers as $customer )
 								          <td>
-											<img src="{{ get_image_src($customer->id, 'customers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+											<img src="{{ get_storage_file_url(optional($customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 								          </td>
 								          <td>{{ $customer->nice_name }}</td>
 								          <td>{{ $customer->name }}</td>

@@ -32,7 +32,7 @@
 		        @foreach($categories as $category )
 			        <tr>
 			          	<td>
-							<img src="{{ get_image_src($category->id, 'categories', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($category->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 			          	</td>
 			          	<td>
 			          		<h5>{{ $category->name }}</h5>
@@ -117,5 +117,4 @@
 	    <!-- /.box-body -->
 	</div>
 	<!-- /.box -->
-
 @endsection

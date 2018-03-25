@@ -29,8 +29,7 @@
 					@foreach($packagings as $packaging )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($packaging->id, 'packagings', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
-
+							<img src="{{ get_storage_file_url(optional($packaging->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							<p class="indent10">
 								{{ $packaging->name }}
 								@if($packaging->default)
@@ -86,7 +85,7 @@
 					@foreach($trashes as $trash )
 					<tr>
 						<td>
-							<img src="{{ get_image_src($trash->id, 'packagings', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							<p class="indent10">
 								{{ $trash->name }}<br>
 								<small>{{ get_formated_dimension($trash) }}</small>

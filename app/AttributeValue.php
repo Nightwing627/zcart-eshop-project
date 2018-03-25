@@ -2,13 +2,14 @@
 
 namespace App;
 
+use App\Common\Imageable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AttributeValue extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Imageable;
 
     /**
      * The database table used by the model.
@@ -42,7 +43,7 @@ class AttributeValue extends Model
      */
     public function attribute()
     {
-        return $this->belongsTo('App\Attribute');
+        return $this->belongsTo(Attribute::class);
     }
 
     /**
@@ -50,7 +51,7 @@ class AttributeValue extends Model
      */
     public function inventories()
     {
-        return $this->belongsToMany('App\Inventory', 'attribute_inventory')
+        return $this->belongsToMany(Inventory::class, 'attribute_inventory')
                     ->withPivot('attribute_id')
                     ->withTimestamps();
     }

@@ -15,10 +15,12 @@
 
             <tr id="{{ $id }}">
               <td>
-                @if(Storage::exists(image_path("inventories/{$id}") . 'small.png'))
-                  <img src="{{ get_image_src($id, 'inventories', 'small') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
+                @if($item->image)
+                  <img src="{{ get_storage_file_url($item->image->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
+                @elseif($item->product->featuredImage)
+                  <img src="{{ get_storage_file_url($item->product->featuredImage->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
                 @else
-                  <img src="{{ get_image_src($item->product->id, 'products', 'small') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
+                  <img src="{{ get_storage_file_url(optional($item->product->image)->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
                 @endif
               </td>
               <td class="nopadding-right" width="55%">
@@ -27,7 +29,6 @@
                 {{ Form::hidden("cart[".$i."][item_description]", $item->pivot->item_description) }}
                 {{ Form::hidden("cart[".$i."][shipping_weight]", $item->shipping_weight) }}
               </td>
-
               <td class="nopadding-right" width="15%">
                 {{ Form::number("cart[".$i."][unit_price]", get_formated_decimal($item->sale_price), ['id' => 'price-'.$id, 'class' => 'form-control itemPrice no-border', 'step' => 'any', 'required']) }}
               </td>

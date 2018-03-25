@@ -7,16 +7,12 @@ use App\Product;
 use App\Inventory;
 use App\Attribute;
 use App\AttributeValue;
-use App\Common\Taggable;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
 class EloquentInventory extends EloquentRepository implements BaseRepository, InventoryRepository
 {
-    use Taggable;
-
 	protected $model;
 
 	public function __construct(Inventory $inventory)
@@ -27,17 +23,17 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('product')->get();
+            return $this->model->mine()->with('product', 'image')->get();
 
-        return $this->model->with('product')->get();
+        return $this->model->with('product', 'image')->get();
     }
 
     public function trashOnly()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->onlyTrashed()->with('product')->get();
+            return $this->model->mine()->onlyTrashed()->with('product', 'image')->get();
 
-        return $this->model->onlyTrashed()->with('product')->get();
+        return $this->model->onlyTrashed()->with('product', 'image')->get();
     }
 
     public function search(Request $request)
@@ -56,17 +52,14 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
 
         $this->setAttributes($inventory, $request->input('variants'));
 
-        if ($request->input('carrier_list'))
-            $this->syncCarriers($inventory, $request->input('carrier_list'));
-
         if ($request->input('packaging_list'))
-            $this->syncPackagings($inventory, $request->input('packaging_list'));
+            $inventory->packagings()->sync($request->input('packaging_list'));
 
         if ($request->input('tag_list'))
-            $this->syncTags($inventory, $request->input('tag_list'));
+            $inventory->syncTags($inventory, $request->input('tag_list'));
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $inventory->id);
+            $inventory->saveImage($request->file('image'));
 
         return $inventory;
     }
@@ -152,20 +145,13 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
             // Insert the record
             $inventory = Inventory::create($data);
 
-            // Sync Carriers
-            if ($carrier_lists)
-                $this->syncCarriers($inventory, $carrier_lists);
-
             // Sync Attributes
             if ($variants[$key])
                 $this->setAttributes($inventory, $variants[$key]);
 
             // Save Images
-            if ($images[$key]){
-                $images[$key]->move('assets/images/inventories/', $inventory->id.'.png');
-
-                ImageHelper::CreateThumbnails('inventories', $inventory->id);
-            }
+            if ($images[$key])
+                $inventory->saveImage($images[$key]);
         }
 
         return true;
@@ -177,17 +163,15 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
 
         $this->setAttributes($inventory, $request->input('variants'));
 
-        $this->syncCarriers($inventory, $request->input('carrier_list', []));
+        $inventory->packagings()->sync($request->input('packaging_list', []));
 
-        $this->syncPackagings($inventory, $request->input('packaging_list', []));
+        $inventory->syncTags($inventory, $request->input('tag_list', []));
 
-        $this->syncTags($inventory, $request->input('tag_list', []));
-
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($inventory->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $inventory->deleteImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $inventory->id);
+            $inventory->saveImage($request->file('image'));
 
         return $inventory;
     }
@@ -195,14 +179,11 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
     public function destroy($inventory)
     {
         if(! $inventory instanceof Inventory)
-            $inventory = $this->model->onlyTrashed()->findOrFail($inventory);
+            $inventory = parent::findTrash($inventory);
 
-        $this->detachTags($inventory->id, 'inventory');
+        $inventory->detachTags($inventory->id, 'inventory');
 
-        if($inventory->hasAttachments())
-            $inventory->flushAttachments();
-
-        $this->removeImages($inventory->id);
+        $inventory->flushImages();
 
         return $inventory->forceDelete();
     }
@@ -269,25 +250,5 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
         }
 
         return $results;
-    }
-
-    public function syncCarriers($inventory, array $ids)
-    {
-        $inventory->carriers()->sync($ids);
-    }
-
-    public function syncPackagings($inventory, array $ids)
-    {
-        $inventory->packagings()->sync($ids);
-    }
-
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'inventories', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('inventories', $id);
     }
 }

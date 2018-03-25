@@ -33,10 +33,10 @@
 					@foreach($inventories as $inventory )
 					<tr>
 						<td>
-						  	@if(Storage::exists(image_path("inventories/{$inventory->id}") . 'small.png'))
-								<img src="{{ get_image_src($inventory->id, 'inventories', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+						  	@if($inventory->image)
+								<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							@else
-								<img src="{{ get_image_src($inventory->product->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							@endif
 						</td>
 						<td>{{ $inventory->sku }}</td>
@@ -108,10 +108,10 @@
 					@foreach($trashes as $trash )
 					<tr>
 						<td>
-						  	@if(Storage::exists(image_path("inventories/{$trash->id}") . 'small.png'))
-								<img src="{{ get_image_src($trash->id, 'inventories', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+						  	@if($trash->image)
+								<img src="{{ get_storage_file_url($trash->image->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							@else
-								<img src="{{ get_image_src($trash->product->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<img src="{{ get_storage_file_url(optional($trash->product->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 							@endif
 						</td>
 						<td>{{ $trash->sku }}</td>

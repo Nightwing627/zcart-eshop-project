@@ -4,9 +4,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
 
             <div class="col-md-3 nopadding" style="margin-top: 10px;">
-
-				<img src="{{ get_image_src($manufacturer->id, 'manufacturers', 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
-
+				<img src="{{ get_storage_file_url(optional($manufacturer->image)->path, 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.logo') }}">
 			</div>
 
             <div class="col-md-9 nopadding">
@@ -68,7 +66,6 @@
 								<td style="width: 75%;"> {{ $manufacturer->phone }} </td>
 							</tr>
 							@endif
-
 				        </table>
 				    </div>
 				    <!-- /.tab-pane -->

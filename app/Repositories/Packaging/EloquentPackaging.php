@@ -5,7 +5,6 @@ namespace App\Repositories\Packaging;
 use Auth;
 use App\Packaging;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -21,17 +20,17 @@ class EloquentPackaging extends EloquentRepository implements BaseRepository, Pa
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->get();
+            return $this->model->mine()->with('image')->get();
 
-        return parent::all();
+        return $this->model->with('image')->all();
     }
 
     public function trashOnly()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->onlyTrashed()->get();
+            return $this->model->mine()->with('image')->onlyTrashed()->get();
 
-        return parent::trashOnly();
+        return $this->model->with('image')->onlyTrashed()->get();
     }
 
     public function store(Request $request)
@@ -39,7 +38,7 @@ class EloquentPackaging extends EloquentRepository implements BaseRepository, Pa
         $packaging = parent::store($request);
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $packaging->id);
+            $packaging->saveImage($request->file('image'));
 
         return $packaging;
     }
@@ -51,20 +50,22 @@ class EloquentPackaging extends EloquentRepository implements BaseRepository, Pa
 
         $packaging = parent::update($request, $id);
 
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($packaging->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $packaging->deleteImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $packaging->id);
+            $packaging->saveImage($request->file('image'));
 
         return $packaging;
     }
 
     public function destroy($id)
     {
-        $this->removeImages($id);
+        $packaging = parent::findTrash($id);
 
-        return parent::destroy($id);
+        $packaging->flushImages();
+
+        return $packaging->forceDelete();
     }
 
     public function removeDefault()
@@ -72,15 +73,5 @@ class EloquentPackaging extends EloquentRepository implements BaseRepository, Pa
         $default = $this->model->where('default', 1)->mine()->first();
 
         return $default ? $default->update(['default' => null]) : true;
-    }
-
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'packagings', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('packagings', $id);
     }
 }

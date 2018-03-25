@@ -24,7 +24,12 @@
 					@foreach($disputes as $dispute )
 						<tr>
 							<td>
-								<img src="{{ get_image_src($dispute->customer_id, 'customers', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}"> &nbsp;
+					            @if($dispute->customer->image)
+									<img src="{{ get_storage_file_url(optional($dispute->customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @else
+				            		<img src="{{ get_gravatar_url($dispute->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @endif
+					             &nbsp;
 								<strong>
 									{{ $dispute->customer->name }}
 								</strong>

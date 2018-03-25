@@ -93,7 +93,7 @@ return [
 
     'config_alert_quantity' => 'A notification email will be send your inventory goes below the alert quantity',
 
-    'config_merchant_logo_max_size_limit_kb' => 'The maximum image size vendors can upload for inventory/logo/avatar. The limit in kilobytes.',
+    'config_max_img_size_limit_kb' => 'The maximum image size limit system can upload for product/inventory/logo/avatar. The size in kilobytes.',
 
     'config_max_number_of_inventory_imgs' => 'Choose how many images can be uploaded for a single inventory item.',
 

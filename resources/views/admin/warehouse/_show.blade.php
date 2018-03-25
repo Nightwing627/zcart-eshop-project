@@ -3,7 +3,7 @@
         <div class="modal-body" style="padding: 0px;">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
             <div class="col-md-3 nopadding" style="margin-top: 10px;">
-				<img src="{{ get_image_src($warehouse->id, 'warehouses', 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
+				<img src="{{ get_storage_file_url(optional($warehouse->image)->path, 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.image') }}">
 			</div>
             <div class="col-md-9 nopadding">
 				<table class="table no-border">
@@ -65,10 +65,10 @@
 								@foreach($warehouse->inventories as $inventory )
 								<tr>
 									<td>
-									  	@if(Storage::exists(image_path("inventories/{$inventory->id}") . 'small.png'))
-											<img src="{{ get_image_src($inventory->id, 'inventories', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+										@if($inventory->image)
+											<img src="{{ get_storage_file_url(optional($inventory->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 										@else
-											<img src="{{ get_image_src($inventory->product->id, 'products', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+											<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 										@endif
 									</td>
 									<td>{{ $inventory->sku }}</td>

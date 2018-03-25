@@ -60,11 +60,11 @@
 
 <div class="form-group">
 	<label for="exampleInputFile">{{ trans('app.form.logo') }}</label>
-  @if(isset($manufacturer) && Storage::exists(image_path("manufacturers/{$manufacturer->id}") . 'medium.png'))
+  @if(isset($manufacturer) && $manufacturer->image)
   <label>
-    <img src="{{ get_image_src($manufacturer->id, 'manufacturers', 'medium') }}" width="80px" alt="{{ trans('app.image') }}">
+    <img src="{{ get_storage_file_url($manufacturer->image->path, 'small') }}" alt="{{ trans('app.logo') }}">
     <span style="margin-left: 10px;">
-      {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
+      {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_logo') }}
     </span>
   </label>
   @endif

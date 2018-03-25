@@ -54,7 +54,7 @@
           <legend>{{ trans('app.form.images') }}</legend>
           <div class="form-group">
             <div class="file-loading">
-              <input id="dropzone-input" name="attachments[]" type="file" accept="image/*" multiple>
+              <input id="dropzone-input" name="images[]" type="file" accept="image/*" multiple>
             </div>
           </div>
         </fieldset>

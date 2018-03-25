@@ -6,7 +6,6 @@ use Auth;
 use App\Role;
 use App\Merchant;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -21,12 +20,12 @@ class EloquentMerchant extends EloquentRepository implements BaseRepository, Mer
 
     public function all()
     {
-        return $this->model->where('role_id', Role::MERCHANT)->with('owns', 'primaryAddress')->get();
+        return $this->model->where('role_id', Role::MERCHANT)->with('owns', 'image', 'primaryAddress')->get();
     }
 
     public function trashOnly()
     {
-        return $this->model->where('role_id', Role::MERCHANT)->with('owns')->onlyTrashed()->get();
+        return $this->model->where('role_id', Role::MERCHANT)->with('owns', 'image')->onlyTrashed()->get();
     }
 
     public function addresses($merchant)
@@ -41,7 +40,7 @@ class EloquentMerchant extends EloquentRepository implements BaseRepository, Mer
         $this->saveAdrress($request->all(), $merchant);
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $merchant->id);
+            $merchant->saveImage($request->file('image'));
 
         return $merchant;
     }
@@ -50,34 +49,24 @@ class EloquentMerchant extends EloquentRepository implements BaseRepository, Mer
     {
         $merchant = parent::update($request, $id);
 
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($merchant->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $merchant->deleteImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $merchant->id);
+            $merchant->saveImage($request->file('image'));
 
         return $merchant;
     }
 
     public function destroy($id)
     {
-        $merchant = $this->model->onlyTrashed()->findOrFail($id);
+        $merchant = parent::findTrash($id);
 
         $merchant->flushAddresses();
 
-        $this->removeImages($merchant->id);
+        $merchant->flushImages();
 
         return $merchant->forceDelete();
-    }
-
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'users', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('users', $id);
     }
 
     public function saveAdrress(array $address, $merchant)

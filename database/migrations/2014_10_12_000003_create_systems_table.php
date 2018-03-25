@@ -59,7 +59,7 @@ class CreateSystemsTable extends Migration
 
             // Views
             $table->integer('pagination')->unsigned()->default(10);
-            $table->integer('merchant_logo_max_size_limit_kb')->default(2000);
+            $table->integer('max_img_size_limit_kb')->default(5000);
             $table->integer('max_number_of_inventory_imgs')->unsigned()->default(5);
 
             // Address

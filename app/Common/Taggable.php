@@ -61,7 +61,7 @@ trait Taggable {
      */
     public function detachTags($id, $taggable)
     {
-        $taggable_type = 'App\\' . studly_case($taggable);
+        $taggable_type = get_qualified_model($taggable);
 
         return \DB::table('taggables')->where('taggable_id', $id)->where('taggable_type', $taggable_type)->delete();
     }

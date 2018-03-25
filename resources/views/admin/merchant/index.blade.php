@@ -19,7 +19,6 @@
 			<table class="table table-hover table-2nd-short">
 				<thead>
 					<tr>
-					  <th>{{ trans('app.avatar') }}</th>
 					  <th>{{ trans('app.nice_name') }}</th>
 					  <th>{{ trans('app.full_name') }}</th>
 					  <th>{{ trans('app.email') }}</th>
@@ -32,23 +31,31 @@
 				    @foreach($merchants as $merchant )
 				        <tr>
 				          <td>
-							<img src="{{ get_image_src($merchant->id, 'users', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @if($merchant->image)
+								<img src="{{ get_storage_file_url(optional($merchant->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @else
+			            		<img src="{{ get_gravatar_url($merchant->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @endif
+							<p class="indent10">
+								{{ $merchant->nice_name }}
+							</p>
 				          </td>
-				          <td>{{ $merchant->nice_name }}</td>
 				          <td>{{ $merchant->name }}</td>
 				          <td>{{ $merchant->email }}</td>
 				          <td>
 				          	@if($merchant->owns)
-					            <a href="{{ route('admin.vendor.shop.show', $merchant->owns->id) }}" class="ajax-modal-btn">
-									<img src="{{ get_image_src($merchant->owns->id, 'shops', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">&nbsp;
-						          	<span class="label label-outline">{{ $merchant->owns->name }}</span>
-						          </a>
+								<img src="{{ get_storage_file_url(optional($merchant->owns->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+								<p class="indent10">
+						            <a href="{{ route('admin.vendor.shop.show', $merchant->owns->id) }}" class="ajax-modal-btn">
+										{{ $merchant->owns->name }}
+							         </a>
+								</p>
 				          	@endif
 				          </td>
 				          <td>{{ ($merchant->active) ? trans('app.active') : trans('app.inactive') }}</td>
 				          <td class="row-options">
 							@can('view', $merchant)
-					            <a href="{{ route('admin.vendor.merchant.show', $merchant->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
+					            <a href="{{ route('admin.vendor.merchant.show', $merchant->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.profile') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
 							@endcan
 
 							@can('secretLogin', $merchant)
@@ -90,7 +97,6 @@
 	    	<table class="table table-hover table-2nd-short">
 		        <thead>
 		        <tr>
-		          <th>{{ trans('app.avatar') }}</th>
 		          <th>{{ trans('app.nice_name') }}</th>
 		          <th>{{ trans('app.full_name') }}</th>
 		          <th>{{ trans('app.email') }}</th>
@@ -103,13 +109,15 @@
 			        @foreach($trashes as $trash )
 				        <tr>
 				          	<td>
-								<img src="{{ get_image_src($trash->id, 'users', 'small') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+								<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+								<p class="indent10">
+									{{ $trash->nice_name }}
+								</p>
 							</td>
-					        <td>{{ $trash->nice_name }}</td>
 					        <td>{{ $trash->name }}</td>
 					        <td>{{ $trash->email }}</td>
 					        <td>
-					        	<span class="label label-outline">{{ $trash->shop->name or '' }}</span>
+					        	<span class="label label-outline">{{ optional($trash->shop)->name }}</span>
 				          	</td>
 				          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 				          <td class="row-options">

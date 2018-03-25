@@ -4,16 +4,12 @@ namespace App\Repositories\Product;
 
 use Auth;
 use App\Product;
-use App\Common\Taggable;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
 class EloquentProduct extends EloquentRepository implements BaseRepository, ProductRepository
 {
-    use Taggable;
-
 	protected $model;
 
 	public function __construct(Product $product)
@@ -24,17 +20,17 @@ class EloquentProduct extends EloquentRepository implements BaseRepository, Prod
 	public function all()
 	{
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('categories')->withCount('inventories')->get();
+            return $this->model->mine()->with('categories', 'image')->withCount('inventories')->get();
 
-		return $this->model->with('categories')->withCount('inventories')->get();
+		return $this->model->with('categories', 'image')->withCount('inventories')->get();
 	}
 
 	public function trashOnly()
 	{
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->onlyTrashed()->with('categories')->get();
+            return $this->model->mine()->onlyTrashed()->with('categories', 'image')->get();
 
-		return $this->model->onlyTrashed()->with('categories')->get();
+		return $this->model->onlyTrashed()->with('categories', 'image')->get();
 	}
 
     public function store(Request $request)
@@ -42,13 +38,13 @@ class EloquentProduct extends EloquentRepository implements BaseRepository, Prod
         $product = parent::store($request);
 
         if ($request->input('category_list'))
-	        $this->syncCategories($product, $request->input('category_list'));
+            $product->categories()->sync($request->input('category_list'));
 
         if ($request->input('tag_list'))
-            $this->syncTags($product, $request->input('tag_list'));
+            $product->syncTags($product, $request->input('tag_list'));
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $product->id);
+            $product->saveImage($request->file('image'), true);
 
         return $product;
     }
@@ -57,15 +53,15 @@ class EloquentProduct extends EloquentRepository implements BaseRepository, Prod
     {
         $product = parent::update($request, $id);
 
-        $this->syncCategories($product, $request->input('category_list', []));
+        $product->categories()->sync($request->input('category_list', []));
 
-        $this->syncTags($product, $request->input('tag_list', []));
+        $product->syncTags($product, $request->input('tag_list', []));
 
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($product->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $product->deleteFeaturedImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $product->id);
+            $product->saveImage($request->file('image'), true);
 
         return $product;
     }
@@ -73,30 +69,12 @@ class EloquentProduct extends EloquentRepository implements BaseRepository, Prod
 	public function destroy($product)
 	{
         if(! $product instanceof Product)
-            $product = $this->model->onlyTrashed()->findOrFail($product);
+            $product = parent::findTrash($product);
 
-        $this->detachTags($product->id, 'product');
+        $product->detachTags($product->id, 'product');
 
-        if($product->hasAttachments())
-            $product->flushAttachments();
-
-        $this->removeImages($product->id);
+        $product->flushImages();
 
         return $product->forceDelete();
 	}
-
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'products', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('products', $id);
-    }
-
-    public function syncCategories($product, array $catIds)
-    {
-        $product->categories()->sync($catIds);
-    }
 }

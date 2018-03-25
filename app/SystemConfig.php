@@ -40,7 +40,7 @@ class SystemConfig extends Model
                         'coupon_code_size',
                         'gift_card_serial_number_size',
                         'gift_card_pin_size',
-                        'merchant_logo_max_size_limit_kb',
+                        'max_img_size_limit_kb',
                         'max_number_of_inventory_imgs',
                         'pagination',
                         'show_address_title',

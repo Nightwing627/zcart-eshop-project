@@ -5,7 +5,6 @@ namespace App\Repositories\Supplier;
 use Auth;
 use App\Supplier;
 use Illuminate\Http\Request;
-use App\Helpers\ImageHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -21,17 +20,17 @@ class EloquentSupplier extends EloquentRepository implements BaseRepository, Sup
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('primaryAddress')->get();
+            return $this->model->mine()->with('primaryAddress', 'image')->get();
 
-        return $this->model->with('primaryAddress')->get();
+        return $this->model->with('primaryAddress', 'image')->get();
     }
 
     public function trashOnly()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->onlyTrashed()->get();
+            return $this->model->mine()->with('image')->onlyTrashed()->get();
 
-        return parent::trashOnly();
+        return $this->model->with('image')->onlyTrashed()->get();
     }
 
     public function store(Request $request)
@@ -41,7 +40,7 @@ class EloquentSupplier extends EloquentRepository implements BaseRepository, Sup
         $this->saveAdrress($request->all(), $supplier);
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $supplier->id);
+            $supplier->saveImage($request->file('image'));
 
         return $supplier;
     }
@@ -50,22 +49,22 @@ class EloquentSupplier extends EloquentRepository implements BaseRepository, Sup
     {
         $supplier = parent::update($request, $id);
 
-        if ($request->input('delete_image') == 1)
-            $this->removeImages($supplier->id);
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $supplier->deleteImage();
 
         if ($request->hasFile('image'))
-            $this->uploadImages($request, $supplier->id);
+            $supplier->saveImage($request->file('image'));
 
         return $supplier;
     }
 
     public function destroy($id)
     {
-        $supplier = $this->model->onlyTrashed()->findOrFail($id);
+        $supplier = parent::findTrash($id);
 
         $supplier->flushAddresses();
 
-        $this->removeImages($id);
+        $supplier->flushImages();
 
         return $supplier->forceDelete();
     }
@@ -73,15 +72,5 @@ class EloquentSupplier extends EloquentRepository implements BaseRepository, Sup
     public function saveAdrress(array $address, $supplier)
     {
         $supplier->addresses()->create($address);
-    }
-
-    public function uploadImages(Request $request, $id)
-    {
-        ImageHelper::UploadImages($request, 'suppliers', $id);
-    }
-
-    public function removeImages($id)
-    {
-        ImageHelper::RemoveImages('suppliers', $id);
     }
 }

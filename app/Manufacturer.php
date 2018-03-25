@@ -2,14 +2,14 @@
 
 namespace App;
 
-use App\Common\Taggable;
+use App\Common\Imageable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Manufacturer extends Model
 {
-    use SoftDeletes, Taggable;
+    use SoftDeletes, Imageable;
 
     /**
      * The database table used by the model.

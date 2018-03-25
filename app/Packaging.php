@@ -2,13 +2,14 @@
 
 namespace App;
 
+use App\Common\Imageable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Packaging extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Imageable;
 
     /**
      * The database table used by the model.

@@ -46,15 +46,15 @@ class Attachment extends Model
      *
      * @return attachment model
      */
-    public static function storeAttachmentFromRequest($request, $attachable, $dir = 'attachments')
+    public static function storeAttachmentFromRequest($attachment, $attachable, $dir = 'attachments')
     {
-        $file = Storage::put($dir, $request->file('attachment'));
+        $file = Storage::put($dir, $attachment);
 
         return $attachable->attachments()->create([
             'path' => $file,
-            'name' => str_slug($request->file('attachment')->getClientOriginalName(), '-'),
-            'extension' => $request->file('attachment')->getClientOriginalExtension(),
-            'size' => $request->file('attachment')->getClientSize()
+            'name' => str_slug($attachment->getClientOriginalName(), '-'),
+            'extension' => $attachment->getClientOriginalExtension(),
+            'size' => $attachment->getClientSize()
         ]);
     }
 

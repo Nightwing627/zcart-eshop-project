@@ -38,17 +38,6 @@ class EloquentRefund extends EloquentRepository implements BaseRepository, Refun
         return $this->model->mine()->statusOf($status)->with('order')->get();
     }
 
-    public function store(Request $request)
-    {
-        $refund = $this->model->create($request->all());
-
-        if ($request->hasFile('attachment')) {
-            Attachment::storeAttachmentFromRequest($request, $refund, 'attachments');
-        }
-
-        return $refund;
-    }
-
     public function approve($refund)
     {
         if(! $refund instanceof Refund)

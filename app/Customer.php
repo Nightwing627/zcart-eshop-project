@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Common\Taggable;
+use App\Common\Imageable;
 use App\Common\Addressable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Customer extends Authenticatable
 {
 
-    use SoftDeletes, Notifiable, Addressable, Taggable;
+    use SoftDeletes, Notifiable, Addressable, Taggable, Imageable;
 
    /**
      * The database table used by the model.

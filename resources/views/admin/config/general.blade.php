@@ -121,7 +121,6 @@
 							    </div>
 							</div>
 						@endif
-
 						<p class="help-block">* {{ trans('app.form.required_fields') }}</p>
 
 				  		@if($can_update)
@@ -136,7 +135,6 @@
 							<div class="form-group text-center">
 								{!! Form::label('maintenance_mode', trans('app.form.maintenance_mode'), ['class' => 'control-label with-help']) !!}
 							  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.shop_maintenance_mode_handle') }}"></i>
-
 							  	<div class="handle">
 									<a href="{{ route('admin.setting.config.maintenanceMode.toggle', $shop) }}" type="button" class="btn btn-lg btn-secondary btn-toggle {{ $shop->config->maintenance_mode == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $shop->config->maintenance_mode == 1 ? 'true' : 'false' }}" autocomplete="off">
 										<div class="btn-handle"></div>
@@ -163,13 +161,11 @@
 					        <div class="spacer30"></div>
 						</div>
 
-				  		@if(isset($shop) && Storage::exists(image_path("shops/{$shop->id}") . 'medium.png'))
+						@if(isset($shop) && $shop->image)
 							<div class="form-group text-center">
 								<label class="with-help control-label"> {{ trans('app.logo') }}</label>
-						    	<img src="{{ get_image_src($shop->id, 'shops') }}" width="100%" alt="{{ trans('app.image') }}">
-
+								<img src="{{ get_storage_file_url(optional($shop->image)->path, 'medium') }}" width="100%" alt="{{ trans('app.logo') }}">
 						        <div class="spacer20"></div>
-
 								<label>
 							    	{!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_logo') }}
 								</label>

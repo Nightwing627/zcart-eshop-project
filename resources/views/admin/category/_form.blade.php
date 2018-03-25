@@ -25,12 +25,11 @@
 </div>
 <div class="form-group">
 	<label for="exampleInputFile"> {{ trans('app.form.image') }}</label>
-  @if(isset($category) && Storage::exists(image_path("categories/{$category->id}") . 'category_banner.png'))
-    <img src="{{ get_image_src($category->id, 'categories', 'category_banner') }}" class="card-bkimg" width="100%" alt="{{ trans('app.image') }}">
-
-    <label style="padding-top: 5px;">
+  @if(isset($category) && Storage::exists(optional($category->image)->path))
+    <img src="{{ get_storage_file_url(optional($category->image)->path, 'small') }}" width="" alt="{{ trans('app.image') }}">
+    <span style="margin-left: 10px;">
       {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
-    </label>
+    </span>
   @endif
 	<div class="row">
       <div class="col-md-9 nopadding-right">

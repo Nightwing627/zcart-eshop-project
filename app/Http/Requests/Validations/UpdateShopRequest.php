@@ -30,7 +30,7 @@ class UpdateShopRequest extends Request
            'legal_name' => 'required',
            'email' =>  'required|email|max:255|composite_unique:shops, '.$id,
            'external_url' => 'nullable|url',
-           'image' => 'max:' . config('system_settings.merchant_logo_max_size_limit_kb') . '|mimes:jpg,jpeg,png,gif',
+           'image' => 'max:' . config('system_settings.max_img_size_limit_kb') . '|mimes:jpg,jpeg,png,gif',
         ];
     }
 

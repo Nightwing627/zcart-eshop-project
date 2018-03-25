@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Common\Imageable;
 use App\Common\Addressable;
 use Laravel\Cashier\Billable;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Merchant extends Authenticatable
 {
-    use Billable, SoftDeletes, Notifiable, Addressable;
+    use Billable, SoftDeletes, Notifiable, Addressable, Imageable;
 
    /**
      * The database table used by the model.

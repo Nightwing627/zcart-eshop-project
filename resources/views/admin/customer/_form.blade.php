@@ -76,10 +76,9 @@
 
 <div class="form-group">
   <label for="exampleInputFile">{{ trans('app.form.avatar') }}</label>
-  @if(isset($customer) && Storage::exists(image_path("customers/{$customer->id}") . 'medium.png'))
+  @if(isset($customer) && Storage::exists(optional($customer->image)->path))
   <label>
-    <img src="{{ get_image_src($customer->id, 'customers', 'medium') }}" width="80px" alt="{{ trans('app.avatar') }}">
-
+    <img src="{{ get_storage_file_url(optional($customer->image)->path, 'small') }}" width="" alt="{{ trans('app.avatar') }}">
     <span style="margin-left: 10px;">
       {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_avatar') }}
     </span>
@@ -97,5 +96,4 @@
     </div>
   </div>
 </div>
-
 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>
