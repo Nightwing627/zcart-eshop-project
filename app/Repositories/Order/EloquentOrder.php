@@ -25,9 +25,9 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('customer', 'status', 'paymentStatus')->get();
+            return $this->model->mine()->with('customer', 'status')->get();
 
-        return $this->model->with('customer', 'status', 'paymentStatus')->get();
+        return $this->model->with('customer', 'status')->get();
     }
 
     public function trashOnly()
@@ -66,6 +66,34 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
             Cart::find($request->input('cart_id'))->forceDelete();
 
         return $order;
+    }
+
+    public function fulfill(Request $request, $order)
+    {
+        if(! $order instanceof Order)
+            $order = $this->model->find($order);
+
+        return $order->update($request->all());
+    }
+
+    public function updateOrderStatus(Request $request, $order)
+    {
+        if(! $order instanceof Order)
+            $order = $this->model->find($order);
+
+        $order->order_status_id = $request->input('order_status_id');
+
+        return $order->save();
+    }
+
+    public function togglePaymentStatus($order)
+    {
+        if(! $order instanceof Order)
+            $order = $this->model->find($order);
+
+        $order->payment_status = ($order->payment_status == Order::PAYMENT_STATUS_PAID) ? Order::PAYMENT_STATUS_UNPAID : Order::PAYMENT_STATUS_PAID;
+
+        return $order->save();
     }
 
     /**

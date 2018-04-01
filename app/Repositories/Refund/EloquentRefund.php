@@ -3,6 +3,7 @@
 namespace App\Repositories\Refund;
 
 use Auth;
+use App\Order;
 use App\Refund;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -52,18 +53,15 @@ class EloquentRefund extends EloquentRepository implements BaseRepository, Refun
             $refund = $this->getInst($refund);
 
         return $refund->update(['status' => Refund::STATUS_DECLINED]);
-   }
-
-    public function opened($refund)
-    {
-         if(! $refund instanceof Refund)
-            $refund = $this->getInst($refund);
-
-        return $refund->update(['status' => Refund::STATUS_PENDING]);
-   }
+    }
 
     private function getInst($refund)
     {
-        return Refund::findorFail($refund);
+        return Refund::findOrFail($refund);
+    }
+
+    public function findOrder($order)
+    {
+        return Order::findOrFail($order);
     }
 }

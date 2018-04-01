@@ -4,7 +4,6 @@
     </span>
 
     <div class="admin-user-widget-content">
-
         <span class="admin-user-widget-title">
             {{ trans('app.customer') . ': ' . $customer->name }}
         </span>
@@ -24,8 +23,6 @@
             <a href="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
         @endcan
 
-        <span class="pull-right" style="margin-top: -60px;margin-right: 30px;font-size: 40px; color: rgba(0, 0, 0, 0.2);">
-            <i class="fa fa-check-square-o"></i>
-        </span>
+        <i class="fa fa-check-square-o pull-right" style="position: absolute; right: 30px; top: 90px; font-size: 40px; color: rgba(0, 0, 0, 0.2);"></i>
     </div>            <!-- /.admin-user-widget-content -->
 </div>          <!-- /.admin-user-widget -->

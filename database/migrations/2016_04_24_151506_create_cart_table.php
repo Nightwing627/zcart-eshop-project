@@ -29,18 +29,17 @@ class CreateCartTable extends Migration
             $table->decimal('taxes', 20, 6)->nullable();
             $table->decimal('grand_total', 20, 6)->nullable();
 
-            $table->text('shipping_address')->nullable();
-            $table->text('billing_address')->nullable();
+            $table->bigInteger('billing_address')->unsigned()->nullable();
+            $table->bigInteger('shipping_address')->unsigned()->nullable();
 
+            $table->integer('payment_status')->default(1);
             $table->integer('payment_method_id')->unsigned();
-            $table->integer('payment_status_id')->unsigned()->nullable();
             $table->text('message_to_customer')->nullable();
             $table->text('admin_note')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->foreign('payment_status_id')->references('id')->on('payment_statuses')->onDelete('set null');
         });
 
         Schema::create('cart_items', function (Blueprint $table) {

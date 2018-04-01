@@ -13,8 +13,24 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\SomeEvent' => [
-            'App\Listeners\EventListener',
+
+        // Order Events
+        'App\Events\Order\OrderCreated' => [
+            'App\Listeners\Order\ChargeCustomer',
+            'App\Listeners\Order\NotifyCustomerOrderCreated',
+        ],
+        'App\Events\Order\OrderUpdated' => [
+            'App\Listeners\Order\NotifyCustomerOrderUpdated',
+        ],
+        'App\Events\Order\RefundInitiated' => [
+            'App\Listeners\Order\NotifyCustomerRefundInitiated',
+        ],
+        'App\Events\Order\RefundApproved' => [
+            'App\Listeners\Order\PayBackCustomer',
+            'App\Listeners\Order\NotifyCustomerRefundStatusChanged',
+        ],
+        'App\Events\Order\RefundDeclined' => [
+            'App\Listeners\Order\NotifyCustomerRefundStatusChanged',
         ],
     ];
 

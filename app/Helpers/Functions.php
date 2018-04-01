@@ -81,7 +81,7 @@ if ( ! function_exists('get_gravatar_url') )
 
         $size = config("image.sizes.{$size}");
 
-        return "https://www.gravatar.com/avatar/{$email}?s={$size['w']}";
+        return "https://www.gravatar.com/avatar/{$email}?s={$size['w']}&d=mm";
 
         // $defaultImage = urlencode('https://raw.githubusercontent.com/BadChoice/handesk/master/public/images/default-avatar.png');
         // return "https://www.gravatar.com/avatar/" . $email . "?s={$size['w']}&default={$defaultImage}";
@@ -141,7 +141,7 @@ if ( ! function_exists('getNumberOfInventoryImgs') )
      */
     function getNumberOfInventoryImgs()
     {
-        return config('system_settings.max_number_of_inventory_imgs') ?: 5;
+        return config('system_settings.max_number_of_inventory_imgs') ?: 10;
     }
 }
 
@@ -406,31 +406,22 @@ if ( ! function_exists('get_formated_decimal') )
      */
     function get_formated_decimal($value = 0, $trim = true, $decimal = null)
     {
-        $value = number_format(
-             $value,
-             config('system_settings.decimals') ?: 2,
-             config('system_settings.decimalpoint') ?: '.',
-             config('system_settings.thousands_separator') ?: ', '
-        );
-
-        if ($trim){
-            $dotPos = strrpos($value, '.');
-            $commaPos = strrpos($value, ',');
-            $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos :
-                ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
-
-            if (!$sep) {
-                $value = floatval(preg_replace("/[^0-9]/", "", $value));
-            }
-
-            $value = floatval(
-                preg_replace("/[^0-9]/", "", substr($value, 0, $sep)) . '.' .
-                preg_replace("/[^0-9]/", "", substr($value, $sep+1, strlen($value)))
-            );
+        if (!$decimal){
+            if ($decimal === 0)
+                $decimal = 0;
+            else
+                $decimal = config('system_settings.decimals');
         }
 
-        if ($decimal)
-            return number_format($value, $decimal);
+        $value = number_format(
+             $value,
+             $decimal,
+             config('system_settings.currency.decimal_mark'),
+             config('system_settings.currency.thousands_separator')
+        );
+
+        // if ($trim)
+        //     $value = floatval($value);
 
         return $value;
     }
@@ -447,12 +438,12 @@ if ( ! function_exists('get_formated_currency') )
      */
     function get_formated_currency($value = 0, $decimal = null)
     {
-        $value =  get_formated_decimal($value);
+        $value =  get_formated_decimal($value, true, $decimal);
 
-        if ($decimal)
-            return get_formated_currency_symbol() . number_format($value, $decimal);
+        if (config('system_settings.currency.symbol_first'))
+            return get_formated_currency_symbol() . $value;
 
-        return get_formated_currency_symbol() . $value;
+        return $value . get_formated_currency_symbol();
     }
 }
 
@@ -460,9 +451,14 @@ if ( ! function_exists('get_formated_currency_symbol') )
 {
     function get_formated_currency_symbol()
     {
-        return
-            (config('system_settings.show_currency_symbol') ? config('system_settings.currency_symbol') : '') .
-            (config('system_settings.show_space_after_symbol') ? ' ' : '');
+        if (config('system_settings.show_currency_symbol')) {
+            if (config('system_settings.currency.symbol_first'))
+                return config('system_settings.currency.symbol') . (config('system_settings.show_space_after_symbol') ? ' ' : '');
+
+            return (config('system_settings.show_space_after_symbol') ? ' ' : '') . config('system_settings.currency.symbol');
+        }
+
+        return '';
     }
 }
 
@@ -483,7 +479,7 @@ if ( ! function_exists('get_formated_weight') )
 {
     function get_formated_weight($value = 0)
     {
-        return get_formated_decimal($value) . ' ' . config('system_settings.weight_unit');
+        return get_formated_decimal($value, true, 0) . ' ' . config('system_settings.weight_unit');
     }
 }
 
@@ -981,16 +977,19 @@ if ( ! function_exists('setAdditionalCartInfo') )
     {
         $total = 0;
         $handling = config('shop_settings.order_handling_cost');
+        $shipping_weight = 0;
         $grand_total = 0;
 
         foreach ($request->input('cart') as $cart){
             $total = $total + ($cart['quantity'] * $cart['unit_price']);
+            $shipping_weight += $cart['shipping_weight'];
         }
 
         $grand_total =  ($total + $handling + $request->input('shipping') + $request->input('packaging') + $request->input('taxes')) - $request->input('discount');
 
         $request->merge([
             'shop_id' => $request->user()->merchantId(),
+            'shipping_weight' => $shipping_weight,
             'item_count' => count($request->input('cart') ),
             'quantity' => array_sum(array_column($request->input('cart'), 'quantity') ),
             'total' => $total,

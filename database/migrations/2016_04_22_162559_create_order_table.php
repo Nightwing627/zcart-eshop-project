@@ -19,6 +19,7 @@ class CreateOrderTable extends Migration
             $table->string('label_color')->nullable();
             $table->boolean('send_email_to_customer')->default(0);
             $table->integer('email_template_id')->unsigned()->nullable();
+            $table->boolean('fulfilled')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,11 +29,14 @@ class CreateOrderTable extends Migration
             $table->string('order_number')->nullable();
             $table->integer('shop_id')->unsigned()->nullable();
             $table->bigInteger('customer_id')->unsigned()->nullable();
+            $table->integer('shipping_zone_id')->unsigned()->nullable();
             $table->integer('shipping_rate_id')->unsigned()->nullable();
             $table->integer('packaging_id')->unsigned()->nullable();
             $table->integer('item_count')->unsigned();
             $table->integer('quantity')->unsigned();
 
+            $table->decimal('taxrate', 20, 6)->nullable();
+            $table->decimal('shipping_weight', 20, 2)->nullable();
             $table->decimal('total', 20, 6)->nullable();
             $table->decimal('discount', 20, 6)->nullable();
             $table->decimal('shipping', 20, 6)->nullable();
@@ -41,15 +45,16 @@ class CreateOrderTable extends Migration
             $table->decimal('taxes', 20, 6)->nullable();
             $table->decimal('grand_total', 20, 6)->nullable();
 
-            $table->text('billing_address');
-            $table->text('shipping_address');
+            $table->bigInteger('billing_address')->unsigned()->nullable();
+            $table->bigInteger('shipping_address')->unsigned()->nullable();
             $table->date('shipping_date')->nullable();
             $table->date('delivery_date')->nullable();
             $table->string('tracking_id')->nullable();
+            $table->integer('carrier_id')->unsigned()->nullable();
 
+            $table->integer('payment_status')->default(1);
             $table->integer('payment_method_id')->unsigned();
-            $table->integer('payment_status_id')->unsigned()->nullable();
-            $table->integer('order_status_id')->unsigned()->nullable();
+            $table->integer('order_status_id')->unsigned()->default(1);
 
             $table->text('message_to_customer')->nullable();
             $table->boolean('send_invoice_to_customer')->nullable();
@@ -60,7 +65,6 @@ class CreateOrderTable extends Migration
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
-            $table->foreign('payment_status_id')->references('id')->on('payment_statuses')->onDelete('set null');
         });
 
         Schema::create('order_items', function (Blueprint $table) {

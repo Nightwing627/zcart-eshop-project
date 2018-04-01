@@ -102,7 +102,7 @@ class ModulesSeeder extends Seeder
 
         'Order' => [
             'access' => 'Merchant',
-            'actions' => 'view,add,archive'
+            'actions' => 'view,add,fulfill,archive'
         ],
 
         'Product' => [
@@ -114,11 +114,6 @@ class ModulesSeeder extends Seeder
             'access' => 'Merchant',
             'actions' => 'view,add,edit,delete'
         ],
-
-        // 'Payment Method' => [
-        //     'access' => 'Platform',
-        //     'actions' => 'enable,disable'
-        // ],
 
         'Refund' => [
             'access' => 'Merchant',

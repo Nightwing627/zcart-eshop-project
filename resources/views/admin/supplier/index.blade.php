@@ -2,8 +2,6 @@
 
 @section('buttons')
 	@can('create', App\Supplier::class)
-		<a href="{{ route('admin.exim', 'suppliers') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
-
 		<a href="{{ route('admin.stock.supplier.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_supplier') }}</a>
 	@endcan
 @endsection

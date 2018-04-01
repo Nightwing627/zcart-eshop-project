@@ -6,14 +6,12 @@
             {{ trans('app.reply') }}
         </div>
         <div class="modal-body">
-
             @if($template)
                 @include('admin.partials._email_template_id_field')
                 @include('admin.partials._attachment_upload_field')
             @else
                 @include('admin.partials._reply')
             @endif
-
             <p class="help-block">* {{ trans('app.form.required_fields') }}</p>
         </div>
         <div class="modal-footer">
@@ -22,4 +20,3 @@
         {!! Form::close() !!}
     </div> <!-- / .modal-content -->
 </div> <!-- / .modal-dialog -->
-

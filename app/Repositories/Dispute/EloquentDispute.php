@@ -5,7 +5,6 @@ namespace App\Repositories\Dispute;
 use Auth;
 use App\Dispute;
 use Carbon\Carbon;
-use App\Attachment;
 use Illuminate\Http\Request;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
@@ -39,8 +38,8 @@ class EloquentDispute extends EloquentRepository implements BaseRepository, Disp
     {
         $dispute = $this->model->create($request->all());
 
-        if ($request->hasFile('attachment'))
-            Attachment::storeAttachmentFromRequest($request, $dispute, attachment_storage_dir());
+        if ($request->hasFile('attachments'))
+            $dispute->saveAttachments($request->file('attachments'));
 
         return $dispute;
     }
@@ -60,8 +59,8 @@ class EloquentDispute extends EloquentRepository implements BaseRepository, Disp
 
         $response = $dispute->replies()->create($request->all());
 
-        if ($request->hasFile('attachment'))
-            Attachment::storeAttachmentFromRequest($request, $response, attachment_storage_dir());
+        if ($request->hasFile('attachments'))
+            $dispute->saveAttachments($request->file('attachments'));
 
         return $response;
     }

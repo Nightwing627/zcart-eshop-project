@@ -214,7 +214,7 @@
     "smallest_denomination": 1
   },
   "bdt": {
-    "priority": 100,
+    "priority": 10,
     "iso_code": "BDT",
     "name": "Bangladeshi Taka",
     "symbol": "৳",
@@ -1119,7 +1119,7 @@
     "smallest_denomination": 10
   },
   "inr": {
-    "priority": 100,
+    "priority": 59,
     "iso_code": "INR",
     "name": "Indian Rupee",
     "symbol": "₹",

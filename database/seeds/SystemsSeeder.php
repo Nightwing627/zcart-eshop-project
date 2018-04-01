@@ -25,8 +25,6 @@ class SystemsSeeder extends Seeder
             'time_separator' => ':',
             'timezone_id' => '35',
             'currency_id' => 148,
-            'currency_code' => 'USD',
-            'currency_symbol' => '$',
             'length_unit' => 'cm',
             'weight_unit' => 'gm',
             'valume_unit' => 'liter',

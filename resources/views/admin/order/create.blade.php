@@ -41,13 +41,15 @@
           <div class="box-body">
             {{ Form::hidden('customer_id', $customer->id) }}
             {{ Form::hidden('discount', isset($cart->discount) ? $cart->discount : Null, ['id' => 'cart-discount']) }}
+            {{ Form::hidden('taxrate', Null, ['id' => 'cart-taxrate']) }}
             {{ Form::hidden('taxes', Null, ['id' => 'cart-taxes']) }}
             {{ Form::hidden('packaging_id', $default_packaging ? $default_packaging->id : Null, ['id' => 'packaging_id']) }}
             {{ Form::hidden('packaging', $default_packaging ? $default_packaging->cost : Null, ['id' => 'cart-packaging']) }}
             {{ Form::hidden('shipping', Null, ['id' => 'cart-shipping']) }}
+            {{ Form::hidden('shipping_zone_id', $shipping_zone ? $shipping_zone->id : Null, ['id' => 'shipping_zone_id']) }}
             {{ Form::hidden('shipping_rate_id', Null, ['id' => 'shipping_rate_id']) }}
-            {{ Form::hidden('shipping_address', $shipping_address ? $shipping_address->toString() : '') }}
-            {{ Form::hidden('billing_address', $billing_address ? $billing_address->toString() : '') }}
+            {{ Form::hidden('shipping_address', $shipping_address ? $shipping_address->id : Null) }}
+            {{ Form::hidden('billing_address', $billing_address ? $billing_address->id : Null) }}
 
             @include('admin.order._add_to_cart')
 
@@ -76,7 +78,7 @@
                   <tr>
                     <td class="text-right">
                       <a class="discount-options" data-toggle="popover" title= "{{ trans('app.discount') }}">
-                        <u>{{ trans('app.discount') }}</u></a>
+                        <u>{{ trans('app.discount') }}</u>
                       </a>
                     </td>
                     <td class="text-right" width="40%"> &minus; {{ get_formated_currency_symbol() }}
@@ -257,8 +259,8 @@
               <div class="help-block with-errors"></div>
             </div>
             <div class="form-group">
-              {!! Form::label('payment_status_id', trans('app.form.payment_status').'*') !!}
-              {!! Form::select('payment_status_id', $payment_statuses, (isset($cart->payment_status_id)) ? $cart->payment_status_id : null, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+              {!! Form::label('payment_status', trans('app.form.payment_status').'*') !!}
+              {!! Form::select('payment_status', $payment_statuses, (isset($cart->payment_status)) ? $cart->payment_status : 1, ['class' => 'form-control select2-normal', 'required']) !!}
               <div class="help-block with-errors"></div>
             </div>
           </div>
@@ -295,6 +297,18 @@
 
   <script language="javascript" type="text/javascript">
     ;(function($, window, document) {
+      var payment_methods = <?=$payment_methods;?>;
+      if(payment_methods.length == 0){
+        $("#global-alert-msg").html('{!! trans('messages.notice.no_active_payment_method') . ' ' . '<a href="' . route('admin.setting.config.paymentMethod.index') . '">' . trans('app.activate') . '</a>' !!}');
+        $("#global-alert-box").removeClass('hidden');
+      }
+
+      var billing_address = <?=$billing_address;?>;
+      if(billing_address.length == 0){
+        $("#global-alert-msg").html('{!! trans('messages.notice.no_billing_address') . ' ' . '<a class="ajax-modal-btn btn btn-new" href="' . route('address.create', ['customer', $customer->id]) . '"><i class="fa fa-plus-square-o"></i>' . trans('app.add_address') . '</a>' !!}');
+        $("#global-alert-box").removeClass('hidden');
+      }
+
       var cartWeight = 0;
 
       var packaging_options = <?=$packaging_options;?>;
@@ -522,21 +536,6 @@
        * This function will need in front end
        */
 
-      // function filterShippingOptions(){
-        {{-- // var url = "{{ route('admin.ajax.filterShippingOptions') }}" --}}
-        // $.ajax({
-        {{-- //     data: {zone: {{ $shipping_zone->id }}, price: totalPrice, weight: cartWeight}, --}}
-        //     url: url,
-        //     success: function(result)
-        //     {
-        //       console.log(result);
-        //     }
-        // });
-
-        // setShippingCost(name, value);
-        // return;
-      // }
-
       function calculateOrderTotal()
       {
         cartWeight = 0;
@@ -560,7 +559,10 @@
         }
 
         var options = getShippingOptions();
-        setShippingCost(options[0].name, options[0].rate, options[0].id);
+        if(options[0])
+          setShippingCost(options[0].name, options[0].rate, options[0].id);
+        else
+          setShippingCost('');
 
         return;
       };
@@ -573,7 +575,7 @@
         return;
       }
 
-      function setShippingCost(name, value = 0, id = '')
+      function setShippingCost(name = '', value = 0, id = '')
       {
         value = value ? value : 0;
         $('#summary-shipping').text(getFormatedValue(value));
@@ -603,12 +605,12 @@
               return;
           }
 
-          var url = "{{ route('admin.ajax.getTaxRate') }}"
           $.ajax({
             data: "ID="+ID,
-            url: url,
+            url: "{{ route('admin.ajax.getTaxRate') }}",
             success: function(result){
                 $("#summary-taxrate").text(result);
+                $("#cart-taxrate").val(result);
                 calculateTax();
             }
           });
@@ -702,7 +704,6 @@
 
       function getFormatedValue(value = 0)
       {
-        // console.log(value);
         value = value ? value : 0;
         return parseFloat(value).toFixed(2);
       }
@@ -762,32 +763,6 @@
         $("form#form").submit();
       });
 
-      // function saveTheCart(e)
-      // {
-      //   // console.log('save the cart');
-      //   var cart = $("input#cart_id").val();
-
-      //   var order = <?=isset($order_cart) ? 1 : 'NaN'?>;
-      //   // console.log(order);
-
-      //   if (order){
-      //     var method = '<input name="_method" type="hidden" value="PUT">';
-      //     var url = "{{ url('admin/order/order/') }}/"+ cart;
-      //     $("form#form").append(method);
-      //   }
-      //   else if (cart){
-      //     var method = '<input name="_method" type="hidden" value="PUT">';
-      //     var url = "{{ url('admin/order/cart/') }}/"+ cart;
-      //     $("form#form").append(method);
-      //   }
-      //   else{
-      //     var url = "{{ url('admin/order/cart') }}";
-      //   }
-
-      //   $("form#form").attr('action', url);
-      //   $("form#form").submit();
-      // }
-
       // Toggle billing address
       $('input#same_as_shipping_address').on('ifChecked', function () {
         $('#billing-address-block').hide()
@@ -797,14 +772,6 @@
         $('#billing-address-block').show();
       });
 
-      // Check if a image file is exist
-      function ImageExist(url)
-      {
-          var http = new XMLHttpRequest();
-          http.open('HEAD', url, false);
-          http.send();
-          return http.status != 404;
-      };
     }(window.jQuery, window, document));
   </script>
 @endsection

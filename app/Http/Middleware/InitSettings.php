@@ -20,7 +20,10 @@ class InitSettings
     {
         // TEMPORARY :: Must move somewhere more appropriate
         $system_settings = ListHelper::system_settings();
+
         config()->set('system_settings', $system_settings);
+
+        self::initCurrency();
 
         if(Auth::check())
         {
@@ -48,5 +51,29 @@ class InitSettings
         }
 
         return $next($request);
+    }
+
+    /**
+     * Set system currency information to config
+     *
+     * @return void
+     */
+    private static function initCurrency()
+    {
+        $currency = \DB::table('currencies')->where('id', config('system_settings.currency_id'))->first();
+
+        config([
+            'system_settings.currency' => [
+                'name' => $currency->name,
+                'symbol' => $currency->symbol,
+                'iso_code' => $currency->iso_code,
+                'symbol_first' => $currency->symbol_first,
+                'decimal_mark' => $currency->decimal_mark,
+                'thousands_separator' => $currency->thousands_separator,
+                'subunit' => $currency->subunit,
+            ]
+        ]);
+
+        return;
     }
 }

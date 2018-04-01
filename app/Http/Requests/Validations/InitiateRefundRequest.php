@@ -28,7 +28,6 @@ class InitiateRefundRequest extends Request
 
         return [
            'order_id' => 'required',
-           'status' => 'required',
            'amount' => 'required|numeric',
         ];
     }

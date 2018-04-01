@@ -33,25 +33,27 @@
 					@foreach($refunds as $refund )
 						<tr>
 							<td>
-								<span class="label label-default">{{ $refund->order->order_number }}</span>
+					            @can('index', App\Order::class)
+									<a href="{{ route('admin.order.order.show', $refund->order_id) }}">
+										{{ $refund->order->order_number }}
+									</a>
+								@else
+									{{ $refund->order->order_number }}
+								@endcan
 							</td>
 							<td>{!! get_yes_or_no($refund->return_goods) !!}</td>
-							<td>{{ get_formated_currency($refund->order->total) }}</td>
+							<td>{{ get_formated_currency($refund->order->grand_total) }}</td>
 							<td>{{ get_formated_currency($refund->amount) }}</td>
 							<td>{!! $refund->statusName() !!}</td>
 				          	<td>{{ $refund->created_at->diffForHumans() }}</td>
 				          	<td>{{ $refund->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
-					            @can('index', App\Order::class)
-									<a href="{{ route('admin.order.order.show', $refund->order_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.order_detail') }}" class="fa fa-shopping-cart"></i></a>&nbsp;
-								@endcan
-
 					            @can('index', App\Customer::class)
 									<a href="{{ route('admin.admin.customer.show', $refund->order->customer_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.customer') }}" class="fa fa-user"></i></a>&nbsp;
 								@endcan
 
 								@can('approve', $refund)
-									<a href="{{ route('admin.support.refund.response', $refund) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-random"></i></a>&nbsp;
+									<a href="{{ route('admin.support.refund.response', $refund) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-random"></i></a>&nbsp;
 								@endcan
 							</td>
 						</tr>
@@ -86,7 +88,15 @@
 				<tbody>
 					@foreach($closed as $refund )
 						<tr>
-							<td><span class="label label-default">{{ get_formated_order_number($refund->order->order_number) }}</span></td>
+							<td>
+					            @can('index', App\Order::class)
+									<a href="{{ route('admin.order.order.show', $refund->order_id) }}">
+										{{ $refund->order->order_number }}
+									</a>
+								@else
+									{{ $refund->order->order_number }}
+								@endcan
+							</td>
 							<td>{!! get_yes_or_no($refund->return_goods) !!}</td>
 							<td>{{ get_formated_currency($refund->order->total) }}</td>
 							<td>{{ get_formated_currency($refund->amount) }}</td>
@@ -94,10 +104,6 @@
 				          	<td>{{ $refund->created_at->diffForHumans() }}</td>
 				          	<td>{{ $refund->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
-					            @can('index', App\Order::class)
-									<a href="{{ route('admin.order.order.show', $refund->order_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.order_detail') }}" class="fa fa-shopping-cart"></i></a>&nbsp;
-								@endcan
-
 					            @can('index', App\Customer::class)
 									<a href="{{ route('admin.admin.customer.show', $refund->order->customer_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.customer') }}" class="fa fa-user"></i></a>&nbsp;
 								@endcan

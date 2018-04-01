@@ -25,6 +25,7 @@ class UpdateOrderStatusRequest extends Request
     {
         return [
            'name' => 'required',
+           'send_email_to_customer' => 'required',
            'email_template_id' => 'required_if:send_email_to_customer,1',
         ];
     }
@@ -40,5 +41,5 @@ class UpdateOrderStatusRequest extends Request
             'email_template_id.required_if' => trans('validation.email_template_id_required'),
         ];
     }
-    
+
 }

@@ -2,6 +2,7 @@
 
 @section('buttons')
 	@can('create', App\Inventory::class)
+		<a href="{{ route('admin.exim', 'products') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 		<a href="{{ route('admin.stock.inventory.showSearchForm') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_inventory') }}</a>
 	@endcan
 @endsection

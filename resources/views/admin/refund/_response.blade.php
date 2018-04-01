@@ -5,14 +5,18 @@
             {{ trans('app.response') }}
         </div>
         <div class="modal-body" style="padding: 0px;">
-            <div class="col-md-3 nopadding-right" style="margin-top: 10px;">
+            <div class="col-md-4 nopadding-right" style="margin-top: 10px;">
                 <div class="form-group">
                     <label>{{ trans('app.customer') }}</label>
-                    <img src="{{ get_storage_file_url(optional($refund->order->customer->image)->path, 'small') }}" class="thumbnail" style="margin-bottom: 0px;" alt="{{ trans('app.avatar') }}">
                     <p class="lead">{{ $refund->order->customer->getName() }}</p>
+                    @if($refund->order->customer->image)
+                        <img src="{{ get_storage_file_url(optional($refund->order->customer->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.avatar') }}">
+                    @else
+                        <img src="{{ get_gravatar_url($refund->order->customer->email, 'small') }}" class="thumbnail" alt="{{ trans('app.avatar') }}">
+                    @endif
                 </div>
             </div>
-            <div class="col-md-7 nopadding-left">
+            <div class="col-md-8 nopadding-left">
                 <table class="table no-border">
                     <tr>
                         <th class="text-right">{{ trans('app.order_number') }}: </th>
@@ -28,7 +32,7 @@
                     </tr>
                     <tr>
                         <th class="text-right">{{ trans('app.payment_status') }}: </th>
-                        <td style="width: 60%;">{{ $refund->order->paymentStatus->name }}</td>
+                        <td style="width: 60%;">{!! $refund->order->paymentStatusName() !!}</td>
                     </tr>
                     <tr>
                         <th class="text-right">{{ trans('app.order_received') }}: </th>

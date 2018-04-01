@@ -17,6 +17,7 @@ return [
     'admin' => 'Admin',
     'users' => 'Users',
     'customers' => 'Customers',
+    'currencies' => 'Currencies',
     'shops' => 'Shops',
     'shipping_zones' => 'Shipping zones',
     'suppliers' => 'Suppliers',

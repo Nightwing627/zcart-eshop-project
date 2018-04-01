@@ -31,10 +31,8 @@ class CreateOrderRequest extends Request
             'cart.*.quantity' => 'required',
             'cart.*.unit_price' => 'required',
             'customer_id' => 'required',
-            // 'order_status_id' => 'required',
             'payment_method_id' => 'required',
-            'payment_status_id' => 'required',
-            // 'tax_id' => 'required',
+            'payment_status' => 'required',
             'billing_address' => 'required',
         ];
     }

@@ -178,7 +178,7 @@
           </li>
         @endif
 
-        @if(Gate::allows('index', App\OrderStatus::class) || Gate::allows('index', App\PaymentStatus::class))
+        @if(Gate::allows('index', App\OrderStatus::class) || Gate::allows('index', App\Currency::class))
           <li class="treeview {{ Request::is('admin/utility*') ? 'active' : '' }}">
             <a href="#">
               <i class="fa fa-asterisk"></i>
@@ -186,12 +186,12 @@
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-              @can('index', App\OrderStatus::class)
-                <li class=" {{ Request::is('admin/utility/orderStatus*') ? 'active' : '' }}"><a href="{{ url('admin/utility/orderStatus') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.order_statuses') }}</a></li>
+              @can('index', App\Currency::class)
+                <li class=" {{ Request::is('admin/utility/currency*') ? 'active' : '' }}"><a href="{{ url('admin/utility/currency') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.currencies') }}</a></li>
               @endcan
 
-              @can('index', App\PaymentStatus::class)
-                <li class=" {{ Request::is('admin/utility/paymentStatus*') ? 'active' : '' }}"><a href="{{ url('admin/utility/paymentStatus') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.payment_statuses') }}</a></li>
+              @can('index', App\OrderStatus::class)
+                <li class=" {{ Request::is('admin/utility/orderStatus*') ? 'active' : '' }}"><a href="{{ url('admin/utility/orderStatus') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.order_statuses') }}</a></li>
               @endcan
             </ul>
           </li>

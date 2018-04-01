@@ -46,7 +46,7 @@ class Cart extends Model
                         'shipping_address',
                         'billing_address',
                         'payment_method_id',
-                        'payment_status_id',
+                        'payment_status',
                         'message_to_customer',
                         'admin_note',
                     ];
@@ -66,6 +66,27 @@ class Cart extends Model
     {
         return $this->belongsTo(Shop::class);
     }
+
+    /**
+     * Fetch billing address
+     *
+     * @return Address or null
+     */
+    public function billingAddress()
+    {
+        return $this->belongsTo(Address::class, 'billing_address');
+    }
+
+    /**
+     * Fetch billing address
+     *
+     * @return Address or null
+     */
+    public function shippingAddress()
+    {
+        return $this->belongsTo(Address::class, 'shipping_address');
+    }
+
 
     /**
      * Get the shippingRate for the order.
@@ -107,14 +128,6 @@ class Cart extends Model
     public function paymentMethod()
     {
         return $this->belongsTo(PaymentMethod::class);
-    }
-
-    /**
-     * Get the paymentStatus for the order.
-     */
-    public function paymentStatus()
-    {
-        return $this->belongsTo(PaymentStatus::class);
     }
 
     /**

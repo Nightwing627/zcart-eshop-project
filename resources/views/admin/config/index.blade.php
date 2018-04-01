@@ -8,29 +8,29 @@
 	<div class="box">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs nav-justified">
-				<li class="active"><a href="#inventory" data-toggle="tab">
+				<li class="active"><a href="#inventory_tab" data-toggle="tab">
 					<i class="fa fa-cubes hidden-sm"></i>
 					{{ trans('app.inventory') }}
 				</a></li>
-				<li><a href="#order" data-toggle="tab">
+				<li><a href="#order_tab" data-toggle="tab">
 					<i class="fa fa-shopping-cart hidden-sm"></i>
 					{{ trans('app.order') }}
 				</a></li>
-				<li><a href="#views" data-toggle="tab">
+				<li><a href="#views_tab" data-toggle="tab">
 					<i class="fa fa-laptop hidden-sm"></i>
 					{{ trans('app.views') }}
 				</a></li>
-				<li><a href="#support" data-toggle="tab">
+				<li><a href="#support_tab" data-toggle="tab">
 					<i class="fa fa-phone hidden-sm"></i>
 					{{ trans('app.support') }}
 				</a></li>
-				<li><a href="#notifications" data-toggle="tab">
+				<li><a href="#notifications_tab" data-toggle="tab">
 					<i class="fa fa-bell-o hidden-sm"></i>
 					{{ trans('app.notifications') }}
 				</a></li>
 			</ul>
 			<div class="tab-content">
-			    <div class="tab-pane active" id="inventory">
+			    <div class="tab-pane active" id="inventory_tab">
 			    	<div class="row">
 				        {!! Form::model($config, ['method' => 'PUT', 'route' => ['admin.setting.config.update', $config], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
 					    	<div class="col-sm-9">
@@ -96,12 +96,12 @@
 			    </div>
 			  	<!-- /.tab-pane -->
 
-			    <div class="tab-pane" id="order">
+			    <div class="tab-pane" id="order_tab">
 			    	<div class="row">
 				        {!! Form::model($config, ['method' => 'PUT', 'route' => ['admin.setting.config.update', $config], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
-					    	<div class="col-sm-12">
+					    	<div class="col-sm-7 nopadding-right">
 								<div class="form-group">
-									{!! Form::label('order_number_prefix', trans('app.order_number_prefix') . ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+									{!! Form::label('order_number_prefix', trans('app.order_number_prefix') . ':', ['class' => 'with-help col-sm-4 control-label']) !!}
 							        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.order_number_prefix_suffix') }}"></i>
 								  	<div class="col-sm-2 nopadding-left">
 								  		@if($can_update)
@@ -111,7 +111,7 @@
 										@endif
 								  	</div>
 
-									{!! Form::label('order_number_suffix', trans('app.and') . ' ' . trans('app.suffix') . ':', ['class' => 'with-help col-sm-2 control-label']) !!}
+									{!! Form::label('order_number_suffix', trans('app.and') . ' ' . trans('app.suffix') . ':', ['class' => 'with-help col-sm-3 control-label']) !!}
 								  	<div class="col-sm-2 nopadding-left">
 								  		@if($can_update)
 								  			{!! Form::text('order_number_suffix', $config->order_number_suffix, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.order_number_suffix')]) !!}
@@ -122,11 +122,11 @@
 								</div>
 
 								<div class="form-group">
-							        {!! Form::label('default_payment_method_id', trans('app.default_payment_method'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+							        {!! Form::label('default_payment_method_id', trans('app.default_payment_method'). ':', ['class' => 'with-help col-sm-4 control-label']) !!}
 								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_payment_method_id') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
+								  	<div class="col-sm-7 nopadding-left">
 								  		@if($can_update)
-										    {{-- {!! Form::select('default_payment_method_id', $payment_methods , $config->default_payment_method_id, ['class' => 'form-control select2-normal']) !!} --}}
+										    {!! Form::select('default_payment_method_id', $payment_methods , $config->default_payment_method_id, ['class' => 'form-control select2-normal']) !!}
 										@else
 											<span>{{ optional($config->payment_method)->name }}</span>
 										@endif
@@ -134,9 +134,9 @@
 								</div>
 
 								<div class="form-group">
-							        {!! Form::label('default_tax_id', trans('app.default_tax'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+							        {!! Form::label('default_tax_id', trans('app.default_tax'). ':', ['class' => 'with-help col-sm-4 control-label']) !!}
 								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.default_tax_id') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
+								  	<div class="col-sm-7 nopadding-left">
 								  		@if($can_update)
 									        {!! Form::select('default_tax_id', $taxes , $config->default_tax_id, ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.select')]) !!}
 										@else
@@ -146,9 +146,9 @@
 								</div>
 
 								<div class="form-group">
-							        {!! Form::label('order_handling_cost', trans('app.order_handling_cost'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+							        {!! Form::label('order_handling_cost', trans('app.order_handling_cost'). ':', ['class' => 'with-help col-sm-4 control-label']) !!}
 								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_order_handling_cost') }}"></i>
-								  	<div class="col-sm-6 nopadding-left">
+								  	<div class="col-sm-7 nopadding-left">
 								  		@if($can_update)
 										    <div class="input-group">
 									        	{!! Form::number('order_handling_cost', get_formated_decimal($config->order_handling_cost), ['class' => 'form-control', 'placeholder' => trans('app.placeholder.order_handling_cost')]) !!}
@@ -159,7 +159,34 @@
 										@endif
 								  	</div>
 								</div>
+					    	</div>
+					    	<div class="col-sm-5 nopadding-left">
+					    		<fieldset>
+					    			<legend>{{ trans('app.after_fulfilled') }}</legend>
+							    	<div class="row">
+								    	<div class="col-sm-6 text-right">
+											<div class="form-group">
+										        {!! Form::label('auto_archive_order', trans('app.auto_archive_order'). ':', ['class' => 'with-help control-label']) !!}
+											  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_auto_archive_order') }}"></i>
+											</div>
+										</div>
+								    	<div class="col-sm-6">
+									  		@if($can_update)
+											  	<div class="handle horizontal">
+													<a href="{{ route('admin.setting.config.notification.toggle', 'auto_archive_order') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->auto_archive_order == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->auto_archive_order == 1 ? 'true' : 'false' }}" autocomplete="off">
+														<div class="btn-handle"></div>
+													</a>
+											  	</div>
+											@else
+												<span>{{ $config->auto_archive_order == 1 ? trans('app.on') : trans('app.off') }}</span>
+											@endif
+										</div>
+								  	</div>
+								    <!-- /.row -->
+					    		</fieldset>
+					    	</div>
 
+					    	<div class="col-sm-12">
 						  		@if($can_update)
 									<div class="col-md-offset-3">
 							            {!! Form::submit(trans('app.update'), ['class' => 'btn btn-lg btn-flat btn-new']) !!}
@@ -171,7 +198,7 @@
 			    </div>
 			    <!-- /.tab-pane -->
 
-			    <div class="tab-pane" id="views">
+			    <div class="tab-pane" id="views_tab">
 			    	<div class="row">
 				        {!! Form::model($config, ['method' => 'PUT', 'route' => ['admin.setting.config.update', $config], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
 					    	<div class="col-sm-6">
@@ -209,7 +236,7 @@
 			    </div>
 			    <!-- /.tab-pane -->
 
-			    <div class="tab-pane" id="support">
+			    <div class="tab-pane" id="support_tab">
 			    	<div class="row">
 				        {!! Form::model($config, ['method' => 'PUT', 'route' => ['admin.setting.config.update', $config], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
 					    	<div class="col-sm-12">
@@ -303,7 +330,7 @@
 			    </div>
 			  	<!-- /.tab-pane -->
 
-			    <div class="tab-pane" id="notifications">
+			    <div class="tab-pane" id="notifications_tab">
 			    	<div class="row">
 				    	<div class="col-sm-6">
 				    		<fieldset>

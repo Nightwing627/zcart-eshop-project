@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Shop;
+use App\Refund;
+use App\Observers\ShopObserver;
+use App\Observers\RefundObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \App\Shop::observe(\App\Observers\ShopObserver::class);
+        Shop::observe(ShopObserver::class);
+        Refund::observe(RefundObserver::class);
     }
 
     /**

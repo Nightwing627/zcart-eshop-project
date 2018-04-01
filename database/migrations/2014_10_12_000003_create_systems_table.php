@@ -22,8 +22,8 @@ class CreateSystemsTable extends Migration
             $table->string('email')->nullable(); //Notifications, supports and other alert send to this email
             // $table->longtext('description')->nullable();
             $table->integer('timezone_id')->default(35);
-            $table->string('currency_code')->default('USD');
-            $table->string('currency_symbol')->default('$');
+            // $table->string('currency_code')->default('USD');
+            // $table->string('currency_symbol')->default('$');
             $table->integer('currency_id')->default(148);
             $table->string('google_analytics_id')->nullable();
 
@@ -44,11 +44,8 @@ class CreateSystemsTable extends Migration
             $table->enum('time_format', ['12h', '24h'])->default('12h');
             $table->enum('time_separator', ['.', ':'])->default(':');
 
-            $table->enum('decimals', [2, 3, 4, 5, 6])->default(2);
-            $table->enum('decimalpoint', [',', '.'])->default('.');
-            $table->enum('thousands_separator', [',', '.', ' '])->default(',');
-
             // Currency
+            $table->enum('decimals', [2, 3, 4, 5, 6])->default(2);
             $table->boolean('show_currency_symbol')->default(1);
             $table->boolean('show_space_after_symbol')->default(1);
 
@@ -60,20 +57,18 @@ class CreateSystemsTable extends Migration
             // Views
             $table->integer('pagination')->unsigned()->default(10);
             $table->integer('max_img_size_limit_kb')->default(5000);
-            $table->integer('max_number_of_inventory_imgs')->unsigned()->default(5);
+            $table->integer('max_number_of_inventory_imgs')->unsigned()->default(10);
 
             // Address
+            $table->integer('address_default_country')->nullable();
+            $table->integer('address_default_state')->nullable();
             $table->boolean('show_address_title')->nullable();
             $table->boolean('address_show_country')->nullable();
             $table->boolean('address_geocode')->nullable();
-            $table->integer('address_default_country')->nullable();
-            $table->integer('address_default_state')->nullable();
 
             // Checkout
             $table->boolean('allow_guest_checkout')->nullable()->default(false);
             $table->boolean('auto_approve_order')->nullable()->default(false);
-
-            //Customer
             $table->boolean('ask_customer_for_email_subscription')->nullable()->default(true);
 
             // Notification Settings

@@ -329,6 +329,19 @@
 
 					    		<fieldset>
 					    			<legend>{{ trans('app.config_currency') }}</legend>
+									<div class="form-group">
+								        {!! Form::label('decimals', '*' . trans('app.decimals'). ':', ['class' => 'with-help col-sm-7 control-label']) !!}
+									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_decimals') }}"></i>
+									  	<div class="col-sm-4 nopadding-left">
+									  		@if($can_update)
+											    {!! Form::select('decimals', ['2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6'], $system->decimals, ['class' => 'form-control select2-normal', 'required']) !!}
+										      	<div class="help-block with-errors"></div>
+											@else
+												<span>{{ $system->decimals }}</span>
+											@endif
+									  	</div>
+									</div>
+
 							    	<div class="row">
 								    	<div class="col-sm-7 text-right">
 											<div class="form-group">
@@ -372,48 +385,6 @@
 								</fieldset>
 					    	</div>
 					    	<div class="col-sm-6">
-					    		<fieldset>
-					    			<legend>{{ trans('app.config_numbers') }}</legend>
-									<div class="form-group">
-								        {!! Form::label('decimals', '*' . trans('app.decimals'). ':', ['class' => 'with-help col-sm-7 control-label']) !!}
-									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_decimals') }}"></i>
-									  	<div class="col-sm-4 nopadding-left">
-									  		@if($can_update)
-											    {!! Form::select('decimals', ['2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6'], $system->decimals, ['class' => 'form-control select2-normal', 'required']) !!}
-										      	<div class="help-block with-errors"></div>
-											@else
-												<span>{{ $system->decimals }}</span>
-											@endif
-									  	</div>
-									</div>
-
-									<div class="form-group">
-								        {!! Form::label('decimalpoint', '*' . trans('app.decimalpoint'). ':', ['class' => 'with-help col-sm-7 control-label']) !!}
-									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_decimalpoint') }}"></i>
-									  	<div class="col-sm-4 nopadding-left">
-									  		@if($can_update)
-											    {!! Form::select('decimalpoint', [',' => ',', '.' => '.'], $system->decimalpoint, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
-										      	<div class="help-block with-errors"></div>
-											@else
-												<span>{{ $system->decimalpoint }}</span>
-											@endif
-									  	</div>
-									</div>
-
-									<div class="form-group">
-								        {!! Form::label('thousands_separator', '*' . trans('app.thousands_separator'). ':', ['class' => 'with-help col-sm-7 control-label']) !!}
-									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_thousands_separator') }}"></i>
-									  	<div class="col-sm-4 nopadding-left">
-									  		@if($can_update)
-											    {!! Form::select('thousands_separator', [',' => ',', '.' => '.', ' ' => 'Space(&nbsp;)'], $system->thousands_separator, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
-										      	<div class="help-block with-errors"></div>
-											@else
-												<span>{{ $system->thousands_separator }}</span>
-											@endif
-									  	</div>
-									</div>
-					    		</fieldset>
-
 					    		<fieldset>
 					    			<legend>{{ trans('app.config_promotions') }}</legend>
 									<div class="form-group">

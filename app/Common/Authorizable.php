@@ -31,11 +31,15 @@ trait Authorizable
         'showSearchForm'    => 'add',
         'search'            => 'add',
         'restore'           => 'add',
+        'fulfill'           => 'fulfill',
+        'updateOrderStatus' => 'fulfill',
+        'togglePaymentStatus'=> 'fulfill',
         'initiate'          => 'initiate',
         'form'              => 'initiate',
         'approve'           => 'approve',
         'decline'           => 'approve',
         'storeReply'        => 'reply',
+        'response'          => 'response',
         'storeResponse'     => 'response',
         'edit'              => 'edit',
         'update'            => 'edit',
@@ -70,7 +74,7 @@ trait Authorizable
      */
     private $utility_modules = [
         'orderStatus',
-        'paymentStatus',
+        'currency'
     ];
 
     /**
@@ -94,7 +98,7 @@ trait Authorizable
      */
     public function callAction($method, $parameters)
     {
-        if (! $this->checkPermission() )
+        if (! $this->checkPermission('', $parameters) )
             return view('errors.forbidden');
 
         return parent::callAction($method, $parameters);
@@ -109,15 +113,14 @@ trait Authorizable
      *
      * @return bool false if the permission not granted
      */
-    private function checkPermission($slug = '')
+    private function checkPermission($slug = '', $model = Null)
     {
         if (\Request::ajax())
             return TRUE;
 
         $slug = (bool) $slug ? $slug : $this->getSlug();
 
-        // echo "<pre>"; print_r($slug); echo "</pre>"; exit();
-        return (new Authorize(Auth::user(), $slug))->check();
+        return (new Authorize(Auth::user(), $slug, $model))->check();
     }
 
     /**
@@ -125,11 +128,11 @@ trait Authorizable
      *
      * @return str $slug
      */
-    private function getSlug()
+    private function getSlug($action = Null, $module = Null)
     {
         $temp1 = explode('.', \Request::route()->getName());
-        $module = array_slice($temp1, -2, 1)[0];
-        $action = array_slice($temp1, -1, 1)[0];
+        $module = $module ? $module : array_slice($temp1, -2, 1)[0];
+        $action = $action ? $action : array_slice($temp1, -1, 1)[0];
 
         if($this->isVendor($module))
             return $this->abilities[$action] . '_vendor';

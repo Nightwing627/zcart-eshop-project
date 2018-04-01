@@ -6,7 +6,7 @@
 
     Route::get('refund/{refund}/decline', 'RefundController@decline')->name('refund.decline');
 
-    Route::get('refund/initiate', 'RefundController@showRefundForm')->name('refund.form');
+    Route::get('refund/initiate/{order?}', 'RefundController@showRefundForm')->name('refund.form');
 
     Route::post('refund/initiate', 'RefundController@initiate')->name('refund.initiate');
 

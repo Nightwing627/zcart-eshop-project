@@ -6,7 +6,7 @@
 <!-- DataTables -->
 <link rel="stylesheet" href="{{asset("assets/plugins/datatables/dataTables.bootstrap.css") }}">
 <!-- Date time Picker -->
-<link rel="stylesheet" href="{{asset("assets/plugins/datetimepicker/bootstrap-datetimepicker.css") }}">
+<link rel="stylesheet" href="{{asset("assets/plugins/datetimepicker/bootstrap-datetimepicker.min.css") }}">
 <!-- daterange picker -->
 <!-- <link rel="stylesheet" href="{{asset("assets/plugins/daterangepicker/daterangepicker-bs3.css") }}"> -->
 <!-- Datepicker -->

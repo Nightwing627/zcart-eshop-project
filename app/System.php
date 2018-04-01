@@ -29,8 +29,6 @@ class System extends Model
                         'slogan',
                         'email',
                         'timezone_id',
-                        'currency_code',
-                        'currency_symbol',
                         'currency_id',
                         'google_analytics_id',
                     ];

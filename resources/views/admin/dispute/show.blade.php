@@ -43,7 +43,12 @@
 						<div class="form-group">
 						  	<label>{{ trans('app.owner') }}</label>
 							<p>
-								<img src="{{ get_storage_file_url(optional($dispute->shop->owner->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}"> &nbsp;
+					            @if($dispute->shop->owner->image)
+									<img src="{{ get_storage_file_url(optional($dispute->shop->owner->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @else
+				            		<img src="{{ get_gravatar_url($dispute->shop->owner->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @endif
+								&nbsp;
 								@if(Gate::allows('view', $dispute->shop->owner))
 						            <a href="{{ route('admin.admin.user.show', $dispute->shop->owner_id) }}" class="ajax-modal-btn small"><span class="lead">{{ $dispute->shop->owner->getName() }}</span></a>
 								@else
@@ -98,7 +103,12 @@
 					<div class="form-group">
 					  	<label>{{ trans('app.customer') }}</label>
 						<p>
-							<img src="{{ get_storage_file_url(optional($dispute->customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @if($dispute->customer->image)
+								<img src="{{ get_storage_file_url(optional($dispute->customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @else
+			            		<img src="{{ get_gravatar_url($dispute->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @endif
+							&nbsp;
 							@if(Gate::allows('view', $dispute->customer))
 					            <a href="{{ route('admin.admin.customer.show', $dispute->customer_id) }}" class="ajax-modal-btn small"><span class="lead">{{ $dispute->customer->getName() }}</span></a>
 							@else

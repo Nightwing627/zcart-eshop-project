@@ -2,7 +2,6 @@
 
 @section('buttons')
 	@can('create', App\Blog::class)
-		<a href="{{ route('admin.exim', 'blogs') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 		<a href="{{ route('admin.blog.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_blog') }}</a>
 	@endcan
 @endsection

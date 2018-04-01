@@ -28,18 +28,66 @@ trait Attachable {
 	 */
 	public function attachments()
     {
-        return $this->morphMany(\App\Attachment::class, 'attachable')->orderBy('order', 'asc');
+        return $this->morphMany(\App\Attachment::class, 'attachable');
     }
 
-	/**
-	 * Return the image related to the attachable
-	 *
-	 * @return Illuminate\Database\Eloquent\Collection
-	 */
-	public function image()
+    /**
+     * Save Attachments
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  model $attachable
+     *
+     * @return attachment model
+     */
+    public function saveAttachments($attachments)
     {
-        return $this->morphOne(\App\Attachment::class, 'attachable');
+		$data = [];
+		$dir = attachment_storage_dir();
+
+    	foreach ($attachments as $order => $file) {
+	        $path = Storage::put($dir, $file);
+
+			$data[] = [
+			            'path' => $path,
+			            'name' => $file->getClientOriginalName(),
+			            // 'name' => str_slug($file->getClientOriginalName(), '-'),
+			            'extension' => $file->getClientOriginalExtension(),
+			            'size' => $file->getClientSize()
+			        ];
+		}
+
+        return $this->attachments()->createMany($data);
     }
+
+    /**
+     * @param IncomingMail $mail
+     * @param $attachable
+     */
+    // public static function storeAttachmentsFromEmail($mail, $attachable)
+    // {
+    //     foreach ($mail->getAttachments() as $mailAttachment) {
+    //         $path = str_replace(' ', '_', $attachable->id.'_'.$mailAttachment->name);
+    //         Storage::put(attachment_storage_path() . $path, file_get_contents($mailAttachment->filePath));
+    //         $attachable->attachments()->create(['path' => $path]);
+    //         unlink($mailAttachment->filePath);
+    //     }
+    // }
+
+	/**
+	 * Deletes the given attachment.
+	 *
+	 * @return bool
+	 */
+	public function deleteAttachment($attachment)
+	{
+		// \Log::info($attachment);
+		if (optional($attachment)->path) {
+	    	Storage::delete($attachment->path);
+		    return $attachment->delete();
+		}
+
+		return;
+	}
 
 	/**
 	 * Deletes all the attachments of this model.
@@ -48,38 +96,9 @@ trait Attachable {
 	 */
 	public function flushAttachments()
 	{
-		$attachments = $this->attachments()->get();
+		foreach ($this->attachments as $attachment)
+			$this->deleteAttachment($attachment);
 
-		foreach ($attachments as $attachment){
-	    	Storage::delete($attachment->path);
-		}
-
-	    return \App\Attachment::destroy($attachments->pluck('id')->toArray());
-	}
-
-	/**
-	 * Prepare the previews for the dropzone
-	 *
-	 * @return array
-	 */
-	public function previewAttachments()
-	{
-		$urls = '';
-		$configs = '';
-
-		$attachments = $this->attachments()->get();
-
-		foreach ($attachments as $attachment){
-	    	Storage::url($attachment->path);
-            $path = Storage::url($attachment->path);
-            $deleteUrl = route('attachment.delete', $attachment->id);
-            $urls .= '"' .$path . '",';
-            $configs .= '{caption:"' . $attachment->name . '", size:' . $attachment->size . ', url: "' . $deleteUrl . '", key:' . $attachment->id . '},';
-		}
-
-		return [
-			'urls' => rtrim($urls, ','),
-			'configs' => rtrim($configs, ',')
-		];
+	    return;
 	}
 }

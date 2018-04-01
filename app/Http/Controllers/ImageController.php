@@ -30,14 +30,14 @@ class ImageController extends Controller
         // \Log::info('outer:');
         // \Log::info($request->all());
         if ($request->hasFile('images')){
-			$images = [];
+			$data = [];
 			$dir = image_storage_dir();
 			$files = $request->file('images');
 
         	foreach ($files as $order => $file) {
 		        $path = Storage::put($dir, $file);
 
-				$images[] = [
+				$data[] = [
 					            'path' => $path,
 					            'name' => str_slug($file->getClientOriginalName(), '-'),
 					            'extension' => $file->getClientOriginalExtension(),
@@ -49,7 +49,7 @@ class ImageController extends Controller
         	$model = get_qualified_model($request->input('model_name'));
         	$attachable = (new $model)->find($request->input('model_id'));
 
-			if($attachable->images()->createMany($images)){
+			if($attachable->images()->createMany($data)){
 				return Response::json(['success' => trans('response.success')]);
 			}
 			else{

@@ -18,9 +18,7 @@
         </span>
         <span class="admin-user-widget-text text-muted">
             {{ trans('app.manufacturer').': '.$product->manufacturer->name }}
-        </span>
-        <span class="pull-right" style="margin-top: -60px;margin-right: 30px;font-size: 40px; color: rgba(0, 0, 0, 0.2);">
-            <i class="fa fa-check-square-o"></i>
+            <i class="fa fa-check-square-o pull-right" style="position: absolute; right: 30px; top: 90px; font-size: 40px; color: rgba(0, 0, 0, 0.2);"></i>
         </span>
     </div>            <!-- /.admin-user-widget-content -->
 </div>          <!-- /.admin-user-widget -->

@@ -3,9 +3,11 @@
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Events\Order\OrderCreated;
+use App\Events\Order\OrderUpdated;
 use App\Repositories\Order\OrderRepository;
 use App\Http\Requests\Validations\CreateOrderRequest;
-use App\Http\Requests\Validations\UpdateOrderRequest;
+use App\Http\Requests\Validations\FulfillOrderRequest;
 use App\Http\Requests\Validations\CustomerSearchRequest;
 
 class OrderController extends Controller
@@ -74,7 +76,9 @@ class OrderController extends Controller
      */
     public function store(CreateOrderRequest $request)
     {
-        $this->order->store($request);
+        $order = $this->order->store($request);
+
+        event(new OrderCreated($order));
 
         return redirect()->route('admin.order.order.index')->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -89,9 +93,88 @@ class OrderController extends Controller
     {
         $order = $this->order->find($id);
 
+        $this->authorize('view', $order); // Check permission
+
         $address = $order->customer->primaryAddress();
 
-        return view('admin.order._show', compact('order', 'address'));
+        return view('admin.order.show', compact('order', 'address'));
+    }
+
+    /**
+     * Show the fulfillment form for the specified order.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function fulfillment($id)
+    {
+        $order = $this->order->find($id);
+
+        $this->authorize('fulfill', $order); // Check permission
+
+        return view('admin.order._fulfill', compact('order'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $order = $this->order->find($id);
+
+        $this->authorize('fulfill', $order); // Check permission
+
+        return view('admin.order._edit', compact('order'));
+    }
+
+    /**
+     * Fulfill the order
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function fulfill(FulfillOrderRequest $request, $id)
+    {
+        $order = $this->order->find($id);
+
+        $this->authorize('fulfill', $order); // Check permission
+
+        $this->order->fulfill($request, $order);
+
+        event(new OrderUpdated($order, $request->has('notify_customer')));
+
+        if(config('shop_settings.auto_archive_order') && $order->isPaid()){
+            $this->order->trash($id);
+
+            return redirect()->route('admin.order.order.index')->with('success', trans('messages.fulfilled_and_archived'));
+        }
+
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+    }
+
+    /**
+     * updateOrderStatus the order
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateOrderStatus(Request $request, $id)
+    {
+        $order = $this->order->find($id);
+
+        $this->authorize('fulfill', $order); // Check permission
+
+        $this->order->updateOrderStatus($request, $order);
+
+        if($request->has('notify_customer'))
+            event(new OrderUpdated($order));
+
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**
@@ -105,7 +188,7 @@ class OrderController extends Controller
     {
         $this->order->trash($id);
 
-        return back()->with('success', trans('messages.archived', ['model' => $this->model_name]));
+        return redirect()->route('admin.order.order.index')->with('success', trans('messages.archived', ['model' => $this->model_name]));
     }
 
     /**
@@ -120,6 +203,26 @@ class OrderController extends Controller
         $this->order->restore($id);
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
+    }
+
+    /**
+     * Toggle Payment Status of the given order, Its uses the ajax middleware
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function togglePaymentStatus(Request $request, $id)
+    {
+        $order = $this->order->find($id);
+
+        $this->authorize('fulfill', $order); // Check permission
+
+        $this->order->togglePaymentStatus($order);
+
+        event(new OrderUpdated($order));
+
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**

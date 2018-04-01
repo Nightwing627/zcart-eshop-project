@@ -30,12 +30,16 @@
 				            	<a href="{{ route('admin.vendor.shop.show', $ticket->shop_id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 							@endcan
 
-							<img src="{{ get_storage_file_url(optional($ticket->shop->image)->path, 'medium') }}" class="thumbnail" alt="{{ trans('app.logo') }}">
+							<img src="{{ get_storage_file_url(optional($ticket->shop->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.logo') }}">
 						</p>
 
 						<p>
-							<img src="{{ get_storage_file_url(optional($ticket->user->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-							<span class="lead">{{ $ticket->user->getName() }}</span>
+				            @if($ticket->user->image)
+								<img src="{{ get_storage_file_url(optional($ticket->user->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @else
+			            		<img src="{{ get_gravatar_url($ticket->user->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @endif
+							<span class="lead indent5">{{ $ticket->user->getName() }}</span>
 							<br/>
 							@can('view', $ticket->user)
 					            <a href="{{ route('admin.admin.user.show', $ticket->user_id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
@@ -89,11 +93,14 @@
 					<div class="form-group">
 						@if($ticket->assignedTo)
 						  	<label>{{ trans('app.assigned_to') }}</label>
-							<img src="{{ get_storage_file_url(optional($ticket->assignedTo->user->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @if($ticket->assignedTo->image)
+								<img src="{{ get_storage_file_url(optional($ticket->assignedTo->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @else
+			            		<img src="{{ get_gravatar_url($ticket->assignedTo->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @endif
+
 							<p>
-								<span class="lead">
-									{{ $ticket->assignedTo->getName() }}
-								</span>
+								<span class="lead indent5">{{ $ticket->assignedTo->getName() }}</span>
 								<br/>
 								@can('view', $ticket->assignedTo)
 					            	<a href="{{ route('admin.admin.user.show', $ticket->assigned_to) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>

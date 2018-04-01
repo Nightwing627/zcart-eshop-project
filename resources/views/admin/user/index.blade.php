@@ -19,7 +19,6 @@
 			<table class="table table-hover table-2nd-short">
 				<thead>
 					<tr>
-					  <th>{{ trans('app.avatar') }}</th>
 					  <th>{{ trans('app.nice_name') }}</th>
 					  <th>{{ trans('app.full_name') }}</th>
 					  <th>{{ trans('app.email') }}</th>
@@ -37,8 +36,10 @@
 					            @else
 				            		<img src="{{ get_gravatar_url($user->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 					            @endif
+								<p class="indent10">
+									{{ $user->nice_name }}
+								</p>
 							</td>
-							<td>{{ $user->nice_name }}</td>
 							<td>{{ $user->name }}</td>
 							<td>{{ $user->email }}</td>
 							<td>
@@ -89,7 +90,6 @@
 	    	<table class="table table-hover table-2nd-short">
 		        <thead>
 		        <tr>
-		          <th>{{ trans('app.avatar') }}</th>
 		          <th>{{ trans('app.nice_name') }}</th>
 		          <th>{{ trans('app.full_name') }}</th>
 		          <th>{{ trans('app.email') }}</th>
@@ -103,8 +103,10 @@
 				        <tr>
 				          	<td>
 								<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+								<p class="indent10">
+									{{ $trash->nice_name }}
+								</p>
 							</td>
-					        <td>{{ $trash->nice_name }}</td>
 					        <td>{{ $trash->name }}</td>
 					        <td>{{ $trash->email }}</td>
 					        <td>

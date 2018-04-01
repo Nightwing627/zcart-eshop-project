@@ -22,7 +22,7 @@ class EloquentCarrier extends EloquentRepository implements BaseRepository, Carr
         if (!Auth::user()->isFromPlatform())
             return $this->model->mine()->with('image', 'shippingZones')->get();
 
-        return $this->model->with('image', 'shippingZones')->all();
+        return $this->model->with('image', 'shippingZones')->get();
     }
 
     public function trashOnly()

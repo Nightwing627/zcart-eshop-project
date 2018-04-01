@@ -14,43 +14,45 @@ class OrderStatusesSeeder extends Seeder
     {
         DB::table('order_statuses')->insert([
             [
-                'name' => 'Completed',
+                'name' => 'Confirmed',
                 'label_color' => '#ffffff',
+                'fulfilled' => false,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
-                'name' => 'Waiting for approval',
+                'name' => 'Waiting for payment',
                 'label_color' => '#fddfff',
+                'fulfilled' => false,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
                 'name' => 'Payment error',
                 'label_color' => '#fff11f',
+                'fulfilled' => false,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
-                'name' => 'Shipped',
+                'name' => 'Fulfilled',
                 'label_color' => '#00ffff',
+                'fulfilled' => true,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
                 'name' => 'Awaiting delivery',
                 'label_color' => '#f04fff',
+                'fulfilled' => true,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
                 'name' => 'Delivered',
                 'label_color' => '#f04fff',
+                'fulfilled' => true,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
-                'name' => 'Cancelled',
+                'name' => 'Returned',
                 'label_color' => '#f04fff',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ], [
-                'name' => 'Refunded',
-                'label_color' => '#f04fff',
+                'fulfilled' => true,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ]

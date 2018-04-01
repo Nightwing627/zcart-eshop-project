@@ -2,7 +2,6 @@
 
 namespace App\Common;
 
-use League\Glide\Server;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -65,7 +64,8 @@ trait Imageable {
 
         return $this->image()->create([
             'path' => $file,
-            'name' => str_slug($image->getClientOriginalName(), '-'),
+            'name' => $image->getClientOriginalName(),
+            // 'name' => str_slug($image->getClientOriginalName(), '-'),
             'extension' => $image->getClientOriginalExtension(),
             'featured' => (bool) $featured,
             'size' => $image->getClientSize()
@@ -73,7 +73,7 @@ trait Imageable {
 	}
 
 	/**
-	 * Deletes all the images of this model.
+	 * Deletes the given image.
 	 *
 	 * @return bool
 	 */
@@ -109,9 +109,7 @@ trait Imageable {
 	 */
 	public function flushImages()
 	{
-		$images = $this->images;
-
-		foreach ($images as $image)
+		foreach ($this->images as $image)
 			$this->deleteImage($image);
 
 		return $this->deleteFeaturedImage();

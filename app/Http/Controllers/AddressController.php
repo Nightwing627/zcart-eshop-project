@@ -101,7 +101,6 @@ class AddressController extends Controller
         return back()->with('success', trans('messages.deleted', ['model' => $this->model_name]));
     }
 
-
     /**
      * Response AJAX call to return states of a give country
      */
@@ -115,5 +114,4 @@ class AddressController extends Controller
 
         return response('Not allowed!', 404);
     }
-
 }

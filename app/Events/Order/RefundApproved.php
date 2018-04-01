@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Order;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ShopCreated
+class RefundApproved
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
+use App\Events\Order\RefundInitiated;
+use App\Events\Order\RefundApproved;
+use App\Events\Order\RefundDeclined;
 use App\Http\Controllers\Controller;
 use App\Repositories\Refund\RefundRepository;
 use App\Http\Requests\Validations\InitiateRefundRequest;
@@ -43,11 +46,15 @@ class RefundController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  int  $order
      * @return \Illuminate\Http\Response
      */
-    public function showRefundForm()
+    public function showRefundForm($order = Null)
     {
-        return view('admin.refund._initiate');
+        if($order)
+            $order = $this->refund->findOrder($order);
+
+        return view('admin.refund._initiate', compact('order'));
     }
 
     /**
@@ -58,7 +65,9 @@ class RefundController extends Controller
      */
     public function initiate(InitiateRefundRequest $request)
     {
-        $this->refund->store($request);
+        $refund = $this->refund->store($request);
+
+        event(new RefundInitiated($refund, $request->has('notify_customer')));
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -73,21 +82,23 @@ class RefundController extends Controller
     {
         $refund = $this->refund->find($id);
 
-        $this->refund->opened($refund);
-
         return view('admin.refund._response', compact('refund'));
     }
 
     public function approve($id)
     {
-        $this->refund->approve($id);
+        $refund = $this->refund->approve($id);
+
+        event(new RefundApproved($refund));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     public function decline($id)
     {
-        $this->refund->decline($id);
+        $refund = $this->refund->decline($id);
+
+        event(new RefundDeclined($refund));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }

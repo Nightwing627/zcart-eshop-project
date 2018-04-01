@@ -22,6 +22,7 @@
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.color') }}</th>
 						<th>{{ trans('app.appearance') }}</th>
+						<th>{{ trans('app.fulfilled') }}</th>
 						<th>{{ trans('app.send_email_to_customer') }}</th>
 						<th>{{ trans('app.email_template') }}</th>
 						<th>{{ trans('app.option') }}</th>
@@ -38,6 +39,9 @@
 							</span>
 						</td>
 						<td class='text-center'>
+							<i class="fa fa-{{ $status->fulfilled ? 'check' : '-'}}"></i>
+						</td>
+						<td class='text-center'>
 							<i class="fa fa-{{ $status->send_email_to_customer ? 'check' : '-'}}"></i>
 						</td>
 						<td>{{ ($status->email_template_id) ? $status->emailTemplate->name : '' }}</td>
@@ -47,9 +51,13 @@
 							@endcan
 
 							@can('delete', $status)
-								{!! Form::open(['route' => ['admin.utility.orderStatus.trash', $status->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-								{!! Form::close() !!}
+								@if(in_array($status->id, config('system.freeze.order_statuses')))
+									<i class="fa fa-bell-o text-muted" data-toggle="tooltip" data-placement="left" title="{{ trans('messages.freezed_model') }}" ></i>
+								@else
+									{!! Form::open(['route' => ['admin.utility.orderStatus.trash', $status->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+										{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+									{!! Form::close() !!}
+								@endif
 							@endcan
 						</td>
 					</tr>

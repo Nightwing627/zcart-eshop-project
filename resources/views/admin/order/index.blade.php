@@ -10,62 +10,185 @@
 
 	@include('admin.partials._filter')
 
-	<div class="box">
-		<div class="box-header with-border">
-	        <h3 class="box-title"><i class="fa fa-cart-arrow-down"></i> {{ trans('app.orders') }}</h3>
-			<div class="box-tools pull-right">
-				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-			</div>
-		</div> <!-- /.box-header -->
-		<div class="box-body">
-			<table class="table table-hover table-desc">
-				<thead>
-					<tr>
-						<th>{{ trans('app.order_number') }}</th>
-						<th>{{ trans('app.order_date') }}</th>
-						<th>{{ trans('app.customer') }}</th>
-						<th>{{ trans('app.grand_total') }}</th>
-						<th>{{ trans('app.payment') }}</th>
-						<th>{{ trans('app.status') }}</th>
-						<th>{{ trans('app.option') }}</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($orders as $order )
-						<tr>
-							<td>
-								{{ $order->order_number }}
-								@if($order->disputed)
-									<span class="label label-danger indent5">{{ trans('app.statuses.disputed') }}</span>
-								@endif
-							</td>
-					        <td>{{ $order->created_at->toDayDateTimeString() }}</td>
-							<td>{{ $order->customer->name }}</td>
-							<td>{{ get_formated_currency($order->grand_total )}}</td>
-							<td>{{ $order->paymentStatus->name }}</td>
-							<td>{{ $order->status ? $order->status->name : trans('app.statuses.new') }}</td>
-							<td class="row-options">
-								@can('view', $order)
-									<a href="{{ route('admin.order.order.show', $order->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
-								@endcan
+	@php
+		$unpaid_orders = $orders->where('payment_status', '<' , App\Order::PAYMENT_STATUS_PAID);
+	@endphp
 
-								@can('archive', $order)
-									{!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-										{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.order_archive'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-									{!! Form::close() !!}
-								@endcan
-							</td>
-						</tr>
-					@endforeach
-				</tbody>
-			</table>
-		</div> <!-- /.box-body -->
+	<div class="box">
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs nav-justified">
+				<li class="active"><a href="#all_orders_tab" data-toggle="tab">
+					<i class="fa fa-shopping-cart hidden-sm"></i>
+					{{ trans('app.all_orders') }}
+				</a></li>
+				<li><a href="#unpaid_tab" data-toggle="tab">
+					<i class="fa fa-money hidden-sm"></i>
+					{{ trans('app.statuses.unpaid') }}
+				</a></li>
+				<li><a href="#unfulfilled_tab" data-toggle="tab">
+					<i class="fa fa-shopping-basket hidden-sm"></i>
+					{{ trans('app.statuses.unfulfilled') }}
+				</a></li>
+			</ul>
+			<div class="tab-content">
+			    <div class="tab-pane active" id="all_orders_tab">
+					<table class="table table-hover table-desc">
+						<thead>
+							<tr>
+								<th>{{ trans('app.order_number') }}</th>
+								<th>{{ trans('app.order_date') }}</th>
+								<th>{{ trans('app.customer') }}</th>
+								<th>{{ trans('app.grand_total') }}</th>
+								<th>{{ trans('app.payment') }}</th>
+								<th>{{ trans('app.status') }}</th>
+								<th>&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($orders as $order )
+								<tr>
+									<td>
+										@can('view', $order)
+											<a href="{{ route('admin.order.order.show', $order->id) }}">
+												{{ $order->order_number }}
+											</a>
+										@else
+											{{ $order->order_number }}
+										@endcan
+										@if($order->disputed)
+											<span class="label label-danger indent5">{{ trans('app.statuses.disputed') }}</span>
+										@endif
+									</td>
+							        <td>{{ $order->created_at->toDayDateTimeString() }}</td>
+									<td>{{ $order->customer->name }}</td>
+									<td>{{ get_formated_currency($order->grand_total )}}</td>
+									<td>{!! $order->paymentStatusName() !!}</td>
+									<td>
+										<span class="label label-outline" style="background-color: {{ optional($order->status)->label_color }}">
+											{{ $order->status ? strToupper(optional($order->status)->name) : trans('app.statuses.new') }}
+										</span>
+									</td>
+									<td class="row-options">
+										@can('archive', $order)
+											{!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+												{!! Form::button('<i class="fa fa-archive text-muted"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.order_archive'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+											{!! Form::close() !!}
+										@endcan
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+
+			    <div class="tab-pane" id="unpaid_tab">
+					<table class="table table-hover table-desc">
+						<thead>
+							<tr>
+								<th>{{ trans('app.order_number') }}</th>
+								<th>{{ trans('app.order_date') }}</th>
+								<th>{{ trans('app.customer') }}</th>
+								<th>{{ trans('app.grand_total') }}</th>
+								<th>{{ trans('app.payment') }}</th>
+								<th>{{ trans('app.status') }}</th>
+								<th>&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($unpaid_orders as $order )
+								<tr>
+									<td>
+										@can('view', $order)
+											<a href="{{ route('admin.order.order.show', $order->id) }}">
+												{{ $order->order_number }}
+											</a>
+										@else
+											{{ $order->order_number }}
+										@endcan
+										@if($order->disputed)
+											<span class="label label-danger indent5">{{ trans('app.statuses.disputed') }}</span>
+										@endif
+									</td>
+							        <td>{{ $order->created_at->toDayDateTimeString() }}</td>
+									<td>{{ $order->customer->name }}</td>
+									<td>{{ get_formated_currency($order->grand_total )}}</td>
+									<td>{!! $order->paymentStatusName() !!}</td>
+									<td>
+										<span class="label label-outline" style="background-color: {{ optional($order->status)->label_color }}">
+											{{ $order->status ? strToupper(optional($order->status)->name) : trans('app.statuses.new') }}
+										</span>
+									</td>
+									<td class="row-options">
+										@can('archive', $order)
+											{!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+												{!! Form::button('<i class="fa fa-archive text-muted"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.order_archive'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+											{!! Form::close() !!}
+										@endcan
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+
+			    <div class="tab-pane" id="unfulfilled_tab">
+					<table class="table table-hover table-desc">
+						<thead>
+							<tr>
+								<th>{{ trans('app.order_number') }}</th>
+								<th>{{ trans('app.order_date') }}</th>
+								<th>{{ trans('app.customer') }}</th>
+								<th>{{ trans('app.grand_total') }}</th>
+								<th>{{ trans('app.payment') }}</th>
+								<th>{{ trans('app.status') }}</th>
+								<th>&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($orders as $order )
+								@unless($order->isFulfilled())
+									<tr>
+										<td>
+											@can('view', $order)
+												<a href="{{ route('admin.order.order.show', $order->id) }}">
+													{{ $order->order_number }}
+												</a>
+											@else
+												{{ $order->order_number }}
+											@endcan
+											@if($order->disputed)
+												<span class="label label-danger indent5">{{ trans('app.statuses.disputed') }}</span>
+											@endif
+										</td>
+								        <td>{{ $order->created_at->toDayDateTimeString() }}</td>
+										<td>{{ $order->customer->name }}</td>
+										<td>{{ get_formated_currency($order->grand_total )}}</td>
+										<td>{!! $order->paymentStatusName() !!}</td>
+										<td>
+											<span class="label label-outline" style="background-color: {{ optional($order->status)->label_color }}">
+												{{ $order->status ? strToupper(optional($order->status)->name) : trans('app.statuses.new') }}
+											</span>
+										</td>
+										<td class="row-options">
+											@can('archive', $order)
+												{!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+													{!! Form::button('<i class="fa fa-archive text-muted"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.order_archive'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+												{!! Form::close() !!}
+											@endcan
+										</td>
+									</tr>
+								@endunless
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 	</div> <!-- /.box -->
 
 	<div class="box collapsed-box">
 		<div class="box-header with-border">
-			<h3 class="box-title"><i class="fa fa-trash-o"></i>{{ trans('app.trash') }}</h3>
+			<h3 class="box-title"><i class="fa fa-trash-o"></i> {{ trans('app.trash') }}</h3>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 				<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -77,21 +200,33 @@
 					<tr>
 						<th>{{ trans('app.order_number') }}</th>
 						<th>{{ trans('app.order_date') }}</th>
-						<th>{{ trans('app.customer') }}</th>
 						<th>{{ trans('app.grand_total') }}</th>
 						<th>{{ trans('app.payment') }}</th>
-						<th>{{ trans('app.deleted_at') }}</th>
+						<th>{{ trans('app.status') }}</th>
+						<th>{{ trans('app.archived_at') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($archives as $archive )
 					<tr>
-						<td>{{ $archive->id }}</td>
+						<td>
+							@can('view', $archive)
+								<a href="{{ route('admin.order.order.show', $archive->id) }}"  class="ajax-modal-btn">
+									{{ $archive->order_number }}
+								</a>
+							@else
+								{{ $archive->order_number }}
+							@endcan
+						</td>
 				        <td>{{ $archive->created_at->toDayDateTimeString() }}</td>
-						<td>{{ $archive->customer->name }}</td>
 						<td>{{ $archive->amount_total }}</td>
-						<td>{{ $archive->payment_method }}</td>
+						<td>{!! $archive->paymentStatusName() !!}</td>
+						<td>
+							<span class="label label-outline" style="background-color: {{ optional($archive->status)->label_color }}">
+								{{ $archive->status ? strToupper(optional($archive->status)->name) : trans('app.statuses.new') }}
+							</span>
+						</td>
 						<td>{{ $archive->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('archive', $archive)

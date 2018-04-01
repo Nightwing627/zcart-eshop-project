@@ -36,6 +36,7 @@
 						    	<div class="col-sm-7">
 					    			@foreach($payment_providers as $payment_provider)
 					    				@php
+							    			$has_config = FALSE;
 					    					$logo_path = sys_image_path('payment-methods') ."{$payment_provider->code}.png";
 					    				@endphp
 										<ul class="list-group">

@@ -93,8 +93,8 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 	// Utility Routs for Admin/Merchant
 	Route::group(['as' => 'utility.', 'prefix' => 'utility'], function()
 	{
+		include('admin/Currency.php');
 		include('admin/OrderStatus.php');
-		include('admin/PaymentStatus.php');
 	});
 
 	// Settings Routs for Admin/Merchant

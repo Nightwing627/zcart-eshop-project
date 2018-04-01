@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Helpers;
 
 use Auth;
 use App\User;
 use App\Role;
+use App\Order;
 use App\Module;
 use App\Ticket;
 use App\Message;
@@ -38,7 +40,14 @@ class ListHelper
             PaymentMethod::TYPE_MANUAL      => trans("app.payment_method_type.manual.name"),
         ];
     }
-
+    public static function payment_statuses()
+    {
+        return  [
+            Order::PAYMENT_STATUS_UNPAID    => trans("app.statuses.unpaid"),
+            Order::PAYMENT_STATUS_PENDING   => trans("app.statuses.pending"),
+            Order::PAYMENT_STATUS_PAID      => trans("app.statuses.paid"),
+        ];
+    }
     public static function ticket_priorities()
     {
         return  [
@@ -93,7 +102,6 @@ class ListHelper
     {
         return  [
             Refund::STATUS_NEW      => trans("app.statuses.new"),
-            Refund::STATUS_PENDING     => trans("app.statuses.pending"),
             Refund::STATUS_APPROVED  => trans("app.statuses.approved"),
             Refund::STATUS_DECLINED => trans("app.statuses.declined"),
         ];
@@ -397,24 +405,37 @@ class ListHelper
     }
 
     /**
+     * Get paid_orders list for form dropdown.
+     *
+     * @return array
+     */
+    public static function paid_orders()
+    {
+        return \DB::table('orders')->where('shop_id', Auth::user()->merchantId())
+                ->where('payment_status', Order::PAYMENT_STATUS_PAID)
+                ->where('deleted_at', Null)->orderBy('order_number', 'asc')
+                ->pluck('order_number', 'id')->toArray();
+    }
+
+    /**
      * Get order_statuses list for form dropdown.
      *
      * @return array
      */
     public static function order_statuses()
     {
-        return \DB::table('order_statuses')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('order_statuses')->where('deleted_at', Null)->pluck('name', 'id');
     }
 
-    /**
-     * Get payment_statuses list for form dropdown.
-     *
-     * @return array
-     */
-    public static function payment_statuses()
-    {
-        return \DB::table('payment_statuses')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
-    }
+    // /**
+    //  * Get payment_statuses list for form dropdown.
+    //  *
+    //  * @return array
+    //  */
+    // public static function payment_statuses()
+    // {
+    //     return \DB::table('payment_statuses')->where('deleted_at', Null)->pluck('name', 'id');
+    // }
 
     /**
      * Get address_types list for form dropdown.
@@ -476,12 +497,12 @@ class ListHelper
      */
     public static function currencies()
     {
-        $currencies = \DB::table('currencies')->select('name', 'iso_code', 'id')->where('active', 1)->orderBy('name', 'asc')->get();
+        $currencies = \DB::table('currencies')->select('name', 'iso_code', 'id')->where('active', 1)->orderBy('priority', 'asc')->orderBy('name', 'asc')->get();
         // $currencies = \DB::table('currencies')->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
 
         $result = [];
-        foreach ($currencies as $id => $currency)
-            $result[$id] = $currency->name . ' (' . $currency->iso_code . ')';
+        foreach ($currencies as $currency)
+            $result[$currency->id] = $currency->name . ' (' . $currency->iso_code . ')';
 
         return $result;
     }

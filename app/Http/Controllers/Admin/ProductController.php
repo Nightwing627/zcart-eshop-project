@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
@@ -75,6 +77,8 @@ class ProductController extends Controller
     {
         $product = $this->product->find($id);
 
+        $this->authorize('view', $product); // Check permission
+
         return view('admin.product._show', compact('product'));
     }
 
@@ -87,6 +91,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = $this->product->find($id);
+
+        $this->authorize('update', $product); // Check permission
 
         $preview = $product->previewImages();
 

@@ -51,7 +51,7 @@ class Invoice extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('App\Customer');
+        return $this->belongsTo(Customer::class);
     }
 
     /**
@@ -59,7 +59,7 @@ class Invoice extends Model
      */
     public function shop()
     {
-        return $this->belongsTo('App\Shop');
+        return $this->belongsTo(Shop::class);
     }
 
 
@@ -68,7 +68,7 @@ class Invoice extends Model
      */
     public function tax()
     {
-        return $this->belongsTo('App\Tax');
+        return $this->belongsTo(Tax::class);
     }
 
     /**
@@ -76,24 +76,15 @@ class Invoice extends Model
      */
     public function order()
     {
-        return $this->belongsTo('App\Order');
+        return $this->belongsTo(Order::class);
     }
-
-    /**
-     * Get the status for the order.
-     */
-    public function status()
-    {
-        return $this->belongsTo('App\PaymentStatus', 'payment_status_id');
-    }
-
 
     /**
      * Get the paymentMethod for the invoice.
      */
     public function paymentMethod()
     {
-        return $this->belongsTo('App\PaymentMethod');
+        return $this->belongsTo(PaymentMethod::class);
     }
 
     // /**
@@ -101,7 +92,7 @@ class Invoice extends Model
     //  */
     // public function products()
     // {
-    //     return $this->hasManyThrough('App\Product', 'App\Inventory');
+    //     return $this->hasManyThrough(Product::class, Inventory::class);
     // }
 
     // *
@@ -109,7 +100,7 @@ class Invoice extends Model
 
     // public function inventories()
     // {
-    //     return $this->belongsToMany('App\Inventory', 'order_items')
+    //     return $this->belongsToMany(Inventory::class, 'order_items')
     //                 ->withPivot('item_description', 'quantity', 'unit_price')
     //                 ->withTimestamps();
     // }

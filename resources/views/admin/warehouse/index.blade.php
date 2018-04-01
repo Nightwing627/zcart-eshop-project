@@ -2,7 +2,6 @@
 
 @section('buttons')
 	@can('create', App\Warehouse::class)
-		<a href="{{ route('admin.exim', 'warehouse') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 		<a href="{{ route('admin.stock.warehouse.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_warehouse') }}</a>
 	@endcan
 @endsection

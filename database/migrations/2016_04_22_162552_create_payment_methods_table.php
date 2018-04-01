@@ -29,17 +29,6 @@ class CreatePaymentMethodsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('payment_statuses', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('payment_method_id')->unsigned()->nullable();
-            $table->string('name')->nullable();
-            $table->string('label_color')->nullable();
-            $table->boolean('send_email_to_customer')->default(0);
-            $table->bigInteger('email_template_id')->unsigned()->nullable();
-            $table->softDeletes();
-            $table->timestamps();
-        });
-
         Schema::create('shop_payment_methods', function (Blueprint $table) {
             $table->integer('payment_method_id')->unsigned()->index();
             $table->integer('shop_id')->unsigned()->index();
@@ -59,7 +48,6 @@ class CreatePaymentMethodsTable extends Migration
     public function down()
     {
         Schema::drop('shop_payment_methods');
-        Schema::drop('payment_statuses');
         Schema::drop('payment_methods');
     }
 }

@@ -1,7 +1,12 @@
-<!-- jQuery 2.1.4 -->
-{{-- <script src="{{asset("assets/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script> --}}
 <!-- jQuery 3.2.1 -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+ {{-- (Required by only the datetimepicker, Remove it after find a solution) --}}
+<script>var $Original = jQuery.noConflict(true);</script>
+<!-- jQuery 2.1.4  -->
+<script src="{{asset("assets/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script>
+ {{-- END (Required by only the datetimepicker) --}}
+
 <!-- Bootstrap 3.3.5 -->
 <script src="{{asset("assets/bootstrap/js/bootstrap.min.js") }}"></script>
 
@@ -204,6 +209,7 @@
     });
 
     $(".dataTables_length select").addClass('select2-normal'); //Make the data-table length dropdown like select 2
+    $(".dt-buttons > a.btn").addClass('btn-sm'); //Make the data-table option buttins smaller
   }
   //END DataTables
 
@@ -442,7 +448,18 @@
     });
     //DateTimepicker
     $(".datetimepicker").datetimepicker({
-        format: 'YYYY-MM-DD hh:mm A'
+        format: 'YYYY-MM-DD hh:mm A',
+        icons:{
+            time: 'glyphicon glyphicon-time',
+            date: 'glyphicon glyphicon-calendar',
+            up: 'fa fa-arrow-up',
+            down: 'fa fa-arrow-down',
+            previous: 'glyphicon glyphicon-chevron-left',
+            next: 'glyphicon glyphicon-chevron-right',
+            today: 'glyphicon glyphicon-screenshot',
+            clear: 'glyphicon glyphicon-trash',
+            close: 'glyphicon glyphicon-remove'
+        }
     });
 
     //Colorpicker

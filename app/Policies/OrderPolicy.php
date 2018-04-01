@@ -46,15 +46,15 @@ class OrderPolicy
     }
 
     /**
-     * Determine whether the user can update the Order.
+     * Determine whether the user can fulfill the Order.
      *
      * @param  \App\User  $user
      * @param  \App\Order  $order
      * @return mixed
      */
-    public function update(User $user, Order $order)
+    public function fulfill(User $user, Order $order)
     {
-        return (new Authorize($user, 'edit_order', $order))->check();
+        return (new Authorize($user, 'fulfill_order', $order))->check();
     }
 
     /**

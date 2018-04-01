@@ -24,13 +24,13 @@
 				  <li class="active"><a href="#tab_1" data-toggle="tab">
 				  	{{ trans('app.basic_info') }}
 				  </a></li>
-				  <li><a href="#tab_2" data-toggle="tab">
+				  <li><a href="#desc_tab" data-toggle="tab">
 				  	{{ trans('app.description') }}
 				  </a></li>
-				  <li><a href="#tab_3" data-toggle="tab">
+				  <li><a href="#address_tab" data-toggle="tab">
 				  	{{ trans('app.addresses') }}
 				  </a></li>
-				  <li><a href="#tab_4" data-toggle="tab">
+				  <li><a href="#orders_tab" data-toggle="tab">
 				  	{{ trans('app.latest_orders') }}
 				  </a></li>
 				</ul>
@@ -82,10 +82,10 @@
 				            @endif
 				        </table>
 				    </div> <!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_2">
+				    <div class="tab-pane" id="desc_tab">
 			            {!! $customer->description or trans('app.info_not_found') !!}
 				    </div> <!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_3">
+				    <div class="tab-pane" id="address_tab">
 				    	@foreach($customer->addresses as $address)
 
 					        {!! $address->toHtml() !!}
@@ -97,12 +97,12 @@
 				        <br/>
 	            		@if(config('system_settings.address_geocode') && $customer->primaryAddress)
 					        <div class="row">
-			                    <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q={{ urlencode($customer->primaryAddress->toString()) }}&output=embed"></iframe>
+			                    <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q={{ urlencode($customer->primaryAddress->toGeocodeString()) }}&output=embed"></iframe>
 					        </div>
 					        <div class="help-block" style="margin-bottom: -10px;"><i class="fa fa-warning"></i> {{ trans('app.map_location') }}</div>
 				       	@endif
 				    </div> <!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_4">
+				    <div class="tab-pane" id="orders_tab">
 						<table class="table table-hover table-2nd-short">
 							<thead>
 								<tr>
@@ -117,8 +117,8 @@
 								@foreach($customer->latest_orders as $order )
 									<tr>
 										<td>{{ get_formated_order_number($order->order_number) }}</td>
-										<td>{{ get_formated_currency($order->grand_total )}}</td>
-										<td>{{ optional($order->paymentStatus)->name }}</td>
+										<td>{{ get_formated_currency($order->grand_total)}}</td>
+										<td>{!! $order->paymentStatusName() !!}</td>
 										<td>{{ optional($order->status)->name }}</td>
 								        <td>{{ $order->created_at->toFormattedDateString() }}</td>
 									</tr>

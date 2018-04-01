@@ -5,4 +5,12 @@
 
 	Route::get('order/searchCutomer', 'OrderController@searchCutomer')->name('order.searchCutomer');
 
-	Route::resource('order', 'OrderController', ['except'=>['edit','update']]);
+	Route::get('order/{order}/fulfill', 'OrderController@fulfillment')->name('order.fulfillment');
+
+	Route::put('order/{order}/fulfill', 'OrderController@fulfill')->name('order.fulfill');
+
+	Route::put('order/{order}/updateOrderStatus', 'OrderController@updateOrderStatus')->name('order.updateOrderStatus');
+
+	Route::put('order/{order}/togglePaymentStatus', 'OrderController@togglePaymentStatus')->name('order.togglePaymentStatus');
+
+	Route::resource('order', 'OrderController', ['except' => 'update']);

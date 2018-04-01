@@ -32,18 +32,56 @@
 			<!-- Custom Tabs -->
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs nav-justified">
-				  <li class="active"><a href="#info_tab" data-toggle="tab">
+				  <li class="active"><a href="#items_tab" data-toggle="tab">
+					{{ trans('app.items') }}
+				  </a></li>
+				  <li><a href="#info_tab" data-toggle="tab">
 					{{ trans('app.cart_info') }}
 				  </a></li>
 				  <li><a href="#invoice_tab" data-toggle="tab">
 					{{ trans('app.invoice') }}
 				  </a></li>
-				  <li><a href="#items_tab" data-toggle="tab">
-					{{ trans('app.items') }}
-				  </a></li>
 				</ul>
 				<div class="tab-content">
-				    <div class="tab-pane active" id="info_tab">
+				    <div class="tab-pane active" id="items_tab">
+					    <table class="table table-sripe">
+					      <thead>
+					        <tr>
+					          <th>{{ trans('app.image') }}</th>
+					          <th>{{ trans('app.description') }}</th>
+					          <th>{{ trans('app.quantity') }}</th>
+					          <th>{{ trans('app.price') }}</th>
+					          <th>{{ trans('app.total') }}</th>
+					        </tr>
+					      </thead>
+					      <tbody id="items">
+				            @if(count($cart->inventories) > 0)
+								@foreach($cart->inventories as $item )
+									<tr>
+										<td>
+							                @if($item->image)
+							                  <img src="{{ get_storage_file_url($item->image->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
+							                @elseif($item->product->featuredImage)
+							                  <img src="{{ get_storage_file_url($item->product->featuredImage->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
+							                @else
+							                  <img src="{{ get_storage_file_url(optional($item->product->image)->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
+							                @endif
+										</td>
+										<td>{{ $item->pivot->item_description }}</td>
+										<td>{{ $item->pivot->quantity }}</td>
+										<td>{{ get_formated_currency($item->pivot->unit_price) }}</td>
+										<td>{{ get_formated_currency($item->pivot->quantity * $item->pivot->unit_price) }}</td>
+									</tr>
+								@endforeach
+							@else
+						        <tr id='empty-cart'><td colspan="5">{{ trans('help.empty_cart') }}</td></tr>
+							@endif
+					      </tbody>
+					    </table>
+				    </div>
+				    <!-- /.tab-pane -->
+
+				    <div class="tab-pane" id="info_tab">
 						<table class="table no-border">
 							<tr>
 								<th class="text-right">{{ trans('app.created_at') }}:</th>
@@ -117,57 +155,11 @@
 								<td style="width: 75%;">{{ get_formated_currency($cart->taxes) }}</td>
 							</tr>
 							<tr>
-								<th class="text-right">{{ trans('app.payment_method') }}:</th>
-								<td style="width: 75%;">{{ $cart->paymentMethod->name }}</td>
-							</tr>
-							<tr>
-								<th class="text-right">{{ trans('app.payment_status') }}:</th>
-								<td style="width: 75%;">{{ $cart->paymentStatus->name }}</td>
-							</tr>
-							<tr>
 								<th class="text-right">{{ trans('app.billing_address') }}:</th>
 								<td style="width: 75%;">{{ $cart->billing_address }}</td>
 							</tr>
 						</table>
 					</div>
-				    <!-- /.tab-pane -->
-
-				    <div class="tab-pane" id="items_tab">
-					    <table class="table table-sripe">
-					      <thead>
-					        <tr>
-					          <th>{{ trans('app.image') }}</th>
-					          <th>{{ trans('app.description') }}</th>
-					          <th>{{ trans('app.quantity') }}</th>
-					          <th>{{ trans('app.price') }}</th>
-					          <th>{{ trans('app.total') }}</th>
-					        </tr>
-					      </thead>
-					      <tbody id="items">
-				            @if(count($cart->inventories) > 0)
-								@foreach($cart->inventories as $item )
-									<tr>
-										<td>
-							                @if($item->image)
-							                  <img src="{{ get_storage_file_url($item->image->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
-							                @elseif($item->product->featuredImage)
-							                  <img src="{{ get_storage_file_url($item->product->featuredImage->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
-							                @else
-							                  <img src="{{ get_storage_file_url(optional($item->product->image)->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
-							                @endif
-										</td>
-										<td>{{ $item->pivot->item_description }}</td>
-										<td>{{ $item->pivot->quantity }}</td>
-										<td>{{ get_formated_currency($item->pivot->unit_price) }}</td>
-										<td>{{ get_formated_currency($item->pivot->quantity * $item->pivot->unit_price) }}</td>
-									</tr>
-								@endforeach
-							@else
-						        <tr id='empty-cart'><td colspan="5">{{ trans('help.empty_cart') }}</td></tr>
-							@endif
-					      </tbody>
-					    </table>
-				    </div>
 				    <!-- /.tab-pane -->
 				</div>
 				<!-- /.tab-content -->

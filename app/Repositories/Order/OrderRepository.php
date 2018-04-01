@@ -14,7 +14,9 @@ interface OrderRepository
 
     public function syncInventory($order, array $cart);
 
-    // public function getShippingCost(Request $request);
+    public function fulfill(Request $request, $order);
 
-    // public function getPackagingCost(Request $request);
+    public function updateOrderStatus(Request $request, $order);
+
+    public function togglePaymentStatus($order);
 }

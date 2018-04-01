@@ -5,7 +5,6 @@ namespace App\Repositories\Ticket;
 use Auth;
 use App\Ticket;
 use Carbon\Carbon;
-use App\Attachment;
 use Illuminate\Http\Request;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
@@ -54,8 +53,8 @@ class EloquentTicket extends EloquentRepository implements BaseRepository, Ticke
     {
         $ticket = $this->model->create($request->all());
 
-        if ($request->hasFile('attachment'))
-            Attachment::storeAttachmentFromRequest($request, $ticket, attachment_storage_dir());
+        if ($request->hasFile('attachments'))
+            $ticket->saveAttachments($request->file('attachments'));
 
         return $ticket;
     }
@@ -75,8 +74,8 @@ class EloquentTicket extends EloquentRepository implements BaseRepository, Ticke
 
         $reply = $ticket->replies()->create($request->all());
 
-        if ($request->hasFile('attachment'))
-            Attachment::storeAttachmentFromRequest($request, $reply, attachment_storage_dir());
+        if ($request->hasFile('attachments'))
+            $reply->saveAttachments($request->file('attachments'));
 
         return $reply;
     }

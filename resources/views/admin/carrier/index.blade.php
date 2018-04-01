@@ -2,7 +2,6 @@
 
 @section('buttons')
 	@can('create', App\Carrier::class)
-		<a href="{{ route('admin.exim', 'carriers') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
 		<a href="{{ route('admin.shipping.carrier.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_carrier') }}</a>
 	@endcan
 @endsection

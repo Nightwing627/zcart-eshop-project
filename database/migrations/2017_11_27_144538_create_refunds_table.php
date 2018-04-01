@@ -17,7 +17,7 @@ class CreateRefundsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('shop_id')->unsigned()->nullable();
             $table->bigInteger('order_id')->unsigned();
-            $table->boolean('order_received')->nullable();
+            $table->boolean('order_fulfilled')->nullable();
             $table->boolean('return_goods')->nullable();
             $table->decimal('amount', 20, 6)->default(0);
             $table->longtext('description')->nullable();

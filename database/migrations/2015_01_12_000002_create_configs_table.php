@@ -29,6 +29,7 @@ class CreateConfigsTable extends Migration
             $table->integer('default_tax_id')->unsigned()->nullable()->default(1);
             // $table->integer('default_carrier_id')->unsigned()->nullable();
             $table->decimal('order_handling_cost', 20, 6)->nullable();
+            $table->boolean('auto_archive_order')->nullable()->default(false);
 
             // Checkout
             $table->integer('default_payment_method_id')->unsigned()->nullable();

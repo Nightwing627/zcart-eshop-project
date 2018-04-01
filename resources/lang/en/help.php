@@ -43,6 +43,16 @@ return [
         ]
     ],
 
+    'currency_iso_code' => 'ISO 4217 code. For example, United States dollar has code USD and Japan\'s currency code is JPY.',
+
+    'currency_subunit' => 'The subunit that is a fraction of the base unit. For example: cent, centavo, paisa',
+
+    'currency_symbol_first' => 'Example: $13.21',
+
+    'currency_decimalpoint' => 'Example: 13.21, 13,21',
+
+    'currency_thousands_separator' => 'Example: 1,000, 1.000, 1 000',
+
     'slug' => 'Slug are usually a search engine friendly URL',
 
     'shop_slug' => 'Slug are usually a search engine friendly URL, You can not change it later. Be creative to choose the slug for your shop',
@@ -121,9 +131,9 @@ return [
 
     'config_decimals' => 'How many digits you want to show after the decimal point? Example: 13.21, 13.123',
 
-    'config_decimalpoint' => 'Example: 13.21, 13,21',
+    // 'config_decimalpoint' => 'Example: 13.21, 13,21',
 
-    'config_thousands_separator' => 'Example: 1,000, 1.000, 1 000',
+    // 'config_thousands_separator' => 'Example: 1,000, 1.000, 1 000',
 
     'config_gift_card_pin_size' => 'How many digits you want to generate giftcard pin number. Default length 10',
 
@@ -269,13 +279,7 @@ return [
 
     'order_status_email_template' => 'This email template will be sent to the customer when the order status updates. Mandatory if the email is enabled for the status',
 
-    'payment_status_name' => 'The title of the status that will be visible everywhere.',
-
-    'payment_status_color' => 'The label color of the payment status',
-
-    'payment_status_send_email' => 'An email will be sent to the customer when the payment status updates',
-
-    'payment_status_email_template' => 'This email template will be sent to the customer when the payment status updates. Mandatory if the email is enabled for the status',
+    'update_order_status' => 'Update the order status',
 
     'email_template_name' => 'Give the template a name. This is for system use only.',
 
@@ -333,31 +337,17 @@ return [
 
     'shipping_tracking_url_example' => 'e.g.: http://example.com/track.php?num=@',
 
-    // 'standard_delivery_time' => 'Standard delivery time',
+    'order_tracking_id' => 'Order tracking ID provided by the shipping service provider.',
 
-    // 'shipping_max_width' => 'Maximun package width handle by the carrier. Leave empty to disable.',
+    'order_fulfillment_carrier' => 'Choose the shipping carrier to fulfill the order.',
 
-    // 'shipping_max_height' => 'Maximun package height handle by the carrier. Leave empty to disable.',
+    'notify_customer' => 'A notification email will be send to the customer with necessary information.',
 
-    // 'shipping_max_depth' => 'Maximun package depth handle by the carrier. Leave empty to disable.',
-
-    // 'shipping_max_weight' => 'Maximun package weight handle by the carrier. Leave empty to disable.',
-
-    // 'shipping_standard_delivery_time' => 'Standard delivery time promised by the carrier',
-
-    // 'shipping_is_free' => 'Do you want to enable this shipping carrier to free shipping?',
-
-    // 'shipping_handling_cost' => 'If checked shipping handling cost will be included with the shipping cost as per you set on the setting page.',
-
-    // 'flat_shipping_cost' => 'Enter a flat shipping cost for each order',
+    'order_status_fulfilled' => 'Do you want to mark the order as fulfilled when the order status changed to this?',
 
     'shipping_weight' => 'The will be used to calculate the shipping cost.',
 
     'order_number_prefix_suffix' => 'The prefix and suffix will be added autometically to formate all order numbers. Leave it blank if you don\'t want to formate order numbers.',
-
-    // 'order_number_prefix' => 'The prefix will be added autometically to formate all order numbers. Leave it blank if you don\'t want to formate order numbers.',
-
-    // 'order_number_suffix' => 'The suffix will be added to the end of all order numbers. Leave it blank if you don\'t want to formate order numbers.',
 
     'customer_not_see_this' => 'Customer will not see this',
 
@@ -365,9 +355,13 @@ return [
 
     'refund_select_order' => 'Select the order you want to refund',
 
-    'refund_order_received' => 'Is the order received by the customer?',
+    'refund_order_fulfilled' => 'Is the order shipped to the customer?',
 
     'refund_return_goods' => 'Is the item returned to you?',
+
+    'customer_paid' => 'Customer paid <strong><em> :amount </em></strong>, inclusive all taxes, shipping charges and others.',
+
+    'order_refunded' => 'Previously refunded <strong><em> :amount </em></strong> of total <strong><em> :total </em></strong>',
 
     'search_customer' => 'Find the customer by email address, nice name or full name.',
 
@@ -429,11 +423,7 @@ return [
 
     'default_supplier' => 'Default supplier will be preselected when add new inventory',
 
-    // 'default_carrier_ids_for_inventory' => 'Default carriers will be preselected when add new inventory. This will help you to add inventory faster.',
-
     'default_packaging_ids_for_inventory' => 'Default packagings will be preselected when add new inventory. This will help you to add inventory faster',
-
-    // 'free_shipping_starts' => 'The shipping charge will be free if the total order amount is equal or more than this value. Leave it blank to disable the feature',
 
     'config_enable_payment_method' => 'The system offers various types of payment gateways. You can enable/disable any payment gateway to control payment options vendor can use to accept payment from customers.',
 
@@ -448,6 +438,8 @@ return [
     'config_paypal_express_client_id' => 'The Client ID is a long unique identifier of your PayPal application. You\'ll find this value on the My Apps & Credentials section on your PayPal dashboard.',
 
     'config_paypal_express_secret' => 'The PayPal API Secret Key. You\'ll find this value on the My Apps & Credentials section on your PayPal dashboard.',
+
+    'config_auto_archive_order' => 'Automatically archive the order. Select this feature if you do not want to manually archive all orders after they have been fulfilled.',
 
     // 'config_stripe_secret_key' => 'Secret API keys will be required to charge the customer while checkout.',
 

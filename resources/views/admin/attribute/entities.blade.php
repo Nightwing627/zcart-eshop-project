@@ -77,13 +77,12 @@
 	    <div class="box-body">
 	      <table class="table table-hover table-option">
 	        <thead>
-	        <tr>
-	          <th>{{ trans('app.values') }}</th>
-	          <th>{{ trans('app.color') }}</th>
-	          <th>{{ trans('app.pattern') }}</th>
-	          <th>{{ trans('app.deleted_at') }}</th>
-	          <th>{{ trans('app.option') }}</th>
-	        </tr>
+		        <tr>
+		          <th>{{ trans('app.values') }}</th>
+		          <th>{{ trans('app.color') }}</th>
+		          <th>{{ trans('app.deleted_at') }}</th>
+		          <th>{{ trans('app.option') }}</th>
+		        </tr>
 	        </thead>
 	        <tbody>
 		        @foreach($trashes as $trash )
@@ -95,11 +94,6 @@
 				          	{{ $trash->color }}
 			          	@endif
 			          </td>
-					  <td>
-				 	  	@if($trash->image)
-							<img src="{{ get_storage_file_url($trash->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
-						@endif
-					  </td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 			          <td class="row-options">
 						@can('delete', $trash)

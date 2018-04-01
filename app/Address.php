@@ -110,7 +110,7 @@ class Address extends Model
      *
      * @return str
      */
-    public function toHtml($separator = '<br />', $show_heading = true)
+    public function toHtml($separator = '<br/>', $show_heading = true)
     {
         $html = [];
 
@@ -165,6 +165,9 @@ class Address extends Model
 
         if(config('system_settings.address_show_country') && $this->country)
             $str []= $this->country->name;
+
+        if(strlen($this->phone))
+            $str [] =  trans('app.phone') . ': ' . e($this->phone);
 
         return implode(', ', $str);
     }

@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Refund extends Model
 {
     const STATUS_NEW       = 1;         //Default
-    const STATUS_PENDING   = 2;
-    const STATUS_APPROVED  = 3;
-    const STATUS_DECLINED  = 4;
+    const STATUS_APPROVED  = 2;
+    const STATUS_DECLINED  = 3;
 
     /**
      * The database table used by the model.
@@ -20,6 +19,13 @@ class Refund extends Model
     protected $table = 'refunds';
 
     /**
+     * All of the relationships to be touched.
+     *
+     * @var array
+     */
+    // protected $touches = ['order'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -27,7 +33,7 @@ class Refund extends Model
     protected $fillable = [
                     'shop_id',
                     'order_id',
-                    'order_received',
+                    'order_fulfilled',
                     'return_goods',
                     'amount',
                     'description',
@@ -51,11 +57,11 @@ class Refund extends Model
     }
 
     /**
-     * Set the order_received.
+     * Set the order_fulfilled.
      */
-    public function setOrderReceivedAttribute($value)
+    public function setOrderFulfilledAttribute($value)
     {
-        $this->attributes['order_received'] = (bool) $value;
+        $this->attributes['order_fulfilled'] = (bool) $value;
     }
 
     /**
@@ -82,7 +88,7 @@ class Refund extends Model
      */
     public function scopeOpen($query)
     {
-        return $query->where('status' , '<', Refund::STATUS_APPROVED);
+        return $query->where('status' , '<', static::STATUS_APPROVED);
     }
 
     /**
@@ -92,7 +98,7 @@ class Refund extends Model
      */
     public function scopeClosed($query)
     {
-        return $query->where('status', '>=', Refund::STATUS_APPROVED);
+        return $query->where('status', '>=', static::STATUS_APPROVED);
     }
 
     /**
@@ -109,8 +115,6 @@ class Refund extends Model
     {
         switch ($this->status) {
             case static::STATUS_NEW: return '<span class="label label-outline">' . trans('app.statuses.new') . '</span>';
-
-            case static::STATUS_PENDING: return '<span class="label label-warning">' . trans('app.statuses.pending') . '</span>';
 
             case static::STATUS_APPROVED: return '<span class="label label-primary">' . trans('app.statuses.approved') . '</span>';
 

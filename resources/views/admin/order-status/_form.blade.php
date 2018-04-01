@@ -4,6 +4,16 @@
   {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.status_name'), 'required']) !!}
   <div class="help-block with-errors"></div>
 </div>
+
+@unless(isset($orderStatus) && in_array($orderStatus->id, config('system.freeze.order_statuses')))
+  <div class="form-group">
+    {!! Form::label('fulfilled', trans('app.form.fulfilled').'*', ['class' => 'with-help']) !!}
+    <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.order_status_fulfilled') }}"></i>
+    {!! Form::select('fulfilled', ['1' => trans('app.yes'), '0' => trans('app.no')], null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.fulfilled'), 'required']) !!}
+    <div class="help-block with-errors"></div>
+  </div>
+@endunless
+
 <div class="form-group">
   {!! Form::label('color', trans('app.form.color'), ['class' => 'with-help']) !!}
   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.order_status_color') }}"></i>
@@ -17,7 +27,8 @@
 <div class="form-group">
   {!! Form::label('send_email_to_customer', trans('app.form.send_email_to_customer').'*', ['class' => 'with-help']) !!}
   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.order_status_send_email') }}"></i>
-  {!! Form::select('send_email_to_customer', ['1' => trans('app.yes'), '0' => trans('app.no')], null, ['class' => 'form-control select2-normal', 'id' => 'send_email', 'placeholder' => trans('app.placeholder.send_email_to_customer')]) !!}
+  {!! Form::select('send_email_to_customer', ['1' => trans('app.yes'), '0' => trans('app.no')], null, ['class' => 'form-control select2-normal', 'id' => 'send_email', 'placeholder' => trans('app.placeholder.send_email_to_customer'), 'required']) !!}
+  <div class="help-block with-errors"></div>
 </div>
 <div id="option_email_template"  class="
   {{ (

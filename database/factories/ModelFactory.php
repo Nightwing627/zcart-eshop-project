@@ -257,6 +257,7 @@ $factory->define(App\Inventory::class, function (Faker $faker) {
         'purchase_price' => $num,
         'sale_price' => $num+15,
         'min_order_quantity' => 1,
+        'shipping_weight' => rand(100,1999),
         'active' => 1,
     ];
 });
@@ -265,6 +266,7 @@ $factory->define(App\Order::class, function (Faker $faker) {
     $num = $faker->randomFloat($nbMaxDecimals = NULL, $min = 100, $max = 400);
     $num1 = $faker->randomFloat($nbMaxDecimals = NULL, $min = 100, $max = 400);
     $num2 = rand(1,9);
+    $billing_address = $faker->randomElement(\DB::table('addresses')->pluck('id')->toArray());
     return [
         'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'order_number' => '#' . str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT),
@@ -273,13 +275,14 @@ $factory->define(App\Order::class, function (Faker $faker) {
         'packaging_id' => $faker->randomElement(\DB::table('packagings')->pluck('id')->toArray()),
         'item_count' => $num2,
         'quantity' => $num2,
+        'shipping_weight' => rand(100,999),
         'total' => $num,
         'shipping' => $num2,
         'grand_total' => $num2 + $num,
-        'billing_address' => $faker->address(),
-        'shipping_address' => $faker->address(),
+        'billing_address' => $billing_address,
+        'shipping_address' => $billing_address,
         'payment_method_id' => $faker->randomElement(\DB::table('payment_methods')->pluck('id')->toArray()),
-        'payment_status_id' => rand(1, 3),
+        'payment_status' => rand(1, 3),
     ];
 });
 

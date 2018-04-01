@@ -10,9 +10,9 @@ interface RefundRepository{
 
     public function statusOf($status);
 
-    public function opened($refund);
-
     public function approve($refund);
+
+    public function findOrder($order);
 
     public function decline($refund);
 }

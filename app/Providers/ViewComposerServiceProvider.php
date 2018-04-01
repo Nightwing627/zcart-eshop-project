@@ -60,6 +60,10 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeManufacturerForm();
 
+        $this->composeOrderFulfillmentForm();
+
+        $this->composeOrderUpdateForm();
+
         $this->composeProductForm();
 
         $this->composeRefundInitiationForm();
@@ -482,8 +486,10 @@ class ViewComposerServiceProvider extends ServiceProvider
 
             function($view)
             {
+                $config = Config::findOrFail(auth()->user()->merchantId());
+
                 $view->with('payment_statuses', ListHelper::payment_statuses());
-                $view->with('payment_methods', ListHelper::payment_methods());
+                $view->with('payment_methods', optional($config->paymentMethods)->pluck('name', 'id'));
 
                 $inventories = Inventory::mine()->active()->with('product', 'attributeValues')->get();
 
@@ -520,6 +526,38 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                 $view->with('products', isset($items) ? $items : []);
                 $view->with('inventories', isset($product_info) ? $product_info : []);
+            }
+        );
+    }
+
+    /**
+     * compose partial view of order fulfillment
+     */
+    private function composeOrderFulfillmentForm()
+    {
+        View::composer(
+
+            'admin.order._fulfill',
+
+            function($view)
+            {
+                $view->with('carriers', ListHelper::carriers());
+            }
+        );
+    }
+
+    /**
+     * compose partial view of order status update
+     */
+    private function composeOrderUpdateForm()
+    {
+        View::composer(
+
+            'admin.order._edit',
+
+            function($view)
+            {
+                $view->with('order_statuses', ListHelper::order_statuses());
             }
         );
     }
@@ -598,7 +636,7 @@ class ViewComposerServiceProvider extends ServiceProvider
 
             function($view)
             {
-                $view->with('orders', ListHelper::orders());
+                $view->with('orders', ListHelper::paid_orders());
                 $view->with('statuses', ListHelper::refund_statuses());
             }
         );
@@ -615,10 +653,12 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                 function($view)
                 {
+                    $config = Config::findOrFail(auth()->user()->merchantId());
                     $view->with('taxes', ListHelper::taxes());
                     $view->with('suppliers', ListHelper::suppliers());
                     $view->with('warehouses', ListHelper::warehouses());
                     $view->with('packagings', ListHelper::packagings());
+                    $view->with('payment_methods', optional($config->paymentMethods)->pluck('name', 'id'));
                 });
     }
 
