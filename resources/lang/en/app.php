@@ -541,6 +541,7 @@ return [
     'default_tax' => 'Default tax',
     'default_payment_method' => 'Default payment method',
     'shipping_rates' => 'Shipping rates',
+    'shipping_carrier' => 'Shipping carrier',
     'order_number_prefix' => 'Order number prefix',
     'suffix' => 'Suffix',
     'google_analytics_id' => 'Google analytics ID',
@@ -579,6 +580,8 @@ return [
     'alert' => 'Alert',
     'error' => 'Error',
     'by' => 'By',
+    'system' => 'System',
+    'this' => 'This',
     'no_data_found' => 'No data found!',
     'search_again' => 'Search again',
     'search_result' => 'Search result',
@@ -650,6 +653,12 @@ return [
         'normal'    => 'Normal',
         'high'      => 'High',
         'critical'  => 'Critical',
+    ],
+
+    'activities' => [
+        'created'   => 'The :model was created.',
+        'added'     => 'Updated <strong>:key</strong>: <strong>:value</strong>',
+        'updated'   => 'Changed <strong>:key</strong> from <strong>:from</strong> to <strong>:to</strong>',
     ],
 
     'form' => [

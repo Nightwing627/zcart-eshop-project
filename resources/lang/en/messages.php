@@ -63,6 +63,10 @@ return [
         'cant_cal_weight_shipping_rate' => 'Can\'t calculate weight based shipping rate. Because weight are not set for some items.'
     ],
 
+    'no_changes' => 'Nothing to show',
+
+    'no_history_data' => 'No information to show',
+
     'permission'        => [
             'denied'        => 'Permission denied!',
     ],

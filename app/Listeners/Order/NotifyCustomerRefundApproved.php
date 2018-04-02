@@ -2,11 +2,11 @@
 
 namespace App\Listeners\Order;
 
-use App\Events\Order\RefundDeclined;
+use App\Events\Order\RefundApproved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NotifyCustomerRefundStatusChanged
+class NotifyCustomerRefundApproved
 {
     /**
      * Create the event listener.
@@ -21,10 +21,10 @@ class NotifyCustomerRefundStatusChanged
     /**
      * Handle the event.
      *
-     * @param  RefundDeclined  $event
+     * @param  RefundApproved  $event
      * @return void
      */
-    public function handle(RefundDeclined $event)
+    public function handle(RefundApproved $event)
     {
         //
     }

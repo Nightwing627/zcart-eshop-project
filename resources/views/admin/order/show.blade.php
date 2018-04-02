@@ -219,26 +219,7 @@
         </div> <!-- /.box -->
       @endcan
 
-      <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title"><i class="fa fa-history"></i> {{ trans('app.history') }}</h3>
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-          </div>
-        </div> <!-- /.box-header -->
-        <div class="box-body">
-          @if($order->send_invoice_to_customer)
-            {{ trans('messages.invoice_sent_to_customer') }}
-            @if($order->message_to_customer)
-              {{ trans('app.with_message') }}
-              <blockquote>
-                {!! $order->message_to_customer !!}
-              </blockquote>
-            @endif
-          @endif
-        </div> <!-- /.box-body -->
-      </div> <!-- /.box -->
+      @include('admin.partials._activity_logs', ['logger' => $order])
     </div> <!-- /.col-md-8 -->
 
     <div class="col-md-4 nopadding-left">

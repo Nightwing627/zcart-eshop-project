@@ -27,10 +27,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\Order\RefundApproved' => [
             'App\Listeners\Order\PayBackCustomer',
-            'App\Listeners\Order\NotifyCustomerRefundStatusChanged',
+            'App\Listeners\Order\NotifyCustomerRefundApproved',
         ],
         'App\Events\Order\RefundDeclined' => [
-            'App\Listeners\Order\NotifyCustomerRefundStatusChanged',
+            'App\Listeners\Order\NotifyCustomerRefundDeclined',
         ],
     ];
 

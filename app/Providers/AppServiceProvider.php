@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Shop;
+use App\Order;
 use App\Refund;
 use App\Observers\ShopObserver;
 use App\Observers\RefundObserver;
@@ -18,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Shop::observe(ShopObserver::class);
+        Order::observe(OrderObserver::class);
         Refund::observe(RefundObserver::class);
     }
 

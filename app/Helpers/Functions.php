@@ -31,6 +31,57 @@ if ( ! function_exists('is_serialized') )
     }
 }
 
+if ( ! function_exists('setAdditionalCartInfo') )
+{
+    /**
+     * Push some extra information into the request
+     *
+     * @param $request
+     */
+    function setAdditionalCartInfo($request)
+    {
+        $total = 0;
+        $handling = config('shop_settings.order_handling_cost');
+        $shipping_weight = 0;
+        $grand_total = 0;
+
+        foreach ($request->input('cart') as $cart){
+            $total = $total + ($cart['quantity'] * $cart['unit_price']);
+            $shipping_weight += $cart['shipping_weight'];
+        }
+
+        $grand_total =  ($total + $handling + $request->input('shipping') + $request->input('packaging') + $request->input('taxes')) - $request->input('discount');
+
+        $request->merge([
+            'shop_id' => $request->user()->merchantId(),
+            'shipping_weight' => $shipping_weight,
+            'item_count' => count($request->input('cart') ),
+            'quantity' => array_sum(array_column($request->input('cart'), 'quantity') ),
+            'total' => $total,
+            'handling' => $handling,
+            'grand_total' => $grand_total,
+            'billing_address' => $request->input('same_as_shipping_address') ?
+                                $request->input('shipping_address') :
+                                $request->input('billing_address'),
+            'approved' => 1,
+        ]);
+
+        return $request;
+    }
+
+    // STRIPE Helper
+    // if ( ! function_exists('getStripeAuthorizeUrl') )
+    // {
+    //     /**
+    //      * Return authorize_url to Stripe connect authorization
+    //      */
+    //     function getStripeAuthorizeUrl()
+    //     {
+    //         return "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" . config('services.stripe.client_id') . "&scope=read_write&state=" . csrf_token();
+    //     }
+    // }
+}
+
 if ( ! function_exists('get_platform_title') )
 {
     /**
@@ -966,54 +1017,117 @@ if ( ! function_exists('get_payment_method_type') )
     }
 }
 
-if ( ! function_exists('setAdditionalCartInfo') )
+if ( ! function_exists('get_payment_status_name') )
 {
     /**
-     * Push some extra information into the request
+     * get_payment_status_name
      *
-     * @param $request
+     * @param  int $label
+     *
+     * @return str
      */
-    function setAdditionalCartInfo($request)
+    function get_payment_status_name($status = 1)
     {
-        $total = 0;
-        $handling = config('shop_settings.order_handling_cost');
-        $shipping_weight = 0;
-        $grand_total = 0;
+        switch ($status) {
+            case \App\Order::PAYMENT_STATUS_UNPAID: return trans("app.statuses.unpaid");
+            case \App\Order::PAYMENT_STATUS_PENDING: return trans("app.statuses.pending");
+            case \App\Order::PAYMENT_STATUS_PAID: return trans("app.statuses.paid");
+            case \App\Order::PAYMENT_STATUS_INITIATED_REFUND: return trans("app.statuses.refund_initiated");
+            case \App\Order::PAYMENT_STATUS_PARTIALLY_REFUNDED: return trans("app.statuses.partially_refunded");
+            case \App\Order::PAYMENT_STATUS_REFUNDED: return trans("app.statuses.refunded");
+            default: return trans("app.statuses.unpaid");
+        }
+    }
+}
 
-        foreach ($request->input('cart') as $cart){
-            $total = $total + ($cart['quantity'] * $cart['unit_price']);
-            $shipping_weight += $cart['shipping_weight'];
+
+if ( ! function_exists('get_disput_status_name') )
+{
+    /**
+     * get_disput_status_name
+     *
+     * @param  int $label
+     *
+     * @return str
+     */
+    function get_disput_status_name($status = 1)
+    {
+        switch ($status) {
+            case \App\Dispute::STATUS_NEW: return trans('app.statuses.new');
+
+            case \App\Dispute::STATUS_OPEN: return trans('app.statuses.open');
+
+            case \App\Dispute::STATUS_WAITING: return trans('app.statuses.waiting');
+
+            case \App\Dispute::STATUS_APPEALED: return trans('app.statuses.appealed');
+
+            case \App\Dispute::STATUS_SOLVED: return trans('app.statuses.solved');
+
+            case \App\Dispute::STATUS_CLOSED: return trans('app.statuses.closed');
+        }
+    }
+}
+
+if ( ! function_exists('get_activity_title') )
+{
+    function get_activity_title($activity){
+        if(!$activity->causer)
+            return trans('app.system') . ' ' . $activity->description . ' ' . trans('app.this') . ' ' . $activity->log_name;
+
+        return title_case($activity->description) . ' ' . trans('app.by') . ' ' . $activity->causer->getName();
+    }
+}
+
+if ( ! function_exists('get_activity_str') )
+{
+    function get_activity_str($model, $attrbute, $new, $old){
+
+        switch ($attrbute) {
+            case 'order_status_id':
+                $attrbute = trans('app.status');
+                $statues = \App\OrderStatus::find([$old, $new])->pluck('name', 'id');
+                $old  = $statues[$old];
+                $new  = $statues[$new];
+                break;
+
+            case 'payment_status':
+                $attrbute = trans('app.payment_status');
+                $old  = get_payment_status_name($old);
+                $new  = get_payment_status_name($new);
+                break;
+
+            case 'carrier_id':
+                $attrbute = trans('app.shipping_carrier');
+                $carrier = \App\Carrier::find([$old, $new])->pluck('name', 'id');
+                $new  = $carrier[$new];
+
+                if(is_null($old))
+                    return trans('app.activities.added', ['key' => $attrbute, 'value' => $new]);
+
+                $old  = $carrier[$old];
+                break;
+
+            case 'tracking_id':
+                $attrbute = trans('app.tracking_id');
+                if(is_null($old))
+                    return trans('app.activities.added', ['key' => $attrbute, 'value' => $new]);
+
+                break;
+
+            case 'status':
+                $attrbute = trans('app.status');
+                if(class_basename($model) == 'Dispute'){
+                    $old  = get_disput_status_name($old);
+                    $new  = get_disput_status_name($new);
+                }
+
+                break;
+
+            default:
+                $attrbute = title_case(str_replace('_', ' ', $attrbute));
+                break;
         }
 
-        $grand_total =  ($total + $handling + $request->input('shipping') + $request->input('packaging') + $request->input('taxes')) - $request->input('discount');
-
-        $request->merge([
-            'shop_id' => $request->user()->merchantId(),
-            'shipping_weight' => $shipping_weight,
-            'item_count' => count($request->input('cart') ),
-            'quantity' => array_sum(array_column($request->input('cart'), 'quantity') ),
-            'total' => $total,
-            'handling' => $handling,
-            'grand_total' => $grand_total,
-            'billing_address' => $request->input('same_as_shipping_address') ?
-                                $request->input('shipping_address') :
-                                $request->input('billing_address'),
-            'approved' => 1,
-        ]);
-
-        return $request;
+        return trans('app.activities.updated', ['key' => $attrbute, 'from' => $old, 'to' => $new]);
     }
-
-    // STRIPE Helper
-    // if ( ! function_exists('getStripeAuthorizeUrl') )
-    // {
-    //     /**
-    //      * Return authorize_url to Stripe connect authorization
-    //      */
-    //     function getStripeAuthorizeUrl()
-    //     {
-    //         return "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" . config('services.stripe.client_id') . "&scope=read_write&state=" . csrf_token();
-    //     }
-    // }
-
 }

@@ -8,12 +8,13 @@ use Laravel\Cashier\Billable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\HasActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Merchant extends Authenticatable
 {
-    use Billable, SoftDeletes, Notifiable, Addressable, Imageable;
+    use Billable, SoftDeletes, Notifiable, Addressable, Imageable, HasActivity;
 
    /**
      * The database table used by the model.

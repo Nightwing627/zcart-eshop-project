@@ -7,12 +7,13 @@ use App\Common\Addressable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\HasActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use SoftDeletes, Notifiable, Addressable, Imageable;
+    use SoftDeletes, Notifiable, Addressable, Imageable, HasActivity;
 
    /**
      * The database table used by the model.
