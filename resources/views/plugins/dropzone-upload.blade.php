@@ -77,16 +77,20 @@
 	                content: "{{ trans('app.are_you_sure') }}",
 	                type: 'red',
 	                buttons: {
-	                    ok: {
-	                        btnClass: 'btn-primary text-white',
-	                        keys: ['enter'],
-	                        action: function(){
+			            'confirm': {
+			                text: '{{ trans('app.proceed') }}',
+			                keys: ['enter'],
+			                btnClass: 'btn-red',
+			                action: function () {
 	                            resolve();
-	                        }
-	                    },
-	                    cancel: function(){
-	                      notie.alert(2, "{{ trans('messages.canceled') }}", 3);
-	                    }
+			                }
+			            },
+			            'cancel': {
+			                text: '{{ trans('app.cancel') }}',
+			                action: function () {
+		                    	notie.alert(2, "{{ trans('messages.canceled') }}", 3);
+			                }
+			            },
 	                }
 	            });
 	        });

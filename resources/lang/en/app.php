@@ -515,6 +515,7 @@ return [
     'view_detail' => 'View detail',
     'apply' => 'Apply',
     'cancel' => 'Cancel',
+    'proceed' => 'Proceed',
     'countries' => 'Countries',
     'save_n_back' => 'Save and back',
     'update_n_back' => 'Update and back',

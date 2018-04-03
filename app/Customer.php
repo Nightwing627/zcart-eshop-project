@@ -39,6 +39,27 @@ class Customer extends Authenticatable
     protected $dates = ['deleted_at'];
 
     /**
+     * The attributes that will be logged on activity logger.
+     *
+     * @var boolean
+     */
+    protected static $logFillable = true;
+
+    /**
+     * The only attributes that has been changed.
+     *
+     * @var boolean
+     */
+    protected static $logOnlyDirty = true;
+
+    /**
+     * The name that will be used when log this model. (optional)
+     *
+     * @var boolean
+     */
+    protected static $logName = 'customer';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

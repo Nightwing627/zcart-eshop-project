@@ -54,11 +54,6 @@ class Order extends Model
      */
     protected static $logName = 'order';
 
-    // public function getDescriptionForEvent(string $eventName): string
-    // {
-    //     return "The order has been {$eventName}";
-    // }
-
     /**
      * The attributes that are mass assignable.
      *

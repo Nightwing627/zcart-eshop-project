@@ -216,16 +216,56 @@
   //App plugins
   function initAppPlugins()
   {
-    $(".confirm").confirmation({
-        title: "{{ trans('app.are_you_sure') }}", // The title of the confirm
-        popout: true,
-        singleton: true,
-        placement: "left", // The placement of the confirm (Top, Right, Bottom, Left)
-        btnOkLabel: "{{ trans('app.im_sure') }}",
-        btnCancelLabel: "{{ trans('app.cancel') }}",
-        btnOkClass: "btn-danger btn-flat btn-xs",
-        btnCancelClass: "btn-new btn-flat btn-xs",
+
+    $('.confirm').on('click', function (e) {
+      e.preventDefault();
+
+      var form = this.closest("form");
+      var url = $(this).attr("href");
+
+      $.confirm({
+          title: "{{ trans('app.confirmation') }}",
+          content: "{{ trans('app.are_you_sure') }}",
+          type: 'red',
+          icon: 'fa fa-question-circle',
+          animation: 'scale',
+          closeAnimation: 'scale',
+          opacity: 0.5,
+          buttons: {
+            'confirm': {
+                text: '{{ trans('app.proceed') }}',
+                keys: ['enter'],
+                btnClass: 'btn-red',
+                action: function () {
+                  if (typeof url != 'undefined') {
+                    location.href = url;
+                  }else if(form != null){
+                    form.submit();
+                    notie.alert(4, "{{ trans('messages.confirmed') }}", 3);
+                  }
+                  return true;
+                }
+            },
+            'cancel': {
+                text: '{{ trans('app.cancel') }}',
+                action: function () {
+                  notie.alert(2, "{{ trans('messages.canceled') }}", 3);
+                }
+            },
+          }
+      });
     });
+
+    // $(".confirm").confirmation({
+    //     title: "{{ trans('app.are_you_sure') }}", // The title of the confirm
+    //     popout: true,
+    //     singleton: true,
+    //     placement: "left", // The placement of the confirm (Top, Right, Bottom, Left)
+    //     btnOkLabel: "{{ trans('app.im_sure') }}",
+    //     btnCancelLabel: "{{ trans('app.cancel') }}",
+    //     btnOkClass: "btn-danger btn-flat btn-xs",
+    //     btnCancelClass: "btn-new btn-flat btn-xs",
+    // });
 
     $.ajaxSetup ({
       cache: false,
@@ -290,9 +330,7 @@
       function()
       {
         $("#state_id").empty().trigger('change'); //Reset the state dropdown
-
         var ID = $("#country_id").select2('data')[0].id;
-
         var url = "{{ route('ajax.getCountryStates') }}"
 
         $.ajax({

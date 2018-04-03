@@ -8,7 +8,7 @@
 
 @section('content')
 
-	@include('admin.partials._filter')
+	{{-- @include('admin.partials._filter') --}}
 
 	@php
 		$unpaid_orders = $orders->where('payment_status', '<' , App\Order::PAYMENT_STATUS_PAID);
