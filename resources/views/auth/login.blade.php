@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-xs-7">
                 <label>
-                    <input type="checkbox" name="remember"> Remember Me
+                    <input type="checkbox" id="remember" name="remember"> Remember Me
                 </label>
             </div>
             <!-- /.col -->

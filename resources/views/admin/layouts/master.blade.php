@@ -3,12 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title or get_site_title() }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <!-- Scripts -->
-    @include('admin.stylesheets')
+    <link href="{{ mix("css/app.css") }}" rel="stylesheet">
+
+    <!-- START Page specific Stylesheets -->
+    @yield("page-style")
+    <!-- END Page specific Stylesheets -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -71,13 +76,13 @@
         <section class="content">
 
           @if (count($errors) > 0)
-              <div class="alert alert-danger">
-                  <ul>
-                      @foreach ($errors->all() as $error)
-                          <li>{{ $error }}</li>
-                      @endforeach
-                  </ul>
-              </div>
+            <div class="alert alert-danger">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
           @endif
 
           {{-- Global Notice --}}
@@ -106,16 +111,30 @@
     </div>
     <!-- ./wrapper -->
     <div class="loader">
-       <center>
-           <img class="loading-image" src="{{asset('assets/gears.gif') }}" alt="loading..">
-       </center>
+      <center>
+        <img class="loading-image" src="{{ asset('gears.gif') }}" alt="loading..">
+      </center>
     </div>
 
     <!--Modal-->
     <div id="myDynamicModal" class="modal fade" aria-hidden="true"></div>
 
-    <!-- Scripts -->
-    @include('admin.scripts')
+    <script src="{{ mix("js/app.js") }}"></script>
 
+    {{-- START (Required by only the datetimepicker, Remove it after find a solution) --}}
+    {{-- <script>var $Original = jQuery.noConflict(true);</script> --}}
+    <!-- jQuery 2.1.4  -->
+    {{-- <script src="{{ asset("assets/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script> --}}
+    {{-- END (Required by only the datetimepicker) --}}
+
+    <!-- START Page specific Script -->
+    @yield("page-script")
+    <!-- END Page specific Script -->
+
+    <!-- Notification -->
+    @include('admin.notification')
+
+    <!-- Scripts -->
+    @include('admin.footer_js')
   </body>
 </html>

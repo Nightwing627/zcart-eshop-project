@@ -6,6 +6,8 @@ use Auth;
 use Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Events\Profile\ProfileUpdated;
+use App\Events\Profile\PasswordUpdated;
 use App\Repositories\Profile\ProfileRepository;
 use App\Http\Requests\Validations\UpdatePhotoRequest;
 use App\Http\Requests\Validations\DeletePhotoRequest;
@@ -55,7 +57,9 @@ class ProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request)
     {
-        $this->profile->updateProfile($request);
+        $profile = $this->profile->updateProfile($request);
+
+        event(new ProfileUpdated($profile));
 
         return redirect()->back()->with('success', trans('messages.profile_updated'));
     }
@@ -71,7 +75,9 @@ class ProfileController extends Controller
         if(! Hash::check($request->input('current_password'), Auth::user()->password) )
             return redirect()->back()->with('error', trans('messages.incorrect_current_password'));
 
-        $this->profile->updatePassword($request);
+        $profile = $this->profile->updatePassword($request);
+
+        event(new PasswordUpdated($profile));
 
         return redirect()->back()->with('success', trans('messages.password_updated'));
     }

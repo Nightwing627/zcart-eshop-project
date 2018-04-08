@@ -2,9 +2,9 @@
 
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Events\Order\OrderCreated;
 use App\Events\Order\OrderUpdated;
+use App\Http\Controllers\Controller;
 use App\Repositories\Order\OrderRepository;
 use App\Http\Requests\Validations\CreateOrderRequest;
 use App\Http\Requests\Validations\FulfillOrderRequest;

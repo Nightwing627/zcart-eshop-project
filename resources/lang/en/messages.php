@@ -41,7 +41,6 @@ return [
     'payment_method_disconnect_failed' => 'This application is not connected to the stripe account, or the account does not exist.',
     'invoice_sent_to_customer' => 'The invoice has been sent to the customer.',
     'freezed_model' => 'This record is freezed by the system config. The application need this value to run properly.',
-
     // 'failed'    => [
     //     'create'   => 'Create :model has been failed!',
     //     'update'   => 'Update :model has been failed!',

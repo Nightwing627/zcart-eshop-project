@@ -14,6 +14,38 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
 
+        // Blog Events
+        'App\Events\Blog\BlogPublished' => [
+        ],
+        'App\Events\Blog\NewComment' => [
+        ],
+
+        // Customer Events
+        'App\Events\Customer\CustomerCreated' => [
+        ],
+        'App\Events\Customer\CustomerUpdated' => [
+        ],
+        'App\Events\Customer\CustomerDeleted' => [
+        ],
+
+        // Dispute Events
+        'App\Events\Dispute\DisputeCreated' => [
+        ],
+        'App\Events\Dispute\DisputeUpdated' => [
+        ],
+        'App\Events\Dispute\DisputeSolved' => [
+        ],
+
+        // Inventory Events
+        'App\Events\Inventory\InventoryLow' => [
+        ],
+
+        // Message Events
+        'App\Events\Message\NewMessage' => [
+        ],
+        'App\Events\Message\MessageReplied' => [
+        ],
+
         // Order Events
         'App\Events\Order\OrderCreated' => [
             'App\Listeners\Order\ChargeCustomer',
@@ -22,16 +54,58 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Order\OrderUpdated' => [
             'App\Listeners\Order\NotifyCustomerOrderUpdated',
         ],
-        'App\Events\Order\RefundInitiated' => [
-            'App\Listeners\Order\NotifyCustomerRefundInitiated',
+
+        // Profile Events
+        'App\Events\Profile\ProfileUpdated' => [
         ],
-        'App\Events\Order\RefundApproved' => [
-            'App\Listeners\Order\PayBackCustomer',
-            'App\Listeners\Order\NotifyCustomerRefundApproved',
+        'App\Events\Profile\PasswordUpdated' => [
         ],
-        'App\Events\Order\RefundDeclined' => [
-            'App\Listeners\Order\NotifyCustomerRefundDeclined',
+
+        // Refund Events
+        'App\Events\Refund\RefundInitiated' => [
+            'App\Listeners\Refund\NotifyCustomerRefundInitiated',
         ],
+        'App\Events\Refund\RefundApproved' => [
+            'App\Listeners\Refund\PayBackCustomer',
+            'App\Listeners\Refund\NotifyCustomerRefundApproved',
+        ],
+        'App\Events\Refund\RefundDeclined' => [
+            'App\Listeners\Refund\NotifyCustomerRefundDeclined',
+        ],
+
+        // Shop Events
+        'App\Events\Shop\ShopCreated' => [
+        ],
+        'App\Events\Shop\ShopUpdated' => [
+        ],
+        'App\Events\Shop\ShopDeleted' => [
+        ],
+        'App\Events\Shop\ConfigUpdated' => [
+        ],
+
+        // System Events
+        'App\Events\System\SystemInfoUpdated' => [
+        ],
+        'App\Events\System\SystemConfigUpdated' => [
+        ],
+
+        // Ticket Events
+        'App\Events\Ticket\TicketCreated' => [
+        ],
+        'App\Events\Ticket\TicketReplied' => [
+        ],
+        'App\Events\Ticket\TicketUpdated' => [
+        ],
+
+        // User Events
+        'App\Events\User\UserCreated' => [
+        ],
+        'App\Events\User\UserUpdated' => [
+        ],
+        'App\Events\User\UserDeleted' => [
+        ],
+
+
     ];
 
     /**

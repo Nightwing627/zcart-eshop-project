@@ -306,7 +306,13 @@
         <div class="box-body">
           <span>{{ trans('app.tracking_id') }}: {{ $order->tracking_id }}</span><br/>
           <span>{{ trans('app.carrier') }}: <strong>{{ $order->carrier ? $order->carrier->name : ( $order->shippingRate ? optional($order->shippingRate->carrier)->name : '') }}</strong></span><br/>
-          <span>{{ trans('app.total_weight') }}: <strong>{{ get_formated_weight($order->shipping_weight) }}</strong></span>
+          <span>{{ trans('app.total_weight') }}: <strong>{{ get_formated_weight($order->shipping_weight) }}</strong></span><br/>
+          @if($order->carrier && $order->tracking_id)
+            @php
+              $tracking_url = getTrackingUrl($order->tracking_id, $order->carrier_id);
+            @endphp
+            <span><a href="{{ $tracking_url }}">{{ trans('app.tracking_url') }}</a>: {{ $tracking_url }}</span>
+          @endif
         </div>
       </div>
     </div> <!-- /.col-md-4 -->

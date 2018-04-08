@@ -1,13 +1,10 @@
-<!-- kartik-v-bootstrap-fileinput -->
-<link href="{{ asset("assets/plugins/kartik-v-bootstrap-fileinput/css/fileinput.css") }}" media="all" rel="stylesheet" type="text/css"/>
-<script src="{{ asset("assets/plugins/kartik-v-bootstrap-fileinput/js/plugins/sortable.min.js") }}" type="text/javascript"></script>
-<script src="{{ asset("assets/plugins/kartik-v-bootstrap-fileinput/js/fileinput.min.js") }}" type="text/javascript"></script>
+<link href="{{ mix("css/fileinput.css") }}" rel="stylesheet">
+<script src="{{ mix("js/fileinput.js") }}"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/js/locales/LANG.js"></script> --}}
 
 <!-- page script -->
-<script>
+<script type="text/javascript">
 ;(function($, window, document) {
-	// var sorter = $('#sortable').rowSorter({
 	$( document ).ready(function () {
 	    var formData = new FormData();
 

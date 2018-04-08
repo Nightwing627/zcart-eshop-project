@@ -116,7 +116,7 @@
 							<tbody>
 								@foreach($customer->latest_orders as $order )
 									<tr>
-										<td>{{ get_formated_order_number($order->order_number) }}</td>
+										<td>{{ $order->order_number }}</td>
 										<td>{{ get_formated_currency($order->grand_total)}}</td>
 										<td>{!! $order->paymentStatusName() !!}</td>
 										<td>{{ optional($order->status)->name }}</td>

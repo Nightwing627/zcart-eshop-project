@@ -40,9 +40,12 @@ class TicketAssigned extends Notification
      */
     public function toMail($notifiable)
     {
+        $url = url('/invoice/'.$this->invoice->id);
+
         return (new MailMessage)
+                    ->subject('Notification Subject')
                     ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
+                    ->action('Notification Action', $url)
                     ->line('Thank you for using our application!');
     }
 

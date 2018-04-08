@@ -104,9 +104,9 @@
 				          	<td>{{ $refund->created_at->diffForHumans() }}</td>
 				          	<td>{{ $refund->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
-					            @can('index', App\Customer::class)
+					            {{-- @can('index', App\Customer::class) --}}
 									<a href="{{ route('admin.admin.customer.show', $refund->order->customer_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.customer') }}" class="fa fa-user"></i></a>&nbsp;
-								@endcan
+								{{-- @endcan --}}
 							</td>
 						</tr>
 					@endforeach

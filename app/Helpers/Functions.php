@@ -241,7 +241,7 @@ if ( ! function_exists('sys_image_path') )
 {
     function sys_image_path($dir = '')
     {
-        return str_finish("assets/images/{$dir}", '/');
+        return str_finish("images/{$dir}", '/');
     }
 }
 
@@ -564,9 +564,10 @@ if ( ! function_exists('get_formated_shipping_range_of') )
             $upper = get_formated_currency($rate->maximum);
         }
 
-        $upper = get_formated_decimal($rate->maximum) > 0 ? ' - ' . $upper : ' and up';
+        if (get_formated_decimal($rate->maximum) > 0)
+            return  $lower . ' - ' . $upper;
 
-        return  $lower . $upper;
+        return  trans('app.and_up', ['value' => $lower]);
     }
 }
 
@@ -728,6 +729,28 @@ if ( ! function_exists('getShippingRates') )
                     ->where('shipping_zones.active', 1)
                     ->orderBy('shipping_rates.rate', 'asc')
                     ->get();
+    }
+}
+
+if ( ! function_exists('getTrackingUrl') )
+{
+    /**
+     * Return tracking utl for the given carrier and tracking id
+     *
+     * @param $carrier
+     * @param $tracking_id
+     */
+    function getTrackingUrl($tracking_id = Null, $carrier = Null)
+    {
+        if (!$tracking_id || !$carrier)
+            return '#';
+
+        $tracking_url = \DB::table('carriers')->select('tracking_url')->where('id', $carrier)->first()->tracking_url;
+
+        if (!$tracking_url)
+            return '#';
+
+        return str_replace('@', $tracking_id, $tracking_url);
     }
 }
 

@@ -36,9 +36,9 @@
     {!! Form::select('tag_list[]', $tags, null, ['class' => 'form-control select2-tag', 'multiple' => 'multiple']) !!}
 </div>
 <div class="form-group">
-  <label for="exampleInputFile"> {{ trans('app.form.image') }}</label>
+  <label for="exampleInputFile"> {{ trans('app.featured_image') }}</label>
   @if(isset($blog) && Storage::exists(optional($blog->image)->path))
-    <img src="{{ get_storage_file_url(optional($blog->image)->path, 'small') }}" width="" alt="{{ trans('app.image') }}">
+    <img src="{{ get_storage_file_url(optional($blog->image)->path, 'small') }}" width="" alt="{{ trans('app.featured_image') }}">
     <span style="margin-left: 10px;">
       {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
     </span>
@@ -46,7 +46,7 @@
 
   <div class="row">
     <div class="col-md-9 nopadding-right">
-      <input id="uploadFile" placeholder="{{ trans('app.placeholder.image') }}" class="form-control" disabled="disabled" style="height: 28px;" />
+      <input id="uploadFile" placeholder="{{ trans('app.featured_image') }}" class="form-control" disabled="disabled" style="height: 28px;" />
     </div>
     <div class="col-md-3 nopadding-left">
       <div class="fileUpload btn btn-primary btn-block btn-flat">

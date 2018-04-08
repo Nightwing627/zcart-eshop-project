@@ -1,5 +1,5 @@
 <!-- Notie -->
-<script src="{{asset("assets/plugins/notie/notie.js") }}"></script>
+{{-- <script src="{{asset("assets/plugins/notie/notie.js") }}"></script> --}}
 
 @if (Session::has('success'))
 	<script type="text/javascript">

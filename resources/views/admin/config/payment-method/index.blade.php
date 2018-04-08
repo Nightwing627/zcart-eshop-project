@@ -19,14 +19,14 @@
 	    			@foreach($payment_method_types as $type_id => $type)
 	    				@php
 	    					$payment_providers = $payment_methods->where('type', $type_id);
-	    					$logo_path = sys_image_path('payment-method-types') ."{$type_id}.svg";
+	    					$logo_path = sys_image_path('payment-method-types') . "{$type_id}.svg";
 	    				@endphp
 	    				@if($payment_providers->count())
 					    	<div class="row">
 								<span class="spacer10"></span>
 						    	<div class="col-sm-5">
-						    		@if(Storage::exists($logo_path))
-										<img src="{{ Storage::url($logo_path) }}" width="100" height="25" alt="{{ $type }}">
+						    		@if(File::exists($logo_path))
+										<img src="{{ asset($logo_path) }}" width="100" height="25" alt="{{ $type }}">
 										<span class="spacer10"></span>
 									@else
 							    		<p class="lead">{{ $type }}</p>
@@ -37,12 +37,12 @@
 					    			@foreach($payment_providers as $payment_provider)
 					    				@php
 							    			$has_config = FALSE;
-					    					$logo_path = sys_image_path('payment-methods') ."{$payment_provider->code}.png";
+					    					$logo_path = sys_image_path('payment-methods') . "{$payment_provider->code}.png";
 					    				@endphp
 										<ul class="list-group">
 											<li class="list-group-item">
-									    		@if(Storage::exists($logo_path))
-													<img src="{{ Storage::url($logo_path) }}" class="open-img-md" alt="{{ $type }}">
+									    		@if(File::exists($logo_path))
+													<img src="{{ asset($logo_path) }}" class="open-img-md" alt="{{ $type }}">
 												@else
 													<p class="list-group-item-heading inline lead">
 														{{ $payment_provider->name }}

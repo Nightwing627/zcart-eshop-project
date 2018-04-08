@@ -183,6 +183,7 @@ return [
     'date' => 'Date',
     'excl_tax' => 'excl. tax',
     'free' => 'Free',
+    'and_up' => ':value and up',
 
     'blog' => 'Blog',
     'blogs' => 'Blogs',

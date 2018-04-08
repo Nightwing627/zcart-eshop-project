@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
-use App\Events\Order\RefundInitiated;
-use App\Events\Order\RefundApproved;
-use App\Events\Order\RefundDeclined;
 use App\Http\Controllers\Controller;
+use App\Events\Refund\RefundDeclined;
+use App\Events\Refund\RefundApproved;
+use App\Events\Refund\RefundInitiated;
 use App\Repositories\Refund\RefundRepository;
 use App\Http\Requests\Validations\InitiateRefundRequest;
 

@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
@@ -113,7 +115,7 @@ class ShippingZoneController extends Controller
     {
         $shipping_zone = $this->shipping_zone->find($zone);
 
-        return view('admin.shipping_zone.states', compact('shipping_zone', 'country'));
+        return view('admin.shipping_zone._states', compact('shipping_zone', 'country'));
     }
 
     /**

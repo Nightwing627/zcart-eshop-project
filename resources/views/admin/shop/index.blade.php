@@ -36,7 +36,13 @@
 						<td>{{ $shop->name }}</td>
 						<td>{{ $shop->owner->name }}</td>
 						<td>{{ $shop->email }}</td>
-						<td>{{ ($shop->active) ? trans('app.active') : trans('app.inactive') }}</td>
+						<td>
+		            		@if($shop->config->maintenance_mode)
+					          	<span class="label label-warning">{{ trans('app.maintenance_mode') }}</span>
+		            		@else
+			            		{{ ($shop->active) ? trans('app.active') : trans('app.inactive') }}
+							@endif
+						</td>
 						<td class="row-options">
 							@can('view', $shop)
 								<a href="{{ route('admin.vendor.shop.show', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;

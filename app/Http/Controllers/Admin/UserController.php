@@ -1,7 +1,12 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
+use App\Events\User\UserCreated;
+use App\Events\User\UserUpdated;
+use App\Events\User\UserDeleted;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Repositories\User\UserRepository;
@@ -22,7 +27,6 @@ class UserController extends Controller
     public function __construct(UserRepository $user)
     {
         $this->model_name = trans('app.model.user');
-
         $this->user = $user;
     }
 
@@ -58,7 +62,9 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $this->user->store($request);
+        $user = $this->user->store($request);
+
+        event(new UserCreated($user));
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -98,7 +104,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $this->user->update($request, $id);
+        $user = $this->user->update($request, $id);
+
+        event(new UserUpdated($user));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -112,7 +120,9 @@ class UserController extends Controller
      */
     public function trash(Request $request, $id)
     {
-        $this->user->trash($id);
+        $user = $this->user->trash($id);
+
+        event(new UserDeleted($user));
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -144,5 +154,4 @@ class UserController extends Controller
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
-
 }

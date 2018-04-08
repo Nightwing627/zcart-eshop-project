@@ -34,7 +34,11 @@
                   <a href="#">
                     <div class="pull-left">
                       <!-- User Image -->
-                      <img src="{{asset("assets/dist/img/user2-160x160.jpg") }}" class="img-circle" alt="User Image">
+                      @if(Auth::user()->image)
+                        <img src="{{ get_storage_file_url(Auth::user()->image->path, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+                      @else
+                        <img src="{{ get_gravatar_url(Auth::user()->email, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+                      @endif
                     </div>
                     <!-- Message title and timestamp -->
                     <h4>
@@ -118,7 +122,7 @@
         <li class="dropdown tasks-menu">
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{{ asset('assets/images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
+            <img src="{{ asset('images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
           </a>
           <ul class="dropdown-menu" style="width: 100px;">
             <li>
@@ -127,7 +131,7 @@
                 <li><!-- Task item -->
                   <a href="#">
                     <h3>
-                      <img src="{{ asset('assets/images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
+                      <img src="{{ asset('images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
                       English
                     </h3>
                   </a>
@@ -136,7 +140,7 @@
                 <li><!-- Task item -->
                   <a href="#">
                     <h3>
-                      <img src="{{ asset('assets/images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
+                      <img src="{{ asset('images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
                       Bangla
                     </h3>
                   </a>
@@ -145,7 +149,7 @@
                 <li><!-- Task item -->
                   <a href="#">
                     <h3>
-                      <img src="{{ asset('assets/images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
+                      <img src="{{ asset('images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
                       English
                     </h3>
                   </a>
@@ -154,7 +158,7 @@
                 <li><!-- Task item -->
                   <a href="#">
                     <h3>
-                      <img src="{{ asset('assets/images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
+                      <img src="{{ asset('images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
                       English
                     </h3>
                   </a>
