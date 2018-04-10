@@ -25,7 +25,7 @@ class InitSettings
 
         self::initCurrency();
 
-        if(Auth::check())
+        if(Auth::guard('web')->check())
         {
             // Check if the user has impersonated
             if(Request::session()->has('impersonated'))
@@ -36,7 +36,7 @@ class InitSettings
             config()->set('permissions', $permissions);
 
             // If the user from the platform then no need to set shop settings
-            if( ! Auth::user()->isFromPlatform() )
+            if( ! Auth::user()->isFromPlatform() && Auth::user()->merchantId())
             {
                 $shop_settings = ListHelper::shop_settings();
                 config()->set('shop_settings', $shop_settings);

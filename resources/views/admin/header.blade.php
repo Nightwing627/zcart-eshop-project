@@ -18,154 +18,118 @@
     <!-- Navbar Right Menu -->
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        <!-- Messages: style can be found in dropdown.less-->
-        <li class="dropdown messages-menu">
-          <!-- Menu toggle button -->
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-envelope-o"></i>
-            <span class="label label-success">4</span>
-          </a>
-          <ul class="dropdown-menu">
-            <li class="header">You have 4 messages</li>
-            <li>
-              <!-- inner menu: contains the messages -->
-              <ul class="menu">
-                <li><!-- start message -->
-                  <a href="#">
-                    <div class="pull-left">
-                      <!-- User Image -->
-                      @if(Auth::user()->image)
-                        <img src="{{ get_storage_file_url(Auth::user()->image->path, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-                      @else
-                        <img src="{{ get_gravatar_url(Auth::user()->email, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-                      @endif
-                    </div>
-                    <!-- Message title and timestamp -->
-                    <h4>
-                      Support Team
-                      <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                    </h4>
-                    <!-- The message -->
-                    <p>Why not buy a new awesome theme?</p>
-                  </a>
-                </li>
-                <!-- end message -->
-              </ul>
-              <!-- /.menu -->
-            </li>
-            <li class="footer"><a href="#">See All Messages</a></li>
-          </ul>
-        </li>
-        <!-- /.messages-menu -->
+
+        @can('index', App\Message::class)
+          @php
+            $count_message = Auth::user()->notifications->count();
+          @endphp
+          <!-- Messages: style can be found in dropdown.less-->
+          <li class="dropdown messages-menu">
+            <!-- Menu toggle button -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-envelope-o"></i>
+              <span class="label label-success">{{ $count_message ? $count_message : '' }}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">{{ trans('messages.message_count', ['count' => $count_message]) }}</li>
+              <li>
+                <!-- inner menu: contains the messages -->
+                <ul class="menu">
+                  @foreach(Auth::user()->notifications as $notification)
+                    <li><!-- start message -->
+                      <a href="{{ route('admin.support.message.show', $message) }}">
+                        <div class="pull-left">
+                          <!-- User Image -->
+                          @if(Auth::user()->image)
+                            <img src="{{ get_storage_file_url(Auth::user()->image->path, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+                          @else
+                            <img src="{{ get_gravatar_url(Auth::user()->email, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+                          @endif
+                        </div>
+                        <!-- Message title and timestamp -->
+                        <h4>
+                          Support Team
+                          <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                        </h4>
+                        <!-- The message -->
+                        <p>Why not buy a new awesome theme?</p>
+                      </a>
+                    </li>
+                  @endforeach
+                  <!-- end message -->
+                </ul>
+                <!-- /.menu -->
+              </li>
+              <li class="footer"><a href="#">See All Messages</a></li>
+            </ul>
+          </li>
+          <!-- /.messages-menu -->
+        @endcan
+
+        @if(Gate::allows('index', App\Ticket::class) || Gate::allows('index', App\Dispute::class) || Gate::allows('index', App\Refund::class))
+          <!-- Tasks Menu -->
+          <li class="dropdown tasks-menu">
+            <!-- Menu Toggle Button -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-flag-o"></i>
+              <span class="label label-danger">9</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">You have 9 tasks</li>
+              <li>
+                <!-- Inner menu: contains the tasks -->
+                <ul class="menu">
+                  <li><!-- Task item -->
+                    <a href="#">
+                      <!-- Task title and progress text -->
+                      <h3>
+                        Design some buttons
+                        <small class="pull-right">20%</small>
+                      </h3>
+                      <!-- The progress bar -->
+                      <div class="progress xs">
+                        <!-- Change the css width attribute to simulate progress -->
+                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">20% Complete</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end task item -->
+                </ul>
+              </li>
+              <li class="footer">
+                <a href="#">View all tasks</a>
+              </li>
+            </ul>
+          </li>
+        @endcan
 
         <!-- Notifications Menu -->
+        @php
+          $count_notification = Auth::user()->unreadNotifications->count();
+        @endphp
         <li class="dropdown notifications-menu">
           <!-- Menu toggle button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-bell-o"></i>
-            <span class="label label-warning">10</span>
+            <span class="label label-warning">{{ $count_notification ? $count_notification : '' }}</span>
           </a>
           <ul class="dropdown-menu">
-            <li class="header">You have 10 notifications</li>
+            <li class="header">{{ trans('messages.notification_count', ['count' => $count_notification]) }}</li>
             <li>
               <!-- Inner Menu: contains the notifications -->
               <ul class="menu">
-                <li><!-- start notification -->
+                @foreach(Auth::user()->unreadNotifications as $notification)
+                <li>
                   <a href="#">
-                    <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                    <i class="fa fa-users text-aqua"></i> {{ $notification->type }}
                   </a>
                 </li>
-                <!-- end notification -->
+                @endforeach
               </ul>
             </li>
             <li class="footer"><a href="#">View all</a></li>
-          </ul>
-        </li>
-        <!-- Tasks Menu -->
-        <li class="dropdown tasks-menu">
-          <!-- Menu Toggle Button -->
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-flag-o"></i>
-            <span class="label label-danger">9</span>
-          </a>
-          <ul class="dropdown-menu">
-            <li class="header">You have 9 tasks</li>
-            <li>
-              <!-- Inner menu: contains the tasks -->
-              <ul class="menu">
-                <li><!-- Task item -->
-                  <a href="#">
-                    <!-- Task title and progress text -->
-                    <h3>
-                      Design some buttons
-                      <small class="pull-right">20%</small>
-                    </h3>
-                    <!-- The progress bar -->
-                    <div class="progress xs">
-                      <!-- Change the css width attribute to simulate progress -->
-                      <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                        <span class="sr-only">20% Complete</span>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <!-- end task item -->
-              </ul>
-            </li>
-            <li class="footer">
-              <a href="#">View all tasks</a>
-            </li>
-          </ul>
-        </li>
-
-        <!-- Tasks Menu -->
-        <li class="dropdown tasks-menu">
-          <!-- Menu Toggle Button -->
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{{ asset('images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
-          </a>
-          <ul class="dropdown-menu" style="width: 100px;">
-            <li>
-              <!-- Inner menu: contains the tasks -->
-              <ul class="menu">
-                <li><!-- Task item -->
-                  <a href="#">
-                    <h3>
-                      <img src="{{ asset('images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
-                      English
-                    </h3>
-                  </a>
-                </li>
-                <!-- end task item -->
-                <li><!-- Task item -->
-                  <a href="#">
-                    <h3>
-                      <img src="{{ asset('images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
-                      Bangla
-                    </h3>
-                  </a>
-                </li>
-                <!-- end task item -->
-                <li><!-- Task item -->
-                  <a href="#">
-                    <h3>
-                      <img src="{{ asset('images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
-                      English
-                    </h3>
-                  </a>
-                </li>
-                <!-- end task item -->
-                <li><!-- Task item -->
-                  <a href="#">
-                    <h3>
-                      <img src="{{ asset('images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
-                      English
-                    </h3>
-                  </a>
-                </li>
-                <!-- end task item -->
-              </ul>
-            </li>
           </ul>
         </li>
 
@@ -220,6 +184,40 @@
             </li>
           </ul>
         </li>
+
+        <!-- Lang Menu -->
+        <li class="dropdown tasks-menu">
+          <!-- Menu Toggle Button -->
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="{{ asset('images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
+          </a>
+          <ul class="dropdown-menu" style="width: 100px;">
+            <li>
+              <!-- Inner menu: contains the tasks -->
+              <ul class="menu">
+                <li><!-- Task item -->
+                  <a href="#">
+                    <h3>
+                      <img src="{{ asset('images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
+                      English
+                    </h3>
+                  </a>
+                </li>
+                <!-- end task item -->
+                <li><!-- Task item -->
+                  <a href="#">
+                    <h3>
+                      <img src="{{ asset('images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
+                      English
+                    </h3>
+                  </a>
+                </li>
+                <!-- end task item -->
+              </ul>
+            </li>
+          </ul>
+        </li>
+
         <!-- Control Sidebar Toggle Button -->
         <li>
           <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>

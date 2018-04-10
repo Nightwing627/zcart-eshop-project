@@ -21,6 +21,8 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         // Customer Events
+        'App\Events\Customer\Registered' => [
+        ],
         'App\Events\Customer\CustomerCreated' => [
         ],
         'App\Events\Customer\CustomerUpdated' => [
@@ -34,6 +36,11 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Dispute\DisputeUpdated' => [
         ],
         'App\Events\Dispute\DisputeSolved' => [
+        ],
+
+        // Notificstion Events
+        'Illuminate\Notifications\Events\NotificationSent' => [
+            'App\Listeners\Notification\LogNotification',
         ],
 
         // Inventory Events

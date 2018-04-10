@@ -22,9 +22,9 @@ class demoSeeder extends Seeder
         factory(App\User::class, $this->longCount)
             ->create()
             ->each(function($user){
-
-                $user->addresses()->save(factory(App\Address::class)->make(['address_title' => $user->name, 'address_type' => 'Primary']));
-
+                $user->addresses()->save(
+                    factory(App\Address::class)->make(['address_title' => $user->name, 'address_type' => 'Primary'])
+                );
             });
 
         factory(App\Merchant::class, $this->longCount)
@@ -35,25 +35,66 @@ class demoSeeder extends Seeder
                 );
             });
 
+        // Demo customers with real text
+        DB::table('customers')->insert([
+            [
+                'id' => 1,
+                'nice_name' => 'CustomerOne',
+                'name' => 'Customer One',
+                'email' => 'customer1@demo.com',
+                'sex' => 'app.male',
+                'password' => bcrypt('123456'),
+                'active' => 1,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'id' => 2,
+                'nice_name' => 'CustomerTwo',
+                'name' => 'Customer Two',
+                'email' => 'customer2@demo.com',
+                'sex' => 'app.female',
+                'password' => bcrypt('123456'),
+                'active' => 1,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ]
+        ]);
+        DB::table('addresses')->insert([
+            [
+                'address_type' => 'Primary',
+                'addressable_type' => 'App\Customer',
+                'addressable_id' => 1,
+                'address_title' => 'Primary Address',
+                'state_id' => 1221,
+                'country_id' => 840,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'address_type' => 'Primary',
+                'addressable_type' => 'App\Customer',
+                'addressable_id' => 2,
+                'address_title' => 'Primary Address',
+                'state_id' => 1221,
+                'country_id' => 840,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ]
+        ]);
+
         factory(App\Customer::class, $this->longCount)
             ->create()
             ->each(function($customer){
-
                 $customer->addresses()->save(factory(App\Address::class)->make(['address_title' => $customer->name, 'address_type' => 'Primary']));
                 $customer->addresses()->save(factory(App\Address::class)->make(['address_type' => 'Billing']));
                 $customer->addresses()->save(factory(App\Address::class)->make(['address_type' => 'Shipping']));
-
             });
 
         factory(App\Shop::class, $this->longCount)
             ->create()
             ->each(function($shop){
                 $shop->addresses()->save(factory(App\Address::class)->make(['address_title' => $shop->name, 'address_type' => 'Primary']));
-
                 $shop->config()->save(factory(App\Config::class)->make());
-
                 $shop->shippingZones()->save(factory(App\ShippingZone::class)->make());
-
                 $shop->shippingZones()->create(
                     [
                         'name' => 'Worldwide',

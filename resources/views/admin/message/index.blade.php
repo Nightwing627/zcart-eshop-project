@@ -41,7 +41,7 @@
 						</button>
 						<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 							<span class="caret"></span>
-							<span class="sr-only">Toggle Dropdown</span>
+							<span class="sr-only">{{ trans('app.toggle_dropdown') }}</span>
 						</button>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="{{ route('admin.support.message.massUpdate', [ App\Message::STATUS_NEW, 'status' ]) }}" class="massAction" data-doafter="reload">

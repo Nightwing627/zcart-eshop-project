@@ -457,6 +457,7 @@ return [
     'notify_when_disput_appealed' => 'When disput appealed',
     'after_fulfilled' => 'After an order has been fulfilled and paid',
     'auto_archive_order' => 'Archive the order',
+    'toggle_dropdown' => 'Toggle Dropdown',
 
     'units' => 'Units',
     'seconds' => 'Second|Seconds',

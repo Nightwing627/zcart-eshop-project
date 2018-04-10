@@ -100,7 +100,7 @@ if ( ! function_exists('get_site_title') )
      */
     function get_site_title()
     {
-        if(auth()->user()->isFromMerchant() && auth()->user()->shop)
+        if(auth()->guard('web')->check() && auth()->user()->isFromMerchant() && auth()->user()->shop)
             return auth()->user()->shop->name;
 
         return get_platform_title();

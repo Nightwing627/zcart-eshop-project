@@ -5,10 +5,14 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Welcome {{ optional(Auth::guard('customer')->user())->getName() }} </div>
+                <div class="panel-heading">Customer Dashboard</div>
 
                 <div class="panel-body">
-                    Application's Landing Page. <br/>
+                    Customer Dashboard
+                    <br/>
+                    {{-- <pre> --}}
+                    {{ Auth::guard('customer')->user() }}
+                    {{-- </pre> --}}
                 </div>
             </div>
         </div>

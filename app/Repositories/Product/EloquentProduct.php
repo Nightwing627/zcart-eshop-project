@@ -20,17 +20,17 @@ class EloquentProduct extends EloquentRepository implements BaseRepository, Prod
 	public function all()
 	{
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('categories', 'image')->withCount('inventories')->get();
+            return $this->model->mine()->with('categories', 'featuredImage', 'image')->withCount('inventories')->get();
 
-		return $this->model->with('categories', 'image')->withCount('inventories')->get();
+		return $this->model->with('categories', 'featuredImage', 'image')->withCount('inventories')->get();
 	}
 
 	public function trashOnly()
 	{
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->onlyTrashed()->with('categories', 'image')->get();
+            return $this->model->mine()->onlyTrashed()->with('categories', 'featuredImage', 'image')->get();
 
-		return $this->model->onlyTrashed()->with('categories', 'image')->get();
+		return $this->model->onlyTrashed()->with('categories', 'featuredImage', 'image')->get();
 	}
 
     public function store(Request $request)

@@ -127,11 +127,13 @@ class ListHelper
         $shop = $shop ?: Auth::user()->merchantId(); //Get current user's shop_id
         $settings = \DB::table('configs')->where('shop_id', $shop)->first();
         $result = [];
-        foreach ($settings as $key => $value) {
-            if ( is_serialized($value) )
-                $result[$key] = unserialize($value);
-            else
-                $result[$key] = $value;
+        if($settings){
+            foreach ($settings as $key => $value) {
+                if ( is_serialized($value) )
+                    $result[$key] = unserialize($value);
+                else
+                    $result[$key] = $value;
+            }
         }
         return $result;
     }
@@ -277,8 +279,7 @@ class ListHelper
     {
         $user = $user ?: Auth::user(); //Get current user
 
-        if($user->isSuperAdmin())
-        {
+        if($user->isSuperAdmin()){
             return [];
         }
 

@@ -5,9 +5,16 @@ Route::get('/logout' , 'Auth\LoginController@logout');
 Route::get('/', 'HomeController@index')->name('homepage');
 // Route::get('welcome', 'HomeController@index')->name('welcome');
 
+// Customers
+Route::group(['as' => 'customer.', 'prefix' => 'customer'], function() {
+	include('customer/Auth.php');
+
+   	Route::get('/', 'HomeController@dashboard')->name('dashboard')->middleware('auth:customer');
+});
+
+
 // Common
-Route::group(['middleware' => ['auth']], function()
-{
+Route::group(['middleware' => ['auth']], function(){
 	include('Image.php');
 	include('Attachment.php');
 	include('Address.php');
@@ -15,8 +22,7 @@ Route::group(['middleware' => ['auth']], function()
 });
 
 // Admin
-Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function()
-{
+Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function(){
 	// Dashboard
 	Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
 	Route::get('secretLogin/{user}', 'DashboardController@secretLogin')->name('user.secretLogin');

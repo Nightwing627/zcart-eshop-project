@@ -11,11 +11,19 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\HasActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\CustomerResetPasswordNotification;
 
 class Customer extends Authenticatable
 {
 
     use SoftDeletes, Notifiable, Addressable, Taggable, Imageable, HasActivity;
+
+   /**
+     * The guard used by the model.
+     *
+     * @var string
+     */
+    protected $guard = 'customer';
 
    /**
      * The database table used by the model.
@@ -58,6 +66,16 @@ class Customer extends Authenticatable
      * @var boolean
      */
     protected static $logName = 'customer';
+
+    /**
+     * Route notifications for the Nexmo channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForNexmo()
+    {
+        return $this->primaryAddress->phone;
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -149,4 +167,14 @@ class Customer extends Authenticatable
         $this->attributes['password'] = bcrypt($password);
     }
 
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new CustomerResetPasswordNotification($token));
+    }
 }

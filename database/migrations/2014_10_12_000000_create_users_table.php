@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('shop_id')->unsigned()->nullable();
-            $table->integer('role_id')->unsigned()->nullable();
+            $table->integer('role_id')->unsigned()->default(3);
             $table->string('name');
             $table->string('nice_name')->nullable();
             $table->string('email')->unique();
@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');;
+            // $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');;
         });
 
         Schema::create('user_settings', function (Blueprint $table) {

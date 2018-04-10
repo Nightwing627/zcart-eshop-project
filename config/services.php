@@ -36,4 +36,9 @@ return [
         'client_id' => env('STRIPE_CLIENT_ID'),
     ],
 
+    'nexmo' => [
+        'key' => env('NEXMO_KEY'),
+        'secret' => env('NEXMO_SECRET'),
+        'sms_from' => '15556666666',
+    ],
 ];

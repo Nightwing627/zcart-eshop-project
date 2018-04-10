@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title> {{ get_site_title() }} </title>
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
@@ -40,32 +40,34 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    {{ get_site_title() }}
                 </a>
             </div>
 
             <div class="collapse navbar-collapse" id="spark-navbar-collapse">
                 <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('admin/dashboard') }}">Dashboard</a></li>
-                </ul>
+                {{-- <ul class="nav navbar-nav">
+                    @if(Auth::guard('web')->check())
+                        <li><a href="{{ url('admin/dashboard') }}">Dashboard</a></li>
+                    @endif
+                </ul> --}}
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
-                    @else
+                    @if (Auth::guard('customer')->check())
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ Auth::guard('customer')->user()->name }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li><a href="{{ route('customer.logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
+                    @else
+                        <li><a href="{{ route('customer.login') }}">Login</a></li>
+                        <li><a href="{{ route('customer.register') }}">Register</a></li>
                     @endif
                 </ul>
             </div>
@@ -74,6 +76,14 @@
 
     @yield('content')
 
+    <footer style="margin: 200px;">
+        <ul class="nav navbar-nav">
+            <li><a href="{{ url('admin/dashboard') }}">Admin Dashboard</a></li>
+            @unless (Auth::guard('web')->check())
+                <li><a href="{{ url('/register') }}">Register as a merchant</a></li>
+            @endunless
+        </ul>
+    </footer>
     <!-- JavaScripts -->
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

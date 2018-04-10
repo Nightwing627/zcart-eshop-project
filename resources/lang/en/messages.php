@@ -67,6 +67,10 @@ return [
 
     'no_history_data' => 'No information to show',
 
+    'message_count' => 'You have :count messages',
+
+    'notification_count' => 'You have :count notifications',
+
     'permission'        => [
             'denied'        => 'Permission denied!',
     ],

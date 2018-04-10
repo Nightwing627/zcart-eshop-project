@@ -50,34 +50,34 @@ class UsersSeeder extends Seeder
         ]);
 
         DB::table('addresses')->insert([
-        [
-            'address_type' => 'Primary',
-            'addressable_type' => 'App\User',
-            'addressable_id' => 1,
-            'address_title' => 'Primary Address',
-            'state_id' => 1221,
-            'country_id' => 840,
-            'created_at' => Carbon::Now(),
-            'updated_at' => Carbon::Now(),
-        ],[
-            'address_type' => 'Primary',
-            'addressable_type' => 'App\User',
-            'addressable_id' => 2,
-            'address_title' => 'Primary Address',
-            'state_id' => 1221,
-            'country_id' => 840,
-            'created_at' => Carbon::Now(),
-            'updated_at' => Carbon::Now(),
-        ],[
-            'address_type' => 'Primary',
-            'addressable_type' => 'App\Merchant',
-            'addressable_id' => 3,
-            'address_title' => 'Primary Address',
-            'state_id' => 1221,
-            'country_id' => 840,
-            'created_at' => Carbon::Now(),
-            'updated_at' => Carbon::Now(),
-        ]
+            [
+                'address_type' => 'Primary',
+                'addressable_type' => 'App\User',
+                'addressable_id' => 1,
+                'address_title' => 'Primary Address',
+                'state_id' => 1221,
+                'country_id' => 840,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'address_type' => 'Primary',
+                'addressable_type' => 'App\User',
+                'addressable_id' => 2,
+                'address_title' => 'Primary Address',
+                'state_id' => 1221,
+                'country_id' => 840,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'address_type' => 'Primary',
+                'addressable_type' => 'App\Merchant',
+                'addressable_id' => 3,
+                'address_title' => 'Primary Address',
+                'state_id' => 1221,
+                'country_id' => 840,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ]
         ]);
     }
 }

@@ -148,13 +148,9 @@ class Message extends Model
     {
         switch ($this->label) {
             case static::LABEL_INBOX: return '<span class="label label-info">' . trans('app.message_labels.inbox') . '</span>';
-
             case static::LABEL_SENT: return '<span class="label label-outline">' . trans('app.message_labels.sent') . '</span>';
-
             case static::LABEL_DRAFT: return '<span class="label label-default">' . trans('app.message_labels.draft') . '</span>';
-
             case static::LABEL_SPAM: return '<span class="label label-danger">' . trans('app.message_labels.spam') . '</span>';
-
             case static::LABEL_TRASH: return '<span class="label label-warning">' . trans('app.message_labels.trash') . '</span>';
         }
     }
@@ -163,9 +159,7 @@ class Message extends Model
     {
         switch ($this->status) {
             case static::STATUS_NEW: return '<span class="label label-info">' . trans('app.statuses.new') . '</span>';
-
             case static::STATUS_UNREAD: return '<span class="label label-outline">' . trans('app.statuses.unread') . '</span>';
-
             case static::STATUS_READ: return '<span class="label label-default">' . trans('app.statuses.read') . '</span>';
         }
     }

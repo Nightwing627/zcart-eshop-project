@@ -58,6 +58,16 @@ class User extends Authenticatable
     protected static $logName = 'user';
 
     /**
+     * Route notifications for the Nexmo channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForNexmo()
+    {
+        return $this->primaryAddress->phone;
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

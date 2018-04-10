@@ -197,7 +197,7 @@
           </li>
         @endif
 
-        @if(Gate::allows('index', App\Message::class) || Gate::allows('index', App\Ticket::class))
+        @if(Gate::allows('index', App\Message::class) || Gate::allows('index', App\Ticket::class) || Gate::allows('index', App\Dispute::class) || Gate::allows('index', App\Refund::class))
           <li class="treeview {{ Request::is('admin/support*') ? 'active' : '' }}">
             <a href="#">
               <i class="fa fa-support"></i>

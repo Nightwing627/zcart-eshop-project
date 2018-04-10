@@ -3,8 +3,8 @@
 @section('content')
 <!-- /.login-logo -->
 <div class="login-box-body">
-    <p class="login-box-msg">Admin Login</p>
-    <form role="form" method="POST" action="{{ url('/login') }}">
+    <p class="login-box-msg">Customer Login</p>
+    <form role="form" method="POST" action="{{ route('customer.login.submit') }}">
         {!! csrf_field() !!}
         <div class="form-group has-feedback">
             <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email">
@@ -28,8 +28,17 @@
         </div>
     </form>
 
-    <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a> <br/>
-    <a class="btn btn-link" href="{{ url('/register') }}" class="text-center">Create a Merchant Account.</a>
+    <div class="social-auth-links text-center">
+    <p>- OR -</p>
+    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+      Facebook</a>
+    <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
+      Google+</a>
+    </div>
+    <!-- /.social-auth-links -->
+
+    <a class="btn btn-link" href="{{ url('customer/password/reset') }}">Forgot Your Password?</a>
+    <a class="btn btn-link" href="{{ url('customer/register') }}" class="text-center">Register here.</a>
 </div>
 <!-- /.login-box-body -->
 @endsection

@@ -23,7 +23,7 @@ class CreateCustomersTable extends Migration
             $table->longtext('description')->nullable();
             $table->timestampTz('last_visited_on')->nullable();
             $table->ipAddress('last_visited_from')->nullable();
-            $table->boolean('active')->default(1);
+            $table->boolean('active')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
