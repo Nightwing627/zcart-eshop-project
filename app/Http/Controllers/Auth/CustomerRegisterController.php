@@ -74,6 +74,7 @@ class CustomerRegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:customers',
             'password' => 'required|string|min:6|confirmed',
+            'agree' => 'required',
         ]);
     }
 
@@ -87,7 +88,9 @@ class CustomerRegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($customer = $this->create($request->all())));
+        $customer = $this->create($request->all());
+
+        event(new Registered($customer));
 
         $this->guard('customer')->login($customer);
 

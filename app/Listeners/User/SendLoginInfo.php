@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Listeners\Order;
+namespace App\Listeners\User;
 
-use App\Events\Order\OrderCreated;
+use App\Events\User\UserCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NotifyCustomerOrderCreated
+class SendLoginInfo
 {
     /**
      * Create the event listener.
@@ -21,10 +21,10 @@ class NotifyCustomerOrderCreated
     /**
      * Handle the event.
      *
-     * @param  OrderCreated  $event
+     * @param  UserCreated  $event
      * @return void
      */
-    public function handle(OrderCreated $event)
+    public function handle(UserCreated $event)
     {
         //
     }

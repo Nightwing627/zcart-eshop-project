@@ -54,6 +54,8 @@ return [
     ],
 
     // Application Levels
+    'welcome' => 'Welcome',
+    'worldwide' => 'Worldwide',
     'alert' => 'Alert!',
     'marketplace_name' => 'Marketplace name',
     'platform' => 'Platform',
@@ -602,6 +604,9 @@ return [
     'are_you_sure' => 'Are you sure you want to do this?',
     'im_sure' => 'I\'m sure',
 
+    'sing_in_with_fb' => 'Sign in using Facebook',
+    'sing_in_with_google' => 'Sign in using Google',
+
     'payment_method_type' => [
         'paypal' => [
             'name' => 'PayPal',
@@ -667,8 +672,12 @@ return [
     'form' => [
         'maintenance_mode' => 'Maintenance mode',
         'logo' => 'Brand logo',
+        'login' => 'Login',
+        'merchant_login' => 'Merchant login',
         'slogan' => 'Slogan',
         'system_currency' => 'Currency',
+        'i_agree_with_terms' => 'I agree to the <u><a href="' . url('/') . '"> terms</a></u>',
+        'i_agree_with_merchant_terms' => 'I agree to the <u><a href="' . url('/') . '"> terms</a></u>',
         // 'website' => 'Homepage link',
         'url' => 'URL',
         'external_url' => 'External url',
@@ -682,7 +691,14 @@ return [
         'email_address' => 'Email address',
         'email' => 'Email',
         'password' => 'Password',
+        'password_reset' => 'Password reset',
         'current_password' => 'Current password',
+        'register_as_customer' => 'Register here',
+        'register_as_merchant' => 'Register as a merchant',
+        'register' => 'Register',
+        'forgot_password' => 'Forgot Password?',
+        'have_an_account' => 'I already have an account',
+        'remember_me' => 'Remember Me',
         'new_password' => 'New password',
         'dob' => 'Date of birth',
         'sex' => 'Gender',
@@ -752,6 +768,7 @@ return [
         'delete_pattern' => 'Delete pattern',
         'save' => 'Save',
         'initiate' => 'Initiate',
+        'send_password_link' => 'Send Password Reset Link',
         'required_fields' => 'Required fields.',
         'manufacturer' => 'Manufacturer',
         'model_number' => 'Model number',
@@ -893,7 +910,7 @@ return [
         'paid' => 'Paid',
         'nice_name' => 'Enter nice name',
         'full_name' => 'Enter full name',
-        'password' => 'Minimum 6 characters',
+        'password' => 'Password',
         'confirm_password' => 'Confirm password',
         'current_password' => 'Current password',
         'address' => 'Full address',

@@ -91,6 +91,7 @@ return [
 
     // Custom app validations
     'composite_unique'              => 'The :attribute :value already exists.',
+    'register_email_unique'         => 'This email address already has an account. Please try something else.',
     'role_type_required'            => 'Select role type.',
     'attribute_id_required'         => 'Select attribute.',
     'attribute_type_id_required'    => 'Select attribute type.',

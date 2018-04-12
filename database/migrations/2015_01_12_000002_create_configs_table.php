@@ -19,12 +19,12 @@ class CreateConfigsTable extends Migration
             // Support
             $table->string('support_phone')->nullable();
             $table->string('support_phone_toll_free')->nullable();
-            $table->string('support_email');
+            $table->string('support_email')->nullable();
             $table->string('default_sender_email_address')->nullable();
             $table->string('default_email_sender_name')->nullable();
 
             // Order
-            $table->string('order_number_prefix')->nullable();
+            $table->string('order_number_prefix')->nullable()->default('#');
             $table->string('order_number_suffix')->nullable();
             $table->integer('default_tax_id')->unsigned()->nullable()->default(1);
             // $table->integer('default_carrier_id')->unsigned()->nullable();
@@ -48,7 +48,7 @@ class CreateConfigsTable extends Migration
             $table->boolean('notify_new_message')->nullable();
             $table->boolean('notify_alert_quantity')->nullable();
             $table->boolean('notify_inventory_out')->nullable();
-            $table->boolean('notify_new_order')->nullable();
+            $table->boolean('notify_new_order')->nullable()->default(true);
             $table->boolean('notify_abandoned_checkout')->nullable();
             $table->boolean('notify_new_disput')->nullable()->default(true);
 

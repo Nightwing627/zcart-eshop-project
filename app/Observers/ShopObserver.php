@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Shop;
 use App\User;
+use App\Notifications\ShopCreated;
 
 class ShopObserver
 {
@@ -18,6 +19,8 @@ class ShopObserver
         $user = User::find($shop->owner_id);
         $user->shop_id = $shop->id;
         $user->save();
+
+        // $user->notify(new ShopCreated($shop));
     }
 
     /**

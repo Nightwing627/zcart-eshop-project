@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\Blog;
+namespace App\Events\Merchant;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class BlogPublished
+class AccountActivated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

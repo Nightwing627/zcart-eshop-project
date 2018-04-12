@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Listeners\Notification;
+namespace App\Listeners\Merchant;
 
-use Illuminate\Notifications\Events\NotificationSent;
+use App\Events\Merchant\AccountActivated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class LogNotification
+class SendWelcomeEmail
 {
     /**
      * Create the event listener.
@@ -21,10 +21,10 @@ class LogNotification
     /**
      * Handle the event.
      *
-     * @param  NotificationSent  $event
+     * @param  AccountActivated  $event
      * @return void
      */
-    public function handle(NotificationSent $event)
+    public function handle(AccountActivated $event)
     {
         //
     }

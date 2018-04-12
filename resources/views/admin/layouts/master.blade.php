@@ -77,10 +77,11 @@
 
           @if (count($errors) > 0)
             <div class="alert alert-danger">
-              <ul>
-                @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-                @endforeach
+              <strong>{{ trans('app.error') }}!</strong> {{ trans('messages.input_error') }}<br><br>
+              <ul class="list-group">
+                  @foreach ($errors->all() as $error)
+                      <li class="list-group-item list-group-item-danger">{{ $error }}</li>
+                  @endforeach
               </ul>
             </div>
           @endif

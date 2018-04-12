@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Listeners\Notification;
+namespace App\Listeners\Merchant;
 
-use Illuminate\Notifications\Events\NotificationSent;
+use App\Events\Merchant\MerchantRegistered;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class LogNotification
+class SendAccountActivationLink
 {
     /**
      * Create the event listener.
@@ -21,11 +21,11 @@ class LogNotification
     /**
      * Handle the event.
      *
-     * @param  NotificationSent  $event
+     * @param  MerchantRegistered  $event
      * @return void
      */
-    public function handle(NotificationSent $event)
+    public function handle(MerchantRegistered $event)
     {
-        //
+        \Log::info('Sending Activation line to the Merchant at ' . $event->merchant->email);
     }
 }

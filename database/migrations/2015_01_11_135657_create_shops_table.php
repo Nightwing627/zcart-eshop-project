@@ -23,7 +23,7 @@ class CreateShopsTable extends Migration
             $table->longtext('description')->nullable();
             $table->string('external_url')->nullable();
             $table->integer('timezone_id')->nullable();
-            $table->boolean('active')->default(1);
+            $table->boolean('active')->default(0);
             $table->softDeletes();
             $table->timestamps();
 

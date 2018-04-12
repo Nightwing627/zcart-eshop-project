@@ -17,6 +17,8 @@ return [
 
     'system_legal_name' => 'The legal name of the business',
 
+    'min_pass_lenght' => 'Minimum 6 characters',
+
     'role_name' => 'The title of the user role',
 
     'role_type' => 'Platform and Merchant. The role type platform only available for the main platform user, a merchant can\'t use this role. The Merchant role type will available when a merchant will add a new user.',
@@ -55,7 +57,7 @@ return [
 
     'slug' => 'Slug are usually a search engine friendly URL',
 
-    'shop_slug' => 'Slug are usually a search engine friendly URL, You can not change it later. Be creative to choose the slug for your shop',
+    'shop_slug' => 'This will be used as your shop URL, You can not change it later. Be creative to choose the slug for your shop',
 
     'shop_url' => 'The complete path to the shop\'s landing page. You can\'t change the url.',
 

@@ -554,10 +554,58 @@
 	  //END User Role form
 
 	  //Slug URL Maker
-	  $('.makeSlug').on('keyup', function(){
+	  $('.makeSlug').on('change', function(){
 	    var slugstr = convertToSlug(this.value);
 	    $('.slug').val(slugstr);
+		// setTimeout(sample,2000)
+	    verifyUniqueSlug();
 	  });
+
+	  $('.slug').on('change', function(){
+	    verifyUniqueSlug($(this).val());
+	  });
+
+	  function verifyUniqueSlug(slug = ''){
+	  	var node = $("#slug");
+	    var msg = "{{ trans('messages.slug_length') }}";
+
+	  	if(slug == '')
+	  		slug = node.val();
+
+	  	if (slug.length >= 3){
+	  		var route = "{{ Route::current()->getName() }}";
+
+			if(route.match(/category/i)){
+			    var tbl = 'categories';
+				var url = '/category/';
+			}
+			else if(route.match(/product/i)){
+			    var tbl = 'products';
+				var url = '/';
+			}
+			else if(route.match(/shop/i)){
+			    var tbl = 'shops';
+				var url = '/shop/';
+			}
+			else{
+			    var tbl = 'shops';
+				var url = '/shop/';
+			}
+
+		    var check = getFromPHPHelper('verifyUniqueSlug', [slug, tbl]);
+		    if(check == 'false'){
+			    node.closest( ".form-group" ).addClass('has-error');
+		    	msg = "{{ trans('messages.this_slug_taken') }}";
+		    }
+		    else if(check == 'true'){
+			    node.closest( ".form-group" ).removeClass('has-error');
+		    	msg = "{{ config('app.url') }}" + url + slug;
+		    }
+	  	}
+
+	    node.next( ".help-block" ).html(msg);
+	  	return;
+	  }
 
 	  function convertToSlug(Text){
 	    return Text.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-');

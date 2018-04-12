@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Listeners\Order;
+namespace App\Listeners\User;
 
-use App\Events\Order\OrderCreated;
+use App\Events\User\PasswordUpdated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ChargeCustomer
+class NotifyUserPasswordUpdated
 {
     /**
      * Create the event listener.
@@ -21,10 +21,10 @@ class ChargeCustomer
     /**
      * Handle the event.
      *
-     * @param  OrderCreated  $event
+     * @param  PasswordUpdated  $event
      * @return void
      */
-    public function handle(OrderCreated $event)
+    public function handle(PasswordUpdated $event)
     {
         //
     }

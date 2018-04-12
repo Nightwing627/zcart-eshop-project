@@ -22,12 +22,13 @@ return [
     'restored'          => ':model has been restored successfully!',
     'deleted'           => ':model has been deleted permanently!',
     'nofound'           => ':model is not exist! try another search.',
-    'action_failed'     => 'The action has been failed to unknown reason!',
+    // 'action_failed'     => 'The action has been failed to unknown reason!',
     'file_deleted'      => 'The file has been deleted successfully!',
     'archived'          => ':model has been archived successfully!',
     'fulfilled'         => 'The order has been fulfilled successfully.',
     'fulfilled_and_archived' => 'The order has been fulfilled and archived successfully.',
-    'failed'            => 'Action has been failed! Something went wrong!!',
+    'failed'            => 'The action has been failed! Something went wrong!!',
+    'input_error'       => 'There were some problems with your input.',
     'secret_logged_in'  => 'Impersonated successfully.',
     'secret_logged_out' => 'Logged out from secret account.',
     'profile_updated'   => 'You account has been updated successfully!',
@@ -66,6 +67,10 @@ return [
     'no_changes' => 'Nothing to show',
 
     'no_history_data' => 'No information to show',
+
+    'this_slug_taken' => 'This slug has been taken! Try a new one.',
+
+    'slug_length' => 'The slug should be minimum three character long.',
 
     'message_count' => 'You have :count messages',
 

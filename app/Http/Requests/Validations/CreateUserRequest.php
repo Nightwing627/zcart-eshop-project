@@ -36,4 +36,16 @@ class CreateUserRequest extends Request
            'image' => 'mimes:jpeg,png',
         ];
     }
+
+  /**
+   * Get the error messages for the defined validation rules.
+   *
+   * @return array
+   */
+  public function messages()
+  {
+    return [
+        'email.unique' => trans('validation.register_email_unique'),
+    ];
+  }
 }

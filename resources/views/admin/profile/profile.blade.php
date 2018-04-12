@@ -95,16 +95,16 @@
 						<a class="btn btn-default" href="{{ route('admin.profile.showChangePasswordForm') }}" class="ajax-modal-btn"><i class="fa fa-lock"></i> {{ trans('app.change_password') }}</a>
 					</div>
 
-				    @unless($profile->isFromPlatform())
+				    @if($profile->merchantId())
 					    <hr/>
 						<div class="form-group">
 						  	<label>{{ trans('app.merchant') }}</label>
-						  	<p class="lead">{{ $profile->shop->name }}</p>
+						  	<p class="lead">{{ optional($profile->shop)->name }}</p>
 
 						  	<label>{{ trans('app.form.logo') }}</label>
 					        <img src="{{ get_storage_file_url(optional($profile->shop->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.logo') }}">
 					  	</div>
-				    @endunless
+				    @endif
 			  	</div>
 			</div>
 	    </div> <!-- /.box-body -->

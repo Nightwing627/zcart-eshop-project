@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\Message;
+namespace App\Events\User;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class NewMessage
+class PasswordUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

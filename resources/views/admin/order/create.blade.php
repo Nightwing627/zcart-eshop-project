@@ -323,15 +323,16 @@
 
       // Set default settings based on shop and system configs
       var taxId = "{{ $shipping_zone ? $shipping_zone->tax_id : config('shop_settings.default_tax_id') }}";
-      if( taxId )
+      if( taxId ){
         setTax(taxId);
+      }
 
       if(!shipping_options){
         $("#global-alert-msg").html('{{ trans('messages.notice.no_shipping_option_for_the_zone') }}');
         $("#global-alert-box").removeClass('hidden');
       }
       else if($.isEmptyObject(shipping_options)){
-        $("#global-alert-msg").html('{!! trans('messages.notice.no_rate_for_the_shipping_zone', ['zone' => $shipping_zone->name]) !!}');
+        $("#global-alert-msg").html('{!! trans('messages.notice.no_rate_for_the_shipping_zone', ['zone' => optional($shipping_zone)->name]) !!}');
         $("#global-alert-box").removeClass('hidden');
       }
 

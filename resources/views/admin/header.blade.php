@@ -145,7 +145,7 @@
               <img src="{{ get_gravatar_url(Auth::user()->email, 'tiny') }}" class="user-image" alt="{{ trans('app.avatar') }}">
             @endif
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-            <span class="hidden-xs">{{ Auth::user()->getName() }}</span>
+            <span class="hidden-xs">{{ ($Tname = Auth::user()->getName()) ? $Tname : trans('app.welcome') }}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->

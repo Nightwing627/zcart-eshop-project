@@ -78,6 +78,8 @@ mix.js('resources/assets/js/app.js', 'resources/assets/temp/app.js')
 
 	mix.copy('resources/assets/plugins/iCheck/line/line.png', 'public/css/line.png')
 		.copy('resources/assets/plugins/iCheck/line/line@2x.png', 'public/css/line@2x.png')
+		.copy('resources/assets/plugins/iCheck/minimal/blue.png', 'public/css/blue.png')
+		.copy('resources/assets/plugins/iCheck/minimal/blue@2x.png', 'public/css/blue@2x.png')
 		.copy('resources/assets/plugins/iCheck/flat/flat.png', 'public/css/flat.png')
 		.copy('resources/assets/plugins/iCheck/flat/flat@2x.png', 'public/css/flat@2x.png')
 		.copy('resources/assets/plugins/iCheck/flat/pink.png', 'public/css/pink.png')

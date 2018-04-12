@@ -1,35 +1,26 @@
 @extends('auth.master')
+
 @section('content')
+  @if (session('status'))
+    <div class="alert alert-success">
+      {{ session('status') }}
+    </div>
+  @endif
+  <div class="box login-box-body">
+    <div class="box-header with-border">
+      <h3 class="box-title">{{ trans('app.form.password_reset') }}</h3>
+    </div> <!-- /.box-header -->
+    <div class="box-body">
+      {!! Form::open(['route' => 'password.email', 'id' => 'form', 'data-toggle' => 'validator']) !!}
+        <div class="form-group has-feedback">
+          {!! Form::email('email', null, ['class' => 'form-control input-lg', 'placeholder' => trans('app.placeholder.valid_email'), 'required']) !!}
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          <div class="help-block with-errors"></div>
+        </div>
 
-@if (session('status'))
-  <div class="alert alert-success">
-    {{ session('status') }}
+        {!! Form::submit(trans('app.form.send_password_link'), ['class' => 'btn btn-block btn-lg btn-flat btn-primary']) !!}
+      {!! Form::close() !!}
+      <a href="{{ route('login') }}" class="btn btn-link">{{ trans('app.login') }}</a>
+    </div>
   </div>
-@endif
-<!-- /.login-logo -->
-<div class="login-box-body">
-  <p class="login-box-msg">Reset Password</p>
-  <form role="form" method="POST" action="{{ url('/password/email') }}">
-    {!! csrf_field() !!}
-    <div class="form-group has-feedback">
-      <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email">
-      <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block btn-flat">Send Password Reset Link</button>
-    </div>
-  </form>
-
-<div class="social-auth-links text-center">
-  <p>- OR -</p>
-  <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-  Facebook</a>
-  <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-  Google+</a>
-</div>
-<!-- /.social-auth-links -->
-
-  <a href="/login" class="btn btn-link">Login</a>
-</div>
-<!-- /.login-box-body -->
 @endsection

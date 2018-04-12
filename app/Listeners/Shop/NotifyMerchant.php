@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Listeners\Notification;
+namespace App\Listeners\Shop;
 
-use Illuminate\Notifications\Events\NotificationSent;
+use App\Events\Shop\ShopCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class LogNotification
+class NotifyMerchant
 {
     /**
      * Create the event listener.
@@ -21,11 +21,11 @@ class LogNotification
     /**
      * Handle the event.
      *
-     * @param  NotificationSent  $event
+     * @param  ShopCreated  $event
      * @return void
      */
-    public function handle(NotificationSent $event)
+    public function handle(ShopCreated $event)
     {
-        //
+        \Log::info('Notifying Merchant about shop ' . $event->shop->name);
     }
 }

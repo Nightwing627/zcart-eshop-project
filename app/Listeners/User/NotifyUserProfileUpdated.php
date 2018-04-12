@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Listeners\Notification;
+namespace App\Listeners\User;
 
-use Illuminate\Notifications\Events\NotificationSent;
+use App\Events\User\UserUpdated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class LogNotification
+class NotifyUserProfileUpdated
 {
     /**
      * Create the event listener.
@@ -21,10 +21,10 @@ class LogNotification
     /**
      * Handle the event.
      *
-     * @param  NotificationSent  $event
+     * @param  UserUpdated  $event
      * @return void
      */
-    public function handle(NotificationSent $event)
+    public function handle(UserUpdated $event)
     {
         //
     }

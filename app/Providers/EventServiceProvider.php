@@ -15,58 +15,65 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
 
         // Blog Events
-        'App\Events\Blog\BlogPublished' => [
-        ],
-        'App\Events\Blog\NewComment' => [
-        ],
+        // 'App\Events\Blog\BlogPublished' => [
+        //     'App\Listeners\Blog\EmailToSubscribers',
+        // ],
+        // 'App\Events\Blog\UserRepliedToConversation' => [
+        //     'App\Listeners\Blog\EmailConversationSubscribers',
+        // ],
 
         // Customer Events
-        'App\Events\Customer\Registered' => [
-        ],
-        'App\Events\Customer\CustomerCreated' => [
-        ],
-        'App\Events\Customer\CustomerUpdated' => [
-        ],
-        'App\Events\Customer\CustomerDeleted' => [
-        ],
+        // 'App\Events\Customer\Registered' => [
+        //     'App\Listeners\Customer\SendWelcomeEmail',
+        // ],
+        // 'App\Events\Customer\CustomerCreated' => [
+        //     'App\Listeners\Customer\SendLoginInfo',
+        // ],
+        // 'App\Events\Customer\CustomerUpdated' => [
+        //     'App\Listeners\Customer\SendProfileUpdateNotification',
+        // ],
+        // 'App\Events\Customer\CustomerDeleted' => [
+        // ],
 
         // Dispute Events
-        'App\Events\Dispute\DisputeCreated' => [
+        // 'App\Events\Dispute\DisputeCreated' => [
+        // ],
+        // 'App\Events\Dispute\DisputeUpdated' => [
+        // ],
+        // 'App\Events\Dispute\DisputeSolved' => [
+        // ],
+
+        // Inventory Events
+        // 'App\Events\Inventory\InventoryLow' => [
+        // ],
+
+        // Merchant Events
+        'App\Events\Merchant\MerchantRegistered' => [
+            'App\Listeners\Merchant\SendAccountActivationLink',
         ],
-        'App\Events\Dispute\DisputeUpdated' => [
+        'App\Events\Merchant\AccountActivated' => [
+            'App\Listeners\Merchant\SendWelcomeEmail',
         ],
-        'App\Events\Dispute\DisputeSolved' => [
-        ],
+
+        // Message Events
+        // 'App\Events\Message\NewMessage' => [
+        // ],
+        // 'App\Events\Message\MessageReplied' => [
+        // ],
 
         // Notificstion Events
         'Illuminate\Notifications\Events\NotificationSent' => [
             'App\Listeners\Notification\LogNotification',
         ],
 
-        // Inventory Events
-        'App\Events\Inventory\InventoryLow' => [
-        ],
-
-        // Message Events
-        'App\Events\Message\NewMessage' => [
-        ],
-        'App\Events\Message\MessageReplied' => [
-        ],
-
         // Order Events
-        'App\Events\Order\OrderCreated' => [
-            'App\Listeners\Order\ChargeCustomer',
-            'App\Listeners\Order\NotifyCustomerOrderCreated',
-        ],
-        'App\Events\Order\OrderUpdated' => [
-            'App\Listeners\Order\NotifyCustomerOrderUpdated',
-        ],
-
-        // Profile Events
-        'App\Events\Profile\ProfileUpdated' => [
-        ],
-        'App\Events\Profile\PasswordUpdated' => [
-        ],
+        // 'App\Events\Order\OrderCreated' => [
+        //     'App\Listeners\Order\ChargeCustomer',
+        //     'App\Listeners\Order\NotifyCustomerOrderCreated',
+        // ],
+        // 'App\Events\Order\OrderUpdated' => [
+        //     'App\Listeners\Order\NotifyCustomerOrderUpdated',
+        // ],
 
         // Refund Events
         'App\Events\Refund\RefundInitiated' => [
@@ -82,6 +89,7 @@ class EventServiceProvider extends ServiceProvider
 
         // Shop Events
         'App\Events\Shop\ShopCreated' => [
+            'App\Listeners\Shop\NotifyMerchant',
         ],
         'App\Events\Shop\ShopUpdated' => [
         ],
@@ -106,10 +114,16 @@ class EventServiceProvider extends ServiceProvider
 
         // User Events
         'App\Events\User\UserCreated' => [
+            'App\Listeners\User\SendLoginInfo',
         ],
         'App\Events\User\UserUpdated' => [
+            'App\Listeners\User\NotifyUserProfileUpdated',
         ],
         'App\Events\User\UserDeleted' => [
+            'App\Listeners\User\NotifyUserAccountDeleted',
+        ],
+        'App\Events\User\PasswordUpdated' => [
+            'App\Listeners\User\NotifyUserPasswordUpdated',
         ],
 
 

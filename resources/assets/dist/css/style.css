@@ -3767,22 +3767,23 @@ div.dataTables_paginate ul.pagination {
 .register-logo {
   font-size: 35px;
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   font-weight: 300;
 }
 .login-logo a,
 .register-logo a {
-  color: #444;
+  color: #fff;
 }
 .login-page,
 .register-page {
-  background: #d2d6de;
+  background: #232b2b;
 }
 .login-box,
 .register-box {
-  width: 360px;
+  width: 40%;
   margin: 7% auto;
 }
+
 @media (max-width: 768px) {
   .login-box,
   .register-box {
@@ -3793,7 +3794,7 @@ div.dataTables_paginate ul.pagination {
 .login-box-body,
 .register-box-body {
   background: #fff;
-  padding: 20px;
+  padding: 22px;
   border-top: 0;
   color: #666;
 }
@@ -3925,7 +3926,8 @@ div.dataTables_paginate ul.pagination {
   padding-left: 61px;
 }
 .btn-social.btn-lg > :first-child {
-  line-height: 45px;
+  line-height: 34px;
+  /*line-height: 45px;*/
   width: 45px;
   font-size: 1.8em;
 }

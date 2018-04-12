@@ -160,14 +160,14 @@ class Product extends Model
      *
      * @return array
      */
-    public function getMinPriceAttribute($attribute)
-    {
-         return get_formated_decimal($attribute);
-    }
-    public function getMaxPriceAttribute($attribute)
-    {
-         return $attribute ? get_formated_decimal($attribute) : $attribute;
-    }
+    // public function getMinPriceAttribute($attribute)
+    // {
+    //      return get_formated_decimal($attribute);
+    // }
+    // public function getMaxPriceAttribute($attribute)
+    // {
+    //      return $attribute ? get_formated_decimal($attribute) : $attribute;
+    // }
 
     /**
      * Scope a query to only include active products.

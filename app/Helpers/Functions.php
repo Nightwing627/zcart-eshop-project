@@ -287,6 +287,18 @@ if ( ! function_exists('get_placeholder_img') )
     }
 }
 
+if ( ! function_exists('verifyUniqueSlug') )
+{
+    function verifyUniqueSlug($slug, $table, $field = 'slug')
+    {
+        if(\DB::table($table)->where($field, $slug)->first())
+            return response()->json('false');
+
+        return response()->json('true');
+    }
+}
+
+
 if ( ! function_exists('generateCouponCode') )
 {
     function generateCouponCode()
@@ -360,8 +372,7 @@ if ( ! function_exists('generateUniqueSrt') )
     {
         $characters = implode(range('A', 'Z')) . implode(range(0, 9));
         $uniqueStr = '';
-        for($i=0; $i<$size; $i++)
-        {
+        for($i=0; $i<$size; $i++){
             $uniqueStr .= $characters[mt_rand(0, strlen($characters) - 1)];
         }
 
@@ -464,15 +475,12 @@ if ( ! function_exists('get_formated_decimal') )
                 $decimal = config('system_settings.decimals');
         }
 
-        $value = number_format(
-             $value,
-             $decimal,
-             config('system_settings.currency.decimal_mark'),
-             config('system_settings.currency.thousands_separator')
-        );
+        $value = number_format( $value, $decimal, config('system_settings.currency.decimal_mark'), config('system_settings.currency.thousands_separator') );
 
-        // if ($trim)
-        //     $value = floatval($value);
+        if ($trim){
+            if('.' == config('system_settings.currency.decimal_mark'))
+                return floatval($value);
+        }
 
         return $value;
     }

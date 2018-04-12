@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
 use App\User;
+use App\Jobs\CreateShopForMerchant;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
+use App\Events\Merchant\MerchantRegistered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Requests\Validations\RegisterMerchantRequest;
 
 class RegisterController extends Controller
 {
@@ -40,18 +45,31 @@ class RegisterController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Show the application registration form.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return \Illuminate\Http\Response
      */
-    protected function validator(array $data)
+    public function showRegistrationForm()
     {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        return view('auth.register');
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(RegisterMerchantRequest $request)
+    {
+        $merchant = $this->create($request->all());
+
+        event(new Registered($merchant));
+
+        Auth::guard()->login($merchant);
+
+        return $this->registered($request, $merchant)
+                        ?: redirect($this->redirectPath());
     }
 
     /**
@@ -62,10 +80,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $merchant = User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        // Dispatching Shop create job
+        CreateShopForMerchant::dispatch($merchant, $data['shop_name']);
+
+        event(new MerchantRegistered($merchant));
+
+        return $merchant;
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered($request, $user)
+    {
+        //
     }
 }

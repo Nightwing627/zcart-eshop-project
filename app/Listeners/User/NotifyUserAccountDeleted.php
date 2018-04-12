@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Listeners\Order;
+namespace App\Listeners\User;
 
-use App\Events\Order\OrderUpdated;
+use App\Events\User\UserDeleted;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NotifyCustomerOrderUpdated
+class NotifyUserAccountDeleted
 {
     /**
      * Create the event listener.
@@ -21,10 +21,10 @@ class NotifyCustomerOrderUpdated
     /**
      * Handle the event.
      *
-     * @param  OrderUpdated  $event
+     * @param  UserDeleted  $event
      * @return void
      */
-    public function handle(OrderUpdated $event)
+    public function handle(UserDeleted $event)
     {
         //
     }
