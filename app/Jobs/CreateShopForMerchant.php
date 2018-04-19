@@ -4,8 +4,6 @@ namespace App\Jobs;
 
 use App\User;
 use App\Shop;
-use App\Jobs\ConfigureTheShop;
-use App\Events\Shop\ShopCreated;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 class CreateShopForMerchant
@@ -51,14 +49,16 @@ class CreateShopForMerchant
             'default_sender_email_address' => $this->merchant->email
         ]);
 
-        event(new ShopCreated($shop));
+        // Updating shop_id field in user table
+        $this->merchant->shop_id = $shop->id;
+        $this->merchant->save();
 
         // Creating WordWide shippingZones for the Shop
         $shop->shippingZones()->create([
             'name' => trans('app.worldwide'),
             'tax_id' => 1,
-            'country_ids' => null,
-            'state_ids' => null,
+            'country_ids' => [],
+            'state_ids' => [],
             'rest_of_the_world' => true,
         ]);
     }

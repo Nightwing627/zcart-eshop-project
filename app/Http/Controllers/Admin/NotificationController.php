@@ -2,39 +2,66 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Auth;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class NotificationController extends Controller
 {
+    private $model_name;
+
     /**
-     * Display a listing of the resource.
+     * construct
+     */
+    public function __construct()
+    {
+        $this->model_name = trans('app.model.notification');
+    }
+
+    /**
+     * Show the notifications for the current user.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        Auth::user()->unreadNotifications->markAsRead();
+
+        return view('admin.notification.index');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Mark all Notifications As Read.
      */
-    public function show($id)
+    public function markAllNotificationsAsRead()
     {
-        //
+        Auth::user()->unreadNotifications->markAsRead();
+
+        return response("success", 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  uuid  $notification
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($notification)
     {
-        //
+        Auth::user()->notifications()->find($notification)->delete();
+
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyAll()
+    {
+        Auth::user()->notifications()->delete();
+
+        return back()->with('success',  trans('messages.deleted', ['model' => str_plural($this->model_name)]));
     }
 }

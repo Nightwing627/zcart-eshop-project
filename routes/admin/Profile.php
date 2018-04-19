@@ -1,5 +1,5 @@
 <?php
-	Route::get('view', 'ProfileController@profile')->name('profile');
+	Route::get('view', 'ProfileController@profile')->name('view');
 	Route::put('update', 'ProfileController@update')->name('update');
 	Route::get('changePasswordForm', 'ProfileController@ShowChangePasswordForm')->name('showChangePasswordForm');
 	Route::post('updatePassword', 'ProfileController@updatePassword')->name('updatePassword');

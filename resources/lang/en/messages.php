@@ -74,7 +74,57 @@ return [
 
     'message_count' => 'You have :count messages',
 
-    'notification_count' => 'You have :count notifications',
+    'notification_count' => 'You have :count unread notifications',
+
+    'alert' => 'Alert!',
+
+    'thanks' => 'Thanks',
+
+    'regards' => 'Regards , ',
+
+    'ticket_id' => 'Ticket ID',
+
+    'category' => 'Category',
+
+    'subject' => 'Subject',
+
+    'prioriy' => 'Prioriy',
+
+    'amount' => 'Amount',
+
+    'shop_name' => 'Shop name',
+
+    'order_id' => 'Order ID',
+
+    'status' => 'Status',
+
+    'system_is_live' => 'Marketplace is back to LIVE!',
+
+    'system_is_down' => 'The marketplace goes DOWN!',
+
+    'system_config_updated' => 'System configuration updated!',
+
+    'system_info_updated' => 'System information updated!',
+
+    'temp_password' => 'Temporary Password: :password',
+
+    'password_updated' => 'Password has been changed!',
+
+    'shop_created' => 'The shop :shop_name has been created!',
+
+    'shop_updated' => 'Shop information has been updated!',
+
+    'shop_config_updated' => 'Shop configuration has been updated!',
+
+    'shop_down_for_maintainace' => 'Shop goes DOWN!',
+
+    'shop_is_live' => 'Shop is back to LIVE!',
+
+    'ticket_replied' => 'Ticket has been replied',
+
+    'ticket_updated' => 'Ticket has been updated',
+
+    'ticket_assigned' => 'A new ticket has been assigned to you',
 
     'permission'        => [
             'denied'        => 'Permission denied!',

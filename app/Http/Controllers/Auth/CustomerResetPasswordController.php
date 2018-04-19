@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use Auth;
 use Password;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use App\Events\Customer\PasswordUpdated;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class CustomerResetPasswordController extends Controller
@@ -64,5 +67,25 @@ class CustomerResetPasswordController extends Controller
         return view('auth.passwords.reset_customer')->with(
             ['token' => $token, 'email' => $request->email]
         );
+    }
+
+    /**
+     * Reset the given customer's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $customer
+     * @param  string  $password
+     * @return void
+     */
+    protected function resetPassword($customer, $password)
+    {
+        $customer->password = Hash::make($password);
+
+        $customer->setRememberToken(Str::random(60));
+
+        $customer->save();
+
+        event(new PasswordUpdated($customer));
+
+        $this->guard('customer')->login($customer);
     }
 }

@@ -24,5 +24,6 @@ return [
     'reordered' => 'Successfully reordered',
     'no_files_to_upload' => 'No files found for upload.',
     'form_validation_failed' => 'Failed: Please check all required inputs are filled and valid',
+    'vendor_config_failed' => 'Registration failed! Please make some changes and try again.',
 
 ];

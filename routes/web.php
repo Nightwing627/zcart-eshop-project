@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 	Route::get('secretLogin/{user}', 'DashboardController@secretLogin')->name('user.secretLogin');
 	Route::get('secretLogout', 'DashboardController@secretLogout')->name('secretLogout');
 
+	include('admin/Notification.php');
 	include('admin/Blog.php');
 
 	// Merchant Routs for Admin

@@ -2,35 +2,27 @@
 
 namespace App\Events\Refund;
 
+use App\Refund;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class RefundApproved
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, SerializesModels;
+
+    public $refund;
+    public $notify_customer;
 
     /**
-     * Create a new event instance.
+     * Create a new job instance.
      *
+     * @param  Refund  $refund
      * @return void
      */
-    public function __construct()
+    public function __construct(Refund $refund, $notify_customer = Null)
     {
-        //
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
+        $this->refund = $refund;
+        $this->notify_customer = $notify_customer;
     }
 }

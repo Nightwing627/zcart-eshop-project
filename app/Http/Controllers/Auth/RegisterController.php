@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use DB;
+use Log;
 use Auth;
 use App\User;
+use App\Events\Shop\ShopCreated;
 use App\Jobs\CreateShopForMerchant;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
@@ -62,11 +65,35 @@ class RegisterController extends Controller
      */
     public function register(RegisterMerchantRequest $request)
     {
-        $merchant = $this->create($request->all());
+        // Start transaction!
+        DB::beginTransaction();
 
-        event(new Registered($merchant));
+        try {
+            $merchant = $this->create($request->all());
 
-        Auth::guard()->login($merchant);
+            // Dispatching Shop create job
+            CreateShopForMerchant::dispatch($merchant, $request->get('shop_name'));
+
+            Auth::guard()->login($merchant);
+
+        } catch(\Exception $e){
+
+            // rollback the transaction and log the error
+            DB::rollback();
+            Log::error('Vendor Registration Failed: ' . $e->getMessage());
+
+            // add your error messages:
+            $error = new \Illuminate\Support\MessageBag();
+            $error->add('errors', trans('responses.vendor_config_failed'));
+
+            return redirect()->route('register')->withErrors($error)->withInput();
+        }
+
+        // Everything is fine. Now commit the transaction
+        DB::commit();
+
+        // Trigger after registration events
+        $this->triggerAfterEvents($merchant);
 
         return $this->registered($request, $merchant)
                         ?: redirect($this->redirectPath());
@@ -80,17 +107,30 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $merchant = User::create([
+        return User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
 
-        // Dispatching Shop create job
-        CreateShopForMerchant::dispatch($merchant, $data['shop_name']);
+    /**
+     * Trigger some events after a valid registration.
+     *
+     * @param  User  $merchant
+     * @return void
+     */
+    protected function triggerAfterEvents(User $merchant)
+    {
+        // Trigger the systems default event
+        event(new Registered($merchant));
 
+        // Trigger merchant registered event
         event(new MerchantRegistered($merchant));
 
-        return $merchant;
+        // Trigger shop created event
+        event(new ShopCreated($merchant->owns));
+
+        return;
     }
 
     /**

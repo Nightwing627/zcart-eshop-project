@@ -2,7 +2,7 @@
 
 namespace App\Listeners\Merchant;
 
-use App\Events\Merchant\AccountActivated;
+use App\Events\Merchant\MerchantRegistered;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -21,10 +21,10 @@ class SendWelcomeEmail
     /**
      * Handle the event.
      *
-     * @param  AccountActivated  $event
+     * @param  MerchantRegistered  $event
      * @return void
      */
-    public function handle(AccountActivated $event)
+    public function handle(MerchantRegistered $event)
     {
         //
     }

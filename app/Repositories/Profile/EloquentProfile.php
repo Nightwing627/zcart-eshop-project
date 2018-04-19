@@ -13,7 +13,7 @@ class EloquentProfile extends EloquentRepository implements BaseRepository, Prof
 
     public function profile()
     {
-        return User::findOrFail(Auth::id());
+        return Auth::user();
     }
 
     public function updateProfile(Request $request)

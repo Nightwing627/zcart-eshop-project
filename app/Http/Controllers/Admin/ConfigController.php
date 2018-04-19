@@ -10,7 +10,11 @@ use App\Config;
 use App\PaymentMethod;
 use App\Http\Requests;
 use App\Common\Authorizable;
+use App\Events\Shop\ShopIsLive;
+use App\Events\Shop\ShopUpdated;
+use App\Events\Shop\ConfigUpdated;
 use App\Http\Controllers\Controller;
+use App\Events\Shop\DownForMaintainace;
 use App\Http\Requests\Validations\UpdateConfigRequest;
 use App\Http\Requests\Validations\UpdateBasicConfigRequest;
 use App\Http\Requests\Validations\ToggleMaintenanceModeRequest;
@@ -70,6 +74,8 @@ class ConfigController extends Controller
 
         $config->shop->update($request->all());
 
+        event(new ShopUpdated($config->shop));
+
         if ($request->hasFile('image') || ($request->input('delete_image') == 1))
             $config->shop->deleteImage();
 
@@ -85,8 +91,10 @@ class ConfigController extends Controller
 
         $this->authorize('update', $config); // Check permission
 
-        if($config->update($request->all()))
+        if($config->update($request->all())){
+            event(new ConfigUpdated($config->shop));
             return response("success", 200);
+        }
 
         return response('error', 405);
     }
@@ -106,8 +114,10 @@ class ConfigController extends Controller
 
         $config->$node = !$config->$node;
 
-        if($config->save())
+        if($config->save()){
+            event(new ConfigUpdated($config->shop));
             return response("success", 200);
+        }
 
         return response('error', 405);
     }
@@ -127,8 +137,14 @@ class ConfigController extends Controller
 
         $config->maintenance_mode = !$config->maintenance_mode;
 
-        if($config->save())
+        if($config->save()){
+            if($config->maintenance_mode)
+                event(new DownForMaintainace($config->shop));
+            else
+                event(new ShopIsLive($config->shop));
+
             return response("success", 200);
+        }
 
         return response('error', 405);
     }

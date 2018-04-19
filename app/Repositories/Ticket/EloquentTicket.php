@@ -70,7 +70,7 @@ class EloquentTicket extends EloquentRepository implements BaseRepository, Ticke
     {
         $ticket = $this->model->find($id);
 
-        $ticket->update($request->all());
+        $ticket->update($request->except('user_id'));
 
         $reply = $ticket->replies()->create($request->all());
 
@@ -82,17 +82,29 @@ class EloquentTicket extends EloquentRepository implements BaseRepository, Ticke
 
     public function assign(Request $request, $id)
     {
-        return $this->model->find($id)->update($request->all());
+        $ticket = $this->model->find($id);
+
+        $ticket->update($request->all());
+
+        return $ticket;
     }
 
     public function update(Request $request, $id)
     {
-        return $this->model->find($id)->update($request->all());
+        $ticket = $this->model->find($id);
+
+        $ticket->update($request->all());
+
+        return $ticket;
     }
 
     public function reopen(Request $request, $id)
     {
-        return $this->model->find($id)->update(['status' => Ticket::STATUS_OPEN]);
+        $ticket = $this->model->find($id);
+
+        $ticket->update(['status' => Ticket::STATUS_OPEN]);
+
+        return $ticket;
     }
 
     public function recentlyUpdated()

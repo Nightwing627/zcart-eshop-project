@@ -136,7 +136,7 @@
 								{!! Form::label('maintenance_mode', trans('app.form.maintenance_mode'), ['class' => 'control-label with-help']) !!}
 							  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.shop_maintenance_mode_handle') }}"></i>
 							  	<div class="handle">
-									<a href="{{ route('admin.setting.config.maintenanceMode.toggle', $shop) }}" type="button" class="btn btn-lg btn-secondary btn-toggle {{ $shop->config->maintenance_mode == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $shop->config->maintenance_mode == 1 ? 'true' : 'false' }}" autocomplete="off">
+									<a href="{{ route('admin.setting.config.maintenanceMode.toggle', $shop) }}" type="button" class="toggle-confirm btn btn-lg btn-secondary btn-toggle {{ $shop->config->maintenance_mode == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $shop->config->maintenance_mode == 1 ? 'true' : 'false' }}" autocomplete="off">
 										<div class="btn-handle"></div>
 									</a>
 							  	</div>

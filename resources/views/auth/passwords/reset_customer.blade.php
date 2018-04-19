@@ -15,17 +15,18 @@
             </div>
             <div class="form-group has-feedback">
               {!! Form::password('password', ['class' => 'form-control input-lg', 'id' => 'password', 'placeholder' => trans('app.placeholder.password'), 'data-minlength' => '6', 'required']) !!}
-              <span class="fa fa-lock form-control-feedback"></span>
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
               <div class="help-block with-errors"></div>
             </div>
             <div class="form-group has-feedback">
               {!! Form::password('password_confirmation', ['class' => 'form-control input-lg', 'placeholder' => trans('app.placeholder.confirm_password'), 'data-match' => '#password', 'required']) !!}
-              <span class="fa fa-lock form-control-feedback"></span>
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
               <div class="help-block with-errors"></div>
             </div>
 
             {!! Form::submit(trans('app.form.password_reset'), ['class' => 'btn btn-block btn-lg btn-flat btn-primary']) !!}
         {!! Form::close() !!}
+        <a href="{{ route('customer.login') }}" class="btn btn-link">{{ trans('app.login') }}</a>
     </div>
 </div>
 @endsection

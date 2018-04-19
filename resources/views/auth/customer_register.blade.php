@@ -9,7 +9,7 @@
             {!! Form::open(['route' => 'customer.register', 'id' => 'form', 'data-toggle' => 'validator']) !!}
                 <div class="form-group has-feedback">
                     {!! Form::text('name', null, ['class' => 'form-control input-lg', 'placeholder' => trans('app.placeholder.full_name'), 'required']) !!}
-                    <span class="fa fa-user form-control-feedback"></span>
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     <div class="help-block with-errors"></div>
                 </div>
                 <div class="form-group has-feedback">
@@ -19,12 +19,12 @@
                 </div>
                 <div class="form-group has-feedback">
                     {!! Form::password('password', ['class' => 'form-control input-lg', 'id' => 'password', 'placeholder' => trans('app.placeholder.password'), 'data-minlength' => '6', 'required']) !!}
-                    <span class="fa fa-lock form-control-feedback"></span>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     <div class="help-block with-errors"></div>
                 </div>
                 <div class="form-group has-feedback">
                     {!! Form::password('password_confirmation', ['class' => 'form-control input-lg', 'placeholder' => trans('app.placeholder.confirm_password'), 'data-match' => '#password', 'required']) !!}
-                    <span class="fa fa-lock form-control-feedback"></span>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     <div class="help-block with-errors"></div>
                 </div>
                 <div class="row">

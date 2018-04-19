@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Hash;
 use App\Common\Taggable;
 use App\Common\Imageable;
 use App\Common\Addressable;
@@ -66,6 +67,16 @@ class Customer extends Authenticatable
      * @var boolean
      */
     protected static $logName = 'customer';
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return $this->email;
+    }
 
     /**
      * Route notifications for the Nexmo channel.
@@ -164,7 +175,10 @@ class Customer extends Authenticatable
      */
     public function setPasswordAttribute($password)
     {
-        $this->attributes['password'] = bcrypt($password);
+        if(Hash::needsRehash($password))
+            $this->attributes['password'] = bcrypt($password);
+        else
+            $this->attributes['password'] = $password;
     }
 
     /**

@@ -87,6 +87,7 @@ class Authorize
 	 */
 	private function permissionSlugs()
 	{
+		// For current user just return permissions from cinfig
 		if( Auth::user()->id == $this->user->id )
 	        return config('permissions');
 

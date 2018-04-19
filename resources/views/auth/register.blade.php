@@ -14,17 +14,17 @@
           </div>
           <div class="form-group has-feedback">
               {!! Form::password('password', ['class' => 'form-control input-lg', 'id' => 'password', 'placeholder' => trans('app.placeholder.password'), 'data-minlength' => '6', 'required']) !!}
-              <span class="fa fa-lock form-control-feedback"></span>
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
               <div class="help-block with-errors"></div>
           </div>
           <div class="form-group has-feedback">
               {!! Form::password('password_confirmation', ['class' => 'form-control input-lg', 'placeholder' => trans('app.placeholder.confirm_password'), 'data-match' => '#password', 'required']) !!}
-              <span class="fa fa-lock form-control-feedback"></span>
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
               <div class="help-block with-errors"></div>
           </div>
           <div class="form-group has-feedback">
               {!! Form::text('shop_name', null, ['class' => 'form-control input-lg', 'placeholder' => trans('app.placeholder.shop_name'), 'required']) !!}
-              <i class="fa fa-building-o form-control-feedback"></i>
+              <i class="glyphicon glyphicon-equalizer form-control-feedback"></i>
               <div class="help-block with-errors"></div>
           </div>
 

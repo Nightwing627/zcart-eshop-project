@@ -209,9 +209,11 @@
                 <li class=" {{ Request::is('admin/support/message*') ? 'active' : '' }}"><a href="{{ url('admin/support/message/labelOf/'. App\Message::LABEL_INBOX) }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.support_messages') }}</a></li>
               @endcan
 
-              @can('index', App\Ticket::class)
-                <li class=" {{ Request::is('admin/support/ticket*') ? 'active' : '' }}"><a href="{{ url('admin/support/ticket') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.support_tickets') }}</a></li>
-              @endcan
+              @if(Auth::user()->isFromPlatform())
+                @can('index', App\Ticket::class)
+                  <li class=" {{ Request::is('admin/support/ticket*') ? 'active' : '' }}"><a href="{{ url('admin/support/ticket') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.support_tickets') }}</a></li>
+                @endcan
+              @endif
 
               @can('index', App\Dispute::class)
                 <li class=" {{ Request::is('admin/support/dispute*') ? 'active' : '' }}"><a href="{{ url('admin/support/dispute') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.disputes') }}</a></li>

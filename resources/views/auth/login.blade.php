@@ -14,7 +14,7 @@
                 </div>
                 <div class="form-group has-feedback">
                     {!! Form::password('password', ['class' => 'form-control input-lg', 'id' => 'password', 'placeholder' => trans('app.form.password'), 'data-minlength' => '6', 'required']) !!}
-                    <span class="fa fa-lock form-control-feedback"></span>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     <div class="help-block with-errors"></div>
                 </div>
 

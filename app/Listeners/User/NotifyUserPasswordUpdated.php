@@ -2,12 +2,20 @@
 
 namespace App\Listeners\User;
 
-use App\Events\User\PasswordUpdated;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Notifications\User\PasswordUpdated as PasswordUpdateNotification;
 
-class NotifyUserPasswordUpdated
+class NotifyUserPasswordUpdated implements ShouldQueue
 {
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 20;
+
     /**
      * Create the event listener.
      *
@@ -21,11 +29,11 @@ class NotifyUserPasswordUpdated
     /**
      * Handle the event.
      *
-     * @param  PasswordUpdated  $event
+     * @param  PasswordReset  $event
      * @return void
      */
-    public function handle(PasswordUpdated $event)
+    public function handle(PasswordReset $event)
     {
-        //
+        $event->user->notify(new PasswordUpdateNotification($event->user));
     }
 }

@@ -57,6 +57,14 @@ class Refund extends Model
     }
 
     /**
+     * Get the customer for the refund.
+     */
+    public function customer()
+    {
+        return $this->order->customer();
+    }
+
+    /**
      * Set the order_fulfilled.
      */
     public function setOrderFulfilledAttribute($value)

@@ -4,11 +4,13 @@ namespace App;
 
 use App\Common\Imageable;
 use App\Common\Addressable;
+use App\Common\SystemUsers;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class System extends Model
 {
-    use Addressable, Imageable;
+    use SystemUsers, Addressable, Imageable, LogsActivity;
 
     /**
      * The database table used by the model.
@@ -16,6 +18,27 @@ class System extends Model
      * @var string
      */
     protected $table = 'systems';
+
+    /**
+     * The attributes that will be logged on activity logger.
+     *
+     * @var boolean
+     */
+    protected static $logFillable = true;
+
+    /**
+     * The only attributes that has been changed.
+     *
+     * @var boolean
+     */
+    protected static $logOnlyDirty = true;
+
+    /**
+     * The name that will be used when log this model. (optional)
+     *
+     * @var boolean
+     */
+    protected static $logName = 'system';
 
     /**
      * The attributes that are mass assignable.

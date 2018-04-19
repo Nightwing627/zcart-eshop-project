@@ -6,7 +6,6 @@ use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use App\Events\User\UserCreated;
 use App\Events\User\UserUpdated;
-use App\Events\User\UserDeleted;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Repositories\User\UserRepository;
@@ -64,7 +63,7 @@ class UserController extends Controller
     {
         $user = $this->user->store($request);
 
-        event(new UserCreated($user));
+        event(new UserCreated($user, auth()->user()->getName(), $request->get('password')));
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -121,8 +120,6 @@ class UserController extends Controller
     public function trash(Request $request, $id)
     {
         $user = $this->user->trash($id);
-
-        event(new UserDeleted($user));
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }

@@ -2,35 +2,25 @@
 
 namespace App\Events\System;
 
+use App\SystemConfig;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class SystemConfigUpdated
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, SerializesModels;
+
+    public $system;
 
     /**
-     * Create a new event instance.
+     * Create a new job instance.
      *
+     * @param  System  $system
      * @return void
      */
-    public function __construct()
+    public function __construct(SystemConfig $system)
     {
-        //
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
+        $this->system = $system;
     }
 }

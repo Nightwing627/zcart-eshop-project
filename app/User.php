@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Hash;
 use App\Common\Imageable;
 use App\Common\Addressable;
 use Illuminate\Support\Facades\Auth;
@@ -56,6 +57,16 @@ class User extends Authenticatable
      * @var boolean
      */
     protected static $logName = 'user';
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return $this->email;
+    }
 
     /**
      * Route notifications for the Nexmo channel.
@@ -133,6 +144,14 @@ class User extends Authenticatable
         return $this->hasMany(Warehouse::class, 'incharge');
     }
 
+    /**
+     * Get the user messages of the warehouses.
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'user_id');
+    }
+
     public function assignedTickets()
     {
         return $this->hasMany(Ticket::class, 'assigned_to');
@@ -183,7 +202,10 @@ class User extends Authenticatable
      */
     public function setPasswordAttribute($password)
     {
-        $this->attributes['password'] = bcrypt($password);
+        if(Hash::needsRehash($password))
+            $this->attributes['password'] = bcrypt($password);
+        else
+            $this->attributes['password'] = $password;
     }
 
     /**

@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Events\Ticket\TicketCreated;
+use App\Events\Ticket\TicketUpdated;
+use App\Events\Ticket\TicketReplied;
+use App\Events\Ticket\TicketAssigned;
 use App\Repositories\Ticket\TicketRepository;
 use App\Http\Requests\Validations\ReplyTicketRequest;
 use App\Http\Requests\Validations\CreateTicketRequest;
@@ -64,7 +68,9 @@ class TicketController extends Controller
      */
     public function store(CreateTicketRequest $request)
     {
-        $this->ticket->store($request);
+        $ticket = $this->ticket->store($request);
+
+        event(new TicketCreated($ticket));
 
         return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
@@ -104,7 +110,9 @@ class TicketController extends Controller
      */
     public function storeReply(ReplyTicketRequest $request, $id)
     {
-        $this->ticket->storeReply($request, $id);
+        $reply = $this->ticket->storeReply($request, $id);
+
+        event(new TicketReplied($reply));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
@@ -131,7 +139,9 @@ class TicketController extends Controller
      */
     public function assign(Request $request, $id)
     {
-        $this->ticket->assign($request, $id);
+        $ticket = $this->ticket->assign($request, $id);
+
+        event(new TicketAssigned($ticket));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
@@ -158,7 +168,9 @@ class TicketController extends Controller
      */
     public function update(UpdateTicketRequest $request, $id)
     {
-        $this->ticket->update($request, $id);
+        $ticket = $this->ticket->update($request, $id);
+
+        event(new TicketUpdated($ticket));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
@@ -172,7 +184,9 @@ class TicketController extends Controller
      */
     public function reopen(Request $request, $id)
     {
-        $this->ticket->reopen($request, $id);
+        $ticket = $this->ticket->reopen($request, $id);
+
+        event(new TicketUpdated($ticket));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }

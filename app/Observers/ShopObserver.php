@@ -16,9 +16,9 @@ class ShopObserver
      */
     public function created(Shop $shop)
     {
-        $user = User::find($shop->owner_id);
-        $user->shop_id = $shop->id;
-        $user->save();
+        // $user = User::find($shop->owner_id);
+        // $user->shop_id = $shop->id;
+        // $user->save();
 
         // $user->notify(new ShopCreated($shop));
     }

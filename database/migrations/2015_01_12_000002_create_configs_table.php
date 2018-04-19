@@ -13,7 +13,7 @@ class CreateConfigsTable extends Migration
     public function up()
     {
         Schema::create('configs', function (Blueprint $table) {
-            $table->increments('id');
+            // $table->increments('id');
             $table->integer('shop_id')->unsigned()->unique()->index();
 
             // Support
@@ -55,6 +55,7 @@ class CreateConfigsTable extends Migration
             $table->boolean('maintenance_mode')->nullable();
             $table->timestamps();
 
+            $table->primary('shop_id');
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');;
         });
     }

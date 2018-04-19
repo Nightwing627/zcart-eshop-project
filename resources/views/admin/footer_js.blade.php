@@ -19,7 +19,6 @@
 	    initMassActions();
 
 	    // Support for AJAX loaded modal window.
-	    // $('[data-toggle="modal"]').on('click', function(e) {
 	    $('body').on('click', '.ajax-modal-btn', function(e) {
 	      e.preventDefault();
 	      $('.loader').show();
@@ -56,6 +55,17 @@
 	        });
 	      }
 	    });
+
+	    // Mark all Notifications As Read.
+		$('#notifications-dropdown').on('click', function (e) {
+		    var url = "{{ route('admin.notifications.markAllAsRead') }}";
+
+	        $.get(url, function(data) {}).done(function()
+	        {
+	          $('#notifications-dropdown').find('span.label').text('');
+	        });
+	    });
+
 	  })
 	}(window.jQuery, window, document));
 
@@ -199,17 +209,6 @@
 	        }
 	    });
 	  });
-
-	  // $(".confirm").confirmation({
-	  //     title: "{{ trans('app.are_you_sure') }}", // The title of the confirm
-	  //     popout: true,
-	  //     singleton: true,
-	  //     placement: "left", // The placement of the confirm (Top, Right, Bottom, Left)
-	  //     btnOkLabel: "{{ trans('app.im_sure') }}",
-	  //     btnCancelLabel: "{{ trans('app.cancel') }}",
-	  //     btnOkClass: "btn-danger btn-flat btn-xs",
-	  //     btnCancelClass: "btn-new btn-flat btn-xs",
-	  // });
 
 	//Initialize Select2 Elements
 	$(".select2").not(".dataTables_length .select2").select2();
@@ -673,6 +672,40 @@
 	  $('.btn-toggle').on("click", function(e){
 	      e.preventDefault();
 	      var node = $( this );
+
+	      if(node.hasClass('toggle-confirm')){
+	      	return new Promise(function(resolve, reject) {
+	            $.confirm({
+	                title: "{{ trans('app.confirmation') }}",
+	                content: "{{ trans('app.are_you_sure') }}",
+	                type: 'red',
+	                buttons: {
+			            'confirm': {
+			                text: '{{ trans('app.proceed') }}',
+			                keys: ['enter'],
+			                btnClass: 'btn-red',
+			                action: function () {
+				                notie.alert(4, "{{ trans('messages.confirmed') }}", 2);
+							    proceedToggleActionFor(node);
+			                }
+			            },
+			            'cancel': {
+			                text: '{{ trans('app.cancel') }}',
+			                action: function () {
+					            node.toggleClass('active');
+		                    	notie.alert(2, "{{ trans('messages.canceled') }}", 2);
+			                }
+			            },
+	                }
+	            });
+	        });
+	      }
+
+	      proceedToggleActionFor(node);
+
+	  });
+
+	  function proceedToggleActionFor(node){
 	      $.ajax({
 	          url: node.attr('href'),
 	          type: 'POST',
@@ -699,7 +732,7 @@
 	            node.toggleClass('active');
 	          }
 	      });
-	  });
+	  }
 	  // END Toggle button
 
 	  // Ajax Form Submit

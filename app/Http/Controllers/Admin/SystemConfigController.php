@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\SystemConfig;
 use App\PaymentMethod;
 use App\Http\Requests;
-use Illuminate\Http\Request;
 use App\Common\Authorizable;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Events\System\SystemConfigUpdated;
 use App\Http\Requests\Validations\UpdateSystemConfigRequest;
 
 class SystemConfigController extends Controller
@@ -42,8 +43,11 @@ class SystemConfigController extends Controller
 
         $this->authorize('update', $system); // Check permission
 
-        if($system->update($request->all()))
+        if($system->update($request->all())){
+            event(new SystemConfigUpdated($system));
+
             return response("success", 200);
+        }
 
         return response('error', 405);
     }
@@ -57,15 +61,19 @@ class SystemConfigController extends Controller
      */
     public function togglePaymentMethod(UpdateSystemConfigRequest $request, $id)
     {
-        // Check permission
         $system = SystemConfig::orderBy('id', 'asc')->first();
-        $this->authorize('update', $system);
+
+        $this->authorize('update', $system);    // Check permission
 
         $paymentMethod = PaymentMethod::findOrFail($id);
+
         $paymentMethod->enabled = !$paymentMethod->enabled;
 
-        if($paymentMethod->save())
+        if($paymentMethod->save()){
+            event(new SystemConfigUpdated($system));
+
             return response("success", 200);
+        }
 
         return response('error', 405);
     }
@@ -85,8 +93,11 @@ class SystemConfigController extends Controller
 
         $system->$node = !$system->$node;
 
-        if($system->save())
+        if($system->save()){
+            event(new SystemConfigUpdated($system));
+
             return response("success", 200);
+        }
 
         return response('error', 405);
     }

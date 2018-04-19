@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
+use App\Events\Shop\ShopUpdated;
+use App\Events\Shop\ShopDeleted;
 use App\Http\Controllers\Controller;
 use App\Repositories\Shop\ShopRepository;
 use App\Http\Requests\Validations\CreateShopRequest;
@@ -116,7 +118,9 @@ class ShopController extends Controller
      */
     public function update(UpdateShopRequest $request, $id)
     {
-        $this->shop->update($request, $id);
+        $shop = $this->shop->update($request, $id);
+
+        event(new ShopUpdated($shop));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -131,6 +135,8 @@ class ShopController extends Controller
     public function trash(Request $request, $id)
     {
         $this->shop->trash($id);
+
+        event(new ShopDeleted($id));
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }

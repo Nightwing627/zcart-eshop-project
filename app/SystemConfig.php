@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Common\SystemUsers;
 use Illuminate\Database\Eloquent\Model;
 
 class SystemConfig extends Model
 {
+    use SystemUsers;
+
     /**
      * The database table used by the model.
      *

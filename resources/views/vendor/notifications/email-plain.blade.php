@@ -18,5 +18,5 @@ if (! empty($outroLines)) {
     echo implode("\n", $outroLines), "\n\n";
 }
 
-echo 'Regards, ', "\n";
-echo config('app.name'), "\n";
+echo trans('messages.regards'), "\n";
+echo get_platform_title(), "\n";

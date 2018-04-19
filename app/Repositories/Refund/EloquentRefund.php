@@ -44,7 +44,9 @@ class EloquentRefund extends EloquentRepository implements BaseRepository, Refun
         if(! $refund instanceof Refund)
             $refund = $this->getInst($refund);
 
-        return $refund->update(['status' => Refund::STATUS_APPROVED]);
+        $refund->update(['status' => Refund::STATUS_APPROVED]);
+
+        return $refund;
     }
 
     public function decline($refund)
@@ -52,7 +54,9 @@ class EloquentRefund extends EloquentRepository implements BaseRepository, Refun
          if(! $refund instanceof Refund)
             $refund = $this->getInst($refund);
 
-        return $refund->update(['status' => Refund::STATUS_DECLINED]);
+        $refund->update(['status' => Refund::STATUS_DECLINED]);
+
+        return $refund;
     }
 
     private function getInst($refund)

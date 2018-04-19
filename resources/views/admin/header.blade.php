@@ -18,53 +18,52 @@
     <!-- Navbar Right Menu -->
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-
-        @can('index', App\Message::class)
-          @php
-            $count_message = Auth::user()->notifications->count();
-          @endphp
-          <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
-            <!-- Menu toggle button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">{{ $count_message ? $count_message : '' }}</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">{{ trans('messages.message_count', ['count' => $count_message]) }}</li>
-              <li>
-                <!-- inner menu: contains the messages -->
-                <ul class="menu">
-                  @foreach(Auth::user()->notifications as $notification)
-                    <li><!-- start message -->
-                      <a href="{{ route('admin.support.message.show', $message) }}">
-                        <div class="pull-left">
-                          <!-- User Image -->
-                          @if(Auth::user()->image)
-                            <img src="{{ get_storage_file_url(Auth::user()->image->path, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-                          @else
-                            <img src="{{ get_gravatar_url(Auth::user()->email, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-                          @endif
-                        </div>
-                        <!-- Message title and timestamp -->
-                        <h4>
-                          Support Team
-                          <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                        </h4>
-                        <!-- The message -->
-                        <p>Why not buy a new awesome theme?</p>
-                      </a>
-                    </li>
-                  @endforeach
-                  <!-- end message -->
-                </ul>
-                <!-- /.menu -->
-              </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
-            </ul>
-          </li>
-          <!-- /.messages-menu -->
-        @endcan
+        @php
+          $count_message = Auth::user()->messages->count();
+        @endphp
+        <!-- Messages: style can be found in dropdown.less-->
+        <li class="dropdown messages-menu">
+          <!-- Menu toggle button -->
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-envelope-o"></i>
+            <span class="label label-success">{{ $count_message ? $count_message : '' }}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="header">{{ trans('messages.message_count', ['count' => $count_message]) }}</li>
+            <li>
+              <!-- inner menu: contains the messages -->
+              <ul class="menu">
+                @forelse(Auth::user()->messages as $message)
+                  <li><!-- start message -->
+                    <a href="{{ route('admin.support.message.show', $message) }}">
+                      <div class="pull-left">
+                        <!-- User Image -->
+                        @if($message->customer->image)
+                          <img src="{{ get_storage_file_url($message->customer->image->path, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+                        @else
+                          <img src="{{ get_gravatar_url($message->customer->email, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
+                        @endif
+                      </div>
+                      <!-- Message title and timestamp -->
+                      <h4>
+                        {{ $message->subject }}
+                        <small><i class="fa fa-clock-o"></i> {{ $message->created_at->diffForHumans() }}</small>
+                      </h4>
+                      <!-- The message -->
+                      <p>
+                        {{ str_limit($message->message, 100) }}
+                      </p>
+                    </a>
+                  </li>
+                @endforeach
+                <!-- end message -->
+              </ul>
+              <!-- /.menu -->
+            </li>
+            <li class="footer"><a href="{{ url('admin/support/message/labelOf/'. App\Message::LABEL_INBOX) }}">{{ trans('app.go_to_msg_inbox') }}</a></li>
+          </ul>
+        </li>
+        <!-- /.messages-menu -->
 
         @if(Gate::allows('index', App\Ticket::class) || Gate::allows('index', App\Dispute::class) || Gate::allows('index', App\Refund::class))
           <!-- Tasks Menu -->
@@ -109,7 +108,7 @@
         @php
           $count_notification = Auth::user()->unreadNotifications->count();
         @endphp
-        <li class="dropdown notifications-menu">
+        <li class="dropdown notifications-menu" id="notifications-dropdown">
           <!-- Menu toggle button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-bell-o"></i>
@@ -122,14 +121,12 @@
               <ul class="menu">
                 @foreach(Auth::user()->unreadNotifications as $notification)
                 <li>
-                  <a href="#">
-                    <i class="fa fa-users text-aqua"></i> {{ $notification->type }}
-                  </a>
+                  @include('admin.partials.notifications.' . snake_case(class_basename($notification->type)))
                 </li>
                 @endforeach
               </ul>
             </li>
-            <li class="footer"><a href="#">View all</a></li>
+            <li class="footer"><a href="{{ route('admin.notifications') }}">{{ trans('app.view_all_notifications') }}</a></li>
           </ul>
         </li>
 
@@ -176,7 +173,7 @@
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="{{ route('admin.profile.profile') }}" class="btn btn-default btn-flat">{{ trans('app.profile') }}</a>
+                <a href="{{ route('admin.profile.view') }}" class="btn btn-default btn-flat">{{ trans('app.profile') }}</a>
               </div>
               <div class="pull-right">
                 <a href="{{ Request::session()->has('impersonated') ? route('admin.secretLogout') : route('logout') }}" class="btn btn-default btn-flat">{{ trans('app.log_out') }}</a>

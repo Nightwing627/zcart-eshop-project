@@ -59,6 +59,16 @@ class Merchant extends Authenticatable
     protected static $logName = 'merchant';
 
     /**
+     * Route notifications for the mail channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return $this->email;
+    }
+
+    /**
      * Route notifications for the Nexmo channel.
      *
      * @return string

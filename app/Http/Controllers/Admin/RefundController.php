@@ -67,7 +67,7 @@ class RefundController extends Controller
     {
         $refund = $this->refund->store($request);
 
-        event(new RefundInitiated($refund, $request->has('notify_customer')));
+        event(new RefundInitiated($refund, $request->filled('notify_customer')));
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -85,20 +85,20 @@ class RefundController extends Controller
         return view('admin.refund._response', compact('refund'));
     }
 
-    public function approve($id)
+    public function approve(Request $request, $id)
     {
         $refund = $this->refund->approve($id);
 
-        event(new RefundApproved($refund));
+        event(new RefundApproved($refund, $request->filled('notify_customer')));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
-    public function decline($id)
+    public function decline(Request $request, $id)
     {
         $refund = $this->refund->decline($id);
 
-        event(new RefundDeclined($refund));
+        event(new RefundDeclined($refund, $request->filled('notify_customer')));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
