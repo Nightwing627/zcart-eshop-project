@@ -23,7 +23,6 @@ class OrderStatus extends Model
      * @var array
      */
     protected $casts = [
-        'send_email_to_customer' => 'boolean',
         'fulfilled' => 'boolean',
     ];
 
@@ -58,14 +57,6 @@ class OrderStatus extends Model
     }
 
     /**
-     * Get the emailTemplate associated with the order status.
-     */
-    public function emailTemplate()
-    {
-        return $this->belongsTo(EmailTemplate::class, 'email_template_id');
-    }
-
-    /**
      * Set fulfilled as bool.
      *
      * @return array
@@ -73,16 +64,6 @@ class OrderStatus extends Model
     public function setFulfilledAttribute($value)
     {
         $this->attributes['fulfilled'] = (bool) $value;
-    }
-
-    /**
-     * Set email template id null if not selected.
-     *
-     * @return array
-     */
-    public function setEmailTemplateIdAttribute($template_id)
-    {
-        $this->attributes['email_template_id'] = ($template_id == 0) ? Null : $template_id;
     }
 
     /**

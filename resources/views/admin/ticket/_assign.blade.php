@@ -3,7 +3,7 @@
         {!! Form::open(['route' => ['admin.support.ticket.assign', $ticket], 'files' => true, 'id' => 'form', 'class' => 'form-horizontal', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
         	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        	{{ trans('app.reply') }}
+        	{{ trans('app.assign') }}
         </div>
         <div class="modal-body">
             <div class="col-md-12">

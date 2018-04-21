@@ -6,14 +6,15 @@ use DB;
 use Log;
 use Auth;
 use App\User;
+use App\System;
 use App\Events\Shop\ShopCreated;
 use App\Jobs\CreateShopForMerchant;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
-use App\Events\Merchant\MerchantRegistered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Requests\Validations\RegisterMerchantRequest;
+use App\Notifications\SuperAdmin\VerdorRegistered as VerdorRegisteredNotification;
 
 class RegisterController extends Controller
 {
@@ -95,6 +96,12 @@ class RegisterController extends Controller
         // Trigger after registration events
         $this->triggerAfterEvents($merchant);
 
+        // Send notification to Admin
+        if(config('system_settings.notify_when_vendor_registered')){
+            $system = System::orderBy('id', 'asc')->first();
+            $system->superAdmin()->notify(new VerdorRegisteredNotification($merchant));
+        }
+
         return $this->registered($request, $merchant)
                         ?: redirect($this->redirectPath());
     }
@@ -123,9 +130,6 @@ class RegisterController extends Controller
     {
         // Trigger the systems default event
         event(new Registered($merchant));
-
-        // Trigger merchant registered event
-        event(new MerchantRegistered($merchant));
 
         // Trigger shop created event
         event(new ShopCreated($merchant->owns));

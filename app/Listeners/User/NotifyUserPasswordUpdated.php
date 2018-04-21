@@ -14,7 +14,7 @@ class NotifyUserPasswordUpdated implements ShouldQueue
      *
      * @var int
      */
-    public $tries = 20;
+    public $tries = 10;
 
     /**
      * Create the event listener.

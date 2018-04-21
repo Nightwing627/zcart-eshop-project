@@ -14,4 +14,14 @@ class EloquentGiftCard extends EloquentRepository implements BaseRepository, Gif
 	{
 		$this->model = $giftCard;
 	}
+
+	public function valid()
+	{
+		return $this->model->valid()->get();
+	}
+
+	public function invalid()
+	{
+		return $this->model->invalid()->get();
+	}
 }

@@ -33,26 +33,26 @@
 						@foreach($myTickets as $ticket )
 						<tr>
 							<td>
-								<img src="{{ get_storage_file_url(optional($ticket->shop->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}"> &nbsp;
-								<span class="label label-outline">{{ $ticket->shop->name }}</span> <br/>
-								<strong>
-									{{ $ticket->user->name }}
-								</strong>
+								<img src="{{ get_storage_file_url(optional($ticket->shop->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+								<p class="indent10">
+									<strong>
+										{{ $ticket->shop->name }}
+									</strong>
+									 <br/>
+									{{ trans('app.by') . ' ' . $ticket->user->name }}
+								</p>
 							</td>
 							<td>
 								{!! $ticket->statusName() !!}
 								<span class="label label-outline"> {{ $ticket->category->name }} </span> &nbsp;
-								{{ $ticket->subject }}
+
+								<a href="{{ route('admin.support.ticket.show', $ticket->id) }}">{{ $ticket->subject }}</a>
 							</td>
 							<td>{!! $ticket->priorityLevel() !!}</td>
 							<td><span class="label label-default">{{ $ticket->replies_count }}</span></td>
 							<td>{{ ($ticket->assigned_to) ? $ticket->assignedTo->name : '-' }}</td>
 				          	<td>{{ $ticket->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
-								@can('view', $ticket)
-									<a href="{{ route('admin.support.ticket.show', $ticket->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
-								@endcan
-
 								@can('reply', $ticket)
 									<a href="{{ route('admin.support.ticket.reply', $ticket) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
 								@endcan
@@ -99,26 +99,25 @@
 						@foreach($assigned as $ticket )
 						<tr>
 							<td>
-								<img src="{{ get_storage_file_url(optional($ticket->shop->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}"> &nbsp;
-								<span class="label label-outline">{{ $ticket->shop->name }}</span> <br/>
-								<strong>
-									{{ $ticket->user->name }}
-								</strong>
+								<img src="{{ get_storage_file_url(optional($ticket->shop->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+								<p class="indent10">
+									<strong>
+										{{ $ticket->shop->name }}
+									</strong>
+									 <br/>
+									{{ trans('app.by') . ' ' . $ticket->user->name }}
+								</p>
 							</td>
 							<td>
 								{!! $ticket->statusName() !!}
 								<span class="label label-outline"> {{ $ticket->category->name }} </span> &nbsp;
-								{{ $ticket->subject }}
+								<a href="{{ route('admin.support.ticket.show', $ticket->id) }}">{{ $ticket->subject }}</a>
 							</td>
 							<td>{!! $ticket->priorityLevel() !!}</td>
 							<td><span class="label label-default">{{ $ticket->replies_count }}</span></td>
 							<td>{{ ($ticket->assigned_to) ? $ticket->assignedTo->name : '-' }}</td>
 				          	<td>{{ $ticket->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
-								@can('view', $ticket)
-									<a href="{{ route('admin.support.ticket.show', $ticket->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
-								@endcan
-
 								@can('reply', $ticket)
 									<a href="{{ route('admin.support.ticket.reply', $ticket) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
 								@endcan
@@ -164,26 +163,25 @@
 					@foreach($tickets as $ticket )
 					<tr>
 						<td>
-							<img src="{{ get_storage_file_url(optional($ticket->shop->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}"> &nbsp;
-							<span class="label label-outline">{{ $ticket->shop->name }}</span> <br/>
-							<strong>
-								{{ $ticket->user->name }}
-							</strong>
+							<img src="{{ get_storage_file_url(optional($ticket->shop->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+							<p class="indent10">
+								<strong>
+									{{ $ticket->shop->name }}
+								</strong>
+								 <br/>
+								{{ trans('app.by') . ' ' . $ticket->user->name }}
+							</p>
 						</td>
 						<td>
 							{!! $ticket->statusName() !!}
 							<span class="label label-outline"> {{ $ticket->category->name }} </span> &nbsp;
-							{{ $ticket->subject }}
+							<a href="{{ route('admin.support.ticket.show', $ticket->id) }}">{{ $ticket->subject }}</a>
 						</td>
 						<td>{!! $ticket->priorityLevel() !!}</td>
 						<td><span class="label label-default">{{ $ticket->replies_count }}</span></td>
 						<td>{{ ($ticket->assigned_to) ? $ticket->assignedTo->name : '-' }}</td>
 			          	<td>{{ $ticket->updated_at->diffForHumans() }}</td>
 						<td class="row-options">
-							@can('view', $ticket)
-								<a href="{{ route('admin.support.ticket.show', $ticket->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
-							@endcan
-
 							@can('reply', $ticket)
 								<a href="{{ route('admin.support.ticket.reply', $ticket) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
 							@endcan
@@ -226,20 +224,22 @@
 				<tbody>
 					@foreach($closed as $ticket )
 					<tr>
-						<td>{{ $ticket->shop->name }}</td>
+						<td>
+							<strong>
+								{{ $ticket->shop->name }}
+							</strong>
+							 <br/>
+							{{ trans('app.by') . ' ' . $ticket->user->name }}
+						</td>
 						<td>
 							{!! $ticket->statusName() !!}
 							<span class="label label-outline"> {{ $ticket->category->name }} </span> &nbsp;
-							{{ $ticket->subject }}
+							<a href="{{ route('admin.support.ticket.show', $ticket->id) }}">{{ $ticket->subject }}</a>
 						</td>
 						<td>{!! $ticket->priorityLevel() !!}</td>
 						<td>{{ ($ticket->assigned_to) ? $ticket->assignedTo->name : '-' }}</td>
 			          	<td>{{ $ticket->updated_at->diffForHumans() }}</td>
 						<td class="row-options">
-							@can('view', $ticket)
-								<a href="{{ route('admin.support.ticket.show', $ticket->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
-							@endcan
-
 							@can('update', $ticket)
 			                    {!! Form::open(['route' => ['admin.support.ticket.reopen', $ticket->id], 'method' => 'POST', 'class' => 'data-form']) !!}
 			                        {!! Form::button('<i class="glyphicon glyphicon-refresh"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.reopen'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}

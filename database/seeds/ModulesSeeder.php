@@ -26,7 +26,7 @@ class ModulesSeeder extends Seeder
         ],
 
         'Carrier' => [
-            'access' => 'Common',
+            'access' => 'Merchant',
             'actions' => 'view,add,edit,delete'
         ],
 

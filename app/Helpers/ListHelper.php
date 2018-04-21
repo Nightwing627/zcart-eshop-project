@@ -83,14 +83,18 @@ class ListHelper
      */
     public static function dispute_statuses()
     {
-        return  [
+        $statuses =  [
             Dispute::STATUS_NEW      => trans("app.statuses.new"),
             Dispute::STATUS_OPEN     => trans("app.statuses.open"),
             Dispute::STATUS_WAITING  => trans("app.statuses.waiting"),
-            Dispute::STATUS_APPEALED => trans("app.statuses.appealed"),
             Dispute::STATUS_SOLVED   => trans("app.statuses.solved"),
             Dispute::STATUS_CLOSED   => trans("app.statuses.closed"),
         ];
+
+        if(auth()->user()->isFromPlatform())
+            $statuses[Dispute::STATUS_APPEALED] = trans("app.statuses.appealed");
+
+        return $statuses;
     }
 
     /**

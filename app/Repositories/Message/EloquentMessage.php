@@ -20,12 +20,12 @@ class EloquentMessage extends EloquentRepository implements BaseRepository, Mess
 
     public function labelOf($label)
     {
-        return $this->model->mine()->labelOf($label)->with('customer')->withCount('replies')->paginate(getPaginationValue());
+        return $this->model->mine()->labelOf($label)->with('customer')->withCount('replies')->orderBy('updated_at', 'desc')->paginate(getPaginationValue());
     }
 
     public function statusOf($status)
     {
-        return $this->model->mine()->statusOf($status)->with('customer')->withCount('replies')->paginate(getPaginationValue());
+        return $this->model->mine()->statusOf($status)->with('customer')->withCount('replies')->orderBy('updated_at', 'desc')->paginate(getPaginationValue());
     }
 
     public function updateStatusOrLabel(Request $request, $message, $statusOrLabel, $type)

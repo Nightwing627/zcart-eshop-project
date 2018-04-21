@@ -78,6 +78,10 @@ return [
 
     'alert' => 'Alert!',
 
+    'dispute_appealed' => 'A dispute appealed',
+
+    'appealed_dispute_replied' => 'New reply for appealed dispute',
+
     'thanks' => 'Thanks',
 
     'regards' => 'Regards , ',
@@ -94,9 +98,29 @@ return [
 
     'shop_name' => 'Shop name',
 
+    'customer_name' => 'Customer name',
+
+    'shipping_address' => 'Shipping address',
+
+    'billing_address' => 'Billing address',
+
+    'shipping_carrier' => 'Shipping carrier',
+
+    'tracking_id' => 'Tracking ID',
+
     'order_id' => 'Order ID',
 
+    'payment_method' => 'Payment method',
+
+    'payment_status' => 'Payment status',
+
+    'order_status' => 'Order status',
+
     'status' => 'Status',
+
+    'unread_notification' => 'Unread notification',
+
+    'profile_updated' => 'Profile updated',
 
     'system_is_live' => 'Marketplace is back to LIVE!',
 

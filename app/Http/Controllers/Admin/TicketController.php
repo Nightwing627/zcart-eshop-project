@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\System;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
@@ -13,6 +14,7 @@ use App\Repositories\Ticket\TicketRepository;
 use App\Http\Requests\Validations\ReplyTicketRequest;
 use App\Http\Requests\Validations\CreateTicketRequest;
 use App\Http\Requests\Validations\UpdateTicketRequest;
+use App\Notifications\SuperAdmin\TicketCreated as TicketCreatedNotification;
 
 class TicketController extends Controller
 {
@@ -69,6 +71,13 @@ class TicketController extends Controller
     public function store(CreateTicketRequest $request)
     {
         $ticket = $this->ticket->store($request);
+
+        // Send notification to Admin
+        if(config('system_settings.notify_new_ticket')){
+            $system = System::orderBy('id', 'asc')->first();
+
+            $system->superAdmin()->notify(new TicketCreatedNotification($ticket));
+        }
 
         event(new TicketCreated($ticket));
 

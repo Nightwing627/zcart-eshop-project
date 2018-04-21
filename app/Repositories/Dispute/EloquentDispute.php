@@ -51,9 +51,10 @@ class EloquentDispute extends EloquentRepository implements BaseRepository, Disp
         }])->find($id);
     }
 
-    public function storeResponse(Request $request, $id)
+    public function storeResponse(Request $request, $dispute)
     {
-        $dispute = $this->model->find($id);
+        if(! $dispute instanceof Dispute)
+            $dispute = $this->model->find($dispute);
 
         $dispute->update($request->all());
 

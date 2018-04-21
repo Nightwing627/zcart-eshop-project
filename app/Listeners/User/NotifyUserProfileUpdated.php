@@ -4,8 +4,8 @@ namespace App\Listeners\User;
 
 use App\Events\User\UserUpdated;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Notifications\User\ProfileUpdated;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Notifications\User\ProfileUpdated as ProfileUpdatedNotification;
 
 class NotifyUserProfileUpdated implements ShouldQueue
 {
@@ -34,6 +34,6 @@ class NotifyUserProfileUpdated implements ShouldQueue
      */
     public function handle(UserUpdated $event)
     {
-        $event->user->notify(new ProfileUpdated($event->user));
+        $event->user->notify(new ProfileUpdatedNotification($event->user));
     }
 }

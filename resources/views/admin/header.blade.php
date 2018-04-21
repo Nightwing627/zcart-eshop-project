@@ -121,7 +121,11 @@
               <ul class="menu">
                 @foreach(Auth::user()->unreadNotifications as $notification)
                 <li>
-                  @include('admin.partials.notifications.' . snake_case(class_basename($notification->type)))
+                  @php
+                    $notification_view = 'admin.partials.notifications.' . snake_case(class_basename($notification->type));
+                  @endphp
+
+                  @includeFirst([$notification_view, 'admin.partials.notifications.default'])
                 </li>
                 @endforeach
               </ul>

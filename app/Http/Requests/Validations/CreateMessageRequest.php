@@ -28,7 +28,7 @@ class CreateMessageRequest extends Request
     {
         Request::merge([
             'shop_id' => Auth::user()->merchantId(),
-            'user_id' => Auth::id(),
+            'user_id' => Auth::user()->id,
             'label' => (Request::has('draft')) ? Message::LABEL_DRAFT : Message::LABEL_SENT,
         ]); //Set shop_id
 

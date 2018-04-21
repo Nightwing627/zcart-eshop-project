@@ -27,6 +27,14 @@
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     <div class="help-block with-errors"></div>
                 </div>
+                @if(config('system_settings.ask_customer_for_email_subscription'))
+                    <div class="form-group">
+                        <label>
+                            {!! Form::checkbox('subscribe', null, null, ['class' => 'icheck']) !!} {!! trans('app.form.subscribe') !!}
+                        </label>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-xs-7">
                         <div class="form-group">

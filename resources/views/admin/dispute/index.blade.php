@@ -29,27 +29,22 @@
 					            @else
 				            		<img src="{{ get_gravatar_url($dispute->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 					            @endif
-					             &nbsp;
-								<strong>
-									{{ $dispute->customer->name }}
-								</strong>
-	    						@if (Auth::user()->isFromPlatform())
-									 <br><span>{{ $dispute->shop->name }}</span>
-								@endif
+					            <p class="indent10">
+									<strong>{{ $dispute->customer->name }}</strong>
+		    						@if (Auth::user()->isFromPlatform())
+										 <br/><span>{{ trans('app.vendor') . ': ' . $dispute->shop->name }}</span>
+									@endif
+					            </p>
 							</td>
 							<td>
 	    						@if (!Auth::user()->isFromPlatform())
 									{!! $dispute->statusName() !!}
 								@endif
-								{{ $dispute->dispute_type->detail }}
+								<a href="{{ route('admin.support.dispute.show', $dispute->id) }}">{{ $dispute->dispute_type->detail }}</a>
 							</td>
 							<td><span class="label label-default">{{ $dispute->replies_count }}</span></td>
 				          	<td>{{ $dispute->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
-								@can('view', $dispute)
-									<a href="{{ route('admin.support.dispute.show', $dispute->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
-								@endcan
-
 								@can('response', $dispute)
 									<a href="{{ route('admin.support.dispute.response', $dispute) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-reply"></i></a>&nbsp;
 								@endcan

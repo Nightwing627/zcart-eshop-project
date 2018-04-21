@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Listeners\Merchant;
+namespace App\Listeners\Inventory;
 
-use App\Events\Merchant\MerchantRegistered;
+use App\Events\Inventory\StockOut;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendWelcomeEmail
+class NotifyMerchantStockOut
 {
     /**
      * Create the event listener.
@@ -21,10 +21,10 @@ class SendWelcomeEmail
     /**
      * Handle the event.
      *
-     * @param  MerchantRegistered  $event
+     * @param  StockOut  $event
      * @return void
      */
-    public function handle(MerchantRegistered $event)
+    public function handle(StockOut $event)
     {
         //
     }

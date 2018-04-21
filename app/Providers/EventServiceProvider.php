@@ -37,35 +37,56 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         // Dispute Events
-        // 'App\Events\Dispute\DisputeCreated' => [
-        // ],
-        // 'App\Events\Dispute\DisputeUpdated' => [
-        // ],
-        // 'App\Events\Dispute\DisputeSolved' => [
-        // ],
+        'App\Events\Dispute\DisputeCreated' => [
+            'App\Listeners\Dispute\SendAcknowledgementNotification',
+            'App\Listeners\Dispute\NotifyMerchantDisputeCreated',
+        ],
+        'App\Events\Dispute\DisputeUpdated' => [
+            'App\Listeners\Dispute\NotifyCustomerDisputeUpdated',
+        ],
 
         // Inventory Events
-        // 'App\Events\Inventory\InventoryLow' => [
-        // ],
-
-        // Merchant Events
-        'App\Events\Merchant\MerchantRegistered' => [
-            'App\Listeners\Merchant\SendWelcomeEmail',
+        // Neet to complete
+        'App\Events\Inventory\InventoryLow' => [
+            'App\Listeners\Inventory\NotifyMerchantInventoryLow',
+        ],
+        // Neet to complete
+        'App\Events\Inventory\StockOut' => [
+            'App\Listeners\Inventory\NotifyMerchantStockOut',
         ],
 
         // Message Events
-        // 'App\Events\Message\NewMessage' => [
-        // ],
-        // 'App\Events\Message\MessageReplied' => [
-        // ],
+        'App\Events\Message\NewMessage' => [
+            'App\Listeners\Message\SendNewMessageNotificationToReceiver',
+        ],
+        'App\Events\Message\MessageReplied' => [
+            'App\Listeners\Message\NotifyAssociatedUsersMessagetReplied',
+        ],
 
         // Order Events
         'App\Events\Order\OrderCreated' => [
-            // 'App\Listeners\Order\ChargeCustomer',
-            // 'App\Listeners\Order\NotifyCustomerOrderCreated',
+            'App\Listeners\Order\NotifyCustomerOrderPlaced',
+            'App\Listeners\Order\NotifyMerchantNewOrderPlaced',
         ],
         'App\Events\Order\OrderUpdated' => [
-            // 'App\Listeners\Order\NotifyCustomerOrderUpdated',
+            'App\Listeners\Order\NotifyCustomerOrderUpdated',
+        ],
+        'App\Events\Order\OrderFulfilled' => [
+            'App\Listeners\Order\OrderBeenFulfilled',
+        ],
+        'App\Events\Order\OrderPaid' => [
+            'App\Listeners\Order\OrderBeenPaid',
+        ],
+        'App\Events\Order\OrderPaymentFailed' => [
+            'App\Listeners\Order\NotifyCustomerPaymentFailed',
+        ],
+
+        // Profile Events
+        'App\Events\Profile\ProfileUpdated' => [
+            'App\Listeners\Profile\NotifyUserProfileUpdated',
+        ],
+        'App\Events\Profile\PasswordUpdated' => [
+            'App\Listeners\Profile\NotifyUserPasswordUpdated',
         ],
 
         // Refund Events
@@ -116,7 +137,6 @@ class EventServiceProvider extends ServiceProvider
         // Ticket Events
         'App\Events\Ticket\TicketCreated' => [
             'App\Listeners\Ticket\SendAcknowledgementNotification',
-            'App\Listeners\Ticket\NotifyPlatformTicketCreated',
         ],
         'App\Events\Ticket\TicketAssigned' => [
             'App\Listeners\Ticket\NotifyUserTicketAssigned',
@@ -138,7 +158,6 @@ class EventServiceProvider extends ServiceProvider
         'Illuminate\Auth\Events\PasswordReset' => [
             'App\Listeners\User\NotifyUserPasswordUpdated',
         ],
-
 
     ];
 

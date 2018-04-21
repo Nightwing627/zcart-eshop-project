@@ -73,7 +73,7 @@ class CreateSystemsTable extends Migration
 
             // Notification Settings
             $table->boolean('notify_when_vendor_registered')->nullable()->default(true);;
-            $table->boolean('notify_when_disput_appealed')->nullable()->default(true);
+            $table->boolean('notify_when_dispute_appealed')->nullable()->default(true);
             $table->boolean('notify_new_message')->nullable();
             $table->boolean('notify_new_ticket')->nullable()->default(true);
 

@@ -1,27 +1,27 @@
 <?php
 
-namespace App\Notifications\Ticket;
+namespace App\Notifications\Order;
 
-use App\Ticket;
+use App\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class TicketCreated extends Notification
+class OrderUpdated extends Notification
 {
     use Queueable;
 
-    public $ticket;
+    public $order;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Ticket $ticket)
+    public function __construct(Order $order)
     {
-        $this->ticket = $ticket;
+        $this->order = $order;
     }
 
     /**
@@ -44,8 +44,9 @@ class TicketCreated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.ticket_created.subject', ['ticket_id' => $this->ticket->id, 'subject' => $this->ticket->subject]) )
-                    ->markdown('admin.mail.ticket.created', ['url' => route('admin.support.ticket.show', $this->ticket->id), 'ticket' => $this->ticket]);
+                    ->from(get_sender_email($this->order->shop_id), get_sender_name($this->order->shop_id))
+                    ->subject( trans('notifications.order_updated.subject', ['order' => $this->order->order_number]) )
+                    ->markdown('admin.mail.order.updated', ['url' => url('/'), 'order' => $this->order]);
     }
 
     /**
@@ -57,9 +58,8 @@ class TicketCreated extends Notification
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->ticket->id,
-            'category' => $this->ticket->category->name,
-            'subject' => $this->ticket->subject,
+            'order' => $this->order->order_number,
+            'status' => $this->order->status->name,
         ];
     }
 }

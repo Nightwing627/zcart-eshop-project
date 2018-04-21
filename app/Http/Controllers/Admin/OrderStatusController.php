@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Common\Authorizable;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Repositories\OrderStatus\OrderStatusRepository;
 use App\Http\Requests\Validations\CreateOrderStatusRequest;

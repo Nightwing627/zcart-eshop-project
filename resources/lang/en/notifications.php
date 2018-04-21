@@ -25,28 +25,6 @@ return [
         ],
     ],
 
-    // User Notifications
-    'user_created' => [
-        'subject' => ':admin added you to the :marketplace marketplace!',
-        'greeting' => 'Congratulation :user!',
-        'message' => 'You have been added to the :marketplace by :admin! Click the button below to login into your account. Use the temporary password for initial login.',
-        'alert' => 'Don\'t forgot to change your password after login.',
-        'action' => [
-            'text' => 'Visit your profile',
-            'color' => 'green',
-        ],
-    ],
-    'user_updated' => [
-        'subject' => 'Account information updated successfully!',
-        'greeting' => 'Hello :user!',
-        'message' => 'This is a notification to let you know that your account has been updated successfully!',
-        'action' => [
-            'text' => 'Visit your profile',
-            'color' => 'blue',
-        ],
-    ],
-
-
     // Customer Notifications
     'customer_registered' => [
         'subject' => 'Welcome to the :marketplace marketplace!',
@@ -64,6 +42,139 @@ return [
         'message' => 'You are receiving this email because we received a password reset request for your account. If you did not request a password reset, Just ignore this notification and no further action is required.',
         'action' => [
             'text' => 'Reset Password',
+        ],
+    ],
+
+    // Dispute Notifications
+    'dispute_acknowledgement' => [
+        'subject' => '[Order ID: :order_id] Dispute has been submitted successfully',
+        'greeting' => 'Hello :customer',
+        'message' => 'This is a notification to let you know that we have received your dispute  for the Order ID: :order_id, Our support team will get back to you as soon as possible.',
+        'action' => [
+            'text' => 'View the dispute',
+            'color' => 'blue',
+        ],
+    ],
+
+    'dispute_created' => [
+        'subject' => 'New dispute for Order ID: :order_id',
+        'greeting' => 'Hello :merchant!',
+        'message' => 'You have received a new dispute for Order ID: :order_id. Please review and resolve the issue with the customer.',
+        'action' => [
+            'text' => 'View the dispute',
+            'color' => 'green',
+        ],
+    ],
+
+    'dispute_updated' => [
+        'subject' => '[Order ID: :order_id] Dispute status has been updated!',
+        'greeting' => 'Hello :customer!',
+        'message' => 'A dispute for the Order ID :order_id has been updated with this message from the vendor ":reply". Please check below and contact us if you need any assistance.',
+        'action' => [
+            'text' => 'View the dispute',
+            'color' => 'blue',
+        ],
+    ],
+
+    'dispute_appealed' => [
+        'subject' => '[Order ID: :order_id] Dispute appealed!',
+        'greeting' => 'Hello!',
+        'message' => 'A dispute for the Order ID :order_id has been appealed with this message ":reply". Please check below for detail.',
+        'action' => [
+            'text' => 'View the dispute',
+            'color' => 'blue',
+        ],
+    ],
+
+    'appealed_dispute_replied' => [
+        'subject' => '[Order ID: :order_id] New respons for appealed dispute!',
+        'greeting' => 'Hello!',
+        'message' => 'A dispute for the Order ID :order_id has been responded with this message: </br></br> ":reply"',
+        'action' => [
+            'text' => 'View the dispute',
+            'color' => 'blue',
+        ],
+    ],
+
+    // Message Notifications
+    'new_message' => [
+        'subject' => ':subject',
+        'greeting' => 'Hello :receiver',
+        'message' => ':message',
+        'action' => [
+            'text' => 'View the message on site',
+            'color' => 'blue',
+        ],
+    ],
+
+    'message_replied' => [
+        'subject' => ':user replied :subject',
+        'greeting' => 'Hello :receiver',
+        'message' => ':reply',
+        'action' => [
+            'text' => 'View the message on site',
+            'color' => 'blue',
+        ],
+    ],
+
+    // Order Notifications
+    'order_created' => [
+        'subject' => '[Order ID: :order] your order has been placed successfully!',
+        'greeting' => 'Hello :customer',
+        'message' => 'Thank you for choosing us! Your order [Order ID :order] has been placed successfully. We\'ll let you know the status of the order.',
+        'action' => [
+            'text' => 'Visit the shop',
+            'color' => 'blue',
+        ],
+    ],
+
+    'merchant_order_created_notification' => [
+        'subject' => 'New order [Order ID: :order] has been placed on your shop!',
+        'greeting' => 'Hello :merchant',
+        'message' => 'A new order [Order ID :order] has been placed. Please check the order detail and fulfill the order asap.',
+        'action' => [
+            'text' => 'Fulfill the order',
+            'color' => 'blue',
+        ],
+    ],
+
+    'order_updated' => [
+        'subject' => '[Order ID: :order] your order status has been updated!',
+        'greeting' => 'Hello :customer',
+        'message' => 'This is a notification to let you know that your order [Order ID :order] has been updated. Please see below for order detail. You can also check your orders from your dashboard.',
+        'action' => [
+            'text' => 'Visit the shop',
+            'color' => 'blue',
+        ],
+    ],
+
+    'order_fulfilled' => [
+        'subject' => '[Order ID: :order] Your order on it\'s way!',
+        'greeting' => 'Hello :customer',
+        'message' => 'This is a notification to let you know that your order [Order ID :order] has been shipped and it\'s on your way. Please see below for order detail. You can also check your orders from your dashboard.',
+        'action' => [
+            'text' => 'Visit the shop',
+            'color' => 'green',
+        ],
+    ],
+
+    'order_paid' => [
+        'subject' => '[Order ID: :order] Your order been paid successfully!',
+        'greeting' => 'Hello :customer',
+        'message' => 'This is a notification to let you know that your order [Order ID :order] has been paid successfully and it\'s on your way. Please see below for order detail. You can also check your orders from your dashboard.',
+        'action' => [
+            'text' => 'Visit the shop',
+            'color' => 'green',
+        ],
+    ],
+
+    'order_payment_failed' => [
+        'subject' => '[Order ID: :order] payment failed!',
+        'greeting' => 'Hello :customer',
+        'message' => 'This is a notification to let you know that your order [Order ID :order] payment has been failed. Please see below for order detail. You can also check your orders from your dashboard.',
+        'action' => [
+            'text' => 'Visit the shop',
+            'color' => 'red',
         ],
     ],
 
@@ -235,5 +346,36 @@ return [
         ],
     ],
 
+    // User Notifications
+    'user_created' => [
+        'subject' => ':admin added you to the :marketplace marketplace!',
+        'greeting' => 'Congratulation :user!',
+        'message' => 'You have been added to the :marketplace by :admin! Click the button below to login into your account. Use the temporary password for initial login.',
+        'alert' => 'Don\'t forgot to change your password after login.',
+        'action' => [
+            'text' => 'Visit your profile',
+            'color' => 'green',
+        ],
+    ],
+    'user_updated' => [
+        'subject' => 'Account information updated successfully!',
+        'greeting' => 'Hello :user!',
+        'message' => 'This is a notification to let you know that your account has been updated successfully!',
+        'action' => [
+            'text' => 'Visit your profile',
+            'color' => 'blue',
+        ],
+    ],
+
+    // Vendor Notifications
+    'verdor_registered' => [
+        'subject' => 'New vendor just registered!',
+        'greeting' => 'Congratulation!',
+        'message' => 'Your marketplace :marketplace just got a new verdor with shop name <strong>:shop_name</strong> and the merchant\'s email address is :merchant_email',
+        'action' => [
+            'text' => 'Go to the Dashboard',
+            'color' => 'green',
+        ],
+    ],
 
 ];

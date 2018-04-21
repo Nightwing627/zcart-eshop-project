@@ -23,8 +23,6 @@
 						<th>{{ trans('app.color') }}</th>
 						<th>{{ trans('app.appearance') }}</th>
 						<th>{{ trans('app.fulfilled') }}</th>
-						<th>{{ trans('app.send_email_to_customer') }}</th>
-						<th>{{ trans('app.email_template') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
@@ -41,10 +39,6 @@
 						<td class='text-center'>
 							<i class="fa fa-{{ $status->fulfilled ? 'check' : '-'}}"></i>
 						</td>
-						<td class='text-center'>
-							<i class="fa fa-{{ $status->send_email_to_customer ? 'check' : '-'}}"></i>
-						</td>
-						<td>{{ ($status->email_template_id) ? $status->emailTemplate->name : '' }}</td>
 						<td class="row-options">
 							@can('update', $status)
 								<a href="{{ route('admin.utility.orderStatus.edit', $status->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
@@ -82,8 +76,6 @@
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.color') }}</th>
 						<th>{{ trans('app.appearance') }}</th>
-						<th>{{ trans('app.send_email_to_customer') }}</th>
-						<th>{{ trans('app.email_template') }}</th>
 						<th>{{ trans('app.deleted_at') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -98,8 +90,6 @@
 								{{ $trash->name }}
 							</span>
 						</td>
-						<td>{{ ($trash->send_email_to_customer == 1) ? trans('app.yes') : trans('app.no') }}</td>
-						<td>{{ ($trash->email_template_id) ? $trash->emailTemplate->name : '' }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('delete', $trash)

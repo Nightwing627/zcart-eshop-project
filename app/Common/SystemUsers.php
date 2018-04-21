@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Traits;
+namespace App\Common;
 
 use App\User;
 use App\Role;

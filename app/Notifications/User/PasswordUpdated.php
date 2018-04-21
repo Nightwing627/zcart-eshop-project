@@ -45,7 +45,7 @@ class PasswordUpdated extends Notification
     {
         return (new MailMessage)
                     ->subject( trans('notifications.password_updated.subject', ['marketplace' => get_platform_title()]) )
-                    ->markdown('admin.mail.auth.password_updated', ['url' => route('login'), 'user' => $this->user->getName()]);
+                    ->markdown('admin.mail.auth.password_updated', ['url' => route('admin.profile.view'), 'user' => $this->user->getName()]);
     }
 
     /**

@@ -114,6 +114,16 @@ class GiftCard extends Model
     }
 
     /**
+     * Scope a query to only include Invalid records.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeInvalid($query)
+    {
+        return $query->where('activation_time', '>', Carbon::now())->orWhere('expiry_time', '<=', Carbon::now());
+    }
+
+    /**
      * Scope a query to only include active records.
      *
      * @return \Illuminate\Database\Eloquent\Builder

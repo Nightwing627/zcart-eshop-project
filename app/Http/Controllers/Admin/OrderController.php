@@ -1,10 +1,15 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+namespace App\Http\Controllers\Admin;
 
+use App\Order;
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
+use App\Events\Order\OrderPaid;
 use App\Events\Order\OrderCreated;
 use App\Events\Order\OrderUpdated;
+use App\Events\Order\OrderFulfilled;
 use App\Http\Controllers\Controller;
+// use App\Events\Order\OrderPaymentFailed;
 use App\Repositories\Order\OrderRepository;
 use App\Http\Requests\Validations\CreateOrderRequest;
 use App\Http\Requests\Validations\FulfillOrderRequest;
@@ -145,7 +150,7 @@ class OrderController extends Controller
 
         $this->order->fulfill($request, $order);
 
-        event(new OrderUpdated($order, $request->has('notify_customer')));
+        event(new OrderFulfilled($order, $request->filled('notify_customer')));
 
         if(config('shop_settings.auto_archive_order') && $order->isPaid()){
             $this->order->trash($id);
@@ -171,8 +176,7 @@ class OrderController extends Controller
 
         $this->order->updateOrderStatus($request, $order);
 
-        if($request->has('notify_customer'))
-            event(new OrderUpdated($order));
+        event(new OrderUpdated($order, $request->filled('notify_customer')));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
@@ -220,7 +224,10 @@ class OrderController extends Controller
 
         $this->order->togglePaymentStatus($order);
 
-        event(new OrderUpdated($order));
+        if($order->payment_status == Order::PAYMENT_STATUS_PAID)
+            event(new OrderPaid($order));
+        else
+            event(new OrderUpdated($order));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }

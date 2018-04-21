@@ -8,9 +8,13 @@
         <div class="modal-body">
 
             <div class="form-group">
-              {!! Form::label('status', trans('app.form.status').'*') !!}
-              {!! Form::select('status', $statuses , Null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), 'required']) !!}
-              <div class="help-block with-errors"></div>
+                {!! Form::label('status', trans('app.form.status').'*') !!}
+                @if( !Auth::user()->isFromPlatform() && ($dispute->status == \App\Dispute::STATUS_APPEALED))
+                    {!! $dispute->statusName() !!}
+                @else
+                    {!! Form::select('status', $statuses , Null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), 'required']) !!}
+                    <div class="help-block with-errors"></div>
+                @endif
             </div>
 
             @include('admin.partials._reply')

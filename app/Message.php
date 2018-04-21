@@ -66,6 +66,14 @@ class Message extends Model
     }
 
     /**
+     * Get the user associated with the model.
+    */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Get the customer associated with the model.
     */
     public function customer()

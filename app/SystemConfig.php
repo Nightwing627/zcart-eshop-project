@@ -55,7 +55,7 @@ class SystemConfig extends Model
                         'auto_approve_order',
                         'ask_customer_for_email_subscription',
                         'notify_when_vendor_registered',
-                        'notify_when_disput_appealed',
+                        'notify_when_dispute_appealed',
                         'notify_new_message',
                         'notify_new_ticket',
                     ];
@@ -70,7 +70,7 @@ class SystemConfig extends Model
                 'auto_approve_order' => 'boolean',
                 'ask_customer_for_email_subscription' => 'boolean',
                 'notify_when_vendor_registered' => 'boolean',
-                'notify_when_disput_appealed' => 'boolean',
+                'notify_when_dispute_appealed' => 'boolean',
                 'notify_new_message' => 'boolean',
                 'notify_new_ticket' => 'boolean',
                 'show_currency_symbol' => 'boolean',

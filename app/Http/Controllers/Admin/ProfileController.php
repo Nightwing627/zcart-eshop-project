@@ -59,7 +59,7 @@ class ProfileController extends Controller
     {
         $profile = $this->profile->updateProfile($request);
 
-        event(new ProfileUpdated($profile));
+        event(new ProfileUpdated(Auth::user()));
 
         return redirect()->back()->with('success', trans('messages.profile_updated'));
     }
@@ -77,7 +77,7 @@ class ProfileController extends Controller
 
         $profile = $this->profile->updatePassword($request);
 
-        event(new PasswordUpdated($profile));
+        event(new PasswordUpdated(Auth::user()));
 
         return redirect()->back()->with('success', trans('messages.password_updated'));
     }

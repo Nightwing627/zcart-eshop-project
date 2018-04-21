@@ -14,11 +14,8 @@ class CreateOrderTable extends Migration
     {
         Schema::create('order_statuses', function (Blueprint $table) {
             $table->increments('id');
-            // $table->integer('shop_id')->unsigned()->nullable();
             $table->string('name')->nullable();
             $table->string('label_color')->nullable();
-            $table->boolean('send_email_to_customer')->default(0);
-            $table->integer('email_template_id')->unsigned()->nullable();
             $table->boolean('fulfilled')->nullable();
             $table->softDeletes();
             $table->timestamps();

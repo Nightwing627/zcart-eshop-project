@@ -20,7 +20,13 @@
 		      <div class="panel list-group">
                 @forelse(Auth::user()->notifications as $notification)
 	                <div class="list-group-item">
-	                  @include('admin.partials.notifications.' . snake_case(class_basename($notification->type)))
+	                  @php
+	                    $notification_view = 'admin.partials.notifications.' . snake_case(class_basename($notification->type));
+	                  @endphp
+
+	                  @include($notification_view)
+	                  {{-- @includeFirst([$notification_view, 'admin.partials.notifications.default']) --}}
+
 	                  <span class="pull-right text-muted">{{ $notification->created_at->diffForHumans() }}
 							{!! Form::open(['route' => ['admin.notifications.delete', $notification->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 								{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent indent20', 'title' => trans('app.delete'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}

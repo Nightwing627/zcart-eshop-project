@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\System;
+use App\Dispute;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Events\Dispute\DisputeCreated;
+use App\Events\Dispute\DisputeUpdated;
 use App\Repositories\Dispute\DisputeRepository;
-use App\Http\Requests\Validations\ResponseDisputeRequest;
 use App\Http\Requests\Validations\CreateDisputeRequest;
+use App\Http\Requests\Validations\ResponseDisputeRequest;
+use App\Notifications\SuperAdmin\DisputeAppealed as DisputeAppealedNotification;
+use App\Notifications\SuperAdmin\AppealedDisputeReplied as AppealedDisputeRepliedNotification;
 
 class DisputeController extends Controller
 {
@@ -57,7 +63,9 @@ class DisputeController extends Controller
      */
     public function store(CreateDisputeRequest $request)
     {
-        $this->dispute->store($request);
+        $dispute = $this->dispute->store($request);
+
+        event(new DisputeCreated($dispute));
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -97,7 +105,25 @@ class DisputeController extends Controller
      */
     public function storeResponse(ResponseDisputeRequest $request, $id)
     {
-        $this->dispute->storeResponse($request, $id);
+        $dispute = $this->dispute->find($id);
+
+        $old_status = $dispute->status;
+
+        $response = $this->dispute->storeResponse($request, $dispute);
+
+        $current_status = $response->repliable->status;
+
+        // Send notification to Admin
+        if( config('system_settings.notify_when_dispute_appealed') && ($current_status == Dispute::STATUS_APPEALED)){
+            $system = System::orderBy('id', 'asc')->first();
+
+            if($current_status != $old_status)
+                $system->superAdmin()->notify(new DisputeAppealedNotification($response));
+            else
+                $system->superAdmin()->notify(new AppealedDisputeRepliedNotification($response));
+        }
+
+        event(new DisputeUpdated($response));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }

@@ -93,7 +93,9 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
 
         $order->payment_status = ($order->payment_status == Order::PAYMENT_STATUS_PAID) ? Order::PAYMENT_STATUS_UNPAID : Order::PAYMENT_STATUS_PAID;
 
-        return $order->save();
+        $order->save();
+
+        return $order;
     }
 
     /**

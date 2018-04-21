@@ -475,7 +475,7 @@ return [
 
     'notify_new_ticket' => 'Send me a notification when a support ticket has been created on the system',
 
-    'notify_new_disput' => 'Send me a notification when a customer submit a new disput',
+    'notify_new_disput' => 'Send me a notification when a customer submit a new dispute',
 
-    'notify_when_disput_appealed' => 'Send me a notification when a disput has been appealed to review by marketplace team',
+    'notify_when_dispute_appealed' => 'Send me a notification when a dispute has been appealed to review by marketplace team',
 ];

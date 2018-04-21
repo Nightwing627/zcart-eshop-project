@@ -696,19 +696,19 @@
 						    	<div class="row">
 							    	<div class="col-sm-8 text-right">
 										<div class="form-group">
-									        {!! Form::label('notify_when_disput_appealed', trans('app.notify_when_disput_appealed'). ':', ['class' => 'with-help control-label']) !!}
-										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_when_disput_appealed') }}"></i>
+									        {!! Form::label('notify_when_dispute_appealed', trans('app.notify_when_dispute_appealed'). ':', ['class' => 'with-help control-label']) !!}
+										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.notify_when_dispute_appealed') }}"></i>
 										</div>
 									</div>
 							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
-												<a href="{{ route('admin.setting.system.notification.toggle', 'notify_when_disput_appealed') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->notify_when_disput_appealed == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->notify_when_disput_appealed == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="{{ route('admin.setting.system.notification.toggle', 'notify_when_dispute_appealed') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->notify_when_dispute_appealed == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->notify_when_dispute_appealed == 1 ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>
 										@else
-											<span>{{ $system->notify_when_disput_appealed == 1 ? trans('app.on') : trans('app.off') }}</span>
+											<span>{{ $system->notify_when_dispute_appealed == 1 ? trans('app.on') : trans('app.off') }}</span>
 										@endif
 									</div>
 							  	</div>

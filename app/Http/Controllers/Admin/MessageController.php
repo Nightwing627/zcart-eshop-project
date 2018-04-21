@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
+use App\Events\Message\NewMessage;
+use App\Events\Message\MessageReplied;
 use App\Repositories\Message\MessageRepository;
 use App\Http\Requests\Validations\DraftSendRequest;
 use App\Http\Requests\Validations\ReplyMessageRequest;
@@ -71,7 +73,9 @@ class MessageController extends Controller
      */
     public function store(CreateMessageRequest $request)
     {
-        $this->message->store($request);
+        $message = $this->message->store($request);
+
+        event(new NewMessage($message));
 
         return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
@@ -176,7 +180,9 @@ class MessageController extends Controller
      */
     public function storeReply(ReplyMessageRequest $request, $id)
     {
-        $this->message->storeReply($request, $id);
+        $reply = $this->message->storeReply($request, $id);
+
+        event(new MessageReplied($reply));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }

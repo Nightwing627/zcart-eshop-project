@@ -32,11 +32,13 @@ class GiftCardController extends Controller
      */
     public function index()
     {
-        $gift_cards = $this->giftCard->all();
+        $valid_cards = $this->giftCard->all();
+
+        $expired_cards = $this->giftCard->invalid();
 
         $trashes = $this->giftCard->trashOnly();
 
-        return view('admin.gift-card.index', compact('gift_cards', 'trashes'));
+        return view('admin.gift-card.index', compact('valid_cards', 'expired_cards', 'trashes'));
     }
 
     /**

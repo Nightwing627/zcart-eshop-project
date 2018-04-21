@@ -2,4 +2,8 @@
 
 namespace App\Repositories\GiftCard;
 
-interface GiftCardRepository{}
+interface GiftCardRepository {
+    public function valid();
+
+    public function invalid();
+}

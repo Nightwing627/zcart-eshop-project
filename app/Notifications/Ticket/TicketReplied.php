@@ -47,7 +47,7 @@ class TicketReplied extends Notification
     {
         return (new MailMessage)
                     ->subject( trans('notifications.ticket_replied.subject', ['user' => $this->reply->user->getName(), 'ticket_id' => $this->reply->repliable->id, 'subject' => $this->reply->repliable->subject]) )
-                    ->markdown('admin.mail.ticket.replied', ['user' => $this->user, 'url' => route('admin.support.ticket.show', $this->reply->repliable->id), 'reply' => $this->reply]);
+                    ->markdown('admin.mail.ticket.replied', ['user' => $this->user, 'url' => route('admin.support.ticket.show', $this->reply->repliable_id), 'reply' => $this->reply]);
     }
 
     /**

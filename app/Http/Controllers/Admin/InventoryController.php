@@ -86,8 +86,9 @@ class InventoryController extends Controller
     {
         $inInventory = $this->inventory->checkInveoryExist($id);
 
-        if($inInventory)
+        if($inInventory){
             return redirect()->route('admin.stock.inventory.edit', $inInventory->id)->with('warning', trans('messages.inventory_exist'));
+        }
 
         $product = $this->inventory->findProduct($id);
 
@@ -135,7 +136,6 @@ class InventoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
     public function storeWithVariant(CreateInventoryWithVariantRequest $request)
     {
         $this->inventory->storeWithVariant($request);
