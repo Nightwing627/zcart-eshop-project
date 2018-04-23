@@ -312,9 +312,9 @@ class ListHelper
     public static function new_merchants()
     {
         return \DB::table('users')
-                ->where('shop_id', Null)
-                ->where('role_id', 3)
-                ->where('deleted_at', Null)
+                ->whereNull('shop_id')
+                ->whereNull('deleted_at')
+                ->where('role_id', Role::MERCHANT)
                 ->orderBy('name', 'asc')
                 ->pluck('name', 'id');
     }

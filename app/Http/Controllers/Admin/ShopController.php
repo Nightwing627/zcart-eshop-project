@@ -8,7 +8,6 @@ use App\Events\Shop\ShopUpdated;
 use App\Events\Shop\ShopDeleted;
 use App\Http\Controllers\Controller;
 use App\Repositories\Shop\ShopRepository;
-use App\Http\Requests\Validations\CreateShopRequest;
 use App\Http\Requests\Validations\UpdateShopRequest;
 
 class ShopController extends Controller
@@ -58,29 +57,6 @@ class ShopController extends Controller
         $trashes = $this->shop->staffsTrashOnly($shop);
 
         return view('admin.shop.staffs', compact('shop', 'staffs', 'trashes'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('admin.shop._create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CreateShopRequest $request)
-    {
-        $this->shop->store($request);
-
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
     /**

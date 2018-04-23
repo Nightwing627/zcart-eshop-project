@@ -11,19 +11,19 @@ class CreateShopForMerchant
     use Dispatchable;
 
     protected $merchant;
-    protected $shop_name;
+    protected $request;
 
     /**
      * Create a new job instance.
      *
      * @param  User  $merchant
-     * @param  str  $shop_name
+     * @param  str  $request
      * @return void
      */
-    public function __construct(User $merchant, $shop_name)
+    public function __construct(User $merchant, $request)
     {
         $this->merchant = $merchant;
-        $this->shop_name = $shop_name;
+        $this->request = $request;
     }
 
     /**
@@ -34,19 +34,22 @@ class CreateShopForMerchant
     public function handle()
     {
         $shop = Shop::create([
-            'name' => $this->shop_name,
-            'description' => trans('app.welcome'),
+            'name' => $this->request['shop_name'],
+            'description' => isset($this->request['description']) ? $this->request['description'] : trans('app.welcome'),
+            'legal_name' => isset($this->request['legal_name']) ? $this->request['legal_name'] : Null,
             'owner_id' => $this->merchant->id,
             'email' => $this->merchant->email,
-            'slug' => str_slug($this->shop_name),
+            'slug' => isset($this->request['slug']) ? $this->request['slug'] : str_slug($this->request['shop_name']),
+            'external_url' => isset($this->request['external_url']) ? $this->request['external_url'] : Null,
             'timezone_id' => config('system_settings.timezone_id'),
-            'active' => 0
+            'active' => isset($this->request['active']) ? $this->request['active'] : 0,
         ]);
 
         // configaring The Shop
         $shop->config()->create([
             'support_email' => $this->merchant->email,
-            'default_sender_email_address' => $this->merchant->email
+            'default_sender_email_address' => $this->merchant->email,
+            'maintenance_mode' => 1,
         ]);
 
         // Updating shop_id field in user table

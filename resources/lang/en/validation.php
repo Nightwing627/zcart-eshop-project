@@ -108,7 +108,7 @@ return [
     'sku-unique'                    => ' has already been taken. Try new one.',
     'offer_price-numeric'           => ' is not a valid price value. The offer price must be a number.',
     'email_template_id_required'    => 'Email template is required.',
-    'merchant_have_shop'            => 'This merchant have a shop.',
+    // 'merchant_have_shop'            => 'This merchant have a shop.',
     'brand_logo_max'                => 'The brand logo may not be greater than :max kilobytes.',
     'brand_logo_mimes'              => 'The brand logo must be a file of type: :values.',
     'uploaded'                      => 'The file size exceeded the maximum upload limit on your server. Please check the php.ini file.',

@@ -4,7 +4,7 @@ namespace App\Repositories\Merchant;
 
 use Auth;
 use App\Role;
-use App\Merchant;
+use App\User;
 use Illuminate\Http\Request;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
@@ -13,7 +13,7 @@ class EloquentMerchant extends EloquentRepository implements BaseRepository, Mer
 {
 	protected $model;
 
-	public function __construct(Merchant $merchant)
+	public function __construct(User $merchant)
 	{
 		$this->model = $merchant;
 	}

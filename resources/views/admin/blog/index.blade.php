@@ -16,40 +16,50 @@
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
-	      <table class="table table-hover table-option">
+	      <table class="table table-hover table-no-sort">
 	        <thead>
 	        <tr>
 	          <th>{{ trans('app.image') }}</th>
 	          <th>{{ trans('app.blog_title') }}</th>
 	          <th>{{ trans('app.author') }}</th>
 	          <th><i class="fa fa-comments"></i></th>
-	          <th>{{ trans('app.status') }}</th>
-	          <th>{{ trans('app.option') }}</th>
+	          <th>{{ trans('app.date') }}</th>
+	          <th>&nbsp;</th>
 	        </tr>
 	        </thead>
 	        <tbody>
 		        @foreach($blogs as $blog )
 			        <tr>
 			          <td>
-						<img src="{{ get_storage_file_url(optional($blog->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+						<img src="{{ get_storage_file_url(optional($blog->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.logo') }}">
 			          </td>
-			          <td>
-				          	<strong>{!! $blog->title !!}</strong>
+			          <td width="60%">
+							@can('update', $blog)
+			                    <a href="{{ route('admin.blog.edit', $blog->id) }}"  class="ajax-modal-btn"><strong>{!! $blog->title !!}</strong></a>
+							@else
+					          	<strong>{!! $blog->title !!}</strong>
+							@endcan
+							<br/>
 				          	<span class="excerpt-td">{!! $blog->excerpt !!}</span>
+				          	@if(!$blog->status)
+					          	<br/><span class="label label-default">{{ strtoupper(trans('app.draft')) }}</span>
+					        @endif
 			          </td>
 			          <td>{{ $blog->author->getName() }}</td>
 			          <td>{{ $blog->comments_count }}</td>
-			          <td>
+			          <td class="small">
 			          	@if($blog->status)
-				          	{{ trans('app.published') }}
+				          	{{ trans('app.published_at') }}<br/>
+				          	{{ $blog->published_at->toFormattedDateString() }}
 				        @else
-				          	 {{ trans('app.draft') }}
+				          	{{ trans('app.updated_at') }}<br/>
+				          	{{ $blog->updated_at->toFormattedDateString() }}
 				        @endif
 				      </td>
-			          <td class="row-options">
-						@can('update', $blog)
-		                    <a href="{{ route('admin.blog.edit', $blog->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
-						@endcan
+			          <td class="row-options text-muted small">
+							@can('update', $blog)
+			                    <a href="{{ route('admin.blog.edit', $blog->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+							@endcan
 						@can('delete', $blog)
 		                    {!! Form::open(['route' => ['admin.blog.trash', $blog->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 		                        {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
@@ -75,7 +85,6 @@
 	      <table class="table table-hover table-2nd-short">
 	        <thead>
 	        <tr>
-	          <th>{{ trans('app.image') }}</th>
 	          <th>{{ trans('app.blog_title') }}</th>
 	          <th>{{ trans('app.author') }}</th>
 	          <th>{{ trans('app.deleted_at') }}</th>
@@ -85,16 +94,13 @@
 	        <tbody>
 		        @foreach($trashes as $trash )
 			        <tr>
-			          <td>
-						<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
-			          </td>
-			          <td>
+			          <td width="65%">
 				          	<strong>{!! $trash->title !!}</strong>
 				          	<span class="excerpt-td">{!! $trash->excerpt !!}</span>
 			          </td>
-			          <td>{{ $trash->user->getName() }}</td>
+			          <td>{{ $trash->author->getName() }}</td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
-			          <td class="row-options">
+			          <td class="row-options small">
 						@can('delete', $trash)
 		                    <a href="{{ route('admin.blog.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
 		                    {!! Form::open(['route' => ['admin.blog.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}

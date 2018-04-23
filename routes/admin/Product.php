@@ -7,4 +7,6 @@
 
 	Route::post('product/{product}/update', 'ProductController@update')->name('product.update')->middleware('ajax');
 
+	Route::get('product/getProducts', 'ProductController@getProducts')->name('product.getMore');
+
 	Route::resource('product', 'ProductController', ['except' =>['store', 'update']]);

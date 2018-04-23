@@ -1,8 +1,13 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use DB;
+use Log;
+use Auth;
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Events\Shop\ShopCreated;
+use App\Events\User\UserCreated;
+use App\Jobs\CreateShopForMerchant;
 use App\Http\Controllers\Controller;
 use App\Repositories\Merchant\MerchantRepository;
 use App\Http\Requests\Validations\CreateMerchantRequest;
@@ -58,7 +63,37 @@ class MerchantController extends Controller
      */
     public function store(CreateMerchantRequest $request)
     {
-        $this->merchant->store($request);
+        // echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
+        // Start transaction!
+        DB::beginTransaction();
+
+        try {
+            $merchant = $this->merchant->store($request);
+
+            // Dispatching Shop create job
+            CreateShopForMerchant::dispatch($merchant, $request->all());
+
+        } catch(\Exception $e){
+
+            // rollback the transaction and log the error
+            DB::rollback();
+            Log::error('Vendor Creation Failed: ' . $e->getMessage());
+
+            // add your error messages:
+            $error = new \Illuminate\Support\MessageBag();
+            $error->add('errors', trans('responses.vendor_config_failed'));
+
+            return back()->withErrors($error);
+        }
+
+        // Everything is fine. Now commit the transaction
+        DB::commit();
+
+        // Trigger user created event
+        event(new UserCreated($merchant, auth()->user()->getName(), $request->get('password')));
+
+        // Trigger shop created event
+        event(new ShopCreated($merchant->owns));
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }

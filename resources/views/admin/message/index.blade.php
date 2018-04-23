@@ -33,6 +33,7 @@
               <!-- /.box-tools -->
             </div>
             <!-- /.box-header -->
+
             <div class="box-body no-padding">
               	<div class="mailbox-controls">
 	                <!-- Check all button -->

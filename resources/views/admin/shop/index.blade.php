@@ -1,8 +1,8 @@
 @extends('admin.layouts.master')
 
 @section('buttons')
-	@can('create', App\Shop::class)
-		<a href="{{ route('admin.vendor.shop.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_shop') }}</a>
+	@can('create', App\Merchant::class)
+		<a href="{{ route('admin.vendor.merchant.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_merchant') }}</a>
 	@endcan
 @endsection
 
@@ -16,61 +16,77 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-short">
+			<table class="table table-hover table-option">
 				<thead>
 					<tr>
-						<th>{{ trans('app.logo') }}</th>
-						<th>{{ trans('app.name') }}</th>
-						<th>{{ trans('app.owner') }}</th>
+						<th>{{ trans('app.shop_name') }}</th>
 						<th>{{ trans('app.email') }}</th>
-						<th>{{ trans('app.status') }}</th>
+						<th>{{ trans('app.owner') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($shops as $shop )
-					<tr>
-						<td>
-							<img src="{{ get_storage_file_url(optional($shop->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
-						</td>
-						<td>{{ $shop->name }}</td>
-						<td>{{ $shop->owner->name }}</td>
-						<td>{{ $shop->email }}</td>
-						<td>
-		            		@if($shop->config->maintenance_mode)
-					          	<span class="label label-warning">{{ trans('app.maintenance_mode') }}</span>
-		            		@else
-			            		{{ ($shop->active) ? trans('app.active') : trans('app.inactive') }}
-							@endif
-						</td>
-						<td class="row-options">
-							@can('view', $shop)
-								<a href="{{ route('admin.vendor.shop.show', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+						<tr>
+							<td>
+								<img src="{{ get_storage_file_url(optional($shop->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+								<p class="indent10">
+									@can('view', $shop)
+										<a href="{{ route('admin.vendor.shop.show', $shop->id) }}"  class="ajax-modal-btn">{{ $shop->name }}</a>
+									@else
+										{{ $shop->name }}
+									@endcan
 
-								<a href="{{ route('admin.vendor.shop.staffs', $shop->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.staffs') }}" class="fa fa-users"></i></a>&nbsp;
-							@endcan
+				            		@if($shop->config->maintenance_mode)
+							          	<span class="label label-default indent10">{{ trans('app.maintenance_mode') }}</span>
+				            		@elseif($shop->active)
+					            		<span class="label label-default indent10">{{ trans('app.inactive') }}</span>
+									@endif
+								</p>
+							</td>
+							<td>{{ $shop->email }}</td>
+							<td>
+					            @if($shop->owner->image)
+									<img src="{{ get_storage_file_url(optional($shop->owner->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @else
+				            		<img src="{{ get_gravatar_url($shop->owner->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @endif
+								<p class="indent10">
+									@can('view', $shop->owner)
+							            <a href="{{ route('admin.vendor.merchant.show', $shop->owner_id) }}" class="ajax-modal-btn">{{ $shop->owner->getName() }}</a>
+									@else
+										{{ $shop->owner->getName() }}
+									@endcan
+								</p>
+							</td>
+							<td class="row-options">
+								@can('view', $shop)
+									<a href="{{ route('admin.vendor.shop.show', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 
-							@can('secretLogin', $shop->owner)
-								<a href="{{ route('admin.user.secretLogin', $shop->owner->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.secret_login_merchant') }}" class="fa fa-user-secret"></i></a>&nbsp;
-							@endcan
+									<a href="{{ route('admin.vendor.shop.staffs', $shop->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.staffs') }}" class="fa fa-users"></i></a>&nbsp;
+								@endcan
 
-							@can('update', $shop)
-								<a href="{{ route('admin.vendor.shop.edit', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								@can('secretLogin', $shop->owner)
+									<a href="{{ route('admin.user.secretLogin', $shop->owner->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.secret_login_merchant') }}" class="fa fa-user-secret"></i></a>&nbsp;
+								@endcan
 
-								@if($shop->primaryAddress)
-									<a href="{{ route('address.edit', $shop->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
-								@else
-									<a href="{{ route('address.create', ['shop', $shop->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
-								@endif
-							@endcan
+								@can('update', $shop)
+									<a href="{{ route('admin.vendor.shop.edit', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 
-							@can('delete', $shop)
-								{!! Form::open(['route' => ['admin.vendor.shop.trash', $shop->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-								{!! Form::close() !!}
-							@endcan
-						</td>
-					</tr>
+									@if($shop->primaryAddress)
+										<a href="{{ route('address.edit', $shop->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
+									@else
+										<a href="{{ route('address.create', ['shop', $shop->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
+									@endif
+								@endcan
+
+								@can('delete', $shop)
+									{!! Form::open(['route' => ['admin.vendor.shop.trash', $shop->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+										{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+									{!! Form::close() !!}
+								@endcan
+							</td>
+						</tr>
 					@endforeach
 				</tbody>
 			</table>
@@ -89,7 +105,6 @@
 			<table class="table table-hover table-2nd-short">
 				<thead>
 					<tr>
-						<th>{{ trans('app.logo') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.email') }}</th>
 						<th>{{ trans('app.deleted_at') }}</th>
@@ -101,8 +116,10 @@
 					<tr>
 						<td>
 							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+							<p class="indent10">
+								{{ $trash->name }}
+							</p>
 						</td>
-						<td>{{ $trash->name }}</td>
 						<td>{{ $trash->email }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">

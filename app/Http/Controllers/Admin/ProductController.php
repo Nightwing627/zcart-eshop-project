@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
+use Yajra\Datatables\Datatables;
 use App\Http\Controllers\Controller;
 use App\Repositories\Product\ProductRepository;
 use App\Http\Requests\Validations\CreateProductRequest;
@@ -33,11 +34,33 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->product->all();
+        // $products = $this->product->all();
 
         $trashes = $this->product->trashOnly();
 
-        return view('admin.product.index', compact('products', 'trashes'));
+        return view('admin.product.index', compact('trashes'));
+    }
+
+    // function will process the ajax request
+    public function getProducts(Request $request) {
+
+        $products = $this->product->all();
+
+        return Datatables::of($products)
+            ->addColumn('option', function ($product) {
+                return view( 'admin.partials.actions.product.options', compact('product'));
+            })
+            ->editColumn('name', function($product){
+                return view( 'admin.partials.actions.product.name', compact('product'));
+            })
+            ->editColumn('category',  function ($product) {
+                return view( 'admin.partials.actions.product.category', compact('product'));
+            })
+            ->editColumn('inventories_count', function($product){
+                return view( 'admin.partials.actions.product.inventories_count', compact('product'));
+            })
+            ->rawColumns([ 'name', 'category', 'inventories_count', 'status', 'option' ])
+            ->make(true);
     }
 
     /**

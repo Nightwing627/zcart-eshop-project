@@ -6,10 +6,10 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "aws/aws-sdk-php": "~3.0",
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "^6.3",
         "ixudra/curl": "^6.16",
-        "aws/aws-sdk-php": "~3.0",
         "laracasts/flash": "^2.0",
         "laravel/cashier": "~7.0",
         "laravel/framework": "5.5.*",
@@ -17,7 +17,8 @@
         "laravelcollective/html": "^5.4.0",
         "league/glide-laravel": "^1.0",
         "spatie/laravel-activitylog": "^2.5",
-        "stripe/stripe-php": "~5.0"
+        "stripe/stripe-php": "~5.0",
+        "yajra/laravel-datatables-oracle": "~8.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

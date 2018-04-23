@@ -27,11 +27,14 @@ class CreateMerchantRequest extends Request
 
         return [
            'name' => 'required|max:255',
+           'legal_name' => 'required',
+           'slug' => 'required|string|max:255|unique:shops',
+           'shop_name' => 'required|string|max:255|unique:shops,name',
            'email' =>  'required|email|max:255|unique:users',
-           'password' =>  'required|confirmed|min:6',
-           'dob' => 'nullable|date',
+           'external_url' => 'nullable|url',
+           'password' =>  'required|min:6',
            'active' => 'required',
-           'image' => 'mimes:jpeg,png',
+           'image' => 'max:' . config('system_settings.max_img_size_limit_kb') . '|mimes:jpg,jpeg,png,gif',
         ];
     }
 }

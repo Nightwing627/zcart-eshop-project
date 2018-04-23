@@ -19,7 +19,11 @@ class EloquentCustomer extends EloquentRepository implements BaseRepository, Cus
 
     public function all()
     {
-        return $this->model->with('image')->withCount('orders')->get();
+        return $this->model->with('image', 'primaryAddress')
+            ->withCount('orders');
+            // ->orderBy('orders_count', 'desc');
+            // ->paginate(getPaginationValue());
+            // ->get();
     }
 
     public function trashOnly()

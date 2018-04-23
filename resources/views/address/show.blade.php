@@ -8,8 +8,7 @@
 
 	<div class="admin-user-widget">
 	    <span class="admin-user-widget-img">
-			<img src="{{ get_storage_file_url(optional($addressable->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
-	        {{-- <img src="{{ get_image_src($addressable->id, get_qualified_model($addressable_type), 'medium') }}" class="thumbnail" alt="{{ trans('app.avatar') }}"> --}}
+	        <img src="{{ get_storage_file_url(optional($addressable->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.avatar') }}">
 	    </span>
 
 	    <div class="admin-user-widget-content">

@@ -6,4 +6,4 @@
 
 	Route::get('shop/{shop}/restore', 'ShopController@restore')->name('shop.restore');
 
-	Route::resource('shop', 'ShopController');
+	Route::resource('shop', 'ShopController', ['except' => ['create', 'store']]);

@@ -1,7 +1,10 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
+use Yajra\Datatables\Datatables;
 use App\Http\Controllers\Controller;
 use App\Repositories\Customer\CustomerRepository;
 use App\Http\Requests\Validations\CreateCustomerRequest;
@@ -32,11 +35,33 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = $this->customer->all();
+        // $customers = $this->customer->all();
 
         $trashes = $this->customer->trashOnly();
 
-        return view('admin.customer.index', compact('customers', 'trashes'));
+        return view('admin.customer.index', compact('trashes'));
+    }
+
+    // function will process the ajax request
+    public function getCustomers(Request $request) {
+
+        $customers = $this->customer->all();
+
+        return Datatables::of($customers)
+            ->addColumn('option', function ($customer) {
+                return view( 'admin.partials.actions.customer.options', compact('customer'));
+            })
+            ->editColumn('nice_name',  function ($customer) {
+                return view( 'admin.partials.actions.customer.nice_name', compact('customer'));
+            })
+            ->editColumn('name', function($customer){
+                return view( 'admin.partials.actions.customer.full_name', compact('customer'));
+            })
+            ->editColumn('orders_count', function($customer){
+                return view( 'admin.partials.actions.customer.orders_count', compact('customer'));
+            })
+            ->rawColumns([ 'nice_name', 'name', 'orders_count', 'option' ])
+            ->make(true);
     }
 
     /**

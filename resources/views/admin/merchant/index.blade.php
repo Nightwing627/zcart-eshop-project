@@ -40,7 +40,13 @@
 								{{ $merchant->nice_name }}
 							</p>
 				          </td>
-				          <td>{{ $merchant->name }}</td>
+				          <td>
+							@can('view', $merchant)
+					            <a href="{{ route('admin.vendor.merchant.show', $merchant->id) }}" class="ajax-modal-btn">{{ $merchant->name }}</a>
+							@else
+					          	{{ $merchant->name }}
+							@endcan
+				          </td>
 				          <td>{{ $merchant->email }}</td>
 				          <td>
 				          	@if($merchant->owns)
@@ -117,7 +123,14 @@
 					        <td>{{ $trash->name }}</td>
 					        <td>{{ $trash->email }}</td>
 					        <td>
-					        	<span class="label label-outline">{{ optional($trash->shop)->name }}</span>
+					          	@if($trash->owns)
+									<img src="{{ get_storage_file_url(optional($trash->owns->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+									<p class="indent10">
+							            <a href="{{ route('admin.vendor.shop.show', $trash->owns->id) }}" class="ajax-modal-btn">
+											{{ $trash->owns->name }}
+								         </a>
+									</p>
+					          	@endif
 				          	</td>
 				          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 				          <td class="row-options">

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Hash;
 use App\Common\Imageable;
 use App\Common\Addressable;
 use Laravel\Cashier\Billable;
@@ -189,7 +190,10 @@ class Merchant extends Authenticatable
      */
     public function setPasswordAttribute($password)
     {
-        $this->attributes['password'] = bcrypt($password);
+        if(Hash::needsRehash($password))
+            $this->attributes['password'] = bcrypt($password);
+        else
+            $this->attributes['password'] = $password;
     }
 
     /**

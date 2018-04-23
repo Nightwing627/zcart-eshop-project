@@ -1,11 +1,5 @@
 @extends('admin.layouts.master')
 
-@section('buttons')
-	@can('index', App\Shop::class)
-		<a href="{{ route('admin.vendor.shop.index') }}" class="btn btn-new btn-flat">{{ trans('app.shops') }}</a>
-	@endcan
-@endsection
-
 @section('content')
 
     @include('admin.partials._shop_widget')
@@ -22,7 +16,6 @@
 			<table class="table table-hover table-2nd-short">
 				<thead>
 					<tr>
-					  <th>{{ trans('app.avatar') }}</th>
 					  <th>{{ trans('app.nice_name') }}</th>
 					  <th>{{ trans('app.full_name') }}</th>
 					  <th>{{ trans('app.email') }}</th>
@@ -40,38 +33,51 @@
 				            @else
 			            		<img src="{{ get_gravatar_url($user->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 				            @endif
+					          <p class="indent10">
+					          	{{ $user->nice_name }}
+					          	@if($user->id == $shop->owner_id)
+						          	<span class="label label-outline">{{ trans('app.owner') }}</span>
+					          	@endif
+					          </p>
 				          </td>
-				          <td>{{ $user->nice_name }}</td>
-				          <td>{{ $user->name }}</td>
+				          <td>
+				          		@can('view', $user)
+					        	    <a href="{{ route('admin.admin.user.show', $user->id) }}"  class="ajax-modal-btn">{{ $user->name }}</a>
+								@else
+									{{ $user->name }}
+								@endcan
+						  </td>
 				          <td>{{ $user->email }}</td>
 				          <td>
 					          	<span class="label label-outline">{{ $user->role->name }}</span>
 				          </td>
 				          <td>{{ ($user->active) ? trans('app.active') : trans('app.inactive') }}</td>
 				          <td class="row-options">
-							@can('view', $user)
-				        	    <a href="{{ route('admin.admin.user.show', $user->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
-							@endcan
+				          	@unless($user->id == $shop->owner_id)
+								@can('view', $user)
+					        	    <a href="{{ route('admin.admin.user.show', $user->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
+								@endcan
 
-							@can('secretLogin', $user)
-								<a href="{{ route('admin.user.secretLogin', $user) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.secret_login_user') }}" class="fa fa-user-secret"></i></a>&nbsp;
-							@endcan
+								@can('secretLogin', $user)
+									<a href="{{ route('admin.user.secretLogin', $user) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.secret_login_user') }}" class="fa fa-user-secret"></i></a>&nbsp;
+								@endcan
 
-							@can('update', $user)
-				            	<a href="{{ route('admin.admin.user.edit', $user->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								@can('update', $user)
+					            	<a href="{{ route('admin.admin.user.edit', $user->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 
-								@if($user->primaryAddress)
-									<a href="{{ route('address.edit', $user->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
-								@else
-									<a href="{{ route('address.create', ['user', $user->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
-								@endif
-							@endcan
+									@if($user->primaryAddress)
+										<a href="{{ route('address.edit', $user->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
+									@else
+										<a href="{{ route('address.create', ['user', $user->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
+									@endif
+								@endcan
 
-							@can('delete', $user)
-					            {!! Form::open(['route' => ['admin.admin.user.trash', $user->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-					                {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-								{!! Form::close() !!}
-							@endcan
+								@can('delete', $user)
+						            {!! Form::open(['route' => ['admin.admin.user.trash', $user->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+						                {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+									{!! Form::close() !!}
+								@endcan
+							@endunless
 				          </td>
 				        </tr>
 				    @endforeach
@@ -92,7 +98,6 @@
 	    	<table class="table table-hover table-2nd-short">
 		        <thead>
 		        <tr>
-		          <th>{{ trans('app.avatar') }}</th>
 		          <th>{{ trans('app.nice_name') }}</th>
 		          <th>{{ trans('app.full_name') }}</th>
 		          <th>{{ trans('app.email') }}</th>
@@ -106,8 +111,8 @@
 				        <tr>
 				          <td>
 							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					          <p class="indent10">{{ $trash->nice_name }}</p>
 						  </td>
-				          <td>{{ $trash->nice_name }}</td>
 				          <td>{{ $trash->name }}</td>
 				          <td>{{ $trash->email }}</td>
 				          <td>

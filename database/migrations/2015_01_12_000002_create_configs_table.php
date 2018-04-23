@@ -52,7 +52,7 @@ class CreateConfigsTable extends Migration
             $table->boolean('notify_abandoned_checkout')->nullable();
             $table->boolean('notify_new_disput')->nullable()->default(true);
 
-            $table->boolean('maintenance_mode')->nullable();
+            $table->boolean('maintenance_mode')->nullable()->default(true);
             $table->timestamps();
 
             $table->primary('shop_id');

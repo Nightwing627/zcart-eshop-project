@@ -18,12 +18,13 @@ class EloquentBlog extends EloquentRepository implements BaseRepository, BlogRep
 
     public function all()
     {
-        return $this->model->with('author','image')->withCount('comments')->get();
+        // return $this->model->published()->with('author','image')->orderBy('created_at', 'desc')->withCount('comments')->get();
+        return $this->model->with('author','image')->orderBy('created_at', 'desc')->withCount('comments')->get();
     }
 
     public function trashOnly()
     {
-        return $this->model->with('image')->onlyTrashed()->get();
+        return $this->model->with('image')->orderBy('created_at', 'desc')->onlyTrashed()->get();
     }
 
     public function store(Request $request)

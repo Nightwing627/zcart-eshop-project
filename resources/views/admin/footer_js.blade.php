@@ -72,92 +72,177 @@
 	//DataTables
 	function initDatatables()
 	{
-	  $(".table-2nd-short").DataTable({
-	    "iDisplayLength": {{ getPaginationValue() }},
-	    "aaSorting": [[ 1, "asc" ]],
-	    "oLanguage": {
-	        "sInfo": "_START_ to _END_ of _TOTAL_ entries",
-	        "sLengthMenu": "Show _MENU_",
-	        "sSearch": "",
-	        "sEmptyTable": "No data found!",
-	        "oPaginate": {
-	          "sNext": '<i class="fa fa-hand-o-right"></i>',
-	          "sPrevious": '<i class="fa fa-hand-o-left"></i>',
-	        }
-	    },
-	    "aoColumnDefs": [
-	      {
-	        "bSortable": false,
-	        "aTargets": [ 0,-1 ]
-	      }
-	    ],
-	    dom: 'Bfrtip',
-	    buttons: [
-	          'copy', 'csv', 'excel', 'pdf', 'print'
-	      ]
-	  });
+		$('#all-product-table').DataTable({
+		  	"aaSorting": [],
+		    "iDisplayLength": {{ getPaginationValue() }},
+	        "processing": true,
+	        "serverSide": true,
+	        "ajax": "{{ route('admin.catalog.product.getMore') }}",
+			"columns": [
+	            { 'data': 'name', 'name': 'name' },
+	            { 'data': 'gtin', 'name': 'gtin' },
+	            { 'data': 'model_number', 'name': 'model_number' },
+	            { 'data': 'category', 'name': 'category', 'orderable': false, 'searchable': false },
+	            { 'data': 'inventories_count', 'name': 'inventories_count', 'searchable': false },
+	            { 'data': 'option', 'name': 'option', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false }
+	        ],
+		    "oLanguage": {
+		        "sInfo": "_START_ to _END_ of _TOTAL_ entries",
+		        "sLengthMenu": "Show _MENU_",
+		        "sSearch": "",
+		        "sEmptyTable": "No data found!",
+		        "oPaginate": {
+		          "sNext": '<i class="fa fa-hand-o-right"></i>',
+		          "sPrevious": '<i class="fa fa-hand-o-left"></i>',
+		        },
+		    },
+		    "aoColumnDefs": [{
+		        "bSortable": false,
+		        "aTargets": [ -1 ]
+		     }],
+		    dom: 'Bfrtip',
+		    buttons: [
+		          'copy', 'csv', 'excel', 'pdf', 'print'
+		      ]
+	    });
 
-	  $(".table-option").DataTable({
-	    "iDisplayLength": {{ getPaginationValue() }},
-	    "oLanguage": {
-	        "sInfo": "_START_ to _END_ of _TOTAL_ entries",
-	        "sLengthMenu": "Show _MENU_",
-	        "sSearch": "",
-	        "sEmptyTable": "No data found!",
-	        "oPaginate": {
-	          "sNext": '<i class="fa fa-hand-o-right"></i>',
-	          "sPrevious": '<i class="fa fa-hand-o-left"></i>',
-	        },
-	    },
-	    "aoColumnDefs": [
-	      {
-	        "bSortable": false,
-	        "aTargets": [ -1 ]
-	      }
-	    ],
-	    dom: 'Bfrtip',
-	    buttons: [
-	          'copy', 'csv', 'excel', 'pdf', 'print'
-	      ]
-	  });
+		$('#all-customer-table').DataTable({
+		  	"aaSorting": [],
+		    "iDisplayLength": {{ getPaginationValue() }},
+	        "processing": true,
+	        "serverSide": true,
+	        "ajax": "{{ route('admin.admin.customer.getMore') }}",
+			"columns": [
+	            { 'data': 'nice_name', 'name': 'nice_name' },
+	            { 'data': 'name', 'name': 'name' },
+	            { 'data': 'email', 'name': 'email' },
+	            { 'data': 'orders_count', 'name': 'orders_count', 'searchable': false },
+	            { 'data': 'option', 'name': 'option', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false }
+	        ],
+		    "oLanguage": {
+		        "sInfo": "_START_ to _END_ of _TOTAL_ entries",
+		        "sLengthMenu": "Show _MENU_",
+		        "sSearch": "",
+		        "sEmptyTable": "No data found!",
+		        "oPaginate": {
+		          "sNext": '<i class="fa fa-hand-o-right"></i>',
+		          "sPrevious": '<i class="fa fa-hand-o-left"></i>',
+		        },
+		    },
+		    "aoColumnDefs": [{
+		        "bSortable": false,
+		        "aTargets": [ -1 ]
+		     }],
+		    dom: 'Bfrtip',
+		    buttons: [
+		          'copy', 'csv', 'excel', 'pdf', 'print'
+		      ]
+	    });
 
-	  $(".table-desc").DataTable({
-	    "iDisplayLength": {{ getPaginationValue() }},
-	    "aaSorting": [[ 0, "desc" ]],
-	    "oLanguage": {
-	        "sInfo": "_START_ to _END_ of _TOTAL_ entries",
-	        "sLengthMenu": "Show _MENU_",
-	        "sSearch": "",
-	        "sEmptyTable": "No data found!",
-	        "oPaginate": {
-	          "sNext": '<i class="fa fa-hand-o-right"></i>',
-	          "sPrevious": '<i class="fa fa-hand-o-left"></i>',
-	        },
-	    },
-	    "aoColumnDefs": [
-	      {
-	        "bSortable": false,
-	        "aTargets": [ -1 ]
-	      }
-	    ],
-	    dom: 'Bfrtip',
-	    buttons: [
-	          'copy', 'csv', 'excel', 'pdf', 'print'
-	      ]
-	  });
+	  	$(".table-2nd-short").DataTable({
+		    "iDisplayLength": {{ getPaginationValue() }},
+		    "aaSorting": [[ 1, "asc" ]],
+		    "oLanguage": {
+		        "sInfo": "_START_ to _END_ of _TOTAL_ entries",
+		        "sLengthMenu": "Show _MENU_",
+		        "sSearch": "",
+		        "sEmptyTable": "No data found!",
+		        "oPaginate": {
+		          "sNext": '<i class="fa fa-hand-o-right"></i>',
+		          "sPrevious": '<i class="fa fa-hand-o-left"></i>',
+		        }
+		    },
+		    "aoColumnDefs": [{
+		        "bSortable": false,
+		        "aTargets": [ 0,-1 ]
+		     }],
+		    dom: 'Bfrtip',
+		    buttons: [
+		        	'copy', 'csv', 'excel', 'pdf', 'print'
+		    	]
+	  	});
 
-	  $('.table-no-option').DataTable({
-	    "sLength": "",
-	    "paging": true,
-	    "lengthChange": false,
-	    "searching": false,
-	    "ordering": false,
-	    "info": true,
-	    "autoWidth": false
-	  });
+	  	$(".table-option").DataTable({
+		    "iDisplayLength": {{ getPaginationValue() }},
+		    "oLanguage": {
+		        "sInfo": "_START_ to _END_ of _TOTAL_ entries",
+		        "sLengthMenu": "Show _MENU_",
+		        "sSearch": "",
+		        "sEmptyTable": "No data found!",
+		        "oPaginate": {
+		          "sNext": '<i class="fa fa-hand-o-right"></i>',
+		          "sPrevious": '<i class="fa fa-hand-o-left"></i>',
+		        },
+		    },
+		    "aoColumnDefs": [{
+		        "bSortable": false,
+		        "aTargets": [ -1 ]
+		     }],
+		    dom: 'Bfrtip',
+		    buttons: [
+		          'copy', 'csv', 'excel', 'pdf', 'print'
+		      	]
+	  	});
 
-	  $(".dataTables_length select").addClass('select2-normal'); //Make the data-table length dropdown like select 2
-	  $(".dt-buttons > .btn").addClass('btn-sm'); //Make the data-table option buttins smaller
+	  	$(".table-no-sort").DataTable({
+		  	// "bSort": false,
+		  	"aaSorting": [],
+		    "iDisplayLength": {{ getPaginationValue() }},
+		    "oLanguage": {
+		        "sInfo": "_START_ to _END_ of _TOTAL_ entries",
+		        "sLengthMenu": "Show _MENU_",
+		        "sSearch": "",
+		        "sEmptyTable": "No data found!",
+		        "oPaginate": {
+		          "sNext": '<i class="fa fa-hand-o-right"></i>',
+		          "sPrevious": '<i class="fa fa-hand-o-left"></i>',
+		        },
+		    },
+		    "aoColumnDefs": [{
+		        "bSortable": false,
+		        "aTargets": [ -1 ]
+		     }],
+		    dom: 'Bfrtip',
+		    buttons: [
+		          'copy', 'csv', 'excel', 'pdf', 'print'
+		      ]
+	  	});
+
+	  	$(".table-desc").DataTable({
+		    "iDisplayLength": {{ getPaginationValue() }},
+		    "aaSorting": [[ 0, "desc" ]],
+		    "oLanguage": {
+		        "sInfo": "_START_ to _END_ of _TOTAL_ entries",
+		        "sLengthMenu": "Show _MENU_",
+		        "sSearch": "",
+		        "sEmptyTable": "No data found!",
+		        "oPaginate": {
+		          "sNext": '<i class="fa fa-hand-o-right"></i>',
+		          "sPrevious": '<i class="fa fa-hand-o-left"></i>',
+		        },
+		    },
+		    "aoColumnDefs": [{
+		        "bSortable": false,
+		        "aTargets": [ -1 ]
+		     }],
+		    dom: 'Bfrtip',
+		    buttons: [
+		          'copy', 'csv', 'excel', 'pdf', 'print'
+		      	]
+	  	});
+
+	  	$('.table-no-option').DataTable({
+		    "sLength": "",
+		    "paging": true,
+		    "lengthChange": false,
+		    "searching": false,
+		    "ordering": false,
+		    "info": true,
+		    "autoWidth": false
+	  	});
+
+	  	$(".dataTables_length select").addClass('select2-normal'); //Make the data-table length dropdown like select 2
+	  	$(".dt-buttons > .btn").addClass('btn-sm'); //Make the data-table option buttins smaller
 	}
 	//END DataTables
 
@@ -171,7 +256,7 @@
 	    }
 	  });
 
-	  $('.confirm').on('click', function (e) {
+      $('body').on('click', '.confirm', function(e) {
 	    e.preventDefault();
 
 	    var form = this.closest("form");
@@ -646,13 +731,11 @@
 	  /**
 	   * generate Code
 	   */
-	  $( '.generate-code' ).on( "click", function( event )
-	  {
+	  $( '.generate-code' ).on( "click", function( event ){
 	    var id = $( event.target ).attr('id');
 	    var func = 'generateCouponCode';
 
-	    switch(id)
-	    {
+	    switch(id){
 	      case 'gc-pin-number':
 	        func = 'generatePinCode';
 	        break;
@@ -668,226 +751,222 @@
 	  });
 	  //END Random code string maker
 
-	  // Toggle button
-	  $('.btn-toggle').on("click", function(e){
-	      e.preventDefault();
-	      var node = $( this );
+	  	// Toggle button
+	  	$('.btn-toggle').on("click", function(e){
+			e.preventDefault();
+			var node = $( this );
 
-	      if(node.hasClass('toggle-confirm')){
-	      	return new Promise(function(resolve, reject) {
-	            $.confirm({
-	                title: "{{ trans('app.confirmation') }}",
-	                content: "{{ trans('app.are_you_sure') }}",
-	                type: 'red',
-	                buttons: {
-			            'confirm': {
-			                text: '{{ trans('app.proceed') }}',
-			                keys: ['enter'],
-			                btnClass: 'btn-red',
-			                action: function () {
-				                notie.alert(4, "{{ trans('messages.confirmed') }}", 2);
-							    proceedToggleActionFor(node);
-			                }
-			            },
-			            'cancel': {
-			                text: '{{ trans('app.cancel') }}',
-			                action: function () {
-					            node.toggleClass('active');
-		                    	notie.alert(2, "{{ trans('messages.canceled') }}", 2);
-			                }
-			            },
-	                }
-	            });
-	        });
-	      }
+	      	if(node.hasClass('toggle-confirm')){
+	      		return new Promise(function(resolve, reject) {
+		            $.confirm({
+		                title: "{{ trans('app.confirmation') }}",
+		                content: "{{ trans('app.are_you_sure') }}",
+		                type: 'red',
+		                buttons: {
+				            'confirm': {
+				                text: '{{ trans('app.proceed') }}',
+				                keys: ['enter'],
+				                btnClass: 'btn-red',
+				                action: function () {
+				                	notie.alert(4, "{{ trans('messages.confirmed') }}", 2);
+							    	proceedToggleActionFor(node);
+			                	}
+			            	},
+			            	'cancel': {
+			                	text: '{{ trans('app.cancel') }}',
+			                	action: function () {
+					            	node.toggleClass('active');
+		                    		notie.alert(2, "{{ trans('messages.canceled') }}", 2);
+			                	}
+			            	},
+	                	}
+	            	});
+	        	});
+	      	}
+	      	proceedToggleActionFor(node);
+	  	});
 
-	      proceedToggleActionFor(node);
+	  	function proceedToggleActionFor(node){
+	      	$.ajax({
+	          	url: node.attr('href'),
+	          	type: 'POST',
+	          	data: {
+	              	"_token": "{{ csrf_token() }}",
+	              	"_method": "PUT",
+	          	},
+	          	success: function (data) {
+		            if (data == 'success'){
+		              	notie.alert(1, "{{ trans('responses.success') }}", 2);
+		            }
+		            else{
+		              	notie.alert(3, "{{ trans('responses.failed') }}", 2);
+		              	node.toggleClass('active');
+		            }
+	          	},
+	          	error: function (data) {
+		            if (data.status == 403){
+		              	notie.alert(2, "{{ trans('responses.denied') }}", 2);
+		            }
+		            else{
+		            	notie.alert(3, "{{ trans('responses.error') }}", 2);
+		            }
+		            node.toggleClass('active');
+	          	}
+	      	});
+	  	}
+	  	// END Toggle button
 
-	  });
+	  	//Ajax Form Submit
+	  	$('.ajax-submit-btn').on("click", function(e){
+	      	return;
+	  	});
 
-	  function proceedToggleActionFor(node){
-	      $.ajax({
-	          url: node.attr('href'),
-	          type: 'POST',
-	          data: {
-	              "_token": "{{ csrf_token() }}",
-	              "_method": "PUT",
-	          },
-	          success: function (data) {
-	            if (data == 'success'){
-	              notie.alert(1, "{{ trans('responses.success') }}", 2);
-	            }
-	            else{
-	              notie.alert(3, "{{ trans('responses.failed') }}", 2);
-	              node.toggleClass('active');
-	            }
-	          },
-	          error: function (data) {
-	            if (data.status == 403){
-	              notie.alert(2, "{{ trans('responses.denied') }}", 2);
-	            }
-	            else{
-	              notie.alert(3, "{{ trans('responses.error') }}", 2);
-	            }
-	            node.toggleClass('active');
-	          }
-	      });
-	  }
-	  // END Toggle button
+	  	$('.ajax-form').submit(function(e){
+	      	e.preventDefault();
+	      	//Return false and abort the action if the form validation failed
+	      	if($(this).find('input[type=submit]').hasClass('disabled')){
+	       		notie.alert(3, "{{ trans('responses.form_validation_failed') }}", 5);
+	        	return;
+	      	}
 
-	  // Ajax Form Submit
-	  $('.ajax-submit-btn').on("click", function(e){
-	      // console.log('btn');
-	      return;
-	  });
+	      	var action = this.action;
+	      	var data = $( this ).serialize();
+	      	$.ajax({
+		        url: action,
+		        type: 'POST',
+		        data: data,
+		        success: function (data) {
+		            $('#myDynamicModal').modal('hide');
+		            if (data == 'success'){
+		              	notie.alert(1, "{{ trans('responses.success') }}", 3);
+		            }
+		            else{
+		            	notie.alert(3, "{{ trans('responses.failed') }}", 3);
+		              	node.toggleClass('active');
+		            }
+		        },
+		        error: function (data) {
+		            $('#myDynamicModal').modal('hide');
+		            if (data.status == 403){
+		              notie.alert(2, "{{ trans('responses.denied') }}", 3);
+		            }
+		            else{
+		              	notie.alert(3, "{{ trans('responses.error') }}", 3);
+		            }
+		            node.toggleClass('active');
+		        }
+	      	});
+	  	});
+	 	// END Ajax Form Submit
 
-	  $('.ajax-form').submit(function(e){
-	      e.preventDefault();
-	      //Return false and abort the action if the form validation failed
-	      if($(this).find('input[type=submit]').hasClass('disabled')){
-	        notie.alert(3, "{{ trans('responses.form_validation_failed') }}", 5);
-	        return;
-	      }
+	  	// Offer Price form
+	  	var errHelp = '<div class="help-block with-errors"></div>';
+	  	$('#offer_price').keyup(
+	      	function(){
+	          	var offerPrice = this.value;
+	          	if (offerPrice !== ""){
+	              	$('#offer_start').attr('required', 'required');
+	              	$('#offer_end').attr('required', 'required');
+	          	}
+	          	else{
+	              	$('#offer_start').removeAttr('required');
+	              	$('#offer_end').removeAttr('required');
+	          	}
+	      	}
+	  	);
+	  	//END Offer Price form
 
-	      var action = this.action;
-	      var data = $( this ).serialize();
-
-	      $.ajax({
-	          url: action,
-	          type: 'POST',
-	          data: data,
-	          success: function (data) {
-	            $('#myDynamicModal').modal('hide');
-	            if (data == 'success'){
-	              notie.alert(1, "{{ trans('responses.success') }}", 3);
-	            }
-	            else{
-	              notie.alert(3, "{{ trans('responses.failed') }}", 3);
-	              node.toggleClass('active');
-	            }
-	          },
-	          error: function (data) {
-	            $('#myDynamicModal').modal('hide');
-	            if (data.status == 403){
-	              notie.alert(2, "{{ trans('responses.denied') }}", 3);
-	            }
-	            else{
-	              notie.alert(3, "{{ trans('responses.error') }}", 3);
-	            }
-	            node.toggleClass('active');
-	          }
-	      });
-	  });
-	  // END Ajax Form Submit
-
-	  // Offer Price form
-	  var errHelp = '<div class="help-block with-errors"></div>';
-	  $('#offer_price').keyup(
-	      function(){
-	          var offerPrice = this.value;
-	          if (offerPrice !== ""){
-	              $('#offer_start').attr('required', 'required');
-	              $('#offer_end').attr('required', 'required');
-	          }
-	          else{
-	              $('#offer_start').removeAttr('required');
-	              $('#offer_end').removeAttr('required');
-	          }
-	      }
-	  );
-	  //END Offer Price form
-
-	  // Collapsible fieldset
-	  $(function () {
-	      $('fieldset.collapsible > legend').prepend('<span class="btn-box-tool"><i class="fa fa-toggle-up"></i></span>');
-	      $('fieldset.collapsible > legend').click(function () {
-	          $(this).find('span i').toggleClass('fa-toggle-up fa-toggle-down');
-	          var $divs = $(this).siblings().toggle("slow");
-	      });
-	  });
-	  //END collapsible fieldset
+	  	// Collapsible fieldset
+	  	$(function () {
+			$('fieldset.collapsible > legend').prepend('<span class="btn-box-tool"><i class="fa fa-toggle-up"></i></span>');
+			$('fieldset.collapsible > legend').click(function () {
+			  	$(this).find('span i').toggleClass('fa-toggle-up fa-toggle-down');
+			  	var $divs = $(this).siblings().toggle("slow");
+			});
+  		});
+	  	//END collapsible fieldset
 	}
 	//END App plugins
 
 	//Mass selection and action section
 	function initMassActions()
 	{
-	  //Enable iCheck plugin for checkboxes
-	  //iCheck for checkbox and radio inputs
-	  $('#massSelectArea input[type="checkbox"]').iCheck({
-	    checkboxClass: 'icheckbox_minimal-blue',
-	    radioClass: 'iradio_flat-blue'
-	  });
+	  	//Enable iCheck plugin for checkboxes
+	  	//iCheck for checkbox and radio inputs
+	  	$('#massSelectArea input[type="checkbox"]').iCheck({
+	    	checkboxClass: 'icheckbox_minimal-blue',
+	    	radioClass: 'iradio_flat-blue'
+	 	});
 
-	  //Enable check and uncheck all functionality
-	  $(".checkbox-toggle").click(function () {
-	    var clicks = $(this).data('clicks');
-	    if (clicks) {
-	      $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-	      unCheckAll(); //Uncheck all checkboxes
-	    } else {
-	      $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-	      checkAll();  //Check all checkboxes
-	    }
-	    $(this).data("clicks", !clicks);
-	  });
+	  	//Enable check and uncheck all functionality
+	  	$(".checkbox-toggle").click(function () {
+		    var clicks = $(this).data('clicks');
+		    if (clicks) {
+		      $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+		      unCheckAll(); //Uncheck all checkboxes
+		    } else {
+		      $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+		      checkAll();  //Check all checkboxes
+		    }
+		    $(this).data("clicks", !clicks);
+	  	});
 
-	  //Trigger the mass action functionality
-	  $('.massAction').on('click', function(e) {
-	    e.preventDefault();
+	  	//Trigger the mass action functionality
+	  	$('.massAction').on('click', function(e) {
+		    e.preventDefault();
 
-	    var doAfter = $(this).data('doafter');
+		    var doAfter = $(this).data('doafter');
 
-	    var allVals = [];
-	    $(".massCheck:checked").each(function() {
-	        allVals.push($(this).attr('id'));
-	    });
+		    var allVals = [];
+		    $(".massCheck:checked").each(function() {
+		        allVals.push($(this).attr('id'));
+		    });
 
-	    if(allVals.length <= 0){
-	        notie.alert(3, "{{ trans('responses.select_some_item') }}", 2);
-	    } else {
-	        $.ajax({
-	            url: $(this).attr('href'),
-	            type: 'POST',
-	            data: {
-	                "_token": "{{ csrf_token() }}",
-	                "ids": allVals,
-	            },
-	            success: function (data) {
-	                if (data['success']) {
-	                    notie.alert(1, data['success'], 2);
-	                    switch(doAfter){
-	                      case 'reload':
-	                          window.location.reload();
-	                          break;
-	                      case 'remove':
-	                          $(".massCheck:checked").each(function() {
-	                            $(this).parents("tr").remove();
-	                          });
-	                          break;
-	                      default:
-	                        unCheckAll(); //Uncheck all checkboxes
-	                    }
-	                } else if (data['error']) {
-	                    notie.alert(3, data['error'], 2);
-	                } else {
-	                    notie.alert(3, "{{ trans('responses.failed') }}", 2);
-	                }
-	            },
-	            error: function (data) {
-	              notie.alert(3, "{{ trans('responses.error') }}", 2);
-	            }
-	        });
-	    }
-	  });
+		    if(allVals.length <= 0){
+		        notie.alert(3, "{{ trans('responses.select_some_item') }}", 2);
+		    } else {
+		        $.ajax({
+		            url: $(this).attr('href'),
+		            type: 'POST',
+		            data: {
+		                "_token": "{{ csrf_token() }}",
+		                "ids": allVals,
+		            },
+		            success: function (data) {
+		                if (data['success']) {
+		                    notie.alert(1, data['success'], 2);
+		                    switch(doAfter){
+		                      case 'reload':
+		                          window.location.reload();
+		                          break;
+		                      case 'remove':
+		                          $(".massCheck:checked").each(function() {
+		                            $(this).parents("tr").remove();
+		                          });
+		                          break;
+		                      default:
+		                        unCheckAll(); //Uncheck all checkboxes
+		                    }
+		                } else if (data['error']) {
+		                    notie.alert(3, data['error'], 2);
+		                } else {
+		                    notie.alert(3, "{{ trans('responses.failed') }}", 2);
+		                }
+		            },
+		            error: function (data) {
+		              notie.alert(3, "{{ trans('responses.error') }}", 2);
+		            }
+		        });
+		    }
+	  	});
 	}
 
 	function checkAll(){
-	  $("#massSelectArea input[type='checkbox']").iCheck("check");
+		$("#massSelectArea input[type='checkbox']").iCheck("check");
 	}
 
 	function unCheckAll(){
-	  $("#massSelectArea input[type='checkbox']").iCheck("uncheck");
+		$("#massSelectArea input[type='checkbox']").iCheck("uncheck");
 	}
 	//End Mass selection and action section
 
@@ -911,8 +990,7 @@
 	        url: url,
 	        data: "funcName="+ funcName + "&args=" + args,
 	        async: false,
-	        success: function(v)
-	        {
+	        success: function(v){
 	          result = v;
 	        }
 	    });

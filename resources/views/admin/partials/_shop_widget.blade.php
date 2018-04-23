@@ -14,7 +14,7 @@
             {{ trans('app.email') . ': ' . $shop->email }}
         </span>
         <span class="admin-user-widget-text text-muted">
-            {{ trans('app.phone') . ': ' . $shop->primaryAddress->phone }}
+            {{ trans('app.phone') . ': ' . optional($shop->primaryAddress)->phone }}
         </span>
 
         @can('view', $shop)

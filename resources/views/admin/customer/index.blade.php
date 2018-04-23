@@ -18,63 +18,19 @@
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
-	      <table class="table table-hover table-2nd-short">
-	        <thead>
-	        <tr>
-	          <th>{{ trans('app.nice_name') }}</th>
-	          <th>{{ trans('app.full_name') }}</th>
-	          <th>{{ trans('app.email') }}</th>
-	          <th>{{ trans('app.orders') }}</th>
-	          <th>{{ trans('app.status') }}</th>
-	          <th>{{ trans('app.option') }}</th>
-	        </tr>
-	        </thead>
-	        <tbody>
-		        @foreach($customers as $customer )
-				<tr>
-					<td>
-			            @if($customer->image)
-							<img src="{{ get_storage_file_url(optional($customer->image)->path, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-			            @else
-		            		<img src="{{ get_gravatar_url($customer->email, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-			            @endif
-						<p class="indent10">
-							{{ $customer->nice_name }}
-						</p>
-					</td>
-			        <td>{{ $customer->name }}</td>
-			        <td>{{ $customer->email }}</td>
-					<td>
-						<span class="label label-default">{{ $customer->orders_count }}</span>
-					</td>
-			        <td>{{ ($customer->active) ? trans('app.active') : trans('app.inactive') }}</td>
-			        <td class="row-options">
-						@can('view', $customer)
-		                    <a href="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.profile') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
-						@endcan
-
-						@can('update', $customer)
-		                    <a href="{{ route('admin.admin.customer.edit', $customer->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
-						@endcan
-
-						@can('view', $customer)
-							@if($customer->hasAddress())
-								<a href="{{ route('address.addresses', ['customer', $customer->id]) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.show_addresses') }}" class="fa fa-address-card-o"></i></a>&nbsp;
-							@else
-								<a href="{{ route('address.create', ['customer', $customer->id]) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
-							@endif
-						@endcan
-
-						@can('delete', $customer)
-		                    {!! Form::open(['route' => ['admin.admin.customer.trash', $customer->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-		                        {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
-						@endcan
-			        </td>
-			    </tr>
-		        @endforeach
-	        </tbody>
-	      </table>
+		    <table class="table table-hover" id="all-customer-table">
+		        <thead>
+			        <tr>
+			          <th>{{ trans('app.nice_name') }}</th>
+			          <th>{{ trans('app.full_name') }}</th>
+			          <th>{{ trans('app.email') }}</th>
+			          <th>{{ trans('app.orders') }}</th>
+			          <th>{{ trans('app.option') }}</th>
+			        </tr>
+		        </thead>
+		        <tbody>
+		        </tbody>
+		    </table>
 	    </div> <!-- /.box-body -->
 	</div> <!-- /.box -->
 

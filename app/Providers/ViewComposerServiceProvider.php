@@ -247,11 +247,10 @@ class ViewComposerServiceProvider extends ServiceProvider
     {
         View::composer(
 
-                'admin.shop._create',
+                'admin.shop._edit',
 
                 function($view)
                 {
-                    $view->with('merchants', ListHelper::new_merchants());
                     $view->with('timezones', ListHelper::timezones());
                 });
     }

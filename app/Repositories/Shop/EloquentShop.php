@@ -36,18 +36,6 @@ class EloquentShop extends EloquentRepository implements BaseRepository, ShopRep
         return $shop->staffs()->onlyTrashed()->get();
     }
 
-    public function store(Request $request)
-    {
-        $shop = parent::store($request);
-
-        $this->saveAdrress($request->all(), $shop);
-
-        if ($request->hasFile('image'))
-            $shop->saveImage($request->file('image'));
-
-        return $shop;
-    }
-
     public function update(Request $request, $id)
     {
         $shop = parent::update($request, $id);

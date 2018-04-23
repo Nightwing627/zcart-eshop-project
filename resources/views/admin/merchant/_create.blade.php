@@ -4,7 +4,7 @@
 }
 </style>
 
-<div class="modal-dialog modal-md">
+<div class="modal-dialog modal-lg">
     <div class="modal-content">
     	{!! Form::open(['route' => 'admin.vendor.merchant.store', 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
@@ -20,5 +20,3 @@
         {!! Form::close() !!}
     </div> <!-- / .modal-content -->
 </div> <!-- / .modal-dialog -->
-
-

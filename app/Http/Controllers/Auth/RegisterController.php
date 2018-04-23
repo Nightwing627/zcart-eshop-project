@@ -73,7 +73,7 @@ class RegisterController extends Controller
             $merchant = $this->create($request->all());
 
             // Dispatching Shop create job
-            CreateShopForMerchant::dispatch($merchant, $request->get('shop_name'));
+            CreateShopForMerchant::dispatch($merchant, $request->all());
 
             Auth::guard()->login($merchant);
 

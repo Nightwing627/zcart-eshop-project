@@ -1,10 +1,10 @@
 <div class="form-group">
   {!! Form::label('title', trans('app.form.blog_title').'*') !!}
-  {!! Form::text('title', null, ['class' => 'form-control makeSlug', 'placeholder' => rans('app.placeholder.title'), 'required']) !!}
+  {!! Form::text('title', null, ['class' => 'form-control makeSlug', 'placeholder' => trans('app.placeholder.title'), 'required']) !!}
 </div>
 <div class="form-group">
   {!! Form::label('slug', trans('app.form.slug').'*') !!}
-  {!! Form::text('slug', null, ['class' => 'form-control slug', 'placeholder' => rans('app.placeholder.slug'), 'required']) !!}
+  {!! Form::text('slug', null, ['class' => 'form-control slug', 'placeholder' => trans('app.placeholder.slug'), 'required']) !!}
   <div class="help-block with-errors"></div>
 </div>
 <div class="form-group">

@@ -95,7 +95,7 @@
 
 	            		@if(config('system_settings.address_geocode'))
 					        <div class="row">
-			                    <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q={{ urlencode($merchant->primaryAddress->toString()) }}&output=embed"></iframe>
+			                    <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q={{ urlencode(optional($merchant->primaryAddress)->toString()) }}&output=embed"></iframe>
 					        </div>
 					        <div class="help-block" style="margin-bottom: -10px;"><i class="fa fa-warning"></i> {{ trans('app.map_location') }}</div>
 				       	@endif
