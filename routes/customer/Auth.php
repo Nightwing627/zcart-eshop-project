@@ -6,6 +6,7 @@
 	// Register
    Route::get('/register', 'Auth\CustomerRegisterController@showRegistrationForm')->name('register');
    Route::post('/register', 'Auth\CustomerRegisterController@register')->name('register.submit');
+   Route::get('/verify/{token?}', 'Auth\CustomerRegisterController@verify')->name('verify');
 
    // Forgot Password
    Route::get('password/reset', 'Auth\CustomerForgotPasswordController@showLinkRequestForm')->name('password.request');

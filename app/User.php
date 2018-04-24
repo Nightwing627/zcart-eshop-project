@@ -94,6 +94,8 @@ class User extends Authenticatable
                     'description',
                     'sex',
                     'active',
+                    'remember_token',
+                    'verification_token',
                 ];
 
     /**
@@ -266,6 +268,16 @@ class User extends Authenticatable
     public function isMerchant()
     {
         return $this->role_id === Role::MERCHANT;
+    }
+
+    /**
+     * Check if the user is Verified
+     *
+     * @return bool
+     */
+    public function isVerified()
+    {
+        return $this->verification_token == Null;
     }
 
     /**

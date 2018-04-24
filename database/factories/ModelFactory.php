@@ -40,6 +40,7 @@ $factory->define(App\Merchant::class, function (Faker $faker) {
         'description' => $faker->text(500),
         'active' => $faker->boolean,
         'remember_token' => str_random(10),
+        'verification_token' => rand(0,1) == 1 ? Null : str_random(10),
     ];
 });
 
@@ -54,6 +55,7 @@ $factory->define(App\Customer::class, function (Faker $faker) {
         'description' => $faker->text(500),
         'active' => $faker->boolean,
         'remember_token' => str_random(10),
+        'verification_token' => rand(0,1) == 1 ? Null : str_random(10),
     ];
 });
 

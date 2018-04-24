@@ -14,6 +14,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Requests\Validations\RegisterMerchantRequest;
+use App\Notifications\Auth\SendVerificationEmail as EmailVerificationNotification;
 use App\Notifications\SuperAdmin\VerdorRegistered as VerdorRegisteredNotification;
 
 class RegisterController extends Controller
@@ -45,7 +46,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest')->except('verify');
     }
 
     /**
@@ -117,6 +118,7 @@ class RegisterController extends Controller
         return User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'verification_token' => str_random(40)
         ]);
     }
 
@@ -135,6 +137,41 @@ class RegisterController extends Controller
         event(new ShopCreated($merchant->owns));
 
         return;
+    }
+
+    /**
+     * Verify the User the given token.
+     *
+     * @param  string|null  $token
+     * @return \Illuminate\Http\Response
+     */
+    public function verify($token = null)
+    {
+        if(!$token){
+            $user = Auth::user();
+
+            $user->verification_token = str_random(40);
+
+            if($user->save()){
+                $user->notify(new EmailVerificationNotification($user));
+
+                return redirect()->back()->with('success', trans('auth.verification_link_sent'));
+            }
+
+            return redirect()->back()->with('success', trans('auth.verification_link_sent'));
+        }
+
+        try{
+            $user = User::where('verification_token', $token)->firstOrFail();
+
+            $user->verification_token = Null;
+
+            if($user->save())
+                return redirect()->route('admin.admin.dashboard')->with('success', trans('auth.verification_successful'));
+
+        } catch(\Exception $e){
+            return redirect()->route('admin.admin.dashboard')->with('error', trans('auth.verification_failed'));
+        }
     }
 
     /**

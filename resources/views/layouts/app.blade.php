@@ -62,6 +62,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ route('customer.dashboard') }}"><i class="fa fa-btn fa-dashboard"></i>Dashboard</a></li>
                                 <li><a href="{{ route('customer.logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>

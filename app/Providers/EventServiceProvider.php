@@ -149,6 +149,9 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         // User Events
+        'Illuminate\Auth\Events\Registered' => [
+            'App\Listeners\User\SendVerificationEmail',
+        ],
         'App\Events\User\UserCreated' => [
             'App\Listeners\User\SendLoginInfo',
         ],

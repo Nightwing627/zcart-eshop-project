@@ -1,7 +1,7 @@
 <?php
 
-Route::auth();
-Route::get('/logout' , 'Auth\LoginController@logout');
+include('admin/Auth.php');
+
 Route::get('/', 'HomeController@index')->name('homepage');
 // Route::get('welcome', 'HomeController@index')->name('welcome');
 

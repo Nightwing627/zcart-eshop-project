@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\HasActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Notifications\CustomerResetPasswordNotification;
+use App\Notifications\Auth\CustomerResetPasswordNotification;
 
 class Customer extends Authenticatable
 {
@@ -102,7 +102,9 @@ class Customer extends Authenticatable
                 'bio',
                 'sex',
                 'description',
-                'active'
+                'active',
+                'remember_token',
+                'verification_token',
             ];
 
     /**
@@ -166,6 +168,16 @@ class Customer extends Authenticatable
     public function getName()
     {
         return $this->nice_name ?: $this->name;
+    }
+
+    /**
+     * Check if the user is Verified
+     *
+     * @return bool
+     */
+    public function isVerified()
+    {
+        return $this->verification_token == Null;
     }
 
     /**

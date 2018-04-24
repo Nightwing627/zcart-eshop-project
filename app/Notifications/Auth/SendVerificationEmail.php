@@ -1,26 +1,34 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Auth;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class CustomerResetPasswordNotification extends Notification implements ShouldQueue
+class SendVerificationEmail extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $token;
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 5;
+
+    public $user;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($user)
     {
-        $this->token = $token;
+        $this->user = $user;
     }
 
     /**
@@ -42,10 +50,14 @@ class CustomerResetPasswordNotification extends Notification implements ShouldQu
      */
     public function toMail($notifiable)
     {
+        if($this->user instanceof User)
+            $url = route('verify', $this->user->verification_token);
+        else
+            $url = route('customer.verify', $this->user->verification_token);
+
         return (new MailMessage)
-                    ->subject(trans('notifications.customer_password_reset.subject'))
-                    ->line(trans('notifications.customer_password_reset.message'))
-                    ->action(trans('notifications.customer_password_reset.action.text'), url(config('app.url').route('customer.password.reset', $this->token, false)));
+                        ->subject( trans('notifications.email_verification.subject', ['marketplace' => get_platform_title()]) )
+                        ->markdown('admin.mail.auth.send_verification_email', ['url' => $url, 'user' => $this->user]);
     }
 
     /**

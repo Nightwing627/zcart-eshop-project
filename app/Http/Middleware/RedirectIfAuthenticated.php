@@ -23,8 +23,9 @@ class RedirectIfAuthenticated
                     return redirect()->route('customer.dashboard');
                 break;
             default:
-                if (Auth::guard($guard)->check())
+                if (Auth::guard($guard)->check()){
                     return redirect()->to('admin/dashboard');
+                }
                 break;
         }
 

@@ -9,6 +9,7 @@ use App\Events\Customer\Registered;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Notifications\Auth\SendVerificationEmail as EmailVerificationNotification;
 
 class CustomerRegisterController extends Controller
 {
@@ -39,7 +40,7 @@ class CustomerRegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:customer');
+        $this->middleware('guest:customer')->except('verify');
     }
 
     /**
@@ -110,7 +111,43 @@ class CustomerRegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'verification_token' => str_random(40)
         ]);
+    }
+
+    /**
+     * Verify the User the given token.
+     *
+     * @param  string|null  $token
+     * @return \Illuminate\Http\Response
+     */
+    public function verify($token = null)
+    {
+        if(!$token){
+            $customer = Auth::guard('customer')->user();
+
+            $customer->verification_token = str_random(40);
+
+            if($customer->save()){
+                $customer->notify(new EmailVerificationNotification($customer));
+
+                return redirect()->back()->with('success', trans('auth.verification_link_sent'));
+            }
+
+            return redirect()->back()->with('success', trans('auth.verification_link_sent'));
+        }
+
+        try{
+            $customer = Customer::where('verification_token', $token)->firstOrFail();
+
+            $customer->verification_token = Null;
+
+            if($customer->save())
+                return redirect()->route('customer.dashboard')->with('success', trans('auth.verification_successful'));
+
+        } catch(\Exception $e){
+            return redirect()->route('customer.dashboard')->with('error', trans('auth.verification_failed'));
+        }
     }
 
     /**

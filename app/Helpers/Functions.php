@@ -1023,16 +1023,16 @@ if ( ! function_exists('get_payment_method_type') )
 
             case \App\PaymentMethod::TYPE_CREDIT_CARD:
                 return [
-                        'name' => trans('app.stpayment_method_type.credit_card.name'),
+                        'name' => trans('app.payment_method_type.credit_card.name'),
                         'description' => trans('app.payment_method_type.credit_card.description'),
-                        'admin_description' => trans('app.payment_method_type.paypal.admin_description'),
+                        'admin_description' => trans('app.payment_method_type.credit_card.admin_description'),
                     ];
 
             case \App\PaymentMethod::TYPE_MANUAL:
                 return [
                         'name' => trans('app.payment_method_type.manual.name'),
                         'description' => trans('app.payment_method_type.manual.description'),
-                        'admin_description' => trans('app.payment_method_type.paypal.admin_description'),
+                        'admin_description' => trans('app.payment_method_type.manual.admin_description'),
                     ];
         }
     }

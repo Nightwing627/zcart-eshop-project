@@ -485,14 +485,6 @@
 											<span class="spacer10"></span>
 
 											<p class="list-group-item-text">
-												{{--
-												@php
-												 	echo preg_replace_callback("~([a-z_]+)\(\)~",
-												     function ($m){
-												          return $m[1]();
-												     }, $payment_provider->admin_description);
-												 @endphp --}}
-
 												{!! $payment_provider->admin_description !!}
 											</p>
 

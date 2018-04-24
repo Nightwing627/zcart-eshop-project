@@ -29,9 +29,9 @@ return [
     'customer_registered' => [
         'subject' => 'Welcome to the :marketplace marketplace!',
         'greeting' => 'Congratulation :customer!',
-        'message' => 'Your account has been created successfully! Click the button below to login into your profile page.',
+        'message' => 'Your account has been created successfully! Click the button below to verify your email address.',
         'action' => [
-            'text' => 'Visit the marketplace',
+            'text' => 'Verify me',
             'color' => 'green',
         ],
     ],
@@ -374,6 +374,17 @@ return [
         'message' => 'Your marketplace :marketplace just got a new verdor with shop name <strong>:shop_name</strong> and the merchant\'s email address is :merchant_email',
         'action' => [
             'text' => 'Go to the Dashboard',
+            'color' => 'green',
+        ],
+    ],
+
+    // User/Merchant Notification
+    'email_verification' => [
+        'subject' => 'Verify your :marketplace account!',
+        'greeting' => 'Congratulation :user!',
+        'message' => 'Your account has been created successfully! Click the button below to verify your email address.',
+        'action' => [
+            'text' => 'Verify me',
             'color' => 'green',
         ],
     ],
