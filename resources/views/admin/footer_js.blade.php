@@ -305,14 +305,16 @@
 
 	$(".select2-tag").select2({
 	    placeholder: "{{ trans('app.placeholder.tags') }}",
-	    allowClear: true,
 	    tags: true,
+	    allowClear: true,
 	    tokenSeparators: [',', ';'],
 	});
 
 	$(".select2-set_attribute").select2({
 	    placeholder: "{{ trans('app.placeholder.attribute_values') }}",
+	    minimumResultsForSearch: -1,
 	    tags: true,
+	    allowClear: true,
 	    tokenSeparators: [',', ';'],
 	});
 
@@ -356,12 +358,9 @@
 	          delay: 250,
 	          data: "id="+ID,
 	          url: url,
-	          success: function(result)
-	          {
+	          success: function(result){
 	            var data = [];
-
-	            if(result.length !== 0)
-	            {
+	            if(result.length !== 0){
 	              data = $.map(result, function(val, id) {
 	                  return { id: id, text: val };
 	              })
@@ -379,7 +378,6 @@
 	                  return results;
 	              }
 	            });
-
 	          }
 	      });
 	    }
@@ -395,17 +393,38 @@
 
 	  $(".select2").not(".dataTables_length .select2").css('width', '100%');
 
+	  	//product Seach
+	  $('#searchProduct').on('keyup', function(e){
+	  	var showResult = $("#productFounds");
+	  	var q = $(this).val();
+	  	showResult.html('');
+	  	if(q.length < 3){
+		  	showResult.html('<span class="lead indent50">{{ trans('validation.min.string', ['attribute' => trans('app.form.search'), 'min' => '3' ]) }}</span>');
+		  	return;
+	  	}
+
+	  	showResult.html('<span class="lead indent50">{{trans('responses.searching')}}</span>');
+		$.ajax({
+			data: "q="+q,
+	      	url : "{{ route('search.product') }}",
+	      	success: function(results){
+			  	showResult.html(results);
+	      	}
+        });
+	  });
+	  //End product Seach
+
 	  //Customer Seach
 	  $('.searchCustomer').select2({
 	    ajax: {
-	      delay: 250, // wait 250 milliseconds before triggering the request
 	      url : "{{ route('search.customer') }}",
 	      dataType: 'json',
 	      processResults: function (data) {
 	        return {
 	          results: data
 	        };
-	      }
+	      },
+	      cache: true
 	    },
 	    placeholder: "{{ trans('app.placeholder.search_customer') }}",
 	  });

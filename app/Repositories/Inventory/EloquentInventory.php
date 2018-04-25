@@ -36,11 +36,6 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
         return $this->model->onlyTrashed()->with('product', 'image')->get();
     }
 
-    public function search(Request $request)
-    {
-        return Product::active()->search($request->input('search'))->get();
-    }
-
     public function checkInveoryExist($productId)
     {
         return $this->model->mine()->where('product_id', $productId)->first();

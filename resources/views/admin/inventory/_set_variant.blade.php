@@ -10,17 +10,11 @@
                 <div class="form-group">
                     {!! Form::label($attribute->name, $attribute->name, ['class' => 'with-help']) !!}
                     <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.set_attribute') }}"></i>
-
-                    <select class="form-control select2-set_attribute" id="{{ $attribute->name }}" name="{{ $attribute->id }}[]" multiple='multiple'>
-
+                    <select class="form-control select2-set_attribute" id="{{ $attribute->name }}" name="{{ $attribute->id }}[]" multiple='multiple' placeholder="{{ trans('app.placeholder.attribute_values') }}">
                         @foreach($attribute->attributeValues as $attributeValue)
-
                             <option value="{{ $attributeValue->id }}">{{ $attributeValue->value }}</option>
-
                         @endforeach
-
                     </select>
-
                 </div>
             @endforeach
         </div>
@@ -30,4 +24,3 @@
         {!! Form::close() !!}
     </div> <!-- / .modal-content -->
 </div> <!-- / .modal-dialog -->
-

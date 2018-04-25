@@ -1,13 +1,10 @@
 @extends('admin.layouts.master')
 
-@section('buttons')
-	@can('create', App\Inventory::class)
-		<a href="{{ route('admin.exim', 'products') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
-		<a href="{{ route('admin.stock.inventory.showSearchForm') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_inventory') }}</a>
-	@endcan
-@endsection
-
 @section('content')
+	@can('create', App\Inventory::class)
+		@include('admin.inventory._add')
+	@endcan
+
 	<div class="box">
 		<div class="box-header with-border">
 			<h3 class="box-title">{{ trans('app.inventories') }}</h3>

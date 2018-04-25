@@ -47,31 +47,6 @@ class InventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showSearchForm()
-    {
-        return view('admin.inventory._search_form');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search(ProductSearchRequest $request)
-    {
-        $products = $this->inventory->search($request);
-
-        if($products->isEmpty())
-            return back()->with('warning', trans('messages.nofound', ['model' => trans('app.model.product')]));
-
-        return view('admin.inventory.found', compact('products', $products));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function setVariant(Request $request, $product_id)
     {
         return view('admin.inventory._set_variant', compact('product_id'));
@@ -86,9 +61,8 @@ class InventoryController extends Controller
     {
         $inInventory = $this->inventory->checkInveoryExist($id);
 
-        if($inInventory){
+        if($inInventory)
             return redirect()->route('admin.stock.inventory.edit', $inInventory->id)->with('warning', trans('messages.inventory_exist'));
-        }
 
         $product = $this->inventory->findProduct($id);
 

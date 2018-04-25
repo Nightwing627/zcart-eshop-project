@@ -1445,7 +1445,7 @@ fieldset legend {
 }
 
 .form-control {
-  border-radius: 0;
+  border-radius: 0 !important;
   box-shadow: none;
   border-color: #d2d6de;
 }
@@ -3050,7 +3050,7 @@ table.text-center th {
   color: #999;
 }
 
-.dataTable thead tr th:last-child, .dataTable tbody tr td:last-child{
+.dataTable thead tr th:last-child, .dataTable tbody tr td:last-child:not(.dataTables_empty){
   text-align: right !important;
   padding-right: 10px !important;
 }

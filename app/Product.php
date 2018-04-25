@@ -5,12 +5,13 @@ namespace App;
 use Auth;
 use App\Common\Taggable;
 use App\Common\Imageable;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use SoftDeletes, Taggable, Imageable;
+    use SoftDeletes, Taggable, Imageable, Searchable;
 
     /**
      * The database table used by the model.
@@ -64,6 +65,39 @@ class Product extends Model
                         'sale_count',
                         'active'
                     ];
+
+    /**
+     * Get the value used to index the model.
+     *
+     * @return mixed
+     */
+    public function getScoutKey()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array['id'] = $this->id;
+        $array['shop_id'] = $this->shop_id;
+        $array['manufacturer_id'] = $this->manufacturer_id;
+        $array['name'] = $this->name;
+        $array['model_number'] = $this->model_number;
+        $array['mpn'] = $this->mpn;
+        $array['gtin'] = $this->gtin;
+        $array['description'] = $this->description;
+        $array['slug'] = $this->slug;
+        $array['active'] = $this->active;
+
+        return $array;
+    }
 
     /**
      * Get the origin associated with the product.
@@ -168,18 +202,6 @@ class Product extends Model
     // {
     //      return $attribute ? get_formated_decimal($attribute) : $attribute;
     // }
-
-    /**
-     * Scope a query to only include active products.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeSearch($query, $match)
-    {
-        return $query->where('gtin', $match)
-                    ->orWhere('model_number', 'LIKE', '%'. $match .'%')
-                    ->orWhere('name', 'LIKE', '%'. $match .'%');
-    }
 
     /**
      * Scope a query to only include records from the users shop.

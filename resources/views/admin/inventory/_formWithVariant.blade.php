@@ -165,7 +165,7 @@
             </div>
           </td>
           <td>
-            <div class="form-group">
+            <div class="form-group text-muted">
               <i class="fa fa-close deleteThisRow" data-toggle="tooltip" data-placement="left" title="{{ trans('help.delete_this_combination') }}"></i>
             </div>
           </td>

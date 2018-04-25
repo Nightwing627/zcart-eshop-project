@@ -172,6 +172,8 @@ return [
         'Collective\Html\HtmlServiceProvider',
         'Intervention\Image\ImageServiceProvider',
         'Laracasts\Flash\FlashServiceProvider',
+        Laravel\Scout\ScoutServiceProvider::class,
+        TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Ixudra\Curl\CurlServiceProvider::class,
 

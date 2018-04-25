@@ -6,6 +6,7 @@ use Hash;
 use App\Common\Taggable;
 use App\Common\Imageable;
 use App\Common\Addressable;
+use Laravel\Scout\Searchable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -17,7 +18,7 @@ use App\Notifications\Auth\CustomerResetPasswordNotification;
 class Customer extends Authenticatable
 {
 
-    use SoftDeletes, Notifiable, Addressable, Taggable, Imageable, HasActivity;
+    use SoftDeletes, Notifiable, Addressable, Taggable, Imageable, HasActivity, Searchable;
 
    /**
      * The guard used by the model.
@@ -69,6 +70,54 @@ class Customer extends Authenticatable
     protected static $logName = 'customer';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+                'name',
+                'nice_name',
+                'email',
+                'password',
+                'dob',
+                'sex',
+                'description',
+                'remember_token',
+                'verification_token',
+                'active',
+            ];
+
+    /**
+     * Get the value used to index the model.
+     *
+     * @return mixed
+     */
+    public function getScoutKey()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array['id'] = $this->id;
+        $array['name'] = $this->name;
+        $array['nice_name'] = $this->nice_name;
+        $array['email'] = $this->email;
+        $array['description'] = $this->description;
+        $array['dob'] = $this->dob;
+        $array['active'] = $this->active;
+
+        return $array;
+    }
+
+    /**
      * Route notifications for the mail channel.
      *
      * @return string
@@ -87,25 +136,6 @@ class Customer extends Authenticatable
     {
         return $this->primaryAddress->phone;
     }
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-                'name',
-                'nice_name',
-                'email',
-                'password',
-                'dob',
-                'bio',
-                'sex',
-                'description',
-                'active',
-                'remember_token',
-                'verification_token',
-            ];
 
     /**
      * Get all of the country for the country.
@@ -203,4 +233,15 @@ class Customer extends Authenticatable
     {
         $this->notify(new CustomerResetPasswordNotification($token));
     }
+
+    /**
+     * Scope a query to only include active records.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
+
 }
