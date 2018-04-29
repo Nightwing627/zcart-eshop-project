@@ -130,6 +130,11 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,add,edit,delete'
         ],
 
+        'Subscription Plan' => [
+            'access' => 'Super Admin',
+            'actions' => 'view,add,edit,delete'
+        ],
+
         'Shipping Zone' => [
             'access' => 'Merchant',
             'actions' => 'view,add,edit,delete'

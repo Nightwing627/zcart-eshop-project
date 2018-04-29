@@ -21,7 +21,7 @@ class CreateCustomersTable extends Migration
             $table->date('dob')->nullable();
             $table->string('sex')->nullable();
             $table->longtext('description')->nullable();
-            $table->timestampTz('last_visited_on')->nullable();
+            $table->timestampTz('last_visited_at')->nullable();
             $table->ipAddress('last_visited_from')->nullable();
             $table->boolean('active')->nullable();
             $table->string('verification_token', 100)->nullable();

@@ -60,8 +60,10 @@ return [
     'promotions' => 'Promotions',
     'coupons' => 'Coupons',
     'gift_cards' => 'Gift cards',
+    'faqs' => 'Faqs',
 
     'reports' => 'Reports',
     'sales_report' => 'Sales',
     'system_settings' => 'System settings',
+    'subscription_plans' => 'Plans',
 ];

@@ -11,6 +11,7 @@ use App\Ticket;
 use App\Message;
 use App\Refund;
 use App\Dispute;
+use App\FaqTopic;
 use App\Attribute;
 use App\Permission;
 use App\PaymentMethod;
@@ -73,6 +74,14 @@ class ListHelper
             Ticket::STATUS_CLOSED   => trans("app.statuses.closed"),
             Ticket::STATUS_SOLVED   => trans("app.statuses.solved"),
             Ticket::STATUS_SPAM     => trans("app.statuses.spam"),
+        ];
+    }
+
+    public static function faq_topics_for()
+    {
+        return  [
+            'Merchant'    => trans("app.merchants"),
+            'Customer'    => trans("app.customers"),
         ];
     }
 
@@ -288,6 +297,16 @@ class ListHelper
         }
 
         return $user->role->permissions()->pluck('slug')->toArray();
+    }
+
+    /**
+     * Get all FAQ topic list for form dropdown.
+     *
+     * @return array
+     */
+    public static function faq_topics()
+    {
+        return \DB::table('faq_topics')->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**

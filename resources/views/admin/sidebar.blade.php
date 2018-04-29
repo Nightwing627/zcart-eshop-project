@@ -193,6 +193,10 @@
               @can('index', App\OrderStatus::class)
                 <li class=" {{ Request::is('admin/utility/orderStatus*') ? 'active' : '' }}"><a href="{{ url('admin/utility/orderStatus') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.order_statuses') }}</a></li>
               @endcan
+
+              @can('index', App\Faq::class)
+                <li class=" {{ Request::is('admin/utility/faq*') ? 'active' : '' }}"><a href="{{ url('admin/utility/faq') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.faqs') }}</a></li>
+              @endcan
             </ul>
           </li>
         @endif
@@ -241,6 +245,10 @@
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
+            @can('index', App\SubscriptionPlan::class)
+              <li class=" {{ Request::is('admin/setting/subscriptionPlan*') ? 'active' : '' }}"><a href="{{ url('admin/setting/subscriptionPlan') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.subscription_plans') }}</a></li>
+            @endcan
+
             @can('index', App\Role::class)
               <li class=" {{ Request::is('admin/setting/role*') ? 'active' : '' }}"><a href="{{ url('admin/setting/role') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.user_roles') }}</a></li>
             @endcan

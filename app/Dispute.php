@@ -171,15 +171,10 @@ class Dispute extends Model
     {
         switch ($this->status) {
             case static::STATUS_NEW: return '<span class="label label-outline">' . trans('app.statuses.new') . '</span>';
-
             case static::STATUS_OPEN: return '<span class="label label-primary">' . trans('app.statuses.open') . '</span>';
-
             case static::STATUS_WAITING: return '<span class="label label-info">' . trans('app.statuses.waiting') . '</span>';
-
             case static::STATUS_APPEALED: return '<span class="label label-danger">' . trans('app.statuses.appealed') . '</span>';
-
             case static::STATUS_SOLVED: return '<span class="label label-success">' . trans('app.statuses.solved') . '</span>';
-
             case static::STATUS_CLOSED: return '<span class="label label-warning">' . trans('app.statuses.closed') . '</span>';
         }
     }

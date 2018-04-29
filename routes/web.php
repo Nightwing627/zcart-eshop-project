@@ -100,6 +100,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 	// Utility Routs for Admin/Merchant
 	Route::group(['as' => 'utility.', 'prefix' => 'utility'], function()
 	{
+		include('admin/Faq.php');
 		include('admin/Currency.php');
 		include('admin/OrderStatus.php');
 	});
@@ -114,6 +115,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		include('admin/System.php');
 		include('admin/SystemConfig.php');
 		include('admin/PaymentConfig.php');
+		include('admin/SubscriptionPlan.php');
 	});
 
 	// Promotions Routs for Admin

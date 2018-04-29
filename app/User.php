@@ -5,6 +5,7 @@ namespace App;
 use Hash;
 use App\Common\Imageable;
 use App\Common\Addressable;
+use Laravel\Cashier\Billable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -14,7 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use SoftDeletes, Notifiable, Addressable, Imageable, HasActivity;
+    use SoftDeletes, Billable, Notifiable, Addressable, Imageable, HasActivity;
 
    /**
      * The database table used by the model.
@@ -35,7 +36,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'trial_ends_at'];
 
     /**
      * The attributes that will be logged on activity logger.
@@ -94,6 +95,12 @@ class User extends Authenticatable
                     'description',
                     'sex',
                     'active',
+                    'stripe_id',
+                    'card_brand',
+                    'card_last_four',
+                    'trial_ends_at',
+                    'last_visited_at',
+                    'last_visited_from',
                     'remember_token',
                     'verification_token',
                 ];

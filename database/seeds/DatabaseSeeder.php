@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
         $this->call('DisputeTypesSeeder');
         $this->call('TaxesSeeder');
         $this->call('PackagingsSeeder');
+        $this->call('FaqsSeeder');
         $this->call('demoSeeder');
         $this->command->info('Seeding complete!');
 

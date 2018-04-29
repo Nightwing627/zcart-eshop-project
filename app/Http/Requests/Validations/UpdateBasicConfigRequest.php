@@ -28,7 +28,7 @@ class UpdateBasicConfigRequest extends Request
         return [
            'name' => 'required',
            'legal_name' => 'required',
-           'email' =>  'required|email|max:255|composite_unique:shops, '.$id,
+           'email' =>  'required|email|max:255|composite_unique:shops,' . $id,
            'external_url' => 'nullable|url',
            'image' => 'max:' . config('system_settings.max_img_size_limit_kb') . '|mimes:jpg,jpeg,png,gif',
         ];

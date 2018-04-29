@@ -50,7 +50,7 @@
 			          <td class="small">
 			          	@if($blog->status)
 				          	{{ trans('app.published_at') }}<br/>
-				          	{{ $blog->published_at->toFormattedDateString() }}
+				          	{{ optional($blog->published_at)->toFormattedDateString() }}
 				        @else
 				          	{{ trans('app.updated_at') }}<br/>
 				          	{{ $blog->updated_at->toFormattedDateString() }}

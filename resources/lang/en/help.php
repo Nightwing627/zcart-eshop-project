@@ -103,6 +103,22 @@ return [
 
     'system_pagination' => 'Set the pagination value for the data tables on the admin panel.',
 
+    'subscription_name' => 'This name must need be matched with Stripe\'s subscription name',
+
+    'featured_subscription' => 'There should be only one featured subscription',
+
+    'subscription_cost' => 'The cost of the subscription per month',
+
+    'team_size' => 'Team size is the number of total user can register under this team',
+
+    'inventory_limit' => 'The number of total listing. A variant of the same product will be considered as a different item.',
+
+    'marketplace_commission' => 'Percentage of order item value charge by the marketplace',
+
+    'transaction_fee' => 'If you want to charge a flat fee for every single transaction',
+
+    'subscription_best_for' => 'Terget customer for this package. This\'ll be visible to customer.',
+
     'config_alert_quantity' => 'A notification email will be send your inventory goes below the alert quantity',
 
     'config_max_img_size_limit_kb' => 'The maximum image size limit system can upload for product/inventory/logo/avatar. The size in kilobytes.',
@@ -392,6 +408,8 @@ return [
     'coupon_limited' => 'Choose if you want to make the coupon for specific customers only',
 
     'coupon_limited_to' => 'Use email address or name to find customers',
+
+    'faq_placeholders' => 'You can use this placeholder in your question and answer, this will be replaces by the actual value',
 
     'gift_card_name' => 'The name of the gift card.',
 

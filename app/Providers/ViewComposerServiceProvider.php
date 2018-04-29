@@ -54,6 +54,10 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeEmailTemplatePartialForm();
 
+        $this->composeFaqTopicForm();
+
+        $this->composeFaqForm();
+
         $this->composeInventoryForm();
 
         $this->composeInventoryVariantForm();
@@ -373,6 +377,38 @@ class ViewComposerServiceProvider extends ServiceProvider
                 function($view)
                 {
                     $view->with('email_templates', ListHelper::email_templates());
+                });
+    }
+
+
+    /**
+     * compose partial view of FAQ Topic template partial form
+     */
+    private function composeFaqTopicForm()
+    {
+        View::composer(
+
+                'admin.faq-topic._form',
+
+                function($view)
+                {
+                    $view->with('topics', ListHelper::faq_topics_for());
+                });
+    }
+
+
+    /**
+     * compose partial view of FAQ template partial form
+     */
+    private function composeFaqForm()
+    {
+        View::composer(
+
+                'admin.faq._form',
+
+                function($view)
+                {
+                    $view->with('topics', ListHelper::faq_topics());
                 });
     }
 

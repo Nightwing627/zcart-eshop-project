@@ -21,6 +21,7 @@ return [
     'trashed'           => ':model has been moved to trash!',
     'restored'          => ':model has been restored successfully!',
     'deleted'           => ':model has been deleted permanently!',
+    'cant_delete_faq_topic' => 'Can\'t delete: Please delete all FAQs under the :topic and try again!',
     'nofound'           => ':model is not exist! try another search.',
     // 'action_failed'     => 'The action has been failed to unknown reason!',
     'file_deleted'      => 'The file has been deleted successfully!',

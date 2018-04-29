@@ -73,6 +73,8 @@ trait Authorizable
      * @var arr
      */
     private $utility_modules = [
+        'faq',
+        'faqTopic',
         'orderStatus',
         'currency'
     ];

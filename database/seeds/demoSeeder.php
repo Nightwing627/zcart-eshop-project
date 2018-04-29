@@ -108,6 +108,41 @@ class demoSeeder extends Seeder
                 );
             });
 
+        // Demo SubscriptionPlan with real text
+        DB::table('subscription_plans')->insert([
+            [
+                'name' => 'Individual',
+                'cost' => 9,
+                'transaction_fee' => 2.5,
+                'marketplace_commission' => 3,
+                'team_size' => 1,
+                'inventory_limit' => 20,
+                'featured' => false,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'name' => 'Business',
+                'cost' => 29,
+                'transaction_fee' => 1.9,
+                'marketplace_commission' => 2.5,
+                'team_size' => 5,
+                'inventory_limit' => 200,
+                'featured' => true,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'name' => 'Professional',
+                'cost' => 49,
+                'transaction_fee' => 1,
+                'marketplace_commission' => 1.5,
+                'team_size' => 10,
+                'inventory_limit' => 500,
+                'featured' => false,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ]
+        ]);
+
         // Demo Categories with real text
         DB::table('category_groups')->insert([
             [

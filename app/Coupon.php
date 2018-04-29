@@ -63,7 +63,7 @@ class Coupon extends Model
                  ];
 
     /**
-     * Get the Shop associated with the packaging.
+     * Get the Shop associated with the Coupon.
      */
     public function shop()
     {

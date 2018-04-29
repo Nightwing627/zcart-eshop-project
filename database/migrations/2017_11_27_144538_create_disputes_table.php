@@ -15,8 +15,7 @@ class CreateDisputesTable extends Migration
     {
         Schema::create('dispute_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('detail');
-            $table->unique('detail');
+            $table->string('detail')->unique();
         });
 
         Schema::create('disputes', function (Blueprint $table) {

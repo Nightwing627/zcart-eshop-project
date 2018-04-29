@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-md">
   <div class="modal-content">
     {!! Form::model($paypalExpress, ['method' => 'PUT', 'route' => ['admin.setting.paypalExpress.update', $paypalExpress], 'id' => 'form', 'data-toggle' => 'validator']) !!}
     <div class="modal-header">

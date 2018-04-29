@@ -22,12 +22,14 @@ class CreateBlogsTable extends Migration
             $table->boolean('status')->default(1);
             $table->boolean('approved')->default(1);
             $table->timestamp('published_at')->nullable();
+            $table->integer('likes')->unsigned()->default(0);
+            $table->integer('dislikes')->unsigned()->default(0);
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
-        
+
         Schema::create('blog_comments', function (Blueprint $table) {
             $table->increments('id');
             $table->longtext('content');
@@ -35,6 +37,8 @@ class CreateBlogsTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->integer('parent')->unsigned()->nullable();
             $table->boolean('approved')->default(1);
+            $table->integer('likes')->unsigned()->default(0);
+            $table->integer('dislikes')->unsigned()->default(0);
             $table->softDeletes();
             $table->timestamps();
 

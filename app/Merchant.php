@@ -36,7 +36,7 @@ class Merchant extends Authenticatable
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'trial_ends_at', 'last_visited_at'];
 
     /**
      * The attributes that will be logged on activity logger.
@@ -85,17 +85,23 @@ class Merchant extends Authenticatable
      * @var array
      */
     protected $fillable = [
-                            'shop_id',
-                            'role_id',
-                            'name',
-                            'nice_name',
-                            'email',
-                            'password',
-                            'dob',
-                            'description',
-                            'sex',
-                            'active',
-                        ];
+                    'shop_id',
+                    'role_id',
+                    'name',
+                    'nice_name',
+                    'email',
+                    'password',
+                    'dob',
+                    'description',
+                    'sex',
+                    'active',
+                    'stripe_id',
+                    'card_brand',
+                    'card_last_four',
+                    'trial_ends_at',
+                    'last_visited_at',
+                    'last_visited_from',
+                ];
 
     /**
      * Get all of the country for the country.
