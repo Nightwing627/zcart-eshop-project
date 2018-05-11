@@ -45,7 +45,7 @@ class ProfileUpdated extends Notification
     {
         return (new MailMessage)
                     ->subject( trans('notifications.user_updated.subject', ['marketplace' => get_platform_title()]) )
-                    ->markdown('admin.mail.user.profile_updated', ['url' => route('admin.profile.view'), 'user' => $this->user]);
+                    ->markdown('admin.mail.user.profile_updated', ['url' => route('admin.account.profile'), 'user' => $this->user]);
     }
 
     /**

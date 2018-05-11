@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Profile;
+namespace App\Repositories\Account;
 
 use Auth;
 use App\User;
@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
-class EloquentProfile extends EloquentRepository implements BaseRepository, ProfileRepository
+class EloquentAccount extends EloquentRepository implements BaseRepository, AccountRepository
 {
 
     public function profile()

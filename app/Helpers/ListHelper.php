@@ -15,6 +15,7 @@ use App\FaqTopic;
 use App\Attribute;
 use App\Permission;
 use App\PaymentMethod;
+// use App\SubscriptionPlan;
 
 /**
 * This is a helper class to process,upload and remove images from different models
@@ -27,6 +28,16 @@ class ListHelper
         return \DB::table('ticket_categories')->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
+    public static function plans()
+    {
+        $plans = \DB::table('subscription_plans')->where('deleted_at', Null)->select( 'plan_id', 'name', 'cost')->get();
+
+        $result = [];
+        foreach ($plans as $plan)
+            $result[$plan->plan_id] = $plan->name . ' (' . get_formated_currency($plan->cost) . trans('app.per_month') . ')';
+
+        return $result;
+    }
 
     /**
      * Get payment_method_types list for form dropdown.

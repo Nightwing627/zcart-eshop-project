@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\Profile;
+namespace App\Repositories\Account;
 
 use Illuminate\Http\Request;
 
-interface ProfileRepository
+interface AccountRepository
 {
     public function profile();
 

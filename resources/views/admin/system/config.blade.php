@@ -81,6 +81,47 @@
 					    		</fieldset>
 
 					    		<fieldset>
+					    			<legend>{{ trans('app.config_subscription_section') }}</legend>
+
+									<div class="form-group">
+								        {!! Form::label('trial_days', trans('app.config_trial_days'). ':', ['class' => 'with-help col-sm-6 control-label']) !!}
+									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_trial_days') }}"></i>
+									  	<div class="col-sm-5 nopadding-left">
+									  		@if($can_update)
+										    <div class="input-group">
+									    	    {!! Form::number('trial_days', $system->trial_days, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.trial_days')]) !!}
+										        <span class="input-group-addon">{{ trans('app.form.days') }}</span>
+										    </div>
+									      	<div class="help-block with-errors"></div>
+											@else
+												<span>{{ $system->trial_days }}</span>
+											@endif
+									  	</div>
+									</div>
+
+							    	<div class="row">
+								    	<div class="col-sm-7 text-right">
+											<div class="form-group">
+										        {!! Form::label('required_card_upfront', trans('app.required_card_upfront'). ':', ['class' => 'with-help control-label']) !!}
+											  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.required_card_upfront') }}"></i>
+											</div>
+										</div>
+								    	<div class="col-sm-4">
+									  		@if($can_update)
+											  	<div class="handle horizontal text-center">
+													<a href="{{ route('admin.setting.system.notification.toggle', 'required_card_upfront') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->required_card_upfront == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->required_card_upfront == 1 ? 'true' : 'false' }}" autocomplete="off">
+														<div class="btn-handle"></div>
+													</a>
+											  	</div>
+											@else
+												<span>{{ $system->required_card_upfront == 1 ? trans('app.on') : trans('app.off') }}</span>
+											@endif
+										</div>
+								  	</div>
+								    <!-- /.row -->
+								</fieldset>
+
+					    		<fieldset>
 					    			<legend>{{ trans('app.config_customer_section') }}</legend>
 							    	<div class="row">
 								    	<div class="col-sm-7 text-right">

@@ -27,6 +27,13 @@ class CreateSystemsTable extends Migration
             $table->integer('currency_id')->default(148);
             $table->string('google_analytics_id')->nullable();
 
+            // Merchant registration
+            $table->boolean('required_card_upfront')->nullable()->default(true);
+            $table->integer('trial_days')->nullable();
+
+            // Customer registration
+            $table->boolean('ask_customer_for_email_subscription')->nullable()->default(true);
+
             // Support
             $table->string('support_phone')->nullable();
             $table->string('support_phone_toll_free')->nullable();
@@ -69,7 +76,6 @@ class CreateSystemsTable extends Migration
             // Checkout
             $table->boolean('allow_guest_checkout')->nullable()->default(false);
             $table->boolean('auto_approve_order')->nullable()->default(false);
-            $table->boolean('ask_customer_for_email_subscription')->nullable()->default(true);
 
             // Notification Settings
             $table->boolean('notify_when_vendor_registered')->nullable()->default(true);;

@@ -1,6 +1,6 @@
 <div class="modal-dialog modal-sm">
     <div class="modal-content">
-        {!! Form::open(['route' => 'admin.profile.updatePassword', 'id' => 'form', 'data-toggle' => 'validator']) !!}
+        {!! Form::open(['route' => 'admin.account.updatePassword', 'id' => 'change-password-form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
         	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             {{ trans('app.form.form') }}
@@ -14,5 +14,3 @@
         {!! Form::close() !!}
     </div> <!-- / .modal-content -->
 </div> <!-- / .modal-dialog -->
-
-

@@ -5,7 +5,6 @@ namespace App;
 use Hash;
 use App\Common\Imageable;
 use App\Common\Addressable;
-use Laravel\Cashier\Billable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -15,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use SoftDeletes, Billable, Notifiable, Addressable, Imageable, HasActivity;
+    use SoftDeletes, Notifiable, Addressable, Imageable, HasActivity;
 
    /**
      * The database table used by the model.
@@ -29,14 +28,23 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = [
+                    'password',
+                    'remember_token',
+                    'verification_token',
+                ];
+
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $dates = ['deleted_at', 'trial_ends_at'];
+    protected $casts = [
+        'deleted_at' => 'date',
+        'last_visited_at' => 'date',
+        'active' => 'boolean',
+    ];
 
     /**
      * The attributes that will be logged on activity logger.
@@ -95,10 +103,11 @@ class User extends Authenticatable
                     'description',
                     'sex',
                     'active',
-                    'stripe_id',
-                    'card_brand',
-                    'card_last_four',
-                    'trial_ends_at',
+                    // 'current_billing_plan',
+                    // 'stripe_id',
+                    // 'card_brand',
+                    // 'card_last_four',
+                    // 'trial_ends_at',
                     'last_visited_at',
                     'last_visited_from',
                     'remember_token',
@@ -238,6 +247,21 @@ class User extends Authenticatable
     }
 
     /**
+     * Get current plan
+     *
+     * @return mix
+     */
+    public function getCurrentPlan()
+    {
+        $subscription = optional($this->shop)->subscriptions->first();
+
+        if($subscription && $subscription->valid())
+            return $subscription;
+
+        return Null;
+    }
+
+    /**
      * Check if the user is the super admin
      *
      * @return bool
@@ -285,6 +309,77 @@ class User extends Authenticatable
     public function isVerified()
     {
         return $this->verification_token == Null;
+    }
+
+    /**
+     * Check if the user is has billing token
+     *
+     * @return bool
+     */
+    public function hasBillingToken()
+    {
+        return $this->merchantId() && $this->shop->hasStripeId();
+    }
+
+    /**
+     * Check if the user has outrange plan
+     *
+     * @return bool
+     */
+    public function hasExpiredPlan()
+    {
+        $subscription = $this->shop->subscriptions->first();
+
+        if ($subscription && ! is_null($subscription->ends_at))
+            return \Carbon\Carbon::now()->gt($subscription->ends_at);
+
+        return false;
+    }
+
+    /**
+     * Check if the user is subscribed
+     *
+     * @return bool
+     */
+    public function isSubscribed()
+    {
+        $subscription = optional($this->shop)->subscriptions->first();
+
+        return $subscription && $subscription->valid() || $this->isOnGenericTrial();
+    }
+
+    /**
+     * Check if the user is isOnGenericTrial without card
+     *
+     * @return bool
+     */
+    public function isOnGenericTrial()
+    {
+        return $this->shop->onGenericTrial();
+    }
+
+    /**
+     * Check if the user is OnTrial
+     *
+     * @return bool
+     */
+    public function isOnTrial()
+    {
+        $subscription = $this->shop->subscriptions->first();
+
+        return $subscription && $subscription->onTrial();
+    }
+
+    /**
+     * Check if the user is onGracePeriod
+     *
+     * @return bool
+     */
+    public function isOnGracePeriod()
+    {
+        $subscription = $this->shop->subscriptions->first();
+
+        return $subscription && $subscription->onGracePeriod();
     }
 
     /**

@@ -5745,3 +5745,7 @@ label.img-btn-sm input[type="file"] {
 .krajee-default.file-preview-frame .file-actions{
   padding: 8px !important;
 }
+
+a.btn{
+  text-decoration: none !important;
+}

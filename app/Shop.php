@@ -2,9 +2,12 @@
 
 namespace App;
 
+use App\SubscriptionPlan;
 use App\Common\Imageable;
 use App\Common\Addressable;
 use App\Events\ShopCreated;
+use App\Helpers\Statistics;
+use Laravel\Cashier\Billable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -12,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shop extends Model
 {
-    use SoftDeletes, LogsActivity, Notifiable, Addressable, Imageable;
+    use SoftDeletes, LogsActivity, Notifiable, Addressable, Imageable, Billable;
 
     /**
      * The database table used by the model.
@@ -26,7 +29,7 @@ class Shop extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'trial_ends_at'];
 
     /**
      * The attributes that will be logged on activity logger.
@@ -63,6 +66,12 @@ class Shop extends Model
                     'description',
                     'external_url',
                     'timezone_id',
+                    'current_billing_plan',
+                    'stripe_id',
+                    'card_holder_name',
+                    'card_brand',
+                    'card_last_four',
+                    'trial_ends_at',
                     'active',
                 ];
 
@@ -249,6 +258,40 @@ class Shop extends Model
     public function closedDisputes()
     {
         return $this->disputes()->where('status', '=', Dispute::STATUS_CLOSED);
+    }
+
+    /**
+     * Check if the current subscription plan allow to add more user
+     *
+     * @return bool
+     */
+    public function canAddMoreUser()
+    {
+        if($this->current_billing_plan){
+            $plan = SubscriptionPlan::findOrFail($this->current_billing_plan);
+
+            if( Statistics::shop_user_count() < $plan->team_size )
+                return True;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if the current subscription plan allow to add more Inventory
+     *
+     * @return bool
+     */
+    public function canAddMoreInventory()
+    {
+        if($this->current_billing_plan){
+            $plan = SubscriptionPlan::findOrFail($this->current_billing_plan);
+
+            if( Statistics::shop_inventories_count() < $plan->inventory_limit )
+                return True;
+        }
+
+        return false;
     }
 
     /**

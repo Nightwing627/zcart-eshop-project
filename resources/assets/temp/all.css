@@ -8810,6 +8810,9 @@ label.img-btn-sm input[type="file"] {
   padding: 8px !important;
 }
 
+a.btn{
+  text-decoration: none !important;
+}
 /*
  * Skin: Blue
  * ----------

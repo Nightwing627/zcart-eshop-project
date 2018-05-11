@@ -17,6 +17,10 @@ class CreateNotificationsTable extends Migration
             $table->uuid('id')->primary();
             $table->string('type');
             $table->morphs('notifiable');
+            $table->integer('created_by')->nullable();
+            $table->string('icon', 50)->nullable();
+            $table->string('action_text')->nullable();
+            $table->text('action_url')->nullable();
             $table->text('data');
             $table->timestamp('read_at')->nullable();
             $table->timestamps();

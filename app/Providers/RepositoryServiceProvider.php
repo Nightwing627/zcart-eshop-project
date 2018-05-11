@@ -94,8 +94,8 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Packaging\EloquentPackaging::class
         );
         $this->app->singleton(
-            \App\Repositories\Profile\ProfileRepository::class,
-            \App\Repositories\Profile\EloquentProfile::class
+            \App\Repositories\Account\AccountRepository::class,
+            \App\Repositories\Account\EloquentAccount::class
         );
         $this->app->singleton(
             \App\Repositories\Product\ProductRepository::class,

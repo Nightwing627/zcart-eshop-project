@@ -8,20 +8,20 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Events\Profile\ProfileUpdated;
 use App\Events\Profile\PasswordUpdated;
-use App\Repositories\Profile\ProfileRepository;
+use App\Repositories\Account\AccountRepository;
 use App\Http\Requests\Validations\UpdatePhotoRequest;
 use App\Http\Requests\Validations\DeletePhotoRequest;
 use App\Http\Requests\Validations\UpdateProfileRequest;
 use App\Http\Requests\Validations\UpdatePasswordRequest;
 
-class ProfileController extends Controller
+class AccountController extends Controller
 {
     private $profile;
 
     /**
      * construct
      */
-    public function __construct(ProfileRepository $profile)
+    public function __construct(AccountRepository $profile)
     {
         $this->profile = $profile;
     }
@@ -35,7 +35,7 @@ class ProfileController extends Controller
     {
         $profile = $this->profile->profile();
 
-        return view('admin.profile.profile', compact('profile'));
+        return view('admin.account.index', compact('profile'));
     }
 
     /**
@@ -46,7 +46,7 @@ class ProfileController extends Controller
      */
     public function showChangePasswordForm()
     {
-        return view('admin.profile._change_password');
+        return view('admin.account._change_password');
     }
 
     /**

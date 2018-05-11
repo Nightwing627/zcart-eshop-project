@@ -42,6 +42,9 @@ class CreateShopForMerchant
             'slug' => isset($this->request['slug']) ? $this->request['slug'] : str_slug($this->request['shop_name']),
             'external_url' => isset($this->request['external_url']) ? $this->request['external_url'] : Null,
             'timezone_id' => config('system_settings.timezone_id'),
+            'card_holder_name' => isset($this->request['name']) ? $this->request['name'] : Null,
+            'current_billing_plan' => isset($this->request['plan']) ? $this->request['plan'] : Null,
+            'trial_ends_at' => (bool) config('system_settings.trial_days') ? now()->addDays(config('system_settings.trial_days')) : Null,
             'active' => isset($this->request['active']) ? $this->request['active'] : 0,
         ]);
 

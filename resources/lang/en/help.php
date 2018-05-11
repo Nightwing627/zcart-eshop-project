@@ -119,6 +119,12 @@ return [
 
     'subscription_best_for' => 'Terget customer for this package. This\'ll be visible to customer.',
 
+    'config_trial_days' => 'Merchant\'ll be charged after the trial period. If you dont take card upfront then merchant account will be freeze after this time.',
+
+    'charge_after_trial_days' => 'Will be charged after the :days days trial period.',
+
+    'required_card_upfront' => 'Do you want to take card information when merchant register?',
+
     'config_alert_quantity' => 'A notification email will be send your inventory goes below the alert quantity',
 
     'config_max_img_size_limit_kb' => 'The maximum image size limit system can upload for product/inventory/logo/avatar. The size in kilobytes.',

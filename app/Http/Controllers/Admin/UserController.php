@@ -50,7 +50,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user._create');
+        if(auth()->user()->isFromPlatform() || auth()->user()->shop->canAddMoreUser())
+            return view('admin.user._create');
+
+        return view('admin.partials._max_user_limit_notice');
     }
 
     /**

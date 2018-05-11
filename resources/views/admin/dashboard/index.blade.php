@@ -4,6 +4,9 @@
 @endsection --}}
 
 @section('content')
+
+	@include('admin.partials._subscription_notice')
+
     @if(! Auth::user()->isVerified())
 		<div class="alert alert-info alert-dismissible">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

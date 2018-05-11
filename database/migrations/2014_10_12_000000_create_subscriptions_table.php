@@ -14,7 +14,8 @@ class CreateSubscriptionsTable extends Migration
     {
         Schema::create('subscriptions', function ($table) {
             $table->increments('id');
-            $table->bigInteger('merchant_id');
+            $table->integer('shop_id')->unsigned();
+            // $table->bigInteger('merchant_id');
             $table->string('name');
             $table->string('stripe_id');
             $table->string('stripe_plan');
@@ -27,6 +28,7 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscription_plans', function ($table) {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->string('plan_id')->unique();
             $table->string('best_for')->nullable();
             $table->integer('cost')->default(0);
             $table->integer('transaction_fee')->default(0);

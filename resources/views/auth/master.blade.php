@@ -16,6 +16,25 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+      .select2-selection__arrow{
+        display: none;
+      }
+      .form-control-feedback{
+        width: 46px;
+        height: 46px;
+        line-height: 46px;
+      }
+      .select2-container--default .select2-selection--single {
+          height: 46px !important;
+          padding: 10px 16px;
+          font-size: 18px;
+          line-height: 1.33;
+      }
+      .select2-container--default .select2-selection--single .select2-selection__rendered {
+          line-height: 31px !important;
+      }
+    </style>
   </head>
   <body class="hold-transition login-page">
     <div class="login-box">
@@ -40,13 +59,35 @@
     <!-- /.login-box -->
 
     <script src="{{ mix("js/app.js") }}"></script>
+
+    <!-- Scripts -->
+    @yield('scripts', '')
+
     <script type="text/javascript">
-      $(function () {
+      // ;(function($, window, document) {
+        $("#plans").select2({
+          minimumResultsForSearch: -1,
+        });
+        $("#exp-year").select2({
+          placeholder: "{{ trans('app.placeholder.exp_year') }}",
+          minimumResultsForSearch: -1,
+        });
+        $("#exp-month").select2({
+          placeholder: "{{ trans('app.placeholder.exp_month') }}",
+          minimumResultsForSearch: -1,
+        });
+
         $('.icheck').iCheck({
           checkboxClass: 'icheckbox_minimal-blue',
           radioClass: 'iradio_minimal-blue'
         });
-      });
+      // });
     </script>
+
+    <div class="loader">
+      <center>
+        <img class="loading-image" src="{{ asset('gears.gif') }}" alt="busy...">
+      </center>
+    </div>
   </body>
 </html>

@@ -3,70 +3,117 @@
 	*** Initialise application plugins ***
 	**************************************/
 	;(function($, window, document) {
-	  $(".ajax-modal-btn").hide(); // hide the ajax functional button untill the page load completely
+		$(".ajax-modal-btn").hide(); // hide the ajax functional button untill the page load completely
 
-	  $('img').on('error', function(){
-	    // console.log('img not found');
-	    $(this).hide();
-	  });
+		$('img').on('error', function(){
+		    $(this).hide();
+		});
 
-	  $(document).ready(function(){
-	    $(".ajax-modal-btn").show(); // show the ajax functional button when the page loaded completely
+		$(document).ready(function(){
+		    $(".ajax-modal-btn").show(); // show the ajax functional button when the page loaded completely
 
-	    // Initialise all plugins
-	    initDatatables();
-	    initAppPlugins();
-	    initMassActions();
+		    // Initialise all plugins
+		    initDatatables();
+		    initAppPlugins();
+		    initMassActions();
 
-	    // Support for AJAX loaded modal window.
-	    $('body').on('click', '.ajax-modal-btn', function(e) {
-	      e.preventDefault();
-	      $('.loader').show();
-	      $(".wrapper").addClass('blur-filter');
-	      var url = $(this).attr('href');
+		    // Support for AJAX loaded modal window.
+		    $('body').on('click', '.ajax-modal-btn', function(e) {
+				e.preventDefault();
+				//Disable mouse pointer events and set the busy filter
+				$('body').css("pointer-events", "none");
+				$('.loader').show();
+				$(".wrapper").addClass('blur-filter');
 
-	      if (url.indexOf('#') == 0) {
-	        $(url).modal('open');
-	      } else {
-	        $.get(url, function(data) {
-	          $(".wrapper").removeClass('blur-filter');
-	          $('.loader').hide();
-	          //Load modal data
-	          $('#myDynamicModal').modal().html(data);
+				var url = $(this).attr('href');
+				if (url.indexOf('#') == 0) {
+					$(url).modal('open');
+				}
+		      	else {
+			        $.get(url, function(data) {
+			        	//Enable mouse pointer events and remove the busy filter
+						$('body').css("pointer-events", "auto");
+						$(".wrapper").removeClass('blur-filter');
+						$('.loader').hide();
+						//Load modal data
+						$('#myDynamicModal').modal().html(data);
 
-	          //Initialize application plugins after ajax load the content
-	          if (typeof initAppPlugins == 'function') {
-	            initAppPlugins();
-	          }
-	        })
-	        .done(function()
-	        {
-	          $('.modal-body input:text:visible:first').focus();
-	        })
-	        .fail(function(response)
-	        {
-	          if (401 === response.status)
-	          {
-	            window.location = "{{ route('login') }}";
-	          } else
-	          {
-	            alert("{{ trans('responses.error') }}");
-	          }
-	        });
-	      }
-	    });
+						//Initialize application plugins after ajax load the content
+						if (typeof initAppPlugins == 'function') {
+							initAppPlugins();
+						}
+			        })
+			        .done(function()
+			        {
+			          $('.modal-body input:text:visible:first').focus();
+			        })
+			        .fail(function(response)
+			        {
+				        if (401 === response.status){
+				            window.location = "{{ route('login') }}";
+				        }
+				        else{
+				        	alert("{{ trans('responses.error') }}");
+				        }
+			        });
+		      	}
+		    });
 
-	    // Mark all Notifications As Read.
-		$('#notifications-dropdown').on('click', function (e) {
-		    var url = "{{ route('admin.notifications.markAllAsRead') }}";
+		    // Confirmation for actions
+		    $('body').on('click', '.confirm', function(e) {
+			    e.preventDefault();
 
-	        $.get(url, function(data) {}).done(function()
-	        {
-	          $('#notifications-dropdown').find('span.label').text('');
-	        });
-	    });
+			    var form = this.closest("form");
+			    var url = $(this).attr("href");
 
-	  })
+			    $.confirm({
+			        title: "{{ trans('app.confirmation') }}",
+			        content: "{{ trans('app.are_you_sure') }}",
+			        type: 'red',
+			        icon: 'fa fa-question-circle',
+			        animation: 'scale',
+			        closeAnimation: 'scale',
+			        opacity: 0.5,
+			        buttons: {
+			          'confirm': {
+			              text: '{{ trans('app.proceed') }}',
+			              keys: ['enter'],
+			              btnClass: 'btn-red',
+			              action: function () {
+					      	//Disable mouse pointer events and set the busy filter
+			              	$('body').css("pointer-events", "none");
+							$('.loader').show();
+							$(".wrapper").addClass('blur-filter');
+
+			                if (typeof url != 'undefined') {
+			                  location.href = url;
+			                }else if(form != null){
+			                  form.submit();
+			                  notie.alert(4, "{{ trans('messages.confirmed') }}", 3);
+			                }
+			                return true;
+			              }
+			          },
+			          'cancel': {
+			              text: '{{ trans('app.cancel') }}',
+			              action: function () {
+			                notie.alert(2, "{{ trans('messages.canceled') }}", 3);
+			              }
+			          },
+			        }
+			    });
+			});
+
+		    // Mark all Notifications As Read.
+			$('#notifications-dropdown').on('click', function (e) {
+			    var url = "{{ route('admin.notifications.markAllAsRead') }}";
+
+		        $.get(url, function(data) {}).done(function()
+		        {
+		          $('#notifications-dropdown').find('span.label').text('');
+		        });
+		    });
+		});
 	}(window.jQuery, window, document));
 
 	//DataTables
@@ -249,526 +296,487 @@
 	//App plugins
 	function initAppPlugins()
 	{
-	  $.ajaxSetup ({
-	    cache: false,
-	    headers: {
-	        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-	    }
-	  });
+		$.ajaxSetup ({
+		    cache: false,
+		    headers: {
+		        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+		    }
+	  	});
 
-      $('body').on('click', '.confirm', function(e) {
-	    e.preventDefault();
+		//Initialize Select2 Elements
+		$(".select2").not(".dataTables_length .select2").select2();
 
-	    var form = this.closest("form");
-	    var url = $(this).attr("href");
+		$(".select2-normal").select2({
+			placeholder: "{{ trans('app.placeholder.select') }}",
+			minimumResultsForSearch: -1,
+		});
 
-	    $.confirm({
-	        title: "{{ trans('app.confirmation') }}",
-	        content: "{{ trans('app.are_you_sure') }}",
-	        type: 'red',
-	        icon: 'fa fa-question-circle',
-	        animation: 'scale',
-	        closeAnimation: 'scale',
-	        opacity: 0.5,
-	        buttons: {
-	          'confirm': {
-	              text: '{{ trans('app.proceed') }}',
-	              keys: ['enter'],
-	              btnClass: 'btn-red',
-	              action: function () {
-	                if (typeof url != 'undefined') {
-	                  location.href = url;
-	                }else if(form != null){
-	                  form.submit();
-	                  notie.alert(4, "{{ trans('messages.confirmed') }}", 3);
-	                }
-	                return true;
-	              }
-	          },
-	          'cancel': {
-	              text: '{{ trans('app.cancel') }}',
-	              action: function () {
-	                notie.alert(2, "{{ trans('messages.canceled') }}", 3);
-	              }
-	          },
-	        }
-	    });
-	  });
+		$(".select2-tag").select2({
+		    placeholder: "{{ trans('app.placeholder.tags') }}",
+		    tags: true,
+		    allowClear: true,
+		    tokenSeparators: [',', ';'],
+		});
 
-	//Initialize Select2 Elements
-	$(".select2").not(".dataTables_length .select2").select2();
+		$(".select2-set_attribute").select2({
+		    placeholder: "{{ trans('app.placeholder.attribute_values') }}",
+		    minimumResultsForSearch: -1,
+		    tags: true,
+		    allowClear: true,
+		    tokenSeparators: [',', ';'],
+		});
 
-	$(".select2-normal").select2({
-		placeholder: "{{ trans('app.placeholder.select') }}",
-		minimumResultsForSearch: -1,
-	});
+		$(".select2-attribute_value-attribute").select2({
+		    placeholder: "{{ trans('app.placeholder.select') }}",
+		    minimumResultsForSearch: -1,
+		}).on("change", function(e){
+		    var dataString = 'id=' + $(this).val();
+		    $.ajax({
+		        type: "get",
+		        url : "{{ route('admin.ajax.getParrentAttributeType') }}",
+		        data : dataString,
+		        datatype: 'JSON',
+		        success : function(attribute_type)
+		        {
+		          if (attribute_type == 1)
+		          {
+		            $('#color-option').removeClass('hidden').addClass('show');
+		          }
+		          else
+		          {
+		            $('#color-option').removeClass('show').addClass('hidden');
+		          }
+		        }
+		    },"html");
+		});
 
-	$(".select2-tag").select2({
-	    placeholder: "{{ trans('app.placeholder.tags') }}",
-	    tags: true,
-	    allowClear: true,
-	    tokenSeparators: [',', ';'],
-	});
+		// $(".select2-roles").select2({
+		//  {{--   placeholder: "{{ trans('app.placeholder.roles') }}" --}}
+		// });
 
-	$(".select2-set_attribute").select2({
-	    placeholder: "{{ trans('app.placeholder.attribute_values') }}",
-	    minimumResultsForSearch: -1,
-	    tags: true,
-	    allowClear: true,
-	    tokenSeparators: [',', ';'],
-	});
+		//Country
+		$("#country_id").change(
+		    function()
+		    {
+		      $("#state_id").empty().trigger('change'); //Reset the state dropdown
+		      var ID = $("#country_id").select2('data')[0].id;
+		      var url = "{{ route('ajax.getCountryStates') }}"
 
-	$(".select2-attribute_value-attribute").select2({
-	    placeholder: "{{ trans('app.placeholder.select') }}",
-	    minimumResultsForSearch: -1,
-	}).on("change", function(e){
-	    var dataString = 'id=' + $(this).val();
-	    $.ajax({
-	        type: "get",
-	        url : "{{ route('admin.ajax.getParrentAttributeType') }}",
-	        data : dataString,
-	        datatype: 'JSON',
-	        success : function(attribute_type)
-	        {
-	          if (attribute_type == 1)
-	          {
-	            $('#color-option').removeClass('hidden').addClass('show');
-	          }
-	          else
-	          {
-	            $('#color-option').removeClass('show').addClass('hidden');
-	          }
-	        }
-	    },"html");
-	});
+		      $.ajax({
+		          delay: 250,
+		          data: "id="+ID,
+		          url: url,
+		          success: function(result){
+		            var data = [];
+		            if(result.length !== 0){
+		              data = $.map(result, function(val, id) {
+		                  return { id: id, text: val };
+		              })
+		            }
 
-	// $(".select2-roles").select2({
-	//  {{--   placeholder: "{{ trans('app.placeholder.roles') }}" --}}
-	// });
+		            $("#state_id").select2({
+		              allowClear: true,
+		              tags: true,
+		              placeholder: "{{ trans('app.placeholder.state') }}",
+		              data: data,
+		              sortResults: function(results, container, query) {
+		                  if (query.term) {
+		                      return results.sort();
+		                  }
+		                  return results;
+		              }
+		            });
+		          }
+		      });
+		    }
+		);
 
-	//Country
-	$("#country_id").change(
-	    function()
-	    {
-	      $("#state_id").empty().trigger('change'); //Reset the state dropdown
-	      var ID = $("#country_id").select2('data')[0].id;
-	      var url = "{{ route('ajax.getCountryStates') }}"
+		$(".select2-categories").select2({
+		    placeholder: "{{ trans('app.placeholder.category_sub_groups') }}"
+		});
 
-	      $.ajax({
-	          delay: 250,
-	          data: "id="+ID,
-	          url: url,
-	          success: function(result){
-	            var data = [];
-	            if(result.length !== 0){
-	              data = $.map(result, function(val, id) {
-	                  return { id: id, text: val };
-	              })
-	            }
+		$(".select2-multi").select2({
+		    maximumSelectionLength: 2,
+		});
 
-	            $("#state_id").select2({
-	              allowClear: true,
-	              tags: true,
-	              placeholder: "{{ trans('app.placeholder.state') }}",
-	              data: data,
-	              sortResults: function(results, container, query) {
-	                  if (query.term) {
-	                      return results.sort();
-	                  }
-	                  return results;
-	              }
-	            });
-	          }
-	      });
-	    }
-	);
-
-	  $(".select2-categories").select2({
-	    placeholder: "{{ trans('app.placeholder.category_sub_groups') }}"
-	  });
-
-	  $(".select2-multi").select2({
-	    maximumSelectionLength: 2,
-	  });
-
-	  $(".select2").not(".dataTables_length .select2").css('width', '100%');
+		$(".select2").not(".dataTables_length .select2").css('width', '100%');
 
 	  	//product Seach
-	  $('#searchProduct').on('keyup', function(e){
-	  	var showResult = $("#productFounds");
-	  	var q = $(this).val();
-	  	showResult.html('');
-	  	if(q.length < 3){
-		  	showResult.html('<span class="lead indent50">{{ trans('validation.min.string', ['attribute' => trans('app.form.search'), 'min' => '3' ]) }}</span>');
+		$('#searchProduct').on('keyup', function(e){
+		  	var showResult = $("#productFounds");
+		  	var q = $(this).val();
+		  	showResult.html('');
+		  	if(q.length < 3){
+			  	showResult.html('<span class="lead indent50">{{ trans('validation.min.string', ['attribute' => trans('app.form.search'), 'min' => '3' ]) }}</span>');
+			  	return;
+		  	}
+
+		  	showResult.html('<span class="lead indent50">{{trans('responses.searching')}}</span>');
+			$.ajax({
+				data: "q="+q,
+		      	url : "{{ route('search.product') }}",
+		      	success: function(results){
+				  	showResult.html(results);
+		      	}
+	        });
+		});
+		//End product Seach
+
+		//Customer Seach
+		$('.searchCustomer').select2({
+		    ajax: {
+		      url : "{{ route('search.customer') }}",
+		      dataType: 'json',
+		      processResults: function (data) {
+		        return {
+		          results: data
+		        };
+		      },
+		      cache: true
+		    },
+		    placeholder: "{{ trans('app.placeholder.search_customer') }}",
+		});
+		//End Customer Seach
+
+		/* bootstrap-select */
+		$(".selectpicker").selectpicker();
+
+		//Initialize validator
+		$('#form, form[data-toggle="validator"]').validator();
+
+		//Initialize summernote text editor
+		$('.summernote').summernote({
+		    placeholder: "{{ trans('app.placeholder.start_here') }}",
+		    toolbar: [
+		      ['style', ['style']],
+		      ['font', ['bold', 'italic', 'underline', 'clear']],
+		      ['para', ['ul', 'ol', 'paragraph']],
+		      ['table', ['table']],
+		      ['color', ['color']],
+		      ['insert', ['link', 'picture', 'video']],
+		      ["view", ["codeview"]],
+		    ],
+		});
+		$('.summernote-min').summernote({
+		    placeholder: "{{ trans('app.placeholder.start_here') }}",
+		    toolbar: [
+		      ['font', ['bold', 'italic', 'underline', 'clear']],
+		      ['para', ['ul', 'ol', 'paragraph']],
+		      ['table', ['table']],
+		    ],
+		});
+		$('.summernote-without-toolbar').summernote({
+		    placeholder: "{{ trans('app.placeholder.start_here') }}",
+		    toolbar: [],
+		});
+		$('.summernote-long').summernote({
+		    placeholder: "{{ trans('app.placeholder.start_here') }}",
+		    toolbar: [
+		      ['style', ['style']],
+		      ['font', ['bold', 'italic', 'underline', 'clear']],
+		      ['fontname', ['fontname']],
+		      ['color', ['color']],
+		      ['para', ['ul', 'ol', 'paragraph']],
+		      ['height', ['height']],
+		      ['table', ['table']],
+		      ['insert', ['link', 'picture', 'video', 'hr']],
+		      ['view', ['codeview']],
+		    ],
+		    // codemirror: {
+		    //   theme: 'monokai'
+		    // },
+		    // onImageUpload: function(files) {
+		    //   url = $(this).data('upload'); //path is defined as data attribute for  textarea
+		    //   console.log(url);
+		    //   console.log(' not');
+		    //   // sendFile(files[0], url, $(this));
+		    // }
+		});
+
+		/*
+		* Summernote hack
+		*/
+		// Keep the dynamic modal open after close the insert media in summernote field
+		$(document).on('hidden.bs.modal', '.modal', function () {
+		    $('.modal:visible').length && $(document.body).addClass('modal-open');
+		});
+
+		$('.modal-dismiss').click(function (event) {
+		    $('.note-modal').modal('hide');
+		});
+
+	  	//Datemask dd/mm/yyyy
+	  	// $(".datemask").inputmask("yyyy-mm-dd", {"placeholder": "yyyy-mm-dd"});
+
+	  	//Datemask2 mm/dd/yyyy
+	  	// $(".datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+
+	  	//Money Euro
+	  	// $("[data-mask]").inputmask();
+
+	  	//Date range picker
+	  	// $('#reservation').daterangepicker();
+
+	  	//Date range picker with time picker
+	  	// $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+
+	  	//Date range as a button
+	  	//Timepicker
+	  	// $(".timepicker").timepicker({
+	  	//   showInputs: false
+	  	// });
+
+		//Datepicker
+		$(".datepicker").datepicker({
+		    format: 'yyyy-mm-dd'
+		});
+		//DateTimepicker
+		$(".datetimepicker").datetimepicker({
+		});
+
+	  	// $(".datetimepicker").datetimepicker({
+	  	//     format: 'YYYY-MM-DD hh:mm A',
+	  	//     icons:{
+	  	//         time: 'glyphicon glyphicon-time',
+	  	//         date: 'glyphicon glyphicon-calendar',
+	  	//         up: 'fa fa-arrow-up',
+	  	//         down: 'fa fa-arrow-down',
+	  	//         previous: 'glyphicon glyphicon-chevron-left',
+	  	//         next: 'glyphicon glyphicon-chevron-right',
+	  	//         today: 'glyphicon glyphicon-screenshot',
+	  	//         clear: 'glyphicon glyphicon-trash',
+	  	//         close: 'glyphicon glyphicon-remove'
+	  	//     }
+	  	// });
+
+		//Colorpicker
+		$(".my-colorpicker1").colorpicker();
+		//color picker with addon
+		$(".my-colorpicker2").colorpicker();
+
+	  	// $('#daterange-btn').daterangepicker(
+	  	//     {
+	  	//       ranges: {
+	  	//         'Today': [moment(), moment()],
+	  	//         'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+	  	//         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+	  	//         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+	  	//         'This Month': [moment().startOf('month'), moment().endOf('month')],
+	  	//         'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+	  	//       },
+	  	//       startDate: moment().subtract(29, 'days'),
+	  	//       endDate: moment()
+	  	//     },
+	  	//     function (start, end) {
+	  	//       $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+	  	//     }
+	  	// );
+
+		//iCheck for checkbox and radio inputs
+		$('input[type="checkbox"].icheck, input[type="radio"].icheck').iCheck({
+		    checkboxClass: 'icheckbox_flat-pink',
+		    radioClass: 'iradio_flat-pink'
+		});
+	  	//iCheck line checkbox and radio
+	  	$('.icheckbox_line').each(function(){
+		    var self = $(this),
+		    label = self.next(),
+		    label_text = label.text();
+
+		    label.remove();
+		    self.iCheck({
+		      checkboxClass: 'icheckbox_line-pink',
+		      radioClass: 'iradio_line-pink',
+		      insert: '<div class="icheck_line-icon form-control"></div>' + label_text
+		    });
+	  	});
+
+	  	// coupon form
+	  	$('input#limited').on('ifChecked', function () {
+	    	$('#customers_field').removeClass('hidden').addClass('show');
+	    	$('input#limited').attr('required', 'required');
+	  	});
+
+	  	$('input#limited').on('ifUnchecked', function () {
+	    	$('#customers_field').removeClass('show').addClass('hidden');
+	    	$('input#limited').removeAttr('required');
+	  	});
+	  	//END coupon form
+
+	  	//shipping zone
+		$('input#rest_of_the_world').on('ifChecked', function () {
+		    $('select#country_ids').removeAttr('required').attr('disabled', 'disabled');
+		    $('select#country_ids').select2('val', '');
+		});
+
+		$('input#rest_of_the_world').on('ifUnchecked', function () {
+		    $('select#country_ids').removeAttr('disabled').attr('required', 'required');
+		});
+
+	  	$('input#free_shipping_checkbox').on('ifChecked', function () {
+	    	$('input#shipping_rate_amount').val(0.0).removeAttr('required').attr('disabled', 'disabled');
+	  	});
+
+	  	$('input#free_shipping_checkbox').on('ifUnchecked', function () {
+	    	$('input#shipping_rate_amount').removeAttr('disabled').attr('required', 'required');
+	  	});
+	  	//END shipping zone
+
+	  	//User Role form
+	  	$("#user-role-status").change(function()
+	  	{
+	    	var temp = $("#user-role-status").select2('data')[0].text;
+	    	var roleType = temp.toLowerCase();
+		    var rows = $('table#tbl-permissions tr');
+		    var platform = rows.filter('.platform-module');
+		    var merchant = rows.filter('.merchant-module');
+
+		    switch(roleType)
+		    {
+		      case 'platform':
+		        platform.show();
+		        merchant.hide();
+		        merchant.find("input[type='checkbox']").iCheck('uncheck');
+		        break;
+		      case 'merchant':
+		        platform.hide();
+		        merchant.show();
+		        platform.find("input[type='checkbox']").iCheck('uncheck');
+		        break;
+		      default:
+		        platform.hide();
+		        merchant.hide();
+		        merchant.find("input[type='checkbox']").iCheck('uncheck');
+		        platform.find("input[type='checkbox']").iCheck('uncheck');
+		    }
+		});
+
+	  	$('input.role-module').on('ifChecked', function () {
+	    	var selfId = $(this).attr('id');
+	    	var childClass =  '.' + selfId + '-permission';
+	    	$(childClass).iCheck('enable').iCheck('check');
+	  	});
+
+		$('input.role-module').on('ifUnchecked', function () {
+			var selfId = $(this).attr('id');
+			var childClass =  '.' + selfId + '-permission';
+			$(childClass).iCheck('uncheck').iCheck('disable');
+		});
+	  	//END User Role form
+
+	  	//Slug URL Maker
+	  	$('.makeSlug').on('change', function(){
+		    var slugstr = convertToSlug(this.value);
+		    $('.slug').val(slugstr);
+			// setTimeout(sample,2000)
+		    verifyUniqueSlug();
+	  	});
+
+	  	$('.slug').on('change', function(){
+	    	verifyUniqueSlug($(this).val());
+	  	});
+
+	  	function verifyUniqueSlug(slug = ''){
+		  	var node = $("#slug");
+		    var msg = "{{ trans('messages.slug_length') }}";
+
+		  	if(slug == '')
+		  		slug = node.val();
+
+		  	if (slug.length >= 3){
+		  		var route = "{{ Route::current()->getName() }}";
+
+				if(route.match(/category/i)){
+				    var tbl = 'categories';
+					var url = '/category/';
+				}
+				else if(route.match(/product/i)){
+				    var tbl = 'products';
+					var url = '/';
+				}
+				else if(route.match(/shop/i)){
+				    var tbl = 'shops';
+					var url = '/shop/';
+				}
+				else{
+				    var tbl = 'shops';
+					var url = '/shop/';
+				}
+
+			    var check = getFromPHPHelper('verifyUniqueSlug', [slug, tbl]);
+			    if(check == 'false'){
+				    node.closest( ".form-group" ).addClass('has-error');
+			    	msg = "{{ trans('messages.this_slug_taken') }}";
+			    }
+			    else if(check == 'true'){
+				    node.closest( ".form-group" ).removeClass('has-error');
+			    	msg = "{{ config('app.url') }}" + url + slug;
+			    }
+		  	}
+
+		    node.next( ".help-block" ).html(msg);
 		  	return;
 	  	}
 
-	  	showResult.html('<span class="lead indent50">{{trans('responses.searching')}}</span>');
-		$.ajax({
-			data: "q="+q,
-	      	url : "{{ route('search.product') }}",
-	      	success: function(results){
-			  	showResult.html(results);
-	      	}
-        });
-	  });
-	  //End product Seach
+	  	function convertToSlug(Text){
+	    	return Text.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-');
+	  	}
+	  	//END Slug URL Maker
 
-	  //Customer Seach
-	  $('.searchCustomer').select2({
-	    ajax: {
-	      url : "{{ route('search.customer') }}",
-	      dataType: 'json',
-	      processResults: function (data) {
-	        return {
-	          results: data
-	        };
-	      },
-	      cache: true
-	    },
-	    placeholder: "{{ trans('app.placeholder.search_customer') }}",
-	  });
-	  //End Customer Seach
+	  	//Popover
+	  	$('[data-toggle="popover"]').popover({
+	    	html: 'true',
+	  	});
 
-	  /* bootstrap-select */
-	  $(".selectpicker").selectpicker();
+	  	$('[data-toggle="popover"]').on('click', function(){
+	    	$('[data-toggle="popover"]').not(this).popover('hide');
+	  	});
 
-	  //Initialize validator
-	  $('#form').validator();
+	  	$(document).on("click", ".popover-submit-btn", function() {
+	    	$('[data-toggle="popover"]').popover('hide');
+	  	});
+	  	//END Popover
 
-	  //Initialize summernote text editor
-	  $('.summernote').summernote({
-	    placeholder: "{{ trans('app.placeholder.start_here') }}",
-	    toolbar: [
-	      ['style', ['style']],
-	      ['font', ['bold', 'italic', 'underline', 'clear']],
-	      ['para', ['ul', 'ol', 'paragraph']],
-	      ['table', ['table']],
-	      ['color', ['color']],
-	      ['insert', ['link', 'picture', 'video']],
-	      ["view", ["codeview"]],
-	    ],
-	  });
-	  $('.summernote-min').summernote({
-	    placeholder: "{{ trans('app.placeholder.start_here') }}",
-	    toolbar: [
-	      ['font', ['bold', 'italic', 'underline', 'clear']],
-	      ['para', ['ul', 'ol', 'paragraph']],
-	      ['table', ['table']],
-	    ],
-	  });
-	  $('.summernote-without-toolbar').summernote({
-	    placeholder: "{{ trans('app.placeholder.start_here') }}",
-	    toolbar: [],
-	  });
-	  $('.summernote-long').summernote({
-	    placeholder: "{{ trans('app.placeholder.start_here') }}",
-	    toolbar: [
-	      ['style', ['style']],
-	      ['font', ['bold', 'italic', 'underline', 'clear']],
-	      ['fontname', ['fontname']],
-	      ['color', ['color']],
-	      ['para', ['ul', 'ol', 'paragraph']],
-	      ['height', ['height']],
-	      ['table', ['table']],
-	      ['insert', ['link', 'picture', 'video', 'hr']],
-	      ['view', ['codeview']],
-	    ],
-	    // codemirror: {
-	    //   theme: 'monokai'
-	    // },
-	    // onImageUpload: function(files) {
-	    //   url = $(this).data('upload'); //path is defined as data attribute for  textarea
-	    //   console.log(url);
-	    //   console.log(' not');
-	    //   // sendFile(files[0], url, $(this));
-	    // }
-	  });
-
-	  /*
-	   * Summernote hack
-	   */
-	  // Keep the dynamic modal open after close the insert media in summernote field
-	  $(document).on('hidden.bs.modal', '.modal', function () {
-	      $('.modal:visible').length && $(document.body).addClass('modal-open');
-	  });
-
-	  $('.modal-dismiss').click(function (event) {
-	    $('.note-modal').modal('hide');
-	  });
-
-	  //Datemask dd/mm/yyyy
-	  // $(".datemask").inputmask("yyyy-mm-dd", {"placeholder": "yyyy-mm-dd"});
-
-	  //Datemask2 mm/dd/yyyy
-	  // $(".datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-
-	  //Money Euro
-	  // $("[data-mask]").inputmask();
-
-	  //Date range picker
-	  // $('#reservation').daterangepicker();
-
-	  //Date range picker with time picker
-	  // $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-
-	  //Date range as a button
-	  //Timepicker
-	  // $(".timepicker").timepicker({
-	  //   showInputs: false
-	  // });
-
-	  //Datepicker
-	  $(".datepicker").datepicker({
-	      format: 'yyyy-mm-dd'
-	  });
-	  //DateTimepicker
-	  $(".datetimepicker").datetimepicker({
-	  });
-
-	  // $(".datetimepicker").datetimepicker({
-	  //     format: 'YYYY-MM-DD hh:mm A',
-	  //     icons:{
-	  //         time: 'glyphicon glyphicon-time',
-	  //         date: 'glyphicon glyphicon-calendar',
-	  //         up: 'fa fa-arrow-up',
-	  //         down: 'fa fa-arrow-down',
-	  //         previous: 'glyphicon glyphicon-chevron-left',
-	  //         next: 'glyphicon glyphicon-chevron-right',
-	  //         today: 'glyphicon glyphicon-screenshot',
-	  //         clear: 'glyphicon glyphicon-trash',
-	  //         close: 'glyphicon glyphicon-remove'
-	  //     }
-	  // });
-
-	  //Colorpicker
-	  $(".my-colorpicker1").colorpicker();
-	  //color picker with addon
-	  $(".my-colorpicker2").colorpicker();
-
-	  // $('#daterange-btn').daterangepicker(
-	  //     {
-	  //       ranges: {
-	  //         'Today': [moment(), moment()],
-	  //         'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-	  //         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-	  //         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-	  //         'This Month': [moment().startOf('month'), moment().endOf('month')],
-	  //         'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-	  //       },
-	  //       startDate: moment().subtract(29, 'days'),
-	  //       endDate: moment()
-	  //     },
-	  //     function (start, end) {
-	  //       $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-	  //     }
-	  // );
-
-	  //iCheck for checkbox and radio inputs
-	  $('input[type="checkbox"].icheck, input[type="radio"].icheck').iCheck({
-	    checkboxClass: 'icheckbox_flat-pink',
-	    radioClass: 'iradio_flat-pink'
-	  });
-	  //iCheck line checkbox and radio
-	  $('.icheckbox_line').each(function(){
-	    var self = $(this),
-	    label = self.next(),
-	    label_text = label.text();
-
-	    label.remove();
-	    self.iCheck({
-	      checkboxClass: 'icheckbox_line-pink',
-	      radioClass: 'iradio_line-pink',
-	      insert: '<div class="icheck_line-icon form-control"></div>' + label_text
-	    });
-	  });
-
-	  // coupon form
-	  $('input#limited').on('ifChecked', function () {
-	    $('#customers_field').removeClass('hidden').addClass('show');
-	    $('input#limited').attr('required', 'required');
-	  })
-
-	  $('input#limited').on('ifUnchecked', function () {
-	    $('#customers_field').removeClass('show').addClass('hidden');
-	    $('input#limited').removeAttr('required');
-	  });
-	  //END coupon form
-
-	  //shipping zone
-	  $('input#rest_of_the_world').on('ifChecked', function () {
-	    $('select#country_ids').removeAttr('required').attr('disabled', 'disabled');
-	    $('select#country_ids').select2('val', '');
-	  });
-
-	  $('input#rest_of_the_world').on('ifUnchecked', function () {
-	    $('select#country_ids').removeAttr('disabled').attr('required', 'required');
-	  });
-
-	  $('input#free_shipping_checkbox').on('ifChecked', function () {
-	    $('input#shipping_rate_amount').val(0.0).removeAttr('required').attr('disabled', 'disabled');
-	  });
-
-	  $('input#free_shipping_checkbox').on('ifUnchecked', function () {
-	    $('input#shipping_rate_amount').removeAttr('disabled').attr('required', 'required');
-	  });
-	  //END shipping zone
-
-	  //User Role form
-	  $("#user-role-status").change(function()
-	  {
-	    var temp = $("#user-role-status").select2('data')[0].text;
-	    var roleType = temp.toLowerCase();
-	    var rows = $('table#tbl-permissions tr');
-	    var platform = rows.filter('.platform-module');
-	    var merchant = rows.filter('.merchant-module');
-
-	    switch(roleType)
-	    {
-	      case 'platform':
-	        platform.show();
-	        merchant.hide();
-	        merchant.find("input[type='checkbox']").iCheck('uncheck');
-	        break;
-	      case 'merchant':
-	        platform.hide();
-	        merchant.show();
-	        platform.find("input[type='checkbox']").iCheck('uncheck');
-	        break;
-	      default:
-	        platform.hide();
-	        merchant.hide();
-	        merchant.find("input[type='checkbox']").iCheck('uncheck');
-	        platform.find("input[type='checkbox']").iCheck('uncheck');
-	    }
-	  });
-
-	  $('input.role-module').on('ifChecked', function () {
-	    var selfId = $(this).attr('id');
-	    var childClass =  '.' + selfId + '-permission';
-	    $(childClass).iCheck('enable').iCheck('check');
-	  });
-
-	  $('input.role-module').on('ifUnchecked', function () {
-	    var selfId = $(this).attr('id');
-	    var childClass =  '.' + selfId + '-permission';
-	    $(childClass).iCheck('uncheck').iCheck('disable');
-	  });
-	  //END User Role form
-
-	  //Slug URL Maker
-	  $('.makeSlug').on('change', function(){
-	    var slugstr = convertToSlug(this.value);
-	    $('.slug').val(slugstr);
-		// setTimeout(sample,2000)
-	    verifyUniqueSlug();
-	  });
-
-	  $('.slug').on('change', function(){
-	    verifyUniqueSlug($(this).val());
-	  });
-
-	  function verifyUniqueSlug(slug = ''){
-	  	var node = $("#slug");
-	    var msg = "{{ trans('messages.slug_length') }}";
-
-	  	if(slug == '')
-	  		slug = node.val();
-
-	  	if (slug.length >= 3){
-	  		var route = "{{ Route::current()->getName() }}";
-
-			if(route.match(/category/i)){
-			    var tbl = 'categories';
-				var url = '/category/';
-			}
-			else if(route.match(/product/i)){
-			    var tbl = 'products';
-				var url = '/';
-			}
-			else if(route.match(/shop/i)){
-			    var tbl = 'shops';
-				var url = '/shop/';
-			}
-			else{
-			    var tbl = 'shops';
-				var url = '/shop/';
-			}
-
-		    var check = getFromPHPHelper('verifyUniqueSlug', [slug, tbl]);
-		    if(check == 'false'){
-			    node.closest( ".form-group" ).addClass('has-error');
-		    	msg = "{{ trans('messages.this_slug_taken') }}";
-		    }
-		    else if(check == 'true'){
-			    node.closest( ".form-group" ).removeClass('has-error');
-		    	msg = "{{ config('app.url') }}" + url + slug;
-		    }
+	  	if( $('#uploadBtn').length ){
+		    document.getElementById("uploadBtn").onchange = function () {
+		      document.getElementById("uploadFile").value = this.value;
+		    };
 	  	}
 
-	    node.next( ".help-block" ).html(msg);
-	  	return;
-	  }
+		//SEARCH OPTIONS
+		var $search_rows = $('#search_table tr');
+		$('#search_this').keyup(function() {
+		    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+		    $search_rows.show().filter(function() {
+		        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+		        return !~text.indexOf(val);
+		    }).hide();
+	  	});
+	  	//END SEARCH OPTIONS
 
-	  function convertToSlug(Text){
-	    return Text.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-');
-	  }
-	  //END Slug URL Maker
+		//Random code string maker
+		/**
+		* generate Code
+		*/
+		$( '.generate-code' ).on( "click", function( event ){
+		    var id = $( event.target ).attr('id');
+		    var func = 'generateCouponCode';
 
-	  //Popover
-	  $('[data-toggle="popover"]').popover({
-	      html: 'true',
-	  });
+		    switch(id){
+		      case 'gc-pin-number':
+		        func = 'generatePinCode';
+		        break;
+		      case 'gc-serial-number':
+		        func = 'generateSerialNumber';
+		        break;
+		      default:
+		        func = 'generateCouponCode';
+		    }
 
-	  $('[data-toggle="popover"]').on('click', function(){
-	    $('[data-toggle="popover"]').not(this).popover('hide');
-	  });
-
-	  $(document).on("click", ".popover-submit-btn", function() {
-	    $('[data-toggle="popover"]').popover('hide');
-	  });
-	  //END Popover
-
-	  if( $('#uploadBtn').length ){
-	    document.getElementById("uploadBtn").onchange = function () {
-	      document.getElementById("uploadFile").value = this.value;
-	    };
-	  }
-
-	  //SEARCH OPTIONS
-	  var $search_rows = $('#search_table tr');
-	  $('#search_this').keyup(function() {
-	      var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-	      $search_rows.show().filter(function() {
-	          var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-	          return !~text.indexOf(val);
-	      }).hide();
-	  });
-	  //END SEARCH OPTIONS
-
-	  //Random code string maker
-	  /**
-	   * generate Code
-	   */
-	  $( '.generate-code' ).on( "click", function( event ){
-	    var id = $( event.target ).attr('id');
-	    var func = 'generateCouponCode';
-
-	    switch(id){
-	      case 'gc-pin-number':
-	        func = 'generatePinCode';
-	        break;
-	      case 'gc-serial-number':
-	        func = 'generateSerialNumber';
-	        break;
-	      default:
-	        func = 'generateCouponCode';
-	    }
-
-	    var couponCode = getFromPHPHelper(func);
-	    $('#'+id).closest( ".code-field" ).find( "input.code" ).val(couponCode);
-	  });
-	  //END Random code string maker
+		    var couponCode = getFromPHPHelper(func);
+		    $('#'+id).closest( ".code-field" ).find( "input.code" ).val(couponCode);
+		});
+	  	//END Random code string maker
 
 	  	// Toggle button
 	  	$('.btn-toggle').on("click", function(e){

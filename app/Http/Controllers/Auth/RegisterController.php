@@ -7,6 +7,7 @@ use Log;
 use Auth;
 use App\User;
 use App\System;
+use App\Jobs\SubscribeShopToNewPlan;
 use App\Events\Shop\ShopCreated;
 use App\Jobs\CreateShopForMerchant;
 use App\Http\Controllers\Controller;
@@ -70,6 +71,14 @@ class RegisterController extends Controller
         // Start transaction!
         DB::beginTransaction();
 
+        if( config('system_settings.required_card_upfront') && ! $request->has('cc_token')){
+            // Set error message and return
+            $error = new \Illuminate\Support\MessageBag();
+            $error->add('errors', trans('messages.no_card_added'));
+
+            return redirect()->route('register')->withErrors($error)->withInput();
+        }
+
         try {
             $merchant = $this->create($request->all());
 
@@ -78,13 +87,15 @@ class RegisterController extends Controller
 
             Auth::guard()->login($merchant);
 
+            SubscribeShopToNewPlan::dispatch($merchant, $request->input('plan'), $request->input('cc_token'));
+
         } catch(\Exception $e){
 
             // rollback the transaction and log the error
             DB::rollback();
             Log::error('Vendor Registration Failed: ' . $e->getMessage());
 
-            // add your error messages:
+            // Set error messages:
             $error = new \Illuminate\Support\MessageBag();
             $error->add('errors', trans('responses.vendor_config_failed'));
 

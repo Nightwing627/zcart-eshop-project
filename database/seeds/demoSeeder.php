@@ -112,6 +112,7 @@ class demoSeeder extends Seeder
         DB::table('subscription_plans')->insert([
             [
                 'name' => 'Individual',
+                'plan_id' => 'individual',
                 'cost' => 9,
                 'transaction_fee' => 2.5,
                 'marketplace_commission' => 3,
@@ -122,6 +123,7 @@ class demoSeeder extends Seeder
                 'updated_at' => Carbon::Now(),
             ],[
                 'name' => 'Business',
+                'plan_id' => 'business',
                 'cost' => 29,
                 'transaction_fee' => 1.9,
                 'marketplace_commission' => 2.5,
@@ -132,6 +134,7 @@ class demoSeeder extends Seeder
                 'updated_at' => Carbon::Now(),
             ],[
                 'name' => 'Professional',
+                'plan_id' => 'professional',
                 'cost' => 49,
                 'transaction_fee' => 1,
                 'marketplace_commission' => 1.5,

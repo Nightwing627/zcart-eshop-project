@@ -4,6 +4,7 @@ namespace App\Providers;
 
 // use App\Cart;
 // use App\Module;
+use Auth;
 use App\Config;
 use App\Inventory;
 use App\PaymentMethod;
@@ -36,6 +37,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeAttributeValueForm();
 
+        $this->composeBillingForm();
+
         $this->composeBlogForm();
 
         $this->composeCarrierForm();
@@ -63,6 +66,8 @@ class ViewComposerServiceProvider extends ServiceProvider
         $this->composeInventoryVariantForm();
 
         $this->composeManufacturerForm();
+
+        $this->composeMerchantRregistrationForm();
 
         $this->composeOrderFulfillmentForm();
 
@@ -424,6 +429,40 @@ class ViewComposerServiceProvider extends ServiceProvider
             function($view)
             {
                 $view->with('countries', ListHelper::countries());
+            }
+        );
+    }
+
+    /**
+     * compose partial view of Merchant Rregistration form
+     */
+    private function composeMerchantRregistrationForm()
+    {
+        View::composer(
+
+            'auth.register',
+
+            function($view)
+            {
+                $view->with('plans', ListHelper::plans());
+            }
+        );
+    }
+
+    /**
+     * compose partial view of Billing form
+     */
+    private function composeBillingForm()
+    {
+        View::composer(
+
+            'admin.account._billing',
+
+            function($view)
+            {
+                $view->with('plans', \DB::table('subscription_plans')->where('deleted_at', Null)->select( 'plan_id', 'name', 'cost')->get());
+                $view->with('current_plan', Auth::user()->getCurrentPlan());
+                $view->with('billable', Auth::user()->shop);
             }
         );
     }

@@ -23,6 +23,8 @@ class SystemConfig extends Model
      * @var array
      */
     protected $fillable = [
+                        'trial_days',
+                        'required_card_upfront',
                         'support_phone',
                         'support_phone_toll_free',
                         'support_email',
@@ -66,6 +68,7 @@ class SystemConfig extends Model
      * @var array
      */
     protected $casts = [
+                'required_card_upfront' => 'boolean',
                 'allow_guest_checkout' => 'boolean',
                 'auto_approve_order' => 'boolean',
                 'ask_customer_for_email_subscription' => 'boolean',

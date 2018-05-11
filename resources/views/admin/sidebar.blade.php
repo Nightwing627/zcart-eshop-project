@@ -238,6 +238,21 @@
           </li>
         @endcan
 
+        <li class="treeview {{ Request::is('admin/appearance*') ? 'active' : '' }}">
+          <a href="#">
+            <i class="fa fa-paint-brush"></i>
+            <span>{{ trans('nav.appearance') }}</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            {{-- @can('index', App\EmailTemplate::class) --}}
+              <li class=" {{ Request::is('admin/appearance/theme*') ? 'active' : '' }}"><a href="{{ url('admin/appearance/theme') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.themes') }}</a></li>
+
+              <li class=" {{ Request::is('admin/appearance/theme*') ? 'active' : '' }}"><a href="{{ url('admin/appearance/theme') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.themes') }}</a></li>
+            {{-- @endcan --}}
+          </ul>
+        </li>
+
         <li class="treeview {{ Request::is('admin/setting*') ? 'active' : '' }}">
           <a href="#">
             <i class="fa fa-gears"></i>

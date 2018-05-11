@@ -59,6 +59,9 @@ class InventoryController extends Controller
      */
     public function add(Request $request, $id)
     {
+        if(! $request->user()->shop->canAddMoreInventory())
+            return redirect()->route('admin.stock.inventory.index')->with('error', trans('messages.cant_add_more_inventory'));
+
         $inInventory = $this->inventory->checkInveoryExist($id);
 
         if($inInventory)
@@ -76,6 +79,9 @@ class InventoryController extends Controller
      */
     public function addWithVariant(Request $request, $id)
     {
+        if(! $request->user()->shop->canAddMoreInventory())
+            return redirect()->route('admin.stock.inventory.index')->with('error', trans('messages.cant_add_more_inventory'));
+
         $variants = $this->inventory->confirmAttributes($request->except('_token'));
 
         $combinations = generate_combinations($variants);

@@ -50,7 +50,7 @@ class SendLoginInfo extends Notification
         return (new MailMessage)
                     ->subject( trans('notifications.user_created.subject', ['admin' => $this->admin, 'marketplace' => get_platform_title()]) )
                     ->markdown('admin.mail.user.send_login_info', [
-                        'url' => route('admin.profile.view'),
+                        'url' => route('admin.account.profile'),
                         'admin' => $this->admin,
                         'user' => $this->user,
                         'password' => $this->password

@@ -29,14 +29,18 @@ class Merchant extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = [
+                    'password',
+                    'remember_token',
+                    'verification_token',
+                ];
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['deleted_at', 'trial_ends_at', 'last_visited_at'];
+    protected $dates = ['deleted_at', 'last_visited_at'];
 
     /**
      * The attributes that will be logged on activity logger.
@@ -95,10 +99,11 @@ class Merchant extends Authenticatable
                     'description',
                     'sex',
                     'active',
-                    'stripe_id',
-                    'card_brand',
-                    'card_last_four',
-                    'trial_ends_at',
+                    // 'current_billing_plan',
+                    // 'stripe_id',
+                    // 'card_brand',
+                    // 'card_last_four',
+                    // 'trial_ends_at',
                     'last_visited_at',
                     'last_visited_from',
                 ];

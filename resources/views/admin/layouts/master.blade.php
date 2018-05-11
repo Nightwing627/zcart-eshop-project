@@ -126,7 +126,7 @@
     <!-- ./wrapper -->
     <div class="loader">
       <center>
-        <img class="loading-image" src="{{ asset('gears.gif') }}" alt="loading..">
+        <img class="loading-image" src="{{ asset('gears.gif') }}" alt="busy...">
       </center>
     </div>
 
@@ -141,12 +141,12 @@
     {{-- <script src="{{ asset("assets/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script> --}}
     {{-- END (Required by only the datetimepicker) --}}
 
+    <!-- Notification -->
+    @include('admin.notification')
+
     <!-- START Page specific Script -->
     @yield("page-script")
     <!-- END Page specific Script -->
-
-    <!-- Notification -->
-    @include('admin.notification')
 
     <!-- Scripts -->
     @include('admin.footer_js')

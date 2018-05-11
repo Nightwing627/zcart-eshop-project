@@ -40,15 +40,15 @@
 							<td>{{ $subscriptionPlan->inventory_limit }}</td>
 							<td class="row-options">
 								@can('view', $subscriptionPlan)
-									<a href="{{ route('admin.setting.subscriptionPlan.show', $subscriptionPlan->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+									<a href="{{ route('admin.setting.subscriptionPlan.show', $subscriptionPlan->plan_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 								@endcan
 
 								@can('update', $subscriptionPlan)
-									<a href="{{ route('admin.setting.subscriptionPlan.edit', $subscriptionPlan->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+									<a href="{{ route('admin.setting.subscriptionPlan.edit', $subscriptionPlan->plan_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 								@endcan
 
 								@can('delete', $subscriptionPlan)
-									{!! Form::open(['route' => ['admin.setting.subscriptionPlan.trash', $subscriptionPlan->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+									{!! Form::open(['route' => ['admin.setting.subscriptionPlan.trash', $subscriptionPlan->plan_id], 'method' => 'delete', 'class' => 'data-form']) !!}
 										{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 									{!! Form::close() !!}
 								@endcan

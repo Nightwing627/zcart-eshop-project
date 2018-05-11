@@ -24,7 +24,7 @@ class CreateUserRequest extends Request
     public function rules()
     {
         $shop_id = Request::user()->merchantId(); //Get current user's shop_id
-        Request::merge( array( 'shop_id' => $shop_id ) ); //Set shop_id
+        Request::merge(['shop_id' => $shop_id]); //Set shop_id
 
         return [
            'name' => 'required|max:255',
@@ -37,15 +37,15 @@ class CreateUserRequest extends Request
         ];
     }
 
-  /**
-   * Get the error messages for the defined validation rules.
-   *
-   * @return array
-   */
-  public function messages()
-  {
-    return [
-        'email.unique' => trans('validation.register_email_unique'),
-    ];
-  }
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+      return [
+          'email.unique' => trans('validation.register_email_unique'),
+      ];
+    }
 }

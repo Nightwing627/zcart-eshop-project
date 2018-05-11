@@ -23,10 +23,11 @@ class CreateUsersTable extends Migration
             $table->date('dob')->nullable();
             $table->string('sex')->nullable();
             $table->longtext('description')->nullable();
-            $table->string('stripe_id')->nullable();
-            $table->string('card_brand')->nullable();
-            $table->string('card_last_four')->nullable();
-            $table->timestamp('trial_ends_at')->nullable();
+            // $table->string('current_billing_plan')->nullable();
+            // $table->string('stripe_id')->nullable();
+            // $table->string('card_brand')->nullable();
+            // $table->string('card_last_four')->nullable();
+            // $table->timestamp('trial_ends_at')->nullable();
             $table->timestampTz('last_visited_at')->nullable();
             $table->ipAddress('last_visited_from')->nullable();
             $table->boolean('active')->default(1);

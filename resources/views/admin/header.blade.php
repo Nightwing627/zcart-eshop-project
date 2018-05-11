@@ -177,7 +177,7 @@
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="{{ route('admin.profile.view') }}" class="btn btn-default btn-flat">{{ trans('app.profile') }}</a>
+                <a href="{{ route('admin.account.profile') }}" class="btn btn-default btn-flat">{{ trans('app.account') }}</a>
               </div>
               <div class="pull-right">
                 <a href="{{ Request::session()->has('impersonated') ? route('admin.secretLogout') : route('logout') }}" class="btn btn-default btn-flat">{{ trans('app.log_out') }}</a>

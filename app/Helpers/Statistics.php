@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Helpers;
+
 use App\Message;
 use Carbon\Carbon;
 
@@ -8,6 +10,16 @@ use Carbon\Carbon;
 */
 class Statistics
 {
+    public static function shop_user_count()
+    {
+        return \DB::table('users')->where('shop_id', auth()->user()->merchantId())->count();
+    }
+
+    public static function shop_inventories_count()
+    {
+        return \DB::table('inventories')->where('shop_id', auth()->user()->merchantId())->count();
+    }
+
     public static function unread_msg_count()
     {
         return \DB::table('messages')->where('shop_id', auth()->user()->merchantId())->where('label', Message::LABEL_INBOX)->where('status', '<', Message::STATUS_READ)->count();

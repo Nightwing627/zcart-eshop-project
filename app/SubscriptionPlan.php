@@ -18,6 +18,13 @@ class SubscriptionPlan extends Model
     protected $table = 'subscription_plans';
 
     /**
+     * The database primary key used by the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'plan_id';
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
