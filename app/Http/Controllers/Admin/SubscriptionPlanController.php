@@ -28,7 +28,7 @@ class SubscriptionPlanController extends Controller
      */
     public function index()
     {
-        $subscription_plans = SubscriptionPlan::all();
+        $subscription_plans = SubscriptionPlan::orderBy('order', 'asc')->get();
 
         $trashes = SubscriptionPlan::onlyTrashed()->get();
 
@@ -133,5 +133,18 @@ class SubscriptionPlanController extends Controller
         SubscriptionPlan::onlyTrashed()->findOrFail($id)->forceDelete();
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
+    }
+
+    /**
+     * Save sorting order for attributes by ajax
+     */
+    public function reorder(Request $request)
+    {
+        // $this->attribute->reorder($request->all());
+
+        foreach ($request->all() as $id => $order)
+            SubscriptionPlan::findOrFail($id)->update(['order' => $order]);
+
+        return response('success!', 200);
     }
 }

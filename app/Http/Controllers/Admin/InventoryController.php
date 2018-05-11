@@ -146,6 +146,8 @@ class InventoryController extends Controller
     {
         $inventory = $this->inventory->find($id);
 
+        $this->authorize('update', $inventory); // Check permission
+
         $product = $this->inventory->findProduct($inventory->product_id);
 
         $preview = $inventory->previewImages();

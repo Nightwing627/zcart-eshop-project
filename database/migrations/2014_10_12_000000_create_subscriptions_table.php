@@ -15,7 +15,6 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscriptions', function ($table) {
             $table->increments('id');
             $table->integer('shop_id')->unsigned();
-            // $table->bigInteger('merchant_id');
             $table->string('name');
             $table->string('stripe_id');
             $table->string('stripe_plan');
@@ -26,7 +25,7 @@ class CreateSubscriptionsTable extends Migration
         });
 
         Schema::create('subscription_plans', function ($table) {
-            $table->increments('id');
+            // $table->increments('id');
             $table->string('name')->unique();
             $table->string('plan_id')->unique();
             $table->string('best_for')->nullable();
@@ -34,10 +33,13 @@ class CreateSubscriptionsTable extends Migration
             $table->integer('transaction_fee')->default(0);
             $table->integer('marketplace_commission')->default(0);
             $table->integer('team_size')->default(1);
-            $table->integer('inventory_limit')->nullable();
+            $table->integer('inventory_limit')->default(0);
             $table->boolean('featured')->default(0);
+            $table->integer('order')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->primary('plan_id');
         });
     }
 

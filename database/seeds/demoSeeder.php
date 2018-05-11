@@ -119,6 +119,7 @@ class demoSeeder extends Seeder
                 'team_size' => 1,
                 'inventory_limit' => 20,
                 'featured' => false,
+                'order' => 1,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
@@ -130,6 +131,7 @@ class demoSeeder extends Seeder
                 'team_size' => 5,
                 'inventory_limit' => 200,
                 'featured' => true,
+                'order' => 2,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
@@ -141,6 +143,7 @@ class demoSeeder extends Seeder
                 'team_size' => 10,
                 'inventory_limit' => 500,
                 'featured' => false,
+                'order' => 3,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ]

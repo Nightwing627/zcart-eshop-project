@@ -35,8 +35,13 @@ class Authorize
 			return true;
 
 		// Deny the action immediately if the model has shop_id field and user from different shop
-		if(isset($this->model) && (isset($this->model->shop_id) || array_key_exists('shop_id', $this->model)) && ! Auth::user()->isFromPlatform() && ! $this->merchantAuth())
+		if(isset($this->model)
+		   	&& (isset($this->model->shop_id) || array_key_exists('shop_id', $this->model))
+		    && ! Auth::user()->isFromPlatform()
+		    && ! $this->merchantAuth())
+		{
 			return false;
+		}
 
         return in_array($this->slug, $this->permissionSlugs());
 	}

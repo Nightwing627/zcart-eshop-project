@@ -13,9 +13,12 @@
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 			<strong><i class="icon fa fa-info-circle"></i>{{ trans('app.notice') }}</strong>
 			{{ trans('messages.resume_subscription', ['ends' => \Carbon\Carbon::now()->diffInDays($subscription->ends_at)]) }}
-			<span class="indent15">
-	    		<a href="{{ route('admin.account.subscription.resume') }}" class="confirm btn bg-navy"><i class="fa fa-rocket"></i>  {{ trans('app.resume_subscription') }}</a>
-			</span>
+
+			@if(Auth::user()->isMerchant())
+				<span class="indent15">
+		    		<a href="{{ route('admin.account.subscription.resume') }}" class="confirm btn bg-navy"><i class="fa fa-rocket"></i>  {{ trans('app.resume_subscription') }}</a>
+				</span>
+			@endif
 		</div>
 	@endif
 

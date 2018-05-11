@@ -50,6 +50,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        // Check if the merchant can add more user in the team
         if(auth()->user()->isFromPlatform() || auth()->user()->shop->canAddMoreUser())
             return view('admin.user._create');
 

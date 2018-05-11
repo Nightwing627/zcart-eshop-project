@@ -39,7 +39,7 @@
         @empty
           <span class="indent5">{{ trans('messages.no_history_data') }}</span>
         @endforelse
-      </div>
-    </div>
+      </div> <!-- /.panel -->
+    </div> <!-- /#menu -->
   </div> <!-- /.box-body -->
 </div> <!-- /.box -->

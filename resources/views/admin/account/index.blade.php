@@ -2,30 +2,39 @@
 
 @section('content')
 	<div class="box">
-		<div class="nav-tabs-custom">
-			<ul class="nav nav-tabs nav-justified">
-				<li class="{{ Request::is('admin/account/profile') ? 'active' : '' }}"><a href="#profile_tab" data-toggle="tab">
-					<i class="fa fa-user hidden-sm"></i>
-					{{ trans('app.profile') }}
-				</a></li>
-				<li class="{{ Request::is('admin/account/billing') ? 'active' : '' }}"><a href="#billing_tab" data-toggle="tab">
-					<i class="fa fa-credit-card hidden-sm"></i>
-					{{ trans('app.billing') }}
-				</a></li>
-			</ul>
-			<div class="tab-content">
-			    <div class="tab-pane {{ Request::is('admin/account/profile') ? 'active' : '' }}" id="profile_tab">
-		    		@include('admin.account._profile')
-			    </div>
-			  	<!-- /.tab-pane -->
+	  	@if(Auth::user()->isFromPlatform())
+		    <div class="box-header with-border">
+				<h3 class="box-title"><i class="fa fa-user"></i> {{ trans('app.profile') }}</h3>
+		    </div>
+		    <div class="box-body">
+	    		@include('admin.account._profile')
+	    		<span class="spacer20"></span>
+    		</div>
+	  	@else
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs nav-justified">
+					<li class="{{ Request::is('admin/account/profile') ? 'active' : '' }}"><a href="#profile_tab" data-toggle="tab">
+						<i class="fa fa-user hidden-sm"></i>
+						{{ trans('app.profile') }}
+					</a></li>
+					<li class="{{ Request::is('admin/account/billing') ? 'active' : '' }}"><a href="#billing_tab" data-toggle="tab">
+						<i class="fa fa-credit-card hidden-sm"></i>
+						{{ trans('app.billing') }}
+					</a></li>
+				</ul>
+				<div class="tab-content">
+				    <div class="tab-pane {{ Request::is('admin/account/profile') ? 'active' : '' }}" id="profile_tab">
+			    		@include('admin.account._profile')
+				    </div>
 
-			    <div class="tab-pane {{ Request::is('admin/account/billing') ? 'active' : '' }}" id="billing_tab">
-		    		@include('admin.account._billing')
-			    </div>
-			    <!-- /.tab-pane -->
+				    <div class="tab-pane {{ Request::is('admin/account/billing') ? 'active' : '' }}" id="billing_tab">
+			    		@include('admin.account._billing')
+				    </div>
+				</div>
+				<!-- /.tab-content -->
 			</div>
-			<!-- /.tab-content -->
-		</div>
+			<!-- /.nav-tabs-custom -->
+	  	@endif
 	</div> <!-- /.box -->
 @endsection
 

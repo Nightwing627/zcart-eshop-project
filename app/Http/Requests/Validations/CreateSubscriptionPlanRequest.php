@@ -25,6 +25,7 @@ class CreateSubscriptionPlanRequest extends Request
     {
         return [
             'name' => 'required|unique:subscription_plans',
+            'plan_id' => 'required|unique:subscription_plans',
             'cost' => 'required|numeric|min:0',
             'transaction_fee' => 'nullable|numeric',
             'marketplace_commission' => 'nullable|numeric',

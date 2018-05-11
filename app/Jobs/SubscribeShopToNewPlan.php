@@ -48,10 +48,8 @@ class SubscribeShopToNewPlan
 
         // If the merchant has generic trial
         if($shop->trial_ends_at){
-            // subtract the used trial days with the new subscription
+            // Subtract the used trial days with the new subscription
             $trialDays = Carbon::now()->lt($shop->trial_ends_at) ? Carbon::now()->diffInDays($shop->trial_ends_at) : Null;
-
-            $this->removeGenericTrial($shop);
         }
 
         // Set trial days
@@ -65,24 +63,29 @@ class SubscribeShopToNewPlan
         }
         else if($this->merchant->hasBillingToken()){
             $subscription->create();
+
+            $this->adjustGenericTrial($shop);
         }
-        else if ( ! config('system_settings.required_card_upfront') && (bool) config('system_settings.trial_days') ){
-            $shop->forceFill([
-                'current_billing_plan' => $this->plan,
-                'trial_ends_at' => now()->addDays($trialDays),
-            ])->save();
+        else if ( ! config('system_settings.required_card_upfront') && (bool) config('system_settings.trial_days') )
+        {
+            $trial_ends_at = $shop->trial_ends_at ?: Carbon::now()->addDays($trialDays);
+
+            $this->adjustGenericTrial($shop, $trial_ends_at);
         }
     }
 
     /**
-     * Remove generic trial
+     * Adjust Generic Trial information in shop table
      *
      * @param  App\Shop   $shop
-     * @return [type]
+     * @param  [type] $trialEnds
+     *
+     * @return bool
      */
-    private function removeGenericTrial(Shop $shop){
+    private function adjustGenericTrial(Shop $shop, $trialEnds = Null){
         return $shop->forceFill([
-                        'trial_ends_at' => Null
+                        'current_billing_plan' => $this->plan,
+                        'trial_ends_at' => $trialEnds
                     ])->save();
     }
 }

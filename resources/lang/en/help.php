@@ -103,7 +103,9 @@ return [
 
     'system_pagination' => 'Set the pagination value for the data tables on the admin panel.',
 
-    'subscription_name' => 'This name must need be matched with Stripe\'s subscription name',
+    'subscription_name' => 'Give a meaningful name to the subscription plan.',
+
+    'subscription_plan_id' => 'This is the identifier that needs to be the exact match with Stripe\'s plan ID',
 
     'featured_subscription' => 'There should be only one featured subscription',
 

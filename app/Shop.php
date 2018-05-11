@@ -3,6 +3,7 @@
 namespace App;
 
 use App\SubscriptionPlan;
+use App\Common\Loggable;
 use App\Common\Imageable;
 use App\Common\Addressable;
 use App\Events\ShopCreated;
@@ -10,12 +11,11 @@ use App\Helpers\Statistics;
 use Laravel\Cashier\Billable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shop extends Model
 {
-    use SoftDeletes, LogsActivity, Notifiable, Addressable, Imageable, Billable;
+    use SoftDeletes, Loggable, Notifiable, Addressable, Imageable, Billable;
 
     /**
      * The database table used by the model.
@@ -32,25 +32,23 @@ class Shop extends Model
     protected $dates = ['deleted_at', 'trial_ends_at'];
 
     /**
-     * The attributes that will be logged on activity logger.
-     *
-     * @var boolean
-     */
-    protected static $logFillable = true;
-
-    /**
-     * The only attributes that has been changed.
-     *
-     * @var boolean
-     */
-    protected static $logOnlyDirty = true;
-
-    /**
      * The name that will be used when log this model. (optional)
      *
-     * @var boolean
+     * @var tring
      */
     protected static $logName = 'shop';
+
+    /**
+     * The name that will be ignored when log this model.
+     *
+     * @var array
+     */
+    protected static $ignoreChangedAttributes = [
+                            'stripe_id',
+                            'card_brand',
+                            'card_holder_name',
+                            'trial_ends_at',
+                        ];
 
    /**
      * The attributes that are mass assignable.

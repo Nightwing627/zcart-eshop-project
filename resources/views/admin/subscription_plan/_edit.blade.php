@@ -1,6 +1,6 @@
 <div class="modal-dialog modal-md">
     <div class="modal-content">
-        {!! Form::model($subscriptionPlan, ['method' => 'PUT', 'route' => ['admin.setting.subscriptionPlan.update', $subscriptionPlan->id], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
+        {!! Form::model($subscriptionPlan, ['method' => 'PUT', 'route' => ['admin.setting.subscriptionPlan.update', $subscriptionPlan->plan_id], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
         	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             {{ trans('app.form.form') }}

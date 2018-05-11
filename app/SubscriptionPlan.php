@@ -25,18 +25,18 @@ class SubscriptionPlan extends Model
     protected $primaryKey = 'plan_id';
 
     /**
-     * The attributes that should be mutated to dates.
+     * The primanry key is not incrementing
      *
-     * @var array
+     * @var boolean
      */
-    protected $dates = ['deleted_at'];
+    public $incrementing = false;
 
     /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
-    protected $guarded = ['id', 'deleted_at'];
+    protected $guarded = ['deleted_at'];
 
     /**
      * The event map for the model.
@@ -53,6 +53,7 @@ class SubscriptionPlan extends Model
      * @var array
      */
     protected $casts = [
+        'deleted_at' => 'date',
         'featured' => 'boolean',
     ];
 
@@ -73,5 +74,4 @@ class SubscriptionPlan extends Model
     {
         $this->attributes['featured'] = (bool) $value;
     }
-
 }

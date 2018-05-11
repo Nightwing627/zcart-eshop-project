@@ -5,7 +5,6 @@ namespace App;
 use Hash;
 use App\Common\Imageable;
 use App\Common\Addressable;
-use Laravel\Cashier\Billable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -15,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Merchant extends Authenticatable
 {
-    use Billable, SoftDeletes, Notifiable, Addressable, Imageable, HasActivity;
+    use SoftDeletes, Notifiable, Addressable, Imageable, HasActivity;
 
    /**
      * The database table used by the model.
@@ -99,11 +98,6 @@ class Merchant extends Authenticatable
                     'description',
                     'sex',
                     'active',
-                    // 'current_billing_plan',
-                    // 'stripe_id',
-                    // 'card_brand',
-                    // 'card_last_four',
-                    // 'trial_ends_at',
                     'last_visited_at',
                     'last_visited_from',
                 ];

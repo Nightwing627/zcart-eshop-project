@@ -23,10 +23,11 @@ class UpdateSubscriptionPlanRequest extends Request
      */
     public function rules()
     {
-        $id = Request::segment(count(Request::segments())); //Current model ID
+        $plan = Request::route('subscriptionPlan'); //Current model
 
         return [
-            'name' =>  'required|composite_unique:subscription_plans,' . $id,
+            'name' =>  'required|unique:subscription_plans,name,' . $plan->plan_id . ',plan_id',
+            'plan_id' =>  'required|unique:subscription_plans,plan_id,' . $plan->plan_id . ',plan_id',
             'cost' => 'required|numeric|min:0',
             'transaction_fee' => 'nullable|numeric',
             'marketplace_commission' => 'nullable|numeric',

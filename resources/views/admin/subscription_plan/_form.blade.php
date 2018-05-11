@@ -5,6 +5,13 @@
   <div class="help-block with-errors"></div>
 </div>
 
+<div class="form-group">
+  {!! Form::label('plan_id', trans('app.form.subscription_plan_id').'*', ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.subscription_plan_id') }}"></i>
+  {!! Form::text('plan_id', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.subscription_plan_id'), 'required']) !!}
+  <div class="help-block with-errors"></div>
+</div>
+
 <div class="row">
   <div class="col-md-6 nopadding-right">
     <div class="form-group">
@@ -83,10 +90,9 @@
 </div>
 
 <div class="form-group">
-  {!! Form::label('best_for', trans('app.form.best_for').'*', ['class' => 'with-help']) !!}
+  {!! Form::label('best_for', trans('app.form.best_for'), ['class' => 'with-help']) !!}
   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.subscription_best_for') }}"></i>
-  {!! Form::text('best_for', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.subscription_best_for'), 'required']) !!}
-  <div class="help-block with-errors"></div>
+  {!! Form::text('best_for', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.subscription_best_for')]) !!}
 </div>
 
 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>

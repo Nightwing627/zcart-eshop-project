@@ -3,14 +3,14 @@
 namespace App;
 
 use Carbon\Carbon;
+use App\Common\Loggable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use SoftDeletes, LogsActivity;
+    use SoftDeletes, Loggable;
 
     const PAYMENT_STATUS_UNPAID             = 1;       //Default
     const PAYMENT_STATUS_PENDING            = 2;
@@ -32,20 +32,6 @@ class Order extends Model
      * @var array
      */
     protected $dates = ['deleted_at', 'shipping_date', 'delivery_date', 'payment_date'];
-
-    /**
-     * The attributes that will be logged on activity logger.
-     *
-     * @var boolean
-     */
-    protected static $logFillable = true;
-
-    /**
-     * The only attributes that has been changed.
-     *
-     * @var boolean
-     */
-    protected static $logOnlyDirty = true;
 
     /**
      * The name that will be used when log this model. (optional)
@@ -301,11 +287,6 @@ class Order extends Model
     public function refundedSum()
     {
         return $this->refunds->where('status', Refund::STATUS_APPROVED)->sum('amount');
-    }
-
-    public function activities()
-    {
-        return $this->activity()->orderBy('created_at', 'desc')->get();
     }
 
     public function paymentStatusName()

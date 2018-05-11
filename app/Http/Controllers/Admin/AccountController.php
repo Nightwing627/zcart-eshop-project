@@ -61,7 +61,7 @@ class AccountController extends Controller
 
         event(new ProfileUpdated(Auth::user()));
 
-        return redirect()->back()->with('success', trans('messages.profile_updated'));
+        return redirect()->route('admin.account.profile')->with('success', trans('messages.profile_updated'));
     }
 
     /**
@@ -73,13 +73,13 @@ class AccountController extends Controller
     public function updatePassword(UpdatePasswordRequest $request)
     {
         if(! Hash::check($request->input('current_password'), Auth::user()->password) )
-            return redirect()->back()->with('error', trans('messages.incorrect_current_password'));
+            return redirect()->route('admin.account.profile')->with('error', trans('messages.incorrect_current_password'));
 
         $profile = $this->profile->updatePassword($request);
 
         event(new PasswordUpdated(Auth::user()));
 
-        return redirect()->back()->with('success', trans('messages.password_updated'));
+        return redirect()->route('admin.account.profile')->with('success', trans('messages.password_updated'));
     }
 
     /**
@@ -92,7 +92,7 @@ class AccountController extends Controller
     {
         $this->profile->updatePhoto($request);
 
-        return redirect()->back()->with('success', trans('messages.profile_updated'));
+        return redirect()->route('admin.account.profile')->with('success', trans('messages.profile_updated'));
     }
 
     /**
@@ -105,6 +105,6 @@ class AccountController extends Controller
     {
         $this->profile->deletePhoto($request);
 
-        return redirect()->back()->with('success', trans('messages.profile_updated'));
+        return redirect()->route('admin.account.profile')->with('success', trans('messages.profile_updated'));
     }
 }

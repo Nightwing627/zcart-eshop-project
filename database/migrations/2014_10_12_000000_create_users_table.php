@@ -23,11 +23,6 @@ class CreateUsersTable extends Migration
             $table->date('dob')->nullable();
             $table->string('sex')->nullable();
             $table->longtext('description')->nullable();
-            // $table->string('current_billing_plan')->nullable();
-            // $table->string('stripe_id')->nullable();
-            // $table->string('card_brand')->nullable();
-            // $table->string('card_last_four')->nullable();
-            // $table->timestamp('trial_ends_at')->nullable();
             $table->timestampTz('last_visited_at')->nullable();
             $table->ipAddress('last_visited_from')->nullable();
             $table->boolean('active')->default(1);
@@ -35,8 +30,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
-
-            // $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');;
         });
 
         Schema::create('user_settings', function (Blueprint $table) {

@@ -64,6 +64,7 @@ return [
     'using_more_resource' => 'You\'re using more resources than the :plan plan allowed to. Please use a plan that appropriate to your business.',
     'cant_add_more_user' => 'Your current subscription plan doesn\'t allow to add more user. If your business need more user to manage, please upgrade your plan.',
     'cant_add_more_inventory' => 'You have reached the maximum limit of stock allocate to your current subscription plan. Please upgrade your plan to extend the limit.',
+    'only_merchant_can_change_plan' => 'Only the shop owner can change the billing/subscription plan.',
 
     // 'failed'    => [
     //     'create'   => 'Create :model has been failed!',

@@ -3,14 +3,14 @@
 namespace App;
 
 use Auth;
+use App\Common\Loggable;
 use App\Common\Repliable;
 use App\Common\Attachable;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class Dispute extends Model
 {
-    use Repliable, Attachable, LogsActivity;
+    use Repliable, Attachable, Loggable;
 
 	const STATUS_NEW       = 1; 		//Default
     const STATUS_OPEN      = 2;
@@ -25,20 +25,6 @@ class Dispute extends Model
      * @var string
      */
     protected $table = 'disputes';
-
-    /**
-     * The attributes that will be logged on activity logger.
-     *
-     * @var boolean
-     */
-    protected static $logFillable = true;
-
-    /**
-     * The only attributes that has been changed.
-     *
-     * @var boolean
-     */
-    protected static $logOnlyDirty = true;
 
     /**
      * The name that will be used when log this model. (optional)
@@ -110,11 +96,6 @@ class Dispute extends Model
     public function order()
     {
         return $this->belongsTo(Order::class);
-    }
-
-    public function activities()
-    {
-        return $this->activity()->orderBy('created_at', 'desc')->get();
     }
 
     /**

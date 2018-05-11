@@ -1155,6 +1155,24 @@ if ( ! function_exists('get_activity_str') )
     function get_activity_str($model, $attrbute, $new, $old){
 
         switch ($attrbute) {
+            case 'current_billing_plan':
+                $plan = \App\SubscriptionPlan::find([$old, $new])->pluck('name', 'plan_id');
+
+                if(is_null($old))
+                    return trans('app.activities.subscribed', ['plan' => $plan[$new]]);
+
+                return trans('app.activities.subscription_changed', ['from' => $plan[$old], 'to' => $plan[$new]]);
+
+                break;
+
+            case 'card_last_four':
+                if(is_null($old))
+                    return trans('app.activities.billing_info_added', ['by' => $new]);
+
+                return trans('app.activities.billing_info_changed', ['from' => $old, 'to' => $new]);
+
+                break;
+
             case 'order_status_id':
                 $attrbute = trans('app.status');
                 $statues = \App\OrderStatus::find([$old, $new])->pluck('name', 'id');

@@ -63,7 +63,6 @@
 			</div>
 
             {!! Form::submit(trans('app.update'), ['class' => 'btn btn-flat btn-new']) !!}
-
         {!! Form::close() !!}
   	</div>
 

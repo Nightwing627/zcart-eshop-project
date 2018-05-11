@@ -103,11 +103,6 @@ class User extends Authenticatable
                     'description',
                     'sex',
                     'active',
-                    // 'current_billing_plan',
-                    // 'stripe_id',
-                    // 'card_brand',
-                    // 'card_last_four',
-                    // 'trial_ends_at',
                     'last_visited_at',
                     'last_visited_from',
                     'remember_token',
@@ -343,7 +338,10 @@ class User extends Authenticatable
      */
     public function isSubscribed()
     {
-        $subscription = optional($this->shop)->subscriptions->first();
+        if($this->isFromPlatform())
+            return False;
+
+        $subscription = optional($this->shop->subscriptions)->first();
 
         return $subscription && $subscription->valid() || $this->isOnGenericTrial();
     }
@@ -390,6 +388,16 @@ class User extends Authenticatable
     public function accessLevel()
     {
         return $this->role->level ? $this->role->level + 1 : Null;
+    }
+
+    /**
+     * Activities for the loggable model
+     *
+     * @return [type] [description]
+     */
+    public function activities()
+    {
+        return $this->activity()->orderBy('created_at', 'desc')->get();
     }
 
     /**

@@ -16,19 +16,23 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-no-option">
+			<table class="table table-hover table-no-option" id="sortable" data-action="{{ Route('admin.setting.subscriptionPlan.reorder') }}">
 				<thead>
 					<tr>
+				        <th width="7px">{{ trans('app.#') }}</th>
 						<th>{{ trans('app.name') }}</th>
-						<th>{{ trans('app.cost_per_month') }}</th>
-						<th>{{ trans('app.team_size') }}</th>
-						<th>{{ trans('app.inventory_limit') }}</th>
+						<th><i class="fa fa-money"></i> {{ trans('app.cost_per_month') }}</th>
+						<th><i class="fa fa-users"></i> {{ trans('app.team_size') }}</th>
+						<th><i class="fa fa-cubes"></i> {{ trans('app.inventory_limit') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($subscription_plans as $subscriptionPlan )
-						<tr>
+						<tr id="{{ $subscriptionPlan->plan_id }}">
+					        <td>
+								<i data-toggle="tooltip" data-placement="top" title="{{ trans('app.move') }}" class="fa fa-arrows sort-handler"> </i>
+					        </td>
 							<td>
 								{{ $subscriptionPlan->name }}
 								@if($subscriptionPlan->featured)
@@ -90,9 +94,9 @@
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('delete', $trash)
-								<a href="{{ route('admin.setting.subscriptionPlan.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+								<a href="{{ route('admin.setting.subscriptionPlan.restore', $trash->plan_id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
 
-								{!! Form::open(['route' => ['admin.setting.subscriptionPlan.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+								{!! Form::open(['route' => ['admin.setting.subscriptionPlan.destroy', $trash->plan_id], 'method' => 'delete', 'class' => 'data-form']) !!}
 									{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 								{!! Form::close() !!}
 							@endcan
@@ -103,4 +107,8 @@
 			</table>
 		</div> <!-- /.box-body -->
 	</div> <!-- /.box -->
+@endsection
+
+@section('page-script')
+	@include('plugins.drag-n-drop')
 @endsection

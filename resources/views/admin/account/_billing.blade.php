@@ -20,9 +20,11 @@
 		  		<div class="panel panel-default">
 			  		<div class="panel-body">
 						{!! trans('messages.current_subscription', ['plan' => $current_plan->name]) !!}
-						{!! Form::open(['route' => ['admin.account.subscription.cancel', $current_plan], 'method' => 'delete', 'class' => 'inline']) !!}
-							{!! Form::button(trans('app.calcel_plan'), ['type' => 'submit', 'class' => 'confirm ajax-silent btn btn-sm btn-danger pull-right']) !!}
-						{!! Form::close() !!}
+						@if(Auth::user()->isMerchant())
+							{!! Form::open(['route' => ['admin.account.subscription.cancel', $current_plan], 'method' => 'delete', 'class' => 'inline']) !!}
+								{!! Form::button(trans('app.calcel_plan'), ['type' => 'submit', 'class' => 'confirm ajax-silent btn btn-sm btn-danger pull-right']) !!}
+							{!! Form::close() !!}
+				  		@endif
 			  		</div>
 		  		</div>
 	  		@endif
@@ -58,23 +60,25 @@
 					  				<td class="lead">
 					  					<span class="indent20">{{ get_formated_currency($plan->cost) . trans('app.per_month') }}</span>
 					  				</td>
-					  				<td class="pull-right">
-			                        	@if(optional($current_plan)->stripe_plan == $plan->plan_id || optional($current_plan)->braintree_plan == $plan->plan_id)
-											@if(Auth::user()->isOnGracePeriod())
-				                                <a href="{{ route('admin.account.subscription.resume') }}" class="confirm btn btn-lg btn-primary">
-					                            	<i class="fa fa-rocket"></i> {{ trans('app.resume_subscription') }}
+									@if(Auth::user()->isMerchant())
+						  				<td class="pull-right">
+				                        	@if(optional($current_plan)->stripe_plan == $plan->plan_id || optional($current_plan)->braintree_plan == $plan->plan_id)
+												@if(Auth::user()->isOnGracePeriod())
+					                                <a href="{{ route('admin.account.subscription.resume') }}" class="confirm btn btn-lg btn-primary">
+						                            	<i class="fa fa-rocket"></i> {{ trans('app.resume_subscription') }}
+						                            </a>
+												@else
+						                            <button class="btn btn-lg btn-primary disabled">
+						                            	<i class="fa fa-check-circle-o"></i> {{ trans('app.current_plan') }}
+						                            </button>
+												@endif
+				                        	@else
+				                                <a href="{{ route('admin.account.subscribe', $plan->plan_id) }}" class="confirm btn btn-lg btn-default">
+					                            	<i class="fa fa-leaf"></i> {{ trans('app.select_this_plan') }}
 					                            </a>
-											@else
-					                            <button class="btn btn-lg btn-primary disabled">
-					                            	<i class="fa fa-check-circle-o"></i> {{ trans('app.current_plan') }}
-					                            </button>
-											@endif
-			                        	@else
-			                                <a href="{{ route('admin.account.subscribe', $plan->plan_id) }}" class="confirm btn btn-lg btn-default">
-				                            	<i class="fa fa-leaf"></i> {{ trans('app.select_this_plan') }}
-				                            </a>
-			                        	@endif
-					  				</td>
+				                        	@endif
+						  				</td>
+					  				@endif
 					  			</tr>
 					  		@endforeach
 			  			</tbody>
@@ -91,17 +95,29 @@
 			</div>
 		</div>
 
-  		<div class="panel panel-default">
-	  		<div class="panel-body">
-		        {!! Form::model($profile, ['method' => 'PUT', 'route' => ['admin.account.card.update'], 'id' => 'stripe-form', 'data-toggle' => 'validator']) !!}
+		@if(Auth::user()->isMerchant())
+	  		<div class="panel panel-default">
+		  		<div class="panel-body">
+			        {!! Form::model($profile, ['method' => 'PUT', 'route' => ['admin.account.card.update'], 'id' => 'stripe-form', 'data-toggle' => 'validator']) !!}
 
-					@include('auth.stripe_form')
+						@include('auth.stripe_form')
 
-					<div class="pull-right">
-			            {!! Form::submit(trans('app.update'), ['class' => 'btn btn-lg btn-new']) !!}
-					</div>
-				{!! Form::close() !!}
+						<div class="pull-right">
+				            {!! Form::submit(trans('app.update'), ['class' => 'btn btn-lg btn-new']) !!}
+						</div>
+					{!! Form::close() !!}
+				</div>
 			</div>
-		</div>
+		@else
+			<div class="alert alert-danger">
+				<strong><i class="icon fa fa-info-circle"></i>{{ trans('app.notice') }}</strong>
+				{{ trans('messages.only_merchant_can_change_plan') }}
+			</div>
+		@endif
+
+		<fieldset>
+			<legend>{{ trans('app.history') }} <i class="fa fa-history"></i> </legend>
+			@include('admin.account._activity_logs', ['logger' => Auth::user()->shop])
+		</fieldset>
   	</div>
 </div>

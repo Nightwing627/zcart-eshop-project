@@ -30,7 +30,7 @@ class ListHelper
 
     public static function plans()
     {
-        $plans = \DB::table('subscription_plans')->where('deleted_at', Null)->select( 'plan_id', 'name', 'cost')->get();
+        $plans = \DB::table('subscription_plans')->where('deleted_at', Null)->orderBy('order', 'asc')->select( 'plan_id', 'name', 'cost')->get();
 
         $result = [];
         foreach ($plans as $plan)

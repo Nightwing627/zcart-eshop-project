@@ -704,6 +704,10 @@ return [
         'created'   => 'The :model was created.',
         'added'     => 'Updated <strong>:key</strong>: <strong>:value</strong>',
         'updated'   => 'Changed <strong>:key</strong> from <strong>:from</strong> to <strong>:to</strong>',
+        'subscribed' => 'Subscribed to the <strong>:plan</strong> plan.',
+        'subscription_changed'   => 'Subscription migrated from <strong>:from</strong> to <strong>:to</strong>',
+        'billing_info_added' => 'Billing information added successfully.',
+        'billing_info_changed'   => 'Billing information has been updated.',
     ],
 
     'form' => [
@@ -754,6 +758,7 @@ return [
         'state' => 'State/Province/Region',
         'zip_code' => 'Zip/Postal code',
         'phone' => 'Phone',
+        'subscription_plan_id' => 'Plan ID',
         'avatar' => 'Avatar',
         'image' => 'Image',
         'images' => 'Images',
@@ -1040,6 +1045,7 @@ return [
         'brand' => 'Brand',
         // 'company_name' => 'Company name',
         'sku' => 'Seller SKU',
+        'subscription_plan_id' => 'The unique identifier of the subscription plan',
         'mpn' => 'Manufacturer Part Number',
         'gtin' => 'Global Trade Item Number',
         'gtin_type' => 'GTIN type',
