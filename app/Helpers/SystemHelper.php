@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\ListHelper;
+use Laravel\Cashier\Cashier;
 
 if ( ! function_exists('setSystemConfig') )
 {
@@ -46,6 +47,9 @@ if ( ! function_exists('setSystemCurrency') )
     function setSystemCurrency()
     {
         $currency = \DB::table('currencies')->where('id', config('system_settings.currency_id'))->first();
+
+        // Set Cashier Currency
+        Cashier::useCurrency($currency->iso_code, $currency->symbol);
 
         config([
             'system_settings.currency' => [

@@ -125,7 +125,7 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
-    'log_max_files' => 7, //For 'daily' log: Number of files will be kept in log directory
+    'log_max_files' => 30, //For 'daily' log: Number of files will be kept in log directory
 
     /*
     |--------------------------------------------------------------------------

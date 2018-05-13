@@ -16,6 +16,8 @@ class CreateSubscriptionsTable extends Migration
             $table->increments('id');
             $table->integer('shop_id')->unsigned();
             $table->string('name');
+            // $table->string('braintree_id');
+            // $table->string('braintree_plan');
             $table->string('stripe_id');
             $table->string('stripe_plan');
             $table->integer('quantity');

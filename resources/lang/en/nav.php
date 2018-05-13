@@ -62,6 +62,7 @@ return [
     'gift_cards' => 'Gift cards',
     'faqs' => 'Faqs',
     'appearance' => 'Appearance',
+    'performance' => 'Performance',
 
     'reports' => 'Reports',
     'sales_report' => 'Sales',

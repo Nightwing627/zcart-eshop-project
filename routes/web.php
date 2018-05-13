@@ -23,6 +23,16 @@ Route::group(['middleware' => ['auth']], function(){
 
 // Admin Routes
 Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function(){
+	// Markerplace Admin only routes
+	Route::middleware(['admin'])->group(function () {
+		include('admin/Report.php');
+	});
+
+	// Merchant only routes
+	Route::middleware(['merchant'])->group(function () {
+		include('admin/ShopReport.php');
+	});
+
 	// Account Routes for Merchant and Admin
 	Route::group(['as' => 'account.', 'prefix' => 'account'], function()
 	{

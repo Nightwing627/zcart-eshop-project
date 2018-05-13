@@ -25,30 +25,54 @@
                   </a>
                   <ul class="treeview-menu">
                     @can('index', App\CategoryGroup::class)
-                      <li class="{{ Request::is('admin/catalog/categoryGroup*') ? 'active' : '' }}"><a href="{{ route('admin.catalog.categoryGroup.index') }}"><i class="fa fa-angle-right"></i>{{ trans('nav.groups') }}</a></li>
+                      <li class="{{ Request::is('admin/catalog/categoryGroup*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.catalog.categoryGroup.index') }}">
+                          <i class="fa fa-angle-right"></i>{{ trans('nav.groups') }}
+                        </a>
+                      </li>
                     @endcan
 
                     @can('index', App\CategorySubGroup::class)
-                      <li class="{{ Request::is('admin/catalog/categorySubGroup*') ? 'active' : '' }}"><a href="{{ route('admin.catalog.categorySubGroup.index') }}"><i class="fa fa-angle-right"></i>{{ trans('nav.sub-groups') }}</a></li>
+                      <li class="{{ Request::is('admin/catalog/categorySubGroup*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.catalog.categorySubGroup.index') }}">
+                          <i class="fa fa-angle-right"></i>{{ trans('nav.sub-groups') }}
+                        </a>
+                      </li>
                     @endcan
 
                     @can('index', App\Category::class)
-                      <li class="{{ Request::is('admin/catalog/category') ? 'active' : '' }}"><a href="{{ url('admin/catalog/category') }}"><i class="fa fa-angle-right"></i>{{ trans('nav.categories') }}</a></li>
+                      <li class="{{ Request::is('admin/catalog/category') ? 'active' : '' }}">
+                        <a href="{{ url('admin/catalog/category') }}">
+                          <i class="fa fa-angle-right"></i>{{ trans('nav.categories') }}
+                        </a>
+                      </li>
                     @endcan
                   </ul>
                 </li>
               @endif
 
               @can('index', App\Attribute::class)
-                <li class=" {{ Request::is('admin/catalog/attribute*') ? 'active' : '' }}"><a href="{{ url('admin/catalog/attribute') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.attributes') }}</a></li>
+                <li class=" {{ Request::is('admin/catalog/attribute*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/catalog/attribute') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.attributes') }}
+                  </a>
+                </li>
               @endcan
 
               @can('index', App\Product::class)
-                <li class=" {{ Request::is('admin/catalog/product*') ? 'active' : '' }}"><a href="{{ url('admin/catalog/product') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.products') }}</a></li>
+                <li class=" {{ Request::is('admin/catalog/product*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/catalog/product') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.products') }}
+                  </a>
+                </li>
               @endcan
 
               @can('index', App\Manufacturer::class)
-                <li class=" {{ Request::is('admin/catalog/manufacturer*') ? 'active' : '' }}"><a href="{{ url('admin/catalog/manufacturer') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.manufacturers') }}</a></li>
+                <li class=" {{ Request::is('admin/catalog/manufacturer*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/catalog/manufacturer') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.manufacturers') }}
+                  </a>
+                </li>
               @endcan
             </ul>
           </li>
@@ -63,15 +87,27 @@
             </a>
             <ul class="treeview-menu">
               @can('index', App\Inventory::class)
-                <li class=" {{ Request::is('admin/stock/inventory*') ? 'active' : '' }}"><a href="{{ url('admin/stock/inventory') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.inventories') }}</a></li>
+                <li class=" {{ Request::is('admin/stock/inventory*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/stock/inventory') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.inventories') }}
+                  </a>
+                </li>
               @endcan
 
               @can('index', App\Warehouse::class)
-                <li class=" {{ Request::is('admin/stock/warehouse*') ? 'active' : '' }}"><a href="{{ url('admin/stock/warehouse') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.warehouses') }}</a></li>
+                <li class=" {{ Request::is('admin/stock/warehouse*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/stock/warehouse') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.warehouses') }}
+                  </a>
+                </li>
               @endcan
 
               @can('index', App\Supplier::class)
-                <li class=" {{ Request::is('admin/stock/supplier*') ? 'active' : '' }}"><a href="{{ url('admin/stock/supplier') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.suppliers') }}</a></li>
+                <li class=" {{ Request::is('admin/stock/supplier*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/stock/supplier') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.suppliers') }}
+                  </a>
+                </li>
               @endcan
             </ul>
           </li>
@@ -86,15 +122,27 @@
             </a>
             <ul class="treeview-menu">
               @can('index', App\Order::class)
-                <li class=" {{ Request::is('admin/order/order*') ? 'active' : '' }}"><a href="{{ url('admin/order/order') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.orders') }}</a></li>
+                <li class=" {{ Request::is('admin/order/order*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/order/order') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.orders') }}
+                  </a>
+                </li>
               @endcan
 
               @can('index', App\Cart::class)
-                <li class=" {{ Request::is('admin/order/cart*') ? 'active' : '' }}"><a href="{{ url('admin/order/cart') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.carts') }}</a></li>
+                <li class=" {{ Request::is('admin/order/cart*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/order/cart') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.carts') }}
+                  </a>
+                </li>
               @endcan
 
               {{-- @can('index', App\Payment::class) --}}
-                {{-- <li class=" {{ Request::is('admin/order/payment*') ? 'active' : '' }}"><a href="{{ url('admin/order/payments') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.payments') }}</a></li> --}}
+                {{-- <li class=" {{ Request::is('admin/order/payment*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/order/payments') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.payments') }}
+                  </a>
+                </li> --}}
               {{-- @endcan --}}
             </ul>
           </li>
@@ -109,11 +157,19 @@
             </a>
             <ul class="treeview-menu">
               @can('index', App\User::class)
-                <li class=" {{ Request::is('admin/admin/user*') ? 'active' : '' }}"><a href="{{ url('admin/admin/user') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.users') }}</a></li>
+                <li class=" {{ Request::is('admin/admin/user*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/admin/user') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.users') }}
+                  </a>
+                </li>
               @endcan
 
               @can('index', App\Customer::class)
-                <li class=" {{ Request::is('admin/admin/customer*') || Request::is('address/addresses/customer*') ? 'active' : '' }}"><a href="{{ url('admin/admin/customer') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.customers') }}</a></li>
+                <li class=" {{ Request::is('admin/admin/customer*') || Request::is('address/addresses/customer*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/admin/customer') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.customers') }}
+                  </a>
+                </li>
               @endcan
             </ul>
           </li>
@@ -128,10 +184,18 @@
             </a>
             <ul class="treeview-menu">
               @can('index', App\Shop::class)
-                <li class=" {{ Request::is('admin/vendor/merchant*') ? 'active' : '' }}"><a href="{{ url('admin/vendor/merchant') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.merchants') }}</a></li>
+                <li class=" {{ Request::is('admin/vendor/merchant*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/vendor/merchant') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.merchants') }}
+                  </a>
+                </li>
               @endcan
               @can('index', App\Shop::class)
-                <li class=" {{ Request::is('admin/vendor/shop*') ? 'active' : '' }}"><a href="{{ url('admin/vendor/shop') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.shops') }}</a></li>
+                <li class=" {{ Request::is('admin/vendor/shop*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/vendor/shop') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.shops') }}
+                  </a>
+                </li>
               @endcan
             </ul>
           </li>
@@ -146,15 +210,27 @@
             </a>
             <ul class="treeview-menu">
               @can('index', App\Carrier::class)
-                <li class=" {{ Request::is('admin/shipping/carrier*') ? 'active' : '' }}"><a href="{{ url('admin/shipping/carrier') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.carriers') }}</a></li>
+                <li class=" {{ Request::is('admin/shipping/carrier*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/shipping/carrier') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.carriers') }}
+                  </a>
+                </li>
               @endcan
 
               @can('index', App\Packaging::class)
-                <li class=" {{ Request::is('admin/shipping/packaging*') ? 'active' : '' }}"><a href="{{ url('admin/shipping/packaging') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.packaging') }}</a></li>
+                <li class=" {{ Request::is('admin/shipping/packaging*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/shipping/packaging') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.packaging') }}
+                  </a>
+                </li>
               @endcan
 
               @can('index', App\ShippingZone::class)
-                <li class=" {{ Request::is('admin/shipping/shippingZone*') ? 'active' : '' }}"><a href="{{ url('admin/shipping/shippingZone') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.shipping_zones') }}</a></li>
+                <li class=" {{ Request::is('admin/shipping/shippingZone*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/shipping/shippingZone') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.shipping_zones') }}
+                  </a>
+                </li>
               @endcan
             </ul>
           </li>
@@ -169,10 +245,18 @@
             </a>
             <ul class="treeview-menu">
               @can('index', App\Coupon::class)
-                <li class=" {{ Request::is('admin/promotion/coupon*') ? 'active' : '' }}"><a href="{{ url('admin/promotion/coupon') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.coupons') }}</a></li>
+                <li class=" {{ Request::is('admin/promotion/coupon*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/promotion/coupon') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.coupons') }}
+                  </a>
+                </li>
               @endcan
               @can('index', App\GiftCard::class)
-                <li class=" {{ Request::is('admin/promotion/giftCard*') ? 'active' : '' }}"><a href="{{ url('admin/promotion/giftCard') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.gift_cards') }}</a></li>
+                <li class=" {{ Request::is('admin/promotion/giftCard*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/promotion/giftCard') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.gift_cards') }}
+                  </a>
+                </li>
               @endcan
             </ul>
           </li>
@@ -187,15 +271,27 @@
             </a>
             <ul class="treeview-menu">
               @can('index', App\Currency::class)
-                <li class=" {{ Request::is('admin/utility/currency*') ? 'active' : '' }}"><a href="{{ url('admin/utility/currency') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.currencies') }}</a></li>
+                <li class=" {{ Request::is('admin/utility/currency*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/utility/currency') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.currencies') }}
+                  </a>
+                </li>
               @endcan
 
               @can('index', App\OrderStatus::class)
-                <li class=" {{ Request::is('admin/utility/orderStatus*') ? 'active' : '' }}"><a href="{{ url('admin/utility/orderStatus') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.order_statuses') }}</a></li>
+                <li class=" {{ Request::is('admin/utility/orderStatus*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/utility/orderStatus') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.order_statuses') }}
+                  </a>
+                </li>
               @endcan
 
               @can('index', App\Faq::class)
-                <li class=" {{ Request::is('admin/utility/faq*') ? 'active' : '' }}"><a href="{{ url('admin/utility/faq') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.faqs') }}</a></li>
+                <li class=" {{ Request::is('admin/utility/faq*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/utility/faq') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.faqs') }}
+                  </a>
+                </li>
               @endcan
             </ul>
           </li>
@@ -210,21 +306,37 @@
             </a>
             <ul class="treeview-menu">
               @can('index', App\Message::class)
-                <li class=" {{ Request::is('admin/support/message*') ? 'active' : '' }}"><a href="{{ url('admin/support/message/labelOf/'. App\Message::LABEL_INBOX) }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.support_messages') }}</a></li>
+                <li class=" {{ Request::is('admin/support/message*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/support/message/labelOf/'. App\Message::LABEL_INBOX) }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.support_messages') }}
+                  </a>
+                </li>
               @endcan
 
               @if(Auth::user()->isFromPlatform())
                 @can('index', App\Ticket::class)
-                  <li class=" {{ Request::is('admin/support/ticket*') ? 'active' : '' }}"><a href="{{ url('admin/support/ticket') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.support_tickets') }}</a></li>
+                  <li class=" {{ Request::is('admin/support/ticket*') ? 'active' : '' }}">
+                    <a href="{{ url('admin/support/ticket') }}">
+                      <i class="fa fa-angle-double-right"></i> {{ trans('nav.support_tickets') }}
+                    </a>
+                  </li>
                 @endcan
               @endif
 
               @can('index', App\Dispute::class)
-                <li class=" {{ Request::is('admin/support/dispute*') ? 'active' : '' }}"><a href="{{ url('admin/support/dispute') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.disputes') }}</a></li>
+                <li class=" {{ Request::is('admin/support/dispute*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/support/dispute') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.disputes') }}
+                  </a>
+                </li>
               @endcan
 
               @can('index', App\Refund::class)
-                <li class=" {{ Request::is('admin/support/refund*') ? 'active' : '' }}"><a href="{{ url('admin/support/refund') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.refunds') }}</a></li>
+                <li class=" {{ Request::is('admin/support/refund*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/support/refund') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.refunds') }}
+                  </a>
+                </li>
               @endcan
             </ul>
           </li>
@@ -246,9 +358,17 @@
           </a>
           <ul class="treeview-menu">
             {{-- @can('index', App\EmailTemplate::class) --}}
-              <li class=" {{ Request::is('admin/appearance/theme*') ? 'active' : '' }}"><a href="{{ url('admin/appearance/theme') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.themes') }}</a></li>
+              <li class=" {{ Request::is('admin/appearance/theme*') ? 'active' : '' }}">
+                <a href="{{ url('admin/appearance/theme') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.themes') }}
+                </a>
+              </li>
 
-              <li class=" {{ Request::is('admin/appearance/theme*') ? 'active' : '' }}"><a href="{{ url('admin/appearance/theme') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.themes') }}</a></li>
+              <li class=" {{ Request::is('admin/appearance/theme*') ? 'active' : '' }}">
+                <a href="{{ url('admin/appearance/theme') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.themes') }}
+                </a>
+              </li>
             {{-- @endcan --}}
           </ul>
         </li>
@@ -261,53 +381,106 @@
           </a>
           <ul class="treeview-menu">
             @can('index', App\SubscriptionPlan::class)
-              <li class=" {{ Request::is('admin/setting/subscriptionPlan*') ? 'active' : '' }}"><a href="{{ url('admin/setting/subscriptionPlan') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.subscription_plans') }}</a></li>
+              <li class=" {{ Request::is('admin/setting/subscriptionPlan*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/subscriptionPlan') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.subscription_plans') }}
+                </a>
+              </li>
             @endcan
 
             @can('index', App\Role::class)
-              <li class=" {{ Request::is('admin/setting/role*') ? 'active' : '' }}"><a href="{{ url('admin/setting/role') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.user_roles') }}</a></li>
+              <li class=" {{ Request::is('admin/setting/role*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/role') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.user_roles') }}
+                </a>
+              </li>
             @endcan
 
             @can('index', App\Tax::class)
-              <li class=" {{ Request::is('admin/setting/tax*') ? 'active' : '' }}"><a href="{{ url('admin/setting/tax') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.taxes') }}</a></li>
+              <li class=" {{ Request::is('admin/setting/tax*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/tax') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.taxes') }}
+                </a>
+              </li>
             @endcan
 
             @can('index', App\EmailTemplate::class)
-              <li class=" {{ Request::is('admin/setting/emailTemplate*') ? 'active' : '' }}"><a href="{{ url('admin/setting/emailTemplate') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.email_templates') }}</a></li>
+              <li class=" {{ Request::is('admin/setting/emailTemplate*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/emailTemplate') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.email_templates') }}
+                </a>
+              </li>
             @endcan
 
             @can('view', App\Config::class)
-              <li class=" {{ Request::is('admin/setting/general*') ? 'active' : '' }}"><a href="{{ url('admin/setting/general') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.general') }}</a></li>
+              <li class=" {{ Request::is('admin/setting/general*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/general') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.general') }}
+                </a>
+              </li>
 
-              <li class=" {{ Request::is('admin/setting/config*') ? 'active' : '' }}"><a href="{{ url('admin/setting/config') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}</a></li>
+              <li class=" {{ Request::is('admin/setting/config*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/config') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}
+                </a>
+              </li>
 
-              <li class=" {{ Request::is('admin/setting/paymentMethod*') ? 'active' : '' }}"><a href="{{ url('admin/setting/paymentMethod') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.payment_methods') }}</a></li>
+              <li class=" {{ Request::is('admin/setting/paymentMethod*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/paymentMethod') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.payment_methods') }}
+                </a>
+              </li>
             @endcan
 
             @can('view', App\System::class)
-              <li class=" {{ Request::is('admin/setting/system/general*') ? 'active' : '' }}"><a href="{{ url('admin/setting/system/general') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.system_settings') }}</a></li>
+              <li class=" {{ Request::is('admin/setting/system/general*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/system/general') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.system_settings') }}
+                </a>
+              </li>
 
-              <li class=" {{ Request::is('admin/setting/system/config*') ? 'active' : '' }}"><a href="{{ url('admin/setting/system/config') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}</a></li>
+              <li class=" {{ Request::is('admin/setting/system/config*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/system/config') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}
+                </a>
+              </li>
             @endcan
           </ul>
         </li>
 
-        <li class="treeview {{ Request::is('reports*') ? 'active' : '' }}">
-          <a href="#">
-            <i class="fa fa-map"></i>
-            <span>{{ trans('nav.reports') }}</span>
-            <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li class=" {{ Request::is('admin/report/sales*') ? 'active' : '' }}"><a href="{{ url('admin/report/sales') }}"><i class="fa fa-angle-double-right"></i> {{ trans('nav.sales_report') }}</a></li>
-          </ul>
-        </li>
+        @if(Auth::user()->isAdmin() || Auth::user()->isMerchant())
+          <li class="treeview {{ Request::is('report*') ? 'active' : '' }}">
+            <a href="#">
+              <i class="fa fa-map"></i>
+              <span>{{ trans('nav.reports') }}</span>
+              <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+              @if(Auth::user()->isAdmin())
+                <li class=" {{ Request::is('admin/report/kpi*') ? 'active' : '' }}">
+                  <a href="{{ route('admin.kpi') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.performance') }}
+                  </a>
+                </li>
+              @elseif(Auth::user()->isMerchant())
+                <li class=" {{ Request::is('admin/shop/report/kpi*') ? 'active' : '' }}">
+                  <a href="{{ route('admin.shop-kpi') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.performance') }}
+                  </a>
+                </li>
+              @endif
+            </ul>
+          </li>
+        @endif
 
         <!--
         <li class="header">LABELS</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+        <li><a href="#">
+        <i class="fa fa-circle-o text-red"></i> <span>Important</span></a>
+        </li>
+        <li><a href="#">
+        <i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a>
+        </li>
+        <li><a href="#">
+        <i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a>
+        </li>
         -->
       </ul>
   </section>

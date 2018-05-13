@@ -267,6 +267,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if the user is the super admin or admin
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->isSuperAdmin() || $this->role_id === Role::ADMIN;
+    }
+
+    /**
      * Check if the user is from main platform or not
      *
      * @return bool

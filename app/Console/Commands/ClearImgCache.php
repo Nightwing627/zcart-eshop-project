@@ -38,8 +38,7 @@ class ClearImgCache extends Command
      */
     public function handle()
     {
-        $this->info('Cleaning cached files.');
         Storage::deleteDirectory(image_cache_path());
-        $this->info('Cache cleaned successfully.');
+        $this->info('Cleaning cached images: <info>✔</info>');
     }
 }

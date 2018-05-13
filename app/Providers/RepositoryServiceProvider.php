@@ -10,6 +10,10 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(
+            \App\Repositories\Account\AccountRepository::class,
+            \App\Repositories\Account\EloquentAccount::class
+        );
+        $this->app->singleton(
             \App\Repositories\Address\AddressRepository::class,
             \App\Repositories\Address\EloquentAddress::class
         );
@@ -94,8 +98,8 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Packaging\EloquentPackaging::class
         );
         $this->app->singleton(
-            \App\Repositories\Account\AccountRepository::class,
-            \App\Repositories\Account\EloquentAccount::class
+            \App\Contracts\Repositories\PerformanceIndicatorsRepository::class,
+            \App\Repositories\PerformanceIndicatorsRepository::class
         );
         $this->app->singleton(
             \App\Repositories\Product\ProductRepository::class,
@@ -141,7 +145,6 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Warehouse\WarehouseRepository::class,
             \App\Repositories\Warehouse\EloquentWarehouse::class
         );
-
     }
 
 }
