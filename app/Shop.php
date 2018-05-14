@@ -98,14 +98,6 @@ class Shop extends Model
     }
 
     /**
-     * Get the rules for the shop.
-     */
-    public function rules()
-    {
-        return $this->hasOne(ShopRule::class);
-    }
-
-    /**
      * Get the warehouses for the product.
      */
     public function warehouses()

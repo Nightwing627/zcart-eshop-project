@@ -64,7 +64,7 @@ class GiftCard extends Model
     }
 
     /**
-     * Set the activation_time for the packaging.
+     * Set the activation_time for the model.
      */
     public function setActivationTimeAttribute($value)
     {
@@ -72,7 +72,7 @@ class GiftCard extends Model
     }
 
     /**
-     * Set the expiry_time for the packaging.
+     * Set the expiry_time for the model.
      */
     public function setExpiryTimeAttribute($value)
     {
@@ -80,7 +80,7 @@ class GiftCard extends Model
     }
 
     /**
-     * Set the partial_use for the packaging.
+     * Set the partial_use for the model.
      */
     public function setPartialUseAttribute($value)
     {
@@ -88,7 +88,7 @@ class GiftCard extends Model
     }
 
     /**
-     * Set the exclude_offer_items for the packaging.
+     * Set the exclude_offer_items for the model.
      */
     public function setExcludeOfferItemsAttribute($value)
     {
@@ -96,7 +96,7 @@ class GiftCard extends Model
     }
 
     /**
-     * Set the exclude_tax_n_shipping for the packaging.
+     * Set the exclude_tax_n_shipping for the model.
      */
     public function setExcludeTaxNShippingAttribute($value)
     {

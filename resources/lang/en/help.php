@@ -121,11 +121,15 @@ return [
 
     'subscription_best_for' => 'Terget customer for this package. This\'ll be visible to customer.',
 
+    'config_return_refund' => 'Return & refund policy for you shop. Please read the marketplace\'s policy before you specify yours.',
+
     'config_trial_days' => 'Merchant\'ll be charged after the trial period. If you dont take card upfront then merchant account will be freeze after this time.',
 
     'charge_after_trial_days' => 'Will be charged after the :days days trial period.',
 
     'required_card_upfront' => 'Do you want to take card information when merchant register?',
+
+    'leave_empty_to_save_as_draft' => 'Leave empty to save as draft',
 
     'config_alert_quantity' => 'A notification email will be send your inventory goes below the alert quantity',
 

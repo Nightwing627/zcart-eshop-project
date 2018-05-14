@@ -105,13 +105,13 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,add,fulfill,archive'
         ],
 
-        'Product' => [
-            'access' => 'Common',
+        'Packaging' => [
+            'access' => 'Merchant',
             'actions' => 'view,add,edit,delete'
         ],
 
-        'Packaging' => [
-            'access' => 'Merchant',
+        'Product' => [
+            'access' => 'Common',
             'actions' => 'view,add,edit,delete'
         ],
 
@@ -143,11 +143,6 @@ class ModulesSeeder extends Seeder
         'Shipping Rate' => [
             'access' => 'Merchant',
             'actions' => 'add,edit,delete'
-        ],
-
-        'Shop Rule' => [
-            'access' => 'Merchant',
-            'actions' => 'view,add,edit,delete'
         ],
 
         'System' => [

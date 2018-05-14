@@ -76,7 +76,8 @@ trait Authorizable
         'faq',
         'faqTopic',
         'orderStatus',
-        'currency'
+        'currency',
+        'page'
     ];
 
     /**

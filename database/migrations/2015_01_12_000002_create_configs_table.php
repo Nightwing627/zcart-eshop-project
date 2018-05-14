@@ -22,6 +22,7 @@ class CreateConfigsTable extends Migration
             $table->string('support_email')->nullable();
             $table->string('default_sender_email_address')->nullable();
             $table->string('default_email_sender_name')->nullable();
+            $table->longtext('return_refund')->nullable();
 
             // Order
             $table->string('order_number_prefix')->nullable()->default('#');

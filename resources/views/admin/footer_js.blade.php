@@ -694,9 +694,13 @@
 				    var tbl = 'products';
 					var url = '/';
 				}
-				else if(route.match(/shop/i)){
-				    var tbl = 'shops';
-					var url = '/shop/';
+				else if(route.match(/page/i)){
+				    var tbl = 'pages';
+					var url = '/';
+				}
+				else if(route.match(/blog/i)){
+				    var tbl = 'blogs';
+					var url = '/blog/';
 				}
 				else{
 				    var tbl = 'shops';

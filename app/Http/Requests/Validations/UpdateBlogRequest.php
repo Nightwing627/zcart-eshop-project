@@ -30,7 +30,8 @@ class UpdateBlogRequest extends Request
            'excerpt' => 'required|max:555',
            'slug' =>  'required|unique:blogs,slug,'.$id,
            'content' => 'required',
-           'status' => 'required'
+           'status' => 'required',
+           'image' => 'mimes:jpg,jpeg,png,gif',
         ];
     }
 }

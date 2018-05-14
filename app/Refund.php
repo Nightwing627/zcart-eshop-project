@@ -89,6 +89,7 @@ class Refund extends Model
     {
         return $query->where('shop_id', Auth::user()->merchantId());
     }
+
     /**
      * Scope a query to only include records from the users shop.
      *

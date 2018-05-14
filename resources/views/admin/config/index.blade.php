@@ -317,6 +317,19 @@
 										@endif
 								  	</div>
 								</div>
+
+								<div class="form-group">
+							        {!! Form::label('return_refund', trans('app.form.config_return_refund'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_return_refund') }}"></i>
+								  	<div class="col-sm-6 nopadding-left">
+								  		@if($can_update)
+											{!! Form::textarea('return_refund', $config->return_refund, ['class' => 'form-control summernote-without-toolbar', 'placeholder' => trans('app.placeholder.config_return_refund')]) !!}
+										@else
+											<span>{{ $config->return_refund }}</span>
+										@endif
+								  	</div>
+								</div>
+
 								<p class="help-block">* {{ trans('app.form.required_fields') }}</p>
 
 						  		@if($can_update)

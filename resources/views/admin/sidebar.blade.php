@@ -286,6 +286,14 @@
                 </li>
               @endcan
 
+              @can('index', App\Page::class)
+                <li class=" {{ Request::is('admin/utility/page*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/utility/page') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.pages') }}
+                  </a>
+                </li>
+              @endcan
+
               @can('index', App\Faq::class)
                 <li class=" {{ Request::is('admin/utility/faq*') ? 'active' : '' }}">
                   <a href="{{ url('admin/utility/faq') }}">

@@ -103,6 +103,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		Route::group(['as' => 'utility.', 'prefix' => 'utility'], function()
 		{
 			include('admin/Faq.php');
+			include('admin/Page.php');
 			include('admin/Currency.php');
 			include('admin/OrderStatus.php');
 		});

@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call('CurrenciesSeeder');
         $this->call('RolesSeeder');
         $this->call('SystemsSeeder');
-        $this->call('KeyValuesSeeder');
         $this->call('UsersSeeder');
         $this->call('ShopsSeeder');
         $this->call('ModulesSeeder');
@@ -38,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->call('DisputeTypesSeeder');
         $this->call('TaxesSeeder');
         $this->call('PackagingsSeeder');
+        $this->call('PagesSeeder');
         $this->call('FaqsSeeder');
         $this->call('demoSeeder');
         $this->command->info('Seeding complete!');

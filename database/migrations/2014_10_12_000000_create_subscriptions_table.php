@@ -34,6 +34,8 @@ class CreateSubscriptionsTable extends Migration
             $table->integer('cost')->default(0);
             $table->integer('transaction_fee')->default(0);
             $table->integer('marketplace_commission')->default(0);
+            $table->integer('order_per_month')->nullable();
+            $table->integer('revenue_per_month')->nullable();
             $table->integer('team_size')->default(1);
             $table->integer('inventory_limit')->default(0);
             $table->boolean('featured')->default(0);

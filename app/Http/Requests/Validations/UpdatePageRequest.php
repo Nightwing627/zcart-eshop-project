@@ -4,7 +4,7 @@ namespace App\Http\Requests\Validations;
 
 use App\Http\Requests\Request;
 
-class CreateBlogRequest extends Request
+class UpdatePageRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,14 +23,11 @@ class CreateBlogRequest extends Request
      */
     public function rules()
     {
-        Request::merge(['user_id' => Request::user()->id]); //Set user_id
-
         return [
            'title' => 'required',
-           'excerpt' => 'required|max:555',
-           'slug' => 'required|unique:blogs',
+           'slug' =>  'required|unique:pages,slug,' . $this->route('page')->id,
            'content' => 'required',
-           'status' => 'required',
+           'visibility' => 'required',
            'image' => 'mimes:jpg,jpeg,png,gif',
         ];
     }

@@ -32,17 +32,16 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('user_settings', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('user_id')->unsigned();
-            $table->string('messages_signature')->nullable();
-            $table->boolean('new_support_message_notification')->default(true);
-            $table->boolean('support_message_assigned_notification')->default(true);
-            $table->boolean('support_message_updated_notification')->default(true);
-            $table->timestamps();
+        // Schema::create('user_settings', function (Blueprint $table) {
+        //     $table->bigInteger('user_id')->unsigned()->primary();
+        //     $table->string('messages_signature')->nullable();
+        //     $table->boolean('new_support_message_notification')->default(true);
+        //     $table->boolean('support_message_assigned_notification')->default(true);
+        //     $table->boolean('support_message_updated_notification')->default(true);
+        //     $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        });
+        //     $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        // });
     }
 
     /**
@@ -52,7 +51,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_settings');
+        // Schema::dropIfExists('user_settings');
         Schema::dropIfExists('users');
     }
 }

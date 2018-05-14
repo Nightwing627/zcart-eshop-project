@@ -61,6 +61,7 @@ return [
     'coupons' => 'Coupons',
     'gift_cards' => 'Gift cards',
     'faqs' => 'Faqs',
+    'pages' => 'Pages',
     'appearance' => 'Appearance',
     'performance' => 'Performance',
 
