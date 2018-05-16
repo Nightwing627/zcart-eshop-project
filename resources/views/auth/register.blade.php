@@ -45,7 +45,7 @@
           <div class="col-xs-8">
             <div class="form-group">
                 <label>
-                    {!! Form::checkbox('agree', null, null, ['class' => 'icheck', 'required']) !!} {!! trans('app.form.i_agree_with_merchant_terms') !!}
+                    {!! Form::checkbox('agree', null, null, ['class' => 'icheck', 'required']) !!} {!! trans('app.form.i_agree_with_merchant_terms', ['url' => route('admin.utility.page.show', \App\Page::PAGE_TNC_FOR_MERCHANT)]) !!}
                 </label>
                 <div class="help-block with-errors"></div>
             </div>
@@ -64,40 +64,5 @@
 @endsection
 
 @section('scripts')
-
   @include('plugins.stripe-scripts')
-
-  <script type="text/javascript">
-    $(document).ready(function() {
-      // // target the form
-      // // on form submission, create a token
-      // $('#registration-form').submit(function(e) {
-      //   var form = $(this);
-
-      //   // disable the form button
-      //   form.find('button').prop('disabled', true);
-      //   $('.loader').show();
-      //   $(".login-box").addClass('blur-filter');
-
-      //   Stripe.card.createToken(form, function(status, response) {
-      //     if (response.error) {
-      //       form.find('.stripe-errors').text(response.error.message).addClass('text-danger');
-      //       form.find('button').prop('disabled', false);
-      //       $(".login-box").removeClass('blur-filter');
-      //       $('.loader').hide();
-      //     } else {
-      //       // console.log(response);
-
-      //       // append the token to the form
-      //       form.append($('<input type="hidden" name="cc_token">').val(response.id));
-
-      //       // submit the form
-      //       form.get(0).submit();
-      //     }
-      //   });
-
-      //   e.preventDefault();
-      // });
-    });
-  </script>
 @endsection

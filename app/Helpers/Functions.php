@@ -1,37 +1,5 @@
 <?php
 
-if ( ! function_exists('is_serialized') )
-{
-    /**
-     * Check if the given value is_serialized or not
-     */
-    function is_serialized( $data ) {
-        // if it isn't a string, it isn't serialized
-        if ( !is_string( $data ) )
-            return false;
-        $data = trim( $data );
-        if ( 'N;' == $data )
-            return true;
-        if ( !preg_match( '/^([adObis]):/', $data, $badions ) )
-            return false;
-        switch ( $badions[1] ) {
-            case 'a' :
-            case 'O' :
-            case 's' :
-                if ( preg_match( "/^{$badions[1]}:[0-9]+:.*[;}]\$/s", $data ) )
-                    return true;
-                break;
-            case 'b' :
-            case 'i' :
-            case 'd' :
-                if ( preg_match( "/^{$badions[1]}:[0-9.E-]+;\$/", $data ) )
-                    return true;
-                break;
-        }
-        return false;
-    }
-}
-
 // if ( ! function_exists('get_platform_tld') )
 // {
 //     /**
@@ -84,6 +52,38 @@ if ( ! function_exists('get_shop_url') )
             $slug = \DB::table('shops')->find($id)->slug;
 
         return url('/shop/' . $slug);
+    }
+}
+
+if ( ! function_exists('is_serialized') )
+{
+    /**
+     * Check if the given value is_serialized or not
+     */
+    function is_serialized( $data ) {
+        // if it isn't a string, it isn't serialized
+        if ( !is_string( $data ) )
+            return false;
+        $data = trim( $data );
+        if ( 'N;' == $data )
+            return true;
+        if ( !preg_match( '/^([adObis]):/', $data, $badions ) )
+            return false;
+        switch ( $badions[1] ) {
+            case 'a' :
+            case 'O' :
+            case 's' :
+                if ( preg_match( "/^{$badions[1]}:[0-9]+:.*[;}]\$/s", $data ) )
+                    return true;
+                break;
+            case 'b' :
+            case 'i' :
+            case 'd' :
+                if ( preg_match( "/^{$badions[1]}:[0-9.E-]+;\$/", $data ) )
+                    return true;
+                break;
+        }
+        return false;
     }
 }
 
@@ -851,50 +851,6 @@ if ( ! function_exists('find_string_in_array') )
     }
 }
 
-if ( ! function_exists('generate_combinations') )
-{
-    /**
-     * Generate all the possible combinations among a set of nested arrays.
-     *
-     * @param  array   $data  The entrypoint array container.
-     * @param  array   &$all  The final container (used internally).
-     * @param  array   $group The sub container (used internally).
-     * @param  int     $k     The actual key for value to append (used internally).
-     * @param  string  $value The value to append (used internally).
-     * @param  integer $i     The key index (used internally).
-     * @param  int     $key   The kay of parent array (used internally).
-     * @return array          The result array with all posible combinations.
-     */
-    function generate_combinations(array $data, array &$all = [], array $group = [], $k = null, $value = null, $i = 0, $key = null)
-    {
-        $keys = array_keys($data);
-
-        if ((isset($value) === true) && (isset($k) === true)) {
-            $group[$key][$k] = $value;
-        }
-
-        if ($i >= count($data)){
-            array_push($all, $group);
-        }
-        else {
-            $currentKey = $keys[$i];
-
-            $currentElement = $data[$currentKey];
-
-            if(count($currentElement) <= 0){
-               	generate_combinations($data, $all, $group, null, null, $i + 1, $currentKey);
-            }
-            else{
-                foreach ($currentElement as $k => $val){
-                    generate_combinations($data, $all, $group, $k, $val, $i + 1, $currentKey);
-                }
-            }
-        }
-
-        return $all;
-    }
-}
-
 if ( ! function_exists('userLevelCompare') )
 {
     /**
@@ -1075,15 +1031,10 @@ if ( ! function_exists('get_disput_status_name') )
     {
         switch ($status) {
             case \App\Dispute::STATUS_NEW: return trans('app.statuses.new');
-
             case \App\Dispute::STATUS_OPEN: return trans('app.statuses.open');
-
             case \App\Dispute::STATUS_WAITING: return trans('app.statuses.waiting');
-
             case \App\Dispute::STATUS_APPEALED: return trans('app.statuses.appealed');
-
             case \App\Dispute::STATUS_SOLVED: return trans('app.statuses.solved');
-
             case \App\Dispute::STATUS_CLOSED: return trans('app.statuses.closed');
         }
     }
@@ -1096,45 +1047,6 @@ if ( ! function_exists('get_activity_title') )
             return trans('app.system') . ' ' . $activity->description . ' ' . trans('app.this') . ' ' . $activity->log_name;
 
         return title_case($activity->description) . ' ' . trans('app.by') . ' ' . $activity->causer->getName();
-    }
-}
-
-if ( ! function_exists('setAdditionalCartInfo') )
-{
-    /**
-     * Push some extra information into the request
-     *
-     * @param $request
-     */
-    function setAdditionalCartInfo($request)
-    {
-        $total = 0;
-        $handling = config('shop_settings.order_handling_cost');
-        $shipping_weight = 0;
-        $grand_total = 0;
-
-        foreach ($request->input('cart') as $cart){
-            $total = $total + ($cart['quantity'] * $cart['unit_price']);
-            $shipping_weight += $cart['shipping_weight'];
-        }
-
-        $grand_total =  ($total + $handling + $request->input('shipping') + $request->input('packaging') + $request->input('taxes')) - $request->input('discount');
-
-        $request->merge([
-            'shop_id' => $request->user()->merchantId(),
-            'shipping_weight' => $shipping_weight,
-            'item_count' => count($request->input('cart') ),
-            'quantity' => array_sum(array_column($request->input('cart'), 'quantity') ),
-            'total' => $total,
-            'handling' => $handling,
-            'grand_total' => $grand_total,
-            'billing_address' => $request->input('same_as_shipping_address') ?
-                                $request->input('shipping_address') :
-                                $request->input('billing_address'),
-            'approved' => 1,
-        ]);
-
-        return $request;
     }
 }
 

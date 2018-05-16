@@ -47,6 +47,7 @@ class SystemConfig extends Model
                         'gift_card_pin_size',
                         'max_img_size_limit_kb',
                         'max_number_of_inventory_imgs',
+                        'active_theme',
                         'pagination',
                         'show_address_title',
                         'address_show_country',

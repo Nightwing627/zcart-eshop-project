@@ -14,6 +14,7 @@ class PagesSeeder extends Seeder
     {
         DB::table('pages')->insert([
             [
+                'id' => 1,
                 'author_id' => \App\Role::SUPER_ADMIN,
                 'title' => 'About us',
                 'slug' => 'about-us',
@@ -23,6 +24,7 @@ class PagesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
+                'id' => 2,
                 'author_id' => \App\Role::SUPER_ADMIN,
                 'title' => 'Privacy policy',
                 'slug' => 'privacy-policy',
@@ -32,6 +34,7 @@ class PagesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
+                'id' => 3,
                 'author_id' => \App\Role::SUPER_ADMIN,
                 'title' => 'Terms and condition for customer',
                 'slug' => 'terms-of-use-customer',
@@ -41,6 +44,7 @@ class PagesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
+                'id' => 4,
                 'author_id' => \App\Role::SUPER_ADMIN,
                 'title' => 'Terms and condition for merchant',
                 'slug' => 'terms-of-use-merchant',
@@ -50,6 +54,7 @@ class PagesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
+                'id' => 5,
                 'author_id' => \App\Role::SUPER_ADMIN,
                 'title' => 'Return and refund policy',
                 'slug' => 'return-and-refund-policy',

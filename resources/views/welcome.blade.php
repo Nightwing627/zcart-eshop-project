@@ -7,6 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Welcome {{ optional(Auth::guard('customer')->user())->getName() }} </div>
                 @php
+                    print_r(config('view.paths'));
                     // echo "<pre>"; print_r($this); echo "</pre>"; exit();
                 @endphp
 

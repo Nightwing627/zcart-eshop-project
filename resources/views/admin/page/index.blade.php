@@ -64,9 +64,13 @@
 			                    <a href="{{ route('admin.utility.page.edit', $page->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 						@can('delete', $page)
-		                    {!! Form::open(['route' => ['admin.utility.page.trash', $page->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-		                        {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-							{!! Form::close() !!}
+							@if(in_array($page->id, config('system.freeze.pages')))
+								<i class="fa fa-bell-o text-muted" data-toggle="tooltip" data-placement="left" title="{{ trans('messages.freezed_model') }}" ></i>
+							@else
+			                    {!! Form::open(['route' => ['admin.utility.page.trash', $page->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+			                        {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+								{!! Form::close() !!}
+							@endif
 						@endcan
 			          </td>
 			        </tr>

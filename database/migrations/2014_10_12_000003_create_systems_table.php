@@ -62,6 +62,8 @@ class CreateSystemsTable extends Migration
             $table->integer('gift_card_pin_size')->default(10);
 
             // Views
+            $table->string('active_theme')->default('default');
+            $table->string('selling_theme')->default('default');
             $table->integer('pagination')->unsigned()->default(10);
             $table->integer('max_img_size_limit_kb')->default(5000);
             $table->integer('max_number_of_inventory_imgs')->unsigned()->default(10);

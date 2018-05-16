@@ -23,12 +23,17 @@ class UpdatePageRequest extends Request
      */
     public function rules()
     {
-        return [
-           'title' => 'required',
-           'slug' =>  'required|unique:pages,slug,' . $this->route('page')->id,
-           'content' => 'required',
-           'visibility' => 'required',
-           'image' => 'mimes:jpg,jpeg,png,gif',
-        ];
+      $rules = [
+         'title' => 'required',
+         'content' => 'required',
+         'image' => 'mimes:jpg,jpeg,png,gif',
+      ];
+
+      if( ! in_array($this->route('page')->id, config('system.freeze.pages')) )
+      {
+        $rules['visibility'] = 'required';
+      }
+
+      return $rules;
     }
 }

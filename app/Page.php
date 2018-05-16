@@ -9,10 +9,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Page extends Model
 {
+    use SoftDeletes, Imageable;
+
     const VISIBILITY_PUBLIC    = 1;         //Default
     const VISIBILITY_MERCHANT  = 2;
 
-    use SoftDeletes, Imageable;
+    const PAGE_ABOUT_US             = 1;         //About us page
+    const PAGE_PRIVACY_POLICY       = 2;         //The privacy policy page
+    const PAGE_TNC_FOR_CUSTOMER     = 3;         //Terms and condiotion page for customers
+    const PAGE_TNC_FOR_MERCHANT     = 4;         //Terms and condiotion page for merchants
+    const PAGE_RETURN_AND_REFUND    = 5;         //Return and refund policy page
 
     /**
      * The database table used by the model.

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Storefront;
 
-use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -14,11 +14,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        return view('index');
     }
 
-    public function dashboard()
-    {
-        return view('customer_dashboard');
-    }
 }
