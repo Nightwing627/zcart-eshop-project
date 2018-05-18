@@ -64,17 +64,6 @@ class PageController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Page  $page
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Page $page)
-    {
-        return view('admin.page._edit', compact('page'));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Page  $page

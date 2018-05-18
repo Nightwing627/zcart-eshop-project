@@ -549,8 +549,8 @@
 			    <!-- /.tab-pane -->
 
 			    <div class="tab-pane" id="support">
-			    	<div class="row">
-				        {!! Form::model($system, ['method' => 'PUT', 'route' => ['admin.setting.system.update'], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
+			        {!! Form::model($system, ['method' => 'PUT', 'route' => ['admin.setting.system.update'], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
+				    	<div class="row">
 					    	<div class="col-sm-12">
 								<div class="form-group">
 							        {!! Form::label('support_phone', trans('app.support_phone'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
@@ -629,16 +629,95 @@
 										@endif
 								  	</div>
 								</div>
-								<p class="help-block">* {{ trans('app.form.required_fields') }}</p>
+							</div>
+						</div>
 
+				    	<div class="row">
+				    		<fieldset>
+								<div class="col-sm-12">
+					    			<legend class="col-sm-9">{{ trans('app.social_links') }}</legend>
+								</div>
+								<div class="col-sm-12">
+									<div class="form-group">
+								        {!! Form::label('google_plus_link', trans('app.google_plus_link'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+									  	<div class="col-sm-6 nopadding-left">
+									  		@if($can_update)
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="fa fa-google-plus-official"></i></span>
+													{!! Form::text('google_plus_link', $system->google_plus_link, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.google_plus_link')]) !!}
+										    	</div>
+											@else
+												<span>{{ $system->google_plus_link }}</span>
+											@endif
+									  	</div>
+									</div>
+									<div class="form-group">
+								        {!! Form::label('facebook_link', trans('app.facebook_link'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+									  	<div class="col-sm-6 nopadding-left">
+									  		@if($can_update)
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
+													{!! Form::text('facebook_link', $system->facebook_link, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.facebook_link')]) !!}
+										    	</div>
+											@else
+												<span>{{ $system->facebook_link }}</span>
+											@endif
+									  	</div>
+									</div>
+   									<div class="form-group">
+								        {!! Form::label('twitter_link', trans('app.twitter_link'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+									  	<div class="col-sm-6 nopadding-left">
+									  		@if($can_update)
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+													{!! Form::text('twitter_link', $system->twitter_link, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.twitter_link')]) !!}
+										    	</div>
+											@else
+												<span>{{ $system->twitter_link }}</span>
+											@endif
+									  	</div>
+									</div>
+									<div class="form-group">
+								        {!! Form::label('pinterest_link', trans('app.pinterest_link'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+									  	<div class="col-sm-6 nopadding-left">
+									  		@if($can_update)
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="fa fa-pinterest"></i></span>
+													{!! Form::text('pinterest_link', $system->pinterest_link, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.pinterest_link')]) !!}
+										    	</div>
+											@else
+												<span>{{ $system->pinterest_link }}</span>
+											@endif
+									  	</div>
+									</div>
+									<div class="form-group">
+								        {!! Form::label('youtube_link', trans('app.youtube_link'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+									  	<div class="col-sm-6 nopadding-left">
+									  		@if($can_update)
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="fa fa-youtube"></i></span>
+													{!! Form::text('youtube_link', $system->youtube_link, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.youtube_link')]) !!}
+										    	</div>
+											@else
+												<span>{{ $system->youtube_link }}</span>
+											@endif
+									  	</div>
+									</div>
+						    	</div>
+				    		</fieldset>
+				    	</div>
+
+					    <div class="row">
+					    	<div class="col-sm-12">
+								<p class="help-block">* {{ trans('app.form.required_fields') }}</p>
 						  		@if($can_update)
 									<div class="col-md-offset-3">
 							            {!! Form::submit(trans('app.update'), ['class' => 'btn btn-lg btn-flat btn-new']) !!}
 							        </div>
 						  		@endif
-						  	</div>
-				        {!! Form::close() !!}
-			    	</div>
+					    	</div>
+				    	</div>
+			        {!! Form::close() !!}
 			    </div>
 			  	<!-- /.tab-pane -->
 

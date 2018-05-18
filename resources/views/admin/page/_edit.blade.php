@@ -1,6 +1,6 @@
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
-        {!! Form::model($page, ['method' => 'PUT', 'route' => ['admin.utility.page.update', $page->id], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
+        {!! Form::model($page, ['method' => 'PUT', 'route' => ['admin.utility.page.update', $page], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
         	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             {{ trans('app.form.form') }}

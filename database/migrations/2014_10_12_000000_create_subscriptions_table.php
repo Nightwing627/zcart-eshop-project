@@ -31,9 +31,9 @@ class CreateSubscriptionsTable extends Migration
             $table->string('name')->unique();
             $table->string('plan_id')->unique();
             $table->string('best_for')->nullable();
-            $table->integer('cost')->default(0);
-            $table->integer('transaction_fee')->default(0);
-            $table->integer('marketplace_commission')->default(0);
+            $table->decimal('cost')->default(0);
+            $table->decimal('transaction_fee')->default(0);
+            $table->decimal('marketplace_commission')->default(0);
             $table->integer('order_per_month')->nullable();
             $table->integer('revenue_per_month')->nullable();
             $table->integer('team_size')->default(1);

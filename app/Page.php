@@ -14,11 +14,11 @@ class Page extends Model
     const VISIBILITY_PUBLIC    = 1;         //Default
     const VISIBILITY_MERCHANT  = 2;
 
-    const PAGE_ABOUT_US             = 1;         //About us page
-    const PAGE_PRIVACY_POLICY       = 2;         //The privacy policy page
-    const PAGE_TNC_FOR_CUSTOMER     = 3;         //Terms and condiotion page for customers
-    const PAGE_TNC_FOR_MERCHANT     = 4;         //Terms and condiotion page for merchants
-    const PAGE_RETURN_AND_REFUND    = 5;         //Return and refund policy page
+    const PAGE_ABOUT_US             = 'about-us';                   //About us page
+    const PAGE_PRIVACY_POLICY       = 'privacy-policy';             //The privacy policy page
+    const PAGE_TNC_FOR_CUSTOMER     = 'terms-of-use-customer';      //Terms and condiotion page for customers
+    const PAGE_TNC_FOR_MERCHANT     = 'terms-of-use-merchant';      //Terms and condiotion page for merchants
+    const PAGE_RETURN_AND_REFUND    = 'return-and-refund-policy';    //Return and refund policy page
 
     /**
      * The database table used by the model.
@@ -26,6 +26,20 @@ class Page extends Model
      * @var string
      */
     protected $table = 'pages';
+
+    /**
+     * The database primary key used by the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'slug';
+
+    /**
+     * The primanry key is not incrementing
+     *
+     * @var boolean
+     */
+    public $incrementing = false;
 
     /**
      * The attributes that should be mutated to dates.

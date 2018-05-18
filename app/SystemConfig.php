@@ -61,6 +61,11 @@ class SystemConfig extends Model
                         'notify_when_dispute_appealed',
                         'notify_new_message',
                         'notify_new_ticket',
+                        'facebook_link',
+                        'google_plus_link',
+                        'twitter_link',
+                        'pinterest_link',
+                        'youtube_link',
                     ];
 
     /**

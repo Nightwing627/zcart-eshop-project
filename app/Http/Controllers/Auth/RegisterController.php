@@ -53,11 +53,12 @@ class RegisterController extends Controller
     /**
      * Show the application registration form.
      *
+     * @param  str  $plan subscription plan
      * @return \Illuminate\Http\Response
      */
-    public function showRegistrationForm()
+    public function showRegistrationForm($plan = Null)
     {
-        return view('auth.register');
+        return view('auth.register', compact('plan'));
     }
 
     /**

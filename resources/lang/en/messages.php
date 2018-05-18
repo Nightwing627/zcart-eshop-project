@@ -65,6 +65,7 @@ return [
     'cant_add_more_user' => 'Your current subscription plan doesn\'t allow to add more user. If your business need more user to manage, please upgrade your plan.',
     'cant_add_more_inventory' => 'You have reached the maximum limit of stock allocate to your current subscription plan. Please upgrade your plan to extend the limit.',
     'only_merchant_can_change_plan' => 'Only the shop owner can change the billing/subscription plan.',
+    'message_send_failed' => 'Sorry, the message cannot be sent now! Please try again later.',
 
     // 'failed'    => [
     //     'create'   => 'Create :model has been failed!',
@@ -89,90 +90,52 @@ return [
     ],
 
     'no_changes' => 'Nothing to show',
-
     'no_history_data' => 'No information to show',
-
     'this_slug_taken' => 'This slug has been taken! Try a new one.',
-
     'slug_length' => 'The slug should be minimum three character long.',
-
     'message_count' => 'You have :count messages',
-
     'notification_count' => 'You have :count unread notifications',
-
     'alert' => 'Alert!',
-
     'dispute_appealed' => 'A dispute appealed',
-
     'appealed_dispute_replied' => 'New reply for appealed dispute',
-
     'thanks' => 'Thanks',
-
     'regards' => 'Regards , ',
-
     'ticket_id' => 'Ticket ID',
-
     'category' => 'Category',
-
     'subject' => 'Subject',
-
     'prioriy' => 'Prioriy',
-
     'amount' => 'Amount',
-
     'shop_name' => 'Shop name',
-
     'customer_name' => 'Customer name',
-
     'shipping_address' => 'Shipping address',
-
     'billing_address' => 'Billing address',
-
     'shipping_carrier' => 'Shipping carrier',
-
     'tracking_id' => 'Tracking ID',
-
     'order_id' => 'Order ID',
-
     'payment_method' => 'Payment method',
-
     'payment_status' => 'Payment status',
-
     'order_status' => 'Order status',
-
     'status' => 'Status',
-
     'unread_notification' => 'Unread notification',
-
     'profile_updated' => 'Profile updated',
-
     'system_is_live' => 'Marketplace is back to LIVE!',
-
     'system_is_down' => 'The marketplace goes DOWN!',
-
     'system_config_updated' => 'System configuration updated!',
-
     'system_info_updated' => 'System information updated!',
-
     'temp_password' => 'Temporary Password: :password',
-
     'password_updated' => 'Password has been changed!',
-
     'shop_created' => 'The shop :shop_name has been created!',
-
     'shop_updated' => 'Shop information has been updated!',
-
     'shop_config_updated' => 'Shop configuration has been updated!',
-
     'shop_down_for_maintainace' => 'Shop goes DOWN!',
-
     'shop_is_live' => 'Shop is back to LIVE!',
-
     'ticket_replied' => 'Ticket has been replied',
-
     'ticket_updated' => 'Ticket has been updated',
-
     'ticket_assigned' => 'A new ticket has been assigned to you',
+    'we_will_get_back_to_you_soon' => 'Send us a message and we will get back to you soon!',
+    'faqs' => 'Most Frequently Asked Questions',
+    'how_the_marketplace_works' => 'It\'s Good To Know How The System Works, Before You Register',
+    'merchant_benefits' => 'Selling online has never been easier.',
 
     'permission'        => [
             'denied'        => 'Permission denied!',

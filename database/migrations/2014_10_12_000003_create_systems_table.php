@@ -41,6 +41,13 @@ class CreateSystemsTable extends Migration
             $table->string('default_sender_email_address')->nullable();
             $table->string('default_email_sender_name')->nullable();
 
+            // Social Links
+            $table->string('facebook_link')->nullable();
+            $table->string('google_plus_link')->nullable();
+            $table->string('twitter_link')->nullable();
+            $table->string('pinterest_link')->nullable();
+            $table->string('youtube_link')->nullable();
+
             // Units and Formating
             $table->string('length_unit')->default('meter');
             $table->string('weight_unit')->default('g');

@@ -35,7 +35,7 @@
 			          </td>
 			          <td width="45%">
 							@can('update', $page)
-			                    <a href="{{ route('admin.utility.page.edit', $page->id) }}"  class="ajax-modal-btn"><strong>{!! $page->title !!}</strong></a>
+			                    <a href="{{ route('admin.utility.page.edit', $page) }}"  class="ajax-modal-btn"><strong>{!! $page->title !!}</strong></a>
 							@else
 					          	<strong>{!! $page->title !!}</strong>
 							@endcan
@@ -61,13 +61,13 @@
 				      </td>
 			          <td class="row-options text-muted small">
 							@can('update', $page)
-			                    <a href="{{ route('admin.utility.page.edit', $page->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+			                    <a href="{{ route('admin.utility.page.edit', $page) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 						@can('delete', $page)
 							@if(in_array($page->id, config('system.freeze.pages')))
 								<i class="fa fa-bell-o text-muted" data-toggle="tooltip" data-placement="left" title="{{ trans('messages.freezed_model') }}" ></i>
 							@else
-			                    {!! Form::open(['route' => ['admin.utility.page.trash', $page->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+			                    {!! Form::open(['route' => ['admin.utility.page.trash', $page], 'method' => 'delete', 'class' => 'data-form']) !!}
 			                        {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 								{!! Form::close() !!}
 							@endif
@@ -108,8 +108,8 @@
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 			          <td class="row-options small">
 						@can('delete', $trash)
-		                    <a href="{{ route('admin.utility.page.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
-		                    {!! Form::open(['route' => ['admin.utility.page.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+		                    <a href="{{ route('admin.utility.page.restore', $trash) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+		                    {!! Form::open(['route' => ['admin.utility.page.destroy', $trash], 'method' => 'delete', 'class' => 'data-form']) !!}
 		                        {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 							{!! Form::close() !!}
 						@endcan

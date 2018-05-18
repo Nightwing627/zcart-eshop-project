@@ -35,4 +35,14 @@ class FaqTopic extends Model
     {
         return $this->faqs->count();
     }
+
+    /**
+     * Scope a query to only include Merchant topics.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMerchant($query)
+    {
+        return $query->where('for', 'Merchant');
+    }
 }

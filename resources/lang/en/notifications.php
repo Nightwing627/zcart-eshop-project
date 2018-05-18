@@ -295,6 +295,14 @@ return [
         ],
     ],
 
+    'new_contact_us_message' => [
+        'subject' => 'New message via contact us form: :subject',
+        'greeting' => 'Hello!',
+        'message_head' => '',
+        'message_footer_with_phone' => 'You can reply this email or contact directly to this phone :phone',
+        'message_footer' => 'You can reply this email directly.',
+    ],
+
     // Ticket Notifications
     'ticket_acknowledgement' => [
         'subject' => '[Ticket ID: :ticket_id] :subject',

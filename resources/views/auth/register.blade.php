@@ -8,7 +8,7 @@
     <div class="box-body">
       {!! Form::open(['route' => 'register', 'id' => config('system_settings.required_card_upfront') ? 'stripe-form' : 'registration-form', 'data-toggle' => 'validator']) !!}
         <div class="form-group has-feedback">
-          {{ Form::select('plan', $plans, Null, ['id' => 'plans' , 'class' => 'form-control input-lg', 'required']) }}
+          {{ Form::select('plan', $plans, isset($plan) ? $plan : Null, ['id' => 'plans' , 'class' => 'form-control input-lg', 'required']) }}
             <i class="glyphicon glyphicon-dashboard form-control-feedback"></i>
             <div class="help-block with-errors">
               @if((bool) config('system_settings.trial_days'))
@@ -45,7 +45,7 @@
           <div class="col-xs-8">
             <div class="form-group">
                 <label>
-                    {!! Form::checkbox('agree', null, null, ['class' => 'icheck', 'required']) !!} {!! trans('app.form.i_agree_with_merchant_terms', ['url' => route('admin.utility.page.show', \App\Page::PAGE_TNC_FOR_MERCHANT)]) !!}
+                    {!! Form::checkbox('agree', null, null, ['class' => 'icheck', 'required']) !!} {!! trans('app.form.i_agree_with_merchant_terms', ['url' => route('page.open', \App\Page::PAGE_TNC_FOR_MERCHANT)]) !!}
                 </label>
                 <div class="help-block with-errors"></div>
             </div>

@@ -6,11 +6,12 @@ use App\Common\Imageable;
 use App\Common\Addressable;
 use App\Common\SystemUsers;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class System extends Model
 {
-    use SystemUsers, Addressable, Imageable, LogsActivity;
+    use SystemUsers, Notifiable, Addressable, Imageable, LogsActivity;
 
     /**
      * The database table used by the model.
@@ -39,6 +40,26 @@ class System extends Model
      * @var boolean
      */
     protected static $logName = 'system';
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return $this->support_email ? $this->support_email : $this->email;
+    }
+
+    /**
+     * Route notifications for the Nexmo channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForNexmo()
+    {
+        return $this->support_phone ? $this->support_phone : $this->primaryAddress->phone;
+    }
 
     /**
      * The attributes that are mass assignable.
