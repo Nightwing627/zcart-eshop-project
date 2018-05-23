@@ -3630,10 +3630,7 @@ a:focus {
 }
 .sidebar-form input[type="text"] {
   color: #666;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 2px;
+  border-radius: 0;
 }
 .sidebar-form input[type="text"]:focus,
 .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
@@ -3645,10 +3642,7 @@ a:focus {
 }
 .sidebar-form .btn {
   color: #999;
-  border-top-left-radius: 0;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-  border-bottom-left-radius: 0;
+  border-radius: 0;
 }
 
 
@@ -4319,16 +4313,14 @@ a:focus {
   margin: 0;
 }
 .navbar-nav > .user-menu > .dropdown-menu {
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
+  border-radius: 0;
   padding: 1px 0 0 0;
   border-top-width: 0;
   width: 280px;
 }
 .navbar-nav > .user-menu > .dropdown-menu,
 .navbar-nav > .user-menu > .dropdown-menu > .user-body {
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
+  border-radius: 0px;
 }
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header {
   height: 175px;
@@ -4627,6 +4619,14 @@ fieldset legend {
   border: none;
 }
 
+/* jquery 3 hack fix */
+div.datepicker > div {
+  display: block;
+}
+/*.bootstrap-datetimepicker-widget {
+  display: block !important;
+}
+*/
 /**
  * summurnote
  */
@@ -5393,9 +5393,9 @@ fieldset legend {
   font-size: 14px;
 }
 .info-box .progress {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.1);
   margin: 5px -10px 5px -10px;
-  height: 2px;
+  height: 3px;
 }
 .info-box .progress,
 .info-box .progress .progress-bar {
@@ -5404,11 +5404,23 @@ fieldset legend {
 .info-box .progress .progress-bar {
   background: #fff;
 }
+.info-box .progress .progress-bar-primary {
+  background-color: #3c8dbc !important;
+}
+.info-box .progress .progress-bar-info {
+  background-color: #00c0ef !important;
+}
+.info-box .progress .progress-bar-success {
+  background-color: #00a65a !important;
+}
+.info-box .progress .progress-bar-warning {
+  background-color: #f39c12 !important;
+}
+.info-box .progress .progress-bar-danger {
+  background-color: #dd4b39 !important;
+}
 .info-box-icon {
-  border-top-left-radius: 2px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 2px;
+  border-radius: 0px;
   display: block;
   float: left;
   height: 90px;
@@ -6142,69 +6154,77 @@ table.text-center th {
 div.dataTables_paginate ul.pagination {
   margin: 10px 0;
 }
-    .dataTables_paginate{
-      margin: -7px 0 7px 0;
-    }
-        .dataTables_paginate li.paginate_button.previous.disabled a, .dataTables_paginate li.paginate_button.next.disabled a{
-            color: #DDD;
-            border: 0;
-        }
-        .dataTables_paginate li.paginate_button a {
-            height: 25px;
-            line-height: 25px;
-            padding-top: 0px;
-            color:#444;
-            font-size:12px;
-            border:0;
-        }
-        .dataTables_paginate li.paginate_button a:hover{
-          background:none;
-          color:#11A7DB;
-        }
-        .dataTables_paginate li.paginate_button.active a {
-            background:#FFF;
-            color:#11A7DB;
-            border:0;
-        }
+.dataTables_paginate{
+  margin: -7px 0 7px 0;
+}
+.dataTables_paginate li.paginate_button.previous.disabled a, .dataTables_paginate li.paginate_button.next.disabled a{
+    color: #DDD;
+    border: 0;
+}
+.dataTables_paginate li.paginate_button a {
+    height: 25px;
+    line-height: 25px;
+    padding-top: 0px;
+    color:#444;
+    font-size:12px;
+    border:0;
+}
+.dataTables_paginate li.paginate_button a:hover{
+  background:none;
+  color:#11A7DB;
+}
+.dataTables_paginate li.paginate_button.active a {
+    background:#FFF;
+    color:#11A7DB;
+    border:0;
+}
 
-    .paginate_disabled_previous, .paginate_disabled_next, a.paginate_disabled_previous:hover, a.paginate_disabled_next:hover {
-      display: inline-block;
-      margin-bottom: 0;
-      font-weight: normal;
-      text-align: center;
-      vertical-align: middle;
-      cursor: default;
-      background-image: none;
-      border: 1px solid transparent;
-      white-space: nowrap;
-      padding: 4px 9px;
-      font-size: 12px;
-      line-height: 1.428571429;
-      border-radius: 0;
-      margin-left: 5px;
-      color: #ADADAD;
-      text-decoration: none;
-    }
-    .paginate_enabled_next, .paginate_enabled_previous, a.paginate_enabled_previous:hover, a.paginate_enabled_next:hover{
-      display: inline-block;
-      margin-bottom: 0;
-      font-weight: normal;
-      text-align: center;
-      vertical-align: middle;
-      cursor: pointer;
-      background-image: none;
-      border: 1px solid transparent;
-      white-space: nowrap;
-      padding: 4px 9px;
-      font-size: 12px;
-      line-height: 1.428571429;
-      border-radius: 0;
-      color: #007AFF;
-      margin-left: 5px;
-      text-decoration: none;
-      background:none;
-    }
+.paginate_disabled_previous, .paginate_disabled_next, a.paginate_disabled_previous:hover, a.paginate_disabled_next:hover {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: default;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 4px 9px;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 0;
+  margin-left: 5px;
+  color: #ADADAD;
+  text-decoration: none;
+}
+.paginate_enabled_next, .paginate_enabled_previous, a.paginate_enabled_previous:hover, a.paginate_enabled_next:hover{
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 4px 9px;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 0;
+  color: #007AFF;
+  margin-left: 5px;
+  text-decoration: none;
+  background:none;
+}
 
+div.dt-button-background{
+  height: 1px !important;
+  width: 1px !important;
+}
+
+li.dt-button.button-page-length.active a{
+  color: #fff !important;
+}
 /*
  * Component: Label
  * ----------------
@@ -8813,6 +8833,19 @@ label.img-btn-sm input[type="file"] {
 a.btn{
   text-decoration: none !important;
 }
+
+.themes .theme .caption .lead{
+  margin-bottom: 10px !important;
+}
+.themes .theme .caption .lead small{
+  font-size: 75% !important;
+  padding-top: 5px;
+}
+
+.themes .theme .thumbnail.active{
+  box-shadow: 0 0 1px #d3d3d3;
+}
+
 /*
  * Skin: Blue
  * ----------

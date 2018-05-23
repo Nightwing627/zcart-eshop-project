@@ -23,7 +23,7 @@
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.gtin') }}</th>
 						<th>{{ trans('app.model_number') }}</th>
-						<th width="30%">{{ trans('app.category') }}</th>
+						<th width="25%">{{ trans('app.category') }}</th>
 						<th>{{ trans('app.listing') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>

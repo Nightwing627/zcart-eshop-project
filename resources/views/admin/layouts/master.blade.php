@@ -10,6 +10,7 @@
 
     <!-- Scripts -->
     <link href="{{ mix("css/app.css") }}" rel="stylesheet">
+    <link href="{{ mix("css/vendor.css") }}" rel="stylesheet">
 
     <!-- START Page specific Stylesheets -->
     @yield("page-style")
@@ -134,6 +135,7 @@
     <div id="myDynamicModal" class="modal fade" aria-hidden="true"></div>
 
     <script src="{{ mix("js/app.js") }}"></script>
+    <script src="{{ mix("js/vendor.js") }}"></script>
 
     {{-- START (Required by only the datetimepicker, Remove it after find a solution) --}}
     {{-- <script>var $Original = jQuery.noConflict(true);</script> --}}

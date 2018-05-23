@@ -61,7 +61,7 @@
                             <ul class="timeline">
                                 <li>
                                     <div class="timeline-image">
-                                        <img class="img-circle img-responsive" src="{{ selling_theme_asset_path('img/step_1.jpg') }}" alt="">
+                                        <img class="img-circle img-responsive" src="{{ selling_theme_asset_url('img/step_1.jpg') }}" alt="">
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
@@ -75,7 +75,7 @@
                                 </li>
                                 <li class="timeline-inverted">
                                     <div class="timeline-image">
-                                        <img class="img-circle img-responsive" src="{{ selling_theme_asset_path('img/step_2.jpg') }}" alt="">
+                                        <img class="img-circle img-responsive" src="{{ selling_theme_asset_url('img/step_2.jpg') }}" alt="">
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
@@ -89,7 +89,7 @@
                                 </li>
                                 <li>
                                     <div class="timeline-image">
-                                        <img class="img-circle img-responsive" src="{{ selling_theme_asset_path('img/step_3.jpg') }}" alt="">
+                                        <img class="img-circle img-responsive" src="{{ selling_theme_asset_url('img/step_3.jpg') }}" alt="">
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
@@ -103,7 +103,7 @@
                                 </li>
                                 <li class="timeline-inverted">
                                     <div class="timeline-image">
-                                        <img class="img-circle img-responsive" src="{{ selling_theme_asset_path('img/step_4.jpg') }}" alt="">
+                                        <img class="img-circle img-responsive" src="{{ selling_theme_asset_url('img/step_4.jpg') }}" alt="">
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">

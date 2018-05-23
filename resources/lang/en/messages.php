@@ -49,6 +49,7 @@ return [
     'invoice_sent_to_customer' => 'The invoice has been sent to the customer.',
     'freezed_model' => 'This record is freezed by the system config. The application need this value to run properly.',
     'email_verification_notice' => 'Your email address is not verified. Please verify to get full access! if you didn\'t got the verification email, you can resend again from your frofile page.',
+    'theme_activated' => 'Theme :theme has been activated successfully!',
 
     'no_billing_info' => 'Please add billing information to continue.',
     'no_card_added' => 'Please add billing information to subscribe.',
@@ -66,6 +67,9 @@ return [
     'cant_add_more_inventory' => 'You have reached the maximum limit of stock allocate to your current subscription plan. Please upgrade your plan to extend the limit.',
     'only_merchant_can_change_plan' => 'Only the shop owner can change the billing/subscription plan.',
     'message_send_failed' => 'Sorry, the message cannot be sent now! Please try again later.',
+
+    'you_have_disputes_solve' => 'There are :disputes active disputes! Please review and solve disputes.',
+    'you_have_refund_request' => 'You have :requests refund request. Please review and take action.',
 
     // 'failed'    => [
     //     'create'   => 'Create :model has been failed!',

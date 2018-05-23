@@ -32,6 +32,16 @@ class Shop extends Model
     protected $dates = ['deleted_at', 'trial_ends_at'];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'active' => 'boolean',
+        'upgrade_plan_notice' => 'boolean',
+    ];
+
+    /**
      * The name that will be used when log this model. (optional)
      *
      * @var tring
@@ -48,6 +58,7 @@ class Shop extends Model
                             'card_brand',
                             'card_holder_name',
                             'trial_ends_at',
+                            'upgrade_plan_notice',
                         ];
 
    /**
@@ -71,6 +82,7 @@ class Shop extends Model
                     'card_last_four',
                     'trial_ends_at',
                     'active',
+                    'upgrade_plan_notice',
                 ];
 
     /**

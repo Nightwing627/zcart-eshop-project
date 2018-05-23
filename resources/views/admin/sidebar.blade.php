@@ -294,6 +294,14 @@
                 </li>
               @endcan
 
+              @can('index', App\Blog::class)
+                <li class=" {{ Request::is('admin/utility/blog*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/utility/blog') }}">
+                    <i class="fa fa-angle-double-right"></i> <span>{{ trans('nav.blogs') }}</span>
+                  </a>
+                </li>
+              @endcan
+
               @can('index', App\Faq::class)
                 <li class=" {{ Request::is('admin/utility/faq*') ? 'active' : '' }}">
                   <a href="{{ url('admin/utility/faq') }}">
@@ -350,14 +358,6 @@
           </li>
         @endif
 
-        @can('index', App\Blog::class)
-          <li class=" {{ Request::is('admin/blog*') ? 'active' : '' }}">
-            <a href="{{ url('admin/blog') }}">
-              <i class="fa fa-rss"></i> <span>{{ trans('nav.blogs') }}</span>
-            </a>
-          </li>
-        @endcan
-
         <li class="treeview {{ Request::is('admin/appearance*') ? 'active' : '' }}">
           <a href="#">
             <i class="fa fa-paint-brush"></i>
@@ -366,12 +366,6 @@
           </a>
           <ul class="treeview-menu">
             {{-- @can('index', App\EmailTemplate::class) --}}
-              <li class=" {{ Request::is('admin/appearance/theme*') ? 'active' : '' }}">
-                <a href="{{ url('admin/appearance/theme') }}">
-                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.themes') }}
-                </a>
-              </li>
-
               <li class=" {{ Request::is('admin/appearance/theme*') ? 'active' : '' }}">
                 <a href="{{ url('admin/appearance/theme') }}">
                   <i class="fa fa-angle-double-right"></i> {{ trans('nav.themes') }}
@@ -422,17 +416,20 @@
 
             @can('view', App\Config::class)
               <li class=" {{ Request::is('admin/setting/general*') ? 'active' : '' }}">
-                <a href="{{ url('admin/setting/general') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.general') }}
+                <a href="{{ url('admin/setting/general') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.general') }}
                 </a>
               </li>
 
               <li class=" {{ Request::is('admin/setting/config*') ? 'active' : '' }}">
-                <a href="{{ url('admin/setting/config') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}
+                <a href="{{ url('admin/setting/config') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}
                 </a>
               </li>
 
               <li class=" {{ Request::is('admin/setting/paymentMethod*') ? 'active' : '' }}">
-                <a href="{{ url('admin/setting/paymentMethod') }}"> <i class="fa fa-angle-double-right"></i> {{ trans('nav.payment_methods') }}
+                <a href="{{ url('admin/setting/paymentMethod') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.payment_methods') }}
                 </a>
               </li>
             @endcan

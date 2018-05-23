@@ -3,7 +3,6 @@
 @section('buttons')
 	@can('create', App\Customer::class)
 		<a href="{{ route('admin.exim', 'customers') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
-
 		<a href="{{ route('admin.admin.customer.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_customer') }}</a>
 	@endcan
 @endsection

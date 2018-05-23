@@ -1,11 +1,10 @@
 {
-    "slug": "frontend::foo/bar",
-    "parent": "frontend::base",
-    "name": "Foo-Bar theme",
+    "slug": "default",
+    "name": "Default Selling Theme",
     "description": "The best theme you've ever seen.",
-    "author": "Cartalyst LLC",
-	"email": "minuwan@platformoncloud.com",
-	"uri": "https://platformoncloud.com",
-	"license": "The MIT License (MIT)",
+    "author": "Munna Khan",
+	"email": "bd.munna@hotmail.com",
+	"uri": "https://incevio.com",
+	"license": "Copyright reserved to the Author",
     "version": "1.0.0"
 }

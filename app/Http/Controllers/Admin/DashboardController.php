@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
-use Request;
 use App\User;
+use App\Charts\LatestSales;
+use App\Charts\ResourcesUse;
+use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SecretLoginRequest;
-
-use Rap2hpoutre\LaravelStripeConnect\StripeConnect;
 
 class DashboardController extends Controller
 {
@@ -30,23 +30,16 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard.index');
-    }
+        if(Auth::user()->isFromPlatform()){
+            return view('admin.dashboard.platform');
+        }
 
+        $chart = new LatestSales;
+        $chart->dataset('Sale', 'column', [100, 65, 84, 45, 90,0, 65, 44, 45, 90,20, 65, 84, 45, 110])->color('#d3d3d3');
 
-    public function pay()
-    {
-        $customer = \App\Customer::find(2);
-        $vendor = User::find(3);
-        $token = 'test';
+        return view('admin.dashboard.merchant', compact('chart'));
 
-        StripeConnect::transaction($token)
-            ->amount(1000, 'usd')
-            ->from($customer)
-            ->to($vendor)
-            ->create();
-
-        return redirect()->route('admin.admin.dashboard')->with('success', trans('messages.success'));
+        // return view('admin.dashboard.index');
     }
 
     /**

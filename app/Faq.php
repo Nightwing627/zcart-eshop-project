@@ -45,7 +45,6 @@ class Faq extends Model
         return str_replace([':marketplace_url', ':marketplace'], ['<a href="' . url('/') . '" target="_black">' . url('/') . '</a>', get_platform_title()], $question);
     }
 
-
     /**
      * Get the question with replaced placeholder.
      *

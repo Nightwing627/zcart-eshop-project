@@ -41,9 +41,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'deleted_at' => 'date',
-        'last_visited_at' => 'date',
-        'active' => 'boolean',
+        'dob'           => 'date',
+        'deleted_at'    => 'datetime',
+        'last_visited_at' => 'datetime',
+        'active'        => 'boolean',
     ];
 
     /**
@@ -196,6 +197,17 @@ class User extends Authenticatable
     public function blogs()
     {
         return $this->hasMany(Blog::class);
+    }
+
+    /**
+     * Get dob for the user.
+     *
+     * @return array
+     */
+    public function getDobAttribute($dob)
+    {
+        if($dob)
+            return date('Y-m-d', strtotime($dob));
     }
 
     /**

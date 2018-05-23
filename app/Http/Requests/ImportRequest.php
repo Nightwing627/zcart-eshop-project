@@ -13,7 +13,12 @@ class ImportRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        if($this->user()->isFromPlatform()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
@@ -24,7 +29,7 @@ class ImportRequest extends Request
     public function rules()
     {
         return [
-            //
+            'csv_file' => 'required|file'
         ];
     }
 }

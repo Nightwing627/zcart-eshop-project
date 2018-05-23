@@ -15,6 +15,7 @@ class Page extends Model
     const VISIBILITY_MERCHANT  = 2;
 
     const PAGE_ABOUT_US             = 'about-us';                   //About us page
+    const PAGE_CONTACT_US           = 'contact-us';                 //Contact us page
     const PAGE_PRIVACY_POLICY       = 'privacy-policy';             //The privacy policy page
     const PAGE_TNC_FOR_CUSTOMER     = 'terms-of-use-customer';      //Terms and condiotion page for customers
     const PAGE_TNC_FOR_MERCHANT     = 'terms-of-use-merchant';      //Terms and condiotion page for merchants

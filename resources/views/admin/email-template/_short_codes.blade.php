@@ -1,24 +1,14 @@
 <h4>Platform:</h4>
 <pre>
-  {platform_name} {platform_logo} {platform_url} {platform_address}
+  {PLATFORM_NAME} {PLATFORM_URL} {PLATFORM_ADDRESS} {SUPPORT_EMAIL} {SUPPORT_PHONE}
 </pre>
 
 <h4>Marchent:</h4>
 <pre>
-  {shop_name} {shop_logo} {shop_url} {shop_support_email}
+  {SHOP_NAME} {SHOP_URL} {SHOP_SUPPORT_EMAIL} {SHOP_SUPPORT_PHONE}
 </pre>
 
-<h4>User:</h4>
+<h4>Pages:</h4>
 <pre>
-  {user_name} {user_email} {user_password} {user_login} {customer_login}
-</pre>
-
-<h4>Order:</h4>
-<pre>
-  {order_id} {invoice_id} {shipping_address} {billing_address} {order_date} {shipping_date} {order_status}
-</pre>
-
-<h4>Others:</h4>
-<pre>
-  {contact_page} {help_page} {privacy_policy} {terms_and_conditions}
+  {CONTACT_US} {ABOUT_US} {PRIVACY_POLICY} {RETURN_AND_REFUND} {TERMS_AND_CONDITIONS_FOR_CUSTOMER} {TERMS_AND_CONDITIONS_FOR_MERCHANT}
 </pre>

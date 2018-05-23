@@ -39,14 +39,32 @@ class Customer extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'verification_token'
+    ];
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = [
+        'deleted_at',
+        'last_visited_at'
+    ];
+
+    /**
+     * The attributes that should be casted to boolean types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'dob' => 'date',
+        'active' => 'boolean',
+        'accepts_marketing' => 'boolean'
+    ];
 
     /**
      * The attributes that will be logged on activity logger.
@@ -85,6 +103,7 @@ class Customer extends Authenticatable
                 'remember_token',
                 'verification_token',
                 'active',
+                'accepts_marketing',
             ];
 
     /**
@@ -188,6 +207,17 @@ class Customer extends Authenticatable
     public function gift_cards()
     {
         return $this->hasMany(GiftCard::class);
+    }
+
+    /**
+     * Get dob for the user.
+     *
+     * @return array
+     */
+    public function getDobAttribute($dob)
+    {
+        if($dob)
+            return date('Y-m-d', strtotime($dob));
     }
 
     /**

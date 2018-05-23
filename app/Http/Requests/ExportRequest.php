@@ -13,7 +13,12 @@ class ExportRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        if($this->user()->isFromPlatform()){
+            return true;
+        }
+        else{
+            echo "<pre>"; print_r($this->all()); echo "</pre>"; exit();
+        }
     }
 
     /**

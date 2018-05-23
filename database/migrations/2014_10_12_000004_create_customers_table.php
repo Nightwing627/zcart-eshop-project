@@ -24,6 +24,7 @@ class CreateCustomersTable extends Migration
             $table->timestampTz('last_visited_at')->nullable();
             $table->ipAddress('last_visited_from')->nullable();
             $table->boolean('active')->nullable();
+            $table->boolean('accepts_marketing')->nullable();
             $table->string('verification_token', 100)->nullable();
             $table->rememberToken();
             $table->softDeletes();

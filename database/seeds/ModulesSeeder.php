@@ -20,11 +20,6 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,add,edit,delete'
         ],
 
-        'Blog' => [
-            'access' => 'Platform',
-            'actions' => 'view,add,edit,delete'
-        ],
-
         'Carrier' => [
             'access' => 'Merchant',
             'actions' => 'view,add,edit,delete'

@@ -28,7 +28,6 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		Route::get('secretLogout', 'DashboardController@secretLogout')->name('secretLogout');
 
 		include('admin/Notification.php');
-		include('admin/Blog.php');
 
 		// Merchant Routes for Admin
 		Route::group(['as' => 'admin.', 'prefix' => 'admin'], function()
@@ -85,6 +84,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		{
 			include('admin/Faq.php');
 			include('admin/Page.php');
+			include('admin/Blog.php');
 			include('admin/Currency.php');
 			include('admin/OrderStatus.php');
 		});
@@ -100,6 +100,12 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 			include('admin/SystemConfig.php');
 			include('admin/PaymentConfig.php');
 			include('admin/SubscriptionPlan.php');
+		});
+
+		// Appearances Routes for Admin
+		Route::group(['as' => 'appearance.', 'prefix' => 'appearance'], function()
+		{
+			include('admin/Theme.php');
 		});
 
 		// Promotions Routes for Admin

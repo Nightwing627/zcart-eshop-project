@@ -1,10 +1,8 @@
 {
-    "/resources/assets/temp/app.js": "/resources/assets/temp/app.js",
-    "/resources/assets/temp/app.css": "/resources/assets/temp/app.css",
-    "/resources/assets/temp/all.js": "/resources/assets/temp/all.js",
-    "/resources/assets/temp/all.css": "/resources/assets/temp/all.css",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/js/vendor.js": "/js/vendor.js",
+    "/css/vendor.css": "/css/vendor.css",
     "/js/fileinput.js": "/js/fileinput.js",
     "/css/fileinput.css": "/css/fileinput.css",
     "/css/line.png": "/css/line.png",

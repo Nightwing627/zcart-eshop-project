@@ -2,7 +2,9 @@
 	/*************************************
 	*** Initialise application plugins ***
 	**************************************/
+	// var jq214 = jQuery.noConflict(true);
 	;(function($, window, document) {
+		console.log($().jquery);
 		$(".ajax-modal-btn").hide(); // hide the ajax functional button untill the page load completely
 
 		$('img').on('error', function(){
@@ -147,10 +149,14 @@
 		        "bSortable": false,
 		        "aTargets": [ -1 ]
 		     }],
+			"lengthMenu": [
+				[10, 25, 50, -1],
+				[ '10 rows', '25 rows', '50 rows', 'Show all' ]
+			],     // page length options
 		    dom: 'Bfrtip',
 		    buttons: [
-		          'copy', 'csv', 'excel', 'pdf', 'print'
-		      ]
+		        	'pageLength', 'copy', 'csv', 'excel', 'pdf', 'print'
+		    	]
 	    });
 
 		$('#all-customer-table').DataTable({
@@ -180,10 +186,14 @@
 		        "bSortable": false,
 		        "aTargets": [ -1 ]
 		     }],
+			"lengthMenu": [
+				[10, 25, 50, -1],
+				[ '10 rows', '25 rows', '50 rows', 'Show all' ]
+			],     // page length options
 		    dom: 'Bfrtip',
 		    buttons: [
-		          'copy', 'csv', 'excel', 'pdf', 'print'
-		      ]
+		        	'pageLength', 'copy', 'csv', 'excel', 'pdf', 'print'
+		    	]
 	    });
 
 	  	$(".table-2nd-short").DataTable({
@@ -203,9 +213,13 @@
 		        "bSortable": false,
 		        "aTargets": [ 0,-1 ]
 		     }],
+			"lengthMenu": [
+				[10, 25, 50, -1],
+				[ '10 rows', '25 rows', '50 rows', 'Show all' ]
+			],     // page length options
 		    dom: 'Bfrtip',
 		    buttons: [
-		        	'copy', 'csv', 'excel', 'pdf', 'print'
+		        	'pageLength', 'copy', 'csv', 'excel', 'pdf', 'print'
 		    	]
 	  	});
 
@@ -532,6 +546,17 @@
 		});
 		//DateTimepicker
 		$(".datetimepicker").datetimepicker({
+	  	    icons:{
+	  	        time: 'glyphicon glyphicon-time',
+	  	        date: 'glyphicon glyphicon-calendar',
+	  	        previous: 'glyphicon glyphicon-chevron-left',
+	  	        next: 'glyphicon glyphicon-chevron-right',
+	  	        today: 'glyphicon glyphicon-screenshot',
+	  	        up: 'fa fa-user',
+	  	        down: 'glyphicon glyphicon-chevron-down',
+	  	        clear: 'glyphicon glyphicon-trash',
+	  	        close: 'glyphicon glyphicon-remove'
+	  	    }
 		});
 
 	  	// $(".datetimepicker").datetimepicker({

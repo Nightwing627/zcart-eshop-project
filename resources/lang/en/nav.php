@@ -44,6 +44,7 @@ return [
     'refunds' => 'Refunds',
     'user_roles' => 'User roles',
     'taxes' => 'Taxes',
+    'themes' => 'Themes',
     'shipping' => 'Shipping',
     'packaging' => 'Packaging',
     'carriers' => 'Carriers',

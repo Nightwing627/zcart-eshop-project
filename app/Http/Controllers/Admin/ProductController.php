@@ -53,13 +53,16 @@ class ProductController extends Controller
             ->editColumn('name', function($product){
                 return view( 'admin.partials.actions.product.name', compact('product'));
             })
+            ->editColumn('gtin', function($product){
+                return view( 'admin.partials.actions.product.gtin', compact('product'));
+            })
             ->editColumn('category',  function ($product) {
                 return view( 'admin.partials.actions.product.category', compact('product'));
             })
             ->editColumn('inventories_count', function($product){
                 return view( 'admin.partials.actions.product.inventories_count', compact('product'));
             })
-            ->rawColumns([ 'name', 'category', 'inventories_count', 'status', 'option' ])
+            ->rawColumns([ 'name', 'gtin', 'category', 'inventories_count', 'status', 'option' ])
             ->make(true);
     }
 

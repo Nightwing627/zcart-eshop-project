@@ -17,6 +17,9 @@ class VerifyUserIsSubscribed
     // public function handle($request, Closure $next, $subscription = 'default', $plan = null)
     public function handle($request, Closure $next)
     {
+        // Temporarily for dev
+        return $next($request);
+
         if($request->user()->isFromPlatform() || $request->user()->isSubscribed())
             return $next($request);
 

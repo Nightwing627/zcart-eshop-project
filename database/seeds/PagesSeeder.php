@@ -26,6 +26,16 @@ class PagesSeeder extends Seeder
             ], [
                 'id' => 2,
                 'author_id' => \App\Role::SUPER_ADMIN,
+                'title' => 'Contact us',
+                'slug' => 'contact-us',
+                'content' => 'Contact the marketplace here',
+                'visibility' => \App\Page::VISIBILITY_PUBLIC,
+                'published_at' => Carbon::now(),
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ], [
+                'id' => 3,
+                'author_id' => \App\Role::SUPER_ADMIN,
                 'title' => 'Privacy policy',
                 'slug' => 'privacy-policy',
                 'content' => 'Privacy policy here',
@@ -34,7 +44,7 @@ class PagesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
-                'id' => 3,
+                'id' => 4,
                 'author_id' => \App\Role::SUPER_ADMIN,
                 'title' => 'Terms and condition for customer',
                 'slug' => 'terms-of-use-customer',
@@ -44,7 +54,7 @@ class PagesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
-                'id' => 4,
+                'id' => 5,
                 'author_id' => \App\Role::SUPER_ADMIN,
                 'title' => 'Terms and condition for merchant',
                 'slug' => 'terms-of-use-merchant',
@@ -54,7 +64,7 @@ class PagesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
-                'id' => 5,
+                'id' => 6,
                 'author_id' => \App\Role::SUPER_ADMIN,
                 'title' => 'Return and refund policy',
                 'slug' => 'return-and-refund-policy',

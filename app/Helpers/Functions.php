@@ -1,5 +1,7 @@
 <?php
 
+use App\System;
+
 // if ( ! function_exists('get_platform_tld') )
 // {
 //     /**
@@ -21,6 +23,19 @@ if ( ! function_exists('get_platform_title') )
     function get_platform_title()
     {
         return config('system_settings.name') ?: config('app.name');
+    }
+}
+
+if ( ! function_exists('get_platform_address') )
+{
+    /**
+     * return platforms address in html formate
+     */
+    function get_platform_address()
+    {
+        $system = System::orderBy('id', 'asc')->first();
+
+        return $system->primaryAddress->toHtml();
     }
 }
 
@@ -52,6 +67,20 @@ if ( ! function_exists('get_shop_url') )
             $slug = \DB::table('shops')->find($id)->slug;
 
         return url('/shop/' . $slug);
+    }
+}
+
+if ( ! function_exists('get_page_url') )
+{
+    /**
+     * Return page url
+     */
+    function get_page_url($page = Null)
+    {
+        if($page == Null)
+            return url('/');
+
+        return route('page.open', $page);
     }
 }
 

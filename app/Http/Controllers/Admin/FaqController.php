@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Faq;
 use App\FaqTopic;
+use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\CreateFaqRequest;
@@ -11,6 +12,7 @@ use App\Http\Requests\Validations\UpdateFaqRequest;
 
 class FaqController extends Controller
 {
+    use Authorizable;
 
     private $model_name;
 

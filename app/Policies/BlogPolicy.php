@@ -20,7 +20,7 @@ class BlogPolicy
      */
     public function index(User $user)
     {
-        return (new Authorize($user, 'view_blog'))->check();
+        return (new Authorize($user, 'view_utility'))->check();
     }
 
     /**
@@ -32,7 +32,7 @@ class BlogPolicy
      */
     public function view(User $user, Blog $blog)
     {
-        return (new Authorize($user, 'view_blog', $blog))->check();
+        return (new Authorize($user, 'view_utility', $blog))->check();
     }
 
     /**
@@ -43,7 +43,7 @@ class BlogPolicy
      */
     public function create(User $user)
     {
-        return (new Authorize($user, 'add_blog'))->check();
+        return (new Authorize($user, 'add_utility'))->check();
     }
 
     /**
@@ -55,7 +55,7 @@ class BlogPolicy
      */
     public function update(User $user, Blog $blog)
     {
-        return (new Authorize($user, 'edit_blog', $blog))->check();
+        return (new Authorize($user, 'edit_utility', $blog))->check();
     }
 
     /**
@@ -67,6 +67,6 @@ class BlogPolicy
      */
     public function delete(User $user, Blog $blog)
     {
-        return (new Authorize($user, 'delete_blog', $blog))->check();
+        return (new Authorize($user, 'delete_utility', $blog))->check();
     }
 }
