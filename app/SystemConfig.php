@@ -66,6 +66,7 @@ class SystemConfig extends Model
                         'twitter_link',
                         'pinterest_link',
                         'youtube_link',
+                        'google_analytic_report',
                     ];
 
     /**
@@ -87,5 +88,16 @@ class SystemConfig extends Model
                 'show_address_title' => 'boolean',
                 'address_show_country' => 'boolean',
                 'address_geocode' => 'boolean',
+                'google_analytic_report' => 'boolean',
             ];
+
+    /**
+     * Check if Ggoogle Analytic has been Configured.
+     *
+     * @return bool
+     */
+    public static function isGgoogleAnalyticConfigured()
+    {
+        return (bool) config('analytics.view_id');
+    }
 }

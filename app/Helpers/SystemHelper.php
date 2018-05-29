@@ -1,12 +1,55 @@
 <?php
 
+use App\Visitor;
 use App\Helpers\ListHelper;
 use Laravel\Cashier\Cashier;
+use Illuminate\Http\Request;
+
+if ( ! function_exists('updateVisitorTable') )
+{
+    /**
+     * Set system settings into the config
+     */
+    function updateVisitorTable(Request $request)
+    {
+        // $visitor = Visitor::findOrNew($request->ip());
+        $visitor = Visitor::withTrashed()->find($request->ip());
+
+        if( ! $visitor ){
+            $visitor = new Visitor;
+
+            $visitor->ip = $request->ip();
+            $visitor->hits = 1;
+            $visitor->page_views = 1;
+            $visitor->info = $request->header('User-Agent');
+
+            return $visitor->save();
+        }
+
+        // Blocked Ip
+        if($visitor->deleted_at){
+            abort(403, trans('responses.you_are_blocked'));
+        }
+
+        // Increase the hits value if this visit is the first visit for today
+        if($visitor->updated_at->lt(\Carbon\Carbon::today())){
+            $visitor->hits++;
+            $visitor->info = $request->header('User-Agent');
+            // $visitor->mac = $request->mac();
+            // $visitor->device = $request->device();
+            // $visitor->country_code = $request->country_code();
+        }
+
+        $visitor->page_views++;
+
+        return $visitor->save();
+    }
+}
 
 if ( ! function_exists('setSystemConfig') )
 {
     /**
-     * system config into the config
+     * Set system settings into the config
      */
     function setSystemConfig($shop = Null)
     {
@@ -27,7 +70,7 @@ if ( ! function_exists('setSystemConfig') )
 if ( ! function_exists('setShopConfig') )
 {
     /**
-     * shop config into the config
+     * Set shop settings into the config
      */
     function setShopConfig($shop = Null)
     {
@@ -42,7 +85,7 @@ if ( ! function_exists('setShopConfig') )
 if ( ! function_exists('setSystemCurrency') )
 {
     /**
-     * system currency into the config
+     * Set system currency into the config
      */
     function setSystemCurrency()
     {
@@ -62,6 +105,20 @@ if ( ! function_exists('setSystemCurrency') )
                 'subunit' => $currency->subunit,
             ]
         ]);
+    }
+}
+
+if ( ! function_exists('setDashboardConfig') )
+{
+    /**
+     * Set dashboard settings into the config
+     */
+    function setDashboardConfig($dash = Null)
+    {
+        // Unset unwanted values
+        unset($dash['user_id'],$dash['created_at']);
+
+        config()->set('dashboard', $dash);
     }
 }
 
@@ -148,3 +205,71 @@ if ( ! function_exists('generate_combinations') )
     }
 }
 
+if ( ! function_exists('get_activity_str') )
+{
+    function get_activity_str($model, $attrbute, $new, $old){
+
+        switch ($attrbute) {
+            case 'trial_ends_at':
+                return trans('app.activities.trial_started');
+                break;
+
+            case 'current_billing_plan':
+                $plan = \App\SubscriptionPlan::find([$old, $new])->pluck('name', 'plan_id');
+
+                if(is_null($old))
+                    return trans('app.activities.subscribed', ['plan' => $plan[$new]]);
+
+                return trans('app.activities.subscription_changed', ['from' => $plan[$old], 'to' => $plan[$new]]);
+                break;
+
+            case 'card_last_four':
+                if(is_null($old))
+                    return trans('app.activities.billing_info_added', ['by' => $new]);
+
+                return trans('app.activities.billing_info_changed', ['from' => $old, 'to' => $new]);
+                break;
+
+            case 'order_status_id':
+                $attrbute = trans('app.status');
+                $statues = \App\OrderStatus::find([$old, $new])->pluck('name', 'id');
+                $old  = $statues[$old];
+                $new  = $statues[$new];
+                break;
+
+            case 'payment_status':
+                $attrbute = trans('app.payment_status');
+                $old  = get_payment_status_name($old);
+                $new  = get_payment_status_name($new);
+                break;
+
+            case 'carrier_id':
+                $attrbute = trans('app.shipping_carrier');
+                $carrier = \App\Carrier::find([$old, $new])->pluck('name', 'id');
+                $new  = $carrier[$new];
+                $old  = $carrier[$old];
+                break;
+
+            case 'tracking_id':
+                $attrbute = trans('app.tracking_id');
+                break;
+
+            case 'status':
+                $attrbute = trans('app.status');
+                if(class_basename($model) == 'Dispute'){
+                    $old  = get_disput_status_name($old);
+                    $new  = get_disput_status_name($new);
+                }
+                break;
+
+            default:
+                $attrbute = title_case(str_replace('_', ' ', $attrbute));
+                break;
+        }
+
+        if($old)
+            return trans('app.activities.updated', ['key' => $attrbute, 'from' => $old, 'to' => $new]);
+        else
+            return trans('app.activities.added', ['key' => $attrbute, 'value' => $new]);
+    }
+}

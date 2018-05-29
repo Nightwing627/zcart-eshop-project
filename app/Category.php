@@ -36,7 +36,7 @@ class Category extends Model
      */
     public function subGroups()
     {
-        return $this->belongsToMany('App\CategorySubGroup');
+        return $this->belongsToMany(CategorySubGroup::class);
     }
 
     /**
@@ -44,7 +44,7 @@ class Category extends Model
      */
     public function products()
     {
-        return $this->belongsToMany('App\Product');
+        return $this->belongsToMany(Product::class);
     }
 
     /**

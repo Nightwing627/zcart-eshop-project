@@ -58,6 +58,14 @@ class Inventory extends Model
                     ];
 
     /**
+     * Get the shop of the inventory.
+     */
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
+
+    /**
      * Get the Warehouse associated with the inventory.
      */
     public function warehouse()
@@ -216,6 +224,28 @@ class Inventory extends Model
     public function scopeActive($query)
     {
         return $query->where('active', 1);
+    }
+
+    /**
+     * Scope a query to only include low qtt items.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeLowQtt($query)
+    {
+        $alert_quantity = config('shop_settings.alert_quantity') ?: 0;
+
+        return $query->where('stock_quantity', '<=', $alert_quantity);
+    }
+
+    /**
+     * Scope a query to only include out of stock items.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeStockOut($query)
+    {
+        return $query->where('stock_quantity', '<=', 0);
     }
 
     /**

@@ -37,6 +37,7 @@ return [
     'input_error'       => 'There were some problems with your input.',
     'secret_logged_in'  => 'Impersonated successfully.',
     'secret_logged_out' => 'Logged out from secret account.',
+    'you_are_impersonated' => 'You are impersonated into the current account. Be careful about your actions.',
     'profile_updated'   => 'You account has been updated successfully!',
     'password_updated'  => 'You account password has been updated successfully!',
     'incorrect_current_password' => 'Your current password is not correct. Please try again!',
@@ -65,11 +66,13 @@ return [
     'using_more_resource' => 'You\'re using more resources than the :plan plan allowed to. Please use a plan that appropriate to your business.',
     'cant_add_more_user' => 'Your current subscription plan doesn\'t allow to add more user. If your business need more user to manage, please upgrade your plan.',
     'cant_add_more_inventory' => 'You have reached the maximum limit of stock allocate to your current subscription plan. Please upgrade your plan to extend the limit.',
+    'time_to_upgrade_plan' => 'It\'s good time to updgreade your plan',
     'only_merchant_can_change_plan' => 'Only the shop owner can change the billing/subscription plan.',
     'message_send_failed' => 'Sorry, the message cannot be sent now! Please try again later.',
+    'resource_uses_out_of' => ':used of :limit',
 
-    'you_have_disputes_solve' => 'There are :disputes active disputes! Please review and solve disputes.',
-    'you_have_refund_request' => 'You have :requests refund request. Please review and take action.',
+    // 'you_have_disputes_solve' => 'There are :disputes active disputes! Please review and solve disputes.',
+    // 'you_have_refund_request' => 'You have :requests refund request. Please review and take action.',
 
     // 'failed'    => [
     //     'create'   => 'Create :model has been failed!',
@@ -140,6 +143,13 @@ return [
     'faqs' => 'Most Frequently Asked Questions',
     'how_the_marketplace_works' => 'It\'s Good To Know How The System Works, Before You Register',
     'merchant_benefits' => 'Selling online has never been easier.',
+
+    'new_in_30_days' => ':new :model in 30 days',
+    'unfulfilled_percents' => ':percent% of today\'s total orders',
+    'last_30_days_percents' => ':percent% :state in 30 days',
+    'stock_out_percents' => ':percent% of total :total items',
+    'todays_sale_percents' => ':percent% :state from yesterday',
+    'no_sale' => 'No sale :date',
 
     'permission'        => [
             'denied'        => 'Permission denied!',

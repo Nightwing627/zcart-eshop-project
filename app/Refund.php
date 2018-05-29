@@ -85,16 +85,6 @@ class Refund extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId());
-    }
-
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function scopeOpen($query)
     {
         return $query->where('status' , '<', static::STATUS_APPROVED);
@@ -118,6 +108,16 @@ class Refund extends Model
     public function scopeStatusOf($query, $status)
     {
         return $query->where('status', $status);
+    }
+
+    /**
+     * Scope a query to only include records from the users shop.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMine($query)
+    {
+        return $query->where('shop_id', Auth::user()->merchantId());
     }
 
     public function statusName()

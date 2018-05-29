@@ -485,20 +485,25 @@ if ( ! function_exists('get_formated_decimal') )
      *
      * @return decimal
      */
-    function get_formated_decimal($value = 0, $trim = true, $decimal = null)
+    function get_formated_decimal($value = 0, $trim = true, $decimal = 0)
     {
         if (!$decimal){
             if ($decimal === 0)
                 $decimal = 0;
             else
-                $decimal = config('system_settings.decimals');
+                $decimal = config('system_settings.decimals', 2);
         }
 
-        $value = number_format( $value, $decimal, config('system_settings.currency.decimal_mark'), config('system_settings.currency.thousands_separator') );
+        $decimal_mark = config('system_settings.currency.decimal_mark', '.');
+
+        $value = number_format( $value, $decimal, $decimal_mark, config('system_settings.currency.thousands_separator', ',') );
 
         if ($trim){
-            if('.' == config('system_settings.currency.decimal_mark'))
-                return floatval($value);
+            $arr = explode($decimal_mark, $value);
+
+            $temp = rtrim($arr[1], '0');
+
+            $value = $temp ? $arr[0] . $decimal_mark . $temp : $arr[0];
         }
 
         return $value;
@@ -1090,75 +1095,3 @@ if ( ! function_exists('get_activity_title') )
 //         return "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" . config('services.stripe.client_id') . "&scope=read_write&state=" . csrf_token();
 //     }
 // }
-
-if ( ! function_exists('get_activity_str') )
-{
-    function get_activity_str($model, $attrbute, $new, $old){
-
-        switch ($attrbute) {
-            case 'current_billing_plan':
-                $plan = \App\SubscriptionPlan::find([$old, $new])->pluck('name', 'plan_id');
-
-                if(is_null($old))
-                    return trans('app.activities.subscribed', ['plan' => $plan[$new]]);
-
-                return trans('app.activities.subscription_changed', ['from' => $plan[$old], 'to' => $plan[$new]]);
-
-                break;
-
-            case 'card_last_four':
-                if(is_null($old))
-                    return trans('app.activities.billing_info_added', ['by' => $new]);
-
-                return trans('app.activities.billing_info_changed', ['from' => $old, 'to' => $new]);
-
-                break;
-
-            case 'order_status_id':
-                $attrbute = trans('app.status');
-                $statues = \App\OrderStatus::find([$old, $new])->pluck('name', 'id');
-                $old  = $statues[$old];
-                $new  = $statues[$new];
-                break;
-
-            case 'payment_status':
-                $attrbute = trans('app.payment_status');
-                $old  = get_payment_status_name($old);
-                $new  = get_payment_status_name($new);
-                break;
-
-            case 'carrier_id':
-                $attrbute = trans('app.shipping_carrier');
-                $carrier = \App\Carrier::find([$old, $new])->pluck('name', 'id');
-                $new  = $carrier[$new];
-
-                if(is_null($old))
-                    return trans('app.activities.added', ['key' => $attrbute, 'value' => $new]);
-
-                $old  = $carrier[$old];
-                break;
-
-            case 'tracking_id':
-                $attrbute = trans('app.tracking_id');
-                if(is_null($old))
-                    return trans('app.activities.added', ['key' => $attrbute, 'value' => $new]);
-
-                break;
-
-            case 'status':
-                $attrbute = trans('app.status');
-                if(class_basename($model) == 'Dispute'){
-                    $old  = get_disput_status_name($old);
-                    $new  = get_disput_status_name($new);
-                }
-
-                break;
-
-            default:
-                $attrbute = title_case(str_replace('_', ' ', $attrbute));
-                break;
-        }
-
-        return trans('app.activities.updated', ['key' => $attrbute, 'from' => $old, 'to' => $new]);
-    }
-}

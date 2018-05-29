@@ -23,7 +23,8 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 
 	Route::middleware(['subscribed'])->group(function () {
 		// Dashboard
-		Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
+		Route::put('dashboard/config/{node}/toggle', 'DashboardController@toggleConfig')->name('dashboard.config.toggle')->middleware('ajax');
+		Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard')->middleware('dashboard');
 		Route::get('secretLogin/{user}', 'DashboardController@secretLogin')->name('user.secretLogin');
 		Route::get('secretLogout', 'DashboardController@secretLogout')->name('secretLogout');
 

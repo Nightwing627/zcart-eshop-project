@@ -12,4 +12,29 @@ return [
     |
     */
     'default_library' => 'Highcharts',
+
+    // Default values for charts
+    'default' => [
+        'months' => 6,
+        'days' => 15,
+    ],
+
+    // Config
+    'visitors' => [
+        // Set how many months you want to display in the graph
+        'months' => 6,
+        'colors' => [
+            'page_views' => '',
+            'sessions' => '',
+            'unique_visits' => '',
+        ],
+
+        //Set 0 if you dont want to breackdown the chart in days
+        'breakdown_last_days' => 3,
+    ],
+
+    'latest_sales' => [
+        'days' => 15,
+        'color' => '#d3d3d3'
+    ],
 ];

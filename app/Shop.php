@@ -38,7 +38,6 @@ class Shop extends Model
      */
     protected $casts = [
         'active' => 'boolean',
-        'upgrade_plan_notice' => 'boolean',
     ];
 
     /**
@@ -58,7 +57,7 @@ class Shop extends Model
                             'card_brand',
                             'card_holder_name',
                             'trial_ends_at',
-                            'upgrade_plan_notice',
+                            'updated_at'
                         ];
 
    /**
@@ -82,7 +81,6 @@ class Shop extends Model
                     'card_last_four',
                     'trial_ends_at',
                     'active',
-                    'upgrade_plan_notice',
                 ];
 
     /**
@@ -107,6 +105,14 @@ class Shop extends Model
     public function config()
     {
         return $this->hasOne(Config::class);
+    }
+
+    /**
+     * Get current subscription plan of the shop.
+     */
+    public function plan()
+    {
+        return $this->belongsTo(SubscriptionPlan::class, 'current_billing_plan', 'plan_id');
     }
 
     /**
@@ -150,12 +156,39 @@ class Shop extends Model
     }
 
     /**
+     * Get the inventories for the shop.
+     */
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class);
+    }
+
+    /**
      * Get the orders for the shop.
      */
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
+
+    // public function top_listings()
+    // {
+    //     return $this->inventories->sum('pivot.quantity');
+
+    //     return $this->hasManyThrough(
+    //         Inventory::class,
+    //         Order::class,
+    //         'country_id', // Foreign key on users table...
+    //         'user_id', // Foreign key on posts table...
+    //         'id', // Local key on countries table...
+    //         'id' // Local key on users table...
+    //     );
+
+    //     // return $this->belongsToMany(Inventory::class, 'order_items', 'inventory_id', 'order_id')
+    //     //     ->selectRaw('parts.*, sum(project_part.count) as pivot_count')
+    //     //     ->withTimestamps()
+    //     //     ->groupBy('project_part.pivot_part_id');
+    // }
 
     /**
      * Get the carts for the shop.
@@ -212,6 +245,14 @@ class Shop extends Model
     public function suppliers()
     {
         return $this->hasMany(Supplier::class);
+    }
+
+    public function revenue()
+    {
+        return $this->hasMany(Order::class)
+                    ->selectRaw('SUM(total) as total, shop_id')
+                    ->groupBy('shop_id');
+
     }
 
     /**
@@ -272,7 +313,7 @@ class Shop extends Model
         if($this->current_billing_plan){
             $plan = SubscriptionPlan::findOrFail($this->current_billing_plan);
 
-            if( Statistics::shop_user_count() < $plan->team_size )
+            if(Statistics::shop_user_count() < $plan->team_size)
                 return True;
         }
 
@@ -295,6 +336,23 @@ class Shop extends Model
 
         return false;
     }
+
+    // /**
+    //  * Check if the current subscription plan allow to add more user
+    //  *
+    //  * @return bool
+    //  */
+    // public function uses()
+    // {
+    //     if($this->current_billing_plan){
+    //         $plan = SubscriptionPlan::findOrFail($this->current_billing_plan);
+
+    //         if(Statistics::shop_user_count() < $plan->team_size)
+    //             return True;
+    //     }
+
+    //     return false;
+    // }
 
     /**
      * Scope a query to only include active shops.

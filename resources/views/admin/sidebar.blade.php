@@ -464,6 +464,13 @@
                     <i class="fa fa-angle-double-right"></i> {{ trans('nav.performance') }}
                   </a>
                 </li>
+                {{-- @if(config('system_settings.google_analytic_report') && \App\SystemConfig::isGgoogleAnalyticConfigured()) --}}
+                  <li class=" {{ Request::is('admin/report/visitors*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.report.visitors') }}">
+                      <i class="fa fa-angle-double-right"></i> {{ trans('nav.visitors') }}
+                    </a>
+                  </li>
+                {{-- @endif --}}
               @elseif(Auth::user()->isMerchant())
                 <li class=" {{ Request::is('admin/shop/report/kpi*') ? 'active' : '' }}">
                   <a href="{{ route('admin.shop-kpi') }}">

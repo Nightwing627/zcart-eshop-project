@@ -5,13 +5,17 @@ namespace App\Helpers;
 use Auth;
 use App\User;
 use App\Role;
+use App\Shop;
 use App\Order;
 use App\Module;
 use App\Ticket;
 use App\Message;
 use App\Refund;
+use App\Product;
 use App\Dispute;
+use App\Customer;
 use App\FaqTopic;
+use App\Inventory;
 use App\Attribute;
 use App\Permission;
 use App\PaymentMethod;
@@ -23,22 +27,6 @@ use App\PaymentMethod;
 
 class ListHelper
 {
-    public static function ticket_categories()
-    {
-        return \DB::table('ticket_categories')->orderBy('name', 'asc')->pluck('name', 'id');
-    }
-
-    public static function plans()
-    {
-        $plans = \DB::table('subscription_plans')->where('deleted_at', Null)->orderBy('order', 'asc')->select( 'plan_id', 'name', 'cost')->get();
-
-        $result = [];
-        foreach ($plans as $plan)
-            $result[$plan->plan_id] = $plan->name . ' (' . get_formated_currency($plan->cost) . trans('app.per_month') . ')';
-
-        return $result;
-    }
-
     /**
      * Get payment_method_types list for form dropdown.
      *
@@ -159,6 +147,22 @@ class ListHelper
                     $result[$key] = $value;
             }
         }
+        return $result;
+    }
+
+    public static function ticket_categories()
+    {
+        return \DB::table('ticket_categories')->orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
+    public static function plans()
+    {
+        $plans = \DB::table('subscription_plans')->where('deleted_at', Null)->orderBy('order', 'asc')->select( 'plan_id', 'name', 'cost')->get();
+
+        $result = [];
+        foreach ($plans as $plan)
+            $result[$plan->plan_id] = $plan->name . ' (' . get_formated_currency($plan->cost) . trans('app.per_month') . ')';
+
         return $result;
     }
 
@@ -320,6 +324,29 @@ class ListHelper
         return \DB::table('faq_topics')->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
+    public static function open_tickets()
+    {
+        return Ticket::open()->orderBy('priority', 'desc')->with('category')->withCount('replies')
+                        ->latest()->limit(10)
+                        ->get();
+    }
+
+    public static function top_customers()
+    {
+        return Customer::with('image', 'orders')->withCount('orders')
+                        ->orderBy('orders_count', 'desc')
+                        ->limit(5)
+                        ->get();
+    }
+
+    public static function top_vendors()
+    {
+        return Shop::with('image', 'revenue')->withCount('inventories')
+                        ->get()
+                        ->sortByDesc('revenue')
+                        ->take(5);
+    }
+
     /**
      * Get all merchants list for form dropdown.
      *
@@ -430,6 +457,49 @@ class ListHelper
     }
 
     /**
+     * Get top_listing_items list for merchnat.
+     *
+     * @return array
+     */
+    public static function top_listing_items()
+    {
+        return [];
+
+        return $this->belongsToMany('Part', 'project_part', 'project_id', 'part_id')
+        ->selectRaw('parts.*, sum(project_part.count) as pivot_count')
+        ->withTimestamps()
+        ->groupBy('project_part.pivot_part_id');
+
+        // return \DB::table('order_items')
+        //         ->whereDate('created_at', '>=', \Carbon\Carbon::today()->subMonths(3))
+        //         ->select('inventory_id', \DB::raw('sum(quantity) as sale_count'))
+        //         ->groupBy('inventory_id')
+        //         ->orderBy('sale_count', 'desc')
+        //         ->limit(5)->get();;
+
+        // return \DB::raw('SELECT TOP(5) inventory_id, SUM(quantity) AS TotalQuantity
+        //                 FROM order_items
+        //                 GROUP BY inventory_id
+        //                 ORDER BY SUM(quantity) DESC');
+
+        return Order::mine()->select('id')->with('inventories')
+                ->limit(5)
+                ->get()->toArray();
+    }
+
+    /**
+     * Get latest_products list
+     *
+     * @return array
+     */
+    public static function latest_products()
+    {
+        return Product::with('featuredImage')
+                ->latest()->limit(10)
+                ->get();
+    }
+
+    /**
      * Get orders list for form dropdown.
      *
      * @return array
@@ -437,6 +507,19 @@ class ListHelper
     public static function orders()
     {
         return \DB::table('orders')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->orderBy('order_number', 'asc')->pluck('order_number', 'id')->toArray();
+    }
+
+    /**
+     * Get latest_orders list for merchnat.
+     *
+     * @return array
+     */
+    public static function latest_orders()
+    {
+        return Order::mine()->with('customer', 'status')
+                ->latest()
+                ->limit(10)
+                ->get();
     }
 
     /**
@@ -460,6 +543,33 @@ class ListHelper
     public static function order_statuses()
     {
         return \DB::table('order_statuses')->where('deleted_at', Null)->pluck('name', 'id');
+    }
+
+    /**
+     * Get latest_stocks list for merchnat.
+     *
+     * @return array
+     */
+    public static function latest_stocks()
+    {
+        return Inventory::mine()->with('product', 'image')
+                ->latest()
+                ->limit(10)
+                ->get();
+    }
+
+    /**
+     * Get low_qtt_stocks list for merchnat.
+     *
+     * @return array
+     */
+    public static function low_qtt_stocks()
+    {
+        return Inventory::mine()->lowQtt()
+                ->with('product', 'image')
+                ->latest()
+                ->limit(10)
+                ->get();
     }
 
     // /**

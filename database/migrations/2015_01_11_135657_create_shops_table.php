@@ -33,7 +33,6 @@ class CreateShopsTable extends Migration
             $table->timestamp('trial_ends_at')->nullable();
 
             $table->boolean('active')->nullable()->default(0);
-            $table->boolean('upgrade_plan_notice')->nullable()->default(1);
             $table->softDeletes();
             $table->timestamps();
 

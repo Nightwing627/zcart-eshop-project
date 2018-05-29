@@ -6,8 +6,9 @@ use Hash;
 use App\Common\Imageable;
 use App\Common\Addressable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Traits\HasActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -63,6 +64,20 @@ class Merchant extends Authenticatable
     protected static $logName = 'merchant';
 
     /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('merchant', function (Builder $builder) {
+            $builder->where('role_id', Role::MERCHANT);
+        });
+    }
+
+    /**
      * Route notifications for the mail channel.
      *
      * @return string
@@ -103,7 +118,15 @@ class Merchant extends Authenticatable
                 ];
 
     /**
-     * Get all of the country for the country.
+     * Get the dashboard of the merhcant.
+     */
+    public function dashboard()
+    {
+        return $this->hasOne(Dashboard::class, 'user_id');
+    }
+
+    /**
+     * Get all of the country for the merhcant.
      */
     public function country()
     {

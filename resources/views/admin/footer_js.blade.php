@@ -4,7 +4,7 @@
 	**************************************/
 	// var jq214 = jQuery.noConflict(true);
 	;(function($, window, document) {
-		console.log($().jquery);
+		// console.log($().jquery);
 		$(".ajax-modal-btn").hide(); // hide the ajax functional button untill the page load completely
 
 		$('img').on('error', function(){
@@ -88,10 +88,10 @@
 							$(".wrapper").addClass('blur-filter');
 
 			                if (typeof url != 'undefined') {
-			                  location.href = url;
+			                  	location.href = url;
 			                }else if(form != null){
-			                  form.submit();
-			                  notie.alert(4, "{{ trans('messages.confirmed') }}", 3);
+			                  	form.submit();
+			                  	notie.alert(4, "{{ trans('messages.confirmed') }}", 3);
 			                }
 			                return true;
 			              }
@@ -851,6 +851,7 @@
 	              	"_method": "PUT",
 	          	},
 	          	success: function (data) {
+			  		console.log(data);
 		            if (data == 'success'){
 		              	notie.alert(1, "{{ trans('responses.success') }}", 2);
 		            }
@@ -871,6 +872,51 @@
 	      	});
 	  	}
 	  	// END Toggle button
+
+		// Toggle Congiguration widgets settings
+	  	$('.toggle-widget').on("click", function(e){
+			e.preventDefault();
+			var node = $(this);
+		    var box = $(this).closest(".box");
+
+	      	if(node.hasClass('toggle-confirm')){
+	      		return new Promise(function(resolve, reject) {
+		            $.confirm({
+		                title: "{{ trans('app.confirmation') }}",
+		                content: "{{ trans('app.are_you_sure') }}",
+		                type: 'red',
+		                buttons: {
+				            'confirm': {
+				                text: '{{ trans('app.proceed') }}',
+				                keys: ['enter'],
+				                btnClass: 'btn-red',
+				                action: function () {
+				                	notie.alert(4, "{{ trans('messages.confirmed') }}", 2);
+							    	proceedToggleActionFor(node);
+
+							    	// Remove the removable box from UI
+								    if(box.length == 1 && box.hasClass('removable'))
+					                	box.remove();
+			                	}
+			            	},
+			            	'cancel': {
+			                	text: '{{ trans('app.cancel') }}',
+			                	action: function () {
+		                    		notie.alert(2, "{{ trans('messages.canceled') }}", 2);
+			                	}
+			            	},
+	                	}
+	            	});
+	        	});
+	      	}
+
+	      	proceedToggleActionFor(node);
+
+	    	// Remove the removable box from UI
+		    if(box.length == 1 && box.hasClass('removable'))
+            	box.remove();
+	  	});
+		//End
 
 	  	//Ajax Form Submit
 	  	$('.ajax-submit-btn').on("click", function(e){

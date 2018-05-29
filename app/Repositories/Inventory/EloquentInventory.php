@@ -152,6 +152,15 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
         return true;
     }
 
+    public function updateQtt(Request $request, $id)
+    {
+        $inventory = parent::find($id);
+
+        $inventory->stock_quantity = $request->input('stock_quantity');
+
+        return $inventory->save();
+    }
+
     public function update(Request $request, $id)
     {
         $inventory = parent::update($request, $id);

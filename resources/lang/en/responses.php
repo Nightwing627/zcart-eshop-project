@@ -27,5 +27,6 @@ return [
     'vendor_config_failed' => 'Registration failed! Please make some changes and try again.',
     'no_product_found_for_inventory' => 'No result found! Please try different search key',
     'searching' => 'Searching...',
+    'you_are_blocked' => 'You\'re temporarily blocked from this site!',
 
 ];

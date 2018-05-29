@@ -21,6 +21,13 @@ class Config extends Model
     protected $primaryKey = 'shop_id';
 
     /**
+     * The primanry key is not incrementing
+     *
+     * @var boolean
+     */
+    public $incrementing = false;
+
+    /**
      * The attributes that should be casted to native types.
      *
      * @var array
@@ -34,7 +41,7 @@ class Config extends Model
      *
      * @var array
      */
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     /**
      * Get the shop.

@@ -20,4 +20,8 @@
 
 	Route::post('inventory/{inventory}/update', 'InventoryController@update')->name('inventory.update')->middleware('ajax');
 
+	Route::get('inventory/{inventory}/editQtt', 'InventoryController@editQtt')->name('inventory.editQtt');
+
+	Route::put('inventory/{inventory}/updateQtt', 'InventoryController@updateQtt')->name('inventory.updateQtt');
+
 	Route::resource('inventory', 'InventoryController', ['except' =>['create', 'store', 'update']]);

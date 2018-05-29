@@ -18,11 +18,11 @@
 
 					<p>
 						{{ trans('app.total_disputes') }}:
-						<span class="label label-outline">{{ Statistics::dispute_count($dispute->shop_id) }}</span>
+						<span class="label label-outline">{{ \App\Helpers\Statistics::dispute_count($dispute->shop_id) }}</span>
 					</p>
 					<p>
 						{{ trans('app.latest_days', ['days' => 30]) }}:
-						<span class="label label-info"><strong>{{ Statistics::dispute_count($dispute->shop_id, 30) }}</strong></span>
+						<span class="label label-info"><strong>{{ \App\Helpers\Statistics::dispute_count($dispute->shop_id, 30) }}</strong></span>
 					</p>
 					<hr/>
 					<div class="form-group">
@@ -128,20 +128,20 @@
 					@endif
 					<p>
 						{{ trans('app.total_disputes') }}:
-						<span class="label label-outline">{{ Statistics::disputes_by_customer_count($dispute->customer_id) }}</span>
+						<span class="label label-outline">{{ \App\Helpers\Statistics::disputes_by_customer_count($dispute->customer_id) }}</span>
 					</p>
 					<p>
 						{{ trans('app.latest_days', ['days' => 30]) }}:
-						<span class="label label-info"><strong>{{ Statistics::disputes_by_customer_count($dispute->customer_id, 30) }}</strong></span>
+						<span class="label label-info"><strong>{{ \App\Helpers\Statistics::disputes_by_customer_count($dispute->customer_id, 30) }}</strong></span>
 					</p>
 
 					<hr/>
 					<div class="form-group">
-						<p>
+						<p class="text-muted">
 						  	<label>{{ trans('app.created_at') }}</label>
 							{{ $dispute->created_at->diffForHumans() }}
 						</p>
-						<p>
+						<p class="text-muted">
 						  	<label>{{ trans('app.updated_at') }}</label>
 							{{ $dispute->updated_at->diffForHumans() }}
 						</p>

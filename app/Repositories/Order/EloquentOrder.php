@@ -30,6 +30,14 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
         return $this->model->with('customer', 'status')->get();
     }
 
+    public function latest()
+    {
+        if (!Auth::user()->isFromPlatform())
+            return $this->model->with('customer', 'status')->latest()->limit(10)->get();
+
+        return $this->model->mine()->with('customer', 'status')->latest()->limit(10)->get();
+    }
+
     public function trashOnly()
     {
         if (!Auth::user()->isFromPlatform())

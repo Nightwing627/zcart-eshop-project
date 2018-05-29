@@ -24,6 +24,14 @@ $factory->define(App\User::class, function (Faker $faker) {
         'description' => $faker->text(500),
         'active' => $faker->boolean,
         'remember_token' => str_random(10),
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
+    ];
+});
+
+$factory->define(App\Dashboard::class, function (Faker $faker) {
+    return [
+        'upgrade_plan_notice' => true,
     ];
 });
 
@@ -41,6 +49,8 @@ $factory->define(App\Merchant::class, function (Faker $faker) {
         'active' => $faker->boolean,
         'remember_token' => str_random(10),
         'verification_token' => rand(0,1) == 1 ? Null : str_random(10),
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];
 });
 
@@ -56,6 +66,8 @@ $factory->define(App\Customer::class, function (Faker $faker) {
         'active' => $faker->boolean,
         'remember_token' => str_random(10),
         'verification_token' => rand(0,1) == 1 ? Null : str_random(10),
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];
 });
 
@@ -71,6 +83,8 @@ $factory->define(App\Shop::class, function (Faker $faker) {
         'external_url' => $faker->url,
         'timezone_id' => $faker->randomElement(\DB::table('timezones')->pluck('id')->toArray()),
         'active' => $faker->boolean,
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];
 });
 
@@ -179,6 +193,8 @@ $factory->define(App\Product::class, function (Faker $faker) {
     	'meta_description' => $faker->realText,
     	'sale_count' => $faker->randomDigit,
         'active' => $faker->boolean,
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];
 });
 
@@ -240,6 +256,8 @@ $factory->define(App\Packaging::class, function (Faker $faker) {
         'width' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 50),
         'height' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 60),
         'depth' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 40),
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];
 });
 
@@ -261,6 +279,8 @@ $factory->define(App\Inventory::class, function (Faker $faker) {
         'min_order_quantity' => 1,
         'shipping_weight' => rand(100,1999),
         'active' => 1,
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];
 });
 
@@ -285,6 +305,8 @@ $factory->define(App\Order::class, function (Faker $faker) {
         'shipping_address' => $billing_address,
         'payment_method_id' => $faker->randomElement(\DB::table('payment_methods')->pluck('id')->toArray()),
         'payment_status' => rand(1, 3),
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];
 });
 
@@ -296,6 +318,8 @@ $factory->define(App\Blog::class, function (Faker $faker) {
         'content' => $faker->paragraph(10),
         'user_id' => $faker->randomElement(\DB::table('users')->pluck('id')->toArray()),
         'status' => $faker->boolean,
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];
 });
 
@@ -305,6 +329,8 @@ $factory->define(App\BlogComment::class, function (Faker $faker) {
         'content' => $faker->paragraph,
         'user_id' => $faker->randomElement(\DB::table('users')->pluck('id')->toArray()),
         'approved' => $faker->boolean,
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];
 });
 
@@ -321,6 +347,8 @@ $factory->define(App\GiftCard::class, function (Faker $faker) {
         'exclude_offer_items' => $faker->boolean,
         'exclude_tax_n_shipping' => $faker->boolean,
         'active' => $faker->boolean,
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];
 });
 
@@ -340,6 +368,8 @@ $factory->define(App\Coupon::class, function (Faker $faker) {
         'exclude_offer_items' => $faker->boolean,
         'exclude_tax_n_shipping' => $faker->boolean,
         'active' => $faker->boolean,
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];
 });
 
@@ -363,6 +393,8 @@ $factory->define(App\Ticket::class, function (Faker $faker) {
         'message' => $faker->paragraph,
         'status' => rand(1, 6),
         'priority' => rand(1, 4),
+        'created_at' => Carbon::Now()->subDays(rand(0, 15)),
+        'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];
 });
 

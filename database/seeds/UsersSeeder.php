@@ -49,6 +49,24 @@ class UsersSeeder extends Seeder
         ]
         ]);
 
+        DB::table('dashboard_configs')->insert([
+            [
+                'user_id' => 1,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],
+            [
+                'user_id' => 2,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],
+            [
+                'user_id' => 3,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ]
+        ]);
+
         DB::table('addresses')->insert([
             [
                 'address_type' => 'Primary',

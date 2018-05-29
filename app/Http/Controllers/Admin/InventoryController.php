@@ -156,6 +156,21 @@ class InventoryController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editQtt($id)
+    {
+        $inventory = $this->inventory->find($id);
+
+        $this->authorize('update', $inventory); // Check permission
+
+        return view('admin.inventory._editQtt', compact('inventory'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -171,6 +186,20 @@ class InventoryController extends Controller
         $request->session()->flash('success', trans('messages.updated', ['model' => $this->model]));
 
         return response()->json($this->getJsonParams($inventory));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateQtt(Request $request, $id)
+    {
+        $inventory = $this->inventory->updateQtt($request, $id);
+
+        return response("success", 200);
     }
 
     /**

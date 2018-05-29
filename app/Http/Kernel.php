@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'merchant' => \App\Http\Middleware\VerifyUserIsMerchant::class,
         'storefront' => \App\Http\Middleware\Storefront::class,
         'selling' => \App\Http\Middleware\SellingTheme::class,
+        'dashboard' => \App\Http\Middleware\DashboardSetup::class,
         'ajax' => \App\Http\Middleware\AllowOnlyAjaxRequests::class,
     ];
 }

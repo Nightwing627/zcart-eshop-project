@@ -58,6 +58,14 @@ class SubscriptionPlan extends Model
     ];
 
     /**
+     * Get the Shops associated with the plan.
+     */
+    public function shops()
+    {
+        return $this->hasMany(Shop::class, 'current_billing_plan', 'plan_id');
+    }
+
+    /**
      * Check if the plan is the featured
      *
      * @return bool

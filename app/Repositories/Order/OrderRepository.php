@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 interface OrderRepository
 {
+    public function latest();
+
     public function getCustomer($id);
 
     public function getCart($id);

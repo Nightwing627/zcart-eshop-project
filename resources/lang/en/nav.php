@@ -67,6 +67,7 @@ return [
     'performance' => 'Performance',
 
     'reports' => 'Reports',
+    'visitors' => 'Visitors',
     'sales_report' => 'Sales',
     'system_settings' => 'System settings',
     'subscription_plans' => 'Plans',

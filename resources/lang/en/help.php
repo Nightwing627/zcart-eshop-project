@@ -489,7 +489,9 @@ return [
 
     'default_email_sender_name' => 'This name will be used as the sender of email send from default sender email address',
 
-    'google_analytics_id' => 'The tracking ID from google analytics. It looks something like "UA-XXXXX-XX".',
+    // 'google_analytics_id' => 'The tracking ID from google analytics. It looks something like "UA-XXXXX-XX".',
+
+    'google_analytic_report' => 'You should only enable this, If the system is configured with Google analytics. Otherwise, it may cause errors. Check the documentation for help. Alternatively you can use the application\'s built in report system. ',
 
     'notify_new_message' => 'Send me a notification when a new message arrived',
 

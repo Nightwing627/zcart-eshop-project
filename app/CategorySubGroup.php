@@ -28,7 +28,7 @@ class CategorySubGroup extends Model
      */
     public function group()
     {
-        return $this->belongsTo('App\CategoryGroup', 'category_group_id');
+        return $this->belongsTo(CategoryGroup::class, 'category_group_id');
     }
 
     /**
@@ -36,7 +36,7 @@ class CategorySubGroup extends Model
      */
     public function categories()
     {
-        return $this->belongsToMany('App\Category')->withTimestamps();
+        return $this->belongsToMany(Category::class)->withTimestamps();
     }
 
     /**

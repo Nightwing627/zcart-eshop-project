@@ -2,13 +2,15 @@
 
 namespace App\Providers;
 
-// use App\Cart;
-// use App\Module;
 use Auth;
 use App\Config;
 use App\Inventory;
 use App\PaymentMethod;
+use App\Charts\Visitors;
+use App\Charts\LatestSales;
 use App\Helpers\ListHelper;
+use App\Helpers\Statistics;
+use App\Helpers\CharttHelper;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -48,6 +50,10 @@ class ViewComposerServiceProvider extends ServiceProvider
         $this->composeCategorySubGroupForm();
 
         $this->composeConfigPage();
+
+        $this->composeDashboardForAdmin();
+
+        $this->composeDashboardForMerhcant();
 
         $this->composeGeneralConfigPage();
 
@@ -733,6 +739,139 @@ class ViewComposerServiceProvider extends ServiceProvider
                     $view->with('warehouses', ListHelper::warehouses());
                     $view->with('packagings', ListHelper::packagings());
                     $view->with('payment_methods', optional($config->paymentMethods)->pluck('name', 'id'));
+                });
+    }
+
+    /**
+     * compose dashboard UI for admin
+     */
+    private function composeDashboardForAdmin()
+    {
+        View::composer(
+
+                'admin.dashboard.platform',
+
+                function($view)
+                {
+                    // Charts
+                    $months = config('charts.visitors.months');
+
+                    $visitorsData = CharttHelper::visitorsOfMonths($months);
+
+                    $today = \Carbon\Carbon::today()->startOfMonth();
+                    $day_count = $today->diffInDays($today->copy()->subMonths($months));
+                    $per_day_visits = round( array_sum($visitorsData['visits']) / $day_count );
+
+                    $chart = new Visitors($months, $per_day_visits);
+
+                    $chart->dataset(trans('app.page_views'), 'areaspline', $visitorsData['page_views'])->color(config('charts.visitors.colors.page_views'));
+
+                    if(array_key_exists('sessions', $visitorsData)){
+                        $chart->dataset(trans('app.sessions'), 'areaspline', $visitorsData['sessions'])->color(config('charts.visitors.colors.sessions'));
+                    }
+
+                    $chart->dataset(trans('app.unique_visits'), 'areaspline', $visitorsData['visits'])->color(config('charts.visitors.colors.unique_visits'));
+
+                    $view->with([
+                        'chart' => $chart,
+                        'merchant_count' => Statistics::merchant_count(),
+                        'new_merchant_last_30_days' => Statistics::merchant_count(30),
+
+                        'customer_count' => Statistics::customer_count(),
+                        'new_customer_last_30_days' => Statistics::customer_count(30),
+
+                        'todays_sale_amount'        => Statistics::todays_sale_amount(),
+                        'yesterdays_sale_amount'    => Statistics::yesterdays_sale_amount(),
+
+                        'todays_visitor_count' => Statistics::visitor_count('today'),
+                        'last_30days_visitor_count' => Statistics::visitor_count(30),
+                        'last_60days_visitor_count' => Statistics::visitor_count(60),
+
+                        'dispute_count' => Statistics::appealed_dispute_count(),
+                        'last_30days_dispute_count' => Statistics::appealed_dispute_count(Null, 30),
+                        'last_60days_dispute_count' => Statistics::appealed_dispute_count(Null, 60),
+
+                        'top_customers'               => ListHelper::top_customers(),
+                        'top_vendors'               => ListHelper::top_vendors(),
+
+                        'latest_products'            => ListHelper::latest_products(),
+                        'open_tickets'               => ListHelper::open_tickets(),
+
+                    ]);
+                    // $config = Config::findOrFail(auth()->user()->merchantId());
+                    // $view->with('taxes', ListHelper::taxes());
+                    // $view->with('suppliers', ListHelper::suppliers());
+                    // $view->with('warehouses', ListHelper::warehouses());
+                    // $view->with('packagings', ListHelper::packagings());
+                    // $view->with('payment_methods', optional($config->paymentMethods)->pluck('name', 'id'));
+                });
+    }
+
+    /**
+     * compose dashboard UI for merchant
+     */
+    private function composeDashboardForMerhcant()
+    {
+        View::composer(
+
+                'admin.dashboard.merchant',
+
+                function($view)
+                {
+                    // $top_listings = Auth::user()->shop->inventories()->where(function($q){
+
+                    // });
+                    // $top_listings = ListHelper::top_listing_items();
+                    // echo "<pre>"; print_r($top_listings); echo "</pre>"; exit();
+                    // Charts
+                    $days = config('charts.latest_sales.days');
+                    $salesData = CharttHelper::SalesOfLast($days);
+
+                    $chart = new LatestSales($days);
+                    $chart->dataset(trans('app.sale'), 'column', $salesData)->color(config('charts.latest_sales.color'));
+
+                    $dispute_count = Statistics::dispute_count(Auth::user()->merchantId());
+                    $refund_request_count = Statistics::open_refund_request_count();
+                    $current_plan  = Auth::user()->shop->plan;
+
+                    $view->with([
+                        'chart' => $chart,
+                        'top_listings'              => ListHelper::top_listing_items(),
+                        'latest_orders'             => ListHelper::latest_orders(),
+                        'latest_stocks'             => ListHelper::latest_stocks(),
+                        'low_qtt_stocks'            => ListHelper::low_qtt_stocks(),
+                        'unfulfilled_order_count'   => Statistics::unfulfilled_order_count(),
+                        'latest_order_count'        => Statistics::latest_order_count($days),
+                        'todays_order_count'        => Statistics::todays_order_count(),
+                        'stock_out_count'           => Statistics::stock_out_count(),
+                        'stock_count'               => Statistics::shop_inventories_count(),
+                        'todays_sale_amount'        => Statistics::todays_sale_amount(),
+                        'yesterdays_sale_amount'    => Statistics::yesterdays_sale_amount(),
+                        'last_sale'                 => Statistics::last_sale(),
+                        'latest_refund_total'       => Statistics::latest_refund_total($days),
+                        'latest_sale_total'         => array_sum($salesData),
+                        'dispute_count'             => $dispute_count,
+                        'refund_request_count'      => $refund_request_count,
+                    ]);
+
+                    // Disputs and Refunds widget (optional)
+                    if($dispute_count > 0 || $refund_request_count > 0){
+                        $view->with([
+                            'last_30days_dispute_count'  => Statistics::dispute_count(auth()->user()->merchantId(), 30),
+                            'last_60days_dispute_count'  => Statistics::dispute_count(auth()->user()->merchantId(), 60),
+                            'last_30days_refund_request_count'  => Statistics::refund_request_count(30),
+                            'last_60days_refund_request_count'  => Statistics::refund_request_count(60)
+                        ]);
+                    }
+
+                    // Time to upgrade widget (optional)
+                    if((bool) config('dashboard.upgrade_plan_notice')){
+                        $view->with([
+                            // 'stock_count'           => Statistics::shop_inventories_count(), Already loaded
+                            'user_count'                => Statistics::shop_user_count(),
+                            'current_plan'              => $current_plan,
+                        ]);
+                    }
                 });
     }
 

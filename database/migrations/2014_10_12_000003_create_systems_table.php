@@ -20,12 +20,11 @@ class CreateSystemsTable extends Migration
             $table->text('slogan')->nullable();
             $table->text('legal_name')->nullable();
             $table->string('email')->nullable(); //Notifications, supports and other alert send to this email
-            // $table->longtext('description')->nullable();
             $table->integer('timezone_id')->default(35);
-            // $table->string('currency_code')->default('USD');
-            // $table->string('currency_symbol')->default('$');
             $table->integer('currency_id')->default(148);
-            $table->string('google_analytics_id')->nullable();
+
+            // Reporting
+            $table->boolean('google_analytic_report')->nullable()->default(false);
 
             // Merchant registration
             $table->boolean('required_card_upfront')->nullable()->default(true);

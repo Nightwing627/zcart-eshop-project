@@ -58,23 +58,34 @@
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        @if (View::hasSection('buttons') || isset($page_title))
-          <section class="content-header">
-            <h1>
-              {{ $page_title or '' }}
-              <small>{{ $page_description or '' }}</small>
-            </h1>
-            <span class='opt-button'>
+          <!-- Content Header (Page header) -->
+          @if (View::hasSection('buttons') || isset($page_title))
+            <section class="content-header">
+              <h1>
+                {{ $page_title or '' }}
+                <small>{{ $page_description or '' }}</small>
+              </h1>
+              <span class='opt-button'>
 
-              @yield("buttons")
+                @yield("buttons")
 
-            </span>
-          </section>
-        @endif
+              </span>
+            </section>
+          @endif
 
-        <!-- Main content -->
-        <section class="content">
+          <!-- Main content -->
+          <section class="content">
+
+          {{-- If the user is impersonated --}}
+          @if(Request::session()->has('impersonated'))
+            <div class="callout callout-info">
+              <p>
+                <strong><i class="icon ion-md-nuclear"></i> {{ trans('app.alert') }}</strong>
+                {{ trans('messages.you_are_impersonated') }}
+                <a href="{{ route('admin.secretLogout') }}" class="nav-link pull-right"><i class="fa fa-sign-out" data-toggle="tooltip" data-placement="top" title="{{ trans('app.log_out') }}"></i></a>
+              </p>
+            </div>
+          @endif
 
           @if (count($errors) > 0)
             <div class="alert alert-danger">

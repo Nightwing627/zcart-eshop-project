@@ -12,6 +12,8 @@ interface InventoryRepository
 
     public function storeWithVariant(Request $request);
 
+    public function updateQtt(Request $request, $id);
+
     public function setAttributes($inventory, $attributes);
 
     public function getAttributeList(array $variants);

@@ -8,33 +8,33 @@
 	<div class="box">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs nav-justified">
-				<li class="active"><a href="#basic_settings" data-toggle="tab">
+				<li class="active"><a href="#basic_settings_tab" data-toggle="tab">
 					<i class="fa fa-cubes hidden-sm"></i>
 					{{ trans('app.basic_settings') }}
 				</a></li>
-				<li><a href="#formats" data-toggle="tab">
+				<li><a href="#formats_tab" data-toggle="tab">
 					<i class="fa fa-cog hidden-sm"></i>
 					{{ trans('app.config_formats') }}
 				</a></li>
-				<li><a href="#payment_method" data-toggle="tab">
+				<li><a href="#payment_method_tab" data-toggle="tab">
 					<i class="fa fa-credit-card hidden-sm"></i>
 					{{ trans('app.payment_methods') }}
 				</a></li>
-				<li><a href="#support" data-toggle="tab">
+				<li><a href="#support_tab" data-toggle="tab">
 					<i class="fa fa-phone hidden-sm"></i>
 					{{ trans('app.support') }}
 				</a></li>
-				<li><a href="#reports" data-toggle="tab">
+				<li><a href="#reports_tab" data-toggle="tab">
 					<i class="fa fa-line-chart hidden-sm"></i>
 					{{ trans('app.reports') }}
 				</a></li>
-				<li><a href="#notifications" data-toggle="tab">
+				<li><a href="#notifications_tab" data-toggle="tab">
 					<i class="fa fa-bell-o hidden-sm"></i>
 					{{ trans('app.notifications') }}
 				</a></li>
 			</ul>
 			<div class="tab-content">
-			    <div class="tab-pane active" id="basic_settings">
+			    <div class="tab-pane active" id="basic_settings_tab">
 			    	<div class="row">
 				        {!! Form::model($system, ['method' => 'PUT', 'route' => ['admin.setting.system.update'], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
 					    	<div class="col-sm-6">
@@ -309,7 +309,7 @@
 			    </div>
 			  	<!-- /.tab-pane -->
 
-			    <div class="tab-pane" id="formats">
+			    <div class="tab-pane" id="formats_tab">
 			    	<div class="row">
 				        {!! Form::model($system, ['method' => 'PUT', 'route' => ['admin.setting.system.update'], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
 					    	<div class="col-sm-6">
@@ -481,7 +481,7 @@
 			    </div>
 			    <!-- /.tab-pane -->
 
-			    <div class="tab-pane" id="payment_method">
+			    <div class="tab-pane" id="payment_method_tab">
 			    	<div class="jumbotron">
 			    		<p class="text-center">{{ trans('help.config_enable_payment_method') }}</p>
 			    	</div>
@@ -548,7 +548,7 @@
 			    </div>
 			    <!-- /.tab-pane -->
 
-			    <div class="tab-pane" id="support">
+			    <div class="tab-pane" id="support_tab">
 			        {!! Form::model($system, ['method' => 'PUT', 'route' => ['admin.setting.system.update'], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
 				    	<div class="row">
 					    	<div class="col-sm-12">
@@ -721,23 +721,45 @@
 			    </div>
 			  	<!-- /.tab-pane -->
 
-			    <div class="tab-pane" id="reports">
+			    <div class="tab-pane" id="reports_tab">
 			    	<div class="row">
-				        {!! Form::model($system, ['method' => 'PUT', 'route' => ['admin.setting.system.update'], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
-					    	<div class="col-sm-12">
-					    		<h2>Need to updated after reporing done</h2>
-						  		@if($can_update)
-									<div class="col-md-offset-3">
-							            {{-- {!! Form::submit(trans('app.update'), ['class' => 'btn btn-lg btn-flat btn-new']) !!} --}}
-							        </div>
-						  		@endif
-						  	</div>
-				        {!! Form::close() !!}
+				    	<div class="col-sm-6">
+				    		<fieldset>
+				    			<legend>{{ trans('app.visitors') }}</legend>
+						    	<div class="row">
+							    	<div class="col-sm-8 text-right">
+										<div class="form-group">
+									        {!! Form::label('google_analytic_report', trans('app.google_analytic_report'). ':', ['class' => 'with-help control-label']) !!}
+										  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.google_analytic_report') }}"></i>
+										</div>
+									</div>
+							    	<div class="col-sm-4">
+								  		@if($can_update)
+										  	<div class="handle horizontal">
+												<a href="{{ route('admin.setting.system.notification.toggle', 'google_analytic_report') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->google_analytic_report == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->google_analytic_report == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<div class="btn-handle"></div>
+												</a>
+										  	</div>
+										@else
+											<span>{{ $system->google_analytic_report == 1 ? trans('app.on') : trans('app.off') }}</span>
+										@endif
+									</div>
+							  	</div>
+							    <!-- /.row -->
+							</fieldset>
+					  	</div>
+					    <!-- /.col-sm-6 -->
+
+					  	<div class="col-sm-6">
+
+					  	</div>
+					    <!-- /.col-sm-6 -->
 			    	</div>
+				    <!-- /.row -->
 			    </div>
 			    <!-- /.tab-pane -->
 
-			    <div class="tab-pane" id="notifications">
+			    <div class="tab-pane" id="notifications_tab">
 			    	<div class="row">
 				    	<div class="col-sm-6">
 				    		<fieldset>

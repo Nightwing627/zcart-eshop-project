@@ -47,6 +47,7 @@ trait Authorizable
         'removeCountry'     => 'edit',
         'editStates'        => 'edit',
         'updateStates'      => 'edit',
+        'updateQtt'         => 'edit',
         'delete'            => 'delete',
         'trash'             => 'delete',
         'archive'           => 'archive',

@@ -17,11 +17,15 @@ class demoSeeder extends Seeder
      */
     public function run()
     {
+        factory(App\Visitor::class, 100)->create();
+
         factory(App\Role::class, $this->tinycount)->create();
 
         factory(App\User::class, $this->longCount)
             ->create()
             ->each(function($user){
+                $user->dashboard()->save(factory(App\Dashboard::class)->make());
+
                 $user->addresses()->save(
                     factory(App\Address::class)->make(['address_title' => $user->name, 'address_type' => 'Primary'])
                 );
@@ -30,6 +34,8 @@ class demoSeeder extends Seeder
         factory(App\Merchant::class, $this->longCount)
             ->create()
             ->each(function($merchant){
+                $merchant->dashboard()->save(factory(App\Dashboard::class)->make());
+
                 $merchant->addresses()->save(
                     factory(App\Address::class)->make(['address_title' => $merchant->name, 'address_type' => 'Primary'])
                 );
@@ -345,6 +351,8 @@ class demoSeeder extends Seeder
         factory(App\Inventory::class, $this->longLongCount)->create();
 
         factory(App\Order::class, $this->longLongCount)->create();
+
+        factory(App\Dispute::class, $this->count)->create();
 
         factory(App\Blog::class, $this->tinycount)->create();
 

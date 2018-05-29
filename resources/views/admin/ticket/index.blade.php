@@ -44,9 +44,10 @@
 							</td>
 							<td>
 								{!! $ticket->statusName() !!}
-								<span class="label label-outline"> {{ $ticket->category->name }} </span> &nbsp;
-
-								<a href="{{ route('admin.support.ticket.show', $ticket->id) }}">{{ $ticket->subject }}</a>
+								<span class="label label-outline"> {{ $ticket->category->name }} </span>
+                                <p class="indent10">
+									<a href="{{ route('admin.support.ticket.show', $ticket->id) }}">{{ $ticket->subject }}</a>
+								</p>
 							</td>
 							<td>{!! $ticket->priorityLevel() !!}</td>
 							<td><span class="label label-default">{{ $ticket->replies_count }}</span></td>

@@ -111,6 +111,14 @@ class User extends Authenticatable
                 ];
 
     /**
+     * Get the dashboard of the user.
+     */
+    public function dashboard()
+    {
+        return $this->hasOne(Dashboard::class, 'user_id');
+    }
+
+    /**
      * Get all of the country for the country.
      */
     public function country()

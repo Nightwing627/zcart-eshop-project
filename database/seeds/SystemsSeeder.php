@@ -33,6 +33,10 @@ class SystemsSeeder extends Seeder
             'show_currency_symbol' => 1,
             'show_space_after_symbol' => 1,
 
+            // Temoporary for dev
+            'required_card_upfront' => Null,
+            'trial_days' => 13,
+
             // Vendot Defults
             // 'merchant_can_create_category_group' => null,
             // 'merchant_can_create_category_sub_group' => null,

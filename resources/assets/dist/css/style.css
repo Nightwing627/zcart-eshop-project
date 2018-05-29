@@ -2373,6 +2373,10 @@ div.datepicker > div {
   padding: 5px 10px;
   margin-left: 90px;
 }
+.info-box[class*="bg-"] a{
+  color: #fff !important;
+}
+
 .info-box-number {
   display: block;
   font-weight: bold;
@@ -2381,10 +2385,15 @@ div.datepicker > div {
 .progress-description,
 .info-box-text {
   display: block;
-  font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.progress-description{
+  font-size: 85%;
+}
+.info-box-text {
+  font-size: 14px;
 }
 .info-box-text {
   text-transform: uppercase;
@@ -5781,3 +5790,17 @@ a.btn{
 .themes .theme .thumbnail.active{
   box-shadow: 0 0 1px #d3d3d3;
 }
+
+/**
+ * Progress bars with centered text
+ */
+
+.progress {
+    position: relative;
+}
+
+.progress span {
+    position: absolute;
+    display: block;
+    width: 100%;
+ }

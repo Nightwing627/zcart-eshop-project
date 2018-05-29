@@ -92,18 +92,6 @@
 						  	</div>
 						</div>
 
-						<div class="form-group">
-							{!! Form::label('google_analytics_id', trans('app.google_analytics_id') . ':', ['class' => 'with-help col-sm-3 control-label']) !!}
-					        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.google_analytics_id') }}"></i>
-						  	<div class="col-sm-8 nopadding-left">
-						  		@if($can_update)
-						  			{!! Form::text('google_analytics_id', $system->google_analytics_id, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.google_analytics_id')]) !!}
-								@else
-									<span>{{ $system->google_analytics_id }}</span>
-								@endif
-						  	</div>
-						</div>
-
 				  		@if($can_update)
 							<div class="form-group">
 								<label for="exampleInputFile" class="with-help col-sm-3 control-label"> {{ trans('app.form.logo') }}</label>

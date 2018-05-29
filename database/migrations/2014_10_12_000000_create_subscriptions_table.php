@@ -29,7 +29,7 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscription_plans', function ($table) {
             // $table->increments('id');
             $table->string('name')->unique();
-            $table->string('plan_id')->unique();
+            $table->string('plan_id')->primary();
             $table->string('best_for')->nullable();
             $table->decimal('cost')->default(0);
             $table->decimal('transaction_fee')->default(0);
@@ -43,7 +43,7 @@ class CreateSubscriptionsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->primary('plan_id');
+            // $table->primary('plan_id');
         });
     }
 

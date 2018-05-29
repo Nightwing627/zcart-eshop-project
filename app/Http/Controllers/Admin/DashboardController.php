@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
+use Request;
 use App\User;
-use App\Charts\LatestSales;
-use App\Charts\ResourcesUse;
-use Illuminate\Http\Request;
+use App\Dashboard;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SecretLoginRequest;
@@ -30,16 +29,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->isFromPlatform()){
+        if(Auth::user()->isFromPlatform())
             return view('admin.dashboard.platform');
-        }
 
-        $chart = new LatestSales;
-        $chart->dataset('Sale', 'column', [100, 65, 84, 45, 90,0, 65, 44, 45, 90,20, 65, 84, 45, 110])->color('#d3d3d3');
-
-        return view('admin.dashboard.merchant', compact('chart'));
-
-        // return view('admin.dashboard.index');
+        return view('admin.dashboard.merchant');
     }
 
     /**
@@ -68,5 +61,25 @@ class DashboardController extends Controller
         return $secret_url ?
             redirect()->to($secret_url)->with('success', trans('messages.secret_logged_out')) :
             redirect()->route('admin.admin.dashboard');
+    }
+
+    /**
+     * Toggle Configuration of the current user, Its uses the ajax middleware
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  str  $node
+     * @return \Illuminate\Http\Response
+     */
+    public function toggleConfig(Request $request, $node)
+    {
+        $config = Dashboard::findOrFail(Auth::user()->id);
+
+        $config->$node = !$config->$node;
+
+        if($config->save()){
+            return response("success", 200);
+        }
+
+        return response('error', 405);
     }
 }

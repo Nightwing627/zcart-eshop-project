@@ -74,7 +74,6 @@ class System extends Model
                         'email',
                         'timezone_id',
                         'currency_id',
-                        'google_analytics_id',
                     ];
 
     /**

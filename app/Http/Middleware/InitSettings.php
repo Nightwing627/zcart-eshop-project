@@ -24,8 +24,6 @@ class InitSettings
 
         setSystemConfig();
 
-        // self::initCurrency();
-
         if(Auth::guard('web')->check()){
 
             // Check if the user has impersonated
@@ -55,6 +53,9 @@ class InitSettings
                 config()->set('authSlugs', $slugs);
             }
         }
+
+        // update the visitor table for state
+        updateVisitorTable($request);
 
         return $next($request);
     }

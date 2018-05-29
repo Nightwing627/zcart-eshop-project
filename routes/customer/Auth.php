@@ -1,5 +1,7 @@
 <?php
    Route::get('/login', 'Auth\CustomerLoginController@showLoginForm')->name('login');
+   Route::get('login/github', 'Auth\CustomerLoginController@redirectToProvider');
+   Route::get('login/github/callback', 'Auth\CustomerLoginController@handleProviderCallback');
    Route::post('/login', 'Auth\CustomerLoginController@login')->name('login.submit');
    Route::get('/logout', 'Auth\CustomerLoginController@logout')->name('logout');
 

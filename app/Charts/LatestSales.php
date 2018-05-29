@@ -12,14 +12,17 @@ class LatestSales extends Chart
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($period = 15)
     {
         parent::__construct();
 
-		$dates = CharttHelper::Days(15);
+		$dates = CharttHelper::Days($period);
+
+		$dates[$period-1] = trans('app.today');
+		$dates[$period-2] = trans('app.yesterday');
 
 		$this->displayLegend(false)
-			->height(200)
+			->height(200)->width(0)
 			->labels($dates)
 			->options([
 				'yAxis' => [
@@ -27,8 +30,16 @@ class LatestSales extends Chart
 						'text' => null,
 					],
 					'labels' => [
+					    'align'	=> 'right',
 						'format' => config('system_settings.currency.symbol') . '{value}',
 					],
+				],
+				'tooltip' => [
+					'useHTML' => true,
+					'pointFormat' => '<small>{series.name}: <b>' . config('system_settings.currency.symbol') . '{point.y}</b></small>',
+				],
+				'credits' => [
+					'enabled' => false,
 				],
 			]);
     }

@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Dhaka',
 
     /*
     |--------------------------------------------------------------------------
@@ -244,9 +244,9 @@ return [
         /*
          * Package Service Providers...
          */
-        'Form' => 'Collective\Html\FormFacade',
-        'Html' => 'Collective\Html\HtmlFacade',
-        'Image' => 'Intervention\Image\Facades\Image',
+        // 'Form' => 'Collective\Html\FormFacade',
+        // 'Html' => 'Collective\Html\HtmlFacade',
+        // 'Image' => 'Intervention\Image\Facades\Image',
         'Flash' => 'Laracasts\Flash\Flash',
         'Curl' => Ixudra\Curl\Facades\Curl::class,
         // 'Excel' => Maatwebsite\Excel\Facades\Excel::class,
