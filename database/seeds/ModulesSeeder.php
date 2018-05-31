@@ -26,7 +26,7 @@ class ModulesSeeder extends Seeder
         ],
 
         'Category' => [
-            'access' => 'Common',
+            'access' => 'Platform',
             'actions' => 'view,add,edit,delete'
         ],
 

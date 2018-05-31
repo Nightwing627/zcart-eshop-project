@@ -39,7 +39,7 @@ class InitSettings
                 setShopConfig(Auth::user()->merchantId());
 
                 // Some extra permissions for vendor users in platform modules
-                $extra_permissions = ['view_ticket', 'add_ticket', 'reply_ticket'];
+                // $extra_permissions = ['reply_ticket'];
             }
 
             // Set all authorization slugs into the session to check permission very fast

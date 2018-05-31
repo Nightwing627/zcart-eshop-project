@@ -6,10 +6,7 @@
             {{ trans('app.reply') }}
         </div>
         <div class="modal-body">
-
-            @if (Auth::user()->isFromPlatform())
-                @include('admin.ticket._status_form')
-            @endif
+            @include('admin.ticket._status_form')
 
             @include('admin.partials._reply')
 
@@ -21,4 +18,3 @@
         {!! Form::close() !!}
     </div> <!-- / .modal-content -->
 </div> <!-- / .modal-dialog -->
-

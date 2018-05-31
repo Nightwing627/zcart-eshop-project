@@ -49,18 +49,18 @@
 			<!-- Custom Tabs -->
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs nav-justified">
-				  <li class="active"><a href="#tab_1" data-toggle="tab">
+				  <li class="active"><a href="#basic_info_tab" data-toggle="tab">
 					{{ trans('app.basic_info') }}
 				  </a></li>
-				  <li><a href="#tab_2" data-toggle="tab">
+				  <li><a href="#description_tab" data-toggle="tab">
 					{{ trans('app.description') }}
 				  </a></li>
-				  <li><a href="#tab_3" data-toggle="tab">
+				  <li><a href="#seo_tab" data-toggle="tab">
 					{{ trans('app.seo') }}
 				  </a></li>
 				</ul>
 				<div class="tab-content">
-				    <div class="tab-pane active" id="tab_1">
+				    <div class="tab-pane active" id="basic_info_tab">
 				        <table class="table">
 							<tr>
 								<th>{{ trans('app.requires_shipping') }}:</th>
@@ -129,7 +129,7 @@
 				        </table>
 				    </div>
 				    <!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_2">
+				    <div class="tab-pane" id="description_tab">
 					  <div class="box-body">
 				        @if($product->description)
 				            {!! htmlspecialchars_decode($product->description) !!}
@@ -139,18 +139,8 @@
 					  </div>
 				    </div>
 				    <!-- /.tab-pane -->
-				    <div class="tab-pane" id="tab_3">
+				    <div class="tab-pane" id="seo_tab">
 				        <table class="table">
-				            @if($product->tags)
-				                <tr>
-				                	<th>{{ trans('app.tags') }}: </th>
-				                	<td>
-							          	@foreach($product->tags as $tag)
-								          	<span class="label label-outline">{{ $tag->name }}</span>
-								        @endforeach
-				                	</td>
-				                </tr>
-				            @endif
 				            @if($product->slug)
 				                <tr>
 				                	<th>{{ trans('app.slug') }}: </th>
@@ -173,6 +163,16 @@
 				                <tr>
 				                	<th>{{ trans('app.meta_keywords') }}: </th>
 				                	<td>{{ $product->meta_keywords }}</td>
+				                </tr>
+				            @endif
+				            @if($product->tags)
+				                <tr>
+				                	<th>{{ trans('app.tags') }}: </th>
+				                	<td>
+							          	@foreach($product->tags as $tag)
+								          	<span class="label label-outline">{{ $tag->name }}</span>
+								        @endforeach
+				                	</td>
 				                </tr>
 				            @endif
 				        </table>

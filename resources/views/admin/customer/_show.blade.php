@@ -2,50 +2,70 @@
     <div class="modal-content">
         <div class="modal-body" style="padding: 0px;">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
-			<div class="card hovercard">
-			    <div class="card-background">
-					<img src="{{ get_storage_file_url(optional($customer->image)->path, 'medium') }}" class="card-bkimg img-circle" alt="{{ trans('app.avatar') }}">
-			    </div>
-			    <div class="useravatar">
+	        <div class=" box-widget widget-user">
+	            <div class="widget-user-header bg-aqua-active card-background">
+	              	<h3 class="widget-user-username">{{ $customer->getName() }}</h3>
+	              	<h5 class="widget-user-desc">
+		                {{ ($customer->active) ? trans('app.active') : 	trans('app.inactive') }}
+	              	</h5>
+	            </div>
+	            <div class="widget-user-image">
 		            @if($customer->image)
 						<img src="{{ get_storage_file_url(optional($customer->image)->path, 'small') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
 		            @else
 	            		<img src="{{ get_gravatar_url($customer->email, 'small') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
 		            @endif
-			    </div>
-			    <div class="card-info">
-			        <span class="card-title">{{ $customer->getName() }}</span>
-			    </div>
-			</div>
+	            </div>
+	            <div class="spacer10"></div>
+              	<div class="row">
+	                <div class="col-sm-4 border-right">
+	                  <div class="description-block">
+	                    <h5 class="description-header">{{ get_formated_currency(\App\Helpers\Statistics::total_spent($customer)) }}</h5>
+	                    <span class="description-text">{{ trans('app.spent') }}</span>
+	                  </div>
+	                  <!-- /.description-block -->
+	                </div>
+
+	                <div class="col-sm-4 border-right">
+	                  <div class="description-block">
+	                  	<h5 class="description-header">&nbsp;</h5>
+	                    <span class="description-text small">{{ trans('app.member_since') }}: {{ $customer->created_at->diffForHumans() }}</span>
+	                  </div>
+	                </div>
+
+	                <div class="col-sm-4">
+	                  <div class="description-block">
+	                    <h5 class="description-header">{{ \App\Helpers\Statistics::customer_orders_count($customer) }}</h5>
+	                    <span class="description-text">#{{ trans('app.orders') }}</span>
+	                  </div>
+	                </div>
+            	</div>
+              	<!-- /.row -->
+	            <div class="spacer10"></div>
+	        </div>
+	        <!-- /.widget-user -->
 
 			<!-- Custom Tabs -->
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs nav-justified">
-				  <li class="active"><a href="#tab_1" data-toggle="tab">
+				  <li class="active"><a href="#basic_info_tab" data-toggle="tab">
 				  	{{ trans('app.basic_info') }}
-				  </a></li>
-				  <li><a href="#desc_tab" data-toggle="tab">
-				  	{{ trans('app.description') }}
 				  </a></li>
 				  <li><a href="#address_tab" data-toggle="tab">
 				  	{{ trans('app.addresses') }}
 				  </a></li>
-				  <li><a href="#orders_tab" data-toggle="tab">
-				  	{{ trans('app.latest_orders') }}
-				  </a></li>
+				  @if(Auth::user()->isFromPlatform())
+					  <li><a href="#orders_tab" data-toggle="tab">
+					  	{{ trans('app.latest_orders') }}
+					  </a></li>
+				  @endif
 				</ul>
 				<div class="tab-content">
-				    <div class="tab-pane active" id="tab_1">
+				    <div class="tab-pane active" id="basic_info_tab">
 				        <table class="table">
-				            @if($customer->nice_name)
-				                <tr>
-				                	<th>{{ trans('app.nice_name') }}: </th>
-				                	<td>{{ $customer->nice_name }}</td>
-				                </tr>
-				            @endif
 				            @if($customer->name)
 				                <tr>
-				                	<th>{{ trans('app.full_name') }}: </th>
+				                	<th width="25%">{{ trans('app.full_name') }}: </th>
 				                	<td>{{ $customer->name }}</td>
 				                </tr>
 				            @endif
@@ -69,22 +89,15 @@
 				                </tr>
 				            @endif
 
-			                <tr>
-			                	<th>{{ trans('app.status') }}: </th>
-			                	<td>{{ ($customer->active) ? trans('app.active') : 	trans('app.inactive') }}</td>
-			                </tr>
-
-				            @if($customer->created_at)
+				            @if($customer->description)
 				                <tr>
-				                	<th>{{ trans('app.member_since') }}: </th>
-				                	<td>{{ $customer->created_at->diffForHumans() }}</td>
+				                	<th>{{ trans('app.description') }}: </th>
+				                	<td>{!! $customer->description !!}</td>
 				                </tr>
 				            @endif
 				        </table>
 				    </div> <!-- /.tab-pane -->
-				    <div class="tab-pane" id="desc_tab">
-			            {!! $customer->description or trans('app.info_not_found') !!}
-				    </div> <!-- /.tab-pane -->
+
 				    <div class="tab-pane" id="address_tab">
 				    	@foreach($customer->addresses as $address)
 
@@ -102,6 +115,8 @@
 					        <div class="help-block" style="margin-bottom: -10px;"><i class="fa fa-warning"></i> {{ trans('app.map_location') }}</div>
 				       	@endif
 				    </div> <!-- /.tab-pane -->
+
+					@if(Auth::user()->isFromPlatform())
 				    <div class="tab-pane" id="orders_tab">
 						<table class="table table-hover table-2nd-short">
 							<thead>
@@ -126,6 +141,7 @@
 							</tbody>
 						</table>
 				    </div> <!-- /.tab-pane -->
+					@endif
 				</div> <!-- /.tab-content -->
 			</div>
         </div>

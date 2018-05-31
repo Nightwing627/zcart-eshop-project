@@ -6,10 +6,11 @@ use Auth;
 use App\Common\Repliable;
 use App\Common\Attachable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
-    use Repliable, Attachable;
+    use SoftDeletes, Repliable, Attachable;
 
 	const STATUS_NEW     = 1; 		//Default
     const STATUS_OPEN    = 2;
@@ -35,7 +36,7 @@ class Ticket extends Model
      *
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -163,6 +164,16 @@ class Ticket extends Model
     public function scopeCreatedByMe($query)
     {
         return $query->where('user_id', Auth::id());
+    }
+
+    /**
+     * Scope a query to only include records from the users shop.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeArchived($query)
+    {
+        return $query->onlyTrashed();
     }
 
 	public function statusName()

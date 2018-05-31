@@ -143,6 +143,7 @@
 										</div>
 								  	</div>
 								    <!-- /.row -->
+
 							    	<div class="row">
 								    	<div class="col-sm-7 text-right">
 											<div class="form-group">
@@ -159,6 +160,27 @@
 											  	</div>
 											@else
 												<span>{{ $system->allow_guest_checkout == 1 ? trans('app.on') : trans('app.off') }}</span>
+											@endif
+										</div>
+								  	</div>
+								    <!-- /.row -->
+
+							    	<div class="row">
+								    	<div class="col-sm-7 text-right">
+											<div class="form-group">
+										        {!! Form::label('vendor_can_view_customer_info', trans('app.vendor_can_view_customer_info'). ':', ['class' => 'with-help control-label']) !!}
+											  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.vendor_can_view_customer_info') }}"></i>
+											</div>
+										</div>
+								    	<div class="col-sm-4">
+									  		@if($can_update)
+											  	<div class="handle horizontal text-center">
+													<a href="{{ route('admin.setting.system.notification.toggle', 'vendor_can_view_customer_info') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->vendor_can_view_customer_info == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->vendor_can_view_customer_info == 1 ? 'true' : 'false' }}" autocomplete="off">
+														<div class="btn-handle"></div>
+													</a>
+											  	</div>
+											@else
+												<span>{{ $system->vendor_can_view_customer_info == 1 ? trans('app.on') : trans('app.off') }}</span>
 											@endif
 										</div>
 								  	</div>

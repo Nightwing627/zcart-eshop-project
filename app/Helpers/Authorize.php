@@ -34,6 +34,7 @@ class Authorize
 		if($this->isExceptional())
 			return true;
 
+		// echo "<pre>"; print_r($this->permissionSlugs()); echo "</pre>"; exit();
 		// Deny the action immediately if the model has shop_id field and user from different shop
 		if(isset($this->model)
 		   	&& (isset($this->model->shop_id) || array_key_exists('shop_id', $this->model))

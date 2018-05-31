@@ -21,6 +21,10 @@
 						<i class="fa fa-credit-card hidden-sm"></i>
 						{{ trans('app.billing') }}
 					</a></li>
+					<li class="{{ Request::is('admin/account/ticket') ? 'active' : '' }}"><a href="#ticket_tab" data-toggle="tab">
+						<i class="fa fa-ticket hidden-sm"></i>
+						{{ trans('app.tickets') }}
+					</a></li>
 				</ul>
 				<div class="tab-content">
 				    <div class="tab-pane {{ Request::is('admin/account/profile') ? 'active' : '' }}" id="profile_tab">
@@ -29,6 +33,10 @@
 
 				    <div class="tab-pane {{ Request::is('admin/account/billing') ? 'active' : '' }}" id="billing_tab">
 			    		@include('admin.account._billing')
+				    </div>
+
+				    <div class="tab-pane {{ Request::is('admin/account/ticket') ? 'active' : '' }}" id="ticket_tab">
+			    		@include('admin.account._ticket')
 				    </div>
 				</div>
 				<!-- /.tab-content -->

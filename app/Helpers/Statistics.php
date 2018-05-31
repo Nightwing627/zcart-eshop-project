@@ -62,6 +62,16 @@ class Statistics
         return Inventory::mine()->stockOut()->count();
     }
 
+    public static function customer_orders_count($customer)
+    {
+        return Order::withTrashed()->where('customer_id', $customer)->count();
+    }
+
+    public static function total_spent($customer)
+    {
+        return Order::withTrashed()->where('customer_id', $customer)->sum('total');
+    }
+
     public static function last_sale()
     {
         return Order::mine()->withTrashed()->orderBy('created_at', 'desc')->first();

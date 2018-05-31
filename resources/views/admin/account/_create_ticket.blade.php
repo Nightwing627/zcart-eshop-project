@@ -1,6 +1,6 @@
 <div class="modal-dialog modal-md">
     <div class="modal-content">
-    	{!! Form::open(['route' => 'admin.support.ticket.store', 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
+    	{!! Form::open(['route' => 'admin.account.ticket.store', 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
         	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         	{{ trans('app.form.form') }}
@@ -35,4 +35,3 @@
         {!! Form::close() !!}
     </div> <!-- / .modal-content -->
 </div> <!-- / .modal-dialog -->
-

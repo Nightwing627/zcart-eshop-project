@@ -500,10 +500,10 @@ if ( ! function_exists('get_formated_decimal') )
 
         if ($trim){
             $arr = explode($decimal_mark, $value);
-
-            $temp = rtrim($arr[1], '0');
-
-            $value = $temp ? $arr[0] . $decimal_mark . $temp : $arr[0];
+            if(count($arr) == 2){
+                $temp = rtrim($arr[1], '0');
+                $value = $temp ? $arr[0] . $decimal_mark . $temp : $arr[0];
+            }
         }
 
         return $value;

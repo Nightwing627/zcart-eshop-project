@@ -87,6 +87,16 @@
 							@include('admin.partials._reply_conversations')
 				        @endforeach
 			        @endif
+
+			        <hr/>
+					<span class="pull-right">
+						<a href="{{ route('admin.support.ticket.reply', $ticket) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.reply') }}</a>
+						{!! Form::open(['route' => ['admin.support.ticket.archive', $ticket], 'method' => 'delete', 'class' => 'inline']) !!}
+							<button class="confirm btn btn-danger" type="submit"><i class="fa fa-archive"></i> {{ trans('app.archive') }}</button>
+						{!! Form::close() !!}
+					</span>
+					<div class="spacer50"></div>
+
 			  	</div>
 
 			  	<div class="col-md-3">

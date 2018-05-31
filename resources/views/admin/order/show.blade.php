@@ -39,10 +39,10 @@
                         <td>
                           @if($item->image)
                             <img src="{{ get_storage_file_url($item->image->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
-                          @elseif($item->product->featuredImage)
+                          @elseif(optional($item->product)->featuredImage)
                             <img src="{{ get_storage_file_url($item->product->featuredImage->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
                           @else
-                            <img src="{{ get_storage_file_url(optional($item->product->image)->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
+                            <img src="{{ get_storage_file_url(optional(optional($item->product)->image)->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
                           @endif
                         </td>
                         <td class="nopadding-right" width="55%">
@@ -239,14 +239,19 @@
             @endif
 
             <span class="admin-user-widget-title indent5">
-              {{ $order->customer->getName() }}
+              @if(config('system_settings.vendor_can_view_customer_info'))
+                <a href="{{ route('admin.admin.customer.show', $order->customer->id) }}" class="ajax-modal-btn">
+                  {{ $order->customer->getName() }}
+                </a>
+              @else
+                {{ $order->customer->getName() }}
+              @endif
             </span>
           </p>
 
           <span class="admin-user-widget-text text-muted">
               {{ trans('app.email') . ': ' . $order->customer->email }}
           </span>
-          <a href="{{ route('admin.admin.customer.show', $order->customer->id) }}" class="ajax-modal-btn btn btn-default btn-xs">{{ trans('app.view_detail') }}</a>
 
           <fieldset><legend>{{ strtoupper(trans('app.shipping_address')) }}</legend></fieldset>
           <address>

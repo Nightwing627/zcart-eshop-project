@@ -244,7 +244,7 @@
 					    <div class="tab-pane active" id="orders_tab">
 				            <div class="box-body nopadding">
 								<div class="table-responsive">
-									<table class="table no-margin">
+									<table class="table no-margin table-condensed">
 										<thead>
 											<tr>
 												<th>{{ trans('app.order_number') }}</th>
@@ -310,7 +310,7 @@
 					    <div class="tab-pane" id="inventory_tab">
 				            <div class="box-body nopadding">
 								<div class="table-responsive">
-									<table class="table no-margin">
+									<table class="table no-margin table-condensed">
 										<thead>
 											<tr>
 												<th>{{ trans('app.image') }}</th>
@@ -373,7 +373,7 @@
 					    <div class="tab-pane" id="low_stock_tab">
 				            <div class="box-body nopadding">
 								<div class="table-responsive">
-									<table class="table no-margin">
+									<table class="table no-margin table-condensed">
 										<thead>
 											<tr>
 												<th>{{ trans('app.image') }}</th>
@@ -493,6 +493,10 @@
 						    </div>
 			        	</div>
 						<div class="box-footer">
+	                		<a href="{{ route('admin.account.billing') }}" type="button" class="btn btn-flat btn-default">
+		                		<i class="fa fa-leaf"></i> {{ trans('app.choose_plan') }}
+		                	</a>
+
 							<div class="box-tools pull-right">
 		                		<a href="{{ route('admin.dashboard.config.toggle', 'upgrade_plan_notice') }}" type="button" class="btn btn-box-tool toggle-widget toggle-confirm">
 			                		<i class="fa fa-trash" data-toggle="tooltip" data-placement="left" title="{{ trans('app.never_show_this') }}"></i>
@@ -548,8 +552,7 @@
 	        <!-- PRODUCT LIST -->
 	        <div class="box box-primary">
 	            <div class="box-header with-border">
-	              <h3 class="box-title"><i class="icon ion-md-rocket"></i> {{ trans('app.top_selling_items') }}</h3>
-
+	              	<h3 class="box-title"><i class="icon ion-md-rocket"></i> {{ trans('app.top_selling_items') }}</h3>
 	              	<div class="box-tools pull-right">
 	                	<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	                	<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -557,22 +560,41 @@
 	            </div>
 	            <!-- /.box-header -->
 	            <div class="box-body">
-	              	<ul class="products-list product-list-in-box">
-		                @foreach($top_listings as $item)
-			                <li class="item">
-			                  <div class="product-img">
-			                    <img src="http://placehold.it/50" alt="Product Image">
-			                  </div>
-			                  <div class="product-info">
-			                    <a href="javascript::;" class="product-title">Samsung TV
-			                      <span class="label label-warning pull-right">$1800</span></a>
-			                        <span class="product-description">
-			                          Samsung 32" 1080p 60Hz LED Smart HDTV.
-			                        </span>
-			                  </div>
-			                </li>
-		                @endforeach
-	              	</ul>
+	                <div class="table-responsive">
+	                  	<table class="table no-margin table-condensed">
+	                      	<thead>
+	                        	<tr class="text-muted">
+	                          		<th width="60px">&nbsp;</th>
+	                          		<th>{{ trans('app.inventory') }}</th>
+	                          		<th width="8%">{{ trans('app.sold') }}</th>
+	                        	</tr>
+	                      	</thead>
+	                      	<tbody>
+				                @foreach($top_listings as $inventory)
+									<tr>
+										<td>
+											<img src="{{ get_storage_file_url(optional($inventory->image)->path, 'small') }}" class="img-md" alt="{{ trans('app.image') }}">
+										</td>
+										<td>
+				                            <h4 class="nopadding">
+				                            	<small>{{ trans('app.sku') . ': ' }}</small>
+				                                @can('view', $inventory)
+				                                    <a href="{{ route('admin.stock.inventory.show', $inventory->id) }}" class="ajax-modal-btn modal-btn">{{ $inventory->sku }}</a>
+				                                @else
+				                                  {{ $inventory->sku }}
+				                                @endcan
+				                            </h4>
+
+				                        	<span class="text-muted">
+				                          		{{ $inventory->name }}
+				                        	</span>
+										</td>
+										<td>{{ trans('app.sold_units', ['units' => $inventory->sold_qtt]) }}</td>
+									</tr>
+				                @endforeach
+	                      	</tbody>
+	                  	</table>
+	              	</div>
 	            </div>
 	            <!-- /.box-body -->
 	            <div class="box-footer text-center">
@@ -583,11 +605,6 @@
 	            <!-- /.box-footer -->
 	        </div>
 	        <!-- /.box -->
-
-			<span class="spacer20"></span>
-			<a href="{{ route('admin.support.ticket.index') }}" class="btn btn-default">View Tickets</a>
-			<a href="{{ route('admin.support.ticket.create') }}" class="ajax-modal-btn btn btn-default">Submit a Ticket</a>
-			<span class="spacer10"></span>
 	    </div>
       	<!-- /.col-*-* -->
     </div>

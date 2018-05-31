@@ -4,7 +4,14 @@
 	<img src="{{ get_storage_file_url(optional($product->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 @endif
 <p class="indent10">
-	{{ $product->name }}
+	@can('view', $product)
+		<a href="{{ route('admin.catalog.product.show', $product->id) }}" class="ajax-modal-btn">
+			{{ $product->name }}
+		</a>
+	@else
+		{{ $product->name }}
+	@endcan
+
 	@unless($product->active)
         <span class="label label-default indent10">{{ trans('app.inactive') }}</span>
     @endunless

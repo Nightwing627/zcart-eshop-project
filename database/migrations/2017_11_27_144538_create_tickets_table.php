@@ -31,6 +31,7 @@ class CreateTicketsTable extends Migration
             $table->integer('status')->unsigned()->default(1);
             $table->integer('priority')->unsigned()->default(1);
             // $table->enum('priority', ['Low', 'Medium', 'High', 'Critical'])->default('Low');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');

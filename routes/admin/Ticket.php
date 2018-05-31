@@ -1,5 +1,7 @@
 <?php
 	// Support Tickets
+	Route::delete('ticket/{ticket}/archive', 'TicketController@archive')->name('ticket.archive'); // ticket move to trash
+
     Route::get('ticket/{ticket}/reply', 'TicketController@reply')->name('ticket.reply');
 
     Route::post('ticket/{ticket}/storeReply', 'TicketController@storeReply')->name('ticket.storeReply');
@@ -13,4 +15,4 @@
     // Route::get('ticket/search/{text}', 'TicketController@search')->name('ticket.search');
     // Route::post('ticket/{ticket}/comments', 'CommentsController@store')->name('comments.store');
 
-	Route::resource('ticket', 'TicketController', ['except' => ['destroy']]);
+	Route::resource('ticket', 'TicketController', ['only' => ['index', 'show', 'edit', 'update']]);

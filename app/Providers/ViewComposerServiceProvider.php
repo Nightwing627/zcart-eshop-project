@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Auth;
+use App\Ticket;
 use App\Config;
 use App\Inventory;
 use App\PaymentMethod;
@@ -39,7 +40,9 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeAttributeValueForm();
 
-        $this->composeBillingForm();
+        $this->composeBillingSection();
+
+        $this->composeTicketSection();
 
         $this->composeBlogForm();
 
@@ -458,7 +461,7 @@ class ViewComposerServiceProvider extends ServiceProvider
     /**
      * compose partial view of Billing form
      */
-    private function composeBillingForm()
+    private function composeBillingSection()
     {
         View::composer(
 
@@ -469,6 +472,24 @@ class ViewComposerServiceProvider extends ServiceProvider
                 $view->with('plans', \DB::table('subscription_plans')->where('deleted_at', Null)->orderBy('order', 'asc')->select( 'plan_id', 'name', 'cost')->get());
                 $view->with('current_plan', Auth::user()->getCurrentPlan());
                 $view->with('billable', Auth::user()->shop);
+            }
+        );
+    }
+
+    /**
+     * compose partial view of Billing form
+     */
+    private function composeTicketSection()
+    {
+        View::composer(
+
+            'admin.account._ticket',
+
+            function($view)
+            {
+                $view->with([
+                    'tickets' => Ticket::createdByMe()->withCount(['replies','attachments'])->orderBy('status', 'asc')->get(),
+                ]);
             }
         );
     }
@@ -649,7 +670,7 @@ class ViewComposerServiceProvider extends ServiceProvider
     {
         View::composer(
 
-            'admin.ticket._create',
+            'admin.account._create_ticket',
 
             function($view)
             {
@@ -798,12 +819,6 @@ class ViewComposerServiceProvider extends ServiceProvider
                         'open_tickets'               => ListHelper::open_tickets(),
 
                     ]);
-                    // $config = Config::findOrFail(auth()->user()->merchantId());
-                    // $view->with('taxes', ListHelper::taxes());
-                    // $view->with('suppliers', ListHelper::suppliers());
-                    // $view->with('warehouses', ListHelper::warehouses());
-                    // $view->with('packagings', ListHelper::packagings());
-                    // $view->with('payment_methods', optional($config->paymentMethods)->pluck('name', 'id'));
                 });
     }
 
@@ -818,11 +833,6 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                 function($view)
                 {
-                    // $top_listings = Auth::user()->shop->inventories()->where(function($q){
-
-                    // });
-                    // $top_listings = ListHelper::top_listing_items();
-                    // echo "<pre>"; print_r($top_listings); echo "</pre>"; exit();
                     // Charts
                     $days = config('charts.latest_sales.days');
                     $salesData = CharttHelper::SalesOfLast($days);

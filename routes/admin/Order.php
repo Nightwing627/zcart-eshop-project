@@ -13,4 +13,4 @@
 
 	Route::put('order/{order}/togglePaymentStatus', 'OrderController@togglePaymentStatus')->name('order.togglePaymentStatus');
 
-	Route::resource('order', 'OrderController', ['except' => 'update']);
+	Route::resource('order', 'OrderController', ['except' => ['update','destroy']]);

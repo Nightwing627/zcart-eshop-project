@@ -40,9 +40,9 @@
 								<tr>
 									<td>
 									  	@if($inventory->image)
-											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 										@else
-											<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+											<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 										@endif
 									</td>
 									<td>{{ $inventory->sku }}</td>
@@ -114,9 +114,9 @@
 								<tr>
 									<td>
 									  	@if($inventory->image)
-											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 										@else
-											<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+											<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 										@endif
 									</td>
 									<td>{{ $inventory->sku }}</td>
@@ -178,9 +178,9 @@
 								<tr>
 									<td>
 									  	@if($inventory->image)
-											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 										@else
-											<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+											<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 										@endif
 									</td>
 									<td>{{ $inventory->sku }}</td>
@@ -262,9 +262,9 @@
 					<tr>
 						<td>
 						  	@if($trash->image)
-								<img src="{{ get_storage_file_url($trash->image->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<img src="{{ get_storage_file_url($trash->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 							@else
-								<img src="{{ get_storage_file_url(optional($trash->product->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<img src="{{ get_storage_file_url(optional($trash->product->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 							@endif
 						</td>
 						<td>{{ $trash->sku }}</td>

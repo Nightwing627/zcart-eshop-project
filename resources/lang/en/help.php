@@ -101,6 +101,8 @@ return [
 
     'allow_guest_checkout' => 'This will allow customers to checkout without registering on the site.',
 
+    'vendor_can_view_customer_info' => 'This will allow vendors to see customer\'s detail informations on the order page. Otherwise the name, email address and billing/shipping addresses will be visible.',
+
     'system_pagination' => 'Set the pagination value for the data tables on the admin panel.',
 
     'subscription_name' => 'Give a meaningful name to the subscription plan.',

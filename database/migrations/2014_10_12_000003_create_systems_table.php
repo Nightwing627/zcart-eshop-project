@@ -22,6 +22,7 @@ class CreateSystemsTable extends Migration
             $table->string('email')->nullable(); //Notifications, supports and other alert send to this email
             $table->integer('timezone_id')->default(35);
             $table->integer('currency_id')->default(148);
+            $table->boolean('vendor_can_view_customer_info')->nullable()->default(false);
 
             // Reporting
             $table->boolean('google_analytic_report')->nullable()->default(false);

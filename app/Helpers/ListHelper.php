@@ -463,28 +463,15 @@ class ListHelper
      */
     public static function top_listing_items()
     {
-        return [];
-
-        return $this->belongsToMany('Part', 'project_part', 'project_id', 'part_id')
-        ->selectRaw('parts.*, sum(project_part.count) as pivot_count')
-        ->withTimestamps()
-        ->groupBy('project_part.pivot_part_id');
-
-        // return \DB::table('order_items')
-        //         ->whereDate('created_at', '>=', \Carbon\Carbon::today()->subMonths(3))
-        //         ->select('inventory_id', \DB::raw('sum(quantity) as sale_count'))
-        //         ->groupBy('inventory_id')
-        //         ->orderBy('sale_count', 'desc')
-        //         ->limit(5)->get();;
-
-        // return \DB::raw('SELECT TOP(5) inventory_id, SUM(quantity) AS TotalQuantity
-        //                 FROM order_items
-        //                 GROUP BY inventory_id
-        //                 ORDER BY SUM(quantity) DESC');
-
-        return Order::mine()->select('id')->with('inventories')
-                ->limit(5)
-                ->get()->toArray();
+        return Inventory::where('inventories.shop_id', Auth::user()->shop_id)->with('image')
+                    ->select(
+                        'inventories.id','inventories.sku','products.name','inventories.product_id',
+                        \DB::raw('SUM(order_items.quantity) as sold_qtt')
+                    )
+                    ->join('products', 'inventories.product_id', 'products.id')
+                    ->join('order_items', 'inventories.id', 'order_items.inventory_id')
+                    ->groupBy('inventory_id')
+                    ->get();
     }
 
     /**
@@ -506,7 +493,9 @@ class ListHelper
      */
     public static function orders()
     {
-        return \DB::table('orders')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->orderBy('order_number', 'asc')->pluck('order_number', 'id')->toArray();
+        return Order::mine()->orderBy('order_number', 'asc')->pluck('order_number', 'id')->toArray();
+
+        // return \DB::table('orders')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->orderBy('order_number', 'asc')->pluck('order_number', 'id')->toArray();
     }
 
     /**

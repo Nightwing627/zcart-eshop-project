@@ -44,21 +44,6 @@ class EloquentTicket extends EloquentRepository implements BaseRepository, Ticke
         return $this->model->assignedToMe()->with('user', 'shop')->withCount('replies')->get();
     }
 
-    public function createdByMe()
-    {
-        return $this->model->createdByMe()->with('user', 'shop')->withCount('replies')->get();
-    }
-
-    public function store(Request $request)
-    {
-        $ticket = $this->model->create($request->all());
-
-        if ($request->hasFile('attachments'))
-            $ticket->saveAttachments($request->file('attachments'));
-
-        return $ticket;
-    }
-
     public function show($id)
     {
         return $this->model->with(['replies' => function($query){

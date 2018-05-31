@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\System;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
-use App\Events\Ticket\TicketCreated;
 use App\Events\Ticket\TicketUpdated;
 use App\Events\Ticket\TicketReplied;
 use App\Events\Ticket\TicketAssigned;
 use App\Repositories\Ticket\TicketRepository;
 use App\Http\Requests\Validations\ReplyTicketRequest;
-use App\Http\Requests\Validations\CreateTicketRequest;
 use App\Http\Requests\Validations\UpdateTicketRequest;
-use App\Notifications\SuperAdmin\TicketCreated as TicketCreatedNotification;
 
 class TicketController extends Controller
 {
@@ -45,43 +41,9 @@ class TicketController extends Controller
 
         $closed = $this->ticket->closed();
 
-        $myTickets = $this->ticket->createdByMe();
-
         $assigned = $this->ticket->assignedToMe();
 
-        return view('admin.ticket.index', compact('tickets', 'assigned', 'myTickets', 'closed'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('admin.ticket._create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CreateTicketRequest $request)
-    {
-        $ticket = $this->ticket->store($request);
-
-        // Send notification to Admin
-        if(config('system_settings.notify_new_ticket')){
-            $system = System::orderBy('id', 'asc')->first();
-
-            $system->superAdmin()->notify(new TicketCreatedNotification($ticket));
-        }
-
-        event(new TicketCreated($ticket));
-
-        return back()->with('success', trans('messages.created', ['model' => $this->model]));
+        return view('admin.ticket.index', compact('tickets', 'assigned', 'closed'));
     }
 
     /**
@@ -198,5 +160,19 @@ class TicketController extends Controller
         event(new TicketUpdated($ticket));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Order  $order
+     * @return \Illuminate\Http\Response
+     */
+    public function archive(Request $request, $id)
+    {
+        $this->ticket->trash($id);
+
+        return redirect()->route('admin.support.ticket.index')->with('success', trans('messages.archived', ['model' => $this->model]));
     }
 }

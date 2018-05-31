@@ -14,8 +14,6 @@ interface TicketRepository{
 
     public function assignedToMe();
 
-    public function createdByMe();
-
     public function storeReply(Request $request, $ticket);
 
     public function assign(Request $request, $ticket);

@@ -1,7 +1,7 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use Yajra\Datatables\Datatables;

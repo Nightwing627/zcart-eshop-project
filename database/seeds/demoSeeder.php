@@ -95,7 +95,17 @@ class demoSeeder extends Seeder
                 $customer->addresses()->save(factory(App\Address::class)->make(['address_type' => 'Shipping']));
             });
 
-        factory(App\Shop::class, $this->longCount)
+        factory(App\Manufacturer::class, $this->count)->create();
+
+        factory(App\Supplier::class, $this->longCount)
+            ->create()
+            ->each(function($supplier){
+                $supplier->addresses()->save(factory(App\Address::class)->make(['address_title' => $supplier->name, 'address_type' => 'Primary']));
+            });
+
+        factory(App\Product::class, $this->longCount)->create();
+
+        factory(App\Shop::class, $this->count)
             ->create()
             ->each(function($shop){
                 $shop->addresses()->save(factory(App\Address::class)->make(['address_title' => $shop->name, 'address_type' => 'Primary']));
@@ -324,17 +334,7 @@ class demoSeeder extends Seeder
 
         factory(App\Category::class, $this->count)->create();
 
-        factory(App\Supplier::class, $this->longCount)
-            ->create()
-            ->each(function($supplier){
-                $supplier->addresses()->save(factory(App\Address::class)->make(['address_title' => $supplier->name, 'address_type' => 'Primary']));
-            });
-
         factory(App\AttributeValue::class, $this->longLongCount)->create();
-
-        factory(App\Manufacturer::class, $this->count)->create();
-
-        factory(App\Product::class, $this->longCount)->create();
 
         factory(App\Warehouse::class, $this->longCount)
             ->create()
@@ -372,16 +372,37 @@ class demoSeeder extends Seeder
 
         factory(App\ShippingRate::class, $this->longLongCount)->create();
 
-        // factory(App\Address::class, $this->longLongCount)->create();
-
         //PIVOT TABLE SEEDERS
 
         $users      = \DB::table('users')->pluck('id')->toArray();
         $products   = \DB::table('products')->pluck('id')->toArray();
+        $shops      = \DB::table('shops')->pluck('id')->toArray();
         $warehouses = \DB::table('warehouses')->pluck('id')->toArray();
         $categories = \DB::table('categories')->pluck('id')->toArray();
         $category_sub_groups = \DB::table('category_sub_groups')->pluck('id')->toArray();
         $attributes   = \DB::table('attributes')->pluck('id')->toArray();
+
+
+        // order_items
+        foreach ((range(1, $this->longLongCount)) as $index) {
+            $shop_id = $shops[array_rand($shops)];
+            $orders = \DB::table('orders')->where('shop_id', $shop_id)->pluck('id')->toArray();
+            $inventories = \DB::table('inventories')->where('shop_id', $shop_id)->pluck('id')->toArray();
+
+            if(empty($orders) || empty($inventories)) continue;
+
+            DB::table('order_items')->insert(
+                [
+                    'order_id' => $orders[array_rand($orders)],
+                    'inventory_id' => $inventories[array_rand($inventories)],
+                    'item_description' => 'Demo product detail ' . rand(1,9999),
+                    'quantity' => rand(1,5),
+                    'unit_price' => rand(1,500),
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ]
+            );
+        }
 
         // category_category_sub_group
         foreach ((range(1, $this->longLongCount)) as $index) {
@@ -418,7 +439,6 @@ class demoSeeder extends Seeder
                 ]
             );
         }
-
 
         // foreach ((range(1, 30)) as $index) {
         //     DB::table('taggables')->insert(
