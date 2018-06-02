@@ -37,7 +37,7 @@
 						</thead>
 						<tbody>
 							@foreach($inventories->where('active', 1) as $inventory )
-								<tr>
+								<tr class="{{ $inventory->isLowQtt() ? 'danger' : '' }}">
 									<td>
 									  	@if($inventory->image)
 											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
@@ -96,7 +96,7 @@
 					</table>
 				</div>
 
-			    <div class="tab-pane {{ Request::input('tab') == 'unpaid' ? 'active' : '' }}" id="inactive_listings_tab">
+			    <div class="tab-pane {{ Request::input('tab') == 'inactive_listings' ? 'active' : '' }}" id="inactive_listings_tab">
 					<table class="table table-hover table-2nd-short">
 						<thead>
 							<tr>
@@ -111,7 +111,7 @@
 						</thead>
 						<tbody>
 							@foreach($inventories->where('active', 0) as $inventory )
-								<tr>
+								<tr class="{{ $inventory->isLowQtt() ? 'danger' : '' }}">
 									<td>
 									  	@if($inventory->image)
 											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">

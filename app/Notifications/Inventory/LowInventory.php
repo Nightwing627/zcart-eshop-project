@@ -1,30 +1,24 @@
 <?php
 
-namespace App\Notifications\Shop;
+namespace App\Notifications\Inventory;
 
-use App\Shop;
-use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ShopConfigUpdated extends Notification
+class LowInventory extends Notification
 {
     use Queueable;
-
-    public $shop;
-    public $user;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Shop $shop, User $user)
+    public function __construct()
     {
-        $this->shop = $shop;
-        $this->user = $user;
+        //
     }
 
     /**
@@ -35,7 +29,7 @@ class ShopConfigUpdated extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail'];
     }
 
     /**
@@ -47,8 +41,8 @@ class ShopConfigUpdated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.shop_config_updated.subject') )
-                    ->markdown('admin.mail.shop.config_updated', ['url' => route('login'), 'shop' => $this->shop]);
+                    ->subject( trans('notifications.low_inventory_notification.subject') )
+                    ->markdown('admin.mail.inventory.low_inventory_notification', ['url' => url('admin/stock/inventory')]);
     }
 
     /**
@@ -60,8 +54,7 @@ class ShopConfigUpdated extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user' => $this->user->getName(),
-            'name' => $this->shop->name,
+            //
         ];
     }
 }

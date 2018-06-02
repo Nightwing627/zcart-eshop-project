@@ -325,7 +325,7 @@
 											@forelse($latest_stocks as $inventory)
 												<tr>
 													<td>
-														<img src="{{ get_storage_file_url(optional($inventory->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+														<img src="{{ get_storage_file_url(optional($inventory->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 													</td>
 													<td>{{ $inventory->sku }}</td>
 													<td>{{ $inventory->product->name }}</td>
@@ -388,7 +388,7 @@
 											@forelse($low_qtt_stocks as $inventory)
 												<tr>
 													<td>
-														<img src="{{ get_storage_file_url(optional($inventory->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+														<img src="{{ get_storage_file_url(optional($inventory->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 													</td>
 													<td>{{ $inventory->sku }}</td>
 													<td>{{ $inventory->product->name }}</td>

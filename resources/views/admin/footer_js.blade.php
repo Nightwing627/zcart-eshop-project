@@ -546,33 +546,19 @@
 		});
 		//DateTimepicker
 		$(".datetimepicker").datetimepicker({
+		    format: 'YYYY-MM-DD hh:mm a',
 	  	    icons:{
 	  	        time: 'glyphicon glyphicon-time',
 	  	        date: 'glyphicon glyphicon-calendar',
 	  	        previous: 'glyphicon glyphicon-chevron-left',
 	  	        next: 'glyphicon glyphicon-chevron-right',
 	  	        today: 'glyphicon glyphicon-screenshot',
-	  	        up: 'fa fa-user',
+	  	        up: 'glyphicon glyphicon-chevron-up',
 	  	        down: 'glyphicon glyphicon-chevron-down',
 	  	        clear: 'glyphicon glyphicon-trash',
 	  	        close: 'glyphicon glyphicon-remove'
 	  	    }
 		});
-
-	  	// $(".datetimepicker").datetimepicker({
-	  	//     format: 'YYYY-MM-DD hh:mm A',
-	  	//     icons:{
-	  	//         time: 'glyphicon glyphicon-time',
-	  	//         date: 'glyphicon glyphicon-calendar',
-	  	//         up: 'fa fa-arrow-up',
-	  	//         down: 'fa fa-arrow-down',
-	  	//         previous: 'glyphicon glyphicon-chevron-left',
-	  	//         next: 'glyphicon glyphicon-chevron-right',
-	  	//         today: 'glyphicon glyphicon-screenshot',
-	  	//         clear: 'glyphicon glyphicon-trash',
-	  	//         close: 'glyphicon glyphicon-remove'
-	  	//     }
-	  	// });
 
 		//Colorpicker
 		$(".my-colorpicker1").colorpicker();

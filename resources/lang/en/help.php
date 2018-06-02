@@ -149,13 +149,13 @@ return [
 
     'config_address_geocode' => 'Generate geocode(latitude and longitude) when saving a new address. It is importand if you wa to show the location on the map.',
 
-    'system_date_format' => 'Set the date format for the marketplace. Example: 2018-05-13, 05-13-2018, 13-05-2018',
+    // 'system_date_format' => 'Set the date format for the marketplace. Example: 2018-05-13, 05-13-2018, 13-05-2018',
 
-    'config_date_separator' => 'Example: 2018-05-13, 2018.05.13, 2018/05/13',
+    // 'config_date_separator' => 'Example: 2018-05-13, 2018.05.13, 2018/05/13',
 
-    'system_time_format' => 'Set the time format for the marketplace. Example: 01:00pm or 13:00',
+    // 'system_time_format' => 'Set the time format for the marketplace. Example: 01:00pm or 13:00',
 
-    'config_time_separator' => ' Example: 07:00am or 07.00am',
+    // 'config_time_separator' => ' Example: 07:00am or 07.00am',
 
     'config_show_currency_symbol' => 'Do you want to show currency symbol when reprenting a price?  Example: $123',
 
@@ -497,7 +497,7 @@ return [
 
     'notify_new_message' => 'Send me a notification when a new message arrived',
 
-    'notify_alert_quantity' => 'Send me a notification when any item on my inventory reach the aler quanlity value',
+    'notify_alert_quantity' => 'Send me a notification when any item on my inventory reach the alert quantity level',
 
     'notify_inventory_out' => 'Send me a notification when any item on my inventory stock out',
 

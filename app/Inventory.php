@@ -197,7 +197,7 @@ class Inventory extends Model
      */
     public function setAvailableFromAttribute($value)
     {
-        if($value) $this->attributes['offer_start'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+        if($value) $this->attributes['available_from'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
     }
 
     /**
@@ -214,6 +214,13 @@ class Inventory extends Model
     public function setOfferEndAttribute($value)
     {
         if($value) $this->attributes['offer_end'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+    }
+
+    public function isLowQtt()
+    {
+        $alert_quantity = config('shop_settings.alert_quantity') ?: 0;
+
+        return $this->stock_quantity <= $alert_quantity;
     }
 
     /**

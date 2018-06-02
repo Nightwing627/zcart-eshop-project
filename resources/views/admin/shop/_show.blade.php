@@ -76,7 +76,6 @@
 										<td style="width: 75%;">{{ $shop->external_url }}</td>
 									</tr>
 								@endif
-
 							</table>
 						</div>
 					</div>
@@ -103,8 +102,12 @@
 							@endif
 
 							<tr>
-								<th class="text-right">{{ trans('app.google_analytics_id') }}:</th>
-								<td style="width: 75%;">{{ $shop->config->google_analytics_id }}</td>
+								<th class="text-right">{{ trans('app.payment_methods') }}:</th>
+								<td style="width: 75%;">
+									@foreach($shop->config->paymentMethods as $paymentMethod)
+										<span class="label label-outline"> {{ $paymentMethod->name }}</span>
+									@endforeach
+								</td>
 							</tr>
 
 							<tr>

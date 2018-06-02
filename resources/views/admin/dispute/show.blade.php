@@ -136,12 +136,12 @@
 					</p>
 
 					<hr/>
-					<div class="form-group">
-						<p class="text-muted">
+					<div class="form-group text-muted">
+						<p>
 						  	<label>{{ trans('app.created_at') }}</label>
 							{{ $dispute->created_at->diffForHumans() }}
 						</p>
-						<p class="text-muted">
+						<p>
 						  	<label>{{ trans('app.updated_at') }}</label>
 							{{ $dispute->updated_at->diffForHumans() }}
 						</p>

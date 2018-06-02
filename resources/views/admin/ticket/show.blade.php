@@ -24,11 +24,14 @@
 					<div class="form-group">
 					  	<label>{{ trans('app.merchant') }}</label>
 						<p>
-							<span class="lead"> {{ $ticket->shop->name }} </span>
-							<br/>
-							@can('view', $ticket->shop)
-				            	<a href="{{ route('admin.vendor.shop.show', $ticket->shop_id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
-							@endcan
+							<span class="lead">
+								@can('view', $ticket->shop)
+					            	<a href="{{ route('admin.vendor.shop.show', $ticket->shop_id) }}" class="ajax-modal-btn small">{{ $ticket->shop->name }}</a>
+								@else
+									{{ $ticket->shop->name }}
+								@endcan
+							</span>
+							<div class="spacer5"></div>
 
 							<img src="{{ get_storage_file_url(optional($ticket->shop->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.logo') }}">
 						</p>
@@ -39,23 +42,24 @@
 				            @else
 			            		<img src="{{ get_gravatar_url($ticket->user->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 				            @endif
-							<span class="lead indent5">{{ $ticket->user->getName() }}</span>
-							<br/>
-							@can('view', $ticket->user)
-					            <a href="{{ route('admin.admin.user.show', $ticket->user_id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
-							@endcan
+							<span class="lead indent5">
+								@can('view', $ticket->user)
+						            <a href="{{ route('admin.admin.user.show', $ticket->user_id) }}" class="ajax-modal-btn small">{{ $ticket->user->getName() }}</a>
+								@else
+									{{ $ticket->user->getName() }}
+								@endcan
+							</span>
 				        </p>
 
 						<hr/>
 
-						<p>
+						<div class="form-group text-muted">
 						  	<label>{{ trans('app.created_at') }}</label>
 							{{ $ticket->created_at->diffForHumans() }}
-						</p>
-						<p>
+							<span class="spacer10"></span>
 						  	<label>{{ trans('app.updated_at') }}</label>
 							{{ $ticket->updated_at->diffForHumans() }}
-						</p>
+						</div>
 					</div>
 			  	</div>
 

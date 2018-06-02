@@ -150,7 +150,7 @@
           <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.available_from') }}"></i>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-            {!! Form::text('available_from', null, ['class' => 'form-control datetimepicker', 'placeholder' => trans('app.placeholder.available_from')]) !!}
+            {!! Form::text('available_from', null, ['class' => 'datetimepicker form-control', 'placeholder' => trans('app.placeholder.available_from')]) !!}
           </div>
         </div>
 

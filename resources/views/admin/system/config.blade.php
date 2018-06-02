@@ -335,7 +335,7 @@
 			    	<div class="row">
 				        {!! Form::model($system, ['method' => 'PUT', 'route' => ['admin.setting.system.update'], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
 					    	<div class="col-sm-6">
-					    		<fieldset>
+					    		{{-- <fieldset>
 					    			<legend>{{ trans('app.config_date_and_time') }}</legend>
 									<div class="form-group">
 								        {!! Form::label('date_format', '*' . trans('app.date_format'). ':', ['class' => 'with-help col-sm-7 control-label']) !!}
@@ -388,7 +388,7 @@
 											@endif
 									  	</div>
 									</div>
-					    		</fieldset>
+					    		</fieldset> --}}
 
 					    		<fieldset>
 					    			<legend>{{ trans('app.config_currency') }}</legend>

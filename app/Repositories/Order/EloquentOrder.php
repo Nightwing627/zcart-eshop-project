@@ -137,17 +137,19 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
                 'unit_price' => $item->unit_price,
             ];
 
-            // adjust stock qtt based on th order
+            // adjust stock qtt based on tth order
             if($order->inventories->contains($id)){
                 $old = $order->inventories()->where('inventory_id', $id)->first();
                 $old_qtt = $old->pivot->quantity;
 
                 if ($old_qtt > $item->quantity){
                     Inventory::find($id)->increment('stock_quantity', $old_qtt - $item->quantity);
-                }else if($old_qtt < $item->quantity){
+                }
+                else if($old_qtt < $item->quantity){
                     Inventory::find($id)->decrement('stock_quantity', $item->quantity - $old_qtt);
                 }
-            }else{
+            }
+            else{
                 Inventory::find($id)->decrement('stock_quantity', $item->quantity);
             }
         }

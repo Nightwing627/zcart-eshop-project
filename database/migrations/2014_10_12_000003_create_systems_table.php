@@ -53,10 +53,10 @@ class CreateSystemsTable extends Migration
             $table->string('weight_unit')->default('g');
             $table->string('valume_unit')->default('liter');
 
-            $table->enum('date_format', ['YYYY-MM-DD', 'DD-MM-YYYY', 'MM-DD-YYYY'])->default('YYYY-MM-DD');
-            $table->enum('date_separator', ['.', '-', '/'])->default('-');
-            $table->enum('time_format', ['12h', '24h'])->default('12h');
-            $table->enum('time_separator', ['.', ':'])->default(':');
+            // $table->enum('date_format', ['YYYY-MM-DD', 'DD-MM-YYYY', 'MM-DD-YYYY'])->default('YYYY-MM-DD');
+            // $table->enum('date_separator', ['.', '-', '/'])->default('-');
+            // $table->enum('time_format', ['12h', '24h'])->default('12h');
+            // $table->enum('time_separator', ['.', ':'])->default(':');
 
             // Currency
             $table->enum('decimals', [2, 3, 4, 5, 6])->default(2);

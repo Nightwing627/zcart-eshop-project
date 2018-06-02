@@ -67,6 +67,7 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Order\OrderCreated' => [
             'App\Listeners\Order\NotifyCustomerOrderPlaced',
             'App\Listeners\Order\NotifyMerchantNewOrderPlaced',
+            'App\Listeners\Order\LowInventoryCheck',
         ],
         'App\Events\Order\OrderUpdated' => [
             'App\Listeners\Order\NotifyCustomerOrderUpdated',

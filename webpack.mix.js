@@ -46,7 +46,7 @@ mix.scripts([
 	   'resources/assets/plugins/datatables/dataTables.bootstrap.css',
 	   'resources/assets/plugins/datatables/buttons/buttons.dataTables.min.css',
 	   'resources/assets/plugins/datepicker/datepicker3.css',
-	   'resources/assets/plugins/datetimepicker/bootstrap-datetimepicker.min.css',
+	   'resources/assets/plugins/datetimepicker/bootstrap-datetimepicker.css',
 	   'resources/assets/plugins/bootstrap-select/bootstrap-select.css',
 	   'resources/assets/plugins/iCheck/flat/blue.css',
 	   'resources/assets/plugins/iCheck/flat/pink.css',

@@ -96,6 +96,17 @@ return [
         ],
     ],
 
+    // Inventory
+    'low_inventory_notification' => [
+        'subject' => 'Low inventory alert!',
+        'greeting' => 'Hello!',
+        'message' => 'One or more of your inventory items getting low. It time to add more inventory to keep the item live on the marketplace.',
+        'action' => [
+            'text' => 'Update Inventory',
+            'color' => 'blue',
+        ],
+    ],
+
     // Message Notifications
     'new_message' => [
         'subject' => ':subject',

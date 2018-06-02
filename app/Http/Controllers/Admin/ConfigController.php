@@ -92,7 +92,7 @@ class ConfigController extends Controller
         $this->authorize('update', $config); // Check permission
 
         if($config->update($request->all())){
-            event(new ConfigUpdated($config->shop));
+            event(new ConfigUpdated($config->shop, Auth::user()));
             return response("success", 200);
         }
 
@@ -115,7 +115,7 @@ class ConfigController extends Controller
         $config->$node = !$config->$node;
 
         if($config->save()){
-            event(new ConfigUpdated($config->shop));
+            event(new ConfigUpdated($config->shop, Auth::user()));
             return response("success", 200);
         }
 

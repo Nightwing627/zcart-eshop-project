@@ -23,7 +23,6 @@
 	                    <h5 class="description-header">{{ get_formated_currency(\App\Helpers\Statistics::total_spent($customer)) }}</h5>
 	                    <span class="description-text">{{ trans('app.spent') }}</span>
 	                  </div>
-	                  <!-- /.description-block -->
 	                </div>
 
 	                <div class="col-sm-4 border-right">
