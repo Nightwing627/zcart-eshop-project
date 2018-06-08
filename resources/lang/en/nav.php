@@ -15,6 +15,7 @@ return [
 
     'dashboard' => 'Dashboard',
     'admin' => 'Admin',
+    'announcements' => 'announcements',
     'users' => 'Users',
     'customers' => 'Customers',
     'currencies' => 'Currencies',

@@ -16,6 +16,7 @@ return [
     'canceled'          => 'Canceled!',
     'confirmed'         => 'Confirmed',
     'created'           => ':model has been created successfully!',
+    'imported'          => ':model has been imported successfully!',
     'sent'              => ':model has been sent successfully!',
     'updated'           => ':model has been updated successfully!',
     'trashed'           => ':model has been moved to trash!',
@@ -51,6 +52,8 @@ return [
     'freezed_model' => 'This record is freezed by the system config. The application need this value to run properly.',
     'email_verification_notice' => 'Your email address is not verified. Please verify to get full access! if you didn\'t got the verification email, you can resend again from your frofile page.',
     'theme_activated' => 'Theme :theme has been activated successfully!',
+    'the_ip_banned' => 'The IP address has been banned from the application.',
+    'the_ip_unbanned' => 'The IP address has been removed from blocklist.',
 
     'no_billing_info' => 'Please add billing information to continue.',
     'no_card_added' => 'Please add billing information to subscribe.',
@@ -143,8 +146,8 @@ return [
     'faqs' => 'Most Frequently Asked Questions',
     'how_the_marketplace_works' => 'It\'s Good To Know How The System Works, Before You Register',
     'merchant_benefits' => 'Selling online has never been easier.',
+    'import_ignored' => 'Some rows has been ignored! Please check the information and import again.',
 
-    'new_in_30_days' => ':new :model in 30 days',
     'unfulfilled_percents' => ':percent% of today\'s total orders',
     'last_30_days_percents' => ':percent% :state in 30 days',
     'stock_out_percents' => ':percent% of total :total items',

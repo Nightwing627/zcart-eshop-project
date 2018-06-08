@@ -3,12 +3,17 @@
     <div class="box">
       <div class="box-header with-border">
           <h3 class="box-title">{{ isset($product) ? trans('app.update_product') : trans('app.add_product') }}</h3>
+          <div class="box-tools pull-right">
+            @if(!isset($product))
+              <a href="{{ route('admin.catalog.product.upload') }}" class="ajax-modal-btn btn btn-default btn-flat">{{ trans('app.bulk_import') }}</a>
+            @endif
+          </div>
       </div> <!-- /.box-header -->
       <div class="box-body">
         <div class="row">
           <div class="col-md-9 nopadding-right">
             <div class="form-group">
-              {!! Form::label('name', trans('app.form.title').'*') !!}
+              {!! Form::label('name', trans('app.form.name').'*') !!}
               {!! Form::text('name', null, ['class' => 'form-control makeSlug', 'placeholder' => trans('app.placeholder.title'), 'required']) !!}
               <div class="help-block with-errors"></div>
             </div>
@@ -141,7 +146,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          {{-- <div class="form-group">
             <div class="input-group">
               {{ Form::hidden('downloadable', 0) }}
               {!! Form::checkbox('downloadable', null, null, ['class' => 'icheckbox_line']) !!}
@@ -150,7 +155,7 @@
                 <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.downloadable') }}"></i>
               </span>
             </div>
-          </div>
+          </div> --}}
 
           <div class="row">
             <div class="col-md-6 nopadding-right">

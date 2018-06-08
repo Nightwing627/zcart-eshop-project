@@ -13,7 +13,7 @@ class GoogleAnalytics
     {
         $response = Analytics::performQuery(
             $period,
-            'ga:users,ga:sessions,ga:pageviews',
+            'ga:users,ga:sessions,ga:pageviews,ga:sessionDuration,ga:bounces',
             ['dimensions' => 'ga:'.$dimension]
         );
 
@@ -27,6 +27,21 @@ class GoogleAnalytics
         });
     }
 
+    static function topDevice(Period $period): Collection
+    {
+        $data = Analytics::performQuery(
+            $period,
+            'ga:sessions',
+            ['dimensions'=>'ga:deviceCategory','sort'=>'-ga:sessions']);
+
+        return collect($data['rows'] ?? [])->map(function (array $dateRow) {
+            return [
+                'deviceCategory' =>  $dateRow[0],
+                'sessions' => (int) $dateRow[1],
+            ];
+        });
+    }
+
     static function country(Period $period): Collection
     {
         $country = Analytics::performQuery(
@@ -34,7 +49,7 @@ class GoogleAnalytics
             'ga:sessions',
             ['dimensions'=>'ga:country','sort'=>'-ga:sessions']);
 
-        $result= collect($country['rows'] ?? [])->map(function (array $dateRow) {
+        $result = collect($country['rows'] ?? [])->map(function (array $dateRow) {
             return [
                 'country' =>  $dateRow[0],
                 'sessions' => (int) $dateRow[1],
@@ -45,19 +60,4 @@ class GoogleAnalytics
         return $result;
     }
 
-    static function topbrowsers(Period $period): Collection
-    {
-        $analyticsData = Analytics::fetchTopBrowsers($period);
-        $array = $analyticsData->toArray();
-
-        foreach ($array as $k=>$v)
-        {
-            $array[$k] ['label'] = $array[$k] ['browser'];
-            unset($array[$k]['browser']);
-            $array[$k] ['value'] = $array[$k] ['sessions'];
-            unset($array[$k]['sessions']);
-            $array[$k]['color'] = $array[$k]['highlight'] = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-        }
-        return json_encode($array);
-    }
 }

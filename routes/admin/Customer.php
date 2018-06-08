@@ -7,6 +7,6 @@
 
 	Route::get('customer/{customer}/restore', 'CustomerController@restore')->name('customer.restore');
 
-	Route::get('customer/getCustomers', 'CustomerController@getCustomers')->name('customer.getMore');
+	Route::get('customer/getCustomers', 'CustomerController@getCustomers')->name('customer.getMore')->middleware('ajax');
 
 	Route::resource('customer', 'CustomerController');

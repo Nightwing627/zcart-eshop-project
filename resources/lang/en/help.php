@@ -512,4 +512,22 @@ return [
     'notify_new_disput' => 'Send me a notification when a customer submit a new dispute',
 
     'notify_when_dispute_appealed' => 'Send me a notification when a dispute has been appealed to review by marketplace team',
+
+    'download_product_template' => '<a href=":url">Download a sample CSV template</a> to see an example of the format required.',
+
+    'download_category_slugs' => '<a href=":url">Download category slugs</a> to get the correct category for your products.',
+
+    'first_row_as_header' => 'The first row is the header. <strong>Don\'t change</strong> this row.',
+
+    'user_category_slug' => 'Use category <strong>slug</strong> in category field.',
+
+    'invalid_rows_will_ignored' => 'Invalid rows will be <strong>ignored</strong>.',
+
+    'upload_20_rows' => 'Upload no more than <strong>20 rows</strong> per batch for better performance.',
+
+    'name_field_required' => 'Name field is required.',
+
+    'invalid_category' => 'Invalid category.',
+
+    'slug_already_exist' => 'The slug already in use.',
 ];

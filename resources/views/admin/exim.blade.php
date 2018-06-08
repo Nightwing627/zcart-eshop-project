@@ -3,7 +3,7 @@
     	{!! Form::open(['route' => 'admin.import', 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
         	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        	{{ trans('app.form.exim') }}
+        	{{ trans('app.import') }}
         </div>
         <div class="modal-body">
             <div class="row">

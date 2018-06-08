@@ -15,7 +15,7 @@ class DashboardSetup
      */
     public function handle($request, Closure $next)
     {
-        $dash = $request->user()->dashboard->toArray();
+        $dash = optional($request->user()->dashboard)->toArray();
 
         setDashboardConfig($dash);
 

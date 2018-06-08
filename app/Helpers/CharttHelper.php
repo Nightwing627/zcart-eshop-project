@@ -106,7 +106,17 @@ class CharttHelper
     {
         if(config('system_settings.google_analytic_report') && \App\SystemConfig::isGgoogleAnalyticConfigured()){
             //retrieve visitors and pageviews from GoogleAnalytic
-            return static::fetchVisitorsOfMonthsFromGoogle($months, $start);
+            $data = static::fetchVisitorsOfMonthsFromGoogle($months, $start);
+
+            $breackdown = config('charts.visitors.breakdown_last_days') > 0 ? config('charts.visitors.breakdown_last_days') : Null;
+            if($breackdown){
+                $analyticsData = static::fetchVisitorsOfDaysFromGoogle($breackdown);
+                $data['visits'] = array_merge($data['visits'], $analyticsData['visits']);
+                $data['sessions'] = array_merge($data['sessions'], $analyticsData['sessions']);
+                $data['page_views'] = array_merge($data['page_views'], $analyticsData['page_views']);
+            }
+
+            return $data;
         }
 
 		if(!$start)
@@ -222,7 +232,7 @@ class CharttHelper
     {
         //retrieve visitors and pageviews since the 6 months ago
         $analyticsData = GoogleAnalytics::fetchTotalVisitorsSessionsAndPageViews(Period::months($months-1));
-
+        // echo "<pre>"; print_r($analyticsData); echo "</pre>"; exit();
         if(!$start)
             $start = Carbon::now()->startOfMonth();
 
@@ -246,14 +256,6 @@ class CharttHelper
             'sessions' => array_values($sessions_data),
             'page_views' => array_values($views_data)
         ];
-
-        $breackdown = config('charts.visitors.breakdown_last_days') > 0 ? config('charts.visitors.breakdown_last_days') : Null;
-        if($breackdown){
-            $analyticsData = static::fetchVisitorsOfDaysFromGoogle($breackdown);
-            $data['visits'] = array_merge($data['visits'], $analyticsData['visits']);
-            $data['sessions'] = array_merge($data['sessions'], $analyticsData['sessions']);
-            $data['page_views'] = array_merge($data['page_views'], $analyticsData['page_views']);
-        }
 
         return $data;
     }
@@ -295,6 +297,49 @@ class CharttHelper
         ];
 
         return $data;
+    }
+
+    /**
+     * Return formated visitors data from Google analytic to make chart
+     *
+     * @param integer $period
+     * @return array
+     */
+    public static function topReferrers($period = 12, $start = Null)
+    {
+        return Analytics::fetchTopReferrers(Period::months($period));
+    }
+
+    /**
+     * Return formated visitors data from Google analytic to make chart
+     *
+     * @param integer $period
+     * @return array
+     */
+    public static function userTypes($period = 12, $start = Null)
+    {
+        return Analytics::fetchUserTypes(Period::months($period));
+    }
+
+    /**
+     * Return formated visitors data from Google analytic to make chart
+     *
+     * @param integer $period
+     * @return array
+     */
+    public static function topBrowsers($period = 12, $start = Null)
+    {
+        return Analytics::fetchTopBrowsers(Period::months($period));
+    }
+
+    public static function topDevice($period = 12)
+    {
+        return GoogleAnalytics::topDevice(Period::months($period));
+    }
+
+    public static function performQuery($period, string $metrics, array $others = [])
+    {
+        return Analytics::performQuery(Period::months($period), $metrics, $others);
     }
 
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Validations;
 
 use App\Http\Requests\Request;
 
-class ImportRequest extends Request
+class CreateAnnouncementRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,12 +13,7 @@ class ImportRequest extends Request
      */
     public function authorize()
     {
-        if($this->user()->isFromPlatform()){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return $this->user()->isAdmin();
     }
 
     /**
@@ -29,7 +24,9 @@ class ImportRequest extends Request
     public function rules()
     {
         return [
-            'csv_file' => 'required|file'
+            'body' => 'required',
+            'action_text' => 'required_with:action_url|max:255',
+            'action_url' => 'required_with:action_text',
         ];
     }
 }

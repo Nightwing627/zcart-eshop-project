@@ -9,8 +9,9 @@ use App\Shop;
 use App\Order;
 use App\Module;
 use App\Ticket;
-use App\Message;
 use App\Refund;
+use App\Visitor;
+use App\Message;
 use App\Product;
 use App\Dispute;
 use App\Customer;
@@ -120,7 +121,7 @@ class ListHelper
     }
 
     /**
-     * Get ssystem ettings.
+     * Get system ettings.
      *
      * @return array
      */
@@ -324,6 +325,11 @@ class ListHelper
         return \DB::table('faq_topics')->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
+    /**
+     * [open_tickets description]
+     *
+     * @return [type] [description]
+     */
     public static function open_tickets()
     {
         return Ticket::open()->orderBy('priority', 'desc')->with('category')->withCount('replies')
@@ -331,6 +337,11 @@ class ListHelper
                         ->get();
     }
 
+    /**
+     * [top_customers description]
+     *
+     * @return [type] [description]
+     */
     public static function top_customers()
     {
         return Customer::with('image', 'orders')->withCount('orders')
@@ -339,6 +350,11 @@ class ListHelper
                         ->get();
     }
 
+    /**
+     * [top_vendors description]
+     *
+     * @return [type] [description]
+     */
     public static function top_vendors()
     {
         return Shop::with('image', 'revenue')->withCount('inventories')

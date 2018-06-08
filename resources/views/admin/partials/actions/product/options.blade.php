@@ -2,7 +2,7 @@
 	<a href="{{ route('admin.catalog.product.show', $product->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 @endcan
 
-@unless($product->inventories_count > 0 || Auth::user()->isFromPlatform())
+@unless($product->inventories_count > 0 && ! Auth::user()->isFromPlatform())
 	@can('update', $product)
 		<a href="{{ route('admin.catalog.product.edit', $product->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 	@endcan

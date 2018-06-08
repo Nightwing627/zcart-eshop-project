@@ -190,7 +190,6 @@ return [
         App\Providers\ViewComposerServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
-        // Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -249,7 +248,6 @@ return [
         // 'Image' => 'Intervention\Image\Facades\Image',
         'Flash' => 'Laracasts\Flash\Flash',
         'Curl' => Ixudra\Curl\Facades\Curl::class,
-        // 'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],

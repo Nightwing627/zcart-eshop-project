@@ -41,12 +41,10 @@ class PerformanceIndicatorsRepository implements Contract
     public function monthlyRecurringRevenue()
     {
         $total = 0;
-
         $plans = SubscriptionPlan::all();
-
         foreach ($plans as $plan) {
             $total += DB::table('subscriptions')
-                    ->where('plan_id', $plan->plan_id)
+                    ->where('stripe_plan', $plan->plan_id)
                     ->where(function ($query) {
                         $query->whereNull('trial_ends_at')
                               ->orWhere('trial_ends_at', '<=', Carbon::now());
@@ -66,7 +64,7 @@ class PerformanceIndicatorsRepository implements Contract
     public function subscribers(SubscriptionPlan $plan)
     {
         return DB::table('subscriptions')
-                    ->where('plan_id', $plan->plan_id)
+                    ->where('stripe_plan', $plan->plan_id)
                     ->where(function ($query) {
                         $query->whereNull('trial_ends_at')
                               ->orWhere('trial_ends_at', '<=', Carbon::now());
@@ -82,10 +80,17 @@ class PerformanceIndicatorsRepository implements Contract
      */
     public function trialing(SubscriptionPlan $plan)
     {
-        return DB::table('subscriptions')
-                        ->where('plan_id', $plan->plan_id)
+        $stripe =  DB::table('subscriptions')
+                        ->where('stripe_plan', $plan->plan_id)
                         ->where('trial_ends_at', '>', Carbon::now())
                         ->whereNull('ends_at')
                         ->count();
+
+        $local =  DB::table('shops')
+                        ->where('current_billing_plan', $plan->plan_id)
+                        ->where('trial_ends_at', '>', Carbon::now())
+                        ->count();
+
+        return $stripe + $local;
     }
 }

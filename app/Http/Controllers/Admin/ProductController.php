@@ -86,7 +86,7 @@ class ProductController extends Controller
     {
         $this->authorize('create', \App\Product::class); // Check permission
 
-// echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
+        // echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
         $product = $this->product->store($request);
 
         $request->session()->flash('success', trans('messages.created', ['model' => $this->model]));

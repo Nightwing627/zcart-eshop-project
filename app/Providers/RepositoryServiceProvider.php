@@ -18,6 +18,10 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Address\EloquentAddress::class
         );
         $this->app->singleton(
+            \App\Contracts\Repositories\AnnouncementRepository::class,
+            \App\Repositories\Announcement\AnnouncementRepository::class
+        );
+        $this->app->singleton(
             \App\Repositories\Attribute\AttributeRepository::class,
             \App\Repositories\Attribute\EloquentAttribute::class
         );
@@ -72,6 +76,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             \App\Repositories\Inventory\InventoryRepository::class,
             \App\Repositories\Inventory\EloquentInventory::class
+        );
+        $this->app->singleton(
+            \App\Contracts\Repositories\InvoiceRepository::class,
+            \App\Repositories\Billing\InvoiceRepository::class
         );
         $this->app->singleton(
             \App\Repositories\Manufacturer\ManufacturerRepository::class,

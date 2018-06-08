@@ -26,7 +26,7 @@ class EximController extends Controller
 	 */
 	public function index($table)
 	{
-        return view('admin.exim', compact('table',$table));
+        return view('admin.exim', compact('table', $table));
 	}
 
 

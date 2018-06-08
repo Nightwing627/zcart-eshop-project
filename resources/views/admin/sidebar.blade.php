@@ -447,11 +447,18 @@
                 </a>
               </li>
             @endcan
+            @if(Auth::user()->isAdmin())
+              <li class=" {{ Request::is('admin/setting/announcement*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/announcement') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.announcements') }}
+                </a>
+              </li>
+            @endif
           </ul>
         </li>
 
         @if(Auth::user()->isAdmin() || Auth::user()->isMerchant())
-          <li class="treeview {{ Request::is('report*') ? 'active' : '' }}">
+          <li class="treeview {{ Request::is('admin/report*') ? 'active' : '' }}">
             <a href="#">
               <i class="fa fa-map"></i>
               <span>{{ trans('nav.reports') }}</span>
@@ -464,13 +471,11 @@
                     <i class="fa fa-angle-double-right"></i> {{ trans('nav.performance') }}
                   </a>
                 </li>
-                {{-- @if(config('system_settings.google_analytic_report') && \App\SystemConfig::isGgoogleAnalyticConfigured()) --}}
-                  <li class=" {{ Request::is('admin/report/visitors*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.report.visitors') }}">
-                      <i class="fa fa-angle-double-right"></i> {{ trans('nav.visitors') }}
-                    </a>
-                  </li>
-                {{-- @endif --}}
+                <li class=" {{ Request::is('admin/report/visitors*') ? 'active' : '' }}">
+                  <a href="{{ route('admin.report.visitors') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.visitors') }}
+                  </a>
+                </li>
               @elseif(Auth::user()->isMerchant())
                 <li class=" {{ Request::is('admin/shop/report/kpi*') ? 'active' : '' }}">
                   <a href="{{ route('admin.shop-kpi') }}">

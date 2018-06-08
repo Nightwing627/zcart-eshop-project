@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Invoice extends Model
+class Invoicebackup extends Model
 {
     use SoftDeletes;
 
@@ -28,23 +28,22 @@ class Invoice extends Model
      *
      * @var array
      */
-    protected $fillable =
-                    [
-                        'shop_id',
-                        'order_id',
-                        'customer_id',
-                        'total',
-                        'shipping',
-                        'discount',
-                        'tax_amount',
-                        'grand_total',
-                        'paid',
-                        'tax_id',
-                        'payment_date',
-                        'payment_status_id',
-                        'payment_method_id',
-                        'payment_date',
-                    ];
+    protected $fillable =[
+                    'shop_id',
+                    'order_id',
+                    'customer_id',
+                    'total',
+                    'shipping',
+                    'discount',
+                    'tax_amount',
+                    'grand_total',
+                    'paid',
+                    'tax_id',
+                    'payment_date',
+                    'payment_status_id',
+                    'payment_method_id',
+                    'payment_date',
+                ];
 
     /**
      * Get the customer associated with the invoice.
@@ -86,24 +85,6 @@ class Invoice extends Model
     {
         return $this->belongsTo(PaymentMethod::class);
     }
-
-    // /**
-    //  * Get the products for the product.
-    //  */
-    // public function products()
-    // {
-    //     return $this->hasManyThrough(Product::class, Inventory::class);
-    // }
-
-    // *
-    //  * Get the inventories for the product.
-
-    // public function inventories()
-    // {
-    //     return $this->belongsToMany(Inventory::class, 'order_items')
-    //                 ->withPivot('item_description', 'quantity', 'unit_price')
-    //                 ->withTimestamps();
-    // }
 
     /**
      * Scope a query to only include records from the users shop.

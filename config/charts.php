@@ -13,13 +13,17 @@ return [
     */
     'default_library' => 'Highcharts',
 
+    'google_analytic' => [
+        'period' => 12, //Months
+    ],
+
     // Default values for charts
     'default' => [
         'months' => 6,
         'days' => 15,
     ],
 
-    // Config
+    // Config for dashboard charts only
     'visitors' => [
         // Set how many months you want to display in the graph
         'months' => 6,

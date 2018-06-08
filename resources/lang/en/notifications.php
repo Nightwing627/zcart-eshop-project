@@ -25,6 +25,17 @@ return [
         ],
     ],
 
+    // Billing Notifications
+    'invoice_created' => [
+        'subject' => ':marketplace Monthly subscription fee invoice',
+        'greeting' => 'Hello :merchant!',
+        'message' => 'Thanks for your continued support. We\'ve attached a copy of your invoice for your records. Please let us know if you have any questions or concerns!',
+        'action' => [
+            'text' => 'Go to the Dashboard',
+            'color' => 'green',
+        ],
+    ],
+
     // Customer Notifications
     'customer_registered' => [
         'subject' => 'Welcome to the :marketplace marketplace!',

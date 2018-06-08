@@ -22,6 +22,11 @@ class EventServiceProvider extends ServiceProvider
         //     'App\Listeners\Blog\EmailConversationSubscribers',
         // ],
 
+        // Announcement Events
+        'App\Events\Announcement\AnnouncementCreated' => [
+            'App\Listeners\Announcement\SendAnnouncementCreatedNotification',
+        ],
+
         // Customer Events
         'App\Events\Customer\Registered' => [
             'App\Listeners\Customer\SendWelcomeEmail',
@@ -120,6 +125,19 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Shop\ShopIsLive' => [
             'App\Listeners\Shop\NotifyMerchantShopIsLive',
         ],
+
+        // Subscription Events
+        'App\Events\Subscription\UserSubscribed' => [
+            'App\Listeners\Subscription\UpdateActiveSubscription',
+            'App\Listeners\Subscription\UpdateTrialEndingDate',
+        ],
+        'App\Events\Subscription\SubscriptionUpdated' => [
+            'App\Listeners\Subscription\UpdateActiveSubscription',
+        ],
+        'App\Events\Subscription\SubscriptionCancelled' => [
+            'App\Listeners\Subscription\UpdateActiveSubscription',
+        ],
+
 
         // System Events
         'App\Events\System\SystemInfoUpdated' => [

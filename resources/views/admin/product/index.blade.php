@@ -1,19 +1,14 @@
 @extends('admin.layouts.master')
 
-@section('buttons')
-	@can('create', App\Product::class)
-		<a href="{{ route('admin.exim', 'products') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.exim') }}</a>
-		<a href="{{ route('admin.catalog.product.create') }}" class=" btn btn-new btn-flat">{{ trans('app.add_product') }}</a>
-	@endcan
-@endsection
-
 @section('content')
 	<div class="box">
 		<div class="box-header with-border">
 			<h3 class="box-title">{{ trans('app.products') }}</h3>
 			<div class="box-tools pull-right">
-				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+				@can('create', App\Product::class)
+					<a href="{{ route('admin.catalog.product.bulk') }}" class="ajax-modal-btn btn btn-default btn-flat">{{ trans('app.bulk_import') }}</a>
+					<a href="{{ route('admin.catalog.product.create') }}" class=" btn btn-new btn-flat">{{ trans('app.add_product') }}</a>
+				@endcan
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
@@ -23,7 +18,7 @@
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.gtin') }}</th>
 						<th>{{ trans('app.model_number') }}</th>
-						<th width="25%">{{ trans('app.category') }}</th>
+						<th width="20%">{{ trans('app.category') }}</th>
 						<th>{{ trans('app.listing') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -64,7 +59,7 @@
 							<td>{{ $trash->model_number }}</td>
 							<td>
 								@foreach($trash->categories as $category)
-								<span class="label label-outline">{{ $category->name }}</span>
+									<span class="label label-outline">{{ $category->name }}</span>
 								@endforeach
 							</td>
 							<td class="row-options">
@@ -83,5 +78,4 @@
 			</div> <!-- /.box-body -->
 		</div> <!-- /.box -->
 	@endif
-
 @endsection

@@ -4,5 +4,3 @@
     Route::get('report/kpi/revenue', 'PerformanceIndicatorsController@revenue')->name('kpi.revenue');
     Route::get('report/kpi/plans', 'PerformanceIndicatorsController@subscribers')->name('kpi.plans');
     Route::get('report/kpi/trialing', 'PerformanceIndicatorsController@trialUsers')->name('kpi.trialing');
-
-    Route::get('report/visitors', 'ReportController@visitors')->name('report.visitors');

@@ -72,6 +72,38 @@ trait Imageable {
         ]);
 	}
 
+
+	/**
+     * Save images from external URL
+     *
+     * @param  file  $image
+     *
+     * @return image model
+	 */
+	public function saveImageFromUrl($url, $featured = null)
+	{
+    	$file_info = get_headers($url, TRUE);
+
+    	if( ! isset($file_info['Content-Length']) )			return;
+
+		$name = substr($url, strrpos($url, '/') + 1);
+		$path = image_storage_dir() . '/' . $name;
+    	$extension = substr($name, strrpos($name, '.') + 1);
+    	$size = (int) $file_info['Content-Length'];
+
+		$path = image_storage_dir() . '/' . str_random(40) . '.' . $extension;
+
+    	$file = Storage::put($path, file_get_contents($url));
+
+        return $this->image()->create([
+            'path' => $path,
+            'name' => $name,
+            'extension' => $extension,
+            'featured' => (bool) $featured,
+            'size' => $size,
+        ]);
+	}
+
 	/**
 	 * Deletes the given image.
 	 *

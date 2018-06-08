@@ -1,9 +1,11 @@
 <?php
 
 use App\Visitor;
+use Illuminate\Support\Str;
 use App\Helpers\ListHelper;
 use Laravel\Cashier\Cashier;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client as HttpClient;
 
 if ( ! function_exists('updateVisitorTable') )
 {
@@ -12,13 +14,23 @@ if ( ! function_exists('updateVisitorTable') )
      */
     function updateVisitorTable(Request $request)
     {
-        // $visitor = Visitor::findOrNew($request->ip());
-        $visitor = Visitor::withTrashed()->find($request->ip());
+        // $ip = '103.49.170.142'; //Temp for test
+
+        $ip = $request->ip();
+        $visitor = Visitor::withTrashed()->find($ip);
 
         if( ! $visitor ){
             $visitor = new Visitor;
 
-            $visitor->ip = $request->ip();
+            // Get country code
+            if(check_internet_connection()){
+                $response = (new HttpClient)->get('http://ip2c.org/?ip='.$ip);
+                $body = (string) $response->getBody();
+                if ($body[0] === '1'){
+                    $visitor->country_code = explode(';', $body)[1];
+                }
+            }
+            $visitor->ip = $ip;
             $visitor->hits = 1;
             $visitor->page_views = 1;
             $visitor->info = $request->header('User-Agent');

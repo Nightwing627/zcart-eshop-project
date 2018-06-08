@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Validations;
 
 use App\Http\Requests\Request;
 
-class ExportRequest extends Request
+class UpdateAnnouncementRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,12 +13,7 @@ class ExportRequest extends Request
      */
     public function authorize()
     {
-        if($this->user()->isFromPlatform()){
-            return true;
-        }
-        else{
-            echo "<pre>"; print_r($this->all()); echo "</pre>"; exit();
-        }
+        return $this->user()->isAdmin();
     }
 
     /**
@@ -29,7 +24,9 @@ class ExportRequest extends Request
     public function rules()
     {
         return [
-            //
+            'body' => 'required',
+            'action_text' => 'required_with:action_url|max:255',
+            'action_url' => 'required_with:action_text',
         ];
     }
 }

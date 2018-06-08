@@ -19,14 +19,18 @@ use Carbon\Carbon;
 */
 class Statistics
 {
-    public static function visitor_count($period = 'today')
+    public static function visitor_count($period = Null)
     {
         $visitor = new Visitor;
 
-        if ($period == 'today')
-            $date = Carbon::today();
+        if ($period == Null)
+            return $visitor->count();
+        else if(is_numeric($period))
+            $date = Carbon::today()->subDays($period)->startOfDay();
+        else if ($period == 'today')
+            $date = Carbon::today()->startOfDay();
         else
-            $date = Carbon::today()->subDays($period);
+            $date = Carbon::today()->startOfDay();
 
         return $visitor->of($date)->count();
     }
@@ -37,11 +41,17 @@ class Statistics
 
         if ($period){
             $date = Carbon::today()->subDays($period);
-
             $merchant = $merchant->where('created_at', '>=', $date);
         }
 
         return $merchant->count();
+    }
+
+    public static function new_vendor_count($hrs = 24)
+    {
+        $merchant = new Merchant;
+
+        return $merchant->where('created_at', '>=', Carbon::now()->subHours($hrs))->count();
     }
 
     public static function customer_count($period = null)

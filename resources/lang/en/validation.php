@@ -127,6 +127,8 @@ return [
     'shipping_rate_required_unless' => 'Give a shipping rate or select \'Free shipping\' option',
     'shipping_range_minimum_min' => 'Minimum range can\'t be negative value',
     'shipping_range_maximum_min' => 'Maximum range can\'t be less than minimum value',
+    'csv_mimes'                => 'The :attribute must be a file of type csv.',
+    'import_data_required' => 'The dataset is not valid to import. Please check your data and try again.',
 
     /*
     |--------------------------------------------------------------------------

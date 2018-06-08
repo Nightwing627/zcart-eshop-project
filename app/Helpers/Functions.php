@@ -2,6 +2,20 @@
 
 use App\System;
 
+if ( ! function_exists('check_internet_connection') )
+{
+    /**
+     * Check Internet Connection Status.
+     *
+     * @param            string $sCheckHost Default: www.google.com
+     * @return           boolean
+     */
+    function check_internet_connection($sCheckHost = 'www.google.com')
+    {
+        return (bool) @fsockopen($sCheckHost, 80, $iErrno, $sErrStr, 5);
+    }
+}
+
 // if ( ! function_exists('get_platform_tld') )
 // {
 //     /**

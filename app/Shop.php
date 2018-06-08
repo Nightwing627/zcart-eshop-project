@@ -3,12 +3,12 @@
 namespace App;
 
 use App\SubscriptionPlan;
+use App\Common\Billable;
 use App\Common\Loggable;
 use App\Common\Imageable;
 use App\Common\Addressable;
 use App\Events\ShopCreated;
 use App\Helpers\Statistics;
-use Laravel\Cashier\Billable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -221,14 +221,6 @@ class Shop extends Model
     {
         return $this->belongsToMany(PaymentMethod::class, 'shop_payment_methods', 'shop_id', 'payment_method_id')
                     ->withTimestamps();
-    }
-
-    /**
-     * Get the invoices for the shop.
-     */
-    public function invoices()
-    {
-        return $this->hasMany(Invoice::class);
     }
 
     /**

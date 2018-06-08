@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Report;
 
 use App\Shop;
 use Carbon\Carbon;
 use App\SubscriptionPlan;
+use App\Charts\Subscribers;
 use App\Http\Controllers\Controller;
 use App\Contracts\Repositories\PerformanceIndicatorsRepository;
 
@@ -35,11 +36,23 @@ class PerformanceIndicatorsController extends Controller
      */
     public function all()
     {
-        return response()->json([
+
+        $data = [
             'indicators' => $this->indicators->all(60),
             'last_month' => $this->indicators->forDate(Carbon::today()->subMonths(1)),
             'last_year' => $this->indicators->forDate(Carbon::today()->subYears(1)),
-        ]);
+            'subscribers' => $this->subscribers(),
+            // 'subscribers' => $this->subscribers(),
+        ];
+
+// echo "<pre>"; print_r(array_column($data['subscribers'], 'count')); echo "</pre>"; exit();
+
+        // Chart
+        $chartSubscribers = new Subscribers(collect($data['subscribers'])->pluck('name'));
+        $chartSubscribers->dataset(trans('app.subscribers'), 'pie', array_column($data['subscribers'], 'count'))->color([ '#e4d354', '#7CB5EC']);
+        $chartSubscribers = $chartSubscribers;
+
+        return view('admin.report.platform.kpi', compact('data', 'chartSubscribers'));
     }
 
     /**
@@ -63,7 +76,6 @@ class PerformanceIndicatorsController extends Controller
     public function subscribers()
     {
         $plans = [];
-
         foreach (SubscriptionPlan::all() as $plan) {
             $plans[] = [
                 'name' => $plan->name,

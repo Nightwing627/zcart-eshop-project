@@ -44,7 +44,7 @@ trait Taggable {
                 $tags[] =  $id;
             }else{
                 // if the tag not numeric that means that its new tag and we should create it
-                $newTag = Tag::create(['name' => $id]);
+                $newTag = Tag::firstOrCreate(['name' => $id]);
                 $tags[] = $newTag->id;
             }
         }
