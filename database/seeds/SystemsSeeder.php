@@ -50,7 +50,7 @@ class SystemsSeeder extends Seeder
             // 'merchant_can_have_own_gift_cards' => 1,
 
             // Address Defults
-            'address_geocode' => 1,
+            'address_show_map' => 1,
             'address_default_country' => 840, //Country id
             'address_default_state' => 1221, //State id
             'address_show_country' => 1,

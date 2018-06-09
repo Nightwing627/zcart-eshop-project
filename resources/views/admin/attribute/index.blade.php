@@ -1,21 +1,16 @@
 @extends('admin.layouts.master')
 
-@section('buttons')
-	@can('create', App\AttributeValue::class)
-		<a href="{{ route('admin.catalog.attributeValue.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_attribute_value') }} </a>
-	@endcan
-	@can('create', App\Attribute::class)
-		<a href="{{ route('admin.catalog.attribute.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_attribute') }} </a>
-	@endcan
-@endsection
-
 @section('content')
 	<div class="box">
 	    <div class="box-header with-border">
 	      <h3 class="box-title">{{ trans('app.attributes') }}</h3>
 	      <div class="box-tools pull-right">
-	        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+			@can('create', App\AttributeValue::class)
+				<a href="{{ route('admin.catalog.attributeValue.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_attribute_value') }} </a>
+			@endcan
+			@can('create', App\Attribute::class)
+				<a href="{{ route('admin.catalog.attribute.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_attribute') }} </a>
+			@endcan
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
@@ -25,8 +20,8 @@
 			        <th width="7px">{{ trans('app.#') }}</th>
 					<th>{{ trans('app.position') }}</th>
 					<th>{{ trans('app.name') }}</th>
-					<th>{{ trans('app.entities') }}</th>
 					<th>{{ trans('app.type') }}</th>
+					<th>{{ trans('app.entities') }}</th>
 					<th>{{ trans('app.option') }}</th>
 		        </tr>
 	        </thead>
@@ -36,14 +31,18 @@
 				        <td>
 							<i data-toggle="tooltip" data-placement="top" title="{{ trans('app.move') }}" class="fa fa-arrows sort-handler"> </i>
 				        </td>
+						<td><span class="order">{{ $attribute->order }}</span></td>
 						<td>
-							<span class="order">{{ $attribute->order }}</span>
+							@can('view', $attribute)
+								<a href="{{ route('admin.catalog.attribute.entities', $attribute->id) }}">{{ $attribute->name }}</a>
+							@else
+								{{ $attribute->name }}
+							@endcan
 						</td>
-						<td>{{ $attribute->name }}</td>
+						<td>{{ $attribute->attributeType->type }}</td>
 						<td>
 							<span class="label label-default">{{ $attribute->attribute_values_count }}</span>
 						</td>
-						<td>{{ $attribute->attributeType->type }}</td>
 						<td class="row-options">
 							@can('view', $attribute)
 								<a href="{{ route('admin.catalog.attribute.entities', $attribute->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.entities') }}" class="fa fa-expand"></i></a>&nbsp;

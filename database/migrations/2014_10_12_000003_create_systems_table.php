@@ -80,7 +80,7 @@ class CreateSystemsTable extends Migration
             $table->integer('address_default_state')->nullable();
             $table->boolean('show_address_title')->nullable();
             $table->boolean('address_show_country')->nullable();
-            $table->boolean('address_geocode')->nullable();
+            $table->boolean('address_show_map')->nullable();
 
             // Checkout
             $table->boolean('allow_guest_checkout')->nullable()->default(false);

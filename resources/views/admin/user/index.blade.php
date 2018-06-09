@@ -1,18 +1,13 @@
 @extends('admin.layouts.master')
 
-@section('buttons')
-	@can('create', App\User::class)
-		<a href="{{ route('admin.admin.user.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_user') }}</a>
-	@endcan
-@endsection
-
 @section('content')
 	<div class="box">
 	    <div class="box-header with-border">
 	      <h3 class="box-title">{{ trans('app.users') }}</h3>
 	      <div class="box-tools pull-right">
-	        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+			@can('create', App\User::class)
+				<a href="{{ route('admin.admin.user.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_user') }}</a>
+			@endcan
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
@@ -24,7 +19,7 @@
 					  <th>{{ trans('app.email') }}</th>
 					  <th>{{ trans('app.role') }}</th>
 					  <th>{{ trans('app.status') }}</th>
-					  <th>{{ trans('app.option') }}</th>
+					  <th>&nbsp;</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -37,20 +32,22 @@
 				            		<img src="{{ get_gravatar_url($user->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 					            @endif
 								<p class="indent10">
-									{{ $user->nice_name }}
+									<a href="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn">
+										{{ $user->nice_name }}
+									</a>
 								</p>
 							</td>
-							<td>{{ $user->name }}</td>
+							<td>
+								<a href="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn">
+									{{ $user->name }}
+								</a>
+							</td>
 							<td>{{ $user->email }}</td>
 							<td>
 								<span class="label label-outline">{{ optional($user->role)->name }}</span>
 							</td>
 				          <td>{{ ($user->active) ? trans('app.active') : trans('app.inactive') }}</td>
 				          <td class="row-options">
-							@can('view', $user)
-					            <a href="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.profile') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
-							@endcan
-
 							@can('secretLogin', $user)
 								<a href="{{ route('admin.user.secretLogin', $user) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.secret_login_user') }}" class="fa fa-user-secret"></i></a>&nbsp;
 							@endcan

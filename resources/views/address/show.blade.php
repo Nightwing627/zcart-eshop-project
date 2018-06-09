@@ -1,11 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('buttons')
-	<a href="{{ route('address.create', [$addressable_type, $addressable->id]) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_address') }}</a>
-@endsection
-
 @section('content')
-
 	<div class="admin-user-widget">
 	    <span class="admin-user-widget-img">
 	        <img src="{{ get_storage_file_url(optional($addressable->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.avatar') }}">
@@ -38,29 +33,30 @@
 	    <div class="box-header with-border">
 	      <h3 class="box-title">{{ trans('app.addresses') }}</h3>
 	      <div class="box-tools pull-right">
-	        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+			<a href="{{ route('address.create', [$addressable_type, $addressable->id]) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_address') }}</a>
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
 	    	@foreach($addresses as $address)
 		        <div class="row">
-			        <div class="col-md-5">
+			        <div class="col-md-6">
 				        {!! $address->toHtml() !!}
-			        </div>
-			        <div class="col-md-4">
-	                    <iframe width="100%" height="150" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q={{ urlencode($address->toString()) }}&output=embed"></iframe>
-			        </div>
-			        <div class="col-md-3">
 				        <div class="pull-right">
-				    		<a href="{{ route('address.edit', $address->id) }}" class="ajax-modal-btn btn btn-default btn-sm btn-flat"><i class="fa fa-edit"></i> {{ trans('app.edit') }} </a>
-
+				    		<a href="{{ route('address.edit', $address->id) }}" class="ajax-modal-btn">
+				    			<i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i>
+				    		</a>&nbsp;
 				    		@unless($address->address_type == 'Primary')
-								{!! Form::open(['route' => ['address.destroy', $address->id], 'method' => 'delete', 'class' => 'form-inline', 'style' => 'display: inline;']) !!}
-								    {!! Form::button('<i class="fa fa-trash-o"></i> ' . trans('app.delete'), ['type' => 'submit', 'class' => 'confirm ajax-silent btn btn-danger btn-sm btn-flat']) !!}
+								{!! Form::open(['route' => ['address.destroy', $address->id], 'method' => 'delete', 'class' => 'data-form', 'style' => 'display: inline;']) !!}
+								    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 								{!! Form::close() !!}
 					        @endunless
+					        <span class="spacer10"></span>
 				        </div>
+			        </div>
+			        <div class="col-md-6">
+	            		@if(config('system_settings.address_show_map'))
+		                    <iframe width="100%" height="150" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q={{ urlencode($address->toGeocodeString()) }}&output=embed"></iframe>
+						@endif
 			        </div>
 		        </div>
 

@@ -300,19 +300,19 @@
 							    	<div class="row">
 								    	<div class="col-sm-7 text-right">
 											<div class="form-group">
-										        {!! Form::label('address_geocode', trans('app.address_geocode'). ':', ['class' => 'with-help control-label']) !!}
-											  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_address_geocode') }}"></i>
+										        {!! Form::label('address_show_map', trans('app.address_show_map'). ':', ['class' => 'with-help control-label']) !!}
+											  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_address_show_map') }}"></i>
 											</div>
 										</div>
 								    	<div class="col-sm-4">
 									  		@if($can_update)
 											  	<div class="handle horizontal text-center">
-													<a href="{{ route('admin.setting.system.notification.toggle', 'address_geocode') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->address_geocode == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->address_geocode == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<a href="{{ route('admin.setting.system.notification.toggle', 'address_show_map') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->address_show_map == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->address_show_map == 1 ? 'true' : 'false' }}" autocomplete="off">
 														<div class="btn-handle"></div>
 													</a>
 											  	</div>
 											@else
-												<span>{{ $system->address_geocode == 1 ? trans('app.on') : trans('app.off') }}</span>
+												<span>{{ $system->address_show_map == 1 ? trans('app.on') : trans('app.off') }}</span>
 											@endif
 										</div>
 								  	</div>

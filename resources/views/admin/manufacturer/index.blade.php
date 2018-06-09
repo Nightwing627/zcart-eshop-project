@@ -1,18 +1,13 @@
 @extends('admin.layouts.master')
 
-@section('buttons')
-	@can('create', App\Manufacturer::class)
-		<a href="{{ route('admin.catalog.manufacturer.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_manufacturer') }}</a>
-	@endcan
-@endsection
-
 @section('content')
 	<div class="box">
 		<div class="box-header with-border">
 			<h3 class="box-title">{{ trans('app.manufacturers') }}</h3>
 			<div class="box-tools pull-right">
-				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+				@can('create', App\Manufacturer::class)
+					<a href="{{ route('admin.catalog.manufacturer.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_manufacturer') }}</a>
+				@endcan
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
@@ -24,8 +19,7 @@
 						<th>{{ trans('app.email') }}</th>
 						<th>{{ trans('app.country') }}</th>
 						<th>{{ trans('app.products') }}</th>
-						<th>{{ trans('app.status') }}</th>
-						<th>{{ trans('app.option') }}</th>
+						<th>&nbsp;</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,8 +28,15 @@
 							<td>
 								<img src="{{ get_storage_file_url(optional($manufacturer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 								<p class="indent10">
-									{{ $manufacturer->name }}
+									@can('view', $manufacturer)
+										<a href="{{ route('admin.catalog.manufacturer.show', $manufacturer->id) }}" class="ajax-modal-btn">{{ $manufacturer->name }}</a>
+									@else
+										{{ $manufacturer->name }}
+									@endcan
 								</p>
+								@unless($manufacturer->active)
+									<span class="label label-default indent5 small">{{ trans('app.inactive') }}</span>
+								@endunless
 							</td>
 							<td>{{ $manufacturer->phone }}</td>
 							<td>{{ $manufacturer->email }}</td>
@@ -43,7 +44,6 @@
 							<td>
 								<span class="label label-default">{{ $manufacturer->products_count }}</span>
 							</td>
-							<td>{{ ($manufacturer->active) ? trans('app.active') : trans('app.inactive') }}</td>
 							<td class="row-options">
 								@can('view', $manufacturer)
 									<a href="{{ route('admin.catalog.manufacturer.show', $manufacturer->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;

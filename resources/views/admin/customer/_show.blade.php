@@ -107,7 +107,7 @@
 					        @endunless
 				    	@endforeach
 				        <br/>
-	            		@if(config('system_settings.address_geocode') && $customer->primaryAddress)
+	            		@if(config('system_settings.address_show_map') && $customer->primaryAddress)
 					        <div class="row">
 			                    <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q={{ urlencode($customer->primaryAddress->toGeocodeString()) }}&output=embed"></iframe>
 					        </div>
@@ -117,28 +117,32 @@
 
 					@if(Auth::user()->isFromPlatform())
 				    <div class="tab-pane" id="orders_tab">
-						<table class="table table-hover table-2nd-short">
-							<thead>
-								<tr>
-									<th>{{ trans('app.order_number') }}</th>
-									<th>{{ trans('app.grand_total') }}</th>
-									<th>{{ trans('app.payment') }}</th>
-									<th>{{ trans('app.status') }}</th>
-									<th>{{ trans('app.order_date') }}</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach($customer->latest_orders as $order )
+				    	@if($customer->latest_orders->count())
+							<table class="table table-hover table-2nd-short">
+								<thead>
 									<tr>
-										<td>{{ $order->order_number }}</td>
-										<td>{{ get_formated_currency($order->grand_total)}}</td>
-										<td>{!! $order->paymentStatusName() !!}</td>
-										<td>{{ optional($order->status)->name }}</td>
-								        <td>{{ $order->created_at->toFormattedDateString() }}</td>
+										<th>{{ trans('app.order_number') }}</th>
+										<th>{{ trans('app.grand_total') }}</th>
+										<th>{{ trans('app.payment') }}</th>
+										<th>{{ trans('app.status') }}</th>
+										<th>{{ trans('app.order_date') }}</th>
 									</tr>
-								@endforeach
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									@foreach($customer->latest_orders as $order )
+										<tr>
+											<td>{{ $order->order_number }}</td>
+											<td>{{ get_formated_currency($order->grand_total)}}</td>
+											<td>{!! $order->paymentStatusName() !!}</td>
+											<td>{{ optional($order->status)->name }}</td>
+									        <td>{{ $order->created_at->toFormattedDateString() }}</td>
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+				       	@else
+				       		<p>{{ trans('messages.no_orders')}}</p>
+				       	@endif
 				    </div> <!-- /.tab-pane -->
 					@endif
 				</div> <!-- /.tab-content -->

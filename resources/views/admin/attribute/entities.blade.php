@@ -1,18 +1,13 @@
 @extends('admin.layouts.master')
 
-@section('buttons')
-	@can('create', App\AttributeValue::class)
-		<a href="{{ route('admin.catalog.attributeValue.create', $attribute) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_attribute_value') }} </a>
-	@endcan
-@endsection
-
 @section('content')
 	<div class="box">
 	    <div class="box-header with-border">
 	      <h3 class="box-title">{{ trans('app.attribute') . ': ' . $attribute->name . ' | ' . trans('app.type') . ': ' . $attribute->attributeType->type }}</h3>
 	      <div class="box-tools pull-right">
-	        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+			@can('create', App\AttributeValue::class)
+				<a href="{{ route('admin.catalog.attributeValue.create', $attribute) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_attribute_value') }} </a>
+			@endcan
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">

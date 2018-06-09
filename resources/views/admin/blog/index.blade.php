@@ -1,31 +1,26 @@
 @extends('admin.layouts.master')
 
-@section('buttons')
-	@can('create', App\Blog::class)
-		<a href="{{ route('admin.utility.blog.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_blog') }}</a>
-	@endcan
-@endsection
-
 @section('content')
 	<div class="box">
 	    <div class="box-header with-border">
 	      <h3 class="box-title">{{ trans('app.blogs') }}</h3>
 	      <div class="box-tools pull-right">
-	        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+			@can('create', App\Blog::class)
+				<a href="{{ route('admin.utility.blog.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_blog') }}</a>
+			@endcan
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
 	      <table class="table table-hover table-no-sort">
 	        <thead>
-	        <tr>
-	          <th>{{ trans('app.image') }}</th>
-	          <th>{{ trans('app.blog_title') }}</th>
-	          <th>{{ trans('app.author') }}</th>
-	          <th><i class="fa fa-comments"></i></th>
-	          <th>{{ trans('app.date') }}</th>
-	          <th>&nbsp;</th>
-	        </tr>
+		        <tr>
+		          <th>{{ trans('app.image') }}</th>
+		          <th>{{ trans('app.blog_title') }}</th>
+		          <th>{{ trans('app.author') }}</th>
+		          <th><i class="fa fa-comments"></i></th>
+		          <th>{{ trans('app.date') }}</th>
+		          <th>&nbsp;</th>
+		        </tr>
 	        </thead>
 	        <tbody>
 		        @foreach($blogs as $blog )

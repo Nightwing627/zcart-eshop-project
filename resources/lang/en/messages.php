@@ -100,6 +100,7 @@ return [
     ],
 
     'no_changes' => 'Nothing to show',
+    'no_orders' => 'No order found!',
     'no_history_data' => 'No information to show',
     'this_slug_taken' => 'This slug has been taken! Try a new one.',
     'slug_length' => 'The slug should be minimum three character long.',

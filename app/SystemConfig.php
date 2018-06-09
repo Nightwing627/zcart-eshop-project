@@ -51,7 +51,7 @@ class SystemConfig extends Model
                         'pagination',
                         'show_address_title',
                         'address_show_country',
-                        'address_geocode',
+                        'address_show_map',
                         'address_default_country',
                         'address_default_state',
                         'allow_guest_checkout',
@@ -89,7 +89,7 @@ class SystemConfig extends Model
                 'show_space_after_symbol' => 'boolean',
                 'show_address_title' => 'boolean',
                 'address_show_country' => 'boolean',
-                'address_geocode' => 'boolean',
+                'address_show_map' => 'boolean',
                 'google_analytic_report' => 'boolean',
             ];
 

@@ -147,7 +147,7 @@ return [
 
     'config_address_show_country' => 'Show/Hide country name while view/print an address. This is helpful if your marketplace within a small region.',
 
-    'config_address_geocode' => 'Generate geocode(latitude and longitude) when saving a new address. It is importand if you wa to show the location on the map.',
+    'config_address_show_map' => 'Want to show map with addresses? This option will generate map using Google Map.',
 
     // 'system_date_format' => 'Set the date format for the marketplace. Example: 2018-05-13, 05-13-2018, 13-05-2018',
 
@@ -513,7 +513,7 @@ return [
 
     'notify_when_dispute_appealed' => 'Send me a notification when a dispute has been appealed to review by marketplace team',
 
-    'download_product_template' => '<a href=":url">Download a sample CSV template</a> to see an example of the format required.',
+    'download_template' => '<a href=":url">Download a sample CSV template</a> to see an example of the format required.',
 
     'download_category_slugs' => '<a href=":url">Download category slugs</a> to get the correct category for your products.',
 
@@ -523,11 +523,17 @@ return [
 
     'invalid_rows_will_ignored' => 'Invalid rows will be <strong>ignored</strong>.',
 
-    'upload_20_rows' => 'Upload no more than <strong>20 rows</strong> per batch for better performance.',
+    'upload_rows' => 'Upload no more than <strong>:rows rows</strong> per batch for better performance.',
 
     'name_field_required' => 'Name field is required.',
 
+    'email_field_required' => 'Email is required.',
+
+    'invalid_email' => 'Invalid email address.',
+
     'invalid_category' => 'Invalid category.',
+
+    'email_already_exist' => 'The email address already in use.',
 
     'slug_already_exist' => 'The slug already in use.',
 ];
