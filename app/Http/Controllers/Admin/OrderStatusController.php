@@ -20,6 +20,7 @@ class OrderStatusController extends Controller
      */
     public function __construct(OrderStatusRepository $orderStatus)
     {
+        parent::__construct();
         $this->model_name = trans('app.model.order_status');
         $this->orderStatus = $orderStatus;
     }

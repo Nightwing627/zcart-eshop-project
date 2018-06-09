@@ -44,6 +44,7 @@ class User extends Authenticatable
         'dob'           => 'date',
         'deleted_at'    => 'datetime',
         'last_visited_at' => 'datetime',
+        'read_announcements_at' => 'datetime',
         'active'        => 'boolean',
     ];
 
@@ -106,6 +107,7 @@ class User extends Authenticatable
                     'active',
                     'last_visited_at',
                     'last_visited_from',
+                    'read_announcements_at',
                     'remember_token',
                     'verification_token',
                 ];

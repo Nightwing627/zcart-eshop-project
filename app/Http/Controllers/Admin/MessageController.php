@@ -26,6 +26,8 @@ class MessageController extends Controller
      */
     public function __construct(MessageRepository $message)
     {
+        parent::__construct();
+
         $this->model = trans('app.model.message');
 
         $this->message = $message;

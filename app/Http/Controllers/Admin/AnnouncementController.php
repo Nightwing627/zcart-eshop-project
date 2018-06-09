@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\User;
 use App\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,7 @@ class AnnouncementController extends Controller
      */
     public function __construct(AnnouncementRepository $announcements)
     {
+        parent::__construct();
         $this->model_name = trans('app.model.announcement');
 
         $this->announcements = $announcements;
@@ -71,7 +73,6 @@ class AnnouncementController extends Controller
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -110,5 +111,15 @@ class AnnouncementController extends Controller
         Announcement::findOrFail($id)->delete();
 
         return back()->with('success', trans('messages.deleted', ['model' => $this->model_name]));
+    }
+
+    /**
+     * Update announcement read timestamp.
+     */
+    public function read()
+    {
+        User::findOrFail(Auth::id())->forceFill(['read_announcements_at' => \Carbon\Carbon::now()])->save();
+
+        return response("success", 200);
     }
 }

@@ -22,7 +22,7 @@
               <div class="progress" style="background: transparent;"></div>
               <span class="progress-description text-muted">
                   <i class="icon ion-md-add"></i>
-                  {{ trans('messages.new_in_30_days', ['new' => $new_customer_last_30_days, 'model' => trans('app.customers')]) }}
+                  {{ trans('app.new_in_30_days', ['new' => $new_customer_last_30_days, 'model' => trans('app.customers')]) }}
               </span>
           </div>
           <!-- /.info-box-content -->
@@ -46,7 +46,7 @@
                 <div class="progress" style="background: transparent;"></div>
                 <span class="progress-description text-muted">
                   <i class="icon ion-md-add"></i>
-                  {{ trans('messages.new_in_30_days', ['new' => $new_merchant_last_30_days, 'model' => trans('app.merchants')]) }}
+                  {{ trans('app.new_in_30_days', ['new' => $new_merchant_last_30_days, 'model' => trans('app.merchants')]) }}
                 </span>
             </div>
             <!-- /.info-box-content -->

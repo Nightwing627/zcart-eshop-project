@@ -67,6 +67,14 @@ return [
 
     'url' => 'Web address',
 
+    'optional' => '(optional)',
+
+    'use_markdown_to_bold' => 'Add ** bothside of important keyword to highlight',
+
+    'announcement_action_text' => 'Optional action button to link the announcement to any url',
+
+    'announcement_action_url' => 'The action url to blog post or any url',
+
     // 'help_doc_link' => 'Help document link',
 
     'code' => 'Code',

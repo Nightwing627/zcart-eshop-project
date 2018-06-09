@@ -22,6 +22,8 @@ class TaxController extends Controller
      */
     public function __construct(TaxRepository $tax)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.tax');
 
         $this->tax = $tax;

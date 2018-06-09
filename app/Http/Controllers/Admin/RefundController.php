@@ -24,6 +24,8 @@ class RefundController extends Controller
      */
     public function __construct(RefundRepository $refund)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.refund');
 
         $this->refund = $refund;

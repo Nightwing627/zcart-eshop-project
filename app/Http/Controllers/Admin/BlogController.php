@@ -20,6 +20,7 @@ class BlogController extends Controller
      */
     public function __construct(BlogRepository $blog)
     {
+        parent::__construct();
         $this->model_name = trans('app.model.blog');
         $this->blog = $blog;
     }

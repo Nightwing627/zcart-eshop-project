@@ -25,6 +25,8 @@ class TicketController extends Controller
      */
     public function __construct(TicketRepository $ticket)
     {
+        parent::__construct();
+
         $this->model = trans('app.model.ticket');
 
         $this->ticket = $ticket;

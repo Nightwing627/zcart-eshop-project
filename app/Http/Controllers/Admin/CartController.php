@@ -22,6 +22,7 @@ class CartController extends Controller
      */
     public function __construct(CartRepository $cart)
     {
+        parent::__construct();
         $this->model_name = trans('app.model.cart');
         $this->cart = $cart;
     }

@@ -26,6 +26,13 @@
     </style>
 </head>
 <body id="app-layout">
+
+    <div style="background-color: #FFFDDE; height:30px; border:thin solid #EDDD00">
+        </ul>
+            <li style='padding-top:5px;text-align:center;font-family:Verdana'>A N N O U C E M E N T: {GLOBAL ANNOUNCEMENT}</li>
+        </ul>
+    </div>
+
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -62,7 +69,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ route('customer.dashboard') }}"><i class="fa fa-btn fa-dashboard"></i>Dashboard</a></li>
+                                <li><a href="{{ route('dashboard') }}"><i class="fa fa-btn fa-dashboard"></i>Dashboard</a></li>
                                 <li><a href="{{ route('customer.logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
@@ -70,6 +77,38 @@
                         <li><a href="{{ route('customer.login') }}">Login</a></li>
                         <li><a href="{{ route('customer.register') }}">Register</a></li>
                     @endif
+
+                    <!-- Lang Menu -->
+                    <li class="dropdown notifications-menu">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="{{ asset('images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
+                      </a>
+                      <ul class="dropdown-menu" style="width: 100px;">
+                        <li>
+                          <!-- Inner menu: contains the tasks -->
+                          <ul class="menu">
+                            <li><!-- Task item -->
+                              <a href="#">
+                                <h3>
+                                  <img src="{{ asset('images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
+                                  English
+                                </h3>
+                              </a>
+                            </li>
+                            <!-- end task item -->
+                            <li><!-- Task item -->
+                              <a href="#">
+                                <h3>
+                                  <img src="{{ asset('images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
+                                  English
+                                </h3>
+                              </a>
+                            </li>
+                            <!-- end task item -->
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -23,6 +23,8 @@ class CustomerController extends Controller
      */
     public function __construct(CustomerRepository $customer)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.customer');
 
         $this->customer = $customer;

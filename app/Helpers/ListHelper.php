@@ -19,6 +19,7 @@ use App\FaqTopic;
 use App\Inventory;
 use App\Attribute;
 use App\Permission;
+use App\Announcement;
 use App\PaymentMethod;
 // use App\SubscriptionPlan;
 
@@ -165,6 +166,16 @@ class ListHelper
             $result[$plan->plan_id] = $plan->name . ' (' . get_formated_currency($plan->cost) . trans('app.per_month') . ')';
 
         return $result;
+    }
+
+    /**
+     * Get active announcement.
+     *
+     * @return array
+     */
+    public static function activeAnnouncement()
+    {
+        return Announcement::orderBy('created_at', 'desc')->first();
     }
 
     /**

@@ -26,6 +26,8 @@ class MerchantController extends Controller
      */
     public function __construct(MerchantRepository $merchant)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.merchant');
 
         $this->merchant = $merchant;

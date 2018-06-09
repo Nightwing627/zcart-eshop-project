@@ -22,6 +22,8 @@ class ShippingRateController extends Controller
      */
     public function __construct(ShippingRateRepository $shipping_rate)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.shipping_rate');
 
         $this->shipping_rate = $shipping_rate;

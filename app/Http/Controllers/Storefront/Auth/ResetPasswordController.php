@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Storefront\Auth;
 
 use Auth;
 use Password;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Events\Customer\PasswordUpdated;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
-class CustomerResetPasswordController extends Controller
+class ResetPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +64,7 @@ class CustomerResetPasswordController extends Controller
      */
     public function showResetForm(Request $request, $token = null)
     {
-        return view('auth.passwords.reset_customer')->with(
+        return view('auth.passwords.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }

@@ -13,9 +13,8 @@
 	        <thead>
 	        <tr>
 	          <th>{{ trans('app.body') }}</th>
+	          <th>{{ trans('app.action') }}</th>
 	          <th>{{ trans('app.author') }}</th>
-	          <th>{{ trans('app.action_text') }}</th>
-	          <th>{{ trans('app.action_url') }}</th>
 	          <th>{{ trans('app.created_at') }}</th>
 	          <th>&nbsp;</th>
 	        </tr>
@@ -24,9 +23,12 @@
 		        @foreach($announcements as $announcement )
 			        <tr>
 			          <td>{!! $announcement->parsed_body !!}</td>
+			          <td>
+			          	<a href="{{ $announcement->action_url }}" class="btn btn-default btn-xs btn-flat" target="_blank">
+				          	{{ $announcement->action_text }}
+				        </a>
+			          </td>
 			          <td>{{ $announcement->creator->getName() }}</td>
-			          <td>{{ $announcement->action_text }}</td>
-			          <td>{{ $announcement->action_url }}</td>
 			          <td>{{ $announcement->created_at->diffForHumans() }}</td>
 			          <td class="row-options text-muted small">
 		                    <a href="{{ route('admin.setting.announcement.edit', $announcement->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;

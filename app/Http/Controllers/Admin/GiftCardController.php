@@ -20,6 +20,8 @@ class GiftCardController extends Controller
      */
     public function __construct(GiftCardRepository $giftCard)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.gift_card');
 
         $this->giftCard = $giftCard;

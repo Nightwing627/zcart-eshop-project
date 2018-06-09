@@ -25,6 +25,7 @@ class UserController extends Controller
      */
     public function __construct(UserRepository $user)
     {
+        parent::__construct();
         $this->model_name = trans('app.model.user');
         $this->user = $user;
     }

@@ -20,6 +20,8 @@ class SupplierController extends Controller
      */
     public function __construct(SupplierRepository $supplier)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.supplier');
 
         $this->supplier = $supplier;

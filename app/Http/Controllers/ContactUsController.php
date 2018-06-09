@@ -16,6 +16,7 @@ class ContactUsController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
         $this->model = trans('app.model.message');
     }
 

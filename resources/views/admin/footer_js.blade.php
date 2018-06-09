@@ -115,6 +115,16 @@
 		          $('#notifications-dropdown').find('span.label').text('');
 		        });
 		    });
+
+		    // Update announcement read timestamp.
+			$('#announcement-dropdown').on('click', function (e) {
+			    var url = "{{ route('admin.setting.announcement.read') }}";
+
+		        $.get(url, function(data) {}).done(function()
+		        {
+		          $('#announcement-dropdown').find('span.label').text('');
+		        });
+		    });
 		});
 	}(window.jQuery, window, document));
 

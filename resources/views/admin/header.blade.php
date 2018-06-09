@@ -18,20 +18,17 @@
     <!-- Navbar Right Menu -->
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        @php
-          $count_message = Auth::user()->messages->count();
-        @endphp
-        <!-- Messages: style can be found in dropdown.less-->
+        <!-- Messages Menu-->
         <li class="dropdown messages-menu">
-          <!-- Menu toggle button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-envelope-o"></i>
-            <span class="label label-success">{{ $count_message ? $count_message : '' }}</span>
+            @if($count_message = Auth::user()->messages->count())
+              <span class="label label-success">{{ $count_message }}</span>
+            @endif
           </a>
           <ul class="dropdown-menu">
             <li class="header">{{ trans('messages.message_count', ['count' => $count_message]) }}</li>
             <li>
-              <!-- inner menu: contains the messages -->
               <ul class="menu">
                 @forelse(Auth::user()->messages as $message)
                   <li><!-- start message -->
@@ -57,89 +54,64 @@
                   </li>
                 @endforeach
                 <!-- end message -->
-              </ul>
-              <!-- /.menu -->
+              </ul><!-- /.menu -->
             </li>
             <li class="footer"><a href="{{ url('admin/support/message/labelOf/'. App\Message::LABEL_INBOX) }}">{{ trans('app.go_to_msg_inbox') }}</a></li>
           </ul>
-        </li>
-        <!-- /.messages-menu -->
-
-        @if(Gate::allows('index', App\Ticket::class) || Gate::allows('index', App\Dispute::class) || Gate::allows('index', App\Refund::class))
-          <!-- Tasks Menu -->
-          <li class="dropdown tasks-menu">
-            <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-flag-o"></i>
-              <span class="label label-danger">9</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 9 tasks</li>
-              <li>
-                <!-- Inner menu: contains the tasks -->
-                <ul class="menu">
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <!-- Task title and progress text -->
-                      <h3>
-                        Design some buttons
-                        <small class="pull-right">20%</small>
-                      </h3>
-                      <!-- The progress bar -->
-                      <div class="progress xs">
-                        <!-- Change the css width attribute to simulate progress -->
-                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">20% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                </ul>
-              </li>
-              <li class="footer">
-                <a href="#">View all tasks</a>
-              </li>
-            </ul>
-          </li>
-        @endcan
+        </li><!-- /.messages-menu -->
 
         <!-- Notifications Menu -->
-        @php
-          $count_notification = Auth::user()->unreadNotifications->count();
-        @endphp
         <li class="dropdown notifications-menu" id="notifications-dropdown">
-          <!-- Menu toggle button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-bell-o"></i>
-            <span class="label label-warning">{{ $count_notification ? $count_notification : '' }}</span>
+            @if($count_notification = Auth::user()->unreadNotifications->count())
+              <span class="label label-warning">{{ $count_notification }}</span>
+            @endif
           </a>
           <ul class="dropdown-menu">
             <li class="header">{{ trans('messages.notification_count', ['count' => $count_notification]) }}</li>
             <li>
-              <!-- Inner Menu: contains the notifications -->
               <ul class="menu">
                 @foreach(Auth::user()->unreadNotifications as $notification)
-                <li>
-                  @php
-                    $notification_view = 'admin.partials.notifications.' . snake_case(class_basename($notification->type));
-                  @endphp
+                  <li>
+                    @php
+                      $notification_view = 'admin.partials.notifications.' . snake_case(class_basename($notification->type));
+                    @endphp
 
-                  @includeFirst([$notification_view, 'admin.partials.notifications.default'])
-                </li>
+                    @includeFirst([$notification_view, 'admin.partials.notifications.default'])
+                  </li>
                 @endforeach
-              </ul>
+              </ul><!-- .menu -->
             </li>
             <li class="footer"><a href="{{ route('admin.notifications') }}">{{ trans('app.view_all_notifications') }}</a></li>
           </ul>
-        </li>
+        </li><!-- /.notifications-menu -->
+
+        <!-- Announcement Menu -->
+        @if($active_announcement)
+          <li class="dropdown tasks-menu" id="announcement-dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bullhorn"></i>
+              @if($active_announcement && $active_announcement->updated_at > Auth::user()->read_announcements_at)
+                <span class="label"><i class="fa fa-circle"></i></span>
+              @endif
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                {!! $active_announcement->parsed_body !!}
+                @if($active_announcement->action_url)
+                  <span class="indent10">
+                    <a href="{{ $active_announcement->action_url }}" class="btn btn-flat btn-default btn-xs">{{ $active_announcement->action_text }}</a>
+                  </span>
+                @endif
+              </li>
+            </ul>
+          </li><!-- /.notifications-menu -->
+        @endif
 
         <!-- User Account Menu -->
         <li class="dropdown user user-menu">
-          <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <!-- The user image in the navbar-->
-
             @if(Auth::user()->image)
               <img src="{{ get_storage_file_url(Auth::user()->image->path, 'tiny') }}" class="user-image" alt="{{ trans('app.avatar') }}">
             @else
@@ -184,40 +156,7 @@
               </div>
             </li>
           </ul>
-        </li>
-
-        <!-- Lang Menu -->
-        <li class="dropdown tasks-menu">
-          <!-- Menu Toggle Button -->
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{{ asset('images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
-          </a>
-          <ul class="dropdown-menu" style="width: 100px;">
-            <li>
-              <!-- Inner menu: contains the tasks -->
-              <ul class="menu">
-                <li><!-- Task item -->
-                  <a href="#">
-                    <h3>
-                      <img src="{{ asset('images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
-                      English
-                    </h3>
-                  </a>
-                </li>
-                <!-- end task item -->
-                <li><!-- Task item -->
-                  <a href="#">
-                    <h3>
-                      <img src="{{ asset('images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
-                      English
-                    </h3>
-                  </a>
-                </li>
-                <!-- end task item -->
-              </ul>
-            </li>
-          </ul>
-        </li>
+        </li><!-- /.user-menu -->
 
         <!-- Control Sidebar Toggle Button -->
         <li>

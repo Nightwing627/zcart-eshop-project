@@ -28,6 +28,8 @@ class DisputeController extends Controller
      */
     public function __construct(DisputeRepository $dispute)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.dispute');
 
         $this->dispute = $dispute;

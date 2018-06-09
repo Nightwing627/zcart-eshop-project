@@ -23,6 +23,8 @@ class ShopController extends Controller
      */
     public function __construct(ShopRepository $shop)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.shop');
 
         $this->shop = $shop;

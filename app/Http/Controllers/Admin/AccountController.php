@@ -31,6 +31,8 @@ class AccountController extends Controller
      */
     public function __construct(AccountRepository $profile)
     {
+        parent::__construct();
+
         $this->profile = $profile;
     }
 

@@ -17,6 +17,8 @@ class AttributeValueController extends Controller
      */
     public function __construct(AttributeValueRepository $attribute_value)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.attribute_value');
 
         $this->attribute_value = $attribute_value;

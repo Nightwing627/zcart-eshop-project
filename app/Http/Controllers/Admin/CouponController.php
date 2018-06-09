@@ -22,6 +22,7 @@ class CouponController extends Controller
      */
     public function __construct(CouponRepository $coupon)
     {
+        parent::__construct();
         $this->model_name = trans('app.model.coupon');
         $this->coupon = $coupon;
     }

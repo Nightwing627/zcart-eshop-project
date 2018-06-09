@@ -40,6 +40,8 @@ class ViewComposerServiceProvider extends ServiceProvider
     {
         $this->composeAddressForm();
 
+        $this->composeAdminNavigations();
+
         $this->composeAttributeForm();
 
         $this->composeAttributeValueForm();
@@ -128,6 +130,21 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeWarehouseForm();
 
+    }
+
+    /**
+     * compose partial view of role form
+     */
+    private function composeAdminNavigations()
+    {
+        View::composer(
+
+                'admin.header',
+
+                function($view)
+                {
+                    $view->with('active_announcement', ListHelper::activeAnnouncement());
+                });
     }
 
     /**

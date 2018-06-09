@@ -22,6 +22,8 @@ class ShippingZoneController extends Controller
      */
     public function __construct(ShippingZoneRepository $shipping_zone)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.shipping_zone');
 
         $this->shipping_zone = $shipping_zone;

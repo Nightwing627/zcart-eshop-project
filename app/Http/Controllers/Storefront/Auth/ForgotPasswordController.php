@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Storefront\Auth;
 
 use Password;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
-class CustomerForgotPasswordController extends Controller
+class ForgotPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -43,7 +43,7 @@ class CustomerForgotPasswordController extends Controller
      */
     public function showLinkRequestForm()
     {
-        return view('auth.passwords.email_customer');
+        return view('auth.passwords.email');
     }
 
 }

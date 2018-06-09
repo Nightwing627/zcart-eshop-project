@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Storefront\Auth;
 
 use Auth;
 use App\Customer;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Notifications\Auth\SendVerificationEmail as EmailVerificationNotification;
 
-class CustomerRegisterController extends Controller
+class RegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -60,7 +60,7 @@ class CustomerRegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('auth.customer_register');
+        return view('auth.register');
     }
 
     /**

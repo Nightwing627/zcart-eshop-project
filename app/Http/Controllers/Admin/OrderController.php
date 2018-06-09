@@ -28,6 +28,7 @@ class OrderController extends Controller
      */
     public function __construct(OrderRepository $order)
     {
+        parent::__construct();
         $this->model_name = trans('app.model.order');
         $this->order = $order;
     }

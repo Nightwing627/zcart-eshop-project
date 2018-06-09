@@ -18,6 +18,7 @@ class FaqTopicController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
         $this->model_name = trans('app.model.faqTopic');
     }
 

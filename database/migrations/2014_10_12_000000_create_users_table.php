@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->timestampTz('last_visited_at')->nullable();
             $table->ipAddress('last_visited_from')->nullable();
             $table->boolean('active')->default(1);
+            $table->timestamp('read_announcements_at')->nullable();
             $table->string('verification_token', 100)->nullable();
             $table->rememberToken();
             $table->softDeletes();

@@ -20,6 +20,7 @@ class CurrencyController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
         $this->model = trans('app.model.currency');
     }
 

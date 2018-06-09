@@ -115,9 +115,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <h4><i class="icon fa fa-stop-circle-o"></i> {{ trans('app.error') }}</h4>
             <p id="global-error">{{ Session::get('global_error') }}</p>
-          </div>
-
-          <!-- /#global-alert-box -->
+          </div> <!-- /#global-alert-box -->
 
           @yield("content")
 

@@ -23,6 +23,7 @@ class ProductController extends Controller
      */
     public function __construct(ProductRepository $product)
     {
+        parent::__construct();
         $this->model = trans('app.model.product');
         $this->product = $product;
     }

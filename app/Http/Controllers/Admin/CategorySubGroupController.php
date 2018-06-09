@@ -22,6 +22,7 @@ class CategorySubGroupController extends Controller
      */
     public function __construct(CategorySubGroupRepository $categorySubGroup)
     {
+        parent::__construct();
         $this->model_name = trans('app.model.category_group');
         $this->categorySubGroup = $categorySubGroup;
     }

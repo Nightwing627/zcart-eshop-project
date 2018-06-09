@@ -22,6 +22,7 @@ class PackagingController extends Controller
      */
     public function __construct(PackagingRepository $packaging)
     {
+        parent::__construct();
         $this->model_name = trans('app.model.packaging');
         $this->packaging = $packaging;
     }

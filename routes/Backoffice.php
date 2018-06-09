@@ -129,11 +129,6 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 			include('admin/Refund.php');
 		});
 
-		// Export/Import Models
-		Route::get('exim/{table}', 'EximController@index')->name('exim');
-		Route::post('export', 'EximController@export')->name('export');
-		Route::post('import', 'EximController@import')->name('import');
-
 		// Others
 		// Route::resource('role', 'RoleController');
 		// Route::resource('comment', 'CommentController');

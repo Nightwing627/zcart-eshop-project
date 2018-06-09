@@ -23,6 +23,8 @@ class InventoryController extends Controller
      */
     public function __construct(InventoryRepository $inventory)
     {
+        parent::__construct();
+
         $this->model = trans('app.model.inventory');
 
         $this->inventory = $inventory;

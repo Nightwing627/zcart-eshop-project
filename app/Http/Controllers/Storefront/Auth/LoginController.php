@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Storefront\Auth;
 
 use Auth;
 use Socialite;
@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class CustomerLoginController extends Controller
+class LoginController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ class CustomerLoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'customer/dashboard';
+    protected $redirectTo = 'dashboard';
 
     /**
      * Create a new controller instance.
@@ -58,7 +58,7 @@ class CustomerLoginController extends Controller
      */
     public function showLoginForm()
     {
-      return view('auth.customer_login');
+      return view('auth.login');
     }
 
     /**
@@ -107,7 +107,7 @@ class CustomerLoginController extends Controller
 
       if ($this->attemptLogin($request)) {
         // if successful, then redirect to their intended location
-        return redirect()->intended(route('customer.dashboard'));
+        return redirect()->intended(route('dashboard'));
       }
 
       // If the login attempt was unsuccessful we will increment the number of attempts

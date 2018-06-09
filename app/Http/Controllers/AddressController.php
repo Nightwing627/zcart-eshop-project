@@ -20,6 +20,8 @@ class AddressController extends Controller
      */
     public function __construct(AddressRepository $address)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.address');
         $this->address = $address;
     }

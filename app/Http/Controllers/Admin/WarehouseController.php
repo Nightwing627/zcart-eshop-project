@@ -20,6 +20,8 @@ class WarehouseController extends Controller
      */
     public function __construct(WarehouseRepository $warehouse)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.warehouse');
 
         $this->warehouse = $warehouse;

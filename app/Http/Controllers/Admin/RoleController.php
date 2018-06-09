@@ -22,6 +22,8 @@ class RoleController extends Controller
      */
     public function __construct(RoleRepository $role)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.role');
 
         $this->role = $role;

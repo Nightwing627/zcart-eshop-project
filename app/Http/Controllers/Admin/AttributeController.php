@@ -22,6 +22,8 @@ class AttributeController extends Controller
      */
     public function __construct(AttributeRepository $attribute)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.attribute');
 
         $this->attribute = $attribute;

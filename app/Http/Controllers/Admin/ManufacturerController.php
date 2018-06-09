@@ -20,6 +20,8 @@ class ManufacturerController extends Controller
      */
     public function __construct(ManufacturerRepository $manufacturer)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.manufacturer');
 
         $this->manufacturer = $manufacturer;

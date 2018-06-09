@@ -20,6 +20,8 @@ class EmailTemplateController extends Controller
      */
     public function __construct(EmailTemplateRepository $emailTemplate)
     {
+        parent::__construct();
+
         $this->model_name = trans('app.model.email_template');
 
         $this->emailTemplate = $emailTemplate;

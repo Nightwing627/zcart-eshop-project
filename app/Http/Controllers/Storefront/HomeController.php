@@ -27,6 +27,5 @@ class HomeController extends Controller
     public function openPage(Page $page)
     {
     	return $page;
-        // return view('admin.page._edit', compact('page'));
     }
 }

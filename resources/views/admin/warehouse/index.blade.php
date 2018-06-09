@@ -1,18 +1,13 @@
 @extends('admin.layouts.master')
 
-@section('buttons')
-	@can('create', App\Warehouse::class)
-		<a href="{{ route('admin.stock.warehouse.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_warehouse') }}</a>
-	@endcan
-@endsection
-
 @section('content')
 	<div class="box">
 		<div class="box-header with-border">
 			<h3 class="box-title">{{ trans('app.warehouses') }}</h3>
 			<div class="box-tools pull-right">
-				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+				@can('create', App\Warehouse::class)
+					<a href="{{ route('admin.stock.warehouse.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_warehouse') }}</a>
+				@endcan
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">

@@ -22,6 +22,7 @@ class CarrierController extends Controller
      */
     public function __construct(CarrierRepository $carrier)
     {
+        parent::__construct();
         $this->model_name = trans('app.model.carrier');
         $this->carrier = $carrier;
     }

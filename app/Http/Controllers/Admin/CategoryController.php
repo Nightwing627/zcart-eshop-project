@@ -20,6 +20,7 @@ class CategoryController extends Controller
      */
     public function __construct(CategoryRepository $category)
     {
+        parent::__construct();
         $this->model_name = trans('app.model.category');
         $this->category = $category;
     }
