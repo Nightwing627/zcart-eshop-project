@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
     <title>{{ $title or get_site_title() }}</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon" />
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}">
 
     <!-- Scripts -->
     <link href="{{ mix("css/app.css") }}" rel="stylesheet">
@@ -87,6 +89,7 @@
             </div>
           @endif
 
+          <!-- VALIDATION ERRORS -->
           @if (count($errors) > 0)
             <div class="alert alert-danger">
               <strong>{{ trans('app.error') }}!</strong> {{ trans('messages.input_error') }}<br><br>
@@ -136,7 +139,7 @@
     <!-- ./wrapper -->
     <div class="loader">
       <center>
-        <img class="loading-image" src="{{ asset('gears.gif') }}" alt="busy...">
+        <img class="loading-image" src="{{ asset('images/gears.gif') }}" alt="busy...">
       </center>
     </div>
 

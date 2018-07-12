@@ -366,9 +366,27 @@
           </a>
           <ul class="treeview-menu">
             {{-- @can('index', App\EmailTemplate::class) --}}
-              <li class=" {{ Request::is('admin/appearance/theme*') ? 'active' : '' }}">
+              <li class=" {{ Request::is('admin/appearance/theme') ? 'active' : '' }}">
                 <a href="{{ url('admin/appearance/theme') }}">
                   <i class="fa fa-angle-double-right"></i> {{ trans('nav.themes') }}
+                </a>
+              </li>
+
+              <li class=" {{ Request::is('admin/appearance/banner*') ? 'active' : '' }}">
+                <a href="{{ url('admin/appearance/banner') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.banners') }}
+                </a>
+              </li>
+
+              <li class=" {{ Request::is('admin/appearance/slider*') ? 'active' : '' }}">
+                <a href="{{ url('admin/appearance/slider') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.sliders') }}
+                </a>
+              </li>
+
+              <li class=" {{ Request::is('admin/appearance/theme/option*') ? 'active' : '' }}">
+                <a href="{{ url('admin/appearance/theme/option') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.theme_options') }}
                 </a>
               </li>
             {{-- @endcan --}}

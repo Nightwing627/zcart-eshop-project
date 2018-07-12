@@ -1,9 +1,9 @@
-@extends('auth.master')
+@extends('auth.layout')
 
 @section('content')
     <div class="box login-box-body">
         <div class="box-header with-border">
-          <h3 class="box-title">{{ trans('app.form.login') }}</h3>
+          <h3 class="box-title">{{ trans('theme.account_login') }}</h3>
         </div> <!-- /.box-header -->
         <div class="box-body">
             {!! Form::open(['route' => 'customer.login.submit', 'id' => 'form', 'data-toggle' => 'validator']) !!}
@@ -32,9 +32,8 @@
             {!! Form::close() !!}
 
             <div class="social-auth-links text-center">
-
-            <a href="#" class="btn btn-block btn-social btn-facebook btn-lg btn-flat"><i class="fa fa-facebook"></i> {{ trans('app.sing_in_with_fb') }}</a>
-            <a href="#" class="btn btn-block btn-social btn-google btn-lg btn-flat"><i class="fa fa-google"></i> {{ trans('app.sing_in_with_google') }}</a>
+                <a href="#" class="btn btn-block btn-social btn-facebook btn-lg btn-flat"><i class="fa fa-facebook"></i> {{ trans('app.sing_in_with_fb') }}</a>
+                <a href="#" class="btn btn-block btn-social btn-google btn-lg btn-flat"><i class="fa fa-google"></i> {{ trans('app.sing_in_with_google') }}</a>
             </div>
             <!-- /.social-auth-links -->
 

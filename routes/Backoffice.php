@@ -111,6 +111,8 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		Route::group(['as' => 'appearance.', 'prefix' => 'appearance'], function()
 		{
 			include('admin/Theme.php');
+			include('admin/Banner.php');
+			include('admin/Slider.php');
 		});
 
 		// Promotions Routes for Admin

@@ -12,27 +12,33 @@
 	    </div>
 	    <!-- /.box-header -->
 	    <div class="box-body">
-	      <table class="table table-hover table-option">
+	      <table class="table table-hover table-no-sort">
 	        <thead>
 	        <tr>
-	          <th>{{ trans('app.category_group') }}</th>
-	          <th style="width: 35%;">{{ trans('app.sub_groups') }}</th>
-	          <th>{{ trans('app.status') }}</th>
-	          <th>{{ trans('app.option') }}</th>
+	        	<th>{{ trans('app.featured_image') }}</th>
+				<th>{{ trans('app.category_group') }}</th>
+				<th>{{ trans('app.sub_groups') }}</th>
+				<th>{{ trans('app.order') }}</th>
+				<th>{{ trans('app.status') }}</th>
+				<th>&nbsp;</th>
 	        </tr>
 	        </thead>
 	        <tbody>
 		        @foreach($categoryGrps as $categoryGrp )
 			        <tr>
 			          <td>
-			          	<h5>{{ $categoryGrp->name }}</h5>
+						<img src="{{ get_storage_file_url(optional($categoryGrp->image)->path, 'small') }}" class="" alt="{{ trans('app.featured_image') }}">
+			          </td>
+			          <td>
+			          	<h5><i class="fa {{$categoryGrp->icon}}"></i> {{ $categoryGrp->name }}</h5>
 			          	@if($categoryGrp->description)
-				          	<span class="excerpt-td small">{!! str_limit($categoryGrp->description, 150) !!}</span>
+				          	<span class="excerpt-td small">{!! str_limit($categoryGrp->description, 220) !!}</span>
 			          	@endif
 			          </td>
 			          <td>
 				          	<span class="label label-default">{{ $categoryGrp->sub_groups_count }}</span>
 				      </td>
+			          <td>{{ $categoryGrp->order }}</td>
 			          <td>{{ ($categoryGrp->active) ? trans('app.active') : trans('app.inactive') }}</td>
 			          <td class="row-options">
 						@can('update', $categoryGrp)

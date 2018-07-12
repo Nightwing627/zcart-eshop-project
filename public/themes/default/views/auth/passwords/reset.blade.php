@@ -1,4 +1,4 @@
-@extends('auth.master')
+@extends('auth.layout')
 
 @section('content')
 <div class="box login-box-body">

@@ -61,8 +61,8 @@
       <div class="input-group">
         <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
         {!! Form::number('min_order_amount' , null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.coupon_min_order_amount')]) !!}
-        <div class="help-block with-errors"></div>
       </div>
+      <div class="help-block with-errors"></div>
     </div>
   </div>
 

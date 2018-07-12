@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers\Storefront;
 
+use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class DashboardController extends Controller
+class AccountController extends Controller
 {
     /**
      * Show the customer dashboard.
      *
      * @return Response
      */
-    public function index()
+    public function index($tab = 'dashboard')
     {
-        return view('dashboard');
+    	$products = Product::paginate(10);
+
+        return view('dashboard', compact('tab', 'products'));
     }
 }

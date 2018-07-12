@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-sm">
+<div class="modal-dialog modal-md">
     <div class="modal-content">
         {!! Form::model($categoryGroup, ['method' => 'PUT', 'route' => ['admin.catalog.categoryGroup.update', $categoryGroup->id], 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">

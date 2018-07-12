@@ -4,13 +4,9 @@
   <div class="help-block with-errors"></div>
 </div>
 <div class="form-group">
-  {!! Form::label('name', trans('app.form.category_name').'*') !!}
-  {!! Form::text('name', null, ['class' => 'form-control makeSlug', 'placeholder' => trans('app.placeholder.category_name'), 'required']) !!}
+  {!! Form::label('name', trans('app.form.category_sub_grp_name').'*') !!}
+  {!! Form::text('name', null, ['class' => 'form-control makeSlug', 'placeholder' => trans('app.placeholder.category_sub_grp_name'), 'required']) !!}
   <div class="help-block with-errors"></div>
-</div>
-<div class="form-group">
-  {!! Form::label('description', trans('app.form.description')) !!}
-  {!! Form::textarea('description', null, ['class' => 'form-control summernote-min', 'placeholder' => trans('app.placeholder.description'), 'rows' => '3']) !!}
 </div>
 <div class="form-group">
   {!! Form::label('active', trans('app.form.status').'*') !!}

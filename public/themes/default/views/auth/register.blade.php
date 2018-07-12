@@ -1,4 +1,4 @@
-@extends('auth.master')
+@extends('auth.layout')
 
 @section('content')
     <div class="box login-box-body">
@@ -30,9 +30,8 @@
                 @if(config('system_settings.ask_customer_for_email_subscription'))
                     <div class="form-group">
                         <label>
-                            {!! Form::checkbox('subscribe', null, null, ['class' => 'icheck']) !!} {!! trans('app.form.subscribe') !!}
+                            {!! Form::checkbox('subscribe', null, null, ['class' => 'icheck']) !!} {!! trans('app.form.subscribe_to_the_newsletter') !!}
                         </label>
-                        <div class="help-block with-errors"></div>
                     </div>
                 @endif
                 <div class="row">

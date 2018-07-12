@@ -24,12 +24,7 @@
 	        <tbody>
 		        @foreach($categorySubGrps as $categorySubGrp )
 			        <tr>
-			          <td>
-			          	<h5>{{ $categorySubGrp->name }}</h5>
-			          	@if($categorySubGrp->description)
-				          	<span class="excerpt-td small">{!! str_limit($categorySubGrp->description, 150) !!}</span>
-			          	@endif
-			          </td>
+			          <td>{{ $categorySubGrp->name }}</td>
 			          <td>
 				          	<span class="label label-outline">{{ $categorySubGrp->group->name }}</span>
 			          </td>

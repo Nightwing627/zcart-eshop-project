@@ -14,9 +14,8 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call(UserTableSeeder::class);
-
-        //Seed the countries
+        $this->call('SlidersSeeder');
+        $this->call('BannerGroupsSeeder');
         $this->call('CountriesSeeder');
         $this->call('StatesSeeder');
         $this->call('TimezonesSeeder');

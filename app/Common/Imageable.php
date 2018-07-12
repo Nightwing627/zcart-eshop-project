@@ -48,7 +48,7 @@ trait Imageable {
 	 */
 	public function featuredImage()
     {
-        return $this->morphOne(\App\Image::class, 'imageable')->whereNotNull('featured')->orderBy('order', 'asc');
+        return $this->morphOne(\App\Image::class, 'imageable')->whereNotNull('featured');
     }
 
 	/**
@@ -67,11 +67,10 @@ trait Imageable {
             'name' => $image->getClientOriginalName(),
             // 'name' => str_slug($image->getClientOriginalName(), '-'),
             'extension' => $image->getClientOriginalExtension(),
-            'featured' => (bool) $featured,
+            'featured' => $featured ? 1 : Null,
             'size' => $image->getClientSize()
         ]);
 	}
-
 
 	/**
      * Save images from external URL

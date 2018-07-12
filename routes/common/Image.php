@@ -1,6 +1,4 @@
 <?php
-	Route::get('image/{path}', 'ImageController@show')->where('path', '.*')->name('image.show');
-
 	Route::get('download/{image}', 'ImageController@download')->name('image.download');
 
 	Route::post('delete/{image}', 'ImageController@delete')->name('image.delete');

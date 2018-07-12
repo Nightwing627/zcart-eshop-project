@@ -327,6 +327,9 @@
 		    }
 	  	});
 
+		// Icon picker
+		$('.iconpicker-input').iconpicker();
+
 		//Initialize Select2 Elements
 		$(".select2").not(".dataTables_length .select2").select2();
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title or get_site_title() }}</title>
+    <title>{{ $title or get_platform_title() }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -51,7 +51,7 @@
       @endif
 
       <div class="login-logo">
-        <a href="{{ url('/') }}">{{ get_site_title() }}</a>
+        <a href="{{ url('/') }}">{{ get_platform_title() }}</a>
       </div>
 
       @yield('content')

@@ -33,7 +33,7 @@ class AttributeType extends Model
      */
     public function attributes()
     {
-        return $this->hasMany('App\Attribute');
+        return $this->hasMany(Attribute::class);
     }
 
 }

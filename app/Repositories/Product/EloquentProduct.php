@@ -57,8 +57,10 @@ class EloquentProduct extends EloquentRepository implements BaseRepository, Prod
 
         $product->syncTags($product, $request->input('tag_list', []));
 
-        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
-            $product->deleteFeaturedImage();
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1)){
+            if($product->featuredImage)
+                $product->deleteImage($product->featuredImage);
+        }
 
         if ($request->hasFile('image'))
             $product->saveImage($request->file('image'), true);

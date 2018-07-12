@@ -12,7 +12,6 @@ class CreateAttributeTable extends Migration
      */
     public function up()
     {
-
         Schema::create('attribute_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type', 100)->unique();

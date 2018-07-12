@@ -13,9 +13,10 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        \App\Blog::class                => \App\Policies\BlogPolicy::class,
         \App\Attribute::class           => \App\Policies\AttributePolicy::class,
         \App\AttributeValue::class      => \App\Policies\AttributeValuePolicy::class,
+        \App\Banner::class              => \App\Policies\BannerPolicy::class,
+        \App\Blog::class                => \App\Policies\BlogPolicy::class,
         \App\CarrierValue::class        => \App\Policies\CarrierValuePolicy::class,
         \App\Cart::class                => \App\Policies\CartPolicy::class,
         \App\Carrier::class              => \App\Policies\CarrierPolicy::class,
@@ -46,6 +47,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\Shop::class                => \App\Policies\ShopPolicy::class,
         \App\ShippingRate::class        => \App\Policies\ShippingRatePolicy::class,
         \App\ShippingZone::class        => \App\Policies\ShippingZonePolicy::class,
+        \App\Slider::class              => \App\Policies\SliderPolicy::class,
         \App\SubscriptionPlan::class    => \App\Policies\SubscriptionPlanPolicy::class,
         \App\Supplier::class            => \App\Policies\SupplierPolicy::class,
         \App\System::class              => \App\Policies\SystemPolicy::class,

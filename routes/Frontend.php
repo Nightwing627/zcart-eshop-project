@@ -6,9 +6,17 @@ Route::get('page/{page}', 'Storefront\HomeController@openPage')->name('page.open
 Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], function(){
    // Auth route for customers
 	include('storefront/Auth.php');
+	include('storefront/Cart.php');
 
 	Route::get('/', 'HomeController@index')->name('homepage');
-	Route::get('/dashboard', 'DashboardController@index')->name('dashboard')->middleware('auth:customer');
+	Route::get('product/{slug}', 'HomeController@product')->name('show.product');
+	Route::get('categories', 'HomeController@categories')->name('categories');
+	Route::get('category/{slug}', 'HomeController@browseCategory')->name('category.browse');
+	Route::get('shop/{slug}', 'HomeController@shop')->name('show.store');
+
+	Route::middleware(['auth:customer'])->group(function () {
+		Route::get('my/{tab?}', 'AccountController@index')->name('account');
+	});
 });
 
 // Route for merchant landing theme

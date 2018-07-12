@@ -16,11 +16,14 @@ use App\Product;
 use App\Dispute;
 use App\Customer;
 use App\FaqTopic;
+use App\Category;
 use App\Inventory;
 use App\Attribute;
 use App\Permission;
 use App\Announcement;
 use App\PaymentMethod;
+use App\CategoryGroup;
+use App\CategorySubGroup;
 // use App\SubscriptionPlan;
 
 /**
@@ -204,6 +207,25 @@ class ListHelper
     }
 
     /**
+     * Get list of all available categories formated for theme
+     *
+     * @return array
+     */
+    public static function categoriesForTheme()
+    {
+        return CategoryGroup::select('id','name','icon')->with(['image',
+                                   'subGroups' => function($query){
+                                        $query->select('id','category_group_id','name')
+                                              ->active()->has('categories')
+                                              ->withCount('categories')->orderBy('categories_count', 'desc');
+                                    },
+                                    'subGroups.categories' => function($query){
+                                        $query->select('id','name','slug','description')->active();
+                                    }])
+                                    ->has('subGroups')->active()->orderBy('order', 'asc')->get();
+    }
+
+    /**
      * Get list of all available category group
      *
      * @return array
@@ -211,6 +233,16 @@ class ListHelper
     public static function categoryGrps()
     {
         return \DB::table('category_groups')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
+    /**
+     * Get list of category sub-group
+     *
+     * @return array
+     */
+    public static function catSubGrps()
+    {
+        return CategorySubGroup::orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -230,7 +262,8 @@ class ListHelper
      */
     public static function categories()
     {
-        return \DB::table('categories')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+        // return \DB::table('categories')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+        return Category::orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -726,6 +759,16 @@ class ListHelper
     public static function email_templates()
     {
         return \DB::table('email_templates')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
+    /**
+     * Get banner_groups list for form dropdown.
+     *
+     * @return array
+     */
+    public static function banner_groups()
+    {
+        return \DB::table('banner_groups')->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**

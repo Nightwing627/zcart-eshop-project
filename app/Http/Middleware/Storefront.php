@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use View;
 use Closure;
+use App\Helpers\ListHelper;
 use Illuminate\View\FileViewFinder;
 use Illuminate\Support\Facades\Config;
 
@@ -25,7 +26,13 @@ class Storefront
 
         // Reset views path to load theme views
         View::setFinder(new FileViewFinder(app('files'), $paths));
-        // View::setFinder(new FileViewFinder(app()['files'], $paths));
+
+        //Supply important data to all views
+        View::share('all_categories', ListHelper::categoriesForTheme());
+        View::share('search_category_list', ListHelper::catSubGrps());
+
+        $hotcat = ['Hot Category One', 'Hot Category Two', 'Hot Category Three']; //TEST
+        View::share('hot_categories', $hotcat);
 
         return $next($request);
     }

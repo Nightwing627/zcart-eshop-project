@@ -1,132 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="author" content="Munna Khan">
+        <title> {{ get_platform_title() }} </title>
+        <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon" />
+        <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+        <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
 
-    <title> {{ get_site_title() }} </title>
+        <link href="{{ theme_asset_url('css/vendor.css') }}" rel="stylesheet">
+        <link href="{{ theme_asset_url('css/style.css') }}" rel="stylesheet">
+    </head>
+    <body>
+        <!--[if lte IE 9]>
+          <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
 
-    <!-- Fonts -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
-
-    <!-- Styles -->
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Lato';
-        }
-
-        .fa-btn {
-            margin-right: 6px;
-        }
-    </style>
-</head>
-<body id="app-layout">
-
-    <div style="background-color: #FFFDDE; height:30px; border:thin solid #EDDD00">
-        </ul>
-            <li style='padding-top:5px;text-align:center;font-family:Verdana'>A N N O U C E M E N T: {GLOBAL ANNOUNCEMENT}</li>
-        </ul>
-    </div>
-
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#spark-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ get_site_title() }}
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="spark-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                {{-- <ul class="nav navbar-nav">
-                    @if(Auth::guard('web')->check())
-                        <li><a href="{{ url('admin/dashboard') }}">Dashboard</a></li>
-                    @endif
-                </ul> --}}
-
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guard('customer')->check())
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::guard('customer')->user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ route('dashboard') }}"><i class="fa fa-btn fa-dashboard"></i>Dashboard</a></li>
-                                <li><a href="{{ route('customer.logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </li>
-                    @else
-                        <li><a href="{{ route('customer.login') }}">Login</a></li>
-                        <li><a href="{{ route('customer.register') }}">Register</a></li>
-                    @endif
-
-                    <!-- Lang Menu -->
-                    <li class="dropdown notifications-menu">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset('images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
-                      </a>
-                      <ul class="dropdown-menu" style="width: 100px;">
-                        <li>
-                          <!-- Inner menu: contains the tasks -->
-                          <ul class="menu">
-                            <li><!-- Task item -->
-                              <a href="#">
-                                <h3>
-                                  <img src="{{ asset('images/flags/BD.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="BD">
-                                  English
-                                </h3>
-                              </a>
-                            </li>
-                            <!-- end task item -->
-                            <li><!-- Task item -->
-                              <a href="#">
-                                <h3>
-                                  <img src="{{ asset('images/flags/US.png') }}" class="user-image" style="width: 15px; vertical-align: inherit;" alt="US">
-                                  English
-                                </h3>
-                              </a>
-                            </li>
-                            <!-- end task item -->
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                </ul>
-            </div>
+        <div class="{{ Session::has('global_announcement') ? '' : 'hidden'}}" style="background-color: #FFFDDE; height:30px; border:thin solid #EDDD00;">
+            </ul>
+                <li style='padding-top:5px;text-align:center;font-family:Verdana'>A N N O U C E M E N T: {GLOBAL ANNOUNCEMENT}</li>
+            </ul>
         </div>
-    </nav>
 
-    @yield('content')
+        <div id="global-wrapper" class="clearfix">
+            <!-- VALIDATION ERRORS -->
+            @if (count($errors) > 0)
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <strong>{{ trans('app.error') }}!</strong> {{ trans('messages.input_error') }}<br><br>
+                  <ul class="list-group">
+                      @foreach ($errors->all() as $error)
+                        <li class="list-group-item list-group-item-danger">{{ $error }}</li>
+                      @endforeach
+                  </ul>
+                </div>
+            @endif
 
-    <footer style="margin: 200px;">
-        <ul class="nav navbar-nav">
-            <li><a href="{{ url('admin/dashboard') }}">Admin Dashboard</a></li>
-            @unless (Auth::guard('web')->check())
-                <li><a href="{{ url('/selling') }}">Register as a merchant</a></li>
-            @endunless
-        </ul>
-    </footer>
-    <!-- JavaScripts -->
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</body>
+            <!-- MAIN NAVIGATIONS -->
+            @include('nav.main')
+
+            <!-- MAIN CONTENT -->
+            <div id="content-wrapper">
+                @yield('content')
+            </div>
+
+            <!-- MAIN FOOTER -->
+            @include('nav.footer')
+
+            <!-- COPYRIGHT AREA -->
+            @include('nav.copyright')
+        </div><!-- /#global-wrapper -->
+
+        <!-- MODALS -->
+        @unless(Auth::guard('customer')->check())
+            @include('auth.modals')
+        @endunless
+
+        @include('modals.quickview')
+
+        <!-- SCRIPTS -->
+        <script src="{{ theme_asset_url('js/vendor.js') }}"></script>
+        <script src="{{ theme_asset_url('js/jquery.smartCart.js') }}"></script>
+        {{-- <script src="{{ theme_asset_url('js/app.js') }}"></script> --}}
+
+        <!-- Notification -->
+        @include('notifications')
+
+        <!-- AppJS -->
+        @include('appjs')
+
+        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+        <script>
+          window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+          ga('create', 'UA-XXXXX-Y', 'auto'); ga('send', 'pageview')
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    </body>
 </html>

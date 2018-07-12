@@ -52,6 +52,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeBlogForm();
 
+        $this->composeBannerForm();
+
         $this->composeCarrierForm();
 
         $this->composeCategoryForm();
@@ -1040,6 +1042,22 @@ class ViewComposerServiceProvider extends ServiceProvider
                     $view->with('timezones', ListHelper::timezones());
                     $view->with('currencies', ListHelper::currencies());
                 });
+    }
+
+    /**
+     * compose partial view of banner form
+     */
+    private function composeBannerForm()
+    {
+        View::composer(
+
+            'admin.banner._form',
+
+            function($view)
+            {
+                $view->with('groups', ListHelper::banner_groups());
+            }
+        );
     }
 
     /**

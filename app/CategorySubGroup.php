@@ -14,7 +14,7 @@ class CategorySubGroup extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'category_group_id', 'active'];
+    protected $fillable = ['name', 'category_group_id', 'active'];
 
     /**
      * The attributes that should be mutated to dates.

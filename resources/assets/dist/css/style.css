@@ -3063,7 +3063,7 @@ table.text-center th {
   -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
   transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
   transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
-  background-image: url("../search-icon.png");
+  background-image: url("../images/search-icon.png");
   background-repeat: no-repeat;
   background-position: 3% 100%;
   -webkit-background-origin: padding-box;
@@ -3525,6 +3525,7 @@ li.dt-button.button-page-length.active a{
     margin-bottom: 10px;
     padding: 10px;
     text-transform: uppercase;
+    letter-spacing: 1px;
     /*padding: 15px 0 8px;*/
 }
 .modal-header .fa,

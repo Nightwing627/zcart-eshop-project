@@ -168,33 +168,57 @@ class demoSeeder extends Seeder
         // Demo Categories with real text
         DB::table('category_groups')->insert([
             [
+                'name' => 'Home & Garden',
+                'description' => 'Cookware, Dining, Bath, Home Decor and more',
+                'icon' => 'fa-home',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
                 'name' => 'Electronics',
                 'description' => 'Mobile, Computer, Tablet, Camera etc',
+                'icon' => 'fa-plug',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'name' => 'Kids and Toy',
                 'description' => 'Toys, Footwear etc',
+                'icon' => 'fa-gamepad',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'name' => 'Clothing and Shoes',
                 'description' => 'Shoes, Clothing, Life style items',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'name' => 'Home & Garden',
-                'description' => 'Cookware, Dining, Bath, Home Decor and more',
+                'icon' => 'fa-tags',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'name' => 'Beauty and Health',
                 'description' => 'Cosmetics, Foods and more.',
+                'icon' => 'fa-leaf',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'name' => 'Sports',
                 'description' => 'Cycle, Tennis, Boxing, Cricket and more.',
+                'icon' => 'fa-futbol-o',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'name' => 'Jewelry',
+                'description' => 'Necklances, Rings, Pendants and more.',
+                'icon' => 'fa-diamond',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'name' => 'Pets',
+                'description' => 'Pet foods and supplies.',
+                'icon' => 'fa-paw',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'name' => 'Hobbies & DIY',
+                'description' => 'Craft Sewing, Supplies and more.',
+                'icon' => 'fa-bicycle',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ]
@@ -204,61 +228,61 @@ class demoSeeder extends Seeder
             [
                 'category_group_id' => 1,
                 'name' => 'Mobile & Accessories',
-                'description' => 'Cell Phones and Accessories',
+                // 'description' => 'Cell Phones and Accessories',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'category_group_id' => 1,
                 'name' => 'Computer & Accessories',
-                'description' => 'Tablet, Laptop, Desktop and Accessories',
+                // 'description' => 'Tablet, Laptop, Desktop and Accessories',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'category_group_id' => 1,
                 'name' => 'Home Entertainment',
-                'description' => 'TVs, Home Theaters etc',
+                // 'description' => 'TVs, Home Theaters etc',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'category_group_id' => 1,
                 'name' => 'Photo & Video',
-                'description' => 'PnS, DSLR, Video Camera and Accessories',
+                // 'description' => 'PnS, DSLR, Video Camera and Accessories',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'category_group_id' => 2,
                 'name' => 'Indoor',
-                'description' => 'Puzzle, Keram etc',
+                // 'description' => 'Puzzle, Keram etc',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'category_group_id' => 2,
                 'name' => 'Outdoor',
-                'description' => 'Cycle, Dron etc',
+                // 'description' => 'Cycle, Dron etc',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'category_group_id' => 3,
                 'name' => 'Men\'s Fashion',
-                'description' => 'Lots of fashion products.',
+                // 'description' => 'Lots of fashion products.',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'category_group_id' => 3,
                 'name' => 'Women\'s Fashion',
-                'description' => 'Lots of fashion products.',
+                // 'description' => 'Lots of fashion products.',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'category_group_id' => 4,
                 'name' => 'Kitchen',
-                'description' => 'Kitchen and cooking products.',
+                // 'description' => 'Kitchen and cooking products.',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
                 'category_group_id' => 4,
                 'name' => 'Garden',
-                'description' => 'Gardening related products.',
+                // 'description' => 'Gardening related products.',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ]
@@ -328,11 +352,11 @@ class demoSeeder extends Seeder
             ]
         ]);
 
-        factory(App\CategoryGroup::class, $this->count)->create();
+        // factory(App\CategoryGroup::class, $this->count)->create();
 
-        factory(App\CategorySubGroup::class, $this->count)->create();
+        factory(App\CategorySubGroup::class, $this->longCount)->create();
 
-        factory(App\Category::class, $this->count)->create();
+        factory(App\Category::class, $this->longLongCount)->create();
 
         factory(App\AttributeValue::class, $this->longLongCount)->create();
 
@@ -450,5 +474,31 @@ class demoSeeder extends Seeder
         //     );
         // }
 
+
+        // Frontend Seeder
+        factory(App\Banner::class, 3)->create([
+            'columns' => 4,
+            'group_id' => 'best_deals'
+        ]);
+        factory(App\Banner::class, 2)->create([
+            'columns' => 6,
+            'group_id' => 'place_one'
+        ]);
+        factory(App\Banner::class)->create([
+            'columns' => 12,
+            'group_id' => 'place_two'
+        ]);
+        factory(App\Banner::class, 2)->create([
+            'columns' => 6,
+            'group_id' => 'place_three'
+        ]);
+        factory(App\Banner::class, 2)->create([
+            'columns' => 12,
+            'group_id' => 'sidebar'
+        ]);
+        factory(App\Banner::class)->create([
+            'columns' => 12,
+            'group_id' => 'bottom'
+        ]);
     }
 }

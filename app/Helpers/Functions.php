@@ -320,6 +320,41 @@ if ( ! function_exists('get_placeholder_img') )
     }
 }
 
+if ( ! function_exists('get_product_img_src') )
+{
+    function get_product_img_src($product = null, $size = 'medium', $type = 'primary')
+    {
+        if ($product){
+            if ( !($product instanceof \App\Product) && is_int($product) )
+                $product = \App\Product::findorFail($product);
+
+            $hasFeaturedImage = $product->featuredImage ? TRUE : FALSE;
+            $images_count = $product->images->count();
+
+            if($type == 'alt'){
+                if($hasFeaturedImage && $images_count){
+                    $path = $product->images->first()->path;
+                }
+                else if($images_count > 1){
+                    $imgs = $product->images->toArray();
+                    $path = $imgs[1]['path'];
+                }
+            }
+            else{
+                if($hasFeaturedImage)
+                    $path = $product->featuredImage->path;
+                else if($images_count)
+                    $path = $product->images->first()->path;
+            }
+
+            if(isset($path))
+                return url("image/{$path}?p={$size}");
+        }
+
+        return asset('images/demo/no_img.png');
+    }
+}
+
 if ( ! function_exists('verifyUniqueSlug') )
 {
     function verifyUniqueSlug($slug, $table, $field = 'slug')
@@ -330,7 +365,6 @@ if ( ! function_exists('verifyUniqueSlug') )
         return response()->json('true');
     }
 }
-
 
 if ( ! function_exists('generateCouponCode') )
 {

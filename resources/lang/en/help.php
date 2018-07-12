@@ -529,6 +529,12 @@ return [
 
     'user_category_slug' => 'Use category <strong>slug</strong> in category field.',
 
+    'cat_cover_img' => 'This image will display on the top of category page',
+
+    'cat_grp_img' => 'This image will display on the background of the category dropdown box',
+
+    'cat_grp_desc' => 'Customer will not see this. But Merchants will see this.',
+
     'invalid_rows_will_ignored' => 'Invalid rows will be <strong>ignored</strong>.',
 
     'upload_rows' => 'Upload no more than <strong>:rows rows</strong> per batch for better performance.',
@@ -541,7 +547,46 @@ return [
 
     'invalid_category' => 'Invalid category.',
 
+    'category_desc' => 'Give a short detail. Customers will see this.',
+
     'email_already_exist' => 'The email address already in use.',
 
     'slug_already_exist' => 'The slug already in use.',
+
+    'display_order' => 'This number will be used to arrange viewing order. The smallest number will display first.',
+
+    'banner_title' => 'This line will be highlighted on the banner. Leave it blank if you don\'t want to show the title.',
+
+    'banner_description' => '( Example: 50% Off! ) Leave it blank if you don\'t want to show this.',
+
+    'banner_image' => 'The main image what will display over the background. Commonly use a product image.',
+
+    'banner_background' => 'Choose a color or upload an image as the background.',
+
+    'banner_group' => 'The placement of the banner on the storefront. The banner will not display if the group is not specified.',
+
+    'bs_columns' => 'How many columns this banner will use? The system uses 12 columns grid system to display banners.',
+
+    'banner_order' => 'This number will be used to arrange viewing order in the group of banners. The smallest number will display first.',
+
+    'banner_link' => 'Users will redirect to this link.',
+
+    'link_label' => 'The label of the link button',
+
+    'slider_link' => 'Users will redirect to this link.',
+
+    'slider_title' => 'This line will be highlighted over the slider. Leave it blank if you don\'t want to show the title.',
+
+    'slider_sub_title' => 'The second line of the title. Leave it blank if you don\'t want to show this.',
+
+    'slider_image' => 'The main image what will display as slider. Its required to generate the slider.',
+
+    'slider_img_hint' => 'The slider image should be 1280x300px',
+
+    'slider_order' => 'The slider will be  arranged by this order.',
+
+    'slider_thumb_image' => 'This small image will be used as thumbnail. The system will create a thumbnail if not provided.',
+
+    'slider_thumb_hint' => 'It can be 150x59px',
+
 ];

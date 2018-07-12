@@ -15,6 +15,11 @@ class ModulesSeeder extends Seeder
      */
     private $modules = [
         // Module name  => Access level //
+        'Appearance' => [
+            'access' => 'Platform',
+            'actions' => 'customize'
+        ],
+
         'Attribute' => [
             'access' => 'Common',
             'actions' => 'view,add,edit,delete'

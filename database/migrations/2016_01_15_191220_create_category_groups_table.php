@@ -16,7 +16,9 @@ class CreateCategoryGroupsTable extends Migration
             $table->increments('id');
             $table->string('name', 200)->unique();
             $table->text('description')->nullable();
+            $table->string('icon', 100)->default('cube')->nullable();
             $table->boolean('active')->default(1);
+            $table->integer('order')->default(100)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -24,7 +26,6 @@ class CreateCategoryGroupsTable extends Migration
             $table->increments('id');
             $table->integer('category_group_id')->unsigned();
             $table->string('name',200)->unique();
-            $table->text('description')->nullable();
             $table->boolean('active')->default(1);
             $table->softDeletes();
             $table->timestamps();

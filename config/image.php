@@ -85,32 +85,68 @@ return [
             'fit' => 'contain'
         ],
         'medium' => [
-            'w' => 400,
-            'h' => 300,
+            'w' => 250,
+            'h' => 250,
             'fit' => 'contain'
         ],
         'large' => [
-            'w' => 1200,
-            'h' => 900,
+            'w' => 500,
+            'h' => 500,
+            'fit' => 'contain'
+        ],
+        'full' => [
+            'w' => 1280,
+            'h' => 1000,
             'fit' => 'contain'
         ],
 
         /*
         |--------------------------------------------------------------------------
-        | Category banner sizes
+        | Product view sizes
         |--------------------------------------------------------------------------
         |
         | The system will create a banner image using this size
         | Don't modify this values if you are not sure
         |
         */
-        'category_banner' => [
-            'w' => 800,
-            'h' => 200,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Full with banner/cover size
+        |--------------------------------------------------------------------------
+        |
+        | The system will create a banner image using this size
+        | Don't modify this values if you are not sure
+        |
+        */
+        'cover' => [
+            'w' => 1280,
+            'h' => 300,
+            'fit' => 'contain'
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Main slider sizes
+        |--------------------------------------------------------------------------
+        |
+        | The system will create a banner image using this size
+        | Don't modify this values if you are not sure
+        |
+        */
+        'main_slider' => [
+            'w' => 1280,
+            'h' => 300,
+            'fit' => 'contain'
+        ],
+        'slider_thumb' => [
+            'w' => 150,
+            'h' => 59,
             'fit' => 'contain'
         ],
 
         // Add your sizes here
+
     ],
 
     /*

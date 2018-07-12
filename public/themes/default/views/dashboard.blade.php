@@ -1,6 +1,9 @@
 @extends('layouts.main')
 
 @section('content')
+    <!-- HEADER SECTION -->
+    @include('headers.account_page')
+
     <div class="container">
         @if(! Auth::guard('customer')->user()->isVerified())
             <div class="alert alert-info alert-dismissible">
@@ -12,21 +15,22 @@
         @endif
     </div>
 
-    <div class="container spark-screen">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Customer Dashboard</div>
+    <!-- CONTENT SECTION -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 nopadding">
+                    @include('nav.account_page_sidebar')
+                </div><!-- /.col-md-2 -->
 
-                    <div class="panel-body">
-                        Customer Dashboard
-                        <br/>
-                        {{-- <pre> --}}
-                        {{ Auth::guard('customer')->user() }}
-                        {{-- </pre> --}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                <div class="col-md-10 nopadding-right">
+                    @include('contents.' . $tab)
+                </div><!-- /.col-md-10 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section>
+
+    <!-- BROWSING ITEMS -->
+    @include('sliders.browsing_items')
+
 @endsection

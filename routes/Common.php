@@ -1,4 +1,6 @@
 <?php
+// To view img no need to login
+Route::get('image/{path}', 'ImageController@show')->where('path', '.*')->name('image.show');
 
 Route::group(['middleware' => ['auth']], function(){
 	include('common/Image.php');

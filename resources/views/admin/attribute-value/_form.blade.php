@@ -48,7 +48,6 @@
 				<i style="background-color: rgb(135, 60, 60);"></i>
 			</div>
 		</div>
-	<!-- /.input group -->
 	</div>
 
 	<div class="form-group">

@@ -57,6 +57,11 @@ class Category extends Model
         if (count($this->subGroups)) return $this->subGroups->pluck('id')->toArray();
     }
 
+    // public static function findBySlug($slug)
+    // {
+    //     return $this->where('slug', $slug)->firstOrFail();
+    // }
+
     /**
      * Scope a query to only include active categories.
      *

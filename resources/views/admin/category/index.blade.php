@@ -27,13 +27,13 @@
 		        @foreach($categories as $category )
 			        <tr>
 			          	<td>
-							<img src="{{ get_storage_file_url(optional($category->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($category->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 			          	</td>
 			          	<td>
 			          		<h5>{{ $category->name }}</h5>
 			          		@if($category->description)
 				          		<span class="excerpt-td small">
-				          			{!! str_limit($category->description, 150) !!}
+				          			{!! str_limit($category->description, 200) !!}
 				          		</span>
 				          	@endif
 			          	</td>

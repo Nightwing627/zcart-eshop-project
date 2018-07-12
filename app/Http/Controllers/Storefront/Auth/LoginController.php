@@ -107,7 +107,8 @@ class LoginController extends Controller
 
       if ($this->attemptLogin($request)) {
         // if successful, then redirect to their intended location
-        return redirect()->intended(route('dashboard'));
+
+        return redirect()->intended('/')->with('success', trans('theme.notify.logged_in_successfully'));
       }
 
       // If the login attempt was unsuccessful we will increment the number of attempts
@@ -144,6 +145,6 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect('/');
+        return redirect('/')->with('success', trans('theme.notify.logged_out_successfully'));
     }
 }

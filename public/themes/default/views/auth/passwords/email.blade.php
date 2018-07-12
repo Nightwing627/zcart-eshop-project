@@ -1,4 +1,5 @@
-@extends('auth.master')
+@extends('auth.layout')
+
 @section('content')
   @if (session('status'))
     <div class="alert alert-success">

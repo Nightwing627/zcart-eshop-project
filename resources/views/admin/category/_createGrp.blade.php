@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-sm">
+<div class="modal-dialog modal-md">
     <div class="modal-content">
     	{!! Form::open(['route' => 'admin.catalog.categoryGroup.store', 'files' => true, 'id' => 'form', 'data-toggle' => 'validator']) !!}
         <div class="modal-header">
