@@ -33,6 +33,7 @@ class Manufacturer extends Model
     protected $fillable = [
                             'shop_id',
                             'name',
+                            'slug',
                             'email',
                             'url',
                             'phone',
@@ -56,6 +57,14 @@ class Manufacturer extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    /**
+     * Setters
+     */
+    // public function setSlugAttribute($value)
+    // {
+    //     $this->attributes['slug'] = str_slug($value);
+    // }
 
     /**
      * Scope a query to only include records from the users shop.

@@ -1256,7 +1256,7 @@ div[data-notify="container"] {
 }
 
 /* *** Seller Info Widget*** */
-.seller-info .section-title{
+/*.seller-info .section-title{
     color: #777;
 }
 .seller-info .seller-info-logo{
@@ -1270,7 +1270,7 @@ div[data-notify="container"] {
     margin: 10px;
     text-decoration: none;
 }
-
+*/
 
 /* ==========================================================================
     Category page
@@ -1485,7 +1485,7 @@ div[data-notify="container"] {
 }
 .product-info-feature-list {
     position: absolute;
-    right: 10px;
+    right: 0;
     bottom: 11px;
     margin: 0;
     padding: 0;
@@ -1670,7 +1670,7 @@ div[data-notify="container"] {
 }
 .product-info {
   font-family: 'Open Sans', arial, helvetica, sans-serif;
-  padding: 5px 3px;
+  padding: 5px 0px;
   position: relative;
 }
 .product-info-seller-name{
@@ -2174,10 +2174,12 @@ div[data-notify="container"] {
     transform: translateY(-50%);
     z-index: 2;
 }
+.brand-banner-img-wrapper .banner-caption,
 .store-banner-img-wrapper .banner-caption {
     left: unset;
     width: 100%;
     text-align: center!important;
+    padding: 0 50px;
 }
 
 .banner-title {

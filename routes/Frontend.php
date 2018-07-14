@@ -13,6 +13,8 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 	Route::get('categories', 'HomeController@categories')->name('categories');
 	Route::get('category/{slug}', 'HomeController@browseCategory')->name('category.browse');
 	Route::get('shop/{slug}', 'HomeController@shop')->name('show.store');
+	Route::get('brand/{slug}', 'HomeController@brand')->name('show.brand');
+	Route::get('support/contact', 'ContactUsController@show_contact_form')->name('support.contact_us');
 
 	Route::middleware(['auth:customer'])->group(function () {
 		Route::get('my/{tab?}', 'AccountController@index')->name('account');

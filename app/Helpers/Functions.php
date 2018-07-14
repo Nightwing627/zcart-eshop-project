@@ -558,6 +558,28 @@ if ( ! function_exists('get_formated_decimal') )
     }
 }
 
+if ( ! function_exists('get_formated_price') )
+{
+    /**
+     * Get the formated currency tring.
+     *
+     * @param  integer $value amount
+     *
+     * @return str        currency tring
+     */
+    function get_formated_price($value = 0, $decimal = null)
+    {
+        $price = get_formated_currency($value, $decimal);
+
+        $arr = explode(config('system_settings.currency.decimal_mark', '.'), $price);
+
+        if(isset($arr[1]))
+            return $arr[0] . '<sup class="price-fractional">' . $arr[1] .'</sup>';
+
+        return $price;
+    }
+}
+
 if ( ! function_exists('get_formated_currency') )
 {
     /**

@@ -150,7 +150,7 @@
 
                     // Change the action buttons
                     $('.product-actions').toggleClass('btn-group');
-                    $('.product-actions a.btn-default').toggleClass('btn-sm');
+                    $('.product-actions a.btn-default, .product-actions a.btn-link').toggleClass('btn-sm');
                     $('.product-actions a:first-child').toggleClass('btn-link btn-default');
                 }
                 return false;

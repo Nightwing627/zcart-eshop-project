@@ -216,7 +216,7 @@ class ListHelper
         return CategoryGroup::select('id','name','icon')->with(['image',
                                    'subGroups' => function($query){
                                         $query->select('id','category_group_id','name')
-                                              ->active()->has('categories')
+                                              ->active()->has('categories.products.inventories')
                                               ->withCount('categories')->orderBy('categories_count', 'desc');
                                     },
                                     'subGroups.categories' => function($query){

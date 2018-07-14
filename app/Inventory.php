@@ -224,6 +224,18 @@ class Inventory extends Model
     }
 
     /**
+     * Scope a query to only include available for sale .
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAvailable($query)
+    {
+        return $query->where('active', 1)
+                    ->where('stock_quantity', '>', 0)
+                    ->where('available_from', '<=', Carbon::now());
+    }
+
+    /**
      * Scope a query to only include active records.
      *
      * @return \Illuminate\Database\Eloquent\Builder

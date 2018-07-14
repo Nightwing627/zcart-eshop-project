@@ -28,10 +28,9 @@ class SystemsSeeder extends Seeder
             'length_unit' => 'cm',
             'weight_unit' => 'gm',
             'valume_unit' => 'liter',
-            'decimals' => 2,
             // 'currency_format' => 'x,xxx.xx',
             'show_currency_symbol' => 1,
-            'show_space_after_symbol' => 1,
+            'show_space_after_symbol' => 0,
 
             // Temoporary for dev
             'required_card_upfront' => Null,

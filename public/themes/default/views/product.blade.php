@@ -8,7 +8,22 @@
     @include('contents.product_page')
 
     <!-- RELATED ITEMS -->
-    @include('sliders.related_items')
+    <section>
+        <div class="container">
+          <div class="row">
+              <div class="col-md-12 nopadding">
+                <div class="section-title">
+                  <h4>Related <span class="text-primary">Items</span></h4>
+                </div>
+
+                @include('sliders.carousel_with_feedback', ['products' => $related])
+
+              </div><!-- /.col-md-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section>
+
+    <div class="clearfix space20"></div>
 
     <!-- BROWSING ITEMS -->
     @include('sliders.browsing_items')

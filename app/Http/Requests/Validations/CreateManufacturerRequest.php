@@ -23,7 +23,10 @@ class CreateManufacturerRequest extends Request
      */
     public function rules()
     {
-        Request::merge(['shop_id' => Request::user()->merchantId()]); //Set shop_id
+        Request::merge([
+                'shop_id' => Request::user()->merchantId(),
+                'slug'    =>  str_slug($this->input('name'))
+            ]); //Set extra attributes
 
         return [
            'name' => 'bail|required|unique:manufacturers',

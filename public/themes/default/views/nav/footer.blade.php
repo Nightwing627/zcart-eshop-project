@@ -47,6 +47,7 @@
       <ul class="footer-link-list">
         <li><a href="#" rel="nofollow">Sell Your Product</a></li>
         <li><a href="#" rel="nofollow">Affiliate Program</a></li>
+        <li><a href="{{ url('admin/dashboard') }}">Merchant Dashboard</a></li>
       </ul>
     </div>
 
@@ -66,12 +67,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-              <ul>
-                  <li><a href="{{ url('admin/dashboard') }}">Admin Dashboard</a></li>
-                  @unless (Auth::guard('web')->check())
-                      <li><a href="{{ url('/selling') }}">Register as a merchant</a></li>
-                  @endunless
-              </ul>
             </div>
             <div class="col-md-3">
             </div>

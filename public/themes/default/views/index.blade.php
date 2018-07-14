@@ -8,10 +8,23 @@
     @include('banners.best_deals')
 
     <!-- TRENDING ITEMS -->
-    @include('sliders.trending_items')
+    <section>
+        <div class="container">
+          <div class="row">
+              <div class="col-md-12 nopadding">
+                <div class="section-title">
+                  <h4>Trending <span class="text-primary">Now</span></h4>
+                </div>
+
+                @include('sliders.carousel_with_feedback', ['products' => $trending])
+
+              </div><!-- /.col-md-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section>
 
     <!-- PRODUCTS -->
-    @include('contents.prodducts')
+    @include('contents.products')
 
     <!-- BROWSING ITEMS -->
     @include('sliders.browsing_items')

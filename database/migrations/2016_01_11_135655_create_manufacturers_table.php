@@ -16,6 +16,7 @@ class CreateManufacturersTable extends Migration
             $table->increments('id');
             $table->integer('shop_id')->unsigned()->nullable();
             $table->string('name');
+            $table->string('slug', 200)->unique();
             $table->string('email')->nullable();
             $table->text('url')->nullable();
             $table->string('phone')->nullable();

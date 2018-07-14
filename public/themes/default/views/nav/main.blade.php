@@ -130,14 +130,14 @@
         @endforeach
         <li class="dropdown"><a class="navbar-item-mergin-top" href="#">{{ trans('theme.gift_cards') }}</a>
         </li>
-        <li class="dropdown"><a class="navbar-item-mergin-top" href="#">{{ trans('theme.nav.sell_on', ['platform' => get_platform_title()]) }}</a>
+        <li class="dropdown"><a class="navbar-item-mergin-top" href="{{ url('/selling') }}">{{ trans('theme.nav.sell_on', ['platform' => get_platform_title()]) }}</a>
         </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="wishlist.html" class="navbar-item-mergin-top"><i class="fa fa-heart-o hidden-xs"></i> {{ trans('theme.nav.wishlist') }}</a>
+        <li><a href="{{ route('account', 'wishlist') }}" class="navbar-item-mergin-top"><i class="fa fa-heart-o hidden-xs"></i> {{ trans('theme.nav.wishlist') }}</a>
         </li>
-        <li><a href="contact-page.html" class="navbar-item-mergin-top">{{ trans('theme.nav.support') }}</a>
+        <li><a href="{{ route('support.contact_us') }}" class="navbar-item-mergin-top">{{ trans('theme.nav.support') }}</a>
         </li>
         <li class="dropdown">
           <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
