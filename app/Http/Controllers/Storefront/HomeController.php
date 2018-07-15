@@ -10,6 +10,7 @@ use App\Product;
 use App\Category;
 use App\Inventory;
 use App\Manufacturer;
+use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -22,20 +23,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $banners = Banner::with('featuredImage', 'images')->orderBy('order', 'asc')->get()->groupBy('group_id')->toArray();
-        $sliders = Slider::with('featuredImage', 'images')->orderBy('order', 'asc')->get()->toArray();
+        $banners = Banner::with('featuredImage:path', 'images:path')->orderBy('order', 'asc')->get()->groupBy('group_id')->toArray();
+        $sliders = Slider::with('featuredImage:path', 'images:path')->orderBy('order', 'asc')->get()->toArray();
 
-        $trending = Product::active()->whereHas('inventories', function ($query) {
-            $query->available();
-        })->inRandomOrder()->limit(20)->with(['inventories:product_id,sale_price', 'featuredImage', 'images'])->get();
+        $trending = ListHelper::popular_items(config('system.popular.period.trending', 2), config('system.popular.take.trending', 15));
+        $weekly_popular = ListHelper::popular_items(config('system.popular.period.weekly', 7), config('system.popular.take.weekly', 5));
 
-        $recent = Product::active()->whereHas('inventories', function ($query) {
-            $query->available();
-        })->latest()->limit(10)->with(['inventories:product_id,sale_price', 'featuredImage', 'images'])->get();
+        $recent = ListHelper::latest_available_products(10);
+        $additional_items = ListHelper::random_products(10);
 
-        // $trending = Inventory::available()->inRandomOrder()->limit(20)->with('product')->get();
         // echo "<pre>"; print_r($trending->toArray()); echo "</pre>"; exit();
-        return view('index', compact('banners', 'sliders', 'trending', 'recent'));
+        return view('index', compact('banners', 'sliders', 'trending', 'weekly_popular', 'recent', 'additional_items'));
     }
 
     /**
@@ -66,10 +64,12 @@ class HomeController extends Controller
     {
         $product = Product::where('slug', $slug)->firstOrFail();
 
+        // Push product ID to session for the recently viewed items section
+        session()->push('products.recently_viewed_items', $product->getKey());
+
         // TEST
-        $related = Product::active()->whereHas('inventories', function ($query) {
-            $query->available();
-        })->inRandomOrder()->limit(20)->with(['inventories:product_id,sale_price', 'featuredImage', 'images'])->paginate(20);
+        $related = ListHelper::related_products($product);
+        // $related = [];
 
 // echo "<pre>"; print_r($product->inventories); echo "</pre>"; exit();
         return view('product', compact('product', 'related'));

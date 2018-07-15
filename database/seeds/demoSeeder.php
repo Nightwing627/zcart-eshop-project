@@ -9,6 +9,7 @@ class demoSeeder extends Seeder
     private $count = 15;
     private $longCount = 30;
     private $longLongCount = 50;
+    private $veryLongCount = 150;
 
     /**
      * Run the database seeds.
@@ -17,7 +18,7 @@ class demoSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Visitor::class, 100)->create();
+        factory(App\Visitor::class, $this->veryLongCount)->create();
 
         factory(App\Role::class, $this->tinycount)->create();
 
@@ -500,5 +501,7 @@ class demoSeeder extends Seeder
             'columns' => 12,
             'group_id' => 'bottom'
         ]);
+
+        factory(App\Wishlist::class, $this->veryLongCount)->create();
     }
 }

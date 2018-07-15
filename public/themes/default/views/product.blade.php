@@ -13,7 +13,7 @@
           <div class="row">
               <div class="col-md-12 nopadding">
                 <div class="section-title">
-                  <h4>Related <span class="text-primary">Items</span></h4>
+                  <h4>@lang('theme.section_headings.related_items')</h4>
                 </div>
 
                 @include('sliders.carousel_with_feedback', ['products' => $related])

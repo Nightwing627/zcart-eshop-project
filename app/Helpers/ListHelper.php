@@ -26,6 +26,8 @@ use App\CategoryGroup;
 use App\CategorySubGroup;
 // use App\SubscriptionPlan;
 
+use Carbon\Carbon;
+
 /**
 * This is a helper class to process,upload and remove images from different models
 */
@@ -508,7 +510,6 @@ class ListHelper
 
     /**
      * Get customers list for form dropdown.
-     *
      * @return array
      */
     public static function customers()
@@ -517,13 +518,19 @@ class ListHelper
     }
 
     /**
-     * Get top_listing_items list for merchnat.
-     *
+     * Get top listing_items list for merchnat.
      * @return array
      */
-    public static function top_listing_items()
+    public static function top_listing_items($shop = Null, $count = 5)
     {
-        return Inventory::where('inventories.shop_id', Auth::user()->shop_id)->with('image')
+        $items = new Inventory;
+
+        if(Auth::user()->isFromPlatform() && $shop)
+            $items->where('inventories.shop_id', $shop);
+        else
+            $items->where('inventories.shop_id', Auth::user()->shop_id);
+
+        return $items->with('image')
                     ->select(
                         'inventories.id','inventories.sku','products.name','inventories.product_id',
                         \DB::raw('SUM(order_items.quantity) as sold_qtt')
@@ -531,6 +538,27 @@ class ListHelper
                     ->join('products', 'inventories.product_id', 'products.id')
                     ->join('order_items', 'inventories.id', 'order_items.inventory_id')
                     ->groupBy('inventory_id')
+                    ->limit($count)
+                    ->get();
+    }
+
+    /**
+     * Get trendiing items list. Get the most ordered item in given days
+     * @return array
+     */
+    public static function popular_items($days = 7, $count = 15)
+    {
+        return Product::with(['featuredImage:path', 'inventories:product_id,sale_price'])
+                    ->select(
+                        'products.id','products.name','products.slug',
+                        \DB::raw('COUNT(order_items.order_id) as order_count')
+                    )
+                    ->join('inventories', 'inventories.product_id', 'products.id')
+                    ->join('order_items', 'inventories.id', 'order_items.inventory_id')
+                    ->where('order_items.created_at', '>=', Carbon::now()->subDays($days))
+                    ->groupBy('products.id')
+                    ->orderBy('order_count', 'desc')
+                    ->limit($count)
                     ->get();
     }
 
@@ -547,8 +575,65 @@ class ListHelper
     }
 
     /**
+     * Get latest products that has live listing
+     * @return array
+     */
+    public static function latest_available_products($limit = 10)
+    {
+        return Product::active()->whereHas('inventories', function ($query) {
+                                $query->available();
+                            })
+                            ->with(['inventories:product_id,sale_price', 'featuredImage'])
+                            ->latest()->limit($limit)->get();
+    }
+
+    /**
+     * Get related products of given item
+     * @return array
+     */
+    public static function related_products($product, $limit = 10)
+    {
+        $catIds = $product->categories->pluck('id');
+        $productIDs = \DB::table('category_product')->whereIn('category_id', $catIds)->pluck('product_id');
+
+        $products = Product::whereIn('id', $productIDs)->active()->whereHas('inventories', function ($query) {
+                                $query->available();
+                            })
+                            ->with(['inventories:product_id,sale_price', 'featuredImage'])
+                            ->inRandomOrder()->limit($limit)->get();
+
+        // If the item count is not enough, then take more randomly
+        $products_count = $products->count();
+        if($products_count < $limit){
+            $fulfilments = ListHelper::random_products($limit - $products_count);
+            return $products->merge($fulfilments);
+        }
+
+        return $products;
+    }
+
+    /**
+     * Get given number of random products
+     * @return array
+     */
+    public static function random_products($limit = 10)
+    {
+        return Product::active()->whereHas('inventories', function ($query) {
+                                $query->available();
+                            })
+                            ->with(['inventories:product_id,sale_price', 'featuredImage:path'])
+                            ->inRandomOrder()->limit($limit)->get();
+    }
+
+    public static function recentlyViewedItems()
+    {
+        $products = session()->get('products.recently_viewed_items');
+
+        return Product::select('slug', 'name')->whereIn('id', $products)->with('featuredImage:path')->get();
+    }
+
+    /**
      * Get orders list for form dropdown.
-     *
      * @return array
      */
     public static function orders()

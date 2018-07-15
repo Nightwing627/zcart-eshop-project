@@ -62,7 +62,7 @@
             </div>
 
             <div class="product-actions btn-group">
-                <a class="btn btn-default flat" href="#">
+                <a class="btn btn-default flat" href="{{ route('wishlist.add', $product) }}">
                     <i class="fa fa-heart-o" data-toggle="tooltip" title="@lang('theme.button.add_to_wishlist')"></i> <span>@lang('theme.button.add_to_wishlist')</span>
                 </a>
 

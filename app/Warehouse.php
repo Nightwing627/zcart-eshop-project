@@ -45,7 +45,7 @@ class Warehouse extends Model
      */
     public function country()
     {
-        return $this->belongsTo('App\Country');
+        return $this->belongsTo(Country::class);
     }
 
     /**
@@ -53,7 +53,7 @@ class Warehouse extends Model
      */
     public function manager()
     {
-        return $this->belongsTo('App\User', 'incharge');
+        return $this->belongsTo(User::class, 'incharge');
     }
 
     /**
@@ -61,7 +61,7 @@ class Warehouse extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('App\User')->withTimestamps();
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
     /**
@@ -79,7 +79,7 @@ class Warehouse extends Model
      */
     public function shop()
     {
-        return $this->belongsTo('App\Shop');
+        return $this->belongsTo(Shop::class);
     }
 
     /**
@@ -87,7 +87,7 @@ class Warehouse extends Model
      */
     public function inventories()
     {
-        return $this->hasMany('App\Inventory');
+        return $this->hasMany(Inventory::class);
     }
 
     /**
@@ -95,7 +95,7 @@ class Warehouse extends Model
      */
     public function products()
     {
-        return $this->hasManyThrough('App\Product', 'App\Inventory');
+        return $this->hasManyThrough(Product::class, Inventory::class);
     }
 
     /**

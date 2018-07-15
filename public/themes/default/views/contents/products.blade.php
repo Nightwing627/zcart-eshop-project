@@ -10,7 +10,7 @@
 
         <div class="row">
           <div class="section-title">
-            <h4>Recently <span class="text-primary">Added</span></h4>
+            <h4>@lang('theme.section_headings.recently_added')</h4>
           </div>
 
           @include('sliders.carousel_without_feedback', ['products' => $recent])
@@ -22,10 +22,10 @@
 
         <div class="row">
           <div class="section-title">
-            <h4>Additional items to <span class="text-primary">explore</span></h4>
+            <h4>@lang('theme.section_headings.additional_items')</h4>
           </div>
 
-          @include('sliders.carousel_thumbs', ['products' => $recent])
+          @include('sliders.carousel_thumbs', ['products' => $additional_items])
         </div><!-- /.row -->
 
         <!-- Place Three Banner -->
@@ -34,10 +34,10 @@
 
       <div class="col-md-3 nopadding-right bg-light">
         <div class="section-title" style="margin-top: 30px;">
-          <h4>Weekly <span class="text-primary">Popular</span></h4>
+          <h4>@lang('theme.section_headings.weekly_popular')</h4>
         </div>
 
-        @include('contents.sidebar_product_list', ['products' => $recent])
+        @include('contents.sidebar_product_list', ['products' => $weekly_popular])
 
         <div class="space30"></div>
 

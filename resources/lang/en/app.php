@@ -152,6 +152,7 @@ return [
     'spent' => 'Spent',
     'slider' => 'Slider',
     'maintenance_mode' => 'On maintenance mode',
+    'no_img_available' => 'No Image Found',
     'access_control' => 'Access control',
     'order_detail' => 'Order detail',
     'order_amount' => 'Order amount',

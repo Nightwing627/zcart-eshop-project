@@ -48,7 +48,7 @@
 
 				              	<div class="space10"></div>
 
-				              	<a href="#" class="btn btn-link"><i class="fa fa-heart-o"></i> @lang('theme.button.add_to_wishlist')</a>
+				              	<a href="{{ route('wishlist.add', $product) }}" class="btn btn-link"><i class="fa fa-heart-o"></i> @lang('theme.button.add_to_wishlist')</a>
 				          	</div><!-- /.product-info -->
 
 				          	@include('layouts.share_btns')
@@ -104,7 +104,7 @@
 				          	<div class="sep"></div>
 
  				          	<a href="{{ route('checkout') }}" class="btn btn-lg btn-warning flat"><i class="fa fa-rocket"></i> @lang('theme.button.buy_now')</a>
-				          	<a href="#" class="btn btn-link"><i class="fa fa-heart-o"></i> @lang('theme.button.add_to_wishlist')</a>
+				          	<a href="{{ route('wishlist.add', $product) }}" class="btn btn-link"><i class="fa fa-heart-o"></i> @lang('theme.button.add_to_wishlist')</a>
 				      	</div><!-- /.product-single -->
 			  		</div>
 				  	<div class="col-md-5 col-sm-6 nopadding-right">

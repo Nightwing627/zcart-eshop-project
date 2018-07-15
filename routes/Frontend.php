@@ -17,6 +17,8 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 	Route::get('support/contact', 'ContactUsController@show_contact_form')->name('support.contact_us');
 
 	Route::middleware(['auth:customer'])->group(function () {
+		include('storefront/Wishlist.php');
+
 		Route::get('my/{tab?}', 'AccountController@index')->name('account');
 	});
 });

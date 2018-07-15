@@ -888,29 +888,28 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                     $view->with([
                         'chart' => $chart,
-                        'merchant_count' => Statistics::merchant_count(),
+                        'merchant_count'            => Statistics::merchant_count(),
                         'new_merchant_last_30_days' => Statistics::merchant_count(30),
 
-                        'customer_count' => Statistics::customer_count(),
+                        'customer_count'            => Statistics::customer_count(),
                         'new_customer_last_30_days' => Statistics::customer_count(30),
 
                         'todays_sale_amount'        => Statistics::todays_sale_amount(),
                         'yesterdays_sale_amount'    => Statistics::yesterdays_sale_amount(),
 
-                        'todays_visitor_count' => Statistics::visitor_count('today'),
+                        'todays_visitor_count'      => Statistics::visitor_count('today'),
                         'last_30days_visitor_count' => Statistics::visitor_count(30),
                         'last_60days_visitor_count' => Statistics::visitor_count(60),
 
-                        'dispute_count' => Statistics::appealed_dispute_count(),
+                        'dispute_count'             => Statistics::appealed_dispute_count(),
                         'last_30days_dispute_count' => Statistics::appealed_dispute_count(Null, 30),
                         'last_60days_dispute_count' => Statistics::appealed_dispute_count(Null, 60),
 
-                        'top_customers'               => ListHelper::top_customers(),
+                        'top_customers'             => ListHelper::top_customers(),
                         'top_vendors'               => ListHelper::top_vendors(),
 
-                        'latest_products'            => ListHelper::latest_products(),
-                        'open_tickets'               => ListHelper::open_tickets(),
-
+                        'latest_products'           => ListHelper::latest_products(),
+                        'open_tickets'              => ListHelper::open_tickets(),
                     ]);
                 });
     }

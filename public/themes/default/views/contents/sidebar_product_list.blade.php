@@ -3,7 +3,7 @@
         <li>
             <div class="product-widget">
                 <div class="product-img-wrap">
-                    <img class="product-img" src="{{ get_product_img_src($product, 'medium') }}" data-name="product_image" alt="{{ $product->name }}" title="{{ $product->name }}" />
+                    <img class="product-img" src="{{ get_storage_file_url(optional($product->featuredImage)->path, 'medium') }}" data-name="product_image" alt="{{ $product->name }}" title="{{ $product->name }}" />
                 </div>
                 <div class="product-info">
                     @include('layouts.ratings', ['ratings' => 4.5])

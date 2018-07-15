@@ -61,7 +61,7 @@
 									</td>
 							        <td>{{ $order->created_at->toDayDateTimeString() }}</td>
 									<td>{{ $order->customer->name }}</td>
-									<td>{{ get_formated_currency($order->grand_total )}}</td>
+									<td>{{ get_formated_currency($order->grand_total) }}</td>
 									<td>{!! $order->paymentStatusName() !!}</td>
 									<td>
 										<span class="label label-outline" style="background-color: {{ optional($order->status)->label_color }}">

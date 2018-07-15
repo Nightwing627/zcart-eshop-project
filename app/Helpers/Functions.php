@@ -314,9 +314,9 @@ if ( ! function_exists('get_placeholder_img') )
         $size = config("image.sizes.{$size}");
 
         if ($size && is_array($size))
-            return "http://placehold.it/{$size['w']}x{$size['h']}?text=No Img";
+            return "http://placehold.it/{$size['w']}x{$size['h']}/eee?text=" . trans('app.no_img_available');
 
-        return "http://placehold.it/200?text=No Img";
+        return 'images/demo/no_img.png';
     }
 }
 
@@ -375,11 +375,8 @@ if ( ! function_exists('generateCouponCode') )
 
         do{
             $code = generateUniqueSrt($size);
-
             $check = \DB::table('coupons')->where('code', $code)->first();
-
             if($check) $unique = FALSE;
-
         }while( ! $unique );
 
         return $code;
@@ -395,11 +392,8 @@ if ( ! function_exists('generatePinCode') )
 
         do{
             $code = generateUniqueSrt($size);
-
             $check = \DB::table('gift_cards')->where('pin_code', $code)->first();
-
             if($check) $unique = FALSE;
-
         }while( ! $unique );
 
         return $code;
