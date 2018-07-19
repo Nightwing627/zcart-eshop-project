@@ -4,4 +4,4 @@
 
     Route::post('dispute/{dispute}/storeResponse', 'DisputeController@storeResponse')->name('dispute.storeResponse');
 
-	Route::resource('dispute', 'DisputeController', ['except' => ['edit', 'update', 'destroy']]);
+	Route::resource('dispute', 'DisputeController', ['except' => ['create', 'store','edit', 'update', 'destroy']]);

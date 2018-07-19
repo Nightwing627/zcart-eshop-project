@@ -393,7 +393,7 @@ class demoSeeder extends Seeder
 
         factory(App\Ticket::class, $this->longCount)->create();
 
-        factory(App\Reply::class, $this->longLongCount)->create();
+        factory(App\Reply::class, $this->veryLongCount)->create();
 
         factory(App\ShippingRate::class, $this->longLongCount)->create();
 

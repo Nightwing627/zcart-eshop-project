@@ -29,6 +29,6 @@
     <!-- BROWSING ITEMS -->
     @include('sliders.browsing_items')
 
-    <!-- bottom Banner -->
+    <!-- Bottom Banner -->
     @include('banners.bottom')
 @endsection

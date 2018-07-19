@@ -8,7 +8,8 @@ $factory->define(App\Order::class, function (Faker $faker) {
     $num1 = $faker->randomFloat($nbMaxDecimals = NULL, $min = 100, $max = 400);
     $num2 = rand(1,9);
     $customer_id = $faker->randomElement(\DB::table('customers')->pluck('id')->toArray());
-    $billing_address = \DB::table('addresses')->where('addressable_type', 'App\Customer')->where('addressable_id', $customer_id)->first()->id;
+    // $billing_address = \DB::table('addresses')->where('addressable_type', 'App\Customer')->where('addressable_id', $customer_id)->first()->id;
+    $billing_address = App\Address::where('addressable_type', 'App\Customer')->where('addressable_id', $customer_id)->inRandomOrder()->first()->toHtml('<br/>', false);
 
     return [
         'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
@@ -24,8 +25,11 @@ $factory->define(App\Order::class, function (Faker $faker) {
         'grand_total' => $num2 + $num,
         'billing_address' => $billing_address,
         'shipping_address' => $billing_address,
+        'tracking_id' => 'RR123456789CN',
         'payment_method_id' => $faker->randomElement(\DB::table('payment_methods')->pluck('id')->toArray()),
         'payment_status' => rand(1, 3),
+        'admin_note' => $faker->sentence,
+        'buyer_note' => $faker->sentence,
         'created_at' => Carbon::Now()->subDays(rand(0, 15)),
         'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];

@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests\Validations;
 
-// use Auth;
 use App\Customer;
 use App\Http\Requests\Request;
 
-class CreateDisputeRequest extends Request
+class RefundRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,27 +35,20 @@ class CreateDisputeRequest extends Request
         Request::merge([
             'order_id' => $order->id,
             'shop_id' => $order->shop_id,
-            'customer_id' => $order->customer_id,
+            'order_fulfilled' => $order->isFulfilled(),
         ]);
 
-        return [
-           'dispute_type_id' => 'required',
-           'order_received' => 'required',
-           'description' => 'required',
-           'product_id' => 'nullable|numeric',
-           'refund_amount' => 'nullable|numeric|max:' . $order->grand_total,
-        ];
-    }
+        // Update the order if goods received
+        if($this->goods_received == 1){
+            $order->order_status_id = 6; // Delivered Status. This id is freezed by system config
+            $order->goods_received = 1;
+            $order->save();
+        }
 
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
-    public function messages()
-    {
         return [
-            'dispute_type_id.required' => trans('theme.validation.dispute_type_id_required'),
+           'goods_received' => 'required',
+           'description' => 'required',
+           'amount' => 'required|numeric|max:' . $order->grand_total,
         ];
     }
 }

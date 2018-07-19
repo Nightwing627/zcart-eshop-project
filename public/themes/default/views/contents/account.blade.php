@@ -71,3 +71,5 @@
         </div>
     </div><!-- /.tab-content -->
 </div><!-- /.tabpanel -->
+
+<div class="clearfix space50"></div>

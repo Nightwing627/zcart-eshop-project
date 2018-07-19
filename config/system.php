@@ -18,8 +18,6 @@ return [
     |--------------------------------------------------------------------------
     |
     | This IDs associated with the models are not deletable, sometimes not editable.
-    | The application need this values to run properly.
-    | Dont change any value is you're not sure about it.
     |
     */
 
@@ -30,12 +28,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Orders
+    |--------------------------------------------------------------------------
+    |
+    | Config values for orders. System needs this to manage orders.
+    |
+    */
+    'orders' => [
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Popular
     |--------------------------------------------------------------------------
     |
     | This values (Days) will be used to pick popular products.
-    | The application need this values to run properly.
-    | Dont change any value is you're not sure about it.
     |
     */
     'popular' => [

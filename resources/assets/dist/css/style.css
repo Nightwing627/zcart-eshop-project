@@ -3523,7 +3523,7 @@ li.dt-button.button-page-length.active a{
 .modal-header {
     color: #444;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 10px 10px 5px 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
     /*padding: 15px 0 8px;*/

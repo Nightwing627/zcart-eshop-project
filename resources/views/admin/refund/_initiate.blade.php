@@ -6,9 +6,6 @@
         	{{ trans('app.form.form') }}
         </div>
         <div class="modal-body">
-          @php
-            // echo "<pre>"; print_r($order->refunds); echo "</pre>"; //exit();
-          @endphp
             <div class="row">
                 <div class="col-md-8 nopadding-right">
                     <div class="form-group">

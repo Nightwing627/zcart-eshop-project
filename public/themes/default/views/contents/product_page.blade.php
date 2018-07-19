@@ -111,7 +111,7 @@
 				        <div class="seller-info">
 				            <div class="">@lang('theme.sold_by')</div>
 				            <img src="http://via.placeholder.com/30" alt="Logo" class="seller-info-logo img-sm img-circle">
-				            <a href="{{ '#' }}" class="seller-info-name">The Demo Shop</a>
+				            <a href="{{ route('show.store', '$order->shop->slug') }}" class="seller-info-name">The Demo Shop</a>
 				            <div class="space10"></div>
 				        </div><!-- /.seller-info -->
 				        <div class="space20"></div>

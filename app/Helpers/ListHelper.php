@@ -629,6 +629,8 @@ class ListHelper
     {
         $products = session()->get('products.recently_viewed_items');
 
+        if(!$products) return [];
+
         return Product::select('slug', 'name')->whereIn('id', $products)->with('featuredImage:path')->get();
     }
 

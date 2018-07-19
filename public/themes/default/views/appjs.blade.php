@@ -4,8 +4,69 @@
     // ;(function($, window, document) {
         $(document).ready(function(){
 
+            $.ajaxSetup ({
+                cache: false,
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            });
+
+            // Confirmation for actions
+            $('body').on('click', '.confirm', function(e) {
+                e.preventDefault();
+
+                var form = this.closest("form");
+                var url = $(this).attr("href");
+
+                var msg = $(this).data('confirm');
+                if(!msg)
+                    msg = "{{ trans('theme.notify.are_you_sure') }}";
+
+                $.confirm({
+                    title: "{{ trans('theme.confirmation') }}",
+                    content: msg,
+                    type: 'red',
+                    icon: 'fa fa-question-circle',
+                    class: 'flat',
+                    animation: 'scale',
+                    closeAnimation: 'scale',
+                    opacity: 0.5,
+                    buttons: {
+                      'confirm': {
+                          text: '{{ trans('theme.button.proceed') }}',
+                          keys: ['enter'],
+                          btnClass: 'btn-primary flat',
+                          action: function () {
+                            //Disable mouse pointer events and set the busy filter
+                            $('body').css("pointer-events", "none");
+
+                            if (typeof url != 'undefined') {
+                                location.href = url;
+                            }else if(form != null){
+                                form.submit();
+                                @include('layouts.notification', ['message' => trans('theme.notify.confirmed'), 'type' => 'success', 'icon' => 'check-circle'])
+                            }
+                            return true;
+                          }
+                      },
+                      'cancel': {
+                          text: '{{ trans('theme.button.cancel') }}',
+                          btnClass: 'btn-default flat',
+                          action: function () {
+                            @include('layouts.notification', ['message' => trans('theme.notify.canceled'), 'type' => 'warning', 'icon' => 'times-circle'])
+                          }
+                      },
+                    }
+                });
+            });
+
             // Bootstrap fixes
             $('[data-toggle="tooltip"]').tooltip()
+
+            //Initialize validator
+            $('#form, form[data-toggle="validator"]').validator({
+                disable: false,
+            });
 
             // Main slider
             $('#ei-slider').eislideshow({
@@ -193,6 +254,19 @@
                 }
             });
             // END ADD TO CART BTN
+
+            // summernote
+            $('.summernote').summernote({
+                toolbar: [
+                    // [groupName, [list of button]]
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                ],
+                focus: true,
+                height: 90
+            });
+
         });
     // });
 </script>

@@ -7,7 +7,7 @@ use App\Dispute;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
-use App\Events\Dispute\DisputeCreated;
+// use App\Events\Dispute\DisputeCreated;
 use App\Events\Dispute\DisputeUpdated;
 use App\Repositories\Dispute\DisputeRepository;
 use App\Http\Requests\Validations\CreateDisputeRequest;
@@ -52,10 +52,10 @@ class DisputeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('admin.dispute._create');
-    }
+    // public function create()
+    // {
+    //     return view('admin.dispute._create');
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -63,14 +63,14 @@ class DisputeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateDisputeRequest $request)
-    {
-        $dispute = $this->dispute->store($request);
+    // public function store(CreateDisputeRequest $request)
+    // {
+    //     $dispute = $this->dispute->store($request);
 
-        event(new DisputeCreated($dispute));
+    //     event(new DisputeCreated($dispute));
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
-    }
+    //     return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+    // }
 
     /**
      * Display the specified resource.

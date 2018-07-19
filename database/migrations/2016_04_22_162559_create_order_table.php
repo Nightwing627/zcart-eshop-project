@@ -42,8 +42,10 @@ class CreateOrderTable extends Migration
             $table->decimal('taxes', 20, 6)->nullable();
             $table->decimal('grand_total', 20, 6)->nullable();
 
-            $table->bigInteger('billing_address')->unsigned()->nullable();
-            $table->bigInteger('shipping_address')->unsigned()->nullable();
+            // $table->bigInteger('billing_address')->unsigned()->nullable();
+            // $table->bigInteger('shipping_address')->unsigned()->nullable();
+            $table->text('billing_address')->nullable();
+            $table->text('shipping_address')->nullable();
             $table->date('shipping_date')->nullable();
             $table->date('delivery_date')->nullable();
             $table->string('tracking_id')->nullable();
@@ -56,6 +58,8 @@ class CreateOrderTable extends Migration
             $table->text('message_to_customer')->nullable();
             $table->boolean('send_invoice_to_customer')->nullable();
             $table->text('admin_note')->nullable();
+            $table->text('buyer_note')->nullable();
+            $table->boolean('goods_received')->nullable();
             $table->boolean('approved')->nullable();
             $table->boolean('disputed')->nullable();
             $table->softDeletes();

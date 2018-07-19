@@ -1,65 +1,103 @@
-<table class="table" id="buyer-order-table">
-    <thead>
-        <tr>
-            <th width="60%">@lang('theme.products')</th>
-            <th width="30%">@lang('theme.status')</th>
-            <th width="10%">@lang('theme.actions')</th>
-        </tr>
-    </thead>
-    <tbody>
+@if($orders->count() > 0)
+  <table class="table" id="buyer-order-table">
+      <thead>
+          <tr>
+            <th colspan="3">@lang('theme.your_order_history')</th>
+          </tr>
+      </thead>
+      <tbody>
         @foreach($orders as $order)
           <tr class="order-info-head">
-              <td>
+              <td width="55%">
                 <h5><span>@lang('theme.order_id'): </span>{{ $order->order_number }}</h5>
                 <h5><span>@lang('theme.order_time_date'): </span>{{ $order->created_at->toDayDateTimeString() }}</h5>
               </td>
-              <td class="store-info">
-                <h5><span>@lang('theme.store'):</span> <a href="shope-page.html"> {{ $order->shop->name }}</a></h5>
-                <a href="#">
-                    @lang('theme.contact_seller') <span>(<strong>1</strong> unread)</span>
-                </a>
+              <td width="25%" class="store-info">
+                <h5>
+                  <span>@lang('theme.store'):</span>
+                  @if($order->shop)
+                    <a href="{{ route('show.store', $order->shop->slug) }}"> {{ $order->shop->name }}</a>
+                  @else
+                    @land('theme.shop_not_available')
+                  @endif
+                </h5>
+                <h5>
+                    <span>@lang('theme.status')</span>
+                    {{ optional($order->status)->name }}
+                </h5>
               </td>
-              <td class="order-amount">
+              <td width="20%" class="order-amount">
                 <h5><span>@lang('theme.order_amount'): </span>{{ get_formated_currency($order->grand_total) }}</h5>
+                <div class="btn-group" role="group">
+                  <a class="btn btn-xs btn-default flat" href="{{ route('order.detail', $order) }}">@lang('theme.button.order_detail')</a>
+                  <a class="btn btn-xs btn-default flat" href="{{ route('order.detail', $order) . '#message-section' }}">@lang('theme.button.contact_seller')</a>
+                </div>
               </td>
           </tr> <!-- /.order-info-head -->
 
           @foreach($order->inventories as $item)
-              <tr class="order-body">
-                  <td class="">
-                      <div class="product-img-wrap">
-                        <img src="http://via.placeholder.com/100" alt="Image Alternative text" title="Image Title" />
+            <tr class="order-body">
+              <td colspan="2">
+                  <div class="product-img-wrap">
+                    <img src="{{ get_storage_file_url(optional($item->image)->path, 'small') }}" alt="{{ $item->product->slug }}" title="{{ $item->product->slug }}" />
+                  </div>
+                  <div class="product-info">
+                      <a href="{{ route('show.product', $item->product->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>
+                      <div class="order-info-amount">
+                          <span>{{ get_formated_currency($item->pivot->unit_price) }} x {{ $item->pivot->quantity }}</span>
                       </div>
-                      <div class="product-info">
-                          <a href="product-page.html" class="product-info-title">Apple iPhone 4S 16GB Factory Unlocked Black and White Smartphone</a>
-                          <div class="order-info-amount">
-                              <span>$2.84 x 1</span>
-                          </div>
-                          <ul class="order-info-properties">
-                              <li>Size: <span>L</span></li>
-                              <li>Color: <span>RED</span></li>
-                          </ul>
-                          <p class="order-detail-buyer-note">
-                            <span>Note: </span>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua.
-                          </p>
-                      </div>
-                  </td>
-                  <td class="order-status">
-                    <p>{{ optional($order->status)->name }}</p>
-                    <a target="_blank" href="#"> View Detail</a>
-                  </td>
-                  <td class="order-action">
-                      <a class="btn btn-default btn-sm btn-block flat">Track Order</a>
-                      <a class="btn btn-primary btn-block flat" href="#">Confirm Good Received</a>
-                      <a class="btn btn-link btn-block" href="#">Open Dispute</a>
-                  </td>
-              </tr> <!-- /.order-body -->
+                      {{--
+                      <ul class="order-info-properties">
+                          <li>Size: <span>L</span></li>
+                          <li>Color: <span>RED</span></li>
+                      </ul> --}}
+                  </div>
+              </td>
+              @if($loop->first)
+                <td rowspan="{{ $loop->count }}" class="order-actions">
+                  <a href="{{ route('order.track', $order) }}" class="btn btn-default btn-sm btn-block flat">@lang('theme.button.track_order')</a>
+                  @if($order->goods_received)
+                    <a href="{{ route('order.feedback', $order) }}" class="btn btn-primary btn-sm btn-block flat" target="_blank">@lang('theme.button.give_feedback')</a>
+                  @else
+                    {!! Form::model($order, ['method' => 'PUT', 'route' => ['goods.received', $order]]) !!}
+                      {!! Form::button(trans('theme.button.confirm_goods_received'), ['type' => 'submit', 'class' => 'confirm btn btn-primary btn-block flat', 'data-confirm' => trans('theme.confirm_action.goods_received')]) !!}
+                    {!! Form::close() !!}
+                  @endif
+                  <a href="{{ route('order.detail', $order) . '#buyer-order-table' }}" class="btn btn-link btn-block">@lang('theme.button.open_dispute')</a>
+                </td>
+              @endif
+            </tr> <!-- /.order-body -->
           @endforeach
-      @endforeach
-    </tbody>
-</table>
+
+          @if($order->message_to_customer)
+            <tr class="message_from_seller">
+              <td colspan="3">
+                <p>
+                  <strong>@lang('theme.message_from_seller'): </strong> {{ $order->message_to_customer }}
+                </p>
+              </td>
+            </tr>
+          @endif
+
+          @if($order->buyer_note)
+            <tr class="order-info-footer">
+              <td colspan="3">
+                <p class="order-detail-buyer-note">
+                  <span>@lang('theme.note'): </span> {{ $order->buyer_note }}
+                </p>
+              </td>
+            </tr>
+          @endif
+        @endforeach
+      </tbody>
+  </table>
+@else
+  <div class="clearfix space50"></div>
+  <p class="lead text-center space50">
+    @lang('theme.no_order_history')
+    <a href="{{ url('/') }}" class="btn btn-primary btn-sm flat">@lang('theme.button.shop_now')</a>
+  </p>
+@endif
 
 <div class="sep"></div>
 

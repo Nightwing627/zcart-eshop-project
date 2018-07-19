@@ -4,8 +4,11 @@
       <div class="row">
         <div class="col-md-12">
           <ol class="breadcrumb nav-breadcrumb">
+            @include('headers.lists.home')
             @include('headers.lists.categories')
-            @include('headers.lists.category', ['category' => $product->categories->first()])
+            @if($product->categories->count())
+              @include('headers.lists.category', ['category' => $product->categories->first()])
+            @endif
             <li class="active">{{ $product->name }}</li>
           </ol>
         </div>

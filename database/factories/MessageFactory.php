@@ -7,6 +7,7 @@ $factory->define(App\Message::class, function (Faker $faker) {
     return [
         'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'customer_id' => $faker->randomElement(\DB::table('customers')->pluck('id')->toArray()),
+        'order_id' => $faker->randomElement(\DB::table('orders')->pluck('id')->toArray()),
         'subject' => $faker->sentence,
         'message' => $faker->paragraph,
         'status' => rand(1, 3),

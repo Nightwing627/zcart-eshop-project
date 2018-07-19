@@ -72,10 +72,12 @@ class Order extends Model
                         'message_to_customer',
                         'send_invoice_to_customer',
                         'admin_note',
+                        'buyer_note',
                         'payment_method_id',
                         'payment_date',
                         'payment_status',
                         'order_status_id',
+                        'goods_received',
                         'approved',
                         'disputed',
                     ];
@@ -93,7 +95,7 @@ class Order extends Model
      */
     public function shop()
     {
-        return $this->belongsTo(Shop::class);
+        return $this->belongsTo(Shop::class)->withDefault();
     }
 
     /**
@@ -143,6 +145,16 @@ class Order extends Model
     }
 
     /**
+     * Return collection of conversation related to the order
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function conversation()
+    {
+        return $this->hasOne(Message::class, 'order_id')->where('customer_id', $this->customer_id);
+    }
+
+    /**
      * Return collection of refunds related to the order
      *
      * @return Illuminate\Database\Eloquent\Collection
@@ -150,6 +162,14 @@ class Order extends Model
     public function refunds()
     {
         return $this->hasMany(Refund::class)->orderBy('created_at', 'dec');
+    }
+
+    /**
+     * Get the dispute for the order.
+     */
+    public function dispute()
+    {
+        return $this->hasOne(Dispute::class);
     }
 
     /**
@@ -195,11 +215,19 @@ class Order extends Model
     /**
      * Set tag date formate
      */
-    public function setShippingDateAttribute($date){
-        $this->attributes['shipping_date'] = Carbon::createFromFormat('Y-m-d', $date);
+    public function setShippingDateAttribute($value){
+        $this->attributes['shipping_date'] = Carbon::createFromFormat('Y-m-d', $value);
     }
-    public function setDeliveryDateAttribute($date){
-        $this->attributes['delivery_date'] = Carbon::createFromFormat('Y-m-d', $date);
+    public function setDeliveryDateAttribute($value){
+        $this->attributes['delivery_date'] = Carbon::createFromFormat('Y-m-d', $value);
+    }
+    public function setShippingAddressAttribute($value){
+        if(is_numeric($value))
+            $this->attributes['shipping_address'] = Address::find($value)->toHtml('<br/>', false);
+    }
+    public function setBillingAddressAttribute($value){
+        if(is_numeric($value))
+            $this->attributes['billing_address'] = Address::find($value)->toHtml('<br/>', false);
     }
 
     /**

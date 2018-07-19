@@ -150,6 +150,10 @@ ul, li {
 .bg-light{
     background-color: #fafafa;
 }
+.btn:focus,
+.btn:active{
+  outline: 0 !important;
+}
 .btn-primary{
     color: #fff;
     background-color: #d6644a;
@@ -168,6 +172,18 @@ ul, li {
     color: #fff;
     background-color: #d6644a;
 }
+.btn-primary.focus, .btn-primary:focus,
+.btn-black.focus, .btn-black:focus{
+  color: #fff !important;
+  border-color: transparent;
+}
+.btn-black.focus, .btn-black:focus{
+  background-color: #333 !important;
+}
+.btn-primary.focus, .btn-primary:focus{
+  background-color: #d6644a !important;
+}
+
 .select-box-wrapper .selectboxit-container,
 .select-box-wrapper .selectboxit-container .selectboxit,
 .select-box-wrapper .selectboxit-container .selectboxit-options {
@@ -221,7 +237,16 @@ div[data-notify="container"] {
      padding-left: 2px !important;
   }
 }
-
+/* Confirmation box hackes */
+.jconfirm.jconfirm-light .jconfirm-box,
+.jconfirm.jconfirm-white .jconfirm-box{
+  border-radius: 0;
+}
+.jconfirm.jconfirm-light .jconfirm-box .jconfirm-buttons button,
+.jconfirm.jconfirm-white .jconfirm-box .jconfirm-buttons button{
+  font-weight: 400;
+  letter-spacing: 1px;
+}
 /**** breadcrumb ****/
 .nav-breadcrumb {
     margin: 0;
@@ -276,10 +301,12 @@ div[data-notify="container"] {
     Modals
    ========================================================================== */
 .modal-header{
-    font-size: 17px;
-    color: #777;
+    font-size: 15px;
+    color: #444;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 10px 10px 5px;
+    font-weight: 100;
+    letter-spacing: 1px;
     text-transform: uppercase;
     border-bottom: 1px solid #19B6EE;
 }
@@ -461,11 +488,11 @@ div[data-notify="container"] {
 }
 .radio label,
 .checkbox label {
-    padding-left: 0;
-    margin-bottom: 5px;
+  padding-left: 0;
+  margin-bottom: 5px;
 }
 .form-control, .form-control:focus{
-    box-shadow: none;
+  box-shadow: none;
 }
 .form-group label{
     font-weight: 400;
@@ -1361,16 +1388,19 @@ div[data-notify="container"] {
 }
 
 /*Customer Order Table*/
+#buyer-payment-detail-table,
 #buyer-order-table {
     border: 1px solid #ddd;
 }
+#buyer-payment-detail-table thead,
 #buyer-order-table thead {
     background-color: #f2f2f2;
-    border-bottom: 3px solid #fff;
+    border-bottom: 5px solid #fff;
 }
 #buyer-order-table > thead > tr > th {
     border-bottom: none;
 }
+#buyer-payment-detail-table thead th,
 #buyer-order-table thead th{
     font-weight: normal;
     text-transform: uppercase;
@@ -1380,11 +1410,17 @@ div[data-notify="container"] {
 #buyer-order-table tbody tr.order-info-head {
     font-size: 13px;
     background-color: #f2f2f2;
+    border-top: 3px solid #fff;
 }
 #buyer-order-table tbody .order-info-head h5 {
     font-size: 13px;
     font-weight: normal;
 }
+#buyer-payment-detail-table tr.buyer-payment-info-head,
+#buyer-order-table tbody tr.order-info-footer {
+  background-color: #d9edf7;
+}
+
 #buyer-order-table tbody tr.order-body td {
     font-size: 13px;
     border: none;
@@ -1394,15 +1430,15 @@ div[data-notify="container"] {
 #buyer-order-table .order-body .product-img-wrap {
     display: inline-block;
     float: left;
-    margin-right: 15px;
     margin-bottom: 0;
 }
 #buyer-order-table .order-body .product-img-wrap img{
-    max-width: 80px;
+    max-width: 60px;
 }
 #buyer-order-table .order-body .product-info{
     display: block;
-    padding-left: 95px;
+    padding-left: 75px;
+    padding-right: 10px;
     font-size: 13px;
 }
 #buyer-order-table .product-info .product-info-title{
@@ -1434,11 +1470,193 @@ div[data-notify="container"] {
 #buyer-order-table .order-info-properties > li > span {
     color: #009686;
 }
-#buyer-order-table .order-detail-buyer-note {
-    font-size: 11px;
-    color: #999;
-    margin-top: 5px;
+#buyer-order-table .order-body .order-actions{
+  vertical-align: middle;
 }
+#buyer-order-table .order-body .order-actions button.btn-block{
+  margin-top: 5px;
+}
+#buyer-order-table tr.message_from_seller {
+  background-color: #f2f2f2;
+}
+
+#buyer-order-table .message_from_seller p,
+#buyer-order-table .order-detail-buyer-note {
+    font-size: 12px;
+    color: #333;
+    margin: 5px 0;
+}
+#buyer-payment-detail-table tr.buyer-payment-info-head td{
+  font-size: 14px;
+  color: #333;
+}
+
+/* Seller cantact messages*/
+.message-list{
+  padding: 20px 0;
+  border: 1px solid #e8e8e8;
+}
+.message-list form{
+  padding: 10px 30px;
+}
+.message-list-header {
+  border-bottom: 1px solid #E8E8E8;
+}
+.message-list-header h4{
+    margin-left: 30px;
+    font-size: 16px;
+    font-weight: 100;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.message-list-item {
+  margin-top: 20px;
+}
+.message-content {
+  position: relative;
+  display: inline-block;
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  border-radius: 6px;
+}
+.message-seller .message-content {
+  background-color: #F2F2F2;
+}
+.message-buyer .message-content {
+  background-color: #ECFADC;
+  float: right;
+}
+.message-user-info {
+  font-size: 13px;
+  padding-top: 6px;
+}
+.message-seller .message-user-info {
+  text-align: right;
+}
+.message-user-name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.message-date {
+    color: #999;
+}
+.message-content-wrapper .message-attachment {
+  margin: 0 20px;
+}
+.message-content-wrapper .message-attachment img {
+  margin-bottom: 0;
+}
+/* END Seller cantact messages*/
+
+/* Step Wizard */
+.step-wizard-wrapper{
+  position: relative;
+  width: 100%;
+  text-align: center;
+  min-height: 150px;
+}
+.step-wizard {
+  display: block;
+}
+.step-wizard .progress {
+  position: absolute;
+  display: block;
+  top: 25px;
+  left: 12.5%;
+  height: 12px;
+  width: 75%;
+}
+.step-wizard .progressbar {
+  position: absolute;
+  display: block;
+  background-color: #0aa89e;
+  opacity: 0.4;
+  height: 12px;
+  border: 1px solid #e5e6e6;
+  width: 0%;
+  -webkit-transition: width 0.6s ease;
+  -o-transition: width 0.6s ease;
+  transition: width 0.6s ease;
+}
+.step-wizard .progressbar.empty {
+  opacity: 1;
+  width: 100%;
+  background-color: #e5e6e6;
+}
+.step-wizard ul {
+  position: absolute;
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+  left: -2%;
+}
+.step-wizard li {
+  display: inline-block;
+  text-align: center;
+  width: 24.5%;
+}
+.step-wizard li .step {
+  position: absolute;
+  display: inline-block;
+  font-size: 0.75em;
+  line-height: 24px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 4px solid;
+  border-color: #e5e6e6;
+  background: #ffffff;
+  -webkit-transition: background-color 0.6s ease, border-color 0.6s ease;
+  -o-transition: background-color 0.6s ease, border-color 0.6s ease;
+  transition: background-color 0.6s ease, border-color 0.6s ease;
+}
+.step-wizard li .title {
+  position: absolute;
+  width: 100%;
+  left: 20px;
+  padding-top: 42px;
+  color: #969c9c;
+  -webkit-transition: color 0.6s ease;
+  -o-transition: color 0.6s ease;
+  transition: color 0.6s ease;
+}
+.step-wizard li.active .step {
+  border-color: #0aa89e;
+}
+.step-wizard li.active .title {
+  color: black;
+}
+.step-wizard li.done .step {
+  color: white;
+  background-color: #0aa89e;
+  border-color: #0aa89e;
+}
+.step-wizard li > a {
+  display: block;
+  width: 100%;
+  color: black;
+  position: relative;
+  text-align: center;
+}
+.step-wizard li > a:hover .step {
+  border-color: #0aa89e;
+}
+.step-wizard li > a:hover .title {
+  color: black;
+}
+@media only screen and (max-width: 1200px) {
+  .step-wizard li {
+    width: 24%;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .step-wizard li {
+    width: 22%;
+  }
+}
+/* End Step Wizard */
+
 /*lsdksladk;sadlk*/
 .product-list .product{
     position: relative;

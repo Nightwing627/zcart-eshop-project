@@ -48,14 +48,14 @@ class Message extends Model
      *
      * @return void
      */
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        if(Auth::check()){
-            static::addGlobalScope(new MineScope);
-        }
-    }
+    //     if(Auth::check()){
+    //         static::addGlobalScope(new MineScope);
+    //     }
+    // }
 
     /**
      * Get the shop associated with the model.
@@ -78,7 +78,7 @@ class Message extends Model
     */
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class)->withoutGlobalScope('MineScope');
     }
 
     /**

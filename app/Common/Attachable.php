@@ -44,19 +44,37 @@ trait Attachable {
 		$data = [];
 		$dir = attachment_storage_dir();
 
-    	foreach ($attachments as $order => $file) {
-	        $path = Storage::put($dir, $file);
-
-			$data[] = [
-			            'path' => $path,
-			            'name' => $file->getClientOriginalName(),
-			            // 'name' => str_slug($file->getClientOriginalName(), '-'),
-			            'extension' => $file->getClientOriginalExtension(),
-			            'size' => $file->getClientSize()
-			        ];
+		if(is_array($attachments)){
+	    	foreach ($attachments as $order => $file) {
+	    		$data[] = $this->storeFile($dir, $file);
+			}
+		}
+		else{
+    		$data[] = $this->storeFile($dir, $attachments);
 		}
 
         return $this->attachments()->createMany($data);
+    }
+
+    /**
+     * store File one by one
+     *
+     * @param  str $dir
+     * @param  obj $file
+     *
+     * @return arr
+     */
+    private function storeFile($dir, $file)
+    {
+        $path = Storage::put($dir, $file);
+
+		return [
+            'path' => $path,
+            'name' => $file->getClientOriginalName(),
+            // 'name' => str_slug($file->getClientOriginalName(), '-'),
+            'extension' => $file->getClientOriginalExtension(),
+            'size' => $file->getClientSize()
+        ];
     }
 
     /**

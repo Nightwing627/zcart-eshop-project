@@ -17,6 +17,7 @@ class CreateRepliesTable extends Migration
             $table->bigIncrements('id');
             $table->longtext('reply')->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->bigInteger('customer_id')->unsigned()->nullable();
             $table->boolean('read')->nullable();
             $table->bigInteger('repliable_id')->unsigned();
             $table->string('repliable_type');

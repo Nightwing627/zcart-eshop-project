@@ -13,6 +13,8 @@ class DisputeTypesSeeder extends Seeder
     {
         DB::table('dispute_types')->insert([
             [
+                'detail' => 'Did not receive goods',
+            ], [
                 'detail' => 'Counterfeit goods',
             ], [
                 'detail' => 'Quantity shortage',
