@@ -21,7 +21,14 @@ class Reply extends Model
      *
      * @var array
      */
-    protected $fillable = ['reply', 'user_id', 'customer_id', 'read', 'repliable_id', 'repliable_type'];
+    protected $fillable = [
+                    'reply',
+                    'user_id',
+                    'customer_id',
+                    'read',
+                    'repliable_id',
+                    'repliable_type'
+                ];
 
     /**
      * Get all of the owning repliable models.
@@ -38,5 +45,4 @@ class Reply extends Model
     {
         return $this->belongsTo(User::class);
     }
-
 }

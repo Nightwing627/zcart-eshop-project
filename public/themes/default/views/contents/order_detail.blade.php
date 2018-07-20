@@ -61,22 +61,22 @@
 			            </tr>
 			            <tr class="order-info-head">
 			                <td width="55%">
-			                  <h5><span>@lang('theme.order_id'): </span>{{ $order->order_number }}</h5>
-			                  <h5><span>@lang('theme.order_time_date'): </span>{{ $order->created_at->toDayDateTimeString() }}</h5>
+			                  	<h5><span>@lang('theme.order_id'): </span>{{ $order->order_number }}</h5>
+			                  	<h5><span>@lang('theme.order_time_date'): </span>{{ $order->created_at->toDayDateTimeString() }}</h5>
 			                </td>
 			                <td width="25%" class="store-info">
-			                  <h5>
-			                    <span>@lang('theme.store'):</span>
-			                    @if($order->shop)
-			                      <a href="{{ route('show.store', $order->shop->slug) }}"> {{ $order->shop->name }}</a>
-			                    @else
-			                      @land('theme.shop_not_available')
-			                    @endif
-			                  </h5>
-			                  <h5>
+			                  	<h5>
+			                    	<span>@lang('theme.store'):</span>
+			                    	@if($order->shop)
+				                    	<a href="{{ route('show.store', $order->shop->slug) }}"> {{ $order->shop->name }}</a>
+				                    @else
+			                      		@land('theme.shop_not_available')
+			                    	@endif
+			                  	</h5>
+			                  	<h5>
 				                    <span>@lang('theme.status')</span>
 				                    {{ optional($order->status)->name }}
-			                  </h5>
+			                  	</h5>
 			                </td>
 			                <td width="20%" class="order-amount">
 			                  	<h5><span>@lang('theme.order_amount'): </span>{{ get_formated_currency($order->grand_total) }}</h5>
@@ -105,7 +105,7 @@
 				                    <td rowspan="{{ $loop->count }}" class="order-actions">
 			    	                    <a href="{{ route('order.track', $order) }}" class="btn btn-default btn-sm btn-block flat">@lang('theme.button.track_order')</a>
 						                @if($order->goods_received)
-				    	                    <a href="{{ route('order.feedback', $order) }}" class="btn btn-primary btn-sm btn-block flat" target="_blank">@lang('theme.button.give_feedback')</a>
+				    	                    <a href="{{ route('order.feedback', $order) }}" class="btn btn-primary btn-sm btn-block flat">@lang('theme.button.give_feedback')</a>
 						                @else
 									        {!! Form::model($order, ['method' => 'PUT', 'route' => ['goods.received', $order]]) !!}
 						                        {!! Form::button(trans('theme.button.confirm_goods_received'), ['type' => 'submit', 'class' => 'confirm btn btn-primary btn-block flat', 'data-confirm' => trans('theme.confirm_action.goods_received')]) !!}
@@ -155,6 +155,7 @@
 		            <div class="form-group">
 						{!! Form::label('message', trans('theme.write_your_message')) !!}
 						{!! Form::textarea('message', null, ['class' => 'form-control form-control flat', 'placeholder' => trans('theme.leave_message_to_seller'), 'rows' => '4', 'maxlength' => 500, 'required']) !!}
+                        <div class="help-block with-errors"></div>
 		            </div>
 		          </div>
 		          <div class="col-md-6">

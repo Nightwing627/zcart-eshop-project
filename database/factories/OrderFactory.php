@@ -9,7 +9,7 @@ $factory->define(App\Order::class, function (Faker $faker) {
     $num2 = rand(1,9);
     $customer_id = $faker->randomElement(\DB::table('customers')->pluck('id')->toArray());
     // $billing_address = \DB::table('addresses')->where('addressable_type', 'App\Customer')->where('addressable_id', $customer_id)->first()->id;
-    $billing_address = App\Address::where('addressable_type', 'App\Customer')->where('addressable_id', $customer_id)->inRandomOrder()->first()->toHtml('<br/>', false);
+    $billing_address = App\Address::where('addressable_type', 'App\Customer')->where('addressable_id', $customer_id)->first()->toHtml('<br/>', false);
 
     return [
         'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),

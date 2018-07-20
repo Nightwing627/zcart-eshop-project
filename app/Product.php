@@ -5,13 +5,14 @@ namespace App;
 use Auth;
 use App\Common\Taggable;
 use App\Common\Imageable;
+use App\Common\Feedbackable;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use SoftDeletes, Taggable, Imageable, Searchable;
+    use SoftDeletes, Taggable, Imageable, Searchable, Feedbackable;
 
     /**
      * The database table used by the model.

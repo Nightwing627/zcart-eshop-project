@@ -32,5 +32,4 @@
 
     <!-- BROWSING ITEMS -->
     @include('sliders.browsing_items')
-
 @endsection

@@ -77,6 +77,9 @@ class EloquentProduct extends EloquentRepository implements BaseRepository, Prod
 
         $product->flushImages();
 
+        if($product->hasFeedbacks())
+            $product->flushFeedbacks();
+
         return $product->forceDelete();
 	}
 }

@@ -49,6 +49,10 @@ class ConversationController extends Controller
             $order->conversation()->save($msg);
         }
 
+        // Update the order if goods_received
+        if($request->has('goods_received'))
+            $order->goods_received();
+
         if ($request->hasFile('photo'))
             $msg->saveAttachments($request->file('photo'));
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Storefront;
 use Auth;
 use App\Order;
 use App\Product;
+use App\Dispute;
 use App\Wishlist;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,6 +19,9 @@ class AccountController extends Controller
      */
     public function index($tab = 'dashboard')
     {
+        if( ! method_exists($this, $tab) )
+            abort(404);
+
         // Call the methods dynamically to load needed models
         $$tab = $this->$tab();
 
@@ -59,16 +63,9 @@ class AccountController extends Controller
      */
     private function disputes()
     {
-        return [];
-    }
-
-    /**
-     * Return feedbacks
-     * @return collection
-     */
-    private function feedbacks()
-    {
-        return [];
+        return Dispute::where('customer_id', Auth::guard('customer')->user()->id)
+                        ->with(['shop:id,name,slug', 'order:id,order_number'])
+                        ->get();
     }
 
     /**

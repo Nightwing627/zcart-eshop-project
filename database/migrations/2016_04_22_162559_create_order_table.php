@@ -62,6 +62,7 @@ class CreateOrderTable extends Migration
             $table->boolean('goods_received')->nullable();
             $table->boolean('approved')->nullable();
             $table->boolean('disputed')->nullable();
+            $table->bigInteger('feedback_id')->unsigned()->nullable();
             $table->softDeletes();
             $table->timestamps();
 
@@ -75,6 +76,7 @@ class CreateOrderTable extends Migration
             $table->longtext('item_description');
             $table->integer('quantity')->unsigned();
             $table->decimal('unit_price', 20, 6);
+            $table->bigInteger('feedback_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');

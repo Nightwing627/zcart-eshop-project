@@ -76,7 +76,7 @@
             </div>
 
             <div class="product-info">
-                @include('layouts.ratings', ['ratings' => 4.5])
+                @include('layouts.ratings', ['ratings' => $product->averageFeedback(), 'count' => $product->feedbacks_count])
 
                 <a href="{{ route('show.product', $product->slug) }}" class="product-info-title" data-name="product_name">{{ $product->name }}</a>
 

@@ -57,7 +57,7 @@
                 <td rowspan="{{ $loop->count }}" class="order-actions">
                   <a href="{{ route('order.track', $order) }}" class="btn btn-default btn-sm btn-block flat">@lang('theme.button.track_order')</a>
                   @if($order->goods_received)
-                    <a href="{{ route('order.feedback', $order) }}" class="btn btn-primary btn-sm btn-block flat" target="_blank">@lang('theme.button.give_feedback')</a>
+                    <a href="{{ route('order.feedback', $order) }}" class="btn btn-primary btn-sm btn-block flat">@lang('theme.button.give_feedback')</a>
                   @else
                     {!! Form::model($order, ['method' => 'PUT', 'route' => ['goods.received', $order]]) !!}
                       {!! Form::button(trans('theme.button.confirm_goods_received'), ['type' => 'submit', 'class' => 'confirm btn btn-primary btn-block flat', 'data-confirm' => trans('theme.confirm_action.goods_received')]) !!}

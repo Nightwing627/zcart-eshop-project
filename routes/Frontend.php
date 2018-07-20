@@ -16,11 +16,10 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 	Route::get('brand/{slug}', 'HomeController@brand')->name('show.brand');
 	Route::get('support/contact', 'ContactUsController@show_contact_form')->name('support.contact_us');
 
-	// include('storefront/Product.php');
-
 	Route::middleware(['auth:customer'])->group(function () {
 		include('storefront/Account.php');
 		include('storefront/Order.php');
+		include('storefront/Feedback.php');
 	});
 });
 

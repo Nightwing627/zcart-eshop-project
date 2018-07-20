@@ -5,9 +5,8 @@
     @include('headers.dispute_page')
 
     <!-- CONTENT SECTION -->
-	@include('contents.create_dispute')
+	@include('contents.dispute_page')
 
     <!-- MODALS -->
-    @include('modals.refund')
     @include('modals.dispute')
 @endsection

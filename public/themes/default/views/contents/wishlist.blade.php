@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="product-info">
-                        @include('layouts.ratings', ['ratings' => 4.5])
+                        @include('layouts.ratings', ['ratings' => $wish->product->averageFeedback()])
 
                         <a href="{{ route('show.product', $wish->product->slug) }}" class="product-info-title">{{ $wish->product->name }}</a>
 

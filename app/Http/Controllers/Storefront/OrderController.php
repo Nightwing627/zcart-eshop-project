@@ -36,11 +36,9 @@ class OrderController extends Controller
      */
     public function goods_received(ConfirmGoodsReceivedRequest $request, Order $order)
     {
-        $order->order_status_id = 6; // Delivered Status. This id is freezed by system config
-        $order->goods_received = 1;
-        $order->save();
+        $order->goods_received();
 
-        return back()->with('success', trans('theme.notify.order_updated'));
+        return redirect()->route('order.feedback', $order)->with('success', trans('theme.notify.order_updated'));
     }
 
     /**

@@ -57,6 +57,9 @@ class EloquentShop extends EloquentRepository implements BaseRepository, ShopRep
 
         $shop->staffs()->forceDelete();
 
+        if($shop->hasFeedbacks())
+            $shop->flushFeedbacks();
+
         $shop->flushImages();
 
         return $shop->forceDelete();

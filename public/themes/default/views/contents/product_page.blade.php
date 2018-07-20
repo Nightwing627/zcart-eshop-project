@@ -36,7 +36,7 @@
 				              	<a href="{{ route('show.brand', $product->manufacturer->slug) }}" class="product-info-seller-name">{{ $product->manufacturer ? $product->manufacturer->name : 'The Demo Shop' }}</a>
 				              	<h5 class="product-info-title" data-name="product_name">{{ $product->name }}</h5>
 
-		                        @include('layouts.ratings', ['ratings' => 3.5, 'count' => true])
+		                        @include('layouts.ratings', ['ratings' => $product->averageFeedback(), 'count' => $product->feedbacks_count])
 
 				              	<div class="product-info-price">
 				              		{{-- @if() --}}
@@ -165,67 +165,43 @@
           	</ul>
         </div><!-- /.col-md-2 -->
 
-        <div class="col-md-10">
+        <div class="col-md-10" id="product_desc_section">
           <div role="tabpanel">
               <ul class="nav nav-tabs" role="tablist">
                   <li role="presentation" class="active"><a href="#desc_tab" aria-controls="desc_tab" role="tab" data-toggle="tab" aria-expanded="true">@lang('theme.product_desc')</a></li>
-                  <li role="presentation"><a href="#seller_desc_tab" aria-controls="seller_desc_tab" role="tab" data-toggle="tab" aria-expanded="true">@lang('theme.product_desc_seller')</a></li>
-                  <li role="presentation" class=""><a href="#reviews_tab" aria-controls="reviews_tab" role="tab" data-toggle="tab" aria-expanded="false">@lang('theme.customer_reviews')</a></li>
+                  <li role="presentation"><a href="#seller_desc_tab" aria-controls="seller_desc_tab" role="tab" data-toggle="tab" aria-expanded="false">@lang('theme.product_desc_seller')</a></li>
+                  <li role="presentation"><a href="#reviews_tab" aria-controls="reviews_tab" role="tab" data-toggle="tab" aria-expanded="false">@lang('theme.customer_reviews')</a></li>
               </ul><!-- /.nav-tab -->
 
               <div class="tab-content">
                   <div role="tabpanel" class="tab-pane fade active in" id="desc_tab">
 					{{ $product->description }}
                   </div>
-                  <div role="tabpanel" class="tab-pane fade" id="seller_desc_tab">
-                  	Seller Specifications here!
-                  </div>
+                  {{-- @if() --}}
+	                  <div role="tabpanel" class="tab-pane fade" id="seller_desc_tab">
+	                  	Seller Specifications here!
+	                  </div>
+                  {{-- @endif --}}
                   <div role="tabpanel" class="tab-pane fade" id="reviews_tab">
-                      <div class="reviews-tab">
-                          <p><b>Smile Nguyen</b>, 23 July 2014</p>
-                          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                          <div class="product-info-rating">
-                              <span class="rated">&#9733;</span>
-                              <span class="rated">&#9733;</span>
-                              <span class="rated">&#9733;</span>
-                              <span>&#9734;</span>
-                              <span>&#9734;</span>
-                          </div>
-                          <div class="sep"></div>
-                          <p><b>Smile Nguyen</b>, 23 July 2014</p>
-                          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                          <div class="product-info-rating">
-                              <span class="rated">&#9733;</span>
-                              <span class="rated">&#9733;</span>
-                              <span class="rated">&#9733;</span>
-                              <span class="rated">&#9733;</span>
-                              <span class="rated">&#9733;</span>
-                          </div>
-                          <div class="sep"></div>
-                          <form>
-                              <h5>Write a Review</h5>
-                              <div class="form-group">
-                                <label class="">Your Name:</label>
-                                <input class="form-control flat" type="text" required>
-                              </div>
-                              <div class="form-group">
-                                <label class="">Your Review:</label>
-                                <textarea class="form-control flat" required></textarea>
-                              </div>
-                              <div class="form-group">
-                                <label class="">Rating:</label>
-                                <div class="product-info-rating">
-                                    <span>&#9734;</span>
-                                    <span>&#9734;</span>
-                                    <span>&#9734;</span>
-                                    <span>&#9734;</span>
-                                    <span>&#9734;</span>
-                                </div>
-                              </div>
-                              <div class="clearfix space20"></div>
-                              <button type="submit" class="btn btn-primary flat">Submit</button>
-                          </form>
-                      </div>
+                      	<div class="reviews-tab">
+                      		@forelse($product->feedbacks as $feedback)
+								<p>
+									<b>{{ $feedback->customer->getName() }}</b>,
+									{{ $feedback->created_at->diffForHumans() }}
+								</p>
+
+								<p>{{ $feedback->comment }}</p>
+
+		                        @include('layouts.ratings', ['ratings' => $feedback->rating])
+
+		                        @unless($loop->last)
+									<div class="sep"></div>
+		                        @endunless
+                          	@empty
+                          		<div class="space20"></div>
+                          		<p class="lead text-center text-muted">@lang('theme.no_reviews')</p>
+                          	@endforelse
+                      	</div>
                   </div>
               </div><!-- /.tab-content -->
           </div><!-- /.tabpanel -->

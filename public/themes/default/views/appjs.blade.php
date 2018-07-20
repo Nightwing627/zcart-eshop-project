@@ -37,8 +37,9 @@
                           keys: ['enter'],
                           btnClass: 'btn-primary flat',
                           action: function () {
-                            //Disable mouse pointer events and set the busy filter
-                            $('body').css("pointer-events", "none");
+                            //Disable mouse pointer events and set wait cursor
+                            // $('body').css("pointer-events", "none");
+                            $('body').css("cursor", "wait");
 
                             if (typeof url != 'undefined') {
                                 location.href = url;
@@ -61,7 +62,7 @@
             });
 
             // Bootstrap fixes
-            $('[data-toggle="tooltip"]').tooltip()
+            $('[data-toggle="tooltip"]').tooltip();
 
             //Initialize validator
             $('#form, form[data-toggle="validator"]').validator({
@@ -217,6 +218,39 @@
                 return false;
             });
             // End View Switcher
+
+
+            // FEEDBACK SYSTEM
+            $('.feedback-stars span.star').on('mouseover', function(){
+                var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
+                $(this).parent().children('span.star').each(function(e){
+                  if (e < onStar)
+                    $(this).addClass('rated');
+                  else
+                    $(this).removeClass('rated');
+                });
+            });
+
+            $('.feedback-stars span.star').on('click', function(){
+                var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+                var wrapper = $(this).parent();
+
+                // Update the rating value
+                wrapper.children('input.rating-value').val(onStar);
+
+                wrapper.children('span.star').each(function(e){
+                    if (e < onStar){
+                        $(this).addClass('rated');
+                        $(this).children('i').removeClass('fa-star-o').addClass('fa-star');
+                    }
+                    else{
+                        $(this).removeClass('rated');
+                        $(this).children('i').removeClass('fa-star').addClass('fa-star-o');
+                    }
+                });
+                $(this).siblings('span.response').text($(this).data('title'));
+            });
+            //END FEEDBACK SYSTEM
 
             // ADD TO CART BTN
             //Events

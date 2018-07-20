@@ -27,7 +27,7 @@ class DisputeController extends Controller
     {
         $types = DisputeType::all();
 
-        return view('create_dispute', compact('order', 'types'));
+        return view('dispute', compact('order', 'types'));
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Common\Billable;
 use App\Common\Loggable;
 use App\Common\Imageable;
 use App\Common\Addressable;
+use App\Common\Feedbackable;
 use App\Events\ShopCreated;
 use App\Helpers\Statistics;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shop extends Model
 {
-    use SoftDeletes, Loggable, Notifiable, Addressable, Imageable, Billable;
+    use SoftDeletes, Loggable, Notifiable, Addressable, Imageable, Feedbackable, Billable;
 
     /**
      * The database table used by the model.

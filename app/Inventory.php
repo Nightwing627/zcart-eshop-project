@@ -133,7 +133,17 @@ class Inventory extends Model
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_items')
-                    ->withPivot('item_description', 'quantity', 'unit_price')
+                    ->withPivot('item_description', 'quantity', 'unit_price', 'feedback_id')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Get the feedbacks for the product.
+     */
+    public function feedbacks()
+    {
+        return $this->belongsToMany(Feedback::class, 'order_items')
+                    ->withPivot('item_description', 'quantity', 'unit_price', 'order_id')
                     ->withTimestamps();
     }
 

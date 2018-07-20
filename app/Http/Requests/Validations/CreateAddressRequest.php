@@ -42,5 +42,4 @@ class CreateAddressRequest extends Request
             'address_type.composite_unique' => trans('validation.composite_unique'),
         ];
     }
-
 }

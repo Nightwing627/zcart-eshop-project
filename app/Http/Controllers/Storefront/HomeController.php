@@ -49,7 +49,7 @@ class HomeController extends Controller
         // Take only available items
         $products = $category->products()->active()->whereHas('inventories', function ($query) {
             $query->available();
-        })->with(['inventories:product_id,sale_price', 'featuredImage', 'images'])->paginate(20);
+        })->withCount('feedbacks')->with(['inventories:product_id,sale_price', 'featuredImage', 'images'])->paginate(20);
 
         return view('category', compact('category', 'products'));
     }
@@ -62,7 +62,7 @@ class HomeController extends Controller
      */
     public function product($slug)
     {
-        $product = Product::where('slug', $slug)->firstOrFail();
+        $product = Product::where('slug', $slug)->with('feedbacks.customer:id,name,nice_name')->withCount('feedbacks')->firstOrFail();
 
         // Push product ID to session for the recently viewed items section
         session()->push('products.recently_viewed_items', $product->getKey());

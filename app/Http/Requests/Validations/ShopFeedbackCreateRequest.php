@@ -5,7 +5,7 @@ namespace App\Http\Requests\Validations;
 use App\Customer;
 use App\Http\Requests\Request;
 
-class OrderConversationRequest extends Request
+class ShopFeedbackCreateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,9 +17,6 @@ class OrderConversationRequest extends Request
         if ($this->user() instanceof Customer) {
             return $this->route('order')->customer_id == $this->user()->id;
         }
-        else{
-            return $this->route('order')->shop_id == $this->user()->merchantId();
-        }
         return false;
     }
 
@@ -30,9 +27,11 @@ class OrderConversationRequest extends Request
      */
     public function rules()
     {
+        Request::merge(['customer_id' => $this->user()->id]); //Set customer_id
+
         return [
-            'message' => 'required|max:500',
-            'photo' => 'mimes:jpg,jpeg,png|max:2000',
+           'rating' => 'required|numeric|between:1,5',
+           'comment' => 'nullable|string|min:10|max:250',
         ];
     }
 }

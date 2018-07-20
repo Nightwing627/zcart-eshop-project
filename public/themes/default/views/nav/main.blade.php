@@ -27,16 +27,15 @@
             <span>{{ trans('theme.hello') . ', ' . Auth::guard('customer')->user()->getName() }}</span> {{ trans('theme.manage_your_account') }}
           </a>
           <ul class="dropdown-menu nav-list">
-            <li><a href="{{ route('account', 'dashboard') }}"><i class="fa fa-dashboard"></i> @lang('theme.nav.dashboard')</a></li>
-            <li><a href="{{ route('account', 'orders') }}"><i class="fa fa-shopping-cart"></i> @lang('theme.nav.my_orders')</a></li>
-            <li><a href="{{ route('account', 'wishlist') }}"><i class="fa fa-heart-o"></i> @lang('theme.nav.my_wishlist')</a></li>
-            <li><a href="{{ route('account', 'disputes') }}"><i class="fa fa-rocket"></i> @lang('theme.nav.refunds_disputes')</a></li>
-            <li><a href="{{ route('account', 'feedbacks') }}"><i class="fa fa-comment-o"></i> @lang('theme.nav.manage_feedbacks')</a></li>
-            <li><a href="{{ route('account', 'coupons') }}"><i class="fa fa-tags"></i> @lang('theme.nav.my_coupons')</a></li>
-            <li><a href="{{ route('account', 'account') }}"><i class="fa fa-user"></i> @lang('theme.nav.my_account')</a></li>
-            <li><a href="{{ route('account', 'addresses') }}"><i class="fa fa-address-card-o"></i> @lang('theme.nav.addresses')</a></li>
+            <li><a href="{{ route('account', 'dashboard') }}"><i class="fa fa-dashboard fa-fw"></i> @lang('theme.nav.dashboard')</a></li>
+            <li><a href="{{ route('account', 'orders') }}"><i class="fa fa-shopping-cart fa-fw"></i> @lang('theme.nav.my_orders')</a></li>
+            <li><a href="{{ route('account', 'wishlist') }}"><i class="fa fa-heart-o fa-fw"></i> @lang('theme.nav.my_wishlist')</a></li>
+            <li><a href="{{ route('account', 'disputes') }}"><i class="fa fa-rocket fa-fw"></i> @lang('theme.nav.refunds_disputes')</a></li>
+            <li><a href="{{ route('account', 'coupons') }}"><i class="fa fa-tags fa-fw"></i> @lang('theme.nav.my_coupons')</a></li>
+            <li><a href="{{ route('account', 'account') }}"><i class="fa fa-user fa-fw"></i> @lang('theme.nav.my_account')</a></li>
+            <li><a href="{{ route('account', 'addresses') }}"><i class="fa fa-address-card-o fa-fw"></i> @lang('theme.nav.addresses')</a></li>
             <li class="sep"></li>
-            <li><a href="{{ route('customer.logout') }}"><i class="fa fa-power-off"></i> {{ trans('theme.logout') }}</a></li>
+            <li><a href="{{ route('customer.logout') }}"><i class="fa fa-power-off fa-fw"></i> {{ trans('theme.logout') }}</a></li>
           </ul>
         </li>
       @else
@@ -59,8 +58,8 @@
             <p>
               <button class="sc-cart-checkout btn flat btn-primary pull-right" type="button">{{ trans('theme.button.checkout') }}</button>
               <div class="btn-group">
-                <a href="{{ route('cart.index') }}" class="btn nopadding-left btn-link"><i class="fa fa-external-link" data-toggle="tooltip" title="{{ trans('theme.button.open') }}"></i></a>
-                <button class="btn nopadding-left btn-link confirm sc-cart-clear"><i class="fa fa-trash" data-toggle="tooltip" title="{{ trans('theme.button.clear') }}"></i></button>
+                <a href="{{ route('cart.index') }}" class="btn nopadding-left btn-link"><i class="fa fa-external-link fa-fw" data-toggle="tooltip" title="{{ trans('theme.button.open') }}"></i></a>
+                <button class="btn nopadding-left btn-link confirm sc-cart-clear"><i class="fa fa-trash fa-fw" data-toggle="tooltip" title="{{ trans('theme.button.clear') }}"></i></button>
               </div>
             </p>
             <div class="space20"></div>
@@ -90,7 +89,7 @@
           </a>
           <ul class="dropdown-menu menu-category-dropdown" aria-labelledby="dLabel">
             @foreach($all_categories as $catGroup)
-              <li><a href="#"><i class="fa {{ $catGroup->icon or 'fa-cube' }} category-icon"></i>{{ $catGroup->name }}</a>
+              <li><a href="#"><i class="fa {{ $catGroup->icon or 'fa-cube' }} fa-fw category-icon"></i>{{ $catGroup->name }}</a>
                 <div class="category-section">
                   <div class="category-section-inner">
                     <div class="category-section-content">

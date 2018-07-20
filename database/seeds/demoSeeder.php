@@ -503,5 +503,6 @@ class demoSeeder extends Seeder
         ]);
 
         factory(App\Wishlist::class, $this->veryLongCount)->create();
+        factory(App\Feedback::class, $this->veryLongCount)->create();
     }
 }

@@ -2062,12 +2062,18 @@ div[data-notify="container"] {
     color: #d9d9d9;
 }
 .product-info-rating-count{
-    margin-left: 10px;
-    font-size: 71%;
-    line-height: 1em;
-    vertical-align: middle;
-    font-style: italic;
-    color: #767676 !important;
+  margin-left: 10px;
+  font-size: 71%;
+  line-height: 1em;
+  vertical-align: middle;
+  font-style: italic;
+  color: #767676 !important;
+  text-decoration: none!important;
+}
+.feedback-stars span.response {
+  color: #ffc120;
+  font-size: 0.65em;
+  margin: 5px 20px 0;
 }
 /****** End Product Rating ******/
 /****** Sidebar Product List ******/

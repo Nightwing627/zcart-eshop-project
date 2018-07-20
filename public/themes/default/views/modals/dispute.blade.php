@@ -1,5 +1,5 @@
 <div class="modal fade" id="disputeOpenModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-sm" role="document">
+  <div class="modal-dialog modal-md" role="document">
     <div class="modal-content flat">
         <div class="modal-header">
             <a class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
@@ -7,8 +7,7 @@
         </div>
         <div class="modal-body">
             {!! Form::open(['route' => ['dispute.save', $order], 'data-toggle' => 'validator']) !!}
-
-            <div class="row select-box-wrapper space10">
+            <div class="row select-box-wrapper">
                 <div class="form-group col-md-12">
                     <label for="dispute_type_id">@lang('theme.select_reason'):<sup>*</sup></label>
                     <select name="dispute_type_id" id="dispute_type_id" class="selectBoxIt" required="required">
@@ -42,21 +41,24 @@
 
             <div class="row select-box-wrapper space10">
                 <div class="form-group col-md-12">
-                    <label for="product_id">@lang('theme.select_product'):</label>
-                    <select name="product_id" id="product_id" class="selectBoxIt">
+                    <label for="product_id">@lang('theme.select_product'):*</label>
+                    <select name="product_id" id="product_id" class="selectBoxIt" required="required">
                         <option value="">@lang('theme.select')</option>
                         @foreach($order->inventories as $id => $item)
-                            <option value="{{ $item->product_id }}">{{ $item->pivot->item_description }}</option>
+                            <option value="{{ $item->product_id }}">
+                                {{ $item->pivot->item_description }} (@lang('theme.unit_price'): {{ get_formated_currency($item->pivot->unit_price) }})
+                            </option>
                         @endforeach
                     </select>
+                    <div class="help-block with-errors"></div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="refund_amount">@lang('theme.refund_amount'):</label>
+                <label for="refund_amount">@lang('theme.refund_amount'):*</label>
                 <div class="input-group">
                     <span class="input-group-addon flat">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
-                    {!! Form::number('refund_amount' , null, ['id' => 'refund_amount', 'class' => 'form-control flat', 'step' => 'any', 'max' => $order->grand_total, 'placeholder' => trans('theme.placeholder.refund_amount')]) !!}
+                    {!! Form::number('refund_amount' , null, ['id' => 'refund_amount', 'class' => 'form-control flat', 'step' => 'any', 'max' => $order->grand_total, 'placeholder' => trans('theme.placeholder.refund_amount'), 'required']) !!}
                 </div>
                 <div class="help-block with-errors">
                     @php

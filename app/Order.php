@@ -79,6 +79,7 @@ class Order extends Model
                         'order_status_id',
                         'goods_received',
                         'approved',
+                        'feedback_id',
                         'disputed',
                     ];
 
@@ -140,7 +141,7 @@ class Order extends Model
     public function inventories()
     {
         return $this->belongsToMany(Inventory::class, 'order_items')
-                    ->withPivot('item_description', 'quantity', 'unit_price')
+                    ->withPivot('item_description', 'quantity', 'unit_price','feedback_id')
                     ->withTimestamps();
     }
 
@@ -210,6 +211,14 @@ class Order extends Model
     public function status()
     {
         return $this->belongsTo(OrderStatus::class, 'order_status_id');
+    }
+
+    /**
+     * Get the shop feedback for the order/shop.
+     */
+    public function feedback()
+    {
+        return $this->belongsTo(Feedback::class, 'feedback_id');
     }
 
     /**
@@ -315,6 +324,18 @@ class Order extends Model
     public function refundedSum()
     {
         return $this->refunds->where('status', Refund::STATUS_APPROVED)->sum('amount');
+    }
+
+    // Update the goods_received field when customer confirm or change status
+    public function goods_received()
+    {
+        return $this->update(['order_status_id' => 6, 'goods_received' => 1]); // Delivered Status. This id is freezed by system config
+    }
+
+    // Update the feedback_given field when customer leave feedback for the shop
+    public function feedback_given($feedback_id = Null)
+    {
+        return $this->update(['feedback_id' => $feedback_id]);
     }
 
     public function paymentStatusName()

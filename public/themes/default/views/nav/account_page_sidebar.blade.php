@@ -14,9 +14,6 @@
     <li class="{{ $tab == 'disputes' ? 'active' : '' }}">
     	<a href="{{ route('account', 'disputes') }}"><i class="fa fa-rocket"></i> @lang('theme.nav.refunds_disputes')</a>
     </li>
-    <li class="{{ $tab == 'feedbacks' ? 'active' : '' }}">
-    	<a href="{{ route('account', 'feedbacks') }}"><i class="fa fa-comment-o"></i> @lang('theme.nav.manage_feedbacks')</a>
-    </li>
     <li class="{{ $tab == 'coupons' ? 'active' : '' }}">
     	<a href="{{ route('account', 'coupons') }}"><i class="fa fa-tags"></i> @lang('theme.nav.my_coupons')</a>
     </li>
