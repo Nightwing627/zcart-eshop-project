@@ -68,7 +68,10 @@ class GiftCard extends Model
      */
     public function setActivationTimeAttribute($value)
     {
-        if($value) $this->attributes['activation_time'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+        if($value)
+            $this->attributes['activation_time'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+        else
+            $this->attributes['activation_time'] = Carbon::now();
     }
 
     /**

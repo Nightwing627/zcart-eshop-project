@@ -5,9 +5,7 @@
         	<div class="col-md-12 nopadding">
 				<table class="table" id="buyer-payment-detail-table">
 					<thead>
-			          	<tr>
-			            	<th colspan="6">@lang('theme.payment_detail')</th>
-			          	</tr>
+			          	<tr><th colspan="6">@lang('theme.payment_detail')</th></tr>
 					</thead>
 					<tbody>
 						<tr class="buyer-payment-info-head">

@@ -4,17 +4,17 @@
         {!! Form::text('address_title', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.address_title')]) !!}
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                {!! Form::label('address_type', trans('app.form.address_type')) !!}
-                @foreach($address_types as $address_type)
-                  <label class="radio-inline col-md-3 nopadding">
-                    {!! Form::radio('address_type', $address_type, null, ['class' => 'icheck', 'required']) !!} {{ $address_type }}
-                  </label>
-                @endforeach
-                <div class="help-block with-errors"></div>
-            </div>
+      <div class="col-md-12">
+        <div class="form-group">
+            {!! Form::label('address_type', trans('app.form.address_type')) !!}
+            @foreach($address_types as $address_type)
+              <label class="radio-inline col-md-3 nopadding">
+                {!! Form::radio('address_type', $address_type, null, ['class' => 'icheck', 'required']) !!} {{ $address_type }}
+              </label>
+            @endforeach
+            <div class="help-block with-errors"></div>
         </div>
+      </div>
     </div>
     <br/>
 @endif

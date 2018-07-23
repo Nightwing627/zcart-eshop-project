@@ -51,6 +51,7 @@
             </div><!-- /.col-md-* -->
         @endforeach
     </div><!-- /.row .product-list -->
+    <div class="sep"></div>
 @else
   <div class="clearfix space50"></div>
   <p class="lead text-center space50">
@@ -58,8 +59,6 @@
     <a href="{{ url('/') }}" class="btn btn-primary btn-sm flat">@lang('theme.button.shop_now')</a>
   </p>
 @endif
-
-<div class="sep"></div>
 
 <div class="row pagenav-wrapper">
     {{ $wishlist->links('layouts.pagination') }}

@@ -615,7 +615,7 @@
 		    });
 	  	});
 
-	  	// coupon form
+	  	// Coupon form
 	  	$('input#limited').on('ifChecked', function () {
 	    	$('#customers_field').removeClass('hidden').addClass('show');
 	    	$('input#limited').attr('required', 'required');
@@ -625,7 +625,7 @@
 	    	$('#customers_field').removeClass('show').addClass('hidden');
 	    	$('input#limited').removeAttr('required');
 	  	});
-	  	//END coupon form
+	  	//END Coupon form
 
 	  	//shipping zone
 		$('input#rest_of_the_world').on('ifChecked', function () {

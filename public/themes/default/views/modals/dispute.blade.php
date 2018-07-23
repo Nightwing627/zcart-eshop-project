@@ -13,7 +13,7 @@
                     <select name="dispute_type_id" id="dispute_type_id" class="selectBoxIt" required="required">
                         <option value="">@lang('theme.select')</option>
                         @foreach($types as $id => $type)
-                            <option value="{{ $type->id }}">{{ $type->detail }}</option>
+                            <option value="{{ $id }}">{{ $type }}</option>
                         @endforeach
                     </select>
                     <div class="help-block with-errors"></div>
@@ -39,11 +39,12 @@
                 </div>
             </div>
 
-            <div class="row select-box-wrapper space10">
+            <div class="row select-box-wrapper space10 hidden" id="select_disputed_item">
                 <div class="form-group col-md-12">
                     <label for="product_id">@lang('theme.select_product'):*</label>
-                    <select name="product_id" id="product_id" class="selectBoxIt" required="required">
+                    <select name="product_id" id="product_id" class="selectBoxIt">
                         <option value="">@lang('theme.select')</option>
+                        <option value="all">@lang('theme.all_items')</option>
                         @foreach($order->inventories as $id => $item)
                             <option value="{{ $item->product_id }}">
                                 {{ $item->pivot->item_description }} (@lang('theme.unit_price'): {{ get_formated_currency($item->pivot->unit_price) }})
@@ -85,11 +86,12 @@
 
             <div class="row">
                 <div class="col-xs-7">
-                    <div class="form-group">
+                    <div class="form-group hidden" id="return_goods_checkbox">
                         <label>
-                          <input name="return_goods" value="1" class="i-check-blue" type="checkbox"/> {{ trans('theme.return_goods') }}
+                          <input name="return_goods" value="1" class="i-check-blue" id="return_goods" type="checkbox"/> {{ trans('theme.return_goods') }}
                         </label>
                     </div>
+                    <div class="help-block with-errors small"><span class="text-info hidden" id="return_goods_help_txt"><i class="fa fa-info-circle"></i> @lang('theme.help.return_goods_help_txt')</span></div>
                 </div>
                 <div class="col-xs-5">
                     <input class="btn btn-block flat btn-primary" type="submit" value="{{ trans('theme.button.open_dispute') }}">

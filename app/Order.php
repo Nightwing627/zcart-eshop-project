@@ -31,7 +31,7 @@ class Order extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at', 'shipping_date', 'delivery_date', 'payment_date'];
+    protected $dates = ['created_at', 'deleted_at', 'shipping_date', 'delivery_date', 'payment_date'];
 
     /**
      * The name that will be used when log this model. (optional)

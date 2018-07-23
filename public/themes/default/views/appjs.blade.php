@@ -3,12 +3,20 @@
 
     // ;(function($, window, document) {
         $(document).ready(function(){
-
             $.ajaxSetup ({
                 cache: false,
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 }
+            });
+
+            // Activate the tab if the url has any #hash
+            $('.nav a').on('show.bs.tab', function (e) {
+                window.location = $(this).attr('href');
+            });
+            $(function () {
+                var hash = window.location.hash;
+                hash && $('ul.nav a[href="' + hash + '"]').tab('show');
             });
 
             // Confirmation for actions
@@ -124,6 +132,11 @@
             });
             // End Owl Carousel
 
+            //Datepicker
+            $(".datepicker").datepicker({
+                format: 'yyyy-mm-dd'
+            });
+
             //  i Check plugin
             $('.i-check, .i-radio').iCheck({
                 checkboxClass: 'icheckbox_minimal',
@@ -219,7 +232,6 @@
             });
             // End View Switcher
 
-
             // FEEDBACK SYSTEM
             $('.feedback-stars span.star').on('mouseover', function(){
                 var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
@@ -301,6 +313,25 @@
                 height: 90
             });
 
+            // DISPUTE FORM
+            $('#disputeOpenModal input[name="order_received"]').on('ifChecked', function () {
+                if ($(this).val() == 1) {
+                    $('#select_disputed_item, #return_goods_checkbox').removeClass('hidden').addClass('show');
+                    $('#select_disputed_item select#product_id').attr('required', 'required');
+                }
+                else{
+                    $('#select_disputed_item, #return_goods_checkbox').removeClass('show').addClass('hidden');
+                    $('#select_disputed_item select#product_id').removeAttr('required');
+                }
+            });
+
+            $('#disputeOpenModal input#return_goods').on('ifChecked', function () {
+                $('#return_goods_help_txt').removeClass('hidden').addClass('show');
+            });
+            $('#disputeOpenModal input#return_goods').on('ifUnchecked', function () {
+                $('#return_goods_help_txt').removeClass('show').addClass('hidden');
+            });
+            //END DISPUTE FORM
         });
     // });
 </script>

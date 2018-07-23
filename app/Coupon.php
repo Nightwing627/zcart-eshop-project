@@ -79,74 +79,44 @@ class Coupon extends Model
     }
 
     /**
-     * Set the quantity for the inventory.
+     * Setters
      */
     public function setQuantityAttribute($value)
     {
         $this->attributes['quantity'] = $value > 1 ? $value : 1;
     }
-
-    /**
-     * Set the quantity_per_customer for the inventory.
-     */
     public function setQuantityPerCustomerAttribute($value)
     {
         $this->attributes['quantity_per_customer'] = $value > 1 ? $value : 1;
     }
-
-    /**
-     * Set the starting_time
-     */
-    public function setStartingTimeAttribute($value)
-    {
-        if($value) $this->attributes['starting_time'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
-    }
-
-    /**
-     * Set the ending_time
-     */
-    public function setEndingTimeAttribute($value)
-    {
-        if($value) $this->attributes['ending_time'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
-    }
-
-    /**
-     * Set the partial_use
-     */
     public function setPartialUseAttribute($value)
     {
         $this->attributes['partial_use'] = (bool) $value;
     }
-
-    /**
-     * Set the limited
-     */
     public function setLimitedAttribute($value)
     {
         $this->attributes['limited'] = (bool) $value;
     }
-
-    /**
-     * Set the exclude_offer_items
-     */
     public function setExcludeOfferItemsAttribute($value)
     {
         $this->attributes['exclude_offer_items'] = (bool) $value;
     }
-
-    /**
-     * Set the exclude_tax_n_shipping
-     */
     public function setExcludeTaxNShippingAttribute($value)
     {
         $this->attributes['exclude_tax_n_shipping'] = (bool) $value;
     }
 
     /**
-     * Get the Customer list for the product.
-     *
-     * @return array
+     * Getters
      */
+    // public function getStartingTimeAttribute($value)
+    // {
+    //     if($value) $this->attributes['starting_time'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+    // }
+    // public function getEndingTimeAttribute($value)
+    // {
+    //     if($value) $this->attributes['ending_time'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+    // }
     public function getCustomerListAttribute()
     {
         if (count($this->customers)) return $this->customers->pluck('id')->toArray();

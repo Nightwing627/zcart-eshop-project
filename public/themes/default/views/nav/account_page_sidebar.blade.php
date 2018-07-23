@@ -17,10 +17,10 @@
     <li class="{{ $tab == 'coupons' ? 'active' : '' }}">
     	<a href="{{ route('account', 'coupons') }}"><i class="fa fa-tags"></i> @lang('theme.nav.my_coupons')</a>
     </li>
+    <li class="{{ $tab == 'gift_cards' ? 'active' : '' }}">
+        <a href="{{ route('account', 'gift_cards') }}"><i class="fa fa-gift"></i> @lang('theme.nav.gift_cards')</a>
+    </li>
     <li class="{{ $tab == 'account' ? 'active' : '' }}">
     	<a href="{{ route('account', 'account') }}"><i class="fa fa-user"></i> @lang('theme.nav.my_account')</a>
-    </li>
-    <li class="{{ $tab == 'addresses' ? 'active' : '' }}">
-    	<a href="{{ route('account', 'addresses') }}"><i class="fa fa-address-card-o"></i> @lang('theme.nav.addresses')</a>
     </li>
 </ul>

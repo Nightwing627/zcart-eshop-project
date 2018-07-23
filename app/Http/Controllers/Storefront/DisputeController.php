@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Events\Dispute\DisputeCreated;
 use App\Http\Requests\Validations\RefundRequest;
+use App\Http\Requests\Validations\OrderDetailRequest;
 use App\Http\Requests\Validations\CreateDisputeRequest;
 
 class DisputeController extends Controller
@@ -23,9 +24,9 @@ class DisputeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show_dispute_form(Request $request, Order $order)
+    public function show_dispute_form(OrderDetailRequest $request, Order $order)
     {
-        $types = DisputeType::all();
+        $types = DisputeType::orderBy('id')->pluck('detail','id');
 
         return view('dispute', compact('order', 'types'));
     }

@@ -387,7 +387,7 @@ class demoSeeder extends Seeder
 
         factory(App\GiftCard::class, $this->longCount)->create();
 
-        factory(App\Coupon::class, $this->longCount)->create();
+        factory(App\Coupon::class, $this->veryLongCount)->create();
 
         factory(App\Message::class, $this->longCount)->create();
 
@@ -399,6 +399,7 @@ class demoSeeder extends Seeder
 
         //PIVOT TABLE SEEDERS
 
+        $customers  = \DB::table('customers')->pluck('id')->toArray();
         $users      = \DB::table('users')->pluck('id')->toArray();
         $products   = \DB::table('products')->pluck('id')->toArray();
         $shops      = \DB::table('shops')->pluck('id')->toArray();
@@ -406,7 +407,7 @@ class demoSeeder extends Seeder
         $categories = \DB::table('categories')->pluck('id')->toArray();
         $category_sub_groups = \DB::table('category_sub_groups')->pluck('id')->toArray();
         $attributes   = \DB::table('attributes')->pluck('id')->toArray();
-
+        $coupons   = \DB::table('coupons')->where('limited', 1)->pluck('id')->toArray();
 
         // order_items
         foreach ((range(1, $this->longLongCount)) as $index) {
@@ -475,6 +476,17 @@ class demoSeeder extends Seeder
         //     );
         // }
 
+        // coupon_customers
+        foreach ((range(1, $this->veryLongCount)) as $index) {
+            DB::table('coupon_customer')->insert(
+                [
+                    'coupon_id' => $coupons[array_rand($coupons)],
+                    'customer_id' => $customers[array_rand($customers)],
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ]
+            );
+        }
 
         // Frontend Seeder
         factory(App\Banner::class, 3)->create([

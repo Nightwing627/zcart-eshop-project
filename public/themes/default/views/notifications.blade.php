@@ -8,7 +8,7 @@
 	</script>
 @elseif (Session::has('error'))
 	<script type="text/javascript">
-	    @include('layouts.notification', ['message' => Session::get('error'), 'type' => 'error', 'icon' => 'error'])
+	    @include('layouts.notification', ['message' => Session::get('error'), 'type' => 'danger', 'icon' => 'warning'])
 	</script>
 @elseif (Session::has('info'))
 	<script type="text/javascript">

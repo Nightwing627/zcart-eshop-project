@@ -19,7 +19,7 @@ class Address extends Model
      *
      * @var array
      */
-    protected $with = ['country', 'state'];
+    protected $with = ['country:id,name,country_code,iso_3166_2', 'state:id,name,country_id,iso_3166_2'];
 
     /**
      * The attributes that are mass assignable.
@@ -71,9 +71,8 @@ class Address extends Model
      */
     public function setStateIdAttribute($value)
     {
-        if (!is_numeric($value) and $value != NULL)
-        {
-            $state = State::create(['name' => $value, 'country_id' => \Request::input('country_id')]);
+        if (!is_numeric($value) and $value != NULL){
+            $state = State::firstOrCreate(['name' => $value, 'country_id' => \Request::input('country_id')]);
             $value = $state->id;
         }
 

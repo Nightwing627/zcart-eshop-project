@@ -35,7 +35,6 @@ class CreateAddressesTable extends Migration
             $table->string('addressable_type');
             $table->timestamps();
 
-            $table->unique(array('address_type', 'addressable_id', 'addressable_type'));
             $table->foreign('country_id')->references('id')->on('countries');
         });
     }

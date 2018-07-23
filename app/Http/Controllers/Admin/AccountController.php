@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
-use Hash;
 use App\System;
 use App\Ticket;
 use App\Helpers\Authorize;
@@ -183,9 +182,6 @@ class AccountController extends Controller
      */
     public function updatePassword(UpdatePasswordRequest $request)
     {
-        if(! Hash::check($request->input('current_password'), Auth::user()->password) )
-            return redirect()->route('admin.account.profile')->with('error', trans('messages.incorrect_current_password'));
-
         $profile = $this->profile->updatePassword($request);
 
         event(new PasswordUpdated(Auth::user()));

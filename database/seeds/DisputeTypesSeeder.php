@@ -29,7 +29,9 @@ class DisputeTypesSeeder extends Seeder
             ], [
                 'detail' => 'Shipping method',
             ], [
-                'detail' => 'Personal reasons',
+                'detail' => 'Customs problem',
+            ], [
+                'detail' => 'Shipping address not correct',
             ]
         ]);
     }

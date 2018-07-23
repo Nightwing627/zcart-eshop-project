@@ -7,7 +7,7 @@ use Hash;
 use Validator;
 use App\Http\Requests\Request;
 
-class UpdatePasswordRequest extends Request
+class SelfPasswordUpdateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +16,7 @@ class UpdatePasswordRequest extends Request
      */
     public function authorize()
     {
-        return Auth::check();
+        return Auth::guard('customer')->check();
     }
 
     /**
@@ -27,12 +27,13 @@ class UpdatePasswordRequest extends Request
     public function rules()
     {
         Validator::extend('check_current_password', function($attribute, $value, $parameters){
-            return Hash::check($value, Auth::user()->password);
+            return Hash::check($value, Auth::guard('customer')->user()->password);
         });
 
         return [
-           'current_password' =>  'required|check_current_password',
-           'password' =>  'required|confirmed|min:6',
+            'current_password' =>  'required|check_current_password',
+            'password' =>  'required|confirmed|min:6',
+            'password_confirmation' => 'required',
         ];
     }
 
@@ -44,7 +45,7 @@ class UpdatePasswordRequest extends Request
     public function messages()
     {
         return [
-            'current_password.check_current_password' => trans('messages.incorrect_current_password'),
+            'current_password.check_current_password' => trans('theme.validation.incorrect_current_password'),
         ];
     }
 }

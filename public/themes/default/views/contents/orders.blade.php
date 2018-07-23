@@ -91,6 +91,7 @@
         @endforeach
       </tbody>
   </table>
+  <div class="sep"></div>
 @else
   <div class="clearfix space50"></div>
   <p class="lead text-center space50">
@@ -99,10 +100,7 @@
   </p>
 @endif
 
-<div class="sep"></div>
-
 <div class="row pagenav-wrapper">
-    {{-- {{ $orders->links('layouts.pagination') }} --}}
+  {{ $orders->links('layouts.pagination') }}
 </div><!-- /.row .pagenav-wrapper -->
-
 <div class="clearfix space20"></div>
