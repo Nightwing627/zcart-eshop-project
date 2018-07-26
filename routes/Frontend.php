@@ -10,6 +10,7 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 
 	Route::get('/', 'HomeController@index')->name('homepage');
 	Route::get('product/{slug}', 'HomeController@product')->name('show.product');
+	Route::get('product/offers/{slug}', 'HomeController@offers')->name('show.offers');
 	Route::get('categories', 'HomeController@categories')->name('categories');
 	Route::get('category/{slug}', 'HomeController@browseCategory')->name('category.browse');
 	Route::get('shop/{slug}', 'HomeController@shop')->name('show.store');

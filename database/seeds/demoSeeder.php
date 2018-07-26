@@ -408,6 +408,22 @@ class demoSeeder extends Seeder
         $category_sub_groups = \DB::table('category_sub_groups')->pluck('id')->toArray();
         $attributes   = \DB::table('attributes')->pluck('id')->toArray();
         $coupons   = \DB::table('coupons')->where('limited', 1)->pluck('id')->toArray();
+        $inventories = \DB::table('inventories')->pluck('id')->toArray();
+
+        // attribute_inventory
+        foreach ((range(1, $this->veryLongCount)) as $index) {
+            $attribute_id = $attributes[array_rand($attributes)];
+            $attribute_values = \DB::table('attribute_values')->where('attribute_id', $attribute_id)->pluck('id')->toArray();
+            DB::table('attribute_inventory')->insert(
+                [
+                    'attribute_id' => $attribute_id,
+                    'inventory_id' => $inventories[array_rand($inventories)],
+                    'attribute_value_id' => $attribute_values[array_rand($attribute_values)],
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ]
+            );
+        }
 
         // order_items
         foreach ((range(1, $this->longLongCount)) as $index) {

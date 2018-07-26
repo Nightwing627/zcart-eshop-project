@@ -10,6 +10,24 @@
                 }
             });
 
+            $('select.color-options').simplecolorpicker();
+
+            $('.product-attribute-selector').on('change', function(){
+                var attr = [];
+                // console.log(attr);
+                $('.product-attribute-selector').each(function(){
+                    var val = $(this).val();
+                    if(val)
+                        attr.push(val);
+                });
+
+                var attrs_pivot = "{{ $attr_pivots or ''}}";
+
+                console.log(attr);
+                // console.log('this: ');
+                // console.log($(this).val());
+            });
+
             // Activate the tab if the url has any #hash
             $('.nav a').on('show.bs.tab', function (e) {
                 window.location = $(this).attr('href');
@@ -198,16 +216,18 @@
                 $(this).val(currentVal);
             });
             $(".product-info-qty-plus").on('click', function() {
-                var currentVal = parseInt($(this).prev(".product-info-qty-input").val(), 10);
+                var node = $(this).prev(".product-info-qty-input");
+                var currentVal = parseInt(node.val(), 10);
+
                 if (!currentVal || currentVal == "" || currentVal == "NaN") currentVal = 0;
-                $(this).prev(".product-info-qty-input").val(currentVal + 1);
+                if(node.data('max') > currentVal)
+                    node.val(currentVal + 1);
             });
             $(".product-info-qty-minus").on('click', function() {
                 var currentVal = parseInt($(this).next(".product-info-qty-input").val(), 10);
                 if (currentVal == "NaN") currentVal = 1;
-                if (currentVal > 1) {
+                if (currentVal > 1)
                     $(this).next(".product-info-qty-input").val(currentVal - 1);
-                }
             });
             // END Product qty field
 
@@ -287,6 +307,7 @@
 
             // Initialisation
             $('#smartcart').smartCart({
+                cart: [], // initial products on cart
                 currencySettings: {
                     locales: 'en-US', // A string with a BCP 47 language tag, or an array of such strings
                     currencyOptions:  {

@@ -12,10 +12,19 @@
             $product = $inventory->product;
           }
           $requires_shipping = $product->requires_shipping || (isset($inventory) && $inventory->product->requires_shipping);
+          $slug_calsses = isset($inventory) ? 'form-control' : 'form-control makeSlug';
         @endphp
         {{ Form::hidden('product_id', $product->id) }}
 
         <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              {!! Form::label('title', trans('app.form.title').'*') !!}
+              {!! Form::text('title', null, ['class' => $slug_calsses, 'placeholder' => trans('app.placeholder.title'), 'required']) !!}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
           <div class="col-md-7 nopadding-right">
             <div class="form-group">
               {!! Form::label('sku', trans('app.form.sku').'*', ['class' => 'with-help']) !!}
@@ -229,8 +238,27 @@
         <fieldset>
           <legend>{{ trans('app.seo') }}</legend>
           <div class="form-group">
-              {!! Form::label('tag_list[]', trans('app.form.tags'), ['class' => 'with-help']) !!}
-              {!! Form::select('tag_list[]', $tags, null, ['class' => 'form-control select2-tag', 'multiple' => 'multiple']) !!}
+            {!! Form::label('slug', trans('app.form.slug').'*', ['class' => 'with-help']) !!}
+            <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.slug') }}"></i>
+            {!! Form::text('slug', null, ['class' => 'form-control slug', 'placeholder' => 'SEO Friendly URL', 'required']) !!}
+            <div class="help-block with-errors"></div>
+          </div>
+
+          <div class="form-group">
+            {!! Form::label('tag_list[]', trans('app.form.tags'), ['class' => 'with-help']) !!}
+            {!! Form::select('tag_list[]', $tags, null, ['class' => 'form-control select2-tag', 'multiple' => 'multiple']) !!}
+          </div>
+
+          <div class="form-group">
+            {!! Form::label('meta_title', trans('app.form.meta_title'), ['class' => 'with-help']) !!}
+            <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.meta_title') }}"></i>
+            {!! Form::text('meta_title', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.meta_title')]) !!}
+          </div>
+
+          <div class="form-group">
+            {!! Form::label('meta_description', trans('app.form.meta_description'), ['class' => 'with-help']) !!}
+            <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.meta_description') }}"></i>
+            {!! Form::text('meta_description', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.meta_description')]) !!}
           </div>
         </fieldset>
       </div>

@@ -29,7 +29,7 @@ class CreateProductRequest extends Request
         return [
            'category_list' => 'required',
            'name' => 'required|unique:products',
-           'slug' => 'required|unique:products',
+           'description' => 'required',
            'active' => 'required',
            'image' => 'mimes:jpg,jpeg,png,gif',
         ];

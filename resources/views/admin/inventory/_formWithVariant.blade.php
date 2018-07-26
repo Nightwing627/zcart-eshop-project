@@ -10,7 +10,7 @@
    @endphp
 @endif
 
-{{ Form::hidden('product_id', $product->id) }}
+{{ Form::hidden('product', $product) }}
 
 <div class="row">
   <div class="col-lg-3 col-md-6 nopadding-right">

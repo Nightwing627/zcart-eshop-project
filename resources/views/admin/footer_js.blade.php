@@ -365,7 +365,7 @@
 		        datatype: 'JSON',
 		        success : function(attribute_type)
 		        {
-		          if (attribute_type == 1)
+		          if (attribute_type == {{\App\Attribute::TYPE_COLOR}})
 		          {
 		            $('#color-option').removeClass('hidden').addClass('show');
 		          }
@@ -714,13 +714,13 @@
 				    var tbl = 'categories';
 					var url = '/category/';
 				}
-				else if(route.match(/product/i)){
-				    var tbl = 'products';
-					var url = '/';
+				else if(route.match(/inventory/i)){
+				    var tbl = 'inventories';
+					var url = '/product/';
 				}
 				else if(route.match(/page/i)){
 				    var tbl = 'pages';
-					var url = '/';
+					var url = '/page/';
 				}
 				else if(route.match(/blog/i)){
 				    var tbl = 'blogs';

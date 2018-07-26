@@ -568,7 +568,7 @@ if ( ! function_exists('get_formated_price') )
         $arr = explode(config('system_settings.currency.decimal_mark', '.'), $price);
 
         if(isset($arr[1]))
-            return $arr[0] . '<sup class="price-fractional">' . $arr[1] .'</sup>';
+            return $arr[1] > 0 ? $arr[0] . '<sup class="price-fractional">' . $arr[1] .'</sup>' : $arr[0];
 
         return $price;
     }
@@ -585,7 +585,7 @@ if ( ! function_exists('get_formated_currency') )
      */
     function get_formated_currency($value = 0, $decimal = null)
     {
-        $value =  get_formated_decimal($value, true, $decimal);
+        $value =  get_formated_decimal($value, $decimal ? false : true, $decimal);
 
         if (config('system_settings.currency.symbol_first'))
             return get_formated_currency_symbol() . $value;

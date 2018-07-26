@@ -61,12 +61,16 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
 
     public function storeWithVariant(Request $request)
     {
+        // echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
+        $product = json_decode($request->input('product'));
         // Common informations
         $commonInfo['user_id'] = $request->user()->id; //Set user_id
 
         $commonInfo['shop_id'] = $request->user()->merchantId(); //Set shop_id
 
-        $commonInfo['product_id'] = $request->input('product_id');
+        $commonInfo['title'] = $request->has('title') ? $request->input('title') : $product->name;
+
+        $commonInfo['product_id'] = $product->id;
 
         $commonInfo['warehouse_id'] = $request->input('warehouse_id');
 
@@ -133,6 +137,8 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
             $dynamicInfo['offer_start'] = ($offer_prices[$key]) ? $request->input('offer_start') : NULL ;
 
             $dynamicInfo['offer_end'] = ($offer_prices[$key]) ? $request->input('offer_end') : NULL ;
+
+            $dynamicInfo['slug'] = str_slug($product->name . ' ' . $conditions[$key] . ' ' . $sku, '-');
 
             // Merge the common info and dynamic info to data array
             $data = array_merge($dynamicInfo, $commonInfo);

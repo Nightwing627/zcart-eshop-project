@@ -205,6 +205,16 @@ return [
 
     'shop_external_url' => 'If you own a website you can put the external link here, the url can be set as shop\'s landing page.',
 
+    'product_name' => 'Customers will not see this. This name only helps merchants to find the item for listing.',
+
+    'product_featured_image' =>  'Customers will not see this. This only helps merchants to find the item for listing.',
+
+    'product_images' => 'Customers will see this images only if the merchant\'s listing has no images to display.',
+
+    'product_active' => 'Merchants will find active items only.',
+
+    'product_description' => 'Customers will see this. This is the core and common product description.',
+
     'model_number' => 'An identifier of a product given by its manufacturer. Not required but recommended',
 
     'gtin' => 'Global Trade Item Number (GTIN) is a unique identifier of a product in the global marketplace. If you like to obtain an ISBN or UPC code for your product, you will find more information at the following websites: http://www.isbn.org/ and http://www.uc-council.org/',

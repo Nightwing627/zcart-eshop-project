@@ -44,12 +44,19 @@ class HomeController extends Controller
      */
     public function browseCategory($slug)
     {
-        $category = Category::where('slug', $slug)->firstOrFail();
+        $category = Category::where('slug', $slug)->active()->firstOrFail();
 
         // Take only available items
-        $products = $category->products()->active()->whereHas('inventories', function ($query) {
-            $query->available();
-        })->withCount('feedbacks')->with(['inventories:product_id,sale_price', 'featuredImage', 'images'])->paginate(20);
+        // $products = $category->products()->active()->whereHas('inventories', function ($query) {
+        //     $query->available();
+        // })->withCount('feedbacks')->with(['inventories:product_id,sale_price', 'featuredImage', 'images'])->paginate(20);
+        // echo "<pre>"; print_r($products->toArray()); echo "</pre>"; exit();
+
+        $products = $category->items(['id','shop_id','slug','product_id','title','stock_quantity','condition','sale_price','offer_price','offer_start','offer_end']);
+        // $products = $category->items(['id','shop_id','slug','product_id','title','stock_quantity','condition','sale_price','offer_price','offer_start','offer_end']);
+        // ->sortBy('sale_price')->groupBy('product_id');
+
+        echo "<pre>"; print_r($products->toArray()); echo "</pre>"; exit();
 
         return view('category', compact('category', 'products'));
     }
@@ -62,16 +69,15 @@ class HomeController extends Controller
      */
     public function product($slug)
     {
-        $product = Product::where('slug', $slug)->with('feedbacks.customer:id,name,nice_name')->withCount('feedbacks')->firstOrFail();
+        $product = Inventory::where('slug', $slug)->with('feedbacks.customer:id,name,nice_name')
+                                                ->withCount('feedbacks')->firstOrFail();
 
         // Push product ID to session for the recently viewed items section
         session()->push('products.recently_viewed_items', $product->getKey());
 
         // TEST
         $related = ListHelper::related_products($product);
-        // $related = [];
 
-// echo "<pre>"; print_r($product->inventories); echo "</pre>"; exit();
         return view('product', compact('product', 'related'));
     }
 

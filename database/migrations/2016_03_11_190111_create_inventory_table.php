@@ -15,6 +15,7 @@ class CreateInventoryTable extends Migration
         Schema::create('inventories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('shop_id')->unsigned()->nullable();
+            $table->text('title');
             $table->integer('warehouse_id')->unsigned()->nullable();
             $table->bigInteger('product_id')->unsigned();
             $table->integer('supplier_id')->unsigned()->nullable();
@@ -43,6 +44,9 @@ class CreateInventoryTable extends Migration
             $table->timestamp('available_from')->useCurrent();
             $table->integer('min_order_quantity')->default(1);
             $table->boolean('active')->default(1);
+            $table->string('slug', 200)->unique();
+            $table->text('meta_title')->nullable();
+            $table->longtext('meta_description')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

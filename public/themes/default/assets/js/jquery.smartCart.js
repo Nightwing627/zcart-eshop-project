@@ -64,7 +64,6 @@
     }
 
     $.extend(SmartCart.prototype, {
-
         init: function () {
             // Set the elements
             this._setElements();
@@ -166,6 +165,7 @@
          * Add the product object to the cart
          */
         _addToCart: function (p) {
+            // console.log(p);
             var mi = this;
 
             if (!p.hasOwnProperty(this.options.paramSettings.productPrice)) {

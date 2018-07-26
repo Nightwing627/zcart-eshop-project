@@ -59,8 +59,8 @@ class CartController extends Controller
      */
     public function checkout(Request $request, Cart $cart)
     {
-        print_r(json_decode($request->input('cart_list')));
-        echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
+        // print_r(json_decode($request->input('cart_list')));
+        // echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
         return view('checkout', compact('cart'));
     }
 

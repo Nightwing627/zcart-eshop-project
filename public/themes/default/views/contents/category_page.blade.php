@@ -3,11 +3,12 @@
       <div class="row">
         <div class="col-md-2 bg-light">
 
-          @include('contents.category_filters')
+          @include('contents.product_list_sidebar_filters')
 
         </div><!-- /.col-md-2 -->
         <div class="col-md-10" style="padding-left: 15px;">
 
+          @include('contents.product_list_top_filter')
           @include('contents.product_list')
 
         </div><!-- /.col-md-10 -->

@@ -198,6 +198,9 @@ div[data-notify="container"] {
 .flat{
   border-radius: 0 !important;
 }
+.round{
+  border-radius: 1em!important;
+}
 .sep {
     height: 1px;
     background: #cccccc;
@@ -2078,7 +2081,7 @@ div.datepicker > div {
 .product-single .product-info-options{
     margin: 20px 0 30px;
 }
-.product-info-options .color-option a {
+.product-info-options .color-option {
     width: 26px;
     height: 26px;
     display: inline-block;

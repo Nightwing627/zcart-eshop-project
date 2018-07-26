@@ -7,6 +7,7 @@ $factory->define(App\Inventory::class, function (Faker $faker) {
     $num = $faker->randomFloat($nbMaxDecimals = NULL, $min = 100, $max = 400);
     return [
         'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
+        'title' => $faker->sentence,
         'sku' => $faker->word,
         'condition' => 'New',
         'condition_note' => $faker->realText,
@@ -20,6 +21,9 @@ $factory->define(App\Inventory::class, function (Faker $faker) {
         'sale_price' => $num+15,
         'min_order_quantity' => 1,
         'shipping_weight' => rand(100,1999),
+        'slug' => $faker->slug,
+        'meta_title' => $faker->sentence,
+        'meta_description' => $faker->realText,
         'active' => 1,
         'created_at' => Carbon::Now()->subDays(rand(0, 15)),
         'updated_at' => Carbon::Now()->subDays(rand(0, 15)),

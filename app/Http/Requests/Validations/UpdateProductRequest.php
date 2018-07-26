@@ -28,7 +28,7 @@ class UpdateProductRequest extends Request
         return [
            'category_list' => 'required',
            'name' => 'required|composite_unique:products,name, '.$id,
-           'slug' => 'required|composite_unique:products,slug, '.$id,
+           'description' => 'required',
            'active' => 'required',
            'image' => 'mimes:jpg,jpeg,png,gif',
         ];

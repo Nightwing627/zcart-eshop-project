@@ -1,6 +1,3 @@
-<?php
-  //echo "<pre>"; print_r($categories_for_dropdown); echo "</pre>"; exit();
-?>
 <nav class="navbar navbar-default navbar-main navbar-light navbar-top">
   <div class="container">
     <div class="navbar-header">
@@ -56,10 +53,10 @@
             </div>
             <div class="space20"></div>
             <p>
-              <button class="sc-cart-checkout btn flat btn-primary pull-right" type="button">{{ trans('theme.button.checkout') }}</button>
               <div class="btn-group">
-                <a href="{{ route('cart.index') }}" class="btn nopadding-left btn-link"><i class="fa fa-external-link fa-fw" data-toggle="tooltip" title="{{ trans('theme.button.open') }}"></i></a>
                 <button class="btn nopadding-left btn-link confirm sc-cart-clear"><i class="fa fa-trash fa-fw" data-toggle="tooltip" title="{{ trans('theme.button.clear') }}"></i></button>
+                <a href="{{ route('cart.index') }}" class="btn flat btn-primary cart-open-btn">{{ trans('theme.button.checkout') }}</a>
+                <button class="sc-cart-checkout btn flat btn-primary pull-right" type="button"><i class="fa fa-bolt fa-fw"></i> {{ trans('theme.button.quick_checkout') }}</button>
               </div>
             </p>
             <div class="space20"></div>

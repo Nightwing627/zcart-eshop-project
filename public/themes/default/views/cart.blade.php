@@ -158,8 +158,9 @@
                             </li>
                         </ul>
                     </div>
-
-                    <a class="btn btn-primary btn-block btn-lg flat" href="{{ route('checkout') }}"><i class="fa fa-shopping-cart"></i> {{ trans('theme.button.proceed_to_checkout') }}</a>
+                    {!! Form::open(['route' => 'checkout']) !!}
+                      <button class="btn btn-primary btn-block btn-lg flat" type="submit"><i class="fa fa-shopping-cart"></i> {{ trans('theme.button.proceed_to_checkout') }}</button>
+                    {!! Form::close() !!}
                 </div>
             </div> <!-- /.row -->
         </div> <!-- /.container -->

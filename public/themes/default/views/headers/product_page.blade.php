@@ -6,10 +6,8 @@
           <ol class="breadcrumb nav-breadcrumb">
             @include('headers.lists.home')
             @include('headers.lists.categories')
-            @if($product->categories->count())
-              @include('headers.lists.category', ['category' => $product->categories->first()])
-            @endif
-            <li class="active">{{ $product->name }}</li>
+            @include('headers.lists.category', ['category' => $product->product->categories->first()])
+            <li class="active">{{ $product->title }}</li>
           </ol>
         </div>
       </div>

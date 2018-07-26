@@ -5,13 +5,14 @@ namespace App;
 use Carbon\Carbon;
 use App\Common\Taggable;
 use App\Common\Imageable;
+use App\Common\Feedbackable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inventory extends Model
 {
-    use SoftDeletes, Taggable, Imageable;
+    use SoftDeletes, Taggable, Imageable, Feedbackable;
 
     /**
      * The database table used by the model.
@@ -35,6 +36,7 @@ class Inventory extends Model
      */
     protected $fillable = [
                         'shop_id',
+                        'title',
                         'warehouse_id',
                         'product_id',
                         'supplier_id',
@@ -54,6 +56,9 @@ class Inventory extends Model
                         'available_from',
                         'min_order_quantity',
                         // 'alert_quantity',
+                        'slug',
+                        'meta_title',
+                        'meta_description',
                         'active'
                     ];
 

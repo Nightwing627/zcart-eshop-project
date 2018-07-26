@@ -60,9 +60,9 @@ class Product extends Model
                         'has_variant',
                         'requires_shipping',
                         'downloadable',
-                        'slug',
-                        'meta_title',
-                        'meta_description',
+                        // 'slug',
+                        // 'meta_title',
+                        // 'meta_description',
                         'sale_count',
                         'active'
                     ];
@@ -94,7 +94,6 @@ class Product extends Model
         $array['mpn'] = $this->mpn;
         $array['gtin'] = $this->gtin;
         $array['description'] = $this->description;
-        $array['slug'] = $this->slug;
         $array['active'] = $this->active;
 
         return $array;

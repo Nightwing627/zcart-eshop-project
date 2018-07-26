@@ -10,6 +10,10 @@ class Attribute extends Model
 {
     use SoftDeletes;
 
+    const TYPE_COLOR   = 1;         //Color/Pattern
+    const TYPE_RADIO   = 2;
+    const TYPE_SELECT  = 3;
+
     /**
      * The database table used by the model.
      *
@@ -41,7 +45,7 @@ class Attribute extends Model
      */
     public function shop()
     {
-        return $this->belongsTo('App\Shop');
+        return $this->belongsTo(Shop::class);
     }
 
     /**
@@ -49,7 +53,7 @@ class Attribute extends Model
      */
     public function attributeType()
     {
-        return $this->belongsTo('App\AttributeType');
+        return $this->belongsTo(AttributeType::class);
     }
 
     /**
@@ -57,7 +61,7 @@ class Attribute extends Model
      */
     public function attributeValues()
     {
-        return $this->hasMany('App\AttributeValue');
+        return $this->hasMany(AttributeValue::class);
     }
 
     /**
@@ -65,7 +69,7 @@ class Attribute extends Model
      */
     public function inventories()
     {
-        return $this->belongsToMany('App\Inventory', 'attribute_inventory')
+        return $this->belongsToMany(Inventory::class, 'attribute_inventory')
                     ->withPivot('attribute_value_id')
                     ->withTimestamps();
     }

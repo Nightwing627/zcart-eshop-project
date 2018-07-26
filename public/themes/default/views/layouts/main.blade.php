@@ -16,6 +16,7 @@
 
         <link href="{{ theme_asset_url('css/vendor.css') }}" rel="stylesheet">
         <link href="{{ theme_asset_url('css/style.css') }}" rel="stylesheet">
+        <link href="{{ theme_asset_url('css/jquery.simplecolorpicker.css') }}" rel="stylesheet">
     </head>
     <body>
         <!--[if lte IE 9]>
@@ -67,7 +68,7 @@
         <!-- SCRIPTS -->
         <script src="{{ theme_asset_url('js/vendor.js') }}"></script>
         <script src="{{ theme_asset_url('js/jquery.smartCart.js') }}"></script>
-        {{-- <script src="{{ theme_asset_url('js/app.js') }}"></script> --}}
+        <script src="{{ theme_asset_url('js/jquery.simplecolorpicker.js') }}"></script>
 
         <!-- Notification -->
         @include('notifications')

@@ -215,16 +215,16 @@ class ListHelper
      */
     public static function categoriesForTheme()
     {
-        return CategoryGroup::select('id','name','icon')->with(['image',
-                                   'subGroups' => function($query){
-                                        $query->select('id','category_group_id','name')
-                                              ->active()->has('categories.products.inventories')
-                                              ->withCount('categories')->orderBy('categories_count', 'desc');
-                                    },
-                                    'subGroups.categories' => function($query){
-                                        $query->select('id','name','slug','description')->active();
-                                    }])
-                                    ->has('subGroups')->active()->orderBy('order', 'asc')->get();
+        return CategoryGroup::select('id','name','icon')
+                        ->with(['image', 'subGroups' => function($query){
+                            $query->select('id','category_group_id','name')
+                                  ->active()->has('categories.products.inventories')
+                                  ->withCount('categories')->orderBy('categories_count', 'desc');
+                        },
+                        'subGroups.categories' => function($query){
+                            $query->select('id','name','slug','description')->active();
+                        }])
+                        ->has('subGroups')->active()->orderBy('order', 'asc')->get();
     }
 
     /**
@@ -548,18 +548,25 @@ class ListHelper
      */
     public static function popular_items($days = 7, $count = 15)
     {
-        return Product::with(['featuredImage:path', 'inventories:product_id,sale_price'])
-                    ->select(
-                        'products.id','products.name','products.slug',
-                        \DB::raw('COUNT(order_items.order_id) as order_count')
-                    )
-                    ->join('inventories', 'inventories.product_id', 'products.id')
-                    ->join('order_items', 'inventories.id', 'order_items.inventory_id')
-                    ->where('order_items.created_at', '>=', Carbon::now()->subDays($days))
-                    ->groupBy('products.id')
-                    ->orderBy('order_count', 'desc')
+        return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
+                    ->available()
+                    ->with(['image:path'])->withCount('orders')
+                    ->orderBy('orders_count', 'desc')
                     ->limit($count)
                     ->get();
+
+        // return Product::with(['featuredImage:path', 'inventories:product_id,sale_price'])
+        //             ->select(
+        //                 'products.id','products.name','products.slug',
+        //                 \DB::raw('COUNT(order_items.order_id) as order_count')
+        //             )
+        //             ->join('inventories', 'inventories.product_id', 'products.id')
+        //             ->join('order_items', 'inventories.id', 'order_items.inventory_id')
+        //             ->where('order_items.created_at', '>=', Carbon::now()->subDays($days))
+        //             ->groupBy('products.id')
+        //             ->orderBy('order_count', 'desc')
+        //             ->limit($count)
+        //             ->get();
     }
 
     /**
@@ -580,36 +587,39 @@ class ListHelper
      */
     public static function latest_available_products($limit = 10)
     {
-        return Product::active()->whereHas('inventories', function ($query) {
-                                $query->available();
-                            })
-                            ->with(['inventories:product_id,sale_price', 'featuredImage'])
-                            ->latest()->limit($limit)->get();
+        return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
+                    ->available()
+                    ->with(['image:path'])
+                    ->latest()->limit($limit)->get();
+
+        // return Product::active()->whereHas('inventories', function ($query) {
+        //                         $query->available();
+        //                     })
+        //                     ->with(['inventories:product_id,sale_price', 'featuredImage'])
+        //                     ->latest()->limit($limit)->get();
     }
 
     /**
      * Get related products of given item
      * @return array
      */
-    public static function related_products($product, $limit = 10)
+    public static function related_products($item, $limit = 10)
     {
-        $catIds = $product->categories->pluck('id');
+        $catIds = $item->product->categories->pluck('id');
+
         $productIDs = \DB::table('category_product')->whereIn('category_id', $catIds)->pluck('product_id');
 
-        $products = Product::whereIn('id', $productIDs)->active()->whereHas('inventories', function ($query) {
-                                $query->available();
-                            })
-                            ->with(['inventories:product_id,sale_price', 'featuredImage'])
-                            ->inRandomOrder()->limit($limit)->get();
+        // $products = Product::whereIn('id', $productIDs)->active()->whereHas('inventories', function ($query) {
+        //                         $query->available();
+        //                     })
+        //                     ->with(['inventories:product_id,sale_price', 'featuredImage'])
+        //                     ->inRandomOrder()->limit($limit)->get();
 
-        // If the item count is not enough, then take more randomly
-        $products_count = $products->count();
-        if($products_count < $limit){
-            $fulfilments = ListHelper::random_products($limit - $products_count);
-            return $products->merge($fulfilments);
-        }
-
-        return $products;
+        return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
+                    ->whereIn('product_id', $productIDs)
+                    ->available()->inRandomOrder()
+                    ->with(['image:path'])
+                    ->limit($limit)->get();
     }
 
     /**
@@ -631,7 +641,7 @@ class ListHelper
 
         if(!$products) return [];
 
-        return Product::select('slug', 'name')->whereIn('id', $products)->with('featuredImage:path')->get();
+        return Inventory::select('id', 'slug', 'title')->available()->whereIn('id', $products)->with('image:path')->get();
     }
 
     /**

@@ -13,14 +13,16 @@
         <div class="row">
           <div class="col-md-9 nopadding-right">
             <div class="form-group">
-              {!! Form::label('name', trans('app.form.name').'*') !!}
-              {!! Form::text('name', null, ['class' => 'form-control makeSlug', 'placeholder' => trans('app.placeholder.title'), 'required']) !!}
+              {!! Form::label('name', trans('app.form.name').'*', ['class' => 'with-help']) !!}
+              <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.product_name') }}"></i>
+              {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.title'), 'required']) !!}
               <div class="help-block with-errors"></div>
             </div>
           </div>
           <div class="col-md-3 nopadding-left">
             <div class="form-group">
-              {!! Form::label('active', trans('app.form.status').'*') !!}
+              {!! Form::label('active', trans('app.form.status').'*', ['class' => 'with-help']) !!}
+              <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.product_active') }}"></i>
               {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], !isset($product) ? 1 : null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), 'required']) !!}
               <div class="help-block with-errors"></div>
             </div>
@@ -51,52 +53,25 @@
         </div>
 
         <div class="form-group">
-          {!! Form::label('description', trans('app.form.description')) !!}
-          {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'placeholder' => trans('app.placeholder.description')]) !!}
+          {!! Form::label('description', trans('app.form.description').'*', ['class' => 'with-help']) !!}
+          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.product_description') }}"></i>
+          {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'rows' => '4', 'placeholder' => trans('app.placeholder.description'), 'required']) !!}
+          <div class="help-block with-errors">{!! $errors->first('description', ':message') !!}</div>
+        </div>
+
+        <div class="form-group">
+          {!! Form::label('tag_list[]', trans('app.form.tags'), ['class' => 'with-help']) !!}
+          {!! Form::select('tag_list[]', $tags, null, ['class' => 'form-control select2-tag', 'multiple' => 'multiple']) !!}
         </div>
 
         <fieldset>
-          <legend>{{ trans('app.form.images') }}</legend>
+          <legend>
+            {{ trans('app.form.images') }}
+            <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.product_images') }}"></i>
+          </legend>
           <div class="form-group">
             <div class="file-loading">
               <input id="dropzone-input" name="images[]" type="file" accept="image/*" multiple>
-            </div>
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>{{ trans('app.seo') }}</legend>
-          <div class="row">
-            <div class="col-md-6 nopadding-right">
-              <div class="form-group">
-                {!! Form::label('slug', trans('app.form.slug').'*', ['class' => 'with-help']) !!}
-                <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.slug') }}"></i>
-                {!! Form::text('slug', null, ['class' => 'form-control slug', 'placeholder' => 'SEO Friendly URL', 'required']) !!}
-                <div class="help-block with-errors"></div>
-              </div>
-            </div>
-            <div class="col-md-6 nopadding-left">
-              <div class="form-group">
-                  {!! Form::label('tag_list[]', trans('app.form.tags'), ['class' => 'with-help']) !!}
-                  {!! Form::select('tag_list[]', $tags, null, ['class' => 'form-control select2-tag', 'multiple' => 'multiple']) !!}
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6 nopadding-right">
-              <div class="form-group">
-                {!! Form::label('meta_title', trans('app.form.meta_title'), ['class' => 'with-help']) !!}
-                <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.meta_title') }}"></i>
-                {!! Form::text('meta_title', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.meta_title')]) !!}
-              </div>
-            </div>
-            <div class="col-md-6 nopadding-left">
-              <div class="form-group">
-                {!! Form::label('meta_description', trans('app.form.meta_description'), ['class' => 'with-help']) !!}
-                <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.meta_description') }}"></i>
-                {!! Form::text('meta_description', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.meta_description')]) !!}
-              </div>
             </div>
           </div>
         </fieldset>
@@ -157,34 +132,39 @@
             </div>
           </div> --}}
 
-          <div class="row">
-            <div class="col-md-6 nopadding-right">
-              <div class="form-group">
-                {!! Form::label('min_price', trans('app.form.catalog_min_price'), ['class' => 'with-help']) !!}
-                <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.catalog_min_price') }}"></i>
+          @if(auth()->user()->isFromplatform())
+            <div class="row">
+              <div class="col-md-6 nopadding-right">
+                <div class="form-group">
+                  {!! Form::label('min_price', trans('app.form.catalog_min_price'), ['class' => 'with-help']) !!}
+                  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.catalog_min_price') }}"></i>
+                    <div class="input-group">
+                      <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
+                      {!! Form::number('min_price' , null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.catalog_min_price')]) !!}
+                    </div>
+                    <div class="help-block with-errors"></div>
+                </div>
+              </div>
+              <div class="col-md-6 nopadding-left">
+                <div class="form-group">
+                  {!! Form::label('max_price', trans('app.form.catalog_max_price'), ['class' => 'with-help']) !!}
+                  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.catalog_max_price') }}"></i>
                   <div class="input-group">
                     <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
-                    {!! Form::number('min_price' , null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.catalog_min_price')]) !!}
+                    {!! Form::number('max_price' , null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.catalog_max_price')]) !!}
                   </div>
                   <div class="help-block with-errors"></div>
-              </div>
-            </div>
-            <div class="col-md-6 nopadding-left">
-              <div class="form-group">
-                {!! Form::label('max_price', trans('app.form.catalog_max_price'), ['class' => 'with-help']) !!}
-                <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.catalog_max_price') }}"></i>
-                <div class="input-group">
-                  <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
-                  {!! Form::number('max_price' , null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.catalog_max_price')]) !!}
                 </div>
-                <div class="help-block with-errors"></div>
               </div>
             </div>
-          </div>
+          @endif
         </fieldset>
 
         <fieldset>
-          <legend>{{ trans('app.featured_image') }}</legend>
+          <legend>
+            {{ trans('app.featured_image') }}
+            <i class="fa fa-question-circle small" data-toggle="tooltip" data-placement="top" title="{{ trans('help.product_featured_image') }}"></i>
+          </legend>
           @if(isset($product) && $product->featuredImage)
             <img src="{{ get_storage_file_url($product->featuredImage->path, 'small') }}" alt="{{ trans('app.featured_image') }}">
             <label>

@@ -25,10 +25,13 @@ class CreateInventoryWithVariantRequest extends Request
     {
         // echo "<pre>"; print_r(Request::all()); echo "</pre>"; exit();
         $user = Request::user(); //Get current user
-        Request::merge( [ 'shop_id' => $user->shop_id ] ); //Set shop_id
-        Request::merge( [ 'user_id' => $user->id ] ); //Set user_id
+        Request::merge([
+                        'shop_id' => $user->shop_id,
+                        'user_id' => $user->id
+                    ]); //Set user_id
 
         return [
+            'title' => 'required',
             'variants.*' => 'required',
             'sku.*' => 'required|unique:inventories,sku',
             'sale_price.*' => 'bail|required|numeric|min:0',

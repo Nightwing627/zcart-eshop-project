@@ -30,9 +30,9 @@ class CreateProductsTable extends Migration
             $table->boolean('has_variant')->nullable();
             $table->boolean('requires_shipping')->default(1)->nullable();
             $table->boolean('downloadable')->nullable();
-            $table->string('slug', 200)->unique();
-            $table->text('meta_title')->nullable();
-            $table->longtext('meta_description')->nullable();
+            // $table->string('slug', 200)->unique();
+            // $table->text('meta_title')->nullable();
+            // $table->longtext('meta_description')->nullable();
             $table->bigInteger('sale_count')->nullable();
             $table->boolean('active')->default(1);
             $table->softDeletes();
