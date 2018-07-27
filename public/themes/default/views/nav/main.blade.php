@@ -86,36 +86,38 @@
           </a>
           <ul class="dropdown-menu menu-category-dropdown" aria-labelledby="dLabel">
             @foreach($all_categories as $catGroup)
-              <li><a href="#"><i class="fa {{ $catGroup->icon or 'fa-cube' }} fa-fw category-icon"></i>{{ $catGroup->name }}</a>
-                <div class="category-section">
-                  <div class="category-section-inner">
-                    <div class="category-section-content">
-                      <div class="row">
-                        @foreach($catGroup->subGroups as $subGroup)
-                          <div class="col-md-6">
-                            <h5 class="nav-category-inner-title">{{ $subGroup->name }}</h5>
-                            <ul class="nav-category-inner-list">
-                              @foreach($subGroup->categories as $cat)
-                                <li><a href="{{ route('category.browse', $cat->slug) }}">{{ $cat->name }}</a>
-                                  @if($cat->description)
-                                    <p>{{ $cat->description }}</p>
-                                  @endif
-                                </li>
-                              @endforeach
-                            </ul>
-                          </div><!-- /.col-md-6 -->
-                          @if($loop->iteration % 2 == 0)
-                            <div class="clearfix"></div>
-                          @endif
-                        @endforeach
-                      </div><!-- /.row -->
-                    </div><!-- /.category-section-content -->
-                    @if($catGroup->image && Storage::exists($catGroup->image->path))
-                      <img class="nav-category-section-bg-img" src="{{ asset('storage/' . optional($catGroup->image)->path) }}" alt="{{ $catGroup->name }}" title="{{ $catGroup->name }}"/>
-                    @endif
-                  </div><!-- /.category-section-inner -->
-                </div><!-- /.category-section -->
-              </li>
+              @if($catGroup->subGroups->count())
+                <li><a href="#"><i class="fa {{ $catGroup->icon or 'fa-cube' }} fa-fw category-icon"></i>{{ $catGroup->name }}</a>
+                  <div class="category-section">
+                    <div class="category-section-inner">
+                      <div class="category-section-content">
+                        <div class="row">
+                          @foreach($catGroup->subGroups as $subGroup)
+                            <div class="col-md-6">
+                              <h5 class="nav-category-inner-title">{{ $subGroup->name }}</h5>
+                              <ul class="nav-category-inner-list">
+                                @foreach($subGroup->categories as $cat)
+                                  <li><a href="{{ route('category.browse', $cat->slug) }}">{{ $cat->name }}</a>
+                                    @if($cat->description)
+                                      <p>{{ $cat->description }}</p>
+                                    @endif
+                                  </li>
+                                @endforeach
+                              </ul>
+                            </div><!-- /.col-md-6 -->
+                            @if($loop->iteration % 2 == 0)
+                              <div class="clearfix"></div>
+                            @endif
+                          @endforeach
+                        </div><!-- /.row -->
+                      </div><!-- /.category-section-content -->
+                      @if($catGroup->image && Storage::exists($catGroup->image->path))
+                        <img class="nav-category-section-bg-img" src="{{ asset('storage/' . optional($catGroup->image)->path) }}" alt="{{ $catGroup->name }}" title="{{ $catGroup->name }}"/>
+                      @endif
+                    </div><!-- /.category-section-inner -->
+                  </div><!-- /.category-section -->
+                </li>
+              @endif
             @endforeach
           </ul><!-- /.menu-category-dropdown -->
         </li>

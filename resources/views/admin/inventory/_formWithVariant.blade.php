@@ -13,6 +13,16 @@
 {{ Form::hidden('product', $product) }}
 
 <div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      {!! Form::label('title', trans('app.form.title').'*') !!}
+      {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.title'), 'required']) !!}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-lg-3 col-md-6 nopadding-right">
     <div class="form-group">
       {!! Form::label('warehouse_id', trans('app.form.warehouse'), ['class' => 'with-help']) !!}
@@ -207,8 +217,9 @@
 <div class="spacer30"></div>
 
 <div class="form-group">
-  {!! Form::label('description', trans('app.form.description'), ['class' => 'with-help']) !!}
+  {!! Form::label('description', trans('app.form.description').'*', ['class' => 'with-help']) !!}
   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_description') }}"></i>
   {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'placeholder' => trans('app.placeholder.description')]) !!}
+  <div class="help-block with-errors"></div>
 </div>
 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>

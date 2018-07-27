@@ -81,7 +81,7 @@
 
 				              	<div class="product-info-price">
 				              		@if($item->offer_price)
-					              		<span class="old-price">{!! get_formated_price($item->offer_price) !!}</span>
+					              		<span class="old-price">{!! get_formated_price($item->offer_price, 2) !!}</span>
 				              		@endif
 
 				              		{!! get_formated_price($item->sale_price, 2) !!}

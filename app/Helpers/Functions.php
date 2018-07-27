@@ -324,31 +324,20 @@ if ( ! function_exists('get_product_img_src') )
 {
     function get_product_img_src($product = null, $size = 'medium', $type = 'primary')
     {
-        if ($product){
-            if ( !($product instanceof \App\Product) && is_int($product) )
-                $product = \App\Product::findorFail($product);
+        if (  is_int($product) && !($product instanceof \App\Inventory) )
+            $product = \App\Inventory::findorFail($product);
 
-            $hasFeaturedImage = $product->featuredImage ? TRUE : FALSE;
-            $images_count = $product->images->count();
+        $images_count = $product->images->count();
 
-            if($type == 'alt'){
-                if($hasFeaturedImage && $images_count){
-                    $path = $product->images->first()->path;
-                }
-                else if($images_count > 1){
-                    $imgs = $product->images->toArray();
-                    $path = $imgs[1]['path'];
-                }
+        if($images_count){
+            if($type == 'alt' && $images_count > 1){
+                $imgs = $product->images->toArray();
+                $path = $imgs[1]['path'];
             }
             else{
-                if($hasFeaturedImage)
-                    $path = $product->featuredImage->path;
-                else if($images_count)
-                    $path = $product->images->first()->path;
+                $path = $product->images->first()->path;
             }
-
-            if(isset($path))
-                return url("image/{$path}?p={$size}");
+            return url("image/{$path}?p={$size}");
         }
 
         return asset('images/demo/no_img.png');
@@ -637,6 +626,13 @@ if ( ! function_exists('get_formated_order_number') )
         $order_id = $order_id ?: str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT);
 
         return config('shop_settings.order_number_prefix') . $order_id . config('shop_settings.order_number_suffix');
+    }
+}
+
+if ( ! function_exists('get_percentage_of') )
+{
+    function get_percentage_of($org_num, $new_num){
+        return get_formated_decimal((($org_num - $new_num)*100) / $org_num) ;
     }
 }
 

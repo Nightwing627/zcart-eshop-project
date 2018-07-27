@@ -12,7 +12,7 @@
             $product = $inventory->product;
           }
           $requires_shipping = $product->requires_shipping || (isset($inventory) && $inventory->product->requires_shipping);
-          $slug_calsses = isset($inventory) ? 'form-control' : 'form-control makeSlug';
+          $title_calsses = isset($inventory) ? 'form-control' : 'form-control makeSlug';
         @endphp
         {{ Form::hidden('product_id', $product->id) }}
 
@@ -20,7 +20,7 @@
           <div class="col-md-12">
             <div class="form-group">
               {!! Form::label('title', trans('app.form.title').'*') !!}
-              {!! Form::text('title', null, ['class' => $slug_calsses, 'placeholder' => trans('app.placeholder.title'), 'required']) !!}
+              {!! Form::text('title', null, ['class' => $title_calsses, 'placeholder' => trans('app.placeholder.title'), 'required']) !!}
               <div class="help-block with-errors"></div>
             </div>
           </div>

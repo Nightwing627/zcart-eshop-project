@@ -1,25 +1,47 @@
 @if($products->count() > 0)
     <div class="row product-list">
         @foreach($products as $product)
+            @php
+                $has_offer = FALSE;
+                if(
+                    ($product->offer_price > 0) &&
+                    ($product->offer_start < \Carbon\Carbon::now()) &&
+                    ($product->offer_end > \Carbon\Carbon::now())
+                ){
+                    $has_offer = get_percentage_of($product->sale_price, $product->offer_price);
+                    $sale_price = $product->offer_price;
+                }
+                else{
+                    $sale_price = $product->sale_price;
+                }
+            @endphp
+
             <div class="col-md-3">
                 <div class="product product-grid-view sc-product-item">
-                    <input name="product_price" value="{{ get_formated_decimal($product->first()->sale_price) }}" type="hidden" />
-                    <input name="product_id" value="{{ $product->first()->id }}" type="hidden" />
-                    <input name="shop_id" value="{{ $product->first()->id }}" type="hidden" />
+                    <input name="product_price" value="{{ get_formated_decimal($sale_price) }}" type="hidden"/>
+                    <input name="product_id" value="{{ $product->id }}" type="hidden"/>
+                    <input name="shop_id" value="{{ $product->id }}" type="hidden"/>
 
                     <ul class="product-info-labels">
-                        <li>@lang('theme.hot_item')</li>
-                        <li>@lang('theme.stuff_pick')</li>
+                        @if($product->orders_count >= config('system.popular.hot_item.sell_count', 3))
+                            <li>@lang('theme.hot_item')</li>
+                        @endif
+                        @if($product->stuff_pick == 1)
+                            <li>@lang('theme.stuff_pick')</li>
+                        @endif
+                        @if($has_offer)
+                            <li>@lang('theme.percent_off',['value'=>$has_offer])</li>
+                        @endif
                     </ul>
 
                     <div class="product-img-wrap">
-                        <img class="product-img-primary" src="{{ get_product_img_src($product->first(), 'medium') }}" data-name="product_image" alt="{{ $product->first()->title }}" title="{{ $product->first()->title }}" />
-                        <img class="product-img-alt" src="{{ get_product_img_src($product->first(), 'medium', 'alt') }}" alt="{{ $product->first()->title }}" title="{{ $product->first()->title }}" />
-                        <a class="product-link" href="{{ route('show.product', $product->first()->slug) }}" data-name="product_link"></a>
+                        <img class="product-img-primary" src="{{ get_product_img_src($product, 'medium') }}" data-name="product_image" alt="{{ $product->title }}" title="{{ $product->title }}"/>
+                        <img class="product-img-alt" src="{{ get_product_img_src($product, 'medium', 'alt') }}" alt="{{ $product->title }}" title="{{ $product->title }}"/>
+                        <a class="product-link" href="{{ route('show.product', $product->slug) }}" data-name="product_link"></a>
                     </div>
 
                     <div class="product-actions btn-group">
-                        <a class="btn btn-default flat" href="{{ route('wishlist.add', $product->first()) }}">
+                        <a class="btn btn-default flat" href="{{ route('wishlist.add', $product) }}">
                             <i class="fa fa-heart-o" data-toggle="tooltip" title="@lang('theme.button.add_to_wishlist')"></i> <span>@lang('theme.button.add_to_wishlist')</span>
                         </a>
 
@@ -33,20 +55,25 @@
                     </div>
 
                     <div class="product-info">
-                        @include('layouts.ratings', ['ratings' => $product->first()->averageFeedback(), 'count' => $product->first()->feedbacks_count])
+                        @include('layouts.ratings', ['ratings' => $product->feedbacks->avg('rating'), 'count' => $product->feedbacks_count])
 
-                        <a href="{{ route('show.product', $product->first()->slug) }}" class="product-info-title" data-name="product_name">{{ $product->first()->title }}</a>
+                        <a href="{{ route('show.product', $product->slug) }}" class="product-info-title" data-name="product_name">{{ $product->title }}</a>
 
                         <div class="product-info-availability">
-                            @lang('theme.availability'): <span>@lang('theme.in_stock')</span>
+                            @lang('theme.availability'): <span>{{ ($product->stock_quantity > 0) ? trans('theme.in_stock') : trans('theme.out_of_stock') }}</span>
                         </div>
                         <div class="product-info-price">
-                            <span class="product-info-price-new">{!! get_formated_price($product->first()->sale_price) !!}</span>
+                            @if($has_offer)
+                                <span class="old-price">{!! get_formated_price($product->sale_price, 2) !!}</span>
+                                <span class="product-info-price-new">{!! get_formated_price($product->offer_price, 2) !!}</span>
+                            @else
+                                <span class="product-info-price-new">{!! get_formated_price($product->sale_price, 2) !!}</span>
+                            @endif
                         </div>
-                        <div class="product-info-desc"> {{ $product->first()->description }} </div>
+                        <div class="product-info-desc"> {{ $product->description }} </div>
                         {{-- <div class="product-info-desc" data-name="product_description"> {{ $product->description }} </div> --}}
                         <ul class="product-info-feature-list">
-                            <li>{{ $product->first()->condition }}</li>
+                            <li>{{ $product->condition }}</li>
                             {{-- <li>{{ $product->product_id }}</li> --}}
                         </ul>
                     </div><!-- /.product-info -->
@@ -58,7 +85,7 @@
     <div class="sep"></div>
 
     <div class="row pagenav-wrapper">
-      {{-- {{ $products->links('layouts.pagination') }} --}}
+      {{ $products->links('layouts.pagination') }}
     </div><!-- /.row .pagenav-wrapper -->
 @else
     <div class="clearfix space50"></div>

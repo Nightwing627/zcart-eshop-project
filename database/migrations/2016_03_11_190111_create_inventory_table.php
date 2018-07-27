@@ -43,10 +43,11 @@ class CreateInventoryTable extends Migration
 
             $table->timestamp('available_from')->useCurrent();
             $table->integer('min_order_quantity')->default(1);
-            $table->boolean('active')->default(1);
             $table->string('slug', 200)->unique();
             $table->text('meta_title')->nullable();
             $table->longtext('meta_description')->nullable();
+            $table->boolean('stuff_pick')->nullable();
+            $table->boolean('active')->default(1);
             $table->softDeletes();
             $table->timestamps();
 

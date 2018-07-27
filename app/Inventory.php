@@ -28,6 +28,15 @@ class Inventory extends Model
      */
     protected $dates = ['deleted_at', 'offer_start', 'offer_end', 'available_from'];
 
+    /**
+     * The attributes that should be casted to boolean types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'stuff_pick' => 'boolean',
+        'active' => 'boolean',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -59,6 +68,7 @@ class Inventory extends Model
                         'slug',
                         'meta_title',
                         'meta_description',
+                        'stuff_pick',
                         'active'
                     ];
 
@@ -139,16 +149,6 @@ class Inventory extends Model
     {
         return $this->belongsToMany(Order::class, 'order_items')
                     ->withPivot('item_description', 'quantity', 'unit_price', 'feedback_id')
-                    ->withTimestamps();
-    }
-
-    /**
-     * Get the feedbacks for the product.
-     */
-    public function feedbacks()
-    {
-        return $this->belongsToMany(Feedback::class, 'order_items')
-                    ->withPivot('item_description', 'quantity', 'unit_price', 'order_id')
                     ->withTimestamps();
     }
 

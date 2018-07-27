@@ -31,18 +31,12 @@ class Category extends Model
      */
     protected $dates = ['deleted_at'];
 
-    public function items($select = '*')
+    /**
+     * Get all listings for the category.
+     */
+    public function listings()
     {
-        $product_ids = $this->products()->active()->pluck('products.id')->all();
-
-        return Inventory::select($select)->whereIn('product_id', $product_ids)->get();
-
-
-
-
-
-        // return Inventory::select($select)->whereIn('product_id', $products)->available()->with(['image:path'])->groupBy('shop_id','product_id','slug')->get();
-        // return Inventory::select($select)->whereIn('product_id', $products)->available()->with(['image:path'])->groupBy('shop_id')->paginate(20);
+        return $this->belongsToMany(Inventory::class, 'category_product', null, 'product_id', null, 'product_id');
     }
 
     /**

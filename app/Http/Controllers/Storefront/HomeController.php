@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Storefront;
 
+use Carbon\Carbon;
 use App\Page;
 use App\Shop;
 use App\Banner;
@@ -42,22 +43,19 @@ class HomeController extends Controller
      * @param  slug  $slug
      * @return \Illuminate\Http\Response
      */
-    public function browseCategory($slug)
+    public function browseCategory($slug, $sortby = Null)
     {
         $category = Category::where('slug', $slug)->active()->firstOrFail();
 
         // Take only available items
-        // $products = $category->products()->active()->whereHas('inventories', function ($query) {
-        //     $query->available();
-        // })->withCount('feedbacks')->with(['inventories:product_id,sale_price', 'featuredImage', 'images'])->paginate(20);
+        $products = $category->listings()->available()
+        ->withCount(['feedbacks', 'orders' => function($q){
+            $q->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
+        }])
+        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])
+        ->paginate(16);
+
         // echo "<pre>"; print_r($products->toArray()); echo "</pre>"; exit();
-
-        $products = $category->items(['id','shop_id','slug','product_id','title','stock_quantity','condition','sale_price','offer_price','offer_start','offer_end']);
-        // $products = $category->items(['id','shop_id','slug','product_id','title','stock_quantity','condition','sale_price','offer_price','offer_start','offer_end']);
-        // ->sortBy('sale_price')->groupBy('product_id');
-
-        echo "<pre>"; print_r($products->toArray()); echo "</pre>"; exit();
-
         return view('category', compact('category', 'products'));
     }
 

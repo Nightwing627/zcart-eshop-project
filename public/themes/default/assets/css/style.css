@@ -2127,12 +2127,14 @@ div.datepicker > div {
 }
 /****** Product Rating ******/
 .product-info-rating {
-    display: block;
-    margin-bottom: 3px;
-    padding: 0;
-    overflow: hidden;
-    font-size: 19px;
-    color: #767676;
+  display: block;
+  margin-bottom: 3px;
+  padding: 0;
+  overflow: hidden;
+  font-size: 19px;
+  line-height: 19px;
+  min-height: 21px;
+  color: #767676;
 }
 .product-info-rating > span.rated {
    /*content: "\2605";*/

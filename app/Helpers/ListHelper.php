@@ -224,7 +224,7 @@ class ListHelper
                         'subGroups.categories' => function($query){
                             $query->select('id','name','slug','description')->active();
                         }])
-                        ->has('subGroups')->active()->orderBy('order', 'asc')->get();
+                        ->has('subGroups.categories')->active()->orderBy('order', 'asc')->get();
     }
 
     /**

@@ -50,12 +50,19 @@ return [
         // Number of Days
         'period' => [
             'trending'  => 2,
-            'weekly     => 7'
+            'weekly'    => 7
         ],
-        // Number of Products
+        // Number of top selling products will be picked
         'take' => [
             'trending'  => 15,
-            'weekly     => 5'
+            'weekly'    => 5
+        ],
+
+        // This will use to lebel product list as hot item
+        'hot_item' => [
+            'period'        => 24, //hrs
+            'sell_count'    => 3,
         ],
     ],
+
 ];
