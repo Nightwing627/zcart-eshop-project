@@ -40,6 +40,7 @@ class CreateInventoryTable extends Migration
             // $table->decimal('shipping_height', 20, 2)->nullable();
             // $table->decimal('shipping_depth', 20, 2)->nullable();
             $table->decimal('shipping_weight', 20, 2)->nullable();
+            $table->boolean('free_shipping')->nullable();
 
             $table->timestamp('available_from')->useCurrent();
             $table->integer('min_order_quantity')->default(1);

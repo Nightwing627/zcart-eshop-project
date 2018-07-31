@@ -60,7 +60,7 @@ class Product extends Model
                         'has_variant',
                         'requires_shipping',
                         'downloadable',
-                        // 'slug',
+                        'slug',
                         // 'meta_title',
                         // 'meta_description',
                         'sale_count',

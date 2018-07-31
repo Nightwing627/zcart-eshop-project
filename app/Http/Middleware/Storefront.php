@@ -27,13 +27,15 @@ class Storefront
         // Reset views path to load theme views
         View::setFinder(new FileViewFinder(app('files'), $paths));
 
-        //Supply important data to all views
-        View::share('all_categories', ListHelper::categoriesForTheme());
-        View::share('search_category_list', ListHelper::catSubGrps());
-        View::share('recently_viewed_items', ListHelper::recentlyViewedItems());
+        //Supply important data to all views if not ajax request
+        if( ! $request->ajax() ){
+            View::share('all_categories', ListHelper::categoriesForTheme());
+            View::share('search_category_list', ListHelper::catSubGrps());
+            View::share('recently_viewed_items', ListHelper::recentlyViewedItems());
 
-        $hotcat = ['Hot Category One', 'Hot Category Two', 'Hot Category Three']; //TEST
-        View::share('hot_categories', $hotcat);
+            $hotcat = ['Hot Category One', 'Hot Category Two', 'Hot Category Three']; //TEST
+            View::share('hot_categories', $hotcat);
+        }
 
         return $next($request);
     }

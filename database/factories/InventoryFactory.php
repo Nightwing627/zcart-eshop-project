@@ -24,6 +24,7 @@ $factory->define(App\Inventory::class, function (Faker $faker) {
         'offer_end' => date('Y-m-d h:i a', strtotime(rand(3, 22) . ' days')),
         'min_order_quantity' => 1,
         'shipping_weight' => rand(100,1999),
+        'free_shipping' => $faker->boolean,
         'slug' => $faker->slug,
         'meta_title' => $faker->sentence,
         'meta_description' => $faker->realText,

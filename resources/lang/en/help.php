@@ -373,6 +373,8 @@ return [
 
     'shipping_zone_carrier' => 'You can link the shipping carrier. Customer will see this at checkout.',
 
+    'free_shipping' => 'If enabled, The free shipping label will be displayed on the product listing page.',
+
     'shipping_rate' => 'Check the \'Free shipping\' option or give 0 amount for free shipping',
 
     'shipping_zone_tax' => 'This tax profile will be applicable when customer make a purchase from this shipping zone',

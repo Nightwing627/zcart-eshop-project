@@ -77,7 +77,20 @@
         <div class="help-block with-errors"></div>
       </div>
     </div>
-    <div class="col-lg-6 col-md-12">
+    <div class="col-lg-3 col-md-6 nopadding-right">
+      <div class="form-group">
+        <label class="with-help">&nbsp;</label>
+        <div class="input-group">
+          {{ Form::hidden('free_shipping', 0) }}
+          {!! Form::checkbox('free_shipping', null, null, ['id' => 'free_shipping', 'class' => 'icheckbox_line']) !!}
+          {!! Form::label('free_shipping', trans('app.form.free_shipping')) !!}
+          <span class="input-group-addon" id="">
+            <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.free_shipping') }}"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 nopadding-left">
       <div class="form-group">
         {!! Form::label('packaging_list[]', trans('app.form.packaging'), ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_packagings') }}"></i>

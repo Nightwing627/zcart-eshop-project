@@ -837,6 +837,7 @@ return [
         'columns' => 'Columns',
         'merchant_login' => 'Merchant login',
         'slogan' => 'Slogan',
+        'free_shipping' => 'Free shipping',
         'system_currency' => 'Currency',
         'i_agree_with_terms' => 'I agree to the <u><a href=":url" target="_blank"> terms</a></u>',
         'i_agree_with_merchant_terms' => 'I agree to the <u><a href=":url" target="_blank"> terms</a></u>',

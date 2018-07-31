@@ -143,7 +143,7 @@ class AccountController extends Controller
     private function orders()
     {
         return Auth::guard('customer')->user()->orders()
-                ->with(['shop:id,name,slug', 'inventories.product:id,slug'])->paginate(10);
+                ->with(['shop:id,name,slug', 'inventories:id,title,slug,product_id'])->paginate(10);
     }
 
     /**
@@ -152,7 +152,7 @@ class AccountController extends Controller
      */
     private function wishlist()
     {
-        return Wishlist::mine()->with('product.inventories:product_id,sale_price')->paginate(7);
+        return Wishlist::mine()->with(['inventory', 'inventory.feedbacks:rating,feedbackable_id,feedbackable_type', 'inventory.images:path,imageable_id,imageable_type'])->paginate(7);
     }
 
     /**

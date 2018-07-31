@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- HEADER SECTION -->
-    @include('headers.product_page', ['product' => $product])
+    @include('headers.product_page', ['product' => $item])
 
     <!-- CONTENT SECTION -->
     @include('contents.product_page')
@@ -30,4 +30,8 @@
 
     <!-- bottom Banner -->
     @include('banners.bottom')
+@endsection
+
+@section('scripts')
+    @include('scripts.product_page')
 @endsection

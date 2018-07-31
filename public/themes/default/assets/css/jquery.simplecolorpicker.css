@@ -12,16 +12,16 @@
 }
 
 .simplecolorpicker span {
-  margin: 0 5px 5px 0;
+  margin: 0 7px 0 0;
 }
 
 .simplecolorpicker.icon,
 .simplecolorpicker span.color {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
   display: inline-block;
-  border: 1px solid transparent;
+  border: 1px solid #444;
 }
 
 .simplecolorpicker.icon:after,
@@ -31,17 +31,18 @@
 
 .simplecolorpicker span.color[data-disabled]:hover {
   cursor: not-allowed;
-  border: 1px solid transparent;
+  border: 1px solid #f90;
 }
 
 .simplecolorpicker span.color:hover,
 .simplecolorpicker span.color[data-selected] {
-  border: 1px solid #444;
+  border: 1px solid #fff;
+  outline: 3px solid #f90;
 }
 .simplecolorpicker span.color[data-selected]:after {
-  color: #fff;
+  color: #ccc;
 }
-/* Vertical separator, replaces optgroup. */
-.simplecolorpicker span.vr {
-  border-left: 1px solid #444; /* @gray-dark */
+.simplecolorpicker span.color:focus,
+.simplecolorpicker span.color:active{
+  outline: 3px solid #f90;
 }

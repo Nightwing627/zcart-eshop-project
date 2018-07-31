@@ -143,6 +143,9 @@
 
         <p class="help-block">* {{ trans('app.form.required_fields') }}</p>
 
+        @if(isset($inventory))
+          <a href="{{ route('admin.stock.inventory.index') }}" class="btn btn-default btn-flat">{{ trans('app.form.cancel_update') }}</a>
+        @endif
         {!! Form::submit(trans('app.form.save'), ['class' => 'btn btn-flat btn-lg btn-new pull-right']) !!}
       </div>
     </div>
@@ -166,6 +169,17 @@
         @if($requires_shipping)
           <fieldset>
             <legend>{{ trans('app.shipping') }}</legend>
+            <div class="form-group">
+              <div class="input-group">
+                {{ Form::hidden('free_shipping', 0) }}
+                {!! Form::checkbox('free_shipping', null, null, ['id' => 'free_shipping', 'class' => 'icheckbox_line']) !!}
+                {!! Form::label('free_shipping', trans('app.form.free_shipping')) !!}
+                <span class="input-group-addon" id="">
+                  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.free_shipping') }}"></i>
+                </span>
+              </div>
+            </div>
+
             <div class="form-group">
               {!! Form::label('warehouse_id', trans('app.form.warehouse'), ['class' => 'with-help']) !!}
               <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_warehouse') }}"></i>

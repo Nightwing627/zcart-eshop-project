@@ -63,7 +63,8 @@
             @include('auth.modals')
         @endunless
 
-        @include('modals.quickview')
+        <!-- Quick view Modal-->
+        <div id="quickViewModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
         <!-- SCRIPTS -->
         <script src="{{ theme_asset_url('js/vendor.js') }}"></script>
@@ -74,7 +75,10 @@
         @include('notifications')
 
         <!-- AppJS -->
-        @include('appjs')
+        @include('scripts.appjs')
+
+        <!-- Page Scripts -->
+        @yield('scripts')
 
         <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
         <script>

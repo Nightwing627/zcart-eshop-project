@@ -1,8 +1,8 @@
 <div class="owl-carousel big-carousel carousel-img-only">
-    @foreach($products as $product)
+    @foreach($products as $item)
         <div class="product-widget">
-            <img class="product-img" src="{{ get_storage_file_url(optional($product->image)->path, 'medium') }}" data-name="product_image" alt="{{ $product->title }}" title="{{ $product->title }}" />
-            <a class="product-link" href="#" data-toggle="modal" data-target="#quickViewModal"></a>
+            <img class="product-img" src="{{ get_storage_file_url(optional($item->image)->path, 'medium') }}" data-name="product_image" alt="{{ $item->title }}" title="{{ $item->title }}" />
+            <a class="product-link itemQuickView" href="{{ route('quickView.product', $item->slug) }}"></a>
         </div>
     @endforeach
 </div>

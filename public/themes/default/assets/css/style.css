@@ -842,6 +842,9 @@ div.datepicker > div {
   -ms-filter: none;
   filter: none;
 }
+.menu-category-dropdown > li {
+  cursor: pointer;
+}
 .menu-category-dropdown > li > a {
   height: 32px;
   line-height: 32px !important;
@@ -1781,6 +1784,7 @@ div.datepicker > div {
 .product-grid-view .product-info-title {
   height: 3.75em !important;
 }
+.small .product-info-rating,
 .product-list .product .product-info-rating{
     font-size: 15px;
 }
@@ -2248,7 +2252,40 @@ div.datepicker > div {
 .product-widget .product-info-rating {
     font-size: 16px;
 }
+
+.offered-product-widget {
+  display: block;
+  height: 150px;
+  width: 100%;
+  margin: 15px 0;
+}
+.offered-product-widget-img {
+    display: block;
+    float: left;
+    height: 150px;
+    width: auto;
+    border-radius: 0px;
+}
+.offered-product-widget-img img {
+  height: 100%;
+  width: auto;
+}
+.offered-product-widget-content {
+  padding: 5px 10px;
+  margin-left: 160px;
+  height: 150px;
+}
+.offered-product-widget h2 {
+  margin-top: 0;
+  font-weight: 400;
+  font-size: 22px;
+}
+.offered-product-widget-text {
+  display: block;
+  font-size: 14px;
+}
 /****** End Product Widget ******/
+
 /****** Product Zoom ******/
 .zoomPad {
   position: relative;

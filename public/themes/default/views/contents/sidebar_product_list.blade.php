@@ -1,14 +1,16 @@
 <ul class="sidebar-product-list">
-    @foreach($products as $product)
+    @foreach($products as $item)
         <li>
             <div class="product-widget">
                 <div class="product-img-wrap">
-                    <img class="product-img" src="{{ get_storage_file_url(optional($product->image)->path, 'medium') }}" data-name="product_image" alt="{{ $product->title }}" title="{{ $product->title }}" />
+                    <img class="product-img" src="{{ get_storage_file_url(optional($item->image)->path, 'medium') }}" data-name="product_image" alt="{{ $item->title }}" title="{{ $item->title }}" />
                 </div>
                 <div class="product-info">
-                    @include('layouts.ratings', ['ratings' => $product->averageFeedback()])
-                    <a href="{{ route('show.product', $product->slug) }}" class="product-info-title">{{ $product->title }}</a>
-                    <div class="product-info-price">{!!  get_formated_price($product->sale_price) !!}</div>
+                    @include('layouts.ratings', ['ratings' => $item->feedbacks->avg('rating')])
+
+                    <a href="{{ route('show.product', $item->slug) }}" class="product-info-title">{{ $item->title }}</a>
+
+                    @include('layouts.pricing', ['item' => $item])
                 </div>
             </div>
         </li>

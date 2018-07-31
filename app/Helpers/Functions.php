@@ -322,20 +322,20 @@ if ( ! function_exists('get_placeholder_img') )
 
 if ( ! function_exists('get_product_img_src') )
 {
-    function get_product_img_src($product = null, $size = 'medium', $type = 'primary')
+    function get_product_img_src($item = null, $size = 'medium', $type = 'primary')
     {
-        if (  is_int($product) && !($product instanceof \App\Inventory) )
-            $product = \App\Inventory::findorFail($product);
+        if (is_int($item) && !($item instanceof \App\Inventory))
+            $item = \App\Inventory::findorFail($item);
 
-        $images_count = $product->images->count();
+        $images_count = $item->images->count();
 
         if($images_count){
             if($type == 'alt' && $images_count > 1){
-                $imgs = $product->images->toArray();
+                $imgs = $item->images->toArray();
                 $path = $imgs[1]['path'];
             }
             else{
-                $path = $product->images->first()->path;
+                $path = $item->images->first()->path;
             }
             return url("image/{$path}?p={$size}");
         }

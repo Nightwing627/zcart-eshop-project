@@ -16,7 +16,7 @@ $factory->define(App\Product::class, function (Faker $faker) {
         'description' => $faker->text(1500),
         'origin_country' => $faker->randomElement(\DB::table('countries')->pluck('id')->toArray()),
         'has_variant' => $faker->boolean,
-        // 'slug' => $faker->slug,
+        'slug' => $faker->slug,
     	// 'meta_title' => $faker->sentence,
     	// 'meta_description' => $faker->realText,
     	'sale_count' => $faker->randomDigit,

@@ -34,6 +34,7 @@ class Inventory extends Model
      * @var array
      */
     protected $casts = [
+        'free_shipping' => 'boolean',
         'stuff_pick' => 'boolean',
         'active' => 'boolean',
     ];
@@ -62,6 +63,7 @@ class Inventory extends Model
                         'offer_start',
                         'offer_end',
                         'shipping_weight',
+                        'free_shipping',
                         'available_from',
                         'min_order_quantity',
                         // 'alert_quantity',
@@ -236,6 +238,38 @@ class Inventory extends Model
         $alert_quantity = config('shop_settings.alert_quantity') ?: 0;
 
         return $this->stock_quantity <= $alert_quantity;
+    }
+
+    /**
+     * Check if the item hase a valid offer price.
+     */
+    public function hasOffer()
+    {
+        if(
+            ($this->offer_price > 0) &&
+            ($this->offer_price < $this->sale_price) &&
+            ($this->offer_start < \Carbon\Carbon::now()) &&
+            ($this->offer_end > \Carbon\Carbon::now())
+        )
+            return TRUE;
+
+        return FALSE;
+    }
+
+    public function currnt_sale_price()
+    {
+        if($this->hasOffer())
+            return $this->offer_price;
+
+        return $this->sale_price;
+    }
+
+    /**
+     * Setters
+     */
+    public function setFreeShippingAttribute($value)
+    {
+        $this->attributes['free_shipping'] = (bool) $value;
     }
 
     /**

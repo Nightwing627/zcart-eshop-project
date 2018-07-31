@@ -99,6 +99,17 @@ class Dispute extends Model
     }
 
     /**
+     * Setters
+     */
+    public function setProductIdAttribute($value)
+    {
+        if(is_numeric($value))
+            $this->attributes['product_id'] = $value;
+        else
+            $this->attributes['product_id'] = Null;
+    }
+
+    /**
      * Scope a query to only include appealed disputes.
      *
      * @return \Illuminate\Database\Eloquent\Builder
