@@ -344,6 +344,17 @@ if ( ! function_exists('get_product_img_src') )
     }
 }
 
+if ( ! function_exists('get_category_img_src') )
+{
+    function get_category_img_src($category)
+    {
+        if(isset($category->image->path) && Storage::exists($category->image->path))
+            return get_storage_file_url($category->image->path, 'medium');
+        else
+            return asset('images/demo/category_cover.jpg');
+    }
+}
+
 if ( ! function_exists('verifyUniqueSlug') )
 {
     function verifyUniqueSlug($slug, $table, $field = 'slug')

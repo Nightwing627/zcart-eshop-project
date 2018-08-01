@@ -54,6 +54,7 @@ class Inventory extends Model
                         'condition',
                         'condition_note',
                         'description',
+                        'key_features',
                         'stock_quantity',
                         'damaged_quantity',
                         'user_id',
@@ -67,6 +68,7 @@ class Inventory extends Model
                         'available_from',
                         'min_order_quantity',
                         // 'alert_quantity',
+                        'linked_items',
                         'slug',
                         'meta_title',
                         'meta_description',
@@ -154,85 +156,6 @@ class Inventory extends Model
                     ->withTimestamps();
     }
 
-    /**
-     * Get the packaging list for the inventory.
-     *
-     * @return array
-     */
-    public function getPackagingListAttribute()
-    {
-        if (count($this->packagings)) return $this->packagings->pluck('id')->toArray();
-    }
-
-    /**
-     * Set the min_order_quantity for the inventory.
-     */
-    public function setMinOrderQuantityAttribute($value)
-    {
-        if ($value > 1)  $this->attributes['min_order_quantity'] = $value;
-        else $this->attributes['min_order_quantity'] = 1;
-    }
-
-    // /**
-    //  * Set the alert_quantity for the inventory.
-    //  */
-    // public function setAlertQuantityAttribute($value)
-    // {
-    //     if ($value > 1) $this->attributes['alert_quantity'] = $value;
-    //     else $this->attributes['alert_quantity'] = null;
-    // }
-
-    /**
-     * Set the offer_price for the inventory.
-     */
-    public function setOfferPriceAttribute($value)
-    {
-        if ($value > 0) $this->attributes['offer_price'] = $value;
-        else $this->attributes['offer_price'] = null;
-    }
-
-    /**
-     * Get the warehouse_id for the inventory.
-     */
-    public function setWarehouseIdAttribute($value)
-    {
-        if ($value > 0) $this->attributes['warehouse_id'] = $value;
-        else $this->attributes['warehouse_id'] = null;
-    }
-
-    /**
-     * Get the supplier_id for the inventory.
-     */
-    public function setSupplierIdAttribute($value)
-    {
-        if ($value > 0) $this->attributes['supplier_id'] = $value;
-        else $this->attributes['supplier_id'] = null;
-    }
-
-    /**
-     * Set carbon time formate.
-     */
-    public function setAvailableFromAttribute($value)
-    {
-        if($value) $this->attributes['available_from'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
-    }
-
-    /**
-     * Set offer_start carbon time formate.
-     */
-    public function setOfferStartAttribute($value)
-    {
-        if($value) $this->attributes['offer_start'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
-    }
-
-    /**
-     * Set offer_end carbon time formate.
-     */
-    public function setOfferEndAttribute($value)
-    {
-        if($value) $this->attributes['offer_end'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
-    }
-
     public function isLowQtt()
     {
         $alert_quantity = config('shop_settings.alert_quantity') ?: 0;
@@ -267,9 +190,76 @@ class Inventory extends Model
     /**
      * Setters
      */
+    public function setMinOrderQuantityAttribute($value)
+    {
+        if ($value > 1)  $this->attributes['min_order_quantity'] = $value;
+        else $this->attributes['min_order_quantity'] = 1;
+    }
+    public function setOfferPriceAttribute($value)
+    {
+        if ($value > 0) $this->attributes['offer_price'] = $value;
+        else $this->attributes['offer_price'] = null;
+    }
+    public function setWarehouseIdAttribute($value)
+    {
+        if ($value > 0) $this->attributes['warehouse_id'] = $value;
+        else $this->attributes['warehouse_id'] = null;
+    }
+    public function setSupplierIdAttribute($value)
+    {
+        if ($value > 0) $this->attributes['supplier_id'] = $value;
+        else $this->attributes['supplier_id'] = null;
+    }
+    public function setAvailableFromAttribute($value)
+    {
+        if($value) $this->attributes['available_from'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+    }
+    public function setOfferStartAttribute($value)
+    {
+        if($value) $this->attributes['offer_start'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+    }
+    public function setOfferEndAttribute($value)
+    {
+        if($value) $this->attributes['offer_end'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+    }
     public function setFreeShippingAttribute($value)
     {
         $this->attributes['free_shipping'] = (bool) $value;
+    }
+    public function setKeyFeaturesAttribute($value)
+    {
+        $value = array_filter($value, function($item) { return !empty($item[0]); });
+
+        $this->attributes['key_features'] = serialize($value);
+    }
+    public function setLinkedItemsAttribute($value)
+    {
+        $this->attributes['linked_items'] = serialize($value);
+    }
+
+    // /**
+    //  * Set the alert_quantity for the inventory.
+    //  */
+    // public function setAlertQuantityAttribute($value)
+    // {
+    //     if ($value > 1) $this->attributes['alert_quantity'] = $value;
+    //     else $this->attributes['alert_quantity'] = null;
+    // }
+
+    /**
+     * Getters
+     */
+    public function getPackagingListAttribute()
+    {
+        if (count($this->packagings)) return $this->packagings->pluck('id')->toArray();
+    }
+    public function getKeyFeaturesAttribute($value)
+    {
+        return unserialize($value);
+    }
+    public function getLinkedItemsAttribute($value)
+    {
+        return unserialize($value);
     }
 
     /**
@@ -280,8 +270,8 @@ class Inventory extends Model
     public function scopeAvailable($query)
     {
         return $query->where('active', 1)
-                    ->where('stock_quantity', '>', 0)
-                    ->where('available_from', '<=', Carbon::now());
+        ->where('stock_quantity', '>', 0)
+        ->where('available_from', '<=', Carbon::now());
     }
 
     /**

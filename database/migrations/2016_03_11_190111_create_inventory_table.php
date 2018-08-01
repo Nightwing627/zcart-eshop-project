@@ -23,6 +23,7 @@ class CreateInventoryTable extends Migration
             $table->enum('condition', ['New', 'Used', 'Refurbished']);
             $table->text('condition_note')->nullable();
             $table->longtext('description')->nullable();
+            $table->text('key_features')->nullable();
             $table->integer('stock_quantity')->default(0);
             $table->integer('damaged_quantity')->nullable();
 
@@ -45,6 +46,7 @@ class CreateInventoryTable extends Migration
             $table->timestamp('available_from')->useCurrent();
             $table->integer('min_order_quantity')->default(1);
             $table->string('slug', 200)->unique();
+            $table->text('linked_items')->nullable();
             $table->text('meta_title')->nullable();
             $table->longtext('meta_description')->nullable();
             $table->boolean('stuff_pick')->nullable();

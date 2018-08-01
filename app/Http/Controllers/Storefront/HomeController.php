@@ -11,6 +11,7 @@ use App\Product;
 use App\Category;
 use App\Inventory;
 use App\Manufacturer;
+use App\CategoryGroup;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -99,8 +100,9 @@ class HomeController extends Controller
 
         // TEST
         $related = ListHelper::related_products($item);
+        $linked_items = ListHelper::linked_items($item);
 
-        return view('product', compact('item', 'variants', 'attributes', 'item_attrs', 'related'));
+        return view('product', compact('item', 'variants', 'attributes', 'item_attrs', 'related', 'linked_items'));
     }
 
     /**
@@ -186,6 +188,15 @@ class HomeController extends Controller
         ->paginate(20);
 
         return view('brand', compact('brand', 'products'));
+    }
+
+    /**
+     * Display the category list page.
+     * @return \Illuminate\Http\Response
+     */
+    public function categories()
+    {
+        return view('categories');
     }
 
     /**

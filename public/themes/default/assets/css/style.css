@@ -2495,6 +2495,9 @@ div.datepicker > div {
     -moz-background-size: cover;
     background-size: cover;
 }
+.category-widget .banner {
+  height: 100px;
+}
 .banner-o-hid {
     overflow: hidden;
     z-index: 1;
@@ -2622,6 +2625,15 @@ div.datepicker > div {
     text-align: right;
 }
 
+ul.key_feature_list {
+  padding-left: 15px!important;
+}
+ul.key_feature_list li{
+  list-style: disc!important;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #636363;
+}
 /******* side widget ********/
 .widget-title,
 .side-widget h3 {

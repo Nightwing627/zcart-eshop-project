@@ -81,7 +81,7 @@
     <div class="collapse navbar-collapse" id="main-nav-collapse">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a href="#" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a href="{{ route('categories') }}" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span>{{ trans('theme.shop_by') }}</span>{{ trans('theme.category') }}<i class="dropdown-caret"></i>
           </a>
           <ul class="dropdown-menu menu-category-dropdown" aria-labelledby="dLabel">

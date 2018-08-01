@@ -53,11 +53,7 @@
           </div>
         </div>
 
-        <div class="form-group">
-          {!! Form::label('description', trans('app.form.description'), ['class' => 'with-help']) !!}
-          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_description') }}"></i>
-          {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'placeholder' => trans('app.placeholder.description')]) !!}
-        </div>
+        @include('admin.inventory._common')
 
         <fieldset>
           <legend>{{ trans('app.form.images') }}</legend>
@@ -114,6 +110,7 @@
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-6 nopadding-right">
               <div class="form-group">
@@ -139,6 +136,13 @@
               </div>
             </div>
           </div>
+
+          <div class="form-group">
+            {!! Form::label('linked_items[]', trans('app.form.linked_items'), ['class' => 'with-help']) !!}
+            <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.inventory_linked_items') }}"></i>
+            {!! Form::select('linked_items[]', $inventories , Null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
+            <div class="help-block with-errors"></div>
+          </div>
         </fieldset>
 
         <p class="help-block">* {{ trans('app.form.required_fields') }}</p>
@@ -149,7 +153,7 @@
         {!! Form::submit(trans('app.form.save'), ['class' => 'btn btn-flat btn-lg btn-new pull-right']) !!}
       </div>
     </div>
-  </div>
+  </div><!-- /.col-md-8 -->
 
   <div class="col-md-4 nopadding-left">
     <div class="box">
@@ -277,5 +281,5 @@
         </fieldset>
       </div>
     </div>
-  </div>
-</div>
+  </div><!-- /.col-md-4 -->
+</div><!-- /.row -->

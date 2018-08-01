@@ -216,15 +216,15 @@ class ListHelper
     public static function categoriesForTheme()
     {
         return CategoryGroup::select('id','name','icon')
-                        ->with(['image', 'subGroups' => function($query){
-                            $query->select('id','category_group_id','name')
-                                  ->active()->has('categories.products.inventories')
-                                  ->withCount('categories')->orderBy('categories_count', 'desc');
-                        },
-                        'subGroups.categories' => function($query){
-                            $query->select('id','name','slug','description')->active();
-                        }])
-                        ->has('subGroups.categories')->active()->orderBy('order', 'asc')->get();
+        ->with(['image', 'subGroups' => function($query){
+            $query->select('id','category_group_id','name')
+                ->active()->has('categories.products.inventories')
+                ->withCount('categories')->orderBy('categories_count', 'desc');
+        },
+        'subGroups.categories' => function($query){
+            $query->select('id','name','slug','description')->active();
+        }])
+        ->has('subGroups.categories')->active()->orderBy('order', 'asc')->get();
     }
 
     /**
@@ -518,6 +518,18 @@ class ListHelper
     }
 
     /**
+     * Get inventories list for form dropdown.
+     * @return array
+     */
+    public static function inventories($shop = Null)
+    {
+        if(!$shop)
+            $shop = Auth::user()->merchantId();
+
+        return \DB::table('inventories')->where('shop_id', $shop)->where('deleted_at', Null)->orderBy('title', 'asc')->pluck('title', 'id');
+    }
+
+    /**
      * Get top listing_items list for merchnat.
      * @return array
      */
@@ -630,6 +642,18 @@ class ListHelper
                     ->available()->inRandomOrder()
                     ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
                     ->limit($limit)->get();
+    }
+
+    /**
+     * Get linked items of given item
+     * @return array
+     */
+    public static function linked_items($item)
+    {
+        return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
+                    ->whereIn('id', $item->linked_items)
+                    ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
+                    ->available()->get();
     }
 
     /**

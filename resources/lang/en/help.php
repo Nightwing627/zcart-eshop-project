@@ -13,6 +13,10 @@ return [
     |
     */
 
+    'add_input_field' => 'Add input field',
+
+    'remove_input_field' => 'Remove this input field',
+
     'marketplace_name' => 'The name of the marketplace name. Visitors will see this name.',
 
     'system_legal_name' => 'The legal name of the business',
@@ -54,6 +58,8 @@ return [
     'currency_decimalpoint' => 'Example: 13.21, 13,21',
 
     'currency_thousands_separator' => 'Example: 1,000, 1.000, 1 000',
+
+    'category_cover_img_size' => 'Image size should be 1280x300px',
 
     'slug' => 'Slug are usually a search engine friendly URL',
 
@@ -514,6 +520,8 @@ return [
     // 'google_analytics_id' => 'The tracking ID from google analytics. It looks something like "UA-XXXXX-XX".',
 
     'google_analytic_report' => 'You should only enable this, If the system is configured with Google analytics. Otherwise, it may cause errors. Check the documentation for help. Alternatively you can use the application\'s built in report system. ',
+
+    'inventory_linked_items' => 'The linked items will display on the product page as frequently bought together items. This is optional but important.',
 
     'notify_new_message' => 'Send me a notification when a new message arrived',
 

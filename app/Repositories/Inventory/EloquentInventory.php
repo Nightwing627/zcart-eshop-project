@@ -98,6 +98,10 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
 
         $commonInfo['description'] = $request->input('description');
 
+        $commonInfo['key_features'] = $request->input('key_features');
+
+        $commonInfo['linked_items'] = $request->input('linked_items');
+
         // Arrays
         $skus = $request->input('sku');
 

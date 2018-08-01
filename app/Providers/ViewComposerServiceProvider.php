@@ -342,6 +342,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                     $view->with('suppliers', ListHelper::suppliers());
 
+                    $view->with('inventories', ListHelper::inventories());
+
                     $view->with('tags', ListHelper::tags());
                 });
     }
@@ -362,6 +364,8 @@ class ViewComposerServiceProvider extends ServiceProvider
                     $view->with('warehouses', ListHelper::warehouses());
 
                     $view->with('suppliers', ListHelper::suppliers());
+
+                    $view->with('inventories', ListHelper::inventories());
 
                     $view->with('tags', ListHelper::tags());
                 });

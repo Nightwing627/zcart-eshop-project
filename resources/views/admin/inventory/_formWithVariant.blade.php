@@ -229,10 +229,12 @@
 
 <div class="spacer30"></div>
 
+@include('admin.inventory._common')
+
 <div class="form-group">
-  {!! Form::label('description', trans('app.form.description').'*', ['class' => 'with-help']) !!}
-  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_description') }}"></i>
-  {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'placeholder' => trans('app.placeholder.description')]) !!}
+  {!! Form::label('linked_items[]', trans('app.form.linked_items'), ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.inventory_linked_items') }}"></i>
+  {!! Form::select('linked_items[]', $inventories , Null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
   <div class="help-block with-errors"></div>
 </div>
 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>
