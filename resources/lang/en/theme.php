@@ -403,7 +403,7 @@ return [
 		'recently_added' => 'Recently <span class="text-primary">Added</span>',
 		'recently_viewed' => 'You Veiwed <span class="text-primary">Recently</span>',
 		'related_items'	=> 'Related <span class="text-primary">Items</span>',
-		'select_from_categories' => 'Select <span class="text-primary">From Categories</span>',
+		'select_from_categories' => 'Select From <span class="text-primary">Categories</span>',
 		'trending_now' => 'Trending <span class="text-primary">Now</span>',
 		'weekly_popular' => 'Weekly <span class="text-primary">Popular</span>',
 	],

@@ -31,6 +31,7 @@ return [
     'nofound'           => ':model is not exist! try another search.',
     // 'action_failed'     => 'The action has been failed to unknown reason!',
     'file_deleted'      => 'The file has been deleted successfully!',
+    'updated_featured_categories' => 'Featured category list updated successfully!',
     'archived'          => ':model has been archived successfully!',
     'fulfilled'         => 'The order has been fulfilled successfully.',
     'fulfilled_and_archived' => 'The order has been fulfilled and archived successfully.',

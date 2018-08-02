@@ -6,7 +6,7 @@
       </div>
       @foreach($all_categories as $categoryGroup)
         @if($categoryGroup->subGroups->count())
-          <div class="col-md-3 bg-light category-widget space30">
+          <div class="col-md-3 col-sm-6 bg-light category-widget space30">
             <section class="category-banner-img-wrapper">
               <div class="banner banner-o-hid" style="background-color: #333; background-image:url( {{ get_category_img_src($categoryGroup) }} );">
                 <div class="banner-caption">
@@ -29,6 +29,10 @@
           </div><!-- /.col-md-3 -->
           @if($loop->iteration % 4 == 0)
             <div class="clearfix"></div>
+          @endif
+          @if($loop->iteration % 2 == 0)
+            <!-- Add clearfix for only the sm viewport -->
+            <div class="clearfix visible-sm-block"></div>
           @endif
         @endif
       @endforeach

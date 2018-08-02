@@ -34,9 +34,9 @@ class GiftCardController extends Controller
      */
     public function index()
     {
-        $valid_cards = $this->giftCard->all();
+        $valid_cards = $this->giftCard->valid();
 
-        $expired_cards = $this->giftCard->invalid();
+        $expired_cards = $this->giftCard->expired();
 
         $trashes = $this->giftCard->trashOnly();
 

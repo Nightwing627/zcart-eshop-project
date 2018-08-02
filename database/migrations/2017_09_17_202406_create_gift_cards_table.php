@@ -21,6 +21,7 @@ class CreateGiftCardsTable extends Migration
             $table->string('serial_number')->nullable();
             $table->string('pin_code')->nullable();
             $table->decimal('value', 20, 6)->nullable();
+            $table->decimal('remaining_value', 20, 6)->nullable();
             $table->boolean('partial_use')->nullable();
             $table->timestamp('activation_time')->nullable();
             $table->timestamp('expiry_time')->nullable();

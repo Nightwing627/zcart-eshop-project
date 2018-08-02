@@ -121,9 +121,9 @@
             @endforeach
           </ul><!-- /.menu-category-dropdown -->
         </li>
-        @foreach($hot_categories as $id => $hotcat)
+        @foreach($featured_categories as $featured_category)
           <li class="dropdown">
-            <a class="navbar-item-mergin-top" href="#">{{ $hotcat }}</a>
+            <a class="navbar-item-mergin-top" href="{{ route('category.browse', $featured_category->slug) }}">{{ $featured_category->name }}</a>
           </li>
         @endforeach
         <li class="dropdown"><a class="navbar-item-mergin-top" href="#">{{ trans('theme.gift_cards') }}</a>

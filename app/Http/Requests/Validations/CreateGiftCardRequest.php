@@ -23,14 +23,17 @@ class CreateGiftCardRequest extends Request
      */
     public function rules()
     {
+        $this->merge(['remaining_value' => $this->get('value')]); //Set remaining_value
+
         return [
            'name' => 'required',
+           'value' => 'required|numeric',
            'pin_code' => 'required|unique:gift_cards',
            'serial_number' => 'required|unique:gift_cards',
-           'value' => 'required|numeric',
            'activation_time' => 'required|nullable|date|after_or_equal:now',
            'expiry_time' => 'required|nullable|date|after:starting_time',
            'active' => 'required|boolean',
+           'image' => 'mimes:jpg,jpeg,png',
         ];
     }
 

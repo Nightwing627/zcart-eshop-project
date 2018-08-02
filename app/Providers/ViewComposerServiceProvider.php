@@ -78,6 +78,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeFaqForm();
 
+        $this->composeFeaturedCategoriesForm();
+
         $this->composeInventoryForm();
 
         $this->composeInventoryVariantForm();
@@ -119,6 +121,8 @@ class ViewComposerServiceProvider extends ServiceProvider
         $this->composeSystemConfigPage();
 
         $this->composeTaxForm();
+
+        $this->composeThemeOption();
 
         $this->composeTicketCreateForm();
 
@@ -1059,6 +1063,39 @@ class ViewComposerServiceProvider extends ServiceProvider
             function($view)
             {
                 $view->with('groups', ListHelper::banner_groups());
+            }
+        );
+    }
+
+    /**
+     * compose partial view of Theme Option
+     */
+    private function composeThemeOption()
+    {
+        View::composer(
+
+            'admin.theme.options',
+
+            function($view)
+            {
+                $view->with('featured_categories', ListHelper::featured_categories());
+            }
+        );
+    }
+
+    /**
+     * compose partial view of Theme Option
+     */
+    private function composeFeaturedCategoriesForm()
+    {
+        View::composer(
+
+            'admin.theme._edit_featured_categories',
+
+            function($view)
+            {
+                $view->with('categories', ListHelper::categories());
+                $view->with('featured_categories', ListHelper::featured_categories()->toArray());
             }
         );
     }

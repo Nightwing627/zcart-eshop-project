@@ -453,9 +453,9 @@ return [
 
     'gift_card_name' => 'The name of the gift card.',
 
-    'gift_card_pin_code' => 'The unique secret code. The pin code is the passcode for the card.',
+    'gift_card_pin_code' => 'The unique secret code. The pin code is the passcode for the card. You can\'t change this value later.',
 
-    'gift_card_serial_number' => 'The unique serial number for the card.',
+    'gift_card_serial_number' => 'The unique serial number for the card. You can\'t change this value later.',
 
     'gift_card_value' => 'The value of the card. The customer will receive same amount of discount.',
 

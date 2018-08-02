@@ -3,12 +3,13 @@
 namespace App;
 
 use Carbon\Carbon;
+use App\Common\Imageable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GiftCard extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Imageable;
 
     /**
      * The database table used by the model.
@@ -47,6 +48,7 @@ class GiftCard extends Model
                     'serial_number',
                     'pin_code',
                     'value',
+                    'remaining_value',
                     'partial_use',
                     'activation_time',
                     'expiry_time',
@@ -107,14 +109,44 @@ class GiftCard extends Model
     }
 
     /**
+     * Check if card is valid.
+     */
+    public function isValid()
+    {
+        return $this->active == 1 && $this->activation_time <= Carbon::now() && $this->expiry_time > Carbon::now();
+    }
+
+    /**
+     * Check if card hasRemaining.
+     */
+    public function hasRemaining()
+    {
+        if($this->value == $this->remaining_value)
+            return true;
+
+        return ($this->remaining_value > 0) && $this->partial_use;
+    }
+
+    /**
      * Scope a query to only include valid records.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeValid($query)
     {
-        return $query->where('active', 1)->where('activation_time', '<', Carbon::now())->where('expiry_time', '>', Carbon::now());
+        return $query->where('expiry_time', '>', Carbon::now())->where('remaining_value', '>', 0);
     }
+
+    /**
+     * Scope a query to only include Invalid records.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeExpired($query)
+    {
+        return $query->where('expiry_time', '<=', Carbon::now())->orWhere('remaining_value', '<=', 0);
+    }
+
 
     /**
      * Scope a query to only include Invalid records.

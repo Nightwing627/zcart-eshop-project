@@ -11,6 +11,15 @@
 		    $(this).hide();
 		});
 
+        // Activate the tab if the url has any #hash
+        $('.nav a').on('show.bs.tab', function (e) {
+            window.location = $(this).attr('href');
+        });
+        $(function () {
+            var hash = window.location.hash;
+            hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+        });
+
 		$(document).ready(function(){
 		    $(".ajax-modal-btn").show(); // show the ajax functional button when the page loaded completely
 

@@ -73,17 +73,25 @@
 			    </div><!-- /#slider-tab -->
 
 			    <div class="tab-pane" id="settings-tab">
-			    	<table class="table">
+			    	<table class="table table-stripe">
 			    		<thead>
 			    			<tr>
-			    				<th></th>
-			    				<th></th>
+			    				<th>@lang('app.options')</th>
+			    				<th>@lang('app.values')</th>
+			    				<th>&nbsp;</th>
 			    			</tr>
 			    		</thead>
 			    		<tbody>
 			    			<tr>
-			    				<td></td>
-			    				<td></td>
+			    				<th>@lang('app.featured_categories')</th>
+			    				<td>
+			    					@foreach($featured_categories as $category)
+					    				<span class="label label-outline">{{ $category }}</span>
+			    					@endforeach
+			    				</td>
+			    				<td>
+			    					<a href="{{ route('admin.appearance.featuredCategories') }}" class="ajax-modal-btn btn btn-sm btn-default flat"><i class="fa fa-edit"></i> @lang('app.edit')</a>
+			    				</td>
 			    			</tr>
 			    		</tbody>
 			    	</table>

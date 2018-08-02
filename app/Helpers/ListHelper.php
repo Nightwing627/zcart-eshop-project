@@ -673,7 +673,8 @@ class ListHelper
 
         if(!$products) return [];
 
-        return Inventory::select('id', 'slug', 'title')->available()->whereIn('id', $products)->with('image:path')->get();
+        return Inventory::select('id', 'slug', 'title')->available()->whereIn('id', $products)
+        ->with('image:path,imageable_id,imageable_type')->get();
     }
 
     /**
@@ -898,6 +899,24 @@ class ListHelper
     public static function banner_groups()
     {
         return \DB::table('banner_groups')->orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
+    /**
+     * Get featured_categories list for form dropdown.
+     *
+     * @return array
+     */
+    public static function featured_categories()
+    {
+        return \DB::table('categories')->whereNotNull('featured')->pluck('name', 'id');
+    }
+
+    /**
+     * Get featured_categories list for theme.
+     */
+    public static function hot_categories()
+    {
+        return \DB::table('categories')->select('id','name','slug')->whereNotNull('featured')->get();
     }
 
     /**

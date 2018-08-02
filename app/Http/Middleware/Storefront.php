@@ -32,9 +32,7 @@ class Storefront
             View::share('all_categories', ListHelper::categoriesForTheme());
             View::share('search_category_list', ListHelper::catSubGrps());
             View::share('recently_viewed_items', ListHelper::recentlyViewedItems());
-
-            $hotcat = ['Hot Category One', 'Hot Category Two', 'Hot Category Three']; //TEST
-            View::share('hot_categories', $hotcat);
+            View::share('featured_categories', ListHelper::hot_categories());
         }
 
         return $next($request);
