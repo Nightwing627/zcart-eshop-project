@@ -27,9 +27,20 @@ class UpdateGiftCardRequest extends Request
            'name' => 'required',
            'value' => 'required|numeric',
            'activation_time' => 'required|nullable|date',
-           'expiry_time' => 'required|nullable|date',
-           'active' => 'required|boolean',
+           'expiry_time' => 'required|date|after:starting_time',
            'image' => 'mimes:jpg,jpeg,png',
+        ];
+    }
+
+   /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'expiry_time.after' => trans('validation.offer_end_after'),
         ];
     }
 }

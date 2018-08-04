@@ -16,6 +16,16 @@ class EloquentGiftCard extends EloquentRepository implements BaseRepository, Gif
 		$this->model = $giftCard;
 	}
 
+    public function valid()
+    {
+        return $this->model->valid()->with('image:path,imageable_id,imageable_type')->get();
+    }
+
+    public function invalid()
+    {
+        return $this->model->invalid()->get();
+    }
+
     public function store(Request $request)
     {
         $giftCard = parent::store($request);
@@ -39,13 +49,4 @@ class EloquentGiftCard extends EloquentRepository implements BaseRepository, Gif
         return $giftCard;
     }
 
-	public function valid()
-	{
-		return $this->model->valid()->with('image:path,imageable_id,imageable_type')->get();
-	}
-
-	public function expired()
-	{
-		return $this->model->expired()->get();
-	}
 }

@@ -5,5 +5,5 @@ namespace App\Repositories\GiftCard;
 interface GiftCardRepository {
     public function valid();
 
-    public function expired();
+    public function invalid();
 }

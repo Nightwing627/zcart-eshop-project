@@ -715,6 +715,7 @@ return [
     'banners' => 'Banners',
     'settings' => 'Settings',
     'expired_at' => 'Expired at',
+    'in_use' => 'In use',
 
 
     'message' => 'Message',

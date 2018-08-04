@@ -27,7 +27,6 @@ class CreateGiftCardsTable extends Migration
             $table->timestamp('expiry_time')->nullable();
             $table->boolean('exclude_offer_items')->nullable();
             $table->boolean('exclude_tax_n_shipping')->nullable();
-            $table->boolean('active')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

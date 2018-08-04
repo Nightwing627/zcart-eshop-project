@@ -19,7 +19,6 @@ $factory->define(App\GiftCard::class, function (Faker $faker) {
         'partial_use' => $faker->boolean,
         'exclude_offer_items' => $faker->boolean,
         'exclude_tax_n_shipping' => $faker->boolean,
-        'active' => $faker->boolean,
         'created_at' => Carbon::Now()->subDays(rand(0, 15)),
         'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];

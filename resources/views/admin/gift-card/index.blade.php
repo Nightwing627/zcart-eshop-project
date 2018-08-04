@@ -30,14 +30,8 @@
 								<span class="indent10">
 									{{ $card->name }}
 								</span>
-								@unless($card->active)
-									<span class="label label-default indent5 small">{{ trans('app.inactive') }}</span>
-								@endunless
-								@if($card->isValid())
-									<span class="label label-primary indent5">{{ trans('app.live_now') }}</span>
-								@endif
-								@if(!$card->hasRemaining())
-									<span class="label label-info indent5">{{ trans('app.used') }}</span>
+								@if($card->isInUse())
+									<span class="label label-primary indent5">{{ trans('app.in_use') }}</span>
 								@endif
 							</td>
 							<td>{{ get_formated_currency($card->value) }}</td>
@@ -69,7 +63,7 @@
 
 	<div class="box collapsed-box">
 		<div class="box-header with-border">
-			<h3 class="box-title">{{ trans('app.expired_cards') }}</h3>
+			<h3 class="box-title">{{ trans('app.invalid_cards') }}</h3>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 				<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -83,12 +77,12 @@
 						<th>{{ trans('app.pin_code') }}</th>
 						<th>{{ trans('app.serial_number') }}</th>
 						<th>{{ trans('app.value') }}</th>
-						<th>{{ trans('app.expired_at') }}</th>
+						<th>{{ trans('app.expiry_time') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($expired_cards as $card )
+					@foreach($invalid_cards as $card )
 						<tr>
 							<td>
 								{{ $card->name }}
@@ -150,7 +144,7 @@
 						<td>
 							{{ $trash->serial_number }}
 							@if($trash->expiry_time < \Carbon\Carbon::now())
-								({{ trans('app.expired') }})
+								({{ trans('app.invalid') }})
 							@endif
 						</td>
 						<td>{{ get_formated_currency($trash->value) }}</td>
