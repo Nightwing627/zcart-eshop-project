@@ -195,6 +195,6 @@ class AccountController extends Controller
      */
     private function gift_cards()
     {
-        return Auth::guard('customer')->user()->gift_cards()->active()->paginate(20);
+        return Auth::guard('customer')->user()->gift_cards()->paginate(20);
     }
 }

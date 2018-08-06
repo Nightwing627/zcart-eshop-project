@@ -4,7 +4,7 @@
   </legend>
   <div id="DynamicInputsWrapper">
     @if(isset($inventory))
-      @foreach($inventory->key_features as $key_feature)
+      @foreach(unserialize($inventory->key_features) as $key_feature)
         <div class="form-group">
           <div class="input-group">
             {!! Form::text('key_features[]', $key_feature, ['class' => 'form-control input-sm', 'placeholder' => trans('app.placeholder.key_feature')]) !!}

@@ -8,6 +8,9 @@ use App\Refund;
 use App\Observers\ShopObserver;
 use App\Observers\RefundObserver;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +24,18 @@ class AppServiceProvider extends ServiceProvider
         Shop::observe(ShopObserver::class);
         Order::observe(OrderObserver::class);
         Refund::observe(RefundObserver::class);
+
+        // Add pagination on collections
+        if (!Collection::hasMacro('paginate')) {
+            Collection::macro('paginate',
+                function ($perPage = 15, $page = null, $options = []) {
+                $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+                return (new LengthAwarePaginator(
+                    $this->forPage($page, $perPage), $this->count(), $perPage, $page, $options))
+                    ->withPath(url()->full());
+            });
+        }
+
     }
 
     /**

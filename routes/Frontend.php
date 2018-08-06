@@ -7,6 +7,7 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
    // Auth route for customers
 	include('storefront/Auth.php');
 	include('storefront/Cart.php');
+	include('storefront/GiftCard.php');
 
 	Route::get('/', 'HomeController@index')->name('homepage');
 	Route::get('product/{slug}', 'HomeController@product')->name('show.product');
@@ -16,6 +17,7 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 	Route::get('category/{slug}', 'HomeController@browseCategory')->name('category.browse');
 	Route::get('shop/{slug}', 'HomeController@shop')->name('show.store');
 	Route::get('brand/{slug}', 'HomeController@brand')->name('show.brand');
+	Route::get('search', 'SearchController@search')->name('inCategoriesSearch');
 	Route::get('support/contact', 'ContactUsController@show_contact_form')->name('support.contact_us');
 
 	Route::middleware(['auth:customer'])->group(function () {

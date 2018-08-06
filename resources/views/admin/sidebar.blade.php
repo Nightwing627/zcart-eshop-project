@@ -251,13 +251,13 @@
                   </a>
                 </li>
               @endcan
-              @can('index', App\GiftCard::class)
+              {{-- @can('index', App\GiftCard::class)
                 <li class=" {{ Request::is('admin/promotion/giftCard*') ? 'active' : '' }}">
                   <a href="{{ url('admin/promotion/giftCard') }}">
                     <i class="fa fa-angle-double-right"></i> {{ trans('nav.gift_cards') }}
                   </a>
                 </li>
-              @endcan
+              @endcan --}}
             </ul>
           </li>
         @endif

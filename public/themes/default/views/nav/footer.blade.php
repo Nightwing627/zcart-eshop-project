@@ -45,7 +45,9 @@
     <div class="col-xs-12 col-sm-4 col-md-2">
       <h3>Make Money with Us</h3>
       <ul class="footer-link-list">
-        <li><a href="#" rel="nofollow">Sell Your Product</a></li>
+        <li>
+          <a class="navbar-item-mergin-top" href="{{ url('/selling') }}">{{ trans('theme.nav.sell_on', ['platform' => get_platform_title()]) }}</a>
+        </li>
         <li><a href="#" rel="nofollow">Affiliate Program</a></li>
         <li><a href="{{ url('admin/dashboard') }}">Merchant Dashboard</a></li>
       </ul>

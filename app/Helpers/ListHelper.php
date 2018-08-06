@@ -264,8 +264,17 @@ class ListHelper
      */
     public static function categories()
     {
-        // return \DB::table('categories')->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
         return Category::orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
+    /**
+     * Get search_categories list for form dropdown.
+     *
+     * @return array
+     */
+    public static function search_categories()
+    {
+        return Category::orderBy('name', 'asc')->pluck('name', 'slug');
     }
 
     /**
@@ -650,8 +659,10 @@ class ListHelper
      */
     public static function linked_items($item)
     {
+        $linked_items = unserialize($item->linked_items);
+
         return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
-                    ->whereIn('id', $item->linked_items)
+                    ->whereIn('id', $linked_items)
                     ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
                     ->available()->get();
     }

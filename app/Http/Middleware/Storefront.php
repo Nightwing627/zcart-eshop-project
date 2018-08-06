@@ -30,7 +30,7 @@ class Storefront
         //Supply important data to all views if not ajax request
         if( ! $request->ajax() ){
             View::share('all_categories', ListHelper::categoriesForTheme());
-            View::share('search_category_list', ListHelper::catSubGrps());
+            View::share('search_category_list', ListHelper::search_categories());
             View::share('recently_viewed_items', ListHelper::recentlyViewedItems());
             View::share('featured_categories', ListHelper::hot_categories());
         }

@@ -259,6 +259,7 @@ return [
 	'reviews' => '{0,1} :count Review|{2,*} :count Reviews',
 	// 'reviews_count' => ':count reviews',
 	'running' => 'Running',
+	'search_results' => 'Search Results',
 	'select' => 'Select',
 	'select_product' => 'Select Product',
     'select_reason' => 'Select Reason',

@@ -92,7 +92,7 @@
 					          <h4>@lang('theme.section_headings.key_features')</h4>
 					        </div>
 							<ul class="key_feature_list">
-								@foreach($item->key_features as $key_feature)
+								@foreach(unserialize($item->key_features) as $key_feature)
 									<li>{{ $key_feature }}</li>
 								@endforeach
 							</ul>

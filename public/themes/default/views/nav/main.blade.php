@@ -5,18 +5,18 @@
         <img src="{{ asset('images/logo.png') }}" alt="LOGO" title="LOGO" />
       </a>
     </div>
-    <form class="navbar-left navbar-form navbar-search" role="search">
-      <select name="search_in_category" class="search-category-select ">
-        <option>{{ trans('theme.all_categories') }}</option>
-        @foreach($search_category_list as $id => $category)
-          <option value="{{ $id }}">{{ $category }}</option>
+    {!! Form::open(['route' => 'inCategoriesSearch', 'method' => 'GET', 'id' => 'search-categories-form', 'class' => 'navbar-left navbar-form navbar-search', 'role' => 'search']) !!}
+      <select name="in" class="search-category-select ">
+        <option value="all_categories">{{ trans('theme.all_categories') }}</option>
+        @foreach($search_category_list as $slug => $category)
+          <option value="{{ $slug }}">{{ $category }}</option>
         @endforeach
       </select>
       <div class="form-group">
-        <input name="search_for" class="form-control" type="text" placeholder="{{ trans('theme.main_searchbox_placeholder') }}" />
+        {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => trans('theme.main_searchbox_placeholder')]) !!}
       </div>
-      <a class="fa fa-search navbar-search-submit" href="#"></a>
-    </form>
+      <a class="fa fa-search navbar-search-submit" onclick="document.getElementById('search-categories-form').submit()"></a>
+    {!! Form::close() !!}
     <ul class="nav navbar-nav navbar-right navbar-mob-left">
       @auth('customer')
         <li class="dropdown">
@@ -126,9 +126,12 @@
             <a class="navbar-item-mergin-top" href="{{ route('category.browse', $featured_category->slug) }}">{{ $featured_category->name }}</a>
           </li>
         @endforeach
-        <li class="dropdown"><a class="navbar-item-mergin-top" href="#">{{ trans('theme.gift_cards') }}</a>
-        </li>
-        <li class="dropdown"><a class="navbar-item-mergin-top" href="{{ url('/selling') }}">{{ trans('theme.nav.sell_on', ['platform' => get_platform_title()]) }}</a>
+        {{--
+        <li class="dropdown">
+          <a class="navbar-item-mergin-top" href="{{ route('shop.giftCard') }}">{{ trans('theme.gift_cards') }}</a>
+        </li> --}}
+        <li class="dropdown">
+          <a class="navbar-item-mergin-top" href="{{ url('/selling') }}">{{ trans('theme.nav.sell_on', ['platform' => get_platform_title()]) }}</a>
         </li>
       </ul>
 

@@ -34,7 +34,6 @@ class HomeController extends Controller
         $recent = ListHelper::latest_available_items(10);
         $additional_items = ListHelper::random_items(10);
 
-        // echo "<pre>"; print_r($trending->toArray()); echo "</pre>"; exit();
         return view('index', compact('banners', 'sliders', 'trending', 'weekly_popular', 'recent', 'additional_items'));
     }
 

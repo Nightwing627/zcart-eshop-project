@@ -1157,6 +1157,7 @@ div.datepicker > div {
 .navbar-light .navbar-search-submit {
     color: #fff;
     background: #486d97;
+    cursor: pointer;
 }
 .dropdown-menu>li>a.btn-primary {
     display: inline-block;

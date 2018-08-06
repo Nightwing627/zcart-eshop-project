@@ -6,13 +6,14 @@ use Carbon\Carbon;
 use App\Common\Taggable;
 use App\Common\Imageable;
 use App\Common\Feedbackable;
+use Laravel\Scout\Searchable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inventory extends Model
 {
-    use SoftDeletes, Taggable, Imageable, Feedbackable;
+    use SoftDeletes, Taggable, Imageable, Searchable, Feedbackable;
 
     /**
      * The database table used by the model.
@@ -75,6 +76,37 @@ class Inventory extends Model
                         'stuff_pick',
                         'active'
                     ];
+
+    /**
+     * Get the value used to index the model.
+     *
+     * @return mixed
+     */
+    // public function getScoutKey()
+    // {
+    //     return $this->slug;
+    // }
+
+    // public $asYouType = true;
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array['title'] = $this->title;
+        $array['description'] = $this->description;
+        $array['key_features'] = $this->key_features;
+        $array['stock_quantity'] = $this->stock_quantity;
+        $array['available_from'] = $this->available_from;
+        $array['active'] = $this->active;
+
+        return $array;
+    }
 
     /**
      * Get the shop of the inventory.
@@ -253,14 +285,15 @@ class Inventory extends Model
     {
         if (count($this->packagings)) return $this->packagings->pluck('id')->toArray();
     }
-    public function getKeyFeaturesAttribute($value)
-    {
-        return unserialize($value);
-    }
-    public function getLinkedItemsAttribute($value)
-    {
-        return unserialize($value);
-    }
+    // Mutator cause the searse error
+    // public function getKeyFeaturesAttribute($value)
+    // {
+    //     return unserialize($value);
+    // }
+    // public function getLinkedItemsAttribute($value)
+    // {
+    //     return unserialize($value);
+    // }
 
     /**
      * Scope a query to only include available for sale .
@@ -269,9 +302,11 @@ class Inventory extends Model
      */
     public function scopeAvailable($query)
     {
-        return $query->where('active', 1)
-        ->where('stock_quantity', '>', 0)
-        ->where('available_from', '<=', Carbon::now());
+        return $query->where([
+            ['active', '=', 1],
+            ['stock_quantity', '>', 0],
+            ['available_from', '<=', Carbon::now()]
+        ]);
     }
 
     /**
