@@ -229,6 +229,7 @@ return [
     'note' => 'Note',
     'nothing_found' => 'Nothing found',
     'no_order_history' => 'You don\'t have any orders!',
+    'oldest' => 'Oldest',
     'open_a_dispute' => 'Open a Dispute',
     'options' => 'Options',
     'order' => 'Order',

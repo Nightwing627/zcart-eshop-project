@@ -11,6 +11,7 @@
               @include('headers.lists.categories')
             @endif
             <li class="active">@lang('theme.search_results')</li>
+            <li class="active">"<strong class="text-primary">{{ Request::get('search') }}</strong>"</li>
           </ol>
         </div>
       </div>

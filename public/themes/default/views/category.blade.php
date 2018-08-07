@@ -16,3 +16,7 @@
     <!-- bottom Banner -->
     @include('banners.bottom')
 @endsection
+
+@section('scripts')
+    @include('scripts.product_list_top_filter')
+@endsection

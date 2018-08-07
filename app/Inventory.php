@@ -99,10 +99,7 @@ class Inventory extends Model
         $array = $this->toArray();
 
         $array['title'] = $this->title;
-        $array['description'] = $this->description;
         $array['key_features'] = $this->key_features;
-        $array['stock_quantity'] = $this->stock_quantity;
-        $array['available_from'] = $this->available_from;
         $array['active'] = $this->active;
 
         return $array;
@@ -203,8 +200,8 @@ class Inventory extends Model
         if(
             ($this->offer_price > 0) &&
             ($this->offer_price < $this->sale_price) &&
-            ($this->offer_start < \Carbon\Carbon::now()) &&
-            ($this->offer_end > \Carbon\Carbon::now())
+            ($this->offer_start < Carbon::now()) &&
+            ($this->offer_end > Carbon::now())
         )
             return TRUE;
 
@@ -307,6 +304,20 @@ class Inventory extends Model
             ['stock_quantity', '>', 0],
             ['available_from', '<=', Carbon::now()]
         ]);
+    }
+
+    /**
+     * Scope a query to only include available for sale .
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeHasOffer($query)
+    {
+        return $query->where([
+            ['offer_price', '>', 0],
+            ['offer_start', '<', Carbon::now()],
+            ['offer_end', '>', Carbon::now()]
+        ])->whereColumn('offer_price', '<', 'sale_price');
     }
 
     /**

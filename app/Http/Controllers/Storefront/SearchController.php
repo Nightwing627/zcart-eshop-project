@@ -31,27 +31,49 @@ class SearchController extends Controller
             $products = $products->intersect($listings);
         }
 
-        $products = $products->where('stock_quantity', '>', 0)->where('available_from', '<=', Carbon::now())->paginate(16);
+        $products = $products->where('stock_quantity', '>', 0)->where('available_from', '<=', Carbon::now());
+
+        if(request()->has('free_shipping')){
+            $products = $products->where('free_shipping', 1);
+        }
+        if(request()->has('new_arraivals')){
+            $products = $products->where('created_at', '>', Carbon::now()->subDays(config('system.filter.new_arraival', 7)));
+        }
+        if(request()->has('has_offers')){
+            $products = $products->where('offer_price', '>', 0)
+            ->where('offer_start', '<', Carbon::now())
+            ->where('offer_end', '>', Carbon::now());
+        }
+
+        if(request()->has('sort_by')){
+            switch (request()->get('sort_by')) {
+                case 'newest':
+                    $products = $products->sortByDesc('created_at');
+                    break;
+
+                case 'oldest':
+                    $products = $products->sortBy('created_at');
+                    break;
+
+                case 'price_acs':
+                    $products = $products->sortBy('sale_price');
+                    break;
+
+                case 'price_desc':
+                    $products = $products->sortByDesc('sale_price');
+                    break;
+
+                case 'best_match':
+                default:
+                    break;
+            }
+        }
+
+        $products = $products->paginate(3);
 
         $products->load(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type']);
 
         return view('search_results', compact('products', 'category'));
     }
 
-    /**
-      * Generates pagination of collection in an array or collection.
-      *
-      * @param array|Collection      $collection
-      * @param int   $perPage
-      * @param int  $page
-      * @param array $options
-      *
-      * @return LengthAwarePaginator
-      */
-    // public function paginate($collection, $perPage = 15, $page = null, $options = [])
-    // {
-    //     $collection = $collection instanceof Collection ? $collection : Collection::make($collection);
-    //     $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-    //     return new LengthAwarePaginator($collection->forPage($page, $perPage), $collection->count(), $perPage, $page, $options);
-    // }
 }

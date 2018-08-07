@@ -9,7 +9,8 @@
 
     <!-- BROWSING ITEMS -->
     @include('sliders.browsing_items')
+@endsection
 
-    <!-- bottom Banner -->
-    @include('banners.bottom')
+@section('scripts')
+    @include('scripts.product_list_top_filter')
 @endsection
