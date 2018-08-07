@@ -9,7 +9,11 @@
       <select name="in" class="search-category-select ">
         <option value="all_categories">{{ trans('theme.all_categories') }}</option>
         @foreach($search_category_list as $slug => $category)
-          <option value="{{ $slug }}">{{ $category }}</option>
+          <option value="{{ $slug }}"
+            @if(Request::has('in'))
+             {{ Request::get('in') == $slug ? ' selected' : '' }}
+            @endif
+          >{{ $category }}</option>
         @endforeach
       </select>
       <div class="form-group">

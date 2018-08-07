@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Storefront;
 
 use Carbon\Carbon;
+use App\Category;
 use App\Inventory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,24 +23,16 @@ class SearchController extends Controller
         $category = $request->input('in');
         $term = $request->input('search');
 
-        // if($category != 'all_categories'){
-        //     $category = Category::where('slug', $slug)->active()->firstOrFail();
-        //     $products = $category->listings()->available()->search($term)->paginate(16);
-        // }
-        // else{
-            // $products = Inventory::search($term)->where('active', 1)->paginate(16);
-            // $products = Inventory::search($term)->where('active', 1)
-            // ->where('stock_quantity', '>', 0)
-            // ->where('available_from', '<=', Carbon::now())->paginate(16);
-        // }
-
-        // $products = Inventory::available()->paginate(16);
-
         $products = Inventory::search($term)->where('active', 1)->get();
-        // $products = Inventory::search($term)->where('active', 1)->paginate(16);
 
-        $products = $products->paginate(6);
-        echo "<pre>"; print_r($products->toArray()); echo "</pre>"; exit();
+        if($category != 'all_categories'){
+            $category = Category::where('slug', $category)->active()->firstOrFail();
+            $listings = $category->listings()->available()->get();
+            $products = $products->intersect($listings);
+        }
+
+        $products = $products->where('stock_quantity', '>', 0)->where('available_from', '<=', Carbon::now())->paginate(16);
+
         $products->load(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type']);
 
         return view('search_results', compact('products', 'category'));

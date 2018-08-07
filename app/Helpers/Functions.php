@@ -130,6 +130,17 @@ if ( ! function_exists('is_serialized') )
     }
 }
 
+if ( ! function_exists('remove_url_parameter') )
+{
+    /**
+     * Remove given parameter from the given url str
+     */
+    function remove_url_parameter($url, $key = false)
+    {
+        return preg_replace( '/'. ($key ? '(\&|)' . $key . '(\=(.*?)((?=&(?!amp\;))|$)|(.*?)\b)' : '(\?.*)').'/i' , '', $url);
+    }
+}
+
 if ( ! function_exists('get_gravatar_url') )
 {
     function get_gravatar_url($email, $size = 'small')
