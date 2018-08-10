@@ -7,13 +7,15 @@ use App\Common\Taggable;
 use App\Common\Imageable;
 use App\Common\Feedbackable;
 use Laravel\Scout\Searchable;
+use EloquentFilter\Filterable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Inventory extends Model
 {
-    use SoftDeletes, Taggable, Imageable, Searchable, Feedbackable;
+    use SoftDeletes, Taggable, Imageable, Searchable, Filterable, Feedbackable;
 
     /**
      * The database table used by the model.
@@ -50,6 +52,7 @@ class Inventory extends Model
                         'title',
                         'warehouse_id',
                         'product_id',
+                        'brand',
                         'supplier_id',
                         'sku',
                         'condition',
@@ -137,6 +140,30 @@ class Inventory extends Model
         return $this->belongsTo(Supplier::class);
     }
 
+    // public function manufacturer()
+    // {
+    //     return $this->product->belongsTo(Manufacturer::class);
+
+    //     return $this->belongsTo(Manufacturer::class, null, null, 'manufacturer_id')
+    //         ->join('products', 'manufacturers.id', '=', 'products.manufacturer_id');
+
+    //     $instance = new Manufacturer();
+    //     $instance->setTable('manufacturers');
+    //     $query = $instance->newQuery();
+
+    //     return (new BelongsTo($query, $this, 'product_id', $instance->getKeyName(), 'manufacturer'))
+    //         ->join('products', 'manufacturers.id', '=', 'products.manufacturer_id')
+    //         ->select(\DB::raw('manufacturers.name'));
+
+    //     // $instance = new Manufacturer();
+    //     // $instance->setTable('products');
+    //     // $query = $instance->newQuery();
+
+    //     // return (new BelongsTo($query, $this, 'product_id', $instance->getKeyName(), 'manufacturer'))
+    //     //     ->join('manufacturers', 'manufacturers.id', '=', 'products.manufacturer_id')
+    //     //     ->select(\DB::raw('manufacturers.name'));
+    // }
+
     /**
      * Get the packagings for the order.
      */
@@ -181,8 +208,16 @@ class Inventory extends Model
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_items')
-                    ->withPivot('item_description', 'quantity', 'unit_price', 'feedback_id')
-                    ->withTimestamps();
+            ->withPivot('item_description', 'quantity', 'unit_price', 'feedback_id')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get the manufacturer associated with the product.
+     */
+    public function getManufacturerAttribute()
+    {
+        return $this->product->manufacturer;
     }
 
     public function isLowQtt()
@@ -321,6 +356,16 @@ class Inventory extends Model
     }
 
     /**
+     * Scope a query to only include items with free Shipping.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFreeShipping($query)
+    {
+        return $query->where('free_shipping', 1);
+    }
+
+    /**
      * Scope a query to only include active records.
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -328,6 +373,16 @@ class Inventory extends Model
     public function scopeActive($query)
     {
         return $query->where('active', 1);
+    }
+
+    /**
+     * Scope a query to only include new Arraival Items.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNewArraivals($query)
+    {
+        return $query->where('inventories.created_at', '>', Carbon::now()->subDays(config('system.filter.new_arraival', 7)));
     }
 
     /**

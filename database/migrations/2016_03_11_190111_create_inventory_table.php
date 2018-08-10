@@ -18,6 +18,7 @@ class CreateInventoryTable extends Migration
             $table->text('title');
             $table->integer('warehouse_id')->unsigned()->nullable();
             $table->bigInteger('product_id')->unsigned();
+            $table->string('brand')->nullable();
             $table->integer('supplier_id')->unsigned()->nullable();
             $table->string('sku', 200);
             $table->enum('condition', ['New', 'Used', 'Refurbished']);

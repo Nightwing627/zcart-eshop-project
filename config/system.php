@@ -47,8 +47,18 @@ return [
     |
     */
     'inventory' => [
-        'max_key_features' => 7,
+        'max_key_features' => 7, // Maximum Number of key features can be added when creating an inventory
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Pagination
+    |--------------------------------------------------------------------------
+    |
+    | Number of product will be display on the product lisitng page and search result.
+    |
+    */
+    'view_listing_per_page' => 16,
 
     /*
     |--------------------------------------------------------------------------

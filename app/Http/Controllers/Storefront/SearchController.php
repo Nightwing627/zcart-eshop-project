@@ -33,20 +33,25 @@ class SearchController extends Controller
 
         $products = $products->where('stock_quantity', '>', 0)->where('available_from', '<=', Carbon::now());
 
-        if(request()->has('free_shipping')){
+        // Attributes for filters
+        $brands = $products->pluck('brand')->unique();
+        $priceRange['min'] = floor($products->min('sale_price'));
+        $priceRange['max'] = ceil($products->max('sale_price'));
+
+        if($request->has('free_shipping')){
             $products = $products->where('free_shipping', 1);
         }
-        if(request()->has('new_arraivals')){
+        if($request->has('new_arraivals')){
             $products = $products->where('created_at', '>', Carbon::now()->subDays(config('system.filter.new_arraival', 7)));
         }
-        if(request()->has('has_offers')){
+        if($request->has('has_offers')){
             $products = $products->where('offer_price', '>', 0)
             ->where('offer_start', '<', Carbon::now())
             ->where('offer_end', '>', Carbon::now());
         }
 
-        if(request()->has('sort_by')){
-            switch (request()->get('sort_by')) {
+        if($request->has('sort_by')){
+            switch ($request->get('sort_by')) {
                 case 'newest':
                     $products = $products->sortByDesc('created_at');
                     break;
@@ -69,11 +74,27 @@ class SearchController extends Controller
             }
         }
 
-        $products = $products->paginate(3);
+        if($request->has('condition')){
+            $products = $products->whereIn('condition', array_keys($request->input('condition')));
+        }
 
-        $products->load(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type']);
+        if($request->has('price')){
+            $price = explode('-', $request->input('price'));
+            $products = $products->where('sale_price', '>=', $price[0])->where('sale_price', '<=', $price[1]);
+        }
 
-        return view('search_results', compact('products', 'category'));
+        if($request->has('brand')){
+            $products = $products->whereIn('brand', array_keys($request->input('brand')));
+        }
+
+        $products = $products->paginate(config('system.view_listing_per_page', 16));
+
+        $products->load(['product' => function($q){
+            $q->select('id')->with('categories:id,name,slug');
+        }, 'feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type']);
+
+        $categories = $products->pluck('product.categories')->flatten()->pluck('name','slug')->unique();
+
+        return view('search_results', compact('products', 'category', 'categories', 'brands', 'priceRange'));
     }
-
 }

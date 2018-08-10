@@ -301,19 +301,6 @@
             position: 'left'
         });
 
-        // price slider
-        $("#price-slider").ionRangeSlider({
-            hide_min_max: true,
-            keyboard: true,
-            min: 10,
-            max: 5000,
-            type: 'double',
-            step: 5,
-            prefix: "$",
-            grid: true
-        });
-
-
         // summernote
         $('.summernote').summernote({
             toolbar: [

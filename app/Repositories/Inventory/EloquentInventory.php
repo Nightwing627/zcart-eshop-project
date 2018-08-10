@@ -72,6 +72,8 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
 
         $commonInfo['product_id'] = $product->id;
 
+        $commonInfo['brand'] = $product->brand;
+
         $commonInfo['warehouse_id'] = $request->input('warehouse_id');
 
         $commonInfo['supplier_id'] = $request->input('supplier_id');

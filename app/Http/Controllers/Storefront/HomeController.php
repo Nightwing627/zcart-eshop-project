@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Storefront;
 
+use DB;
 use Carbon\Carbon;
 use App\Page;
 use App\Shop;
@@ -43,20 +44,29 @@ class HomeController extends Controller
      * @param  slug  $slug
      * @return \Illuminate\Http\Response
      */
-    public function browseCategory($slug, $sortby = Null)
+    public function browseCategory(Request $request, $slug, $sortby = Null)
     {
         $category = Category::where('slug', $slug)->active()->firstOrFail();
 
         // Take only available items
-        $products = $category->listings()->available()
-        ->withCount(['feedbacks', 'orders' => function($q){
-            $q->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
-        }])
-        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])
-        ->paginate(16);
+        $all_products = $category->listings()->available();
 
-        // echo "<pre>"; print_r($products->toArray()); echo "</pre>"; exit();
-        return view('category', compact('category', 'products'));
+        // Parameter for filter options
+        $brands = $all_products->pluck('brand')->unique();
+        $priceRange['min'] = floor($all_products->min('sale_price'));
+        $priceRange['max'] = ceil($all_products->max('sale_price'));
+
+        // Filter results
+        $products = $all_products->filter($request->all())
+            ->withCount(['feedbacks', 'orders' => function($query){
+                $query->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
+            }])
+            ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])
+            ->paginate(config('system.view_listing_per_page', 16))->appends($request->except('page'));
+
+            // echo "<pre>"; print_r($products->toArray()); echo "</pre>"; exit();
+
+        return view('category', compact('category', 'products', 'brands', 'priceRange'));
     }
 
     /**

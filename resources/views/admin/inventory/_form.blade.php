@@ -15,6 +15,7 @@
           $title_calsses = isset($inventory) ? 'form-control' : 'form-control makeSlug';
         @endphp
         {{ Form::hidden('product_id', $product->id) }}
+        {{ Form::hidden('brand', $product->brand) }}
 
         <div class="row">
           <div class="col-md-12">

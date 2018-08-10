@@ -1411,6 +1411,11 @@ div.datepicker > div {
   margin-left: 5px;
   color: #777;
 }
+.link-filter-opt.active,
+.category-filters-section span.small.active {
+  color: #337ab7;
+  font-weight: bold;
+}
 .cateogry-filters-list {
   list-style: none;
   margin: 0;
@@ -1427,9 +1432,9 @@ div.datepicker > div {
   color: #434343;
 }
 .category-filters-section .product-info-rating{
-    font-size: 15px;
-    line-height: 15px;
-    vertical-align: middle;
+  font-size: 18px;
+  line-height: 18px;
+  vertical-align: middle;
 }
 
 /* ==========================================================================

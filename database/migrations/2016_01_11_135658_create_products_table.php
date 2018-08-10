@@ -37,9 +37,6 @@ class CreateProductsTable extends Migration
             $table->boolean('active')->default(1);
             $table->softDeletes();
             $table->timestamps();
-
-            $table->unique( ['shop_id', 'name'] );
-
         });
 
         Schema::create('gtin_types', function (Blueprint $table) {

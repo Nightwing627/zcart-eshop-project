@@ -651,6 +651,27 @@ if ( ! function_exists('get_formated_order_number') )
     }
 }
 
+if ( ! function_exists('generate_ranges') )
+{
+    /**
+     * Return array of different ranges
+     */
+    function generate_ranges($min, $max, $number_of_ranges)
+    {
+        $range = ($max - $min) / $number_of_ranges;
+        $ranges = [];
+
+        for ($i = 0; $i < $number_of_ranges; $i++) {
+            $end = (int) ($min + $range);
+            $ranges[$i]['lower'] = $min;
+            $ranges[$i]['upper'] = $end;
+            $min = $end;
+        }
+
+        return $ranges;
+    }
+}
+
 if ( ! function_exists('get_percentage_of') )
 {
     function get_percentage_of($org_num, $new_num){

@@ -8,8 +8,9 @@ $factory->define(App\Inventory::class, function (Faker $faker) {
     return [
         'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'title' => $faker->sentence,
+        'brand' => $faker->randomElement(\DB::table('manufacturers')->pluck('name')->toArray()),
         'sku' => $faker->word,
-        'condition' => 'New',
+        'condition' => $faker->randomElement(['New','Used','Refurbished']),
         'condition_note' => $faker->realText,
         'description' => $faker->text(1500),
         'key_features' => [$faker->sentence, $faker->sentence, $faker->sentence, $faker->sentence, $faker->sentence, $faker->sentence, $faker->sentence],

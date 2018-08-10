@@ -59,7 +59,7 @@
                         {{-- <div class="product-info-desc" data-name="product_description"> {{ $item->description }} </div> --}}
                         <ul class="product-info-feature-list">
                             <li>{{ $item->condition }}</li>
-                            {{-- <li>{{ $product->product_id }}</li> --}}
+                            {{-- <li>{{ $item->manufacturer->name }}</li> --}}
                         </ul>
                     </div><!-- /.product-info -->
                 </div><!-- /.product -->
