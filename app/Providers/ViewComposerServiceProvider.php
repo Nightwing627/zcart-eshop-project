@@ -92,6 +92,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeOrderUpdateForm();
 
+        $this->composePageForm();
+
         $this->composePlatformKpi();
 
         $this->composeProductForm();
@@ -796,6 +798,23 @@ class ViewComposerServiceProvider extends ServiceProvider
                     $view->with('packagings', ListHelper::packagings());
                     $view->with('payment_methods', optional($config->paymentMethods)->pluck('name', 'id'));
                 });
+    }
+
+    /**
+     * compose page create form
+     */
+    private function composePageForm()
+    {
+        View::composer(
+
+            'admin.page._form',
+
+            function($view)
+            {
+                $view->with([
+                    'positions' => ListHelper::page_positions(),
+                ]);
+            });
     }
 
     /**

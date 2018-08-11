@@ -61,6 +61,7 @@ class Page extends Model
                     'slug',
                     'content',
                     'published_at',
+                    'position',
                     'visibility',
                 ];
 
@@ -82,6 +83,16 @@ class Page extends Model
     }
 
     /**
+     * Scope a query to only include published blogs.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePublished($query)
+    {
+        return $query->whereNotNull('published_at')->where('published_at', '<', Carbon::now());
+    }
+
+    /**
      * Scope a query to only include records that have the given visibility.
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -89,6 +100,17 @@ class Page extends Model
     public function scopeVisibilityOf($query, $visibility)
     {
         return $query->where('visibility', $visibility);
+    }
+
+    public function viewPosition()
+    {
+        switch ($this->position) {
+            case 'copyright_area'    : return trans("app.copyright_area");
+            case 'footer_1st_column' : return trans("app.footer_1st_column");
+            case 'footer_2nd_column' : return trans("app.footer_2nd_column");
+            case 'footer_3rd_column' : return trans("app.footer_3rd_column");
+            case 'main_nav'          : return trans("app.main_nav");
+        }
     }
 
     public function visibilityName()

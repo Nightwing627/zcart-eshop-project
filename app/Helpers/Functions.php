@@ -67,6 +67,23 @@ if ( ! function_exists('get_site_title') )
     }
 }
 
+if ( ! function_exists('get_social_media_links') )
+{
+    /**
+     * Return social_media_links
+     */
+    function get_social_media_links()
+    {
+        $media = ['facebook','twitter','google_plus','pinterest','instagram','youtube'];
+        $links = [];
+        foreach ($media as $value) {
+            if ($link = config('system_settings.'.$value.'_link'))
+                $links[str_replace('_', '-', $value)] = $link;
+        }
+        return $links;
+    }
+}
+
 if ( ! function_exists('get_shop_url') )
 {
     /**

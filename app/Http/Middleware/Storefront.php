@@ -33,6 +33,7 @@ class Storefront
             View::share('search_category_list', ListHelper::search_categories());
             View::share('recently_viewed_items', ListHelper::recentlyViewedItems());
             View::share('featured_categories', ListHelper::hot_categories());
+            View::share('pages', ListHelper::pages(\App\Page::VISIBILITY_PUBLIC));
         }
 
         return $next($request);

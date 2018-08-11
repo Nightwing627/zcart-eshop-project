@@ -592,6 +592,7 @@ return [
     'go_to_msg_inbox' => 'See All Messages',
     'view_all_notifications' => 'View all notifications',
     'shop_now' => 'Shop now',
+    'view_position' => 'View position',
 
     'move' => 'Move',
     'public' => 'Public',
@@ -716,6 +717,11 @@ return [
     'settings' => 'Settings',
     'expired_at' => 'Expired at',
     'in_use' => 'In use',
+    'main_nav' => 'Main navbar',
+    'footer_1st_column' => 'Footer 1st column',
+    'footer_2nd_column' => 'Footer 2nd column',
+    'footer_3rd_column' => 'Footer 3rd column',
+    'copyright_area'    => 'Copyright area',
 
 
     'message' => 'Message',
@@ -1088,6 +1094,7 @@ return [
         'faq_question' => 'Question',
         'faq_answer' => 'Answer',
         'topic' => 'Topic',
+        'view_area' => 'View position',
 
         // Filter
         'by_customer' => 'By customer',

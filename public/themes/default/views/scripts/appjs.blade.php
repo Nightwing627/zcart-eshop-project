@@ -79,7 +79,6 @@
             e.preventDefault();
             var url = $(this).attr('href');
             $.get(url, function(data) {
-                console.log(data);
                 $('#quickViewModal').modal().html(data);
 
                 //Initialize application plugins after ajax load the content
@@ -341,6 +340,80 @@
                 $(this).next(".product-info-qty-input").val(currentVal - 1);
         });
         // END Product qty field
+    }
+
+    // Filters
+    $("#price-slider").ionRangeSlider({
+        hide_min_max: true,
+        keyboard: true,
+        min: {{ $priceRange['min'] ?? 0 }},
+        max: {{ $priceRange['max'] ?? 5000 }},
+        from: {{ Request::get('price') ? explode('-', Request::get('price'))[0] : $priceRange['min'] ?? 0 }},
+        to: {{ Request::get('price') ? explode('-', Request::get('price'))[1] : $priceRange['max'] ?? 5000 }},
+        step: 10,
+        type: 'double',
+        prefix: "{{ get_formated_currency_symbol() ?? '$'}}",
+        grid: true,
+        onFinish: function (data) {
+            var href = removeQueryStringParameter(window.location.href, 'price'); //Remove currect price
+            window.location.href = getFormatedUrlStr(href, 'price='+ data.from + '-' + data.to);
+        },
+    });
+
+    $('#filter_opt_sort').on('change', function(){
+        var opt = $(this).attr('name');
+        var href = removeQueryStringParameter(window.location.href, opt); //Remove currect sorting
+        opt = opt + '=' + $(this).val();
+        window.location.href = getFormatedUrlStr(href, opt);
+    });
+    $('.filter_opt_checkbox').on('ifChecked', function() {
+        var opt = $(this).attr('name') + '=true';
+        window.location.href = getFormatedUrlStr(window.location.href, opt);
+    });
+    $('.filter_opt_checkbox').on('ifUnchecked', function() {
+        var opt = $(this).attr('name');
+        var href = removeQueryStringParameter(window.location.href, 'page'); //Reset the pagination
+        window.location.href = removeQueryStringParameter(href, opt);
+    });
+
+    $('.link-filter-opt').on('click', function(e){
+        e.preventDefault();
+        var opt = $(this).data('name');
+        var href = removeQueryStringParameter(window.location.href, opt); //Remove currect filter
+        window.location.href = getFormatedUrlStr(href, opt+'='+ $(this).data('value'));
+    });
+
+    $('.clear-filter').on('click', function(e){
+        e.preventDefault();
+        window.location.href = removeQueryStringParameter(window.location.href, $(this).data('name')); //Remove the filter
+    });
+
+    // Helper functions
+    function getFormatedUrlStr(sourceURL, opt) {
+        var url = removeQueryStringParameter(sourceURL, 'page'); //Reset the pagination;
+
+        if(url.indexOf('?') !== -1)
+            return url + '&' + opt;
+
+        return url + '?' + opt;
+    }
+
+    function removeQueryStringParameter(sourceURL, key) {
+        var rtn = sourceURL.split("?")[0],
+            param,
+            params_arr = [],
+            queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+        if (queryString !== "") {
+            params_arr = queryString.split("&");
+            for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+                param = params_arr[i].split("=")[0];
+                if (param === key) {
+                    params_arr.splice(i, 1);
+                }
+            }
+            rtn = rtn + "?" + params_arr.join("&");
+        }
+        return rtn;
     }
 }(window.jQuery, window, document));
 </script>

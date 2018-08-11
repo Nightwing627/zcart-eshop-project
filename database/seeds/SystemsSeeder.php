@@ -48,6 +48,14 @@ class SystemsSeeder extends Seeder
             // 'merchant_can_have_own_carriers' => 1,
             // 'merchant_can_have_own_gift_cards' => 1,
 
+            // Social media
+            'facebook_link' => 'https://www.facebook.com/',
+            'twitter_link' => 'https://twitter.com/',
+            'google_plus_link' => 'https://plus.google.com/',
+            'pinterest_link' => 'https://www.pinterest.com/',
+            'instagram_link' => 'https://www.instagram.com/',
+            'youtube_link' => 'https://www.youtube.com/',
+
             // Address Defults
             'address_show_map' => 1,
             'address_default_country' => 840, //Country id

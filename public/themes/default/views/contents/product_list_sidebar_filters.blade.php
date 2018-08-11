@@ -58,33 +58,31 @@
     @endunless
 
     {{-- price --}}
-    @if($products->count())
-        <div class="category-filters-section">
-            <h3>@lang('theme.price')
-                @if(Request::has('price'))
-                    <a href="#" data-name="price" class="clear-filter small text-lowercase pull-right">@lang('theme.button.clear')</a>
-                @endif
-            </h3>
-            <ul class="cateogry-filters-list space20">
-                @foreach(generate_ranges($priceRange['min'], $priceRange['max'], 5) as $ranges)
-                    <li>
-                        <a href="#" data-name="price" data-value="{{$ranges['lower'].'-'.$ranges['upper']}}" class="link-filter-opt {{ Request::get('price') == $ranges['lower'].'-'.$ranges['upper'] ? 'active' : '' }}">
-                            @if($loop->first)
-                                {{ trans('theme.price_under', ['value' => get_formated_currency($ranges['upper'])]) }}
-                            @elseif($loop->last)
-                                {{ trans('theme.price_above', ['value' => get_formated_currency($ranges['lower'])]) }}
-                            @else
-                                <span class="text-lowercase">
-                                    {{ get_formated_currency($ranges['lower']) . ' ' . trans('theme.to') . ' ' . get_formated_currency($ranges['upper']) }}
-                                </span>
-                            @endif
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-            <input type="text" id="price-slider" />
-        </div>
-    @endif
+    <div class="category-filters-section">
+        <h3>@lang('theme.price')
+            @if(Request::has('price'))
+                <a href="#" data-name="price" class="clear-filter small text-lowercase pull-right">@lang('theme.button.clear')</a>
+            @endif
+        </h3>
+        <ul class="cateogry-filters-list space20">
+            @foreach(generate_ranges($priceRange['min'], $priceRange['max'], 5) as $ranges)
+                <li>
+                    <a href="#" data-name="price" data-value="{{$ranges['lower'].'-'.$ranges['upper']}}" class="link-filter-opt {{ Request::get('price') == $ranges['lower'].'-'.$ranges['upper'] ? 'active' : '' }}">
+                        @if($loop->first)
+                            {{ trans('theme.price_under', ['value' => get_formated_currency($ranges['upper'])]) }}
+                        @elseif($loop->last)
+                            {{ trans('theme.price_above', ['value' => get_formated_currency($ranges['lower'])]) }}
+                        @else
+                            <span class="text-lowercase">
+                                {{ get_formated_currency($ranges['lower']) . ' ' . trans('theme.to') . ' ' . get_formated_currency($ranges['upper']) }}
+                            </span>
+                        @endif
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+        <input type="text" id="price-slider" />
+    </div>
 
     {{-- brand --}}
     <div class="category-filters-section">

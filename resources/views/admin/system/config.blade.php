@@ -713,6 +713,19 @@
 									  	</div>
 									</div>
 									<div class="form-group">
+								        {!! Form::label('instagram_link', trans('app.instagram_link'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+									  	<div class="col-sm-6 nopadding-left">
+									  		@if($can_update)
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="fa fa-instagram"></i></span>
+													{!! Form::text('instagram_link', $system->instagram_link, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.instagram_link')]) !!}
+										    	</div>
+											@else
+												<span>{{ $system->instagram_link }}</span>
+											@endif
+									  	</div>
+									</div>
+									<div class="form-group">
 								        {!! Form::label('youtube_link', trans('app.youtube_link'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
 									  	<div class="col-sm-6 nopadding-left">
 									  		@if($can_update)

@@ -3,8 +3,10 @@
 namespace App\Helpers;
 
 use Auth;
+use Carbon\Carbon;
 use App\User;
 use App\Role;
+use App\Page;
 use App\Shop;
 use App\Order;
 use App\Module;
@@ -25,8 +27,6 @@ use App\PaymentMethod;
 use App\CategoryGroup;
 use App\CategorySubGroup;
 // use App\SubscriptionPlan;
-
-use Carbon\Carbon;
 
 /**
 * This is a helper class to process,upload and remove images from different models
@@ -83,14 +83,6 @@ class ListHelper
         ];
     }
 
-    public static function faq_topics_for()
-    {
-        return  [
-            'Merchant'    => trans("app.merchants"),
-            'Customer'    => trans("app.customers"),
-        ];
-    }
-
     /**
      * Get dispute statuses list for form dropdown.
      *
@@ -123,6 +115,30 @@ class ListHelper
             Refund::STATUS_NEW      => trans("app.statuses.new"),
             Refund::STATUS_APPROVED  => trans("app.statuses.approved"),
             Refund::STATUS_DECLINED => trans("app.statuses.declined"),
+        ];
+    }
+
+    public static function faq_topics_for()
+    {
+        return  [
+            'Merchant'    => trans("app.merchants"),
+            'Customer'    => trans("app.customers"),
+        ];
+    }
+
+    /**
+     * Get page positions list for form dropdown.
+     *
+     * @return array
+     */
+    public static function page_positions()
+    {
+        return  [
+            'copyright_area'    => trans("app.copyright_area"),
+            'footer_1st_column' => trans("app.footer_1st_column"),
+            'footer_2nd_column' => trans("app.footer_2nd_column"),
+            'footer_3rd_column' => trans("app.footer_3rd_column"),
+            'main_nav'           => trans("app.main_nav"),
         ];
     }
 
@@ -919,7 +935,7 @@ class ListHelper
      */
     public static function featured_categories()
     {
-        return \DB::table('categories')->whereNotNull('featured')->pluck('name', 'id');
+        return \DB::table('categories')->whereNull('deleted_at')->whereNotNull('featured')->pluck('name', 'id');
     }
 
     /**
@@ -927,7 +943,18 @@ class ListHelper
      */
     public static function hot_categories()
     {
-        return \DB::table('categories')->select('id','name','slug')->whereNotNull('featured')->get();
+        return \DB::table('categories')->select('id','name','slug')->whereNull('deleted_at')->whereNotNull('featured')->get();
+    }
+
+    /**
+     * Get pages list for theme.
+     */
+    public static function pages($visibility = Null)
+    {
+        if($visibility)
+            return Page::select('title','slug','position')->published()->visibilityOf($visibility)->get();
+
+        return Page::select('title','slug','position')->published()->get();
     }
 
     /**

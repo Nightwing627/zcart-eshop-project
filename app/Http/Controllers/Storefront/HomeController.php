@@ -167,7 +167,7 @@ class HomeController extends Controller
     {
         $shop = Shop::select('id','name','slug','description')->where('slug', $slug)->firstOrFail();
 
-        $products = Inventory::where('shop_id', $shop->id)
+        $products = Inventory::where('shop_id', $shop->id)->filter(request()->all())
         ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])
         ->withCount(['orders' => function($q){
             $q->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
@@ -189,7 +189,7 @@ class HomeController extends Controller
 
         $ids = Product::where('manufacturer_id', $brand->id)->pluck('id');
 
-        $products = Inventory::whereIn('product_id', $ids)
+        $products = Inventory::whereIn('product_id', $ids)->filter(request()->all())
         ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])
         ->withCount(['orders' => function($q){
             $q->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
