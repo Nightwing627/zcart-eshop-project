@@ -16,7 +16,7 @@ class CreateFeedbacksTable extends Migration
         Schema::create('feedbacks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('customer_id')->unsigned();
-            $table->integer('rating')->nullable();
+            $table->tinyInteger('rating')->nullable();
             $table->longtext('comment')->nullable();
             $table->bigInteger('feedbackable_id')->unsigned();
             $table->string('feedbackable_type');

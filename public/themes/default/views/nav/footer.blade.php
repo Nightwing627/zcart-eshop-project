@@ -4,8 +4,13 @@
     <div class="col-xs-12 col-sm-12 col-md-5">
       <div class="footer-subscribe-form">
         <h3>@lang('theme.subscription')</h3>
-        <input class="footer-subscribe-input" data-role="input" placeholder="@lang('theme.placeholder.email')" type="email"><input class="footer-subscribe-submit" data-role="submit" type="submit" value="Subscribe">
-        <div class="email-error-tips"></div>
+        {!! Form::open(['route' => 'newsletter.subscribe', 'class' => 'form-inline', 'id' => 'form', 'data-toggle' => 'validator']) !!}
+          <div class="form-group">
+            <input name="email" class="footer-subscribe-input" placeholder="@lang('theme.placeholder.email')" type="email" required>
+            <button class="footer-subscribe-submit" type="submit">@lang('theme.button.subscribe')</button>
+            <div class="help-block with-errors"></div>
+          </div>
+        {!! Form::close() !!}
 
         <p class="tips">@lang('theme.help.subscribe_to_newsletter')</p>
       </div>
@@ -45,6 +50,7 @@
         @foreach($pages->where('position', 'footer_2nd_column') as $page)
           <li><a href="{{ get_page_url($page->slug) }}" rel="nofollow" target="_blank">{{ $page->title }}</a></li>
         @endforeach
+        <li><a href="{{ url('/selling#faqs') }}" rel="nofollow">@lang('theme.nav.faq')</a></li>
       </ul>
     </div>
 

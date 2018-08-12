@@ -5,18 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title> {{ get_site_title() }} </title>
+        <title> {{ get_platform_title() }} </title>
 
-        <!-- Custom Fonts -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-        <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
-
-        <!-- Bootstrap Core CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <!-- Theme CSS -->
+        <link href="{{ selling_theme_asset_url('css/vendor.css') }}" rel="stylesheet">
         <link href="{{ selling_theme_asset_url('css/agency.css') }}" rel="stylesheet">
         <link href="{{ selling_theme_asset_url('css/style.css') }}" rel="stylesheet">
 
@@ -71,53 +63,17 @@
                     </div>
                     <div class="col-md-4 text-center">
                         <span class="copyright">
-                            © {{ date('Y') }} Copyright
-                            <a href="{{ url('/') }}"> {{ get_platform_title() }} </a>
+                            © {{ date('Y') }} <a href="{{ url('/') }}">{{ get_platform_title() }}</a>
                         </span>
                     </div>
                     <div class="col-md-4 ">
-                        <ul class="list-inline social-buttons pull-right">
-                            <!--Facebook-->
-                            @if(config('system_settings.facebook_link'))
-                                <li>
-                                    <a href="{{ config('system_settings.facebook_link') }}" target="_blank">
-                                        <i class="fa fa-facebook"> </i>
-                                    </a>
-                                </li>
-                            @endif
-                            <!--google-plus-->
-                            @if(config('system_settings.google_plus_link'))
-                                <li>
-                                    <a href="{{ config('system_settings.google_plus_link') }}" target="_blank">
-                                        <i class="fa fa-google-plus"> </i>
-                                    </a>
-                                </li>
-                            @endif
-                            <!--Twitter-->
-                            @if(config('system_settings.twitter_link'))
-                                <li>
-                                    <a href="{{ config('system_settings.twitter_link') }}" target="_blank">
-                                        <i class="fa fa-twitter"> </i>
-                                    </a>
-                                </li>
-                            @endif
-                            <!--Pinterest-->
-                            @if(config('system_settings.pinterest_link'))
-                                <li>
-                                    <a href="{{ config('system_settings.pinterest_link') }}" target="_blank">
-                                        <i class="fa fa-pinterest"> </i>
-                                    </a>
-                                </li>
-                            @endif
-                            <!--youtube-->
-                            @if(config('system_settings.youtube_link'))
-                                <li>
-                                    <a href="{{ config('system_settings.youtube_link') }}" target="_blank">
-                                        <i class="fa fa-youtube"> </i>
-                                    </a>
-                                </li>
-                            @endif
-                        </ul>
+                        @if($social_media_links = get_social_media_links())
+                            <ul class="list-inline social-buttons pull-right">
+                                @foreach($social_media_links as $social_media => $link)
+                                    <li><a href="{{$link}}" target="_blank"><i class="fa fa-{{$social_media}}"></i></a></li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </div>
                 </div>
             </div>

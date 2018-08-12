@@ -211,12 +211,14 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Page  $page
+     * @param  str  $slug
      * @return \Illuminate\Http\Response
      */
-    public function openPage(Page $page)
+    public function openPage($slug)
     {
-    	return $page;
+        $page = Page::where('slug', $slug)->firstOrFail();
+
+        return view('page', compact('page'));
     }
 
     /**

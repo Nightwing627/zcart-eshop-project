@@ -1,7 +1,6 @@
 //Theme JavaScript
-"use strict";
-
 ;(function($, window, document) {
+    "use strict";
     $(document).ready(function(){
         $.ajaxSetup ({
             cache: false,
@@ -31,8 +30,8 @@
             var form = $("form#contactForm");
             var data = form.serialize();
 
-            $submmitBtn = $("button[type=submit]");
-            $submmitBtn.prop("disabled", true); // Disable submit button until AJAX call is complete to prevent duplicate messages
+            var submmitBtn = $("button[type=submit]");
+            submmitBtn.prop("disabled", true); // Disable submit button until AJAX call is complete to prevent duplicate messages
             $.ajax({
                 url: form.attr("action"),
                 type: "POST",
@@ -60,7 +59,7 @@
                 complete: function(xhr, textStatus) {
                   $('#contactForm').trigger("reset"); //clear all fields
                   setTimeout(function() {
-                    $submmitBtn.prop("disabled", false); // Re-enable submit button when AJAX call is complete
+                    submmitBtn.prop("disabled", false); // Re-enable submit button when AJAX call is complete
                   }, 1000);
                 }
             });

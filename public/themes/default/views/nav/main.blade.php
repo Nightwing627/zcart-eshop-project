@@ -142,7 +142,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ route('account', 'wishlist') }}" class="navbar-item-mergin-top"><i class="fa fa-heart-o hidden-xs"></i> {{ trans('theme.nav.wishlist') }}</a>
         </li>
-        <li><a href="{{ route('support.contact_us') }}" class="navbar-item-mergin-top">{{ trans('theme.nav.support') }}</a>
+        <li><a href="{{ get_page_url(\App\Page::PAGE_CONTACT_US) }}" class="navbar-item-mergin-top" target="_blank">{{ trans('theme.nav.support') }}</a>
         </li>
         <li class="dropdown">
           <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">

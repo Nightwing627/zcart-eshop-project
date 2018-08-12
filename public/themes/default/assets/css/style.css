@@ -2710,6 +2710,13 @@ ul.key_feature_list li{
     background-color: #e62e04;
     font-family: arial;
 }
+.footer-subscribe-input:active,
+.footer-subscribe-input:focus,
+.footer-subscribe-submit:active,
+.footer-subscribe-submit:focus {
+    outline: 0 !important;
+    outline-offset: 0  !important;
+}
 .footer-subscribe-form .tips {
     margin: 10px 0 0 0;
     font-size: 12px;
@@ -2759,7 +2766,6 @@ ul.footer-social-list{
   background: #282828;
   text-decoration: none;
 }
-
 .footer-link-list {
     padding-left: 0px;
     margin-bottom: 10px;
@@ -2825,6 +2831,20 @@ ul.footer-social-list{
   opacity: 1;
   -ms-filter: none;
   filter: none;
+}
+
+.contact-info .media,
+.contact-info .media .media-body h4 {
+  color: #333;
+  font-size: 17px!important;
+  font-weight: lighter!important;
+  letter-spacing: 1px;
+}
+.contact-info .media>.pull-left {
+  padding-right: 5px;
+}
+.contact-info .media .media-body h4{
+  margin-top: 0px;
 }
 
 /* Coupon Cards */

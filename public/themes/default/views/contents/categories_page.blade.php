@@ -8,7 +8,7 @@
         @if($categoryGroup->subGroups->count())
           <div class="col-md-3 col-sm-6 bg-light category-widget space30">
             <section class="category-banner-img-wrapper">
-              <div class="banner banner-o-hid" style="background-color: #333; background-image:url( {{ get_category_img_src($categoryGroup) }} );">
+              <div class="banner banner-o-hid" style="background-color: #333; background-image:url( {{ get_cover_img_src($categoryGroup, 'category') }} );">
                 <div class="banner-caption">
                   <span class="lead">{{ $categoryGroup->name }}</span>
                 </div>

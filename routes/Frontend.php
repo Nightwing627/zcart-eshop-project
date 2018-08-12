@@ -1,15 +1,15 @@
 <?php
-// Open pages
-Route::get('page/{page}', 'Storefront\HomeController@openPage')->name('page.open');
-
 // Route for storefront
 Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], function(){
+	Route::post('newsletter', 'NewsletterController@subscribe')->name('newsletter.subscribe');
+
    // Auth route for customers
 	include('storefront/Auth.php');
 	include('storefront/Cart.php');
 	include('storefront/GiftCard.php');
 
 	Route::get('/', 'HomeController@index')->name('homepage');
+	Route::get('page/{page}', 'HomeController@openPage')->name('page.open');
 	Route::get('product/{slug}', 'HomeController@product')->name('show.product');
 	Route::get('product/{slug}/quickView', 'HomeController@quickViewItem')->name('quickView.product')->middleware('ajax');
 	Route::get('product/{slug}/offers', 'HomeController@offers')->name('show.offers');
@@ -18,7 +18,6 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 	Route::get('shop/{slug}', 'HomeController@shop')->name('show.store');
 	Route::get('brand/{slug}', 'HomeController@brand')->name('show.brand');
 	Route::get('search', 'SearchController@search')->name('inCategoriesSearch');
-	Route::get('support/contact', 'ContactUsController@show_contact_form')->name('support.contact_us');
 
 	Route::middleware(['auth:customer'])->group(function () {
 		include('storefront/Account.php');

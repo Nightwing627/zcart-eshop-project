@@ -29,20 +29,6 @@ class Page extends Model
     protected $table = 'pages';
 
     /**
-     * The database primary key used by the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'slug';
-
-    /**
-     * The primanry key is not incrementing
-     *
-     * @var boolean
-     */
-    public $incrementing = false;
-
-    /**
      * The attributes that should be mutated to dates.
      *
      * @var array

@@ -372,14 +372,14 @@ if ( ! function_exists('get_product_img_src') )
     }
 }
 
-if ( ! function_exists('get_category_img_src') )
+if ( ! function_exists('get_cover_img_src') )
 {
-    function get_category_img_src($category)
+    function get_cover_img_src($model, $type = 'category')
     {
-        if(isset($category->image->path) && Storage::exists($category->image->path))
-            return get_storage_file_url($category->image->path, 'medium');
+        if(isset($model->image->path) && Storage::exists($model->image->path))
+            return get_storage_file_url($model->image->path, 'cover');
         else
-            return asset('images/demo/category_cover.jpg');
+            return asset('images/demo/'. $type .'_cover.jpg');
     }
 }
 
