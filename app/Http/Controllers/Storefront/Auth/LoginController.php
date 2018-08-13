@@ -80,7 +80,15 @@ class LoginController extends Controller
     public function handleProviderCallback(Request $request, $provider)
     {
         try {
-            $user = Socialite::driver($provider)->stateless()->user();
+
+            if('twitter' == $provider){
+                $user = Socialite::driver('twitter')->user($request->oauth_token);
+                $user = Socialite::driver('twitter')->userFromTokenAndSecret($user->token, $user->secret);
+            }
+            else{
+                $user = Socialite::driver($provider)->stateless()->user();
+            }
+
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = json_decode($e->getResponse()->getBody()->getContents(), true);
 
@@ -91,6 +99,7 @@ class LoginController extends Controller
         $customer = Customer::where('email', $user->email)->first();
         if ($customer){
             Auth::guard('customer')->login($customer);
+
             return redirect()->intended('/')->with('success', trans('theme.notify.logged_in_successfully'));
         }
 
@@ -98,7 +107,6 @@ class LoginController extends Controller
         $customer->name = $user->getName();
         $customer->nice_name = $user->getNickname();
         $customer->email = $user->getEmail();
-        $customer->password = 123123;
         $customer->save();
 
         $customer->saveImageFromUrl($user->avatar_original ?? $user->getAvatar());
@@ -106,12 +114,6 @@ class LoginController extends Controller
         Auth::guard('customer')->login($customer);
 
         return redirect()->intended('/')->with('success', trans('theme.notify.logged_in_successfully'));
-
-
-        // return view('auth.register', [
-        //     'name' => $user->name,
-        //     'email' => $user->email,
-        // ])->with('success', trans('theme.notify.authentication_successful'));
     }
 
     /**

@@ -11,9 +11,9 @@
    ========================================================================== */
 
 html {
-    color: #222;
-    font-size: 1em;
-    line-height: 1.4;
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4;
 }
 
 /*
@@ -119,6 +119,11 @@ a {
     color: #0066c0;
     transition: .4s;
     text-decoration: none;
+}
+a:focus {
+  outline: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
 }
 ul, li {
     margin: 0;
@@ -646,10 +651,13 @@ div.datepicker > div {
   color: #ccc;
 }
 .btn-facebook{
-    background-color: #3b5998;
+  background-color: #3b5998;
 }
 .btn-google {
-    background-color: #dd4b39;
+  background-color: #dd4b39;
+}
+.btn-twitter{
+  background-color: #55acee;
 }
 
 /* ==========================================================================

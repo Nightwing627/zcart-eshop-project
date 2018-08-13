@@ -30,11 +30,16 @@ class SelfPasswordUpdateRequest extends Request
             return Hash::check($value, Auth::guard('customer')->user()->password);
         });
 
-        return [
-            'current_password' =>  'required|check_current_password',
-            'password' =>  'required|confirmed|min:6',
-            'password_confirmation' => 'required',
-        ];
+        $rules = [];
+
+        // Current password is required if it set
+        if(Auth::guard('customer')->user()->password)
+            $rules['current_password'] =  'required|check_current_password';
+
+        $rules['password'] =  'required|confirmed|min:6';
+        $rules['password_confirmation'] = 'required';
+
+        return $rules;
     }
 
    /**

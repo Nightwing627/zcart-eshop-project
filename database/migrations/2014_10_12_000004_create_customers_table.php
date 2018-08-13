@@ -17,7 +17,7 @@ class CreateCustomersTable extends Migration
             $table->string('name');
             $table->string('nice_name')->nullable();
             $table->string('email')->unique();
-            $table->string('password', 60);
+            $table->string('password', 60)->nullable();
             $table->date('dob')->nullable();
             $table->string('sex')->nullable();
             $table->longtext('description')->nullable();

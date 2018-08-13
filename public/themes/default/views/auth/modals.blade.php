@@ -40,7 +40,11 @@
               <a href="{{ route('customer.login.social', 'facebook') }}" class="btn btn-block btn-social btn-facebook btn-lg flat"><i class="fa fa-facebook"></i> {{ trans('theme.button.login_with_fb') }}</a>
             </div>
             <div class="col-md-6 nopadding-left">
-              <a href="#" class="btn btn-block btn-social btn-google btn-lg flat"><i class="fa fa-google"></i> {{ trans('theme.button.login_with_g') }}</a>
+              <a href="{{ route('customer.login.social', 'twitter') }}" class="btn btn-block btn-social btn-twitter btn-lg flat"><i class="fa fa-twitter"></i> {{ trans('app.sing_in_with_twitter') }}</a>
+            </div>
+            <div class="clearfix space10"></div>
+            <div class="col-md-12">
+              <a href="{{ route('customer.login.social', 'google') }}" class="btn btn-block btn-social btn-google btn-lg flat"><i class="fa fa-google"></i> {{ trans('theme.button.login_with_g') }}</a>
             </div>
           </div>
         </div>

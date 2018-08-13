@@ -26,6 +26,7 @@ class AccountController extends Controller
      */
     public function index($tab = 'dashboard')
     {
+        // Auth::guard('customer')->loginUsingId(33);
         if( ! method_exists($this, $tab) )
             abort(404);
 

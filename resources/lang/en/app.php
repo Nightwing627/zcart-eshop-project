@@ -770,6 +770,7 @@ return [
 
     'sing_in_with_fb' => 'Sign in using Facebook',
     'sing_in_with_google' => 'Sign in using Google',
+    'sing_in_with_twitter' => 'Sign in using twitter',
 
     'payment_method_type' => [
         'paypal' => [

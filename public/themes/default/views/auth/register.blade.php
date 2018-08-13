@@ -51,7 +51,8 @@
 
             <div class="social-auth-links text-center">
                 <a href="{{ route('customer.login.social', 'facebook') }}" class="btn btn-block btn-social btn-facebook btn-lg btn-flat"><i class="fa fa-facebook"></i> {{ trans('app.sing_in_with_fb') }}</a>
-                <a href="#" class="btn btn-block btn-social btn-google btn-lg btn-flat"><i class="fa fa-google"></i> {{ trans('app.sing_in_with_google') }}</a>
+                <a href="{{ route('customer.login.social', 'twitter') }}" class="btn btn-block btn-social btn-twitter btn-lg btn-flat"><i class="fa fa-twitter"></i> {{ trans('app.sing_in_with_twitter') }}</a>
+                <a href="{{ route('customer.login.social', 'google') }}" class="btn btn-block btn-social btn-google btn-lg btn-flat"><i class="fa fa-google"></i> {{ trans('app.sing_in_with_google') }}</a>
             </div>
 
             <a href="{{ route('customer.login') }}" class="btn btn-link">{{ trans('app.form.have_an_account') }}</a>
