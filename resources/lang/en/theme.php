@@ -361,6 +361,8 @@ return [
 		'address_deleted' => 'Address deleted successfully!',
 		'already_subscribed' => 'Cool! You have already subscribed!',
 		'are_you_sure' => 'Are you sure you want to do this?',
+		'authentication_failed' => 'Ooops! Authentication failed. :msg',
+		'authentication_successful' => 'Cool! Authentication successful. Create you account.',
 	    'canceled'  => 'Canceled!',
     	'confirmed' => 'Confirmed',
 		'cart_updated' => 'Cart updated',

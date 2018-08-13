@@ -41,4 +41,16 @@ return [
         'secret' => env('NEXMO_SECRET'),
         'sms_from' => '15556666666',
     ],
+
+    'facebook' => [
+        'client_id'     => env('FB_CLIENT_ID'),
+        'client_secret' => env('FB_CLIENT_SECRET'),
+        'redirect'      => env('FB_REDIRECT_URL'),
+    ],
+
+    'twitter' => [
+        'client_id'     => env('TWITTER_CLIENT_ID'),
+        'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'redirect'      => env('TWITTER_URL'),
+    ],
 ];
