@@ -45,7 +45,7 @@
 
       <li class="dropdown" id="smartcart">
         <a href="{{ route('cart.index') }}">
-          <span >{{ trans('theme.your_cart') }}</span><i class="fa fa-shopping-bag"></i> <div class="sc-cart-count badge"></div>
+          <span>{{ trans('theme.your_cart') }}</span><i class="fa fa-shopping-bag"></i> <div class="sc-cart-count badge"></div>
         </a>
         <div class="dropdown-menu">
           <ul class="sc-cart-item-list nav-dropdown-cart">
@@ -56,17 +56,19 @@
               <span class="sc-cart-subtotal pull-right"></span>
             </div>
             <div class="space20"></div>
-            <p>
-              {{-- <div class="btn-group"> --}}
-                {{-- <button class="btn nopadding-left btn-link confirm sc-cart-clear"><i class="fa fa-trash fa-fw" data-toggle="tooltip" title="{{ trans('theme.button.clear') }}"></i></button> --}}
-                {{-- <button class="sc-cart-checkout btn flat btn-primary pull-right" type="button"><i class="fa fa-bolt fa-fw"></i> {{ trans('theme.button.quick_checkout') }}</button> --}}
-                <a href="{{ route('cart.index') }}" class="btn flat btn-primary cart-open-btn "><i class="fa fa-shopping-cart fa-fw"></i> {{ trans('theme.button.checkout') }}</a>
-              {{-- </div> --}}
-            </p>
-            <div class="space20"></div>
+            <div class="row">
+              <div class="col-md-12">
+                {{-- <div class="btn-group"> --}}
+                  {{-- <button class="btn nopadding-left btn-link confirm sc-cart-clear"><i class="fa fa-trash fa-fw" data-toggle="tooltip" title="{{ trans('theme.button.clear') }}"></i></button> --}}
+                  <button class="sc-cart-checkout btn flat btn-primary pull-right" type="button"><i class="fa fa-shopping-cart fa-fw"></i> {{ trans('theme.button.checkout') }}</button>
+                  {{-- <a href="{{ route('cart.index') }}" class="btn flat btn-primary cart-open-btn sc-cart-checkout"><i class="fa fa-shopping-cart fa-fw"></i> {{ trans('theme.button.checkout') }}</a> --}}
+                {{-- </div> --}}
+              </div>
+            </div>
+            <div class="space10"></div>
           </div><!-- /.sc-toolbar -->
 
-          {!! Form::open(['route' => 'checkout', 'id' => 'checkoutForm']) !!}
+          {!! Form::open(['route' => 'cart.index', 'id' => 'checkoutForm']) !!}
               {{-- Data will be appended automatically via js --}}
           {!! Form::close() !!}
         </div><!-- /.dropdown-manu -->

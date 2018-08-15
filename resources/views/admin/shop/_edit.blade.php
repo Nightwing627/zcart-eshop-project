@@ -62,33 +62,63 @@
             </div>
 
             <div class="form-group">
-              <label for="exampleInputFile">{{ trans('app.form.logo') }}</label>
-              @if(isset($shop) && $shop->image)
-              <label>
-                <img src="{{ get_storage_file_url($shop->image->path, 'small') }}" alt="{{ trans('app.logo') }}">
-                <span style="margin-left: 10px;">
-                  {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
-                </span>
-              </label>
-              @endif
-
-              <div class="row">
-                <div class="col-md-9 nopadding-right">
-                  <input id="uploadFile" placeholder="{{ trans('app.placeholder.logo') }}" class="form-control" disabled="disabled" style="height: 28px;" />
-                </div>
-                <div class="col-md-3 nopadding-left">
-                  <div class="fileUpload btn btn-primary btn-block btn-flat">
-                    <span>{{ trans('app.form.upload') }}</span>
-                    <input type="file" name="image" id="uploadBtn" class="upload" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
               {!! Form::label('description', trans('app.form.description'), ['class' => 'with-help']) !!}
               <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.shop_description') }}"></i>
               {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'placeholder' => trans('app.placeholder.description')]) !!}
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 nopadding-right">
+                <div class="form-group">
+                  {!! Form::label('exampleInputFile', trans('app.form.logo'), ['class' => 'with-help']) !!}
+                  @if(isset($shop) && Storage::exists(optional($shop->logo)->path))
+                  <label>
+                    <img src="{{ get_storage_file_url($shop->logo->path, 'small') }}" alt="{{ trans('app.logo') }}">
+                    <span style="margin-left: 10px;">
+                      {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_logo') }}
+                    </span>
+                  </label>
+                  @endif
+                  <div class="row">
+                    <div class="col-md-9 nopadding-right">
+                      <input id="uploadFile" placeholder="{{ trans('app.placeholder.logo') }}" class="form-control" disabled="disabled" style="height: 28px;" />
+                        <div class="help-block with-errors">{{ trans('help.logo_img_size') }}</div>
+                    </div>
+                    <div class="col-md-3 nopadding-left">
+                      <div class="fileUpload btn btn-primary btn-block btn-flat">
+                          <span>{{ trans('app.form.upload') }}</span>
+                          <input type="file" name="image" id="uploadBtn" class="upload" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 nopadding-left">
+                <div class="form-group">
+                  {!! Form::label('exampleInputFile', trans('app.form.cover_img'), ['class' => 'with-help']) !!}
+                  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.cover_img', ['page' => trans('app.shop')]) }}"></i>
+                  @if(isset($shop) && Storage::exists(optional($shop->featuredImage)->path))
+                    <label>
+                      <img src="{{ get_storage_file_url(optional($shop->featuredImage)->path, 'small') }}" width="" alt="{{ trans('app.cover_image') }}">
+                      <span style="margin-left: 10px;">
+                        {!! Form::checkbox('delete_cover_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
+                      </span>
+                    </label>
+                  @endif
+                  <div class="row">
+                      <div class="col-md-9 nopadding-right">
+                        <input id="uploadFile1" placeholder="{{ trans('app.placeholder.cover_image') }}" class="form-control" disabled="disabled" style="height: 28px;" />
+                        <div class="help-block with-errors">{{ trans('help.cover_img_size') }}</div>
+                      </div>
+                      <div class="col-md-3 nopadding-left">
+                        <div class="fileUpload btn btn-primary btn-block btn-flat">
+                            <span>{{ trans('app.form.upload') }} </span>
+                            <input type="file" name="cover_image" id="uploadBtn1" class="upload" />
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
             </div>
 
             <p class="help-block">* {{ trans('app.form.required_fields') }}</p>

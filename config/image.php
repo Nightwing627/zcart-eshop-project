@@ -92,6 +92,11 @@ return [
             'h' => 30,
             'fit' => 'contain'
         ],
+        'mini' => [
+            'w' => 60,
+            'h' => 60,
+            'fit' => 'contain'
+        ],
         'small' => [
             'w' => 100,
             'h' => 100,

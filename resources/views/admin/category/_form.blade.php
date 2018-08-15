@@ -35,10 +35,10 @@
 </div>
 
 <div class="form-group">
-  {!! Form::label('exampleInputFile', trans('app.form.category_cover_img'), ['class' => 'with-help']) !!}
-  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.cat_cover_img') }}"></i>
+  {!! Form::label('exampleInputFile', trans('app.form.cover_img'), ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.cover_img', ['page' => trans('app.category')]) }}"></i>
   @if(isset($category) && Storage::exists(optional($category->image)->path))
-    <img src="{{ get_storage_file_url(optional($category->image)->path, 'small') }}" width="" alt="{{ trans('app.image') }}">
+    <img src="{{ get_storage_file_url(optional($category->image)->path, 'small') }}" width="" alt="{{ trans('app.cover_image') }}">
     <span style="margin-left: 10px;">
       {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
     </span>
@@ -46,7 +46,7 @@
 	<div class="row">
       <div class="col-md-9 nopadding-right">
         <input id="uploadFile" placeholder="{{ trans('app.placeholder.category_image') }}" class="form-control" disabled="disabled" style="height: 28px;" />
-        <div class="help-block with-errors">{{ trans('help.category_cover_img_size') }}</div>
+        <div class="help-block with-errors">{{ trans('help.cover_img_size') }}</div>
       </div>
       <div class="col-md-3 nopadding-left">
   			<div class="fileUpload btn btn-primary btn-block btn-flat">

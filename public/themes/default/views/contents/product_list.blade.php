@@ -6,7 +6,7 @@
             <div class="product product-grid-view sc-product-item">
                 <input name="product_price" value="{{ get_formated_decimal($item->currnt_sale_price(), true, 2) }}" type="hidden"/>
                 <input name="product_id" value="{{ $item->id }}" type="hidden"/>
-                <input name="shop_id" value="{{ $item->id }}" type="hidden"/>
+                <input name="shop_id" value="{{ $item->shop_id }}" type="hidden"/>
 
                 <ul class="product-info-labels">
                     @if($item->orders_count >= config('system.popular.hot_item.sell_count', 3))

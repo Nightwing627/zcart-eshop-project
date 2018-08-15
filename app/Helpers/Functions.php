@@ -331,6 +331,7 @@ if ( ! function_exists('get_storage_file_url') )
         if ( !$path )
             return get_placeholder_img($size);
 
+        // return asset("image/{$path}?p={$size}");
         return url("image/{$path}?p={$size}");
     }
 }
@@ -344,7 +345,7 @@ if ( ! function_exists('get_placeholder_img') )
         if ($size && is_array($size))
             return "http://placehold.it/{$size['w']}x{$size['h']}/eee?text=" . trans('app.no_img_available');
 
-        return 'images/demo/no_img.png';
+        return url("images/demo/no_img.png");
     }
 }
 
@@ -376,8 +377,8 @@ if ( ! function_exists('get_cover_img_src') )
 {
     function get_cover_img_src($model, $type = 'category')
     {
-        if(isset($model->image->path) && Storage::exists($model->image->path))
-            return get_storage_file_url($model->image->path, 'cover');
+        if(isset($model->featuredImage->path) && Storage::exists($model->featuredImage->path))
+            return get_storage_file_url($model->featuredImage->path, 'cover');
         else
             return asset('images/demo/'. $type .'_cover.jpg');
     }

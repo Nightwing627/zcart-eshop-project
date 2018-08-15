@@ -16,8 +16,9 @@ class CartController extends Controller
      * Display a listing of the resource.
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
         $cart = Cart::where('customer_id', Auth::guard('customer')->user())->first();
 // echo "<pre>"; print_r($cart); echo "</pre>"; exit();
         return view('cart', compact('cart'));
@@ -31,6 +32,8 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
+        $cart = $request->cart_list;
+        echo "<pre>"; print_r($cart); echo "</pre>"; exit();
         $cart->store($request->all());
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));

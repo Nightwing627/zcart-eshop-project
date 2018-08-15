@@ -26,7 +26,7 @@
 					@foreach($manufacturers as $manufacturer )
 						<tr>
 							<td>
-								<img src="{{ get_storage_file_url(optional($manufacturer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<img src="{{ get_storage_file_url(optional($manufacturer->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 								<p class="indent10">
 									@can('view', $manufacturer)
 										<a href="{{ route('admin.catalog.manufacturer.show', $manufacturer->id) }}" class="ajax-modal-btn">{{ $manufacturer->name }}</a>
@@ -89,7 +89,7 @@
 					@foreach($trashes as $trash )
 						<tr>
 							<td>
-								<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<img src="{{ get_storage_file_url(optional($trash->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 								<p class="indent10">
 									{{ $trash->name }}
 								</p>

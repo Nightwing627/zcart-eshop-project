@@ -143,7 +143,7 @@
             $(this.cart_element).on("click", '.sc-cart-clear', function (e) {
                 if ($(this).hasClass('disabled'))
                     return false;
-                // console.log(e);
+
                 e.preventDefault();
                 $('.sc-cart-item-list > .sc-cart-item', this.cart_element).fadeOut("normal", function () {
                     $(this).remove();

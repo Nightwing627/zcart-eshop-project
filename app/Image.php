@@ -36,4 +36,11 @@ class Image extends Model
     {
         return $this->morphTo();
     }
+
+    public function setFeatureAttribute($value)
+    {
+        if ((bool) $value) $this->attributes['featured'] = $value;
+        else $this->attributes['featured'] = null;
+    }
+
 }

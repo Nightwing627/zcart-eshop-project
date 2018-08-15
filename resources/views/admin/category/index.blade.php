@@ -15,7 +15,7 @@
 	      <table class="table table-hover table-2nd-short">
 	        <thead>
 	        <tr>
-			  <th>{{ trans('app.image') }}</th>
+			  <th>{{ trans('app.cover_image') }}</th>
 	          <th>{{ trans('app.category_name') }}</th>
 	          <th>{{ trans('app.parents') }}</th>
 	          <th>{{ trans('app.product') }}</th>
@@ -27,7 +27,7 @@
 		        @foreach($categories as $category )
 			        <tr>
 			          	<td>
-							<img src="{{ get_storage_file_url(optional($category->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($category->featuredImage)->path, 'mini') }}" class="img-sm" alt="{{ trans('app.image') }}">
 			          	</td>
 			          	<td>
 			          		<h5>

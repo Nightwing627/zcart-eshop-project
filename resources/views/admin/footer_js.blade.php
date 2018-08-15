@@ -779,6 +779,11 @@
 		      document.getElementById("uploadFile").value = this.value;
 		    };
 	  	}
+	  	if( $('#uploadBtn1').length ){
+		    document.getElementById("uploadBtn1").onchange = function () {
+		      document.getElementById("uploadFile1").value = this.value;
+		    };
+	  	}
 
 		//SEARCH OPTIONS
 		var $search_rows = $('#search_table tr');

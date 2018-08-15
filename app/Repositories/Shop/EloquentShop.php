@@ -18,12 +18,12 @@ class EloquentShop extends EloquentRepository implements BaseRepository, ShopRep
 
     public function all()
     {
-        return $this->model->with('owner', 'image', 'primaryAddress')->get();
+        return $this->model->with('owner', 'logo', 'primaryAddress')->get();
     }
 
     public function trashOnly()
     {
-        return $this->model->with('image')->onlyTrashed()->get();
+        return $this->model->with('logo')->onlyTrashed()->get();
     }
 
     public function staffs($shop)
@@ -41,10 +41,14 @@ class EloquentShop extends EloquentRepository implements BaseRepository, ShopRep
         $shop = parent::update($request, $id);
 
         if ($request->hasFile('image') || ($request->input('delete_image') == 1))
-            $shop->deleteImage();
-
+            $shop->deleteLogo();
         if ($request->hasFile('image'))
             $shop->saveImage($request->file('image'));
+
+        if ($request->hasFile('cover_image') || ($request->input('delete_cover_image') == 1))
+            $shop->deleteFeaturedImage();
+        if ($request->hasFile('cover_image'))
+            $shop->saveImage($request->file('cover_image'), true);
 
         return $shop;
     }

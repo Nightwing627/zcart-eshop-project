@@ -28,7 +28,7 @@ trait Imageable {
 	 */
 	public function images()
     {
-        return $this->morphMany(\App\Image::class, 'imageable')->whereNull('featured')->orderBy('order', 'asc');
+        return $this->morphMany(\App\Image::class, 'imageable')->where('featured','!=',1)->orderBy('order', 'asc');
     }
 
 	/**
@@ -42,13 +42,23 @@ trait Imageable {
     }
 
 	/**
+	 * Return the logo related to the logoable
+	 *
+	 * @return Illuminate\Database\Eloquent\Collection
+	 */
+	public function logo()
+    {
+        return $this->morphOne(\App\Image::class, 'imageable')->where('featured','!=',1);
+    }
+
+	/**
 	 * Return the featured Image related to the imageable
 	 *
 	 * @return Illuminate\Database\Eloquent\Collection
 	 */
 	public function featuredImage()
     {
-        return $this->morphOne(\App\Image::class, 'imageable')->whereNotNull('featured');
+        return $this->morphOne(\App\Image::class, 'imageable')->where('featured',1);
     }
 
 	/**
@@ -101,6 +111,7 @@ trait Imageable {
 	 */
 	public function deleteImage($image = Null)
 	{
+		// echo "<pre>"; print_r($image); echo "</pre>"; exit();
 		if (!$image)
 			$image = $this->image;
 
@@ -121,7 +132,21 @@ trait Imageable {
 	 */
 	public function deleteFeaturedImage()
 	{
-		return $this->deleteImage($this->featuredImage);
+		if($img = $this->featuredImage)
+			$this->deleteImage($img);
+		return;
+	}
+
+	/**
+	 * Deletes the Brand Logo Image of this model.
+	 *
+	 * @return bool
+	 */
+	public function deleteLogo()
+	{
+		if($img = $this->logo)
+			$this->deleteImage($img);
+		return;
 	}
 
 	/**
@@ -134,7 +159,10 @@ trait Imageable {
 		foreach ($this->images as $image)
 			$this->deleteImage($image);
 
-		return $this->deleteFeaturedImage();
+		$this->deleteLogo();
+		$this->deleteFeaturedImage();
+
+		return;
 	}
 
 	/**
@@ -151,7 +179,6 @@ trait Imageable {
             'featured' => (bool) $featured,
             'size' => $size,
         ]);
-
 	}
 
 	/**

@@ -168,7 +168,7 @@
         $('#smartcart').smartCart({
             cart: [], // initial products on cart
             currencySettings: {
-                locales: 'en-US', // A string with a BCP 47 language tag, or an array of such strings
+                locales: 'en-US', //A string with a BCP 47 language tag, or an array of such strings
                 currencyOptions:  {
                     currency: '{{ config('system_settings.currency.iso_code') ?: 'USD' }}',
                 }

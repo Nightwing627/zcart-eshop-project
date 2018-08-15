@@ -59,7 +59,7 @@ return [
 
     'currency_thousands_separator' => 'Example: 1,000, 1.000, 1 000',
 
-    'category_cover_img_size' => 'Image size should be 1280x300px',
+    'cover_img_size' => 'Image size should be 1280x300px',
 
     'slug' => 'Slug are usually a search engine friendly URL',
 
@@ -146,6 +146,8 @@ return [
     'required_card_upfront' => 'Do you want to take card information when merchant register?',
 
     'leave_empty_to_save_as_draft' => 'Leave empty to save as draft',
+
+    'logo_img_size' => 'Logo image size should be minimum 300x300px',
 
     'config_alert_quantity' => 'A notification email will be send your inventory goes below the alert quantity',
 
@@ -549,11 +551,13 @@ return [
 
     'user_category_slug' => 'Use category <strong>slug</strong> in category field.',
 
-    'cat_cover_img' => 'This image will display on the top of category page',
+    'cover_img' => 'This image will display on the top of the :page page',
 
     'cat_grp_img' => 'This image will display on the background of the category dropdown box',
 
     'cat_grp_desc' => 'Customer will not see this. But Merchants will see this.',
+
+    'inactive_for_back_office' => 'If inactive, Customers can still visit the :page page. But merchants will not able to use this :page for future listing.',
 
     'invalid_rows_will_ignored' => 'Invalid rows will be <strong>ignored</strong>.',
 
