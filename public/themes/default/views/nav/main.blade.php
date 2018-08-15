@@ -57,11 +57,11 @@
             </div>
             <div class="space20"></div>
             <p>
-              <div class="btn-group">
-                <button class="btn nopadding-left btn-link confirm sc-cart-clear"><i class="fa fa-trash fa-fw" data-toggle="tooltip" title="{{ trans('theme.button.clear') }}"></i></button>
-                <a href="{{ route('cart.index') }}" class="btn flat btn-primary cart-open-btn">{{ trans('theme.button.checkout') }}</a>
-                <button class="sc-cart-checkout btn flat btn-primary pull-right" type="button"><i class="fa fa-bolt fa-fw"></i> {{ trans('theme.button.quick_checkout') }}</button>
-              </div>
+              {{-- <div class="btn-group"> --}}
+                {{-- <button class="btn nopadding-left btn-link confirm sc-cart-clear"><i class="fa fa-trash fa-fw" data-toggle="tooltip" title="{{ trans('theme.button.clear') }}"></i></button> --}}
+                {{-- <button class="sc-cart-checkout btn flat btn-primary pull-right" type="button"><i class="fa fa-bolt fa-fw"></i> {{ trans('theme.button.quick_checkout') }}</button> --}}
+                <a href="{{ route('cart.index') }}" class="btn flat btn-primary cart-open-btn "><i class="fa fa-shopping-cart fa-fw"></i> {{ trans('theme.button.checkout') }}</a>
+              {{-- </div> --}}
             </p>
             <div class="space20"></div>
           </div><!-- /.sc-toolbar -->

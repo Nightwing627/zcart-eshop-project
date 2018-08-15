@@ -73,7 +73,16 @@
 
             // Set initial products
             var mi = this;
-            $(this.options.cart).each(function (i, p) {
+
+            var stor = localStorage.getItem('cart');
+            if(stor!==null){
+                var load = $.parseJSON(stor);
+                $.each( load, function( i, n ) {
+                    mi._addToCart(n,false,true);
+                });
+            }
+
+            $(this.options.cart).each(function(i, p) {
                 p = mi._addToCart(p);
             });
 
@@ -132,9 +141,9 @@
 
             // Cart clear event
             $(this.cart_element).on("click", '.sc-cart-clear', function (e) {
-                if ($(this).hasClass('disabled')) {
+                if ($(this).hasClass('disabled'))
                     return false;
-                }
+                // console.log(e);
                 e.preventDefault();
                 $('.sc-cart-item-list > .sc-cart-item', this.cart_element).fadeOut("normal", function () {
                     $(this).remove();
@@ -164,9 +173,11 @@
         /*
          * Add the product object to the cart
          */
-        _addToCart: function (p) {
+        _addToCart: function (p,store,old) {
             // console.log(p);
             var mi = this;
+            store = typeof store !== 'undefined' ? store : true;
+            old = typeof old !== 'undefined' ? old : false;
 
             if (!p.hasOwnProperty(this.options.paramSettings.productPrice)) {
                 this._logError('Price is not set for the item');
@@ -195,7 +206,8 @@
                 } else {
                     this.cart.push(p);
                     // Trigger "itemAdded" event
-                    this._triggerEvent("itemAdded", [p]);
+                    if(!old)
+                        this._triggerEvent("itemAdded", [p]);
                 }
             } else {
                 this.cart.push(p);
@@ -204,6 +216,10 @@
             }
 
             this._addUpdateCartItem(p);
+
+            if(store)
+                localStorage.setItem('cart', JSON.stringify(this.cart));
+
             return p;
         },
         /*
@@ -223,6 +239,7 @@
                     return false;
                 }
             });
+            localStorage.setItem('cart', JSON.stringify(this.cart));
         },
         /*
          * Clear all products from the cart

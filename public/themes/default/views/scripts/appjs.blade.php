@@ -149,6 +149,7 @@
             @include('layouts.notification', ['message' => trans('theme.notify.item_added_to_cart'), 'type' => 'success', 'icon' => 'shopping-bag'])
         });
         $("#smartcart").on("itemRemoved", function(e) {
+            // console.log('itemRemoved');
             @include('layouts.notification', ['message' => trans('theme.notify.item_removed_from_cart'), 'type' => 'success', 'icon' => 'shopping-bag'])
         });
         $("#smartcart").on("itemUpdated", function(e) {

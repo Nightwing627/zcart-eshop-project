@@ -223,6 +223,7 @@ return [
     'sale' => 'Sale',
     'sale_price' => 'Sale price',
     'purchase_price' => 'Purchase price',
+    'payment_method_configuration_issue' => 'Not configured correctly! Update the settings.',
     'offer_price' => 'Offer price',
     'offer_start' => 'Offer start',
     'offer_end' => 'Offer end',

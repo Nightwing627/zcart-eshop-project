@@ -80,15 +80,7 @@ class LoginController extends Controller
     public function handleProviderCallback(Request $request, $provider)
     {
         try {
-
-            if('twitter' == $provider){
-                $user = Socialite::driver('twitter')->user($request->oauth_token);
-                $user = Socialite::driver('twitter')->userFromTokenAndSecret($user->token, $user->secret);
-            }
-            else{
-                $user = Socialite::driver($provider)->stateless()->user();
-            }
-
+            $user = Socialite::driver($provider)->stateless()->user();
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = json_decode($e->getResponse()->getBody()->getContents(), true);
 
@@ -107,6 +99,7 @@ class LoginController extends Controller
         $customer->name = $user->getName();
         $customer->nice_name = $user->getNickname();
         $customer->email = $user->getEmail();
+        $customer->active = 1;
         $customer->save();
 
         $customer->saveImageFromUrl($user->avatar_original ?? $user->getAvatar());
