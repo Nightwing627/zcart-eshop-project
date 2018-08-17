@@ -267,6 +267,8 @@
                     return false;
                 }
             });
+
+            localStorage.setItem('cart', JSON.stringify(this.cart));
         },
         /*
          * Update the UI of the cart list

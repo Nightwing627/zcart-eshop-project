@@ -7,6 +7,7 @@
                 <input name="product_price" value="{{ get_formated_decimal($item->currnt_sale_price(), true, 2) }}" type="hidden"/>
                 <input name="product_id" value="{{ $item->id }}" type="hidden"/>
                 <input name="shop_id" value="{{ $item->shop_id }}" type="hidden"/>
+                <input name="product_link" value="{{ route('show.product', $item->slug) }}" type="hidden" />
 
                 <ul class="product-info-labels">
                     @if($item->orders_count >= config('system.popular.hot_item.sell_count', 3))
@@ -28,7 +29,7 @@
 
                     <img class="product-img-alt" src="{{ get_product_img_src($item, 'medium', 'alt') }}" alt="{{ $item->title }}" title="{{ $item->title }}"/>
 
-                    <a class="product-link" href="{{ route('show.product', $item->slug) }}" data-name="product_link"></a>
+                    <a class="product-link" href="{{ route('show.product', $item->slug) }}"></a>
                 </div>
 
                 <div class="product-actions btn-group">

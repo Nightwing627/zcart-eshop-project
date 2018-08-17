@@ -44,7 +44,7 @@
       @endauth
 
       <li class="dropdown" id="smartcart">
-        <a href="{{ route('cart.index') }}">
+        <a href="#" class="sc-cart-checkout">
           <span>{{ trans('theme.your_cart') }}</span><i class="fa fa-shopping-bag"></i> <div class="sc-cart-count badge"></div>
         </a>
         <div class="dropdown-menu">
@@ -68,7 +68,7 @@
             <div class="space10"></div>
           </div><!-- /.sc-toolbar -->
 
-          {!! Form::open(['route' => 'cart.index', 'id' => 'checkoutForm']) !!}
+          {!! Form::open(['route' => 'cart.store', 'id' => 'checkoutForm']) !!}
               {{-- Data will be appended automatically via js --}}
           {!! Form::close() !!}
         </div><!-- /.dropdown-manu -->

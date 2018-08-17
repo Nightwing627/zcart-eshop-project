@@ -32,6 +32,7 @@ class Cart extends Model
     protected $fillable = [
                         'shop_id',
                         'customer_id',
+                        'ip_address',
                         'shipping_rate_id',
                         'packaging_id',
                         'item_count',
@@ -43,6 +44,7 @@ class Cart extends Model
                         'handling',
                         'taxes',
                         'grand_total',
+                        'shipping_weight',
                         'shipping_address',
                         'billing_address',
                         'payment_method_id',

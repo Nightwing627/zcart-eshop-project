@@ -255,9 +255,9 @@
 
           <fieldset><legend>{{ strtoupper(trans('app.shipping_address')) }}</legend></fieldset>
           <address>
-            {!! $order->shippingAddress->toHtml('<br/>', false) !!}
+            {!! optional($order->shippingAddress)->toHtml('<br/>', false) !!}
           </address>
-          <iframe width="100%" height="150" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q={{ urlencode($order->shippingAddress->toGeocodeString()) }}&output=embed"></iframe>
+          <iframe width="100%" height="150" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q={{ urlencode(optional($order->shippingAddress)->toGeocodeString()) }}&output=embed"></iframe>
           <fieldset><legend>{{ strtoupper(trans('app.billing_address')) }}</legend></fieldset>
           @if($order->shipping_address == $order->billing_address)
             <small>
@@ -266,7 +266,7 @@
             </small>
           @else
             <address>
-              {!! $order->billingAddress->toHtml('<br/>', false) !!}
+              {!! optional($order->billingAddress)->toHtml('<br/>', false) !!}
             </address>
           @endif
         </div>

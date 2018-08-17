@@ -112,6 +112,7 @@
 								<label for="exampleInputFile" class="with-help col-sm-3 control-label"> {{ trans('app.form.logo') }}</label>
 						      	<div class="col-md-6 nopadding">
 									<input id="uploadFile" placeholder="{{ trans('app.placeholder.logo') }}" class="form-control" disabled="disabled" style="height: 28px;" />
+			                        <div class="help-block with-errors">{{ trans('help.logo_img_size') }}</div>
 						    	</div>
 							    <div class="col-md-2 nopadding-left">
 								  	<div class="fileUpload btn btn-primary btn-block btn-flat">
@@ -120,6 +121,21 @@
 							      	</div>
 							    </div>
 							</div>
+
+			                <div class="form-group">
+			                  	{!! Form::label('exampleInputFile', trans('app.form.cover_img'), ['class' => 'with-help col-sm-3 control-label']) !!}
+			                  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.cover_img', ['page' => trans('app.shop')]) }}"></i>
+						      	<div class="col-md-6 nopadding">
+			                        <input id="uploadFile1" placeholder="{{ trans('app.placeholder.cover_image') }}" class="form-control" disabled="disabled" style="height: 28px;" />
+			                        <div class="help-block with-errors">{{ trans('help.cover_img_size') }}</div>
+			                    </div>
+			                    <div class="col-md-2 nopadding-left">
+			                        <div class="fileUpload btn btn-primary btn-block btn-flat">
+			                            <span>{{ trans('app.form.upload') }} </span>
+			                            <input type="file" name="cover_image" id="uploadBtn1" class="upload" />
+			                        </div>
+			                    </div>
+			                </div>
 						@endif
 						<p class="help-block">* {{ trans('app.form.required_fields') }}</p>
 
@@ -161,16 +177,29 @@
 					        <div class="spacer30"></div>
 						</div>
 
-						@if(isset($shop) && $shop->image)
+						@if(isset($shop) && $shop->logo)
 							<div class="form-group text-center">
 								<label class="with-help control-label"> {{ trans('app.logo') }}</label>
-								<img src="{{ get_storage_file_url(optional($shop->image)->path, 'medium') }}" width="100%" alt="{{ trans('app.logo') }}">
-						        <div class="spacer20"></div>
+								<img src="{{ get_storage_file_url(optional($shop->logo)->path, 'medium') }}" alt="{{ trans('app.logo') }}">
+						        <div class="spacer10"></div>
 								<label>
 							    	{!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_logo') }}
 								</label>
 							</div>
 					  	@endif
+
+						@if(isset($shop) && $shop->featuredImage)
+							<div class="form-group text-center">
+								<label class="with-help control-label"> {{ trans('app.cover_image') }}</label>
+		                      	<img src="{{ get_storage_file_url(optional($shop->featuredImage)->path, 'medium') }}" width="" alt="{{ trans('app.cover_image') }}">
+			                    <label>
+						        <div class="spacer10"></div>
+								<label>
+		                        	{!! Form::checkbox('delete_cover_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
+			                    </label>
+			                </div>
+					  	@endif
+
 					</div>
 		        {!! Form::close() !!}
 	    	</div>

@@ -2577,29 +2577,48 @@ div.datepicker > div {
 }
 
 /******* Shopping cart ********/
-.shopping-cart-item-table {
+.shopping-cart-table-wrap {
   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
+.shopping-cart-item-table {
+}
+.shopping-cart-item-table .shopping-cart-item-title {
+  display: inline-block;
+}
+.shopping-cart-item-table .product-info-qty-item {
+  zoom: 0.75!important;
+}
+.shopping-cart-item-table > tfoot > tr > td,
 .shopping-cart-item-table > thead > tr > th,
 .shopping-cart-summary > li {
-    padding: 15px 10px;
+    padding: 10px;
     font-size: 13px;
     font-weight: 400;
     letter-spacing: 1px;
     border-bottom: 1px solid #ddd;
     text-transform: uppercase;
 }
+.shopping-cart-item-table > tfoot > tr > td {
+  border-bottom: none;
+  font-weight: 300;
+  padding: 5px;
+}
+
 .shopping-cart-item-table > tbody > tr > td,
 .shopping-cart-item-table a {
   text-decoration: none;
   vertical-align: middle;
+  padding: 5px;
   font-weight: 300;
+  font-size: 13px;
   color: #444;
 }
+.shopping-cart-item-table > thead > tr > th:last-child,
 .shopping-cart-item-table > tbody > tr > td:last-child {
-    padding: 0;
-    width: 20px;
+  border-right: 1px solid #ddd;
+  padding: 0;
+  width: 20px;
 }
 .shopping-cart-summary > li:last-child {
     border-bottom: none;

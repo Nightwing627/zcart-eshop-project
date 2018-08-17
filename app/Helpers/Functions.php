@@ -101,6 +101,19 @@ if ( ! function_exists('get_shop_url') )
     }
 }
 
+if ( ! function_exists('getShopConfig') )
+{
+    /**
+     * Return config value for the given shop and column
+     *
+     * @param $int packaging
+     */
+    function getShopConfig($shop, $column)
+    {
+        return \DB::table('configs')->where('shop_id', $shop)->value($column);
+    }
+}
+
 if ( ! function_exists('get_page_url') )
 {
     /**
@@ -978,7 +991,7 @@ if ( ! function_exists('getPackagings') )
 if ( ! function_exists('getPackagingCost') )
 {
     /**
-     * Return Shipping Cost and Handling fee for the given carrier
+     * Return packaging Cost for the given id
      *
      * @param $int packaging
      */

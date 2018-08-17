@@ -42,8 +42,8 @@
 				              	<div class="space10"></div>
 
 				              	<dir class="product-qty-wrapper">
-				                  <p>@lang('theme.quantity'):</p>
-				                  <div class="product-info-qty-item">
+				                  	<p>@lang('theme.quantity'):</p>
+				                  	<div class="product-info-qty-item">
 				                      	<button class="product-info-qty product-info-qty-minus">-</button>
 				                      	<input class="product-info-qty product-info-qty-input" data-name="product_quantity" data-max="{{$item->stock_quantity}}" type="text" value="1">
 				                      	<button class="product-info-qty product-info-qty-plus">+</button>
@@ -120,6 +120,7 @@
 							<input name="product_price" value="{{ get_formated_decimal($linkedItem->currnt_sale_price(), true, 2) }}" type="hidden" />
 							<input name="product_id" value="{{ $linkedItem->id }}" type="hidden" />
 							<input name="shop_id" value="{{ $linkedItem->shop_id }}" type="hidden" />
+							<input name="product_link" value="{{ route('show.product', $linkedItem->slug) }}" type="hidden" />
 				            <div class="product-widget">
 				                <div class="product-img-wrap">
 				                    <img class="product-img" src="{{ get_storage_file_url(optional($linkedItem->image)->path, 'medium') }}" data-name="product_image" alt="{{ $linkedItem->title }}" title="{{ $linkedItem->title }}" />

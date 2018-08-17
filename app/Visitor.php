@@ -55,6 +55,14 @@ class Visitor extends Model
     protected $guarded = [];
 
     /**
+     * Get the user carts.
+     */
+    public function carts()
+    {
+        return $this->hasMany(Cart::class, 'ip_address');
+    }
+
+    /**
      * Check if the ip is blocked.
      */
     public function isBlocked()
