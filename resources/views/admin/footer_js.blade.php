@@ -64,7 +64,7 @@
 				            window.location = "{{ route('login') }}";
 				        }
 				        else{
-				        	alert("{{ trans('responses.error') }}");
+				        	console.log("{{ trans('responses.error') }}");
 				        }
 			        });
 		      	}

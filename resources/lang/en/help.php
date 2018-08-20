@@ -37,6 +37,8 @@ return [
 
     'permission_modules' => 'Enable the module to set permission for the module',
 
+    'shipping_rate_delivery_takes' => 'Be specific, customer will see this.',
+
     'module' => [
         'name' => 'All users under this role will be able to do specified actions to manage :module.',
 

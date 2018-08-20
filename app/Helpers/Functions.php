@@ -805,7 +805,24 @@ if ( ! function_exists('get_shipping_zone_of') )
      * @param $tax
      */
     function get_shipping_zone_of($shop, $country, $state = null){
-        $state_counts = get_state_count_of($country);
+        // If the iso_2 code given as country
+        if( ! is_numeric($country) ){
+            $temp = \DB::table('countries')->select('id')->where('iso_3166_2', $country)->first();
+            $country = optional($temp)->id;
+        }
+
+        // If the iso_2 code given as state
+        if( !$state && !is_numeric($state) ){
+            $temp = \DB::table('states')->select('id')->whereNotNull('iso_3166_2')->where([
+                ['iso_3166_2', '=', $state],
+                ['country_id', '=', $country]
+            ])->first();
+
+            $state = optional($temp)->id;
+        }
+
+        if($state)
+            $state_counts = get_state_count_of($country);
 
         $zones = \DB::table('shipping_zones')->select(['id','name','tax_id','country_ids','state_ids','rest_of_the_world'])->where('shop_id', $shop)->where('active', 1)->get();
 
@@ -820,13 +837,13 @@ if ( ! function_exists('get_shipping_zone_of') )
 
             if( ! in_array($country, $countries) ) continue;
 
-            // If the country has no states and the given country matched then return the zone
-            if ( $state_counts == 0 )
+            // If the country has no state or the state is not given, then return the zone
+            if ( $state == null || $state_counts == 0)
                 return $zone;
 
             $states = unserialize($zone->state_ids);
 
-            if ( $state_counts > 0 && ! $state ) continue;
+            if ( $state_counts > 0 && $state == null ) continue;
 
             if( in_array($state, $states) )
                 return $zone;
@@ -866,6 +883,24 @@ if ( ! function_exists('get_states_of') )
     }
 }
 
+if ( ! function_exists('get_id_of_model') )
+{
+    /**
+     * Return ID og the given table using where
+     *
+     * @param  str $table Name of the table
+     * @param  str $where Name of the field
+     * @param  str $value The value conpire to
+     *
+     * @return int
+     */
+    function get_id_of_model($table, $where, $value)
+    {
+        $temp = \DB::table($table)->select('id')->where($where, $value)->first();
+        return optional($temp)->id;
+    }
+}
+
 if ( ! function_exists('getTaxRate') )
 {
     /**
@@ -886,15 +921,15 @@ if ( ! function_exists('getShippingRates') )
      */
     function getShippingRates($zone = Null)
     {
-        if($zone)
-            return \DB::table('shipping_rates')->where('shipping_zone_id', $zone)->orderBy('rate', 'asc')->get();
+        if($zone){
+            return \App\ShippingRate::where('shipping_zone_id', $zone)
+            ->with('carrier:id,name')->orderBy('rate', 'asc')->get();
+        }
 
         return \DB::table('shipping_zones')
-                    ->join('shipping_rates', 'shipping_zones.id', 'shipping_rates.shipping_zone_id')
-                    ->where('shipping_zones.shop_id', Auth::user()->merchantId())
-                    ->where('shipping_zones.active', 1)
-                    ->orderBy('shipping_rates.rate', 'asc')
-                    ->get();
+        ->join('shipping_rates', 'shipping_zones.id', 'shipping_rates.shipping_zone_id')
+        ->where('shipping_zones.shop_id', Auth::user()->merchantId())
+        ->where('shipping_zones.active', 1)->orderBy('shipping_rates.rate', 'asc')->get();
     }
 }
 

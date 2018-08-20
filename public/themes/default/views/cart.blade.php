@@ -15,3 +15,7 @@
     <!-- bottom Banner -->
     @include('banners.bottom')
 @endsection
+
+@section('scripts')
+    @include('scripts.popover')
+@endsection

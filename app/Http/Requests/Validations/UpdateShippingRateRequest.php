@@ -33,6 +33,7 @@ class UpdateShippingRateRequest extends Request
     {
         $rules = [
            'name' => 'required',
+           'delivery_takes' => 'required',
            'minimum' => 'required|numeric|min:0',
            'maximum' => 'nullable|numeric|min:'.(int)$this->minimum,
            'rate' => 'required_unless:free_shipping,1',

@@ -33,6 +33,7 @@ class CreateShippingZonesTable extends Migration
             $table->decimal('minimum', 20, 6)->nullable();
             $table->decimal('maximum', 20, 6)->nullable();
             $table->decimal('rate', 20, 6)->nullable();
+            $table->string('delivery_takes')->nullable();
             $table->timestamps();
 
             $table->foreign('shipping_zone_id')->references('id')->on('shipping_zones')->onDelete('cascade');

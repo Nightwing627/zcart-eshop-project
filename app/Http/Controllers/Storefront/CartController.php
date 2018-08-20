@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Storefront;
 
 use Auth;
 use App\Cart;
+use App\Coupon;
 use App\Inventory;
+use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-// use App\Repositories\Cart\CartRepository;
-// use App\Http\Requests\Validations\CreateCartRequest;
 // use App\Http\Requests\Validations\UpdateCartRequest;
 
 class CartController extends Controller
@@ -28,7 +28,9 @@ class CartController extends Controller
 
         $carts = $carts->get();
 
-        return view('cart', compact('carts'));
+        $countries = ListHelper::countries();
+
+        return view('cart', compact('carts','countries'));
     }
 
     /**
@@ -112,6 +114,23 @@ class CartController extends Controller
         }
 
         return redirect()->route('cart.index');
+    }
+
+    /**
+     * validate coupon.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function validate_coupon(Request $request)
+    {
+        // $request->all();
+        $coupon = Coupon::active()->where('code', $request->coupon)->first();
+
+        if($coupon)
+            return response()->json($coupon->toArray());
+
+        return response('Not found', 404);
     }
 
     /**

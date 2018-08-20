@@ -326,7 +326,8 @@
             else if(maxVal < currentVal) currentVal = maxVal;
             $(this).val(currentVal);
         });
-        $(".product-info-qty-plus").on('click', function() {
+        $(".product-info-qty-plus").on('click', function(e) {
+            e.preventDefault();
             var node = $(this).prev(".product-info-qty-input");
             var currentVal = parseInt(node.val(), 10);
 
@@ -334,7 +335,8 @@
             if(node.data('max') > currentVal)
                 node.val(currentVal + 1);
         });
-        $(".product-info-qty-minus").on('click', function() {
+        $(".product-info-qty-minus").on('click', function(e) {
+            e.preventDefault();
             var currentVal = parseInt($(this).next(".product-info-qty-input").val(), 10);
             if (currentVal == "NaN") currentVal = 1;
             if (currentVal > 1)
@@ -392,7 +394,6 @@
     // Helper functions
     function getFormatedUrlStr(sourceURL, opt) {
         var url = removeQueryStringParameter(sourceURL, 'page'); //Reset the pagination;
-
         if(url.indexOf('?') !== -1)
             return url + '&' + opt;
 

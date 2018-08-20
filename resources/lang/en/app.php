@@ -62,6 +62,7 @@ return [
     ],
 
     // Application Levels
+    'and_takes' => 'And takes :time',
     'welcome' => 'Welcome',
     'body' => 'Body',
     'banner_image' => 'Banner image',
@@ -1020,6 +1021,7 @@ return [
         'available_from' => 'Available from',
         'stock_quantity' => 'Stock quantity',
         'set_variants' => 'Set variants',
+        'delivery_takes' => 'Delivery takes',
         // 'free_shipping' => 'Free shipping',
         // 'order_handling_cost' => 'Order handling cost',
         // 'apply_handling_cost' => 'Apply handling cost',
@@ -1114,6 +1116,7 @@ return [
         'logo' => 'Brand logo',
         'cover_image' => 'Cover image',
         'system_currency' => 'Currency',
+        'delivery_takes' => '2-5 days',
         'slogan' => 'A nice and meaningful tagline',
         // 'website' => 'Homepage link',
         'url' => 'Web address',
