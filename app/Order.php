@@ -68,6 +68,7 @@ class Order extends Model
                         'shipping_date',
                         'delivery_date',
                         'tracking_id',
+                        'coupon_id',
                         'carrier_id',
                         'message_to_customer',
                         'send_invoice_to_customer',
@@ -97,6 +98,14 @@ class Order extends Model
     public function shop()
     {
         return $this->belongsTo(Shop::class)->withDefault();
+    }
+
+    /**
+     * Get the coupon associated with the order.
+     */
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
     }
 
     /**

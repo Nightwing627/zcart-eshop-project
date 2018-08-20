@@ -30,11 +30,12 @@
         // $shipping_options = $shipping_zone ? getShippingRates($shipping_zone->id) : 'NaN';
         $shipping_options = $shipping_zone ? getShippingRates($shipping_zone->id) : 'NaN';
 
-        // echo "<pre>"; print_r($shipping_options->toArray()); echo "</pre>"; exit();
+        // echo "<pre>"; print_r(Auth::guard('customer')->id()); echo "</pre>"; exit();
       @endphp
 
       <div class="row shopping-cart-table-wrap space30" id="cartId{{$cart->id}}">
         {!! Form::open(['route' => 'checkout', 'id' => 'formId'.$cart->id]) !!}
+          {{ Form::hidden('shop_id', $cart->shop_id, ['id' => 'shop_id'.$cart->id]) }}
           {{ Form::hidden('packaging_id', $default_packaging ? $default_packaging->id : Null, ['id' => 'packaging_id'.$cart->id]) }}
           {{ Form::hidden('packaging', $default_packaging ? $default_packaging->cost : Null, ['id' => 'cart-packaging'.$cart->id]) }}
           <div class="col-md-9 nopadding">
@@ -57,7 +58,8 @@
               <table class="table table shopping-cart-item-table">
                   <thead>
                     <tr>
-                        <th>{{ trans('theme.description') }}</th>
+                        <th width="65px">{{ trans('theme.image') }}</th>
+                        <th width="55%">{{ trans('theme.description') }}</th>
                         <th>{{ trans('theme.price') }}</th>
                         <th>{{ trans('theme.quantity') }}</th>
                         <th>{{ trans('theme.total') }}</th>
@@ -70,6 +72,8 @@
                         <td>
                             {{ Form::hidden('shipping_weight['.$item->id.']', $item->shipping_weight, ['class' => 'itemWeight'.$cart->id]) }}
                             <img src="{{ get_storage_file_url(optional($item->image)->path, 'mini') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
+                          </td>
+                          <td>
                             <div class="shopping-cart-item-title">
                                 <a href="{{ route('show.product', $item->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>
                             </div>
@@ -93,6 +97,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
+                      <td></td>
                       <td>
                         <div class="input-group">
                           <span class="input-group-addon flat">

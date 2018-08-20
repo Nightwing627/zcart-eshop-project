@@ -23,23 +23,17 @@ class UpdateCouponRequest extends Request
      */
     public function rules()
     {
-        $shop_id = Request::user()->merchantId(); //Get current user's shop_id
-        $id = Request::segment(count(Request::segments())); //Current model ID
-        Request::merge( array( 'shop_id' => $shop_id ) ); //Set shop_id
-
-        // echo "<pre>"; print_r(Request::all()); echo "</pre>"; exit();
-        return [
-           'name' => 'required',
-           'code' => 'required|composite_unique:coupons,shop_id:'.$shop_id.', '.$id,
-           'value' => 'required|numeric',
-           'type' => 'required',
-           'quantity' => 'required|integer',
-           'min_order_amount' => 'nullable|numeric',
-           'quantity_per_customer' => 'nullable|integer',
-           'starting_time' => 'required|nullable|date|after_or_equal:now',
-           'ending_time' => 'required|nullable|date|after:starting_time',
-           'active' => 'required|boolean',
-        ];
+      return [
+       'name' => 'required',
+       'value' => 'required|numeric',
+       'type' => 'required',
+       'quantity' => 'required|integer',
+       'min_order_amount' => 'nullable|numeric',
+       'quantity_per_customer' => 'nullable|integer',
+       'starting_time' => 'required|nullable|date',
+       'ending_time' => 'required|nullable|date|after:starting_time',
+       'active' => 'required|boolean',
+      ];
     }
 
    /**
@@ -50,7 +44,6 @@ class UpdateCouponRequest extends Request
     public function messages()
     {
         return [
-            'starting_time.after_or_equal' => trans('validation.offer_start_after'),
             'ending_time.after' => trans('validation.offer_end_after'),
         ];
     }

@@ -447,9 +447,11 @@ return [
 
     'exclude_offer_items' => 'Exclude items that already have a running offer or discount',
 
-    'coupon_partial_use' => 'Allow partial use of the total coupon value',
+    // 'coupon_partial_use' => 'Allow partial use of the total coupon value',
 
-    'coupon_limited' => 'Choose if you want to make the coupon for specific customers only',
+    'coupon_limited_to_customers' => 'Choose if you want to make the coupon for specific customers only',
+
+    'coupon_limited_to_shipping_zones' => 'Choose if you want to make the coupon for specific shipping zones only',
 
     'coupon_limited_to' => 'Use email address or name to find customers',
 

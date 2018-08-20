@@ -62,6 +62,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeConfigPage();
 
+        $this->composeCouponForm();
+
         $this->composeDashboardForAdmin();
 
         $this->composeDashboardForMerhcant();
@@ -798,6 +800,23 @@ class ViewComposerServiceProvider extends ServiceProvider
                     $view->with('packagings', ListHelper::packagings());
                     $view->with('payment_methods', optional($config->paymentMethods)->pluck('name', 'id'));
                 });
+    }
+
+    /**
+     * compose Coupon Form
+     */
+    private function composeCouponForm()
+    {
+        View::composer(
+
+            'admin.coupon._form',
+
+            function($view)
+            {
+                $view->with([
+                    'shipping_zones' => ListHelper::shipping_zones(),
+                ]);
+            });
     }
 
     /**

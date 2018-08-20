@@ -370,6 +370,13 @@ class ListHelper
         return \DB::table('users')->where('shop_id', Null)->where('role_id', '!=', 3)->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
+    public static function shipping_zones($shop = Null)
+    {
+        $shop = $shop ?: Auth::user()->merchantId(); //Get current user's shop_id
+
+        return \DB::table('shipping_zones')->where('shop_id', $shop)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
     /**
      * Get permission slugs for the user role.
      *

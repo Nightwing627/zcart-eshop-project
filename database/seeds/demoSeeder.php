@@ -343,7 +343,7 @@ class demoSeeder extends Seeder
         $categories = \DB::table('categories')->pluck('id')->toArray();
         $category_sub_groups = \DB::table('category_sub_groups')->pluck('id')->toArray();
         $attributes   = \DB::table('attributes')->pluck('id')->toArray();
-        $coupons   = \DB::table('coupons')->where('limited', 1)->pluck('id')->toArray();
+        $coupons   = \DB::table('coupons')->pluck('id')->toArray();
         $inventories = \DB::table('inventories')->pluck('id')->toArray();
 
         // attribute_inventory

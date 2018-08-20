@@ -22,16 +22,24 @@ class CreateCouponsTable extends Migration
             $table->decimal('value', 20, 6)->nullable();
             $table->decimal('min_order_amount', 20, 6)->nullable();
             $table->enum('type', ['amount', 'percent'])->default('amount');
-            $table->boolean('partial_use')->nullable();
-            $table->boolean('limited')->nullable();
+            // $table->boolean('partial_use')->nullable();
+            // $table->boolean('limited')->nullable();
             $table->integer('quantity')->nullable();
             $table->integer('quantity_per_customer')->nullable();
             $table->timestamp('starting_time')->nullable();
             $table->timestamp('ending_time')->nullable();
-            $table->boolean('exclude_offer_items')->nullable();
-            $table->boolean('exclude_tax_n_shipping')->nullable();
+            // $table->boolean('exclude_offer_items')->nullable();
+            // $table->boolean('exclude_tax_n_shipping')->nullable();
             $table->boolean('active')->default(1);
             $table->softDeletes();
+            $table->timestamps();
+        });
+
+        Schema::create('coupon_shipping_zone', function (Blueprint $table) {
+            $table->bigInteger('coupon_id')->unsigned()->index();
+            $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('cascade');
+            $table->integer('shipping_zone_id')->unsigned()->index();
+            $table->foreign('shipping_zone_id')->references('id')->on('shipping_zones')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -51,6 +59,7 @@ class CreateCouponsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('coupon_shipping_zone');
         Schema::dropIfExists('coupon_customer');
         Schema::dropIfExists('coupons');
     }

@@ -625,14 +625,22 @@
 	  	});
 
 	  	// Coupon form
-	  	$('input#limited').on('ifChecked', function () {
+	  	$('input#for_limited_customer').on('ifChecked', function () {
 	    	$('#customers_field').removeClass('hidden').addClass('show');
-	    	$('input#limited').attr('required', 'required');
+	    	$('select#customer_list_field').attr('required', 'required');
+	  	});
+	  	$('input#for_limited_customer').on('ifUnchecked', function () {
+	    	$('#customers_field').removeClass('show').addClass('hidden');
+	    	$('select#customer_list_field').removeAttr('required');
 	  	});
 
-	  	$('input#limited').on('ifUnchecked', function () {
-	    	$('#customers_field').removeClass('show').addClass('hidden');
-	    	$('input#limited').removeAttr('required');
+	  	$('input#for_limited_shipping_zones').on('ifChecked', function () {
+	    	$('#zones_field').removeClass('hidden').addClass('show');
+	    	$('select#zone_list_field').attr('required', 'required');
+	  	});
+	  	$('input#for_limited_shipping_zones').on('ifUnchecked', function () {
+	    	$('#zones_field').removeClass('show').addClass('hidden');
+	    	$('select#zone_list_field').removeAttr('required');
 	  	});
 	  	//END Coupon form
 

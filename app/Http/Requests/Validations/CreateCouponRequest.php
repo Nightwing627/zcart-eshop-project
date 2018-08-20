@@ -34,7 +34,7 @@ class CreateCouponRequest extends Request
            'quantity' => 'required|integer',
            'min_order_amount' => 'nullable|numeric',
            'quantity_per_customer' => 'nullable|integer',
-           'starting_time' => 'required|nullable|date|after_or_equal:now',
+           'starting_time' => 'required|nullable|date',
            'ending_time' => 'required|nullable|date|after:starting_time',
            'active' => 'required|boolean',
         ];

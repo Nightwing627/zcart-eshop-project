@@ -49,6 +49,7 @@ class CreateOrderTable extends Migration
             $table->date('shipping_date')->nullable();
             $table->date('delivery_date')->nullable();
             $table->string('tracking_id')->nullable();
+            $table->bigInteger('coupon_id')->unsigned()->nullable();
             $table->integer('carrier_id')->unsigned()->nullable();
 
             $table->integer('payment_status')->default(1);

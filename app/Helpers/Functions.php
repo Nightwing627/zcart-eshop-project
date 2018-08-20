@@ -1142,7 +1142,7 @@ if ( ! function_exists('get_yes_or_no') )
      */
     function get_yes_or_no($value = null)
     {
-        return $value ? trans('app.yes') : trans('app.no');
+        return $value == 1 ? trans('app.yes') : trans('app.no');
     }
 }
 

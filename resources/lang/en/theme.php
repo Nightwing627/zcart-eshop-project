@@ -374,6 +374,7 @@ return [
 		'cart_updated' => 'Cart updated',
 		'cart_empty'  => 'Cart is empty!',
 		'coupon_applied' => 'Coupon applied successfully!',
+		'coupon_limit_expired' => 'This coupon has been used!',
 		'coupon_not_valid' => 'Invalid coupon!',
 		'coupon_not_exist' => 'Coupon doesn\'t exist!',
 		'dispute_created' => 'Dispute created successfully!',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Storefront;
 
 use Auth;
 use App\Cart;
+use App\Order;
 use App\Coupon;
 use App\Inventory;
 use App\Helpers\ListHelper;
@@ -125,13 +126,30 @@ class CartController extends Controller
     public function validate_coupon(Request $request)
     {
         // $request->all();
-        $coupon = Coupon::active()->where('code', $request->coupon)->first();
+        $coupon = Coupon::active()->where([
+            ['code', $request->coupon],
+            ['shop_id', $request->shop],
+        ])->withCount(['orders','customerOrders'])->first();
 
-        if($coupon)
-            return response()->json($coupon->toArray());
+        if( ! $coupon ) return response('Coupon not found', 404);
+
+        if( ! $coupon->isLive() || ! $coupon->isUsable() ) return response('Coupon not valid', 403);
+
+        if( ! $coupon->hasQtt() ) return response('Coupon qtt limit exit', 444);
+
+
+
+        // $count = \DB::table('orders')->where('coupon_id', $coupon->id)->get();
+
+        return response()->json($coupon->toArray());
 
         return response('Not found', 404);
     }
+
+
+
+
+
 
     /**
      * Update the specified resource in storage.
