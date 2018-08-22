@@ -2,26 +2,34 @@
 "use strict";
 ;(function($, window, document) {
     $(document).ready(function(){
+    	$('.shopping-cart-table-wrap').each(function(){
+			var cart = $(this).data('cart');
+
+    		setTaxes(cart);
+    	});
+
     	// Coupon
     	$('.apply_seller_coupon').on('click', function(e){
             e.preventDefault();
 	        var cart = $(this).data('cart');
 	        var coupon = $('#coupon'+cart).val();
 	        var shop = $('#shop_id'+cart).val();
+	        var zone = $('#zone_id'+cart).val();
 			coupon = coupon.trim();
 
 	        if(coupon){
 				$.ajax({
 				    url: '{{ route('validate.coupon') }}',
 				    type: 'POST',
-				    data: {'coupon':coupon,'shop':shop,'cart':cart},
+				    data: {'coupon':coupon,'shop':shop,'cart':cart,'zone':zone},
 				    dataType: 'JSON',
 				    success: function (data, textStatus, xhr) {
+				    	if(200 == xhr.status){
+				    		setDiscount(cart, data);
 
-				        console.log(textStatus);
-				        console.log(xhr.status);
+		                    @include('layouts.notification', ['message' => trans('theme.notify.coupon_applied'), 'type' => 'success', 'icon' => 'check-circle'])
+				    	}
 				        console.log(data);
-	                    @include('layouts.notification', ['message' => trans('theme.notify.coupon_applied'), 'type' => 'success', 'icon' => 'check-circle'])
 				    }
 				})
 				.fail(function(response) {
@@ -37,12 +45,17 @@
 			        else if (404 === response.status){
 	                    @include('layouts.notification', ['message' => trans('theme.notify.coupon_not_exist'), 'type' => 'danger', 'icon' => 'times-circle'])
 			        }
+			        else if (443 === response.status){
+	                    @include('layouts.notification', ['message' => trans('theme.notify.coupon_not_valid_for_zone'), 'type' => 'warning', 'icon' => 'times-circle'])
+			        }
 			        else if (444 === response.status){
 	                    @include('layouts.notification', ['message' => trans('theme.notify.coupon_limit_expired'), 'type' => 'warning', 'icon' => 'times-circle'])
 			        }
 			        else{
 	                    @include('layouts.notification', ['message' => trans('theme.notify.failed'), 'type' => 'danger', 'icon' => 'times-circle'])
 			        }
+
+		    		resetDiscount(cart);
 		        });
 	        }
     	});
@@ -115,22 +128,24 @@
 			content: function(){
 				var cart = $(this).data('cart');
 				var current = getShippingName(cart);
-				var preChecked = String(current) == '{{ trans('app.custom_shipping') }}' ? 'checked' : '';
-				var custValue = preChecked == 'checked' ? getShipping() : '';
 
 				var filtered = getShippingOptions(cart, $(this).data('options'));
 
-				var options = '<table class="table table-striped" id="checkout-options-table">';
+				if($.isEmptyObject(filtered)){
+					var options = '<p class="space10"><span class="space10"></span>{{ trans('theme.seller_doesnt_ship') }}</p>';
+				}
+				else{
+					var options = '<table class="table table-striped" id="checkout-options-table">';
+					filtered.forEach( function (item){
+				  		var preChecked = String(current) == String(item.name) ? 'checked' : '';
 
-				filtered.forEach( function (item){
-			  		preChecked = String(current) == String(item.name) ? 'checked' : '';
-
-			  		options += '<tr><td><div class="radio"><label id="'+ item.id +'"><input type="radio" name="shipping_option" id="'+ item.name +'" value="'+ getFormatedValue(item.rate) +'" '+ preChecked +'>'+ item.name +'</label></div></td>' +
-			  		'<td>' + item.carrier.name + '</td>' +
-			  		'<td><small class"text-muted">'+ item.delivery_takes +'</small></td>' +
-			  		'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(item.rate) +'</span></td></tr>';
-				});
-				options += '</table>';
+				  		options += '<tr><td><div class="radio"><label id="'+ item.id +'"><input type="radio" name="shipping_option" id="'+ item.name +'" value="'+ getFormatedValue(item.rate) +'" '+ preChecked +'>'+ item.name +'</label></div></td>' +
+				  		'<td>' + item.carrier.name + '</td>' +
+				  		'<td><small class"text-muted">'+ item.delivery_takes +'</small></td>' +
+				  		'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(item.rate) +'</span></td></tr>';
+					});
+					options += '</table>';
+				}
 
 				return '<div class="popover-form" id="shipping-options-popover" data-cart="'+ cart +'">'+
 			        options + apply_btn + '</div>';
@@ -167,6 +182,25 @@
 			return filtered;
 		}
 
+		function calculateTax(cart)
+		{
+			var total = getOrderTotal(cart);
+			var taxrate = getTaxrate(cart);
+
+			var tax = (total * taxrate)/100;
+			$('#summary-taxes'+cart).text(getFormatedValue(tax));
+
+			calculateOrderSummary(cart);
+			return;
+		};
+
+      	function calculateOrderSummary(cart)
+      	{
+          	var grand = getTotalAmount(cart) + getTax(cart);
+          	$("#summary-grand-total"+cart).text(getFormatedValue(grand));
+          	return;
+      	}
+
 		function getCartWeight(cart)
 		{
 	      	var cartWeight = 0;
@@ -179,10 +213,29 @@
 	        return cartWeight;
 		}
 
+
+      	function getTotalAmount(cart)
+      	{
+	        var total = getOrderTotal(cart);
+	        if(!total)
+	          return total;
+
+	        var packaging = getPackaging(cart);
+	        var shipping  = getShipping(cart);
+	        var discount  = getDiscount(cart);
+
+	        return (total + shipping + packaging) - discount;
+	    }
+
       	function getPackagingName(cart)
       	{
       		return $("#summary-packaging-name"+cart).text().trim();
       	};
+
+		function getPackaging(cart)
+		{
+			return Number($("#summary-packaging"+cart).text());
+		};
 
       	function getShipping(cart)
       	{
@@ -193,6 +246,26 @@
       	{
           	return $("#summary-shipping-name"+cart).text().trim();
       	};
+
+		function getTaxId(cart)
+		{
+			return $("#tax_id"+cart).val();
+		};
+
+		function getTaxrate(cart)
+		{
+			return Number($("#cart-taxrate"+cart).val());
+		};
+
+		function getTax(cart)
+		{
+			return Number($("#summary-taxes"+cart).text());
+		};
+
+      	function getDiscount(cart)
+      	{
+        	return Number($("#summary-discount"+cart).text());
+      	}
 
       	function getOrderTotal(cart)
       	{
@@ -206,9 +279,9 @@
 	        value = value ? value : 0;
 	        $('#summary-packaging'+cart).text(getFormatedValue(value));
 	        $('#summary-packaging-name'+cart).text(name);
-	        $('input .cart-packaging'+cart).val(value);
-	        $('input .packaging_id'+cart).val(id);
-	        // calculateTax();
+	        $('#cart-packaging'+cart).val(value);
+	        $('#packaging_id'+cart).val(id);
+	        calculateTax(cart);
 	        return;
       	}
 
@@ -217,12 +290,67 @@
 			value = value ? value : 0;
 			$('#summary-shipping'+cart).text(getFormatedValue(value));
 			$('#summary-shipping-name'+cart).text(name);
-			$('input #cart-shipping'+cart).val(value);
-			$('input #shipping_rate_id'+cart).val(id);
-			// calculateTax();
+			$('#cart-shipping'+cart).val(value);
+			$('#shipping_rate_id'+cart).val(id);
+			calculateTax(cart);
 			return;
 		}
 
+		function setTaxes(cart)
+		{
+			var totalPrice  = getOrderTotal(cart);
+			var tax_id = getTaxId(cart);
+			// console.log("totalPrice: "+totalPrice);
+			// console.log("taxID: "+tax_id);
+			if(!tax_id){
+				$('#summary-taxrate'+cart).text(0);
+				calculateTax(cart);
+				return;
+			}
+
+			$.ajax({
+				url: "{{ route('ajax.getTaxRate') }}",
+			    data: {'ID':tax_id},
+				// data: "ID="+tax_id,
+				success: function(result){
+					// console.log(result);
+			    	$('#summary-taxrate'+cart).text(result);
+			   	 	$('#cart-taxrate'+cart).val(result);
+			    	calculateTax(cart);
+				}
+			});
+
+			return;
+		}
+
+		function setDiscount(cart, coupon = null)
+		{
+			var value = coupon.value;
+			var name = coupon.name;
+			var totalPrice  = getOrderTotal(cart);
+
+			if('percent' == coupon.type){
+				value = ( coupon.value * (totalPrice/100) );
+			 	name += coupon.name + '(' + getFormatedValue(coupon.value) + '%)';
+			}
+
+			$('#summary-discount'+cart).text(getFormatedValue(value));
+			$('#summary-discount-name'+cart).text(name);
+			$('#discount_id'+cart).val(coupon.id);
+			calculateTax(cart);
+			return;
+		}
+
+		function resetDiscount(cart)
+		{
+			if($('#discount_id'+cart).val()){
+				$('#summary-discount'+cart).text(getFormatedValue(0));
+				$('#summary-discount-name'+cart).text('');
+				$('#discount_id'+cart).val('');
+				calculateTax(cart);
+			}
+			return;
+		}
     });
 }(window.jQuery, window, document));
 </script>

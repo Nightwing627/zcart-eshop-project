@@ -608,7 +608,7 @@
 
           $.ajax({
             data: "ID="+ID,
-            url: "{{ route('admin.ajax.getTaxRate') }}",
+            url: "{{ route('ajax.getTaxRate') }}",
             success: function(result){
                 $("#summary-taxrate").text(result);
                 $("#cart-taxrate").val(result);
@@ -650,17 +650,17 @@
 
       function getTaxrate()
       {
-          return Number($("#summary-taxrate").text());
+        return Number($("#summary-taxrate").text());
       };
 
       function getTax()
       {
-          return Number($("#summary-tax").text());
+        return Number($("#summary-tax").text());
       };
 
       function getShipping()
       {
-          return Number($("#summary-shipping").text());
+        return Number($("#summary-shipping").text());
       };
 
       function getShippingName()

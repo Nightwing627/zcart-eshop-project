@@ -149,9 +149,23 @@ class Coupon extends Model
      *
      * @return bool
      */
-    public function isUsable()
+    public function isValidCustomer($customer = Null)
     {
-        return ! $this->isLimited() || in_array(\Auth::guard('customer')->id(), $this->customers->pluck('id')->toArray());
+        $customer = $customer ?? \Auth::guard('customer')->id();
+
+        return ! $this->forLimitedCustomer() || in_array($customer, $this->customers->pluck('id')->toArray());
+    }
+
+    /**
+     * Check if the coupon is Usable
+     *
+     * @return bool
+     */
+    public function isValidZone($zone = Null)
+    {
+        if( ! $this->forLimitedZone() ) return TRUE;
+
+        return $zone && in_array($zone, $this->shippingZones->pluck('id')->toArray());
     }
 
     /**

@@ -2,6 +2,8 @@
 // To view img no need to login
 Route::get('image/{path}', 'ImageController@show')->where('path', '.*')->name('image.show');
 
+Route::get('cart/ajax/getTaxRate', 'Admin\ShippingZoneController@ajaxGetTaxRate')->name('ajax.getTaxRate')->middleware('ajax');
+
 Route::group(['middleware' => ['auth']], function(){
 	include('common/Image.php');
 	include('common/Attachment.php');

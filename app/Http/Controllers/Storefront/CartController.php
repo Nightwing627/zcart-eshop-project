@@ -133,7 +133,9 @@ class CartController extends Controller
 
         if( ! $coupon ) return response('Coupon not found', 404);
 
-        if( ! $coupon->isLive() || ! $coupon->isUsable() ) return response('Coupon not valid', 403);
+        if( ! $coupon->isLive() || ! $coupon->isValidCustomer() ) return response('Coupon not valid', 403);
+
+        if( ! $coupon->isValidZone($request->zone) ) return response('Coupon not valid for shipping area', 443);
 
         if( ! $coupon->hasQtt() ) return response('Coupon qtt limit exit', 444);
 
