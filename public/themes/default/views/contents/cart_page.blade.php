@@ -38,13 +38,14 @@
 
         <div class="row shopping-cart-table-wrap space30" id="cartId{{$cart->id}}" data-cart="{{$cart->id}}">
           {!! Form::open(['route' => 'checkout', 'id' => 'formId'.$cart->id]) !!}
-            {{ Form::hidden('shop_id', $cart->shop_id, ['id' => 'shop_id'.$cart->id]) }}
-            {{ Form::hidden('zone_id', $shipping_zone ? $shipping_zone->id : Null, ['id' => 'zone_id'.$cart->id]) }}
-            {{ Form::hidden('tax_id', $shipping_zone ? $shipping_zone->tax_id : Null, ['id' => 'tax_id'.$cart->id]) }}
+            {{ Form::hidden('cart_id', $cart->id, ['id' => 'cart-id'.$cart->id]) }}
+            {{ Form::hidden('shop_id', $cart->shop_id, ['id' => 'shop-id'.$cart->id]) }}
+            {{ Form::hidden('zone_id', $shipping_zone ? $shipping_zone->id : Null, ['id' => 'zone-id'.$cart->id]) }}
+            {{ Form::hidden('tax_id', $shipping_zone ? $shipping_zone->tax_id : Null, ['id' => 'tax-id'.$cart->id]) }}
             {{ Form::hidden('taxrate', Null, ['id' => 'cart-taxrate'.$cart->id]) }}
-            {{ Form::hidden('packaging_id', $default_packaging ? $default_packaging->id : Null, ['id' => 'packaging_id'.$cart->id]) }}
-            {{ Form::hidden('packaging', $default_packaging ? $default_packaging->cost : Null, ['id' => 'cart-packaging'.$cart->id]) }}
-            {{ Form::hidden('discount_id', Null, ['id' => 'discount_id'.$cart->id]) }}
+            {{ Form::hidden('packaging_id', $default_packaging ? $default_packaging->id : Null, ['id' => 'packaging-id'.$cart->id]) }}
+            {{ Form::hidden('shipping_rate_id', Null, ['id' => 'shipping-rate-id'.$cart->id]) }}
+            {{ Form::hidden('discount_id', Null, ['id' => 'discount-id'.$cart->id]) }}
             <div class="col-md-9 nopadding">
                 <div class="shopping-cart-header-section">
                   <span>@lang('theme.store'):</span>
@@ -66,7 +67,7 @@
                     <thead>
                       <tr>
                           <th width="65px">{{ trans('theme.image') }}</th>
-                          <th width="55%">{{ trans('theme.description') }}</th>
+                          <th width="52%">{{ trans('theme.description') }}</th>
                           <th>{{ trans('theme.price') }}</th>
                           <th>{{ trans('theme.quantity') }}</th>
                           <th>{{ trans('theme.total') }}</th>
@@ -82,29 +83,33 @@
                         @endphp
                         <tr class="order-body">
                           <td>
-                              {{ Form::hidden('shipping_weight['.$item->id.']', $item->shipping_weight, ['class' => 'itemWeight'.$cart->id]) }}
-                              <img src="{{ get_storage_file_url(optional($item->image)->path, 'mini') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
-                            </td>
-                            <td>
-                              <div class="shopping-cart-item-title">
-                                  <a href="{{ route('show.product', $item->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>
-                              </div>
+                            {{ Form::hidden('shipping_weight['.$item->id.']', $item->shipping_weight, ['class' => 'itemWeight'.$cart->id]) }}
+                            <img src="{{ get_storage_file_url(optional($item->image)->path, 'mini') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
+                          </td>
+                          <td>
+                            <div class="shopping-cart-item-title">
+                              <a href="{{ route('show.product', $item->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>
+                            </div>
                           </td>
                           <td class="shopping-cart-item-price">
-                            {{ get_formated_currency($item->pivot->unit_price) }}
+                            <span>{{ get_formated_currency_symbol() }}
+                              <span id="item-price{{$cart->id}}-{{$item->id}}" data-value="{{$item->pivot->unit_price}}">{{ get_formated_decimal($item->pivot->unit_price, true, 2) }}</span>
+                            </span>
                           </td>
                           <td>
-                              <div class="product-info-qty-item">
-                                  <button class="product-info-qty product-info-qty-minus">-</button>
-                                  <input class="product-info-qty product-info-qty-input" data-name="product_quantity" data-max="{{$item->stock_quantity}}" type="text" value="1">
-                                  <button class="product-info-qty product-info-qty-plus">+</button>
-                              </div>
+                            <div class="product-info-qty-item">
+                              <button class="product-info-qty product-info-qty-minus">-</button>
+                              <input class="product-info-qty product-info-qty-input" data-name="product_quantity" data-cart="{{$cart->id}}" data-item="{{$item->id}}" data-max="{{$item->stock_quantity}}" type="text" value="1">
+                              <button class="product-info-qty product-info-qty-plus">+</button>
+                            </div>
                           </td>
                           <td>
-                            {{ get_formated_currency($item_total, 2) }}
+                            <span>{{ get_formated_currency_symbol() }}
+                              <span id="item-total{{$cart->id}}-{{$item->id}}" class="item-total{{$cart->id}}">{{ get_formated_decimal($item_total, true, 2) }}</span>
+                            </span>
                           </td>
                           <td>
-                            <a class="cart-item-remove" href="#" data-toggle="tooltip" title="Remove Item">&times;</a>
+                            <a class="cart-item-remove" href="#" data-toggle="tooltip" title="@lang('theme.remove_item')">&times;</a>
                           </td>
                         </tr> <!-- /.order-body -->
                       @endforeach
@@ -124,11 +129,7 @@
                             </span>
                           </div><!-- /input-group -->
                         </td>
-                        <td colspan="2"><span class="pull-right">{{ trans('theme.subtotal') }}: </span></td>
-                        <td>{{ get_formated_currency_symbol() }}
-                          <span id="summary-total{{$cart->id}}">{{ get_formated_decimal($cart_total, true, 2) }}</span>
-                        </td>
-                        <td></td>
+                        <td colspan="4"></td>
                       </tr>
                     </tfoot>
                 </table>
@@ -138,6 +139,23 @@
                 <div class="side-widget">
                     <h3 class="side-widget-title"><span>{{ trans('theme.cart_summary') }}</span></h3>
                     <ul class="shopping-cart-summary">
+                        <li>
+                          <span>{{ trans('theme.subtotal') }}</span>
+                          <span>{{ get_formated_currency_symbol() }}
+                            <span id="summary-total{{$cart->id}}">{{ get_formated_decimal($cart_total, true, 2) }}</span>
+                          </span>
+                        </li>
+                        <li>
+                          <span>
+                            <a class="dynamic-shipping-rates" data-toggle="popover" data-cart="{{$cart->id}}" data-options="{{ $shipping_options }}" id="shipping-options{{$cart->id}}" title= "{{ trans('theme.shipping') }}">
+                              <u>{{ trans('theme.shipping') }}</u>
+                            </a>
+                            <em id="summary-shipping-name{{$cart->id}}" class="small text-muted"></em>
+                          </span>
+                          <span>{{ get_formated_currency_symbol() }}
+                            <span id="summary-shipping{{$cart->id}}">{{ get_formated_decimal(0, true, 2) }}</span>
+                          </span>
+                        </li>
                         <li>
                           <span>
                             <a class="packaging-options" data-toggle="popover" data-cart="{{$cart->id}}" data-options="{{ getPackagings($shop_id) }}" title="{{ trans('theme.packaging') }}">
@@ -154,17 +172,6 @@
                           </span>
                         </li>
                         <li>
-                          <span>
-                            <a class="dynamic-shipping-rates" data-toggle="popover" data-cart="{{$cart->id}}" data-options="{{ $shipping_options }}" title= "{{ trans('theme.shipping') }}">
-                              <u>{{ trans('theme.shipping') }}</u>
-                            </a>
-                            <em id="summary-shipping-name{{$cart->id}}" class="small text-muted"></em>
-                          </span>
-                          <span>{{ get_formated_currency_symbol() }}
-                            <span id="summary-shipping{{$cart->id}}">{{ get_formated_decimal(0, true, 2) }}</span>
-                          </span>
-                        </li>
-                        <li>
                           <span>{{ trans('theme.discount') }}
                             <em id="summary-discount-name{{$cart->id}}" class="small text-muted"></em>
                           </span>
@@ -172,7 +179,7 @@
                             <span id="summary-discount{{$cart->id}}">{{ get_formated_decimal(0, true, 2) }}</span>
                           </span>
                         </li>
-                        <li>
+                        <li id="tax-section-li{{$cart->id}}" style="display: none;">
                           <span>{{ trans('theme.taxes') }}</span>
                           <span>{{ get_formated_currency_symbol() }}
                             <span id="summary-taxes{{$cart->id}}">{{ get_formated_decimal(0, true, 2) }}</span>

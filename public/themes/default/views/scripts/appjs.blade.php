@@ -333,14 +333,14 @@
 
             if (!currentVal || currentVal == "" || currentVal == "NaN") currentVal = 0;
             if(node.data('max') > currentVal)
-                node.val(currentVal + 1);
+                node.val(currentVal + 1).change();
         });
         $(".product-info-qty-minus").on('click', function(e) {
             e.preventDefault();
             var currentVal = parseInt($(this).next(".product-info-qty-input").val(), 10);
             if (currentVal == "NaN") currentVal = 1;
             if (currentVal > 1)
-                $(this).next(".product-info-qty-input").val(currentVal - 1);
+                $(this).next(".product-info-qty-input").val(currentVal - 1).change();
         });
         // END Product qty field
     }

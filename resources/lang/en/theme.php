@@ -281,6 +281,7 @@ return [
 	'refurbished' => 'Refurbished',
     'register_here' => 'Register here',
     'remeber_me' => 'Remeber Me',
+    'remove_item' => 'Remove Item',
     'return_goods' => 'Return Goods',
     'review' => 'Review',
 	'reviews' => '{0,1} :count Review|{2,*} :count Reviews',

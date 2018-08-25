@@ -5,16 +5,47 @@
     	$('.shopping-cart-table-wrap').each(function(){
 			var cart = $(this).data('cart');
 
+			var filtered = getShippingOptions(cart);
+			filtered.sort(function(a, b){return a.rate - b.rate});
+
+            setShippingCost(cart, filtered[0].name, filtered[0].rate, filtered[0].id);
+
+			// console.log(filtered[0]);
     		setTaxes(cart);
     	});
+
+        // Update Item total on qty change
+        $(".product-info-qty-input").on('change', function(e) {
+	        var cart = $(this).data('cart');
+	        var item = $(this).data('item');
+        	var total = $('#item-price'+cart+'-'+item).data('value') * $(this).val();
+
+			$('#item-total'+cart+'-'+item).text(getFormatedValue(total));
+
+			calculateCartTotal(cart);
+    	});
+
+		function calculateCartTotal(cart)
+		{
+			var total = 0;
+	    	$('.item-total'+cart).each(function(){
+				total += Number($(this).text());
+	    	});
+
+	    	$('#summary-total'+cart).text(getFormatedValue(total));
+
+	        calculateTax(cart);
+		}
+
+
 
     	// Coupon
     	$('.apply_seller_coupon').on('click', function(e){
             e.preventDefault();
 	        var cart = $(this).data('cart');
 	        var coupon = $('#coupon'+cart).val();
-	        var shop = $('#shop_id'+cart).val();
-	        var zone = $('#zone_id'+cart).val();
+	        var shop = $('#shop-id'+cart).val();
+	        var zone = $('#zone-id'+cart).val();
 			coupon = coupon.trim();
 
 	        if(coupon){
@@ -129,7 +160,7 @@
 				var cart = $(this).data('cart');
 				var current = getShippingName(cart);
 
-				var filtered = getShippingOptions(cart, $(this).data('options'));
+				var filtered = getShippingOptions(cart);
 
 				if($.isEmptyObject(filtered)){
 					var options = '<p class="space10"><span class="space10"></span>{{ trans('theme.seller_doesnt_ship') }}</p>';
@@ -159,24 +190,19 @@
         	return parseFloat(value).toFixed(2);
       	}
 
-		function getShippingOptions(cart, shipping_options)
-		{
+      	function getShippingOptions(cart)
+      	{
 			var totalPrice  = getOrderTotal(cart);
 			var cartWeight  = getCartWeight(cart);
+			var shippingOptions = $("#shipping-options"+cart).data('options');
 
-			var filtered = shipping_options.filter(function (el) {
-			  var result =  el.based_on == 'price' &&
-			                el.minimum <= totalPrice &&
-			                (el.maximum >= totalPrice || !el.maximum);
+			var filtered = shippingOptions.filter(function (el) {
+			  	var result = el.based_on == 'price' && el.minimum <= totalPrice && (el.maximum >= totalPrice || !el.maximum);
 
-			  if(cartWeight){
-			    result =  result ||
-			              (el.based_on == 'weight' &&
-			              el.minimum <= cartWeight &&
-			              el.maximum >= cartWeight);
-			  }
+			  	if(cartWeight)
+			    	result = result || (el.based_on == 'weight' && el.minimum <= cartWeight && el.maximum >= cartWeight);
 
-			  return result;
+			  	return result;
 			});
 
 			return filtered;
@@ -188,6 +214,12 @@
 			var taxrate = getTaxrate(cart);
 
 			var tax = (total * taxrate)/100;
+
+			if(tax > 0)
+				$("#tax-section-li"+cart).show();
+			else
+				$("#tax-section-li"+cart).hide();
+
 			$('#summary-taxes'+cart).text(getFormatedValue(tax));
 
 			calculateOrderSummary(cart);
@@ -249,7 +281,7 @@
 
 		function getTaxId(cart)
 		{
-			return $("#tax_id"+cart).val();
+			return $("#tax-id"+cart).val();
 		};
 
 		function getTaxrate(cart)
@@ -272,15 +304,14 @@
           	return Number($("#summary-total"+cart).text());
       	};
 
-
       	// Setters
       	function setPackagingCost(cart, name, value = 0, id = '')
       	{
 	        value = value ? value : 0;
 	        $('#summary-packaging'+cart).text(getFormatedValue(value));
 	        $('#summary-packaging-name'+cart).text(name);
-	        $('#cart-packaging'+cart).val(value);
-	        $('#packaging_id'+cart).val(id);
+	        $('#packaging-id'+cart).val(id);
+
 	        calculateTax(cart);
 	        return;
       	}
@@ -290,8 +321,7 @@
 			value = value ? value : 0;
 			$('#summary-shipping'+cart).text(getFormatedValue(value));
 			$('#summary-shipping-name'+cart).text(name);
-			$('#cart-shipping'+cart).val(value);
-			$('#shipping_rate_id'+cart).val(id);
+			$('#shipping-rate-id'+cart).val(id);
 			calculateTax(cart);
 			return;
 		}
@@ -300,9 +330,8 @@
 		{
 			var totalPrice  = getOrderTotal(cart);
 			var tax_id = getTaxId(cart);
-			// console.log("totalPrice: "+totalPrice);
-			// console.log("taxID: "+tax_id);
-			if(!tax_id){
+
+			if( ! tax_id ){
 				$('#summary-taxrate'+cart).text(0);
 				calculateTax(cart);
 				return;
@@ -311,11 +340,10 @@
 			$.ajax({
 				url: "{{ route('ajax.getTaxRate') }}",
 			    data: {'ID':tax_id},
-				// data: "ID="+tax_id,
 				success: function(result){
-					// console.log(result);
 			    	$('#summary-taxrate'+cart).text(result);
 			   	 	$('#cart-taxrate'+cart).val(result);
+
 			    	calculateTax(cart);
 				}
 			});
@@ -336,17 +364,17 @@
 
 			$('#summary-discount'+cart).text(getFormatedValue(value));
 			$('#summary-discount-name'+cart).text(name);
-			$('#discount_id'+cart).val(coupon.id);
+			$('#discount-id'+cart).val(coupon.id);
 			calculateTax(cart);
 			return;
 		}
 
 		function resetDiscount(cart)
 		{
-			if($('#discount_id'+cart).val()){
+			if($('#discount-id'+cart).val()){
 				$('#summary-discount'+cart).text(getFormatedValue(0));
 				$('#summary-discount-name'+cart).text('');
-				$('#discount_id'+cart).val('');
+				$('#discount-id'+cart).val('');
 				calculateTax(cart);
 			}
 			return;

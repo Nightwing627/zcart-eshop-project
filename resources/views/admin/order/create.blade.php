@@ -620,22 +620,22 @@
 
       function calculateTax()
       {
-          var total = getTotalAmount();
-          var taxrate = getTaxrate();
+        var total = getTotalAmount();
+        var taxrate = getTaxrate();
 
-          var tax = (total * taxrate)/100;
-          $("#summary-tax").text(getFormatedValue(tax));
-          $("#cart-taxes").val(tax);
+        var tax = (total * taxrate)/100;
+        $("#summary-tax").text(getFormatedValue(tax));
+        $("#cart-taxes").val(tax);
 
-          calculateOrderSummary();
-          return;
+        calculateOrderSummary();
+        return;
       };
 
       function calculateOrderSummary()
       {
-          var grand = getTotalAmount() + getTax();
-          $("#summary-grand-total").text(getFormatedValue(grand));
-          return;
+        var grand = getTotalAmount() + getTax();
+        $("#summary-grand-total").text(getFormatedValue(grand));
+        return;
       }
 
       function getOrderTotal()
@@ -665,32 +665,32 @@
 
       function getShippingName()
       {
-          return $("#summary-shipping-name").text().trim();
+        return $("#summary-shipping-name").text().trim();
       };
 
       function getHandling()
       {
-          return Number($("#summary-handling").text());
+        return Number($("#summary-handling").text());
       };
 
       function getPackagingName()
       {
-          return $("#summary-packaging-name").text().trim();
+        return $("#summary-packaging-name").text().trim();
       };
 
       function getPackaging()
       {
-          return Number($("#summary-packaging").text());
+        return Number($("#summary-packaging").text());
       };
 
       function getItemQtt(ID)
       {
-          return $("#qtt-"+ID).val();
+        return $("#qtt-"+ID).val();
       };
 
       function getItemPrice(ID)
       {
-          return $("#price-"+ID).val();
+        return $("#price-"+ID).val();
       };
 
       function getItemTotalWeight(ID)
@@ -728,7 +728,7 @@
       {
         $("tr#"+ID).remove();
         if($("tbody#items tr").length <= 1)
-            $("#empty-cart").show(); // Show the empty cart message
+          $("#empty-cart").show(); // Show the empty cart message
 
         calculateOrderTotal();
         return;
@@ -772,7 +772,6 @@
       $('input#same_as_shipping_address').on('ifUnchecked', function () {
         $('#billing-address-block').show();
       });
-
     }(window.jQuery, window, document));
   </script>
 @endsection
