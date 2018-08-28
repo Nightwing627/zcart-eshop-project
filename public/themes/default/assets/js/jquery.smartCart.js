@@ -185,7 +185,8 @@
             }
 
             if (!p.hasOwnProperty(this.options.paramSettings.productQuantity)) {
-                this._logMessage('Quantity not found, default to 1');
+                // this._logMessage('');
+                // this._logMessage('Quantity not found, default to 1');
                 p[this.options.paramSettings.productQuantity] = 1;
             }
 

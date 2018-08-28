@@ -34,7 +34,7 @@
             @if (count($errors) > 0)
                 <div class="alert alert-danger alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <strong>{{ trans('app.error') }}!</strong> {{ trans('messages.input_error') }}<br><br>
+                  <strong>{{ trans('theme.error') }}!</strong> {{ trans('messages.input_error') }}<br><br>
                   <ul class="list-group">
                       @foreach ($errors->all() as $error)
                         <li class="list-group-item list-group-item-danger">{{ $error }}</li>

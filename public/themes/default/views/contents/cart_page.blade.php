@@ -32,8 +32,6 @@
 
           $shipping_options = $shipping_zone ? getShippingRates($shipping_zone->id) : 'NaN';
           // echo "<pre>"; print_r($shipping_zone); echo "</pre>"; exit();
-
-          // echo "<pre>"; print_r(Auth::guard('customer')->id()); echo "</pre>"; exit();
         @endphp
 
         <div class="row shopping-cart-table-wrap space30" id="cartId{{$cart->id}}" data-cart="{{$cart->id}}">
@@ -63,7 +61,7 @@
                   </span>
                 </div>
 
-                <table class="table table shopping-cart-item-table">
+                <table class="table table shopping-cart-item-table" id="table{{$cart->id}}">
                     <thead>
                       <tr>
                           <th width="65px">{{ trans('theme.image') }}</th>
@@ -81,7 +79,7 @@
                           $item_total = $item->pivot->unit_price * $item->pivot->quantity;
                           $cart_total += $item_total;
                         @endphp
-                        <tr class="order-body">
+                        <tr class="cart-item-tr">
                           <td>
                             {{ Form::hidden('shipping_weight['.$item->id.']', $item->shipping_weight, ['class' => 'itemWeight'.$cart->id]) }}
                             <img src="{{ get_storage_file_url(optional($item->image)->path, 'mini') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
@@ -99,7 +97,7 @@
                           <td>
                             <div class="product-info-qty-item">
                               <button class="product-info-qty product-info-qty-minus">-</button>
-                              <input class="product-info-qty product-info-qty-input" data-name="product_quantity" data-cart="{{$cart->id}}" data-item="{{$item->id}}" data-max="{{$item->stock_quantity}}" type="text" value="1">
+                              <input class="product-info-qty product-info-qty-input" data-name="product_quantity" data-cart="{{$cart->id}}" data-item="{{$item->id}}" data-max="{{$item->stock_quantity}}" type="text" value="{{$item->pivot->quantity}}">
                               <button class="product-info-qty product-info-qty-plus">+</button>
                             </div>
                           </td>
@@ -109,7 +107,7 @@
                             </span>
                           </td>
                           <td>
-                            <a class="cart-item-remove" href="#" data-toggle="tooltip" title="@lang('theme.remove_item')">&times;</a>
+                            <a class="cart-item-remove" href="#" data-cart="{{$cart->id}}" data-item="{{$item->id}}" data-toggle="tooltip" title="@lang('theme.remove_item')">&times;</a>
                           </td>
                         </tr> <!-- /.order-body -->
                       @endforeach
@@ -118,8 +116,8 @@
                     <tfoot>
                       <tr>
                         <td></td>
-                        <td>
-                          <div class="input-group">
+                        <td colspan="2">
+                          <div class="input-group full-width">
                             <span class="input-group-addon flat">
                               <i class="fa fa-ticket"></i>
                             </span>
@@ -129,11 +127,15 @@
                             </span>
                           </div><!-- /input-group -->
                         </td>
-                        <td colspan="4"></td>
+                        <td colspan="3"></td>
                       </tr>
                     </tfoot>
                 </table>
-            </div>
+
+                <div class="notice notice-warning notice-sm hidden" id="notice{{$cart->id}}">
+                  <strong>{{ trans('theme.warning') }}</strong> @lang('theme.notify.seller_doesnt_ship')
+                </div>
+            </div><!-- /.col-md-9 -->
 
             <div class="col-md-3 space20">
                 <div class="side-widget">
@@ -194,8 +196,8 @@
                     </ul>
                 </div>
 
-                <button class="btn btn-primary btn-sm flat pull-right" type="submit"><i class="fa fa-shopping-cart"></i> {{ trans('theme.button.buy_from_this_seller') }}</button>
-            </div>
+                <button class="btn btn-primary btn-sm flat pull-right" id="checkout-btn{{$cart->id}}" type="submit"><i class="fa fa-shopping-cart"></i> {{ trans('theme.button.buy_from_this_seller') }}</button>
+            </div><!-- /.col-md-3 -->
           {!! Form::close() !!}
         </div> <!-- /.row -->
       @endforeach

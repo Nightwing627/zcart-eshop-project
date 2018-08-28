@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Storefront;
 
 use Auth;
 use View;
+use App\Address;
 use App\Wishlist;
 use App\Customer;
 use App\Helpers\ListHelper;

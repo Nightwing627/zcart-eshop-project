@@ -1000,9 +1000,9 @@ if ( ! function_exists('getDefaultPackaging') )
     {
         $shop = $shop ?: Auth::user()->merchantId();
 
-        $found = \DB::table('packagings')->select('id', 'name', 'cost')->where('shop_id', $shop)->where('default', 1)->where('active', 1)->whereNull('deleted_at')->first();
+        $packaging = \DB::table('packagings')->select('id', 'name', 'cost')->where('shop_id', $shop)->where('default', 1)->where('active', 1)->whereNull('deleted_at')->first();
 
-        if ($found) return $found;
+        if ($packaging) return $packaging;
 
         return \DB::table('packagings')->select('id', 'name', 'cost')->where('id', 1)->first();
     }

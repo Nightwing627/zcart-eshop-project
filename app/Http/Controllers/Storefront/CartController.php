@@ -42,11 +42,13 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
+        // Get visitors IP to idenfy the customer if not logged in
         $customer_id = Auth::guard('customer')->check() ? Auth::guard('customer')->user()->id : Null;
 
         $cart_list = json_decode($request->cart_list);
         $cart_items = array_column($cart_list, 'product_quantity', 'product_id'); // Get listing id as key and qtt as value
 
+        // Retrive items from listings
         $listings = Inventory::select('id', 'shop_id', 'title', 'condition', 'stock_quantity', 'sale_price', 'offer_price', 'offer_start', 'offer_end', 'shipping_weight', 'free_shipping', 'min_order_quantity', 'active')
         ->whereIn('id', array_keys($cart_items))->with(['attributeValues:value'])->get();
 
@@ -68,13 +70,14 @@ class CartController extends Controller
             // Save the cart info
             $handling = getShopConfig($shop_id, 'order_handling_cost');
 
+            // Instantiate new cart if old cart not found for the shop and customer
             $cart = $old_cart_from_shop ?? new Cart;
             $cart->shop_id = $shop_id;
             $cart->customer_id = $customer_id;
             $cart->ip_address = $request->ip();
             // $cart->shipping_rate_id = Null;
-            $cart->item_count = count($cart_list);
-            $cart->quantity = array_sum($cart_items);
+            $cart->item_count = count($stock_items);
+            $cart->quantity = array_sum(array_intersect_key($cart_items, array_flip($stock_items->pluck('id')->toArray())));
             $cart->handling = $handling;
 
             $total = 0;
@@ -123,7 +126,7 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function validate_coupon(Request $request)
+    public function validateCoupon(Request $request)
     {
         // $request->all();
         $coupon = Coupon::active()->where([
@@ -139,33 +142,47 @@ class CartController extends Controller
 
         if( ! $coupon->hasQtt() ) return response('Coupon qtt limit exit', 444);
 
-
-
-        // $count = \DB::table('orders')->where('coupon_id', $coupon->id)->get();
-
         return response()->json($coupon->toArray());
-
-        return response('Not found', 404);
     }
-
-
-
-
-
 
     /**
-     * Update the specified resource in storage.
+     * validate coupon.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart $cart)
+    public function remove(Request $request)
     {
-        $cart->update($request->all());
+        $cart = Cart::findOrFail($request->cart);
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        $result = \DB::table('cart_items')->where([
+            ['cart_id', $request->cart],
+            ['inventory_id', $request->item],
+        ])->delete();
+
+        if($result){
+            if( ! $cart->inventories()->count() )
+                $cart->forceDelete();
+
+            return response('Item removed', 200);
+        }
+
+        return response('Item remove failed!', 404);
     }
+
+    // /**
+    //  * Update the specified resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @param  \App\Cart  $cart
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function update(Request $request, Cart $cart)
+    // {
+    //     $cart->update($request->all());
+
+    //     return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+    // }
 
     /**
      * Checkout the specified cart.
@@ -188,10 +205,10 @@ class CartController extends Controller
      * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Cart $cart)
-    {
-        $cart->destroy();
+    // public function destroy(Request $request, Cart $cart)
+    // {
+    //     $cart->destroy();
 
-        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
-    }
+    //     return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
+    // }
 }

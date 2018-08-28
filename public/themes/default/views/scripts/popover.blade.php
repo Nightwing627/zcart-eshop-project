@@ -2,15 +2,22 @@
 "use strict";
 ;(function($, window, document) {
     $(document).ready(function(){
+        // Delete the cart info from localStorage
+        // localStorage.removeItem('cart');
+
     	$('.shopping-cart-table-wrap').each(function(){
 			var cart = $(this).data('cart');
 
 			var filtered = getShippingOptions(cart);
 			filtered.sort(function(a, b){return a.rate - b.rate});
 
-            setShippingCost(cart, filtered[0].name, filtered[0].rate, filtered[0].id);
+			if( ! $.isEmptyObject(filtered) ){
+	            setShippingCost(cart, filtered[0].name, filtered[0].rate, filtered[0].id);
+			}
+			else{
+				disableCartCheckout(cart);
+			}
 
-			// console.log(filtered[0]);
     		setTaxes(cart);
     	});
 
@@ -31,13 +38,44 @@
 	    	$('.item-total'+cart).each(function(){
 				total += Number($(this).text());
 	    	});
-
+	    	console.log(total);
 	    	$('#summary-total'+cart).text(getFormatedValue(total));
 
 	        calculateTax(cart);
 		}
 
+    	// Coupon
+    	$('.cart-item-remove').on('click', function(e){
+            e.preventDefault();
+            var node = $(this);
+	        var cart = $(this).data('cart');
+	        var item = $(this).data('item');
 
+			$.ajax({
+			    url: '{{ route('cart.removeItem') }}',
+			    type: 'POST',
+			    data: {'cart':cart,'item':item},
+			    dataType: 'JSON',
+			    complete: function (xhr, textStatus) {
+			    	if(200 == xhr.status){
+		                @include('layouts.notification', ['message' => trans('theme.notify.item_removed_from_cart'), 'type' => 'success', 'icon' => 'check-circle'])
+
+			    		node.parents('tr.cart-item-tr').remove();
+
+			    		// Remove the cart if it has no items
+			    		if($('#table'+cart+' tbody').children().length == 0){
+							$('#cartId'+cart).remove();
+			    		}
+			    		else{
+							calculateCartTotal(cart);
+			    		}
+			    	}
+			    	else{
+		                @include('layouts.notification', ['message' => trans('theme.notify.failed'), 'type' => 'warning', 'icon' => 'times-circle'])
+			    	}
+			    },
+			});
+    	});
 
     	// Coupon
     	$('.apply_seller_coupon').on('click', function(e){
@@ -379,6 +417,13 @@
 			}
 			return;
 		}
+
+      	function disableCartCheckout(cart)
+      	{
+      		$('#checkout-btn'+cart).attr("disabled", "disabled");
+      		$('#table'+cart+' > tfoot').addClass('hidden');
+      		$('#notice'+cart).removeClass('hidden');
+      	}
     });
 }(window.jQuery, window, document));
 </script>

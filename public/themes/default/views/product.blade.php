@@ -8,7 +8,7 @@
     @include('contents.product_page')
 
     <!-- RELATED ITEMS -->
-    <section>
+    <section id="related-items">
         <div class="container">
           <div class="row">
               <div class="col-md-12 nopadding">
