@@ -8,17 +8,23 @@
     	$('.shopping-cart-table-wrap').each(function(){
 			var cart = $(this).data('cart');
 
-			var filtered = getShippingOptions(cart);
-			filtered.sort(function(a, b){return a.rate - b.rate});
+			setShippingOptions(cart);
+    	});
 
-			if( ! $.isEmptyObject(filtered) ){
-	            setShippingCost(cart, filtered[0].name, filtered[0].rate, filtered[0].id);
-			}
-			else{
-				disableCartCheckout(cart);
-			}
+        // Update shipping options
+        $(".ship_to").on('change', function(e) {
+	        var cart = $(this).data('cart');
+	        var shop = $('#shop-id'+cart).val();
+	        var countryId = $(this).val();
 
-    		setTaxes(cart);
+		    var zone = getFromPHPHelper('get_shipping_zone_of', [shop, countryId]);
+			zone = JSON.parse(zone);
+			$("#tax-id"+cart).val(zone.tax_id);
+
+		    var options = getFromPHPHelper('getShippingRates', [zone.id]);
+			$("#shipping-options"+cart).data('options', JSON.parse(options));
+
+			setShippingOptions(cart);
     	});
 
         // Update Item total on qty change
@@ -38,7 +44,7 @@
 	    	$('.item-total'+cart).each(function(){
 				total += Number($(this).text());
 	    	});
-	    	console.log(total);
+
 	    	$('#summary-total'+cart).text(getFormatedValue(total));
 
 	        calculateTax(cart);
@@ -353,6 +359,21 @@
 	        calculateTax(cart);
 	        return;
       	}
+
+		function setShippingOptions(cart)
+		{
+			var filtered = getShippingOptions(cart);
+			filtered.sort(function(a, b){return a.rate - b.rate});
+
+			if( ! $.isEmptyObject(filtered) ){
+	            setShippingCost(cart, filtered[0].name, filtered[0].rate, filtered[0].id);
+			}
+			else{
+				disableCartCheckout(cart);
+			}
+
+    		setTaxes(cart);
+		}
 
 		function setShippingCost(cart, name = '', value = 0, id = '')
 		{

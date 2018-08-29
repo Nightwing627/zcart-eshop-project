@@ -21,6 +21,7 @@
         });
 
 		$(document).ready(function(){
+
 		    $(".ajax-modal-btn").show(); // show the ajax functional button when the page loaded completely
 
 		    // Initialise all plugins
@@ -733,19 +734,19 @@
 				}
 				else if(route.match(/inventory/i)){
 				    var tbl = 'inventories';
-					var url = '/product/';
+					var url = 'product/';
 				}
 				else if(route.match(/page/i)){
 				    var tbl = 'pages';
-					var url = '/page/';
+					var url = 'page/';
 				}
 				else if(route.match(/blog/i)){
 				    var tbl = 'blogs';
-					var url = '/blog/';
+					var url = 'blog/';
 				}
 				else{
 				    var tbl = 'shops';
-					var url = '/shop/';
+					var url = 'shop/';
 				}
 
 			    var check = getFromPHPHelper('verifyUniqueSlug', [slug, tbl]);
@@ -755,7 +756,7 @@
 			    }
 			    else if(check == 'true'){
 				    node.closest( ".form-group" ).removeClass('has-error');
-			    	msg = "{{ config('app.url') }}" + url + slug;
+			    	msg = "{{ ends_with(config('app.url'),'/') ? config('app.url') : config('app.url') . '/' }}" + url + slug;
 			    }
 		  	}
 
@@ -1107,7 +1108,7 @@
 	 */
 	function getFromPHPHelper(funcName, args = null)
 	{
-	    var url = "{{ url('admin/system/ajax/getFromPHPHelper') }}";
+	    var url = "{{ route('helper.getFromPHPHelper') }}";
 	    var result = 0;
 	    $.ajax({
 	        url: url,

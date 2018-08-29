@@ -812,7 +812,7 @@ if ( ! function_exists('get_shipping_zone_of') )
         }
 
         // If the iso_2 code given as state
-        if( !$state && !is_numeric($state) ){
+        if($state && !is_numeric($state) ){
             $temp = \DB::table('states')->select('id')->whereNotNull('iso_3166_2')->where([
                 ['iso_3166_2', '=', $state],
                 ['country_id', '=', $country]

@@ -470,9 +470,9 @@
               var node = '<tr id="'+ ID +'">' +
                   '<td><img src="' + imgSrc + '" class="img-circle img-sm" alt="{{ trans('app.image') }}"></td>' +
                   '<td class="nopadding-right" width="55%">' + itemDescription +
-                      '<input type="hidden" name="cart['+ numOfRows +'][inventory_id]" value="'+ ID +'"></input>' +
-                      '<input type="hidden" name="cart['+ numOfRows +'][item_description]" value="'+ itemDescription +'"></input>' +
-                      '<input type="hidden" name="cart['+ numOfRows +'][shipping_weight]" value="'+ productObj[ID].shipping_weight +'" id="weight-'+ ID +'" class="itemWeight"></input>' +
+                    '<input type="hidden" name="cart['+ numOfRows +'][inventory_id]" value="'+ ID +'"></input>' +
+                    '<input type="hidden" name="cart['+ numOfRows +'][item_description]" value="'+ itemDescription +'"></input>' +
+                    '<input type="hidden" name="cart['+ numOfRows +'][shipping_weight]" value="'+ productObj[ID].shipping_weight +'" id="weight-'+ ID +'" class="itemWeight"></input>' +
                   '</td>' +
                   '<td class="nopadding-right" width="15%">' +
                     '<input name="cart['+ numOfRows +'][unit_price]" value="' + productObj[ID].salePrice + '" id="price-'+ ID +'" type="number" class="form-control itemPrice no-border" placeholder="{{ trans('app.price') }}" required>' +

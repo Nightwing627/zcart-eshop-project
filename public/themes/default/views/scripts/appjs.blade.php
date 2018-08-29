@@ -417,5 +417,30 @@
         }
         return rtn;
     }
+
+
 }(window.jQuery, window, document));
+
+ /*
+ * Get result from PHP helper functions
+ *
+ * @param  {str} funcName The PHP function name will be called
+ * @param  {mix} args arguments need to pass into the PHP function
+ *
+ * @return {mix}
+ */
+function getFromPHPHelper(funcName, args = null)
+{
+    var url = "{{ route('helper.getFromPHPHelper') }}";
+    var result = 0;
+    $.ajax({
+        url: url,
+        data: "funcName="+ funcName + "&args=" + args,
+        async: false,
+        success: function(v){
+          result = v;
+        }
+    });
+    return result;
+}
 </script>

@@ -9,9 +9,9 @@
           $shipping_state_id = $shipping_address ? $shipping_address->state_id : config('system_settings.address_default_state');
         }
         else{
-          $shipping_country = geoip(request()->ip());
-          $shipping_country_id = get_id_of_model('countries', 'iso_3166_2', $shipping_country->iso_code);
-          $shipping_state_id = get_id_of_model('states', 'iso_3166_2', $shipping_country->state);
+          $geoip = geoip(request()->ip());
+          $shipping_country_id = get_id_of_model('countries', 'iso_3166_2', $geoip->iso_code);
+          $shipping_state_id = $geoip->state;
         }
 
         $country_dropdown = '';
@@ -31,7 +31,6 @@
           $shipping_zone = get_shipping_zone_of($shop_id, $shipping_country_id, $shipping_state_id);
 
           $shipping_options = $shipping_zone ? getShippingRates($shipping_zone->id) : 'NaN';
-          // echo "<pre>"; print_r($shipping_zone); echo "</pre>"; exit();
         @endphp
 
         <div class="row shopping-cart-table-wrap space30" id="cartId{{$cart->id}}" data-cart="{{$cart->id}}">
@@ -55,7 +54,7 @@
 
                   <span class="pull-right">
                       @lang('theme.ship_to'):
-                      <select name="sort_by" class="selectBoxIt ship_to" data-cart="{{$cart->id}}">
+                      <select name="sort_by" class="selectBoxIt ship_to" id="shipTo{{$cart->id}}" data-cart="{{$cart->id}}">
                         {!! $country_dropdown !!}
                       </select>
                   </span>
@@ -91,7 +90,7 @@
                           </td>
                           <td class="shopping-cart-item-price">
                             <span>{{ get_formated_currency_symbol() }}
-                              <span id="item-price{{$cart->id}}-{{$item->id}}" data-value="{{$item->pivot->unit_price}}">{{ get_formated_decimal($item->pivot->unit_price, true, 2) }}</span>
+                              <span id="item-price{{$cart->id}}-{{$item->id}}" data-value="{{$item->pivot->unit_price}}">{{ number_format($item->pivot->unit_price, 2, '.', '') }}</span>
                             </span>
                           </td>
                           <td>
@@ -103,7 +102,7 @@
                           </td>
                           <td>
                             <span>{{ get_formated_currency_symbol() }}
-                              <span id="item-total{{$cart->id}}-{{$item->id}}" class="item-total{{$cart->id}}">{{ get_formated_decimal($item_total, true, 2) }}</span>
+                              <span id="item-total{{$cart->id}}-{{$item->id}}" class="item-total{{$cart->id}}">{{ number_format($item_total, 2, '.', '') }}</span>
                             </span>
                           </td>
                           <td>
@@ -144,7 +143,7 @@
                         <li>
                           <span>{{ trans('theme.subtotal') }}</span>
                           <span>{{ get_formated_currency_symbol() }}
-                            <span id="summary-total{{$cart->id}}">{{ get_formated_decimal($cart_total, true, 2) }}</span>
+                            <span id="summary-total{{$cart->id}}">{{ number_format($cart_total, 2, '.', '') }}</span>
                           </span>
                         </li>
                         <li>
@@ -155,7 +154,7 @@
                             <em id="summary-shipping-name{{$cart->id}}" class="small text-muted"></em>
                           </span>
                           <span>{{ get_formated_currency_symbol() }}
-                            <span id="summary-shipping{{$cart->id}}">{{ get_formated_decimal(0, true, 2) }}</span>
+                            <span id="summary-shipping{{$cart->id}}">{{ number_format(0, 2, '.', '') }}</span>
                           </span>
                         </li>
                         <li>
@@ -169,7 +168,7 @@
                           </span>
                           <span>{{ get_formated_currency_symbol() }}
                             <span id="summary-packaging{{$cart->id}}">
-                              {{ get_formated_decimal($default_packaging ? $default_packaging->cost : 0, true, 2) }}
+                              {{ number_format($default_packaging ? $default_packaging->cost : 0, 2, '.', '') }}
                             </span>
                           </span>
                         </li>
@@ -178,19 +177,19 @@
                             <em id="summary-discount-name{{$cart->id}}" class="small text-muted"></em>
                           </span>
                           <span>-{{ get_formated_currency_symbol() }}
-                            <span id="summary-discount{{$cart->id}}">{{ get_formated_decimal(0, true, 2) }}</span>
+                            <span id="summary-discount{{$cart->id}}">{{ number_format(0, 2, '.', '') }}</span>
                           </span>
                         </li>
                         <li id="tax-section-li{{$cart->id}}" style="display: none;">
                           <span>{{ trans('theme.taxes') }}</span>
                           <span>{{ get_formated_currency_symbol() }}
-                            <span id="summary-taxes{{$cart->id}}">{{ get_formated_decimal(0, true, 2) }}</span>
+                            <span id="summary-taxes{{$cart->id}}">{{ number_format(0, 2, '.', '') }}</span>
                           </span>
                         </li>
                         <li>
                           <span>{{ trans('theme.total') }}</span>
                           <span>{{ get_formated_currency_symbol() }}
-                            <span id="summary-grand-total{{$cart->id}}">{{ get_formated_decimal(0, true, 2) }}</span>
+                            <span id="summary-grand-total{{$cart->id}}">{{ number_format(0, 2, '.', '') }}</span>
                           </span>
                         </li>
                     </ul>

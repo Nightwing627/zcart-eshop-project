@@ -138,17 +138,9 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		// AJAX routes
 		Route::group(['middleware' => 'ajax'], function()
 		{
-		    // Route::post('message/massUpdate/{statusOrLabel}/{type?}', 'MessageController@massUpdate')->name('support.message.massUpdate');
-
 			Route::get('catalog/ajax/getParrentAttributeType', 'AttributeController@ajaxGetParrentAttributeType')->name('ajax.getParrentAttributeType');
 
-			// Route::get('order/ajax/getTaxRate', 'OrderController@ajaxGetTaxRate')->name('ajax.getTaxRate');
-
 			Route::get('order/ajax/filterShippingOptions', 'AjaxController@filterShippingOptions')->name('ajax.filterShippingOptions');
-
-			// Route::get('order/ajax/getPackagingCost', 'OrderController@ajaxGetPackagingCost')->name('ajax.getPackagingCost');
-
-			Route::get('system/ajax/getFromPHPHelper', 'AjaxController@ajaxGetFromPHPHelper')->name('ajax.getFromPHPHelper');
 		});
 	});
 });
