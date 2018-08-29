@@ -17,5 +17,5 @@
 @endsection
 
 @section('scripts')
-    @include('scripts.popover')
+    @include('scripts.cart')
 @endsection

@@ -38,19 +38,7 @@
 			calculateCartTotal(cart);
     	});
 
-		function calculateCartTotal(cart)
-		{
-			var total = 0;
-	    	$('.item-total'+cart).each(function(){
-				total += Number($(this).text());
-	    	});
-
-	    	$('#summary-total'+cart).text(getFormatedValue(total));
-
-	        calculateTax(cart);
-		}
-
-    	// Coupon
+    	// Item remove from the cart
     	$('.cart-item-remove').on('click', function(e){
             e.preventDefault();
             var node = $(this);
@@ -104,7 +92,6 @@
 
 		                    @include('layouts.notification', ['message' => trans('theme.notify.coupon_applied'), 'type' => 'success', 'icon' => 'check-circle'])
 				    	}
-				        console.log(data);
 				    }
 				})
 				.fail(function(response) {
@@ -112,7 +99,7 @@
 						$('#loginModal').modal('show');
 			        }
 			        else if (500 === response.status){
-				        console.log(response);
+				        // console.log(response);
 			        }
 			        else if (403 === response.status){
 	                    @include('layouts.notification', ['message' => trans('theme.notify.coupon_not_valid'), 'type' => 'warning', 'icon' => 'times-circle'])
@@ -270,6 +257,18 @@
 			return;
 		};
 
+		function calculateCartTotal(cart)
+		{
+			var total = 0;
+	    	$('.item-total'+cart).each(function(){
+				total += Number($(this).text());
+	    	});
+
+	    	$('#summary-total'+cart).text(getFormatedValue(total));
+
+	        calculateTax(cart);
+		}
+
       	function calculateOrderSummary(cart)
       	{
           	var grand = getTotalAmount(cart) + getTax(cart);
@@ -421,6 +420,11 @@
 			 	name += coupon.name + '(' + getFormatedValue(coupon.value) + '%)';
 			}
 
+			if(value > 0)
+				$("#discount-section-li"+cart).show();
+			else
+				$("#discount-section-li"+cart).hide();
+
 			$('#summary-discount'+cart).text(getFormatedValue(value));
 			$('#summary-discount-name'+cart).text(name);
 			$('#discount-id'+cart).val(coupon.id);
@@ -430,6 +434,8 @@
 
 		function resetDiscount(cart)
 		{
+			$("#discount-section-li"+cart).hide();
+
 			if($('#discount-id'+cart).val()){
 				$('#summary-discount'+cart).text(getFormatedValue(0));
 				$('#summary-discount-name'+cart).text('');

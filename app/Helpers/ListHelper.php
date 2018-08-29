@@ -965,6 +965,26 @@ class ListHelper
     }
 
     /**
+     * Get cart_list list for customer.
+     */
+    public static function cart_list()
+    {
+        $customer = Auth::guard('customer')->user();
+        // $customer->load('carts.inventories');
+        // $carts = $customer->carts->inventories;
+
+        $cart_list = \DB::table('carts')->join('cart_items', 'cart_items.cart_id', '=', 'carts.id')
+        ->leftJoin('images', function ($join) {
+            $join->on('images.imageable_id', '=', 'cart_items.inventory_id')->where('images.imageable_type', '=', 'App\Inventory');
+        })
+        ->select('cart_items.inventory_id as product_id','cart_items.item_description as product_name','cart_items.quantity as product_quantity','cart_items.unit_price as product_price','cart_items.inventory_id as unique_key','images.path as product_image')
+        ->where('carts.customer_id', $customer->id)->whereNull('carts.deleted_at')->get();
+
+        \Log::info($cart_list->toJson());
+        return $cart_list;
+    }
+
+    /**
      * Get tags list for form dropdown.
      *
      * @return array

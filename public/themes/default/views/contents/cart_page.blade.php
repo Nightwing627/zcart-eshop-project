@@ -31,6 +31,10 @@
           $shipping_zone = get_shipping_zone_of($shop_id, $shipping_country_id, $shipping_state_id);
 
           $shipping_options = $shipping_zone ? getShippingRates($shipping_zone->id) : 'NaN';
+
+          $packaging_options = getPackagings($shop_id);
+
+          // \Log::info($packaging_options);
         @endphp
 
         <div class="row shopping-cart-table-wrap space30" id="cartId{{$cart->id}}" data-cart="{{$cart->id}}">
@@ -157,22 +161,24 @@
                             <span id="summary-shipping{{$cart->id}}">{{ number_format(0, 2, '.', '') }}</span>
                           </span>
                         </li>
-                        <li>
-                          <span>
-                            <a class="packaging-options" data-toggle="popover" data-cart="{{$cart->id}}" data-options="{{ getPackagings($shop_id) }}" title="{{ trans('theme.packaging') }}">
-                              <u>{{ trans('theme.packaging') }}</u>
-                            </a>
-                            <em class="small text-muted" id="summary-packaging-name{{$cart->id}}">
-                              {{ $default_packaging ? $default_packaging->name : '' }}
-                            </em>
-                          </span>
-                          <span>{{ get_formated_currency_symbol() }}
-                            <span id="summary-packaging{{$cart->id}}">
-                              {{ number_format($default_packaging ? $default_packaging->cost : 0, 2, '.', '') }}
+                        @unless(empty(json_decode($packaging_options)))
+                          <li>
+                            <span>
+                              <a class="packaging-options" data-toggle="popover" data-cart="{{$cart->id}}" data-options="{{$packaging_options}}" title="{{ trans('theme.packaging') }}">
+                                <u>{{ trans('theme.packaging') }}</u>
+                              </a>
+                              <em class="small text-muted" id="summary-packaging-name{{$cart->id}}">
+                                {{ $default_packaging ? $default_packaging->name : '' }}
+                              </em>
                             </span>
-                          </span>
-                        </li>
-                        <li>
+                            <span>{{ get_formated_currency_symbol() }}
+                              <span id="summary-packaging{{$cart->id}}">
+                                {{ number_format($default_packaging ? $default_packaging->cost : 0, 2, '.', '') }}
+                              </span>
+                            </span>
+                          </li>
+                        @endunless
+                        <li id="discount-section-li{{$cart->id}}" style="display: none;">
                           <span>{{ trans('theme.discount') }}
                             <em id="summary-discount-name{{$cart->id}}" class="small text-muted"></em>
                           </span>

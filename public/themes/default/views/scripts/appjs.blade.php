@@ -150,7 +150,7 @@
         });
         $("#smartcart").on("itemRemoved", function(e) {
             // console.log('itemRemoved');
-            @include('layouts.notification', ['message' => trans('theme.notify.item_removed_from_cart'), 'type' => 'success', 'icon' => 'shopping-bag'])
+            {{-- @include('layouts.notification', ['message' => trans('theme.notify.item_removed_from_cart'), 'type' => 'success', 'icon' => 'shopping-bag']) --}}
         });
         $("#smartcart").on("itemUpdated", function(e) {
             @include('layouts.notification', ['message' => trans('theme.notify.cart_updated'), 'type' => 'success', 'icon' => 'shopping-bag'])
@@ -162,7 +162,7 @@
             @include('layouts.notification', ['message' => trans('theme.notify.cart_empty'), 'type' => 'success', 'icon' => 'shopping-bag'])
         });
         $("#smartcart").on("cartSubmitted", function(e) {
-            console.log("Cart Submitted");
+            // console.log("Cart Submitted");
         });
         // smartCart Initialisation
         $('#smartcart').smartCart({

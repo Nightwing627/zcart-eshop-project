@@ -44,7 +44,7 @@ class CartController extends Controller
     {
         // Get visitors IP to idenfy the customer if not logged in
         $customer_id = Auth::guard('customer')->check() ? Auth::guard('customer')->user()->id : Null;
-
+// echo "<pre>"; print_r($request->cart_list); echo "</pre>"; exit();
         $cart_list = json_decode($request->cart_list);
         $cart_items = array_column($cart_list, 'product_quantity', 'product_id'); // Get listing id as key and qtt as value
 

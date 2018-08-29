@@ -189,11 +189,11 @@ class Customer extends Authenticatable
     }
 
     /**
-     * Get the user cart.
+     * Get the user carts.
      */
-    public function cart()
+    public function carts()
     {
-        return $this->hasOne(Cart::class);
+        return $this->hasMany(Cart::class);
     }
 
     /**
