@@ -965,6 +965,26 @@ class ListHelper
     }
 
     /**
+     * Get cart item count for customer.
+     */
+    public static function cart_item_count($request)
+    {
+        $customer_id = Auth::guard('customer')->check() ? Auth::guard('customer')->user()->id : Null;
+
+        $cart_list = \DB::table('carts')->join('cart_items', 'cart_items.cart_id', '=', 'carts.id');
+        if($customer_id){
+            $cart_list = $cart_list->where(function ($q) use ($customer_id, $request) {
+                $q->where('customer_id', $customer_id)->orWhere('ip_address', $request->ip());
+            });
+        }
+        else{
+            $cart_list = $cart_list->whereNull('customer_id')->where('ip_address', $request->ip());
+        }
+
+        return $cart_list->count();
+    }
+
+    /**
      * Get cart_list list for customer.
      */
     public static function cart_list()

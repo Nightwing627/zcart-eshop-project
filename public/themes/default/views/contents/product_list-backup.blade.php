@@ -4,6 +4,10 @@
     @foreach($products as $item)
         <div class="col-md-3">
             <div class="product product-grid-view sc-product-item">
+                <input name="product_price" value="{{ get_formated_decimal($item->currnt_sale_price(), true, 2) }}" type="hidden"/>
+                <input name="product_id" value="{{ $item->id }}" type="hidden"/>
+                <input name="shop_id" value="{{ $item->shop_id }}" type="hidden"/>
+                <input name="product_link" value="{{ route('show.product', $item->slug) }}" type="hidden" />
 
                 <ul class="product-info-labels">
                     @if($item->orders_count >= config('system.popular.hot_item.sell_count', 3))
@@ -21,7 +25,7 @@
                 </ul>
 
                 <div class="product-img-wrap">
-                    <img class="product-img-primary" src="{{ get_product_img_src($item, 'medium') }}" alt="{{ $item->title }}" title="{{ $item->title }}"/>
+                    <img class="product-img-primary" src="{{ get_product_img_src($item, 'medium') }}" data-name="product_image" alt="{{ $item->title }}" title="{{ $item->title }}"/>
 
                     <img class="product-img-alt" src="{{ get_product_img_src($item, 'medium', 'alt') }}" alt="{{ $item->title }}" title="{{ $item->title }}"/>
 
@@ -37,7 +41,7 @@
                         <i class="fa fa-external-link" data-toggle="tooltip" title="@lang('theme.button.quick_view')"></i> <span>@lang('theme.button.quick_view')</span>
                     </a>
 
-                    <a class="btn btn-primary flat sc-add-to-cart" href="{{ route('cart.addItem', $item->slug) }}">
+                    <a class="btn btn-primary flat sc-add-to-cart" href="#">
                         <i class="fa fa-shopping-cart"></i> @lang('theme.button.add_to_cart')
                     </a>
                 </div>
@@ -54,7 +58,7 @@
                     @include('layouts.pricing', ['item' => $item])
 
                     <div class="product-info-desc"> {{ $item->description }} </div>
-                    {{-- <div class="product-info-desc"> {{ $item->description }} </div> --}}
+                    {{-- <div class="product-info-desc" data-name="product_description"> {{ $item->description }} </div> --}}
                     <ul class="product-info-feature-list">
                         <li>{{ $item->condition }}</li>
                         {{-- <li>{{ $item->manufacturer->name }}</li> --}}

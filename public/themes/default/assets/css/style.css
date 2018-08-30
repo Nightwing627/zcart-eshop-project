@@ -954,112 +954,6 @@ div.datepicker > div {
   margin: 0;
 }
 /****** End of Navbar Category Dropdown ******/
-/****** Navbar Cart Dropdown ******/
-.nav-dropdown-cart {
-  width: 300px;
-}
-.nav-dropdown-cart > li {
-  overflow: hidden;
-  padding: 10px;
-}
-.nav-dropdown-cart > li:nth-child(even) {
-  background: #f7f7f7;
-}
-.sc-cart-item img,
-.nav-dropdown-cart-img {
-  float: left;
-  width: 50px;
-  max-height: 50px;
-  display: block;
-  margin-right: 10px;
-  padding: 0 !important;
-}
-.sc-toolbar{
-  padding: 15px 15px 0 15px;
-}
-.nav-dropdown-cart-img > img {
-  width: 100%;
-}
-.nav-dropdown-cart-inner {
-  display: table;
-}
-.nav-dropdown-cart-price {
-  font-weight: 500;
-  color: #486d97;
-  margin-bottom: 0;
-}
-.sc-cart-item-summary input.sc-cart-item-qty{
-  border: none;
-}
-.sc-cart-count {
-  display: inline-block;
-  font-weight: lighter;
-  background-color: #d6644a;
-}
-.nav-dropdown-cart-item {
-  margin-bottom: 5px;
-  font-size: 14px;
-  height: 18px;
-  line-height: 18px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.nav-dropdown-cart-item > a {
-  color: #6a6a6a;
-}
-.nav-dropdown-cart-item > a:hover {
-  text-decoration: none;
-}
-.nav-dropdown-cart-total {
-    color: #777;
-    font-weight: 300;
-    letter-spacing: 1px;
-    margin-top: 8px;
-    text-transform: uppercase;
-}
-.nav-dropdown-cart-total .sc-cart-subtotal {
-  color: #486d97;
-  font-size: 16px;
-  font-weight: 500;
-}
-.nav-dropdown-cart-checkout {
-  float: right;
-}
-.dropdown-menu-items-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.dropdown-menu-items-list > li {
-  margin-bottom: 7px;
-}
-.dropdown-menu-items-list > li > a {
-  color: #333;
-}
-.dropdown-menu-items-list > li > a:hover {
-  color: #486d97;
-  text-decoration: none;
-}
-@media (max-width:992px) {
-  .dropdown-menu-items-list {
-    margin-bottom: 20px;
-  }
-}
-.dropdown-menu-items-list-desc {
-  font-size: 11px;
-  margin-bottom: 0;
-  color: #a6a6a6;
-}
-.sc-cart-remove {
-  float: right;
-  padding: 0;
-  border: none;
-  font-weight: lighter;
-  margin-top: -5px;
-  background: 0 0;
-}
-/****** End of Navbar Cart Dropdown ******/
 /****** Main Search Box ******/
 .navbar-search {
   width: 770px;
@@ -2577,6 +2471,13 @@ div.datepicker > div {
 }
 
 /******* Shopping cart ********/
+#globalCartItemCount {
+  display: inline-block;
+  font-weight: lighter;
+  padding: 3px 9px;
+  letter-spacing: 1px;
+  background-color: #d6644a;
+}
 .selectBoxIt.ship_to {
   width: 250px!important;
 }

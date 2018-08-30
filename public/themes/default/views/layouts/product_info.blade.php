@@ -1,6 +1,3 @@
-<input name="product_price" value="{{ get_formated_decimal($item->currnt_sale_price(), true, 2) }}" type="hidden" />
-<input name="product_id" value="{{ $item->id }}" type="hidden" />
-<input name="product_link" value="{{ route('show.product', $item->slug) }}" type="hidden" />
 <div class="product-info">
 	@if($item->product->manufacturer)
   	<a href="{{ route('show.brand', $item->product->manufacturer->slug) }}" class="product-info-seller-name">{{ $item->product->manufacturer->name }}</a>

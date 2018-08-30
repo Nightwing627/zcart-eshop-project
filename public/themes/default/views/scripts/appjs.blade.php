@@ -88,6 +88,28 @@
             });
         });
 
+        // Add-to-cart
+        $(".sc-add-to-cart").on("click", function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr('href'),
+                type: 'POST',
+                complete: function (xhr, textStatus) {
+                    if(200 == xhr.status){
+                        @include('layouts.notification', ['message' => trans('theme.notify.item_added_to_cart'), 'type' => 'success', 'icon' => 'check-circle'])
+                        // Increase global cart item count by 1
+                        increaseCartItem(1);
+                    }
+                    else if(444 == xhr.status){
+                        @include('layouts.notification', ['message' => trans('theme.notify.item_added_already_in_cart'), 'type' => 'info', 'icon' => 'info-circle'])
+                    }
+                    else{
+                        @include('layouts.notification', ['message' => trans('theme.notify.failed'), 'type' => 'warning', 'icon' => 'times-circle'])
+                    }
+                },
+            });
+        });
+
         // Main slider
         $('#ei-slider').eislideshow({
             animation           : 'center',
@@ -142,44 +164,6 @@
             }
         });
         // End Owl Carousel
-
-        // ADD TO CART BTN
-        //Events
-        $("#smartcart").on("itemAdded", function(e) {
-            @include('layouts.notification', ['message' => trans('theme.notify.item_added_to_cart'), 'type' => 'success', 'icon' => 'shopping-bag'])
-        });
-        $("#smartcart").on("itemRemoved", function(e) {
-            // console.log('itemRemoved');
-            {{-- @include('layouts.notification', ['message' => trans('theme.notify.item_removed_from_cart'), 'type' => 'success', 'icon' => 'shopping-bag']) --}}
-        });
-        $("#smartcart").on("itemUpdated", function(e) {
-            @include('layouts.notification', ['message' => trans('theme.notify.cart_updated'), 'type' => 'success', 'icon' => 'shopping-bag'])
-        });
-        $("#smartcart").on("quantityUpdated", function(e) {
-            @include('layouts.notification', ['message' => trans('theme.notify.cart_updated'), 'type' => 'success', 'icon' => 'shopping-bag'])
-        });
-        $("#smartcart").on("cartCleared", function(e) {
-            @include('layouts.notification', ['message' => trans('theme.notify.cart_empty'), 'type' => 'success', 'icon' => 'shopping-bag'])
-        });
-        $("#smartcart").on("cartSubmitted", function(e) {
-            // console.log("Cart Submitted");
-        });
-        // smartCart Initialisation
-        $('#smartcart').smartCart({
-            cart: [], // initial products on cart
-            currencySettings: {
-                locales: 'en-US', //A string with a BCP 47 language tag, or an array of such strings
-                currencyOptions:  {
-                    currency: '{{ config('system_settings.currency.iso_code') ?: 'USD' }}',
-                }
-            },
-            submitSettings: {
-                  submitType: 'form', // form, paypal, ajax
-                  ajaxURL: '', // Ajax submit URL
-                  ajaxSettings: {} // Ajax extra settings for submit call
-            }
-        });
-        // END ADD TO CART BTN
 
         // i-Check plugin
         $('.i-check, .i-radio').iCheck({
@@ -420,6 +404,26 @@
 
 
 }(window.jQuery, window, document));
+
+
+// Update global cart item count
+function increaseCartItem(value = 1)
+{
+    return setCartItemCount(getCartItemCount() + value);
+}
+function decreaseCartItem(value = 1)
+{
+    return setCartItemCount(getCartItemCount() - value);
+}
+function getCartItemCount()
+{
+    return Number($("#globalCartItemCount").text());
+}
+function setCartItemCount(value = 0)
+{
+    $('#globalCartItemCount').text(value);
+    return;
+}
 
  /*
  * Get result from PHP helper functions

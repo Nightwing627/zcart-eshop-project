@@ -35,9 +35,7 @@ class Storefront
             View::share('recently_viewed_items', ListHelper::recentlyViewedItems());
             View::share('featured_categories', ListHelper::hot_categories());
             View::share('pages', ListHelper::pages(\App\Page::VISIBILITY_PUBLIC));
-
-            // if(Auth::guard('customer')->check())
-            //     View::share('cart_list', ListHelper::cart_list());
+            View::share('cart_item_count', ListHelper::cart_item_count($request));
         }
 
         return $next($request);

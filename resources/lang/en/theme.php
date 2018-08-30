@@ -388,6 +388,7 @@ return [
 		'info_updated' => 'Updated successfully!',
 		'info_deleted' => 'Deleted successfully!',
 		'item_added_to_cart' => 'Item added to cart',
+		'item_added_already_in_cart' => 'Item already in your cart',
 		'item_added_to_wishlist' => 'Item added to wishlist',
 		'item_removed_from_cart' => 'Item removed',
 		'item_removed_from_wishlist' => 'Item removed',

@@ -68,7 +68,6 @@
 
         <!-- SCRIPTS -->
         <script src="{{ theme_asset_url('js/vendor.js') }}"></script>
-        <script src="{{ theme_asset_url('js/jquery.smartCart.js') }}"></script>
         <script src="{{ theme_asset_url('js/jquery.simplecolorpicker.js') }}"></script>
 
         <!-- Notification -->

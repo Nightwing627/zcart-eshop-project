@@ -34,90 +34,76 @@ class CartController extends Controller
         return view('cart', compact('carts','countries'));
     }
 
+
     /**
-     * Store a newly created resource in storage.
+     * Validate coupon.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function addToCart(Request $request, $slug)
     {
-        // Get visitors IP to idenfy the customer if not logged in
+        $item = Inventory::where('slug', $slug)->first();
+
         $customer_id = Auth::guard('customer')->check() ? Auth::guard('customer')->user()->id : Null;
-// echo "<pre>"; print_r($request->cart_list); echo "</pre>"; exit();
-        $cart_list = json_decode($request->cart_list);
-        $cart_items = array_column($cart_list, 'product_quantity', 'product_id'); // Get listing id as key and qtt as value
 
-        // Retrive items from listings
-        $listings = Inventory::select('id', 'shop_id', 'title', 'condition', 'stock_quantity', 'sale_price', 'offer_price', 'offer_start', 'offer_end', 'shipping_weight', 'free_shipping', 'min_order_quantity', 'active')
-        ->whereIn('id', array_keys($cart_items))->with(['attributeValues:value'])->get();
-
-        // Creating carts for different shops
-        foreach ($listings->groupBy('shop_id') as $shop_id => $stock_items) {
-            // Check if the customer has old cart from the shop
-            $old_cart_from_shop = Cart::where('shop_id', $shop_id);
-            if($customer_id){
-                $old_cart_from_shop = $old_cart_from_shop->where(function ($q) use ($customer_id, $request) {
-                    $q->where('customer_id', $customer_id)->orWhere('ip_address', $request->ip());
-                });
-            }
-            else{
-                $old_cart_from_shop = $old_cart_from_shop->whereNull('customer_id')->where('ip_address', $request->ip());
-            }
-
-            $old_cart_from_shop = $old_cart_from_shop->first();
-
-            // Save the cart info
-            $handling = getShopConfig($shop_id, 'order_handling_cost');
-
-            // Instantiate new cart if old cart not found for the shop and customer
-            $cart = $old_cart_from_shop ?? new Cart;
-            $cart->shop_id = $shop_id;
-            $cart->customer_id = $customer_id;
-            $cart->ip_address = $request->ip();
-            // $cart->shipping_rate_id = Null;
-            $cart->item_count = count($stock_items);
-            $cart->quantity = array_sum(array_intersect_key($cart_items, array_flip($stock_items->pluck('id')->toArray())));
-            $cart->handling = $handling;
-
-            $total = 0;
-            $shipping_weight = 0;
-            $cart_item_pivot_data = [];
-
-            foreach ($stock_items as $stock){
-                $unit_price = $stock->currnt_sale_price();
-                $qtt = $cart_items[$stock->id];
-
-                $total = $total + ($qtt * $unit_price);
-
-                // All items need to have shipping_weight to calculate shipping
-                // If any one the item missing shipping_weight set null to cart shipping_weight
-                if($shipping_weight !== Null)
-                    $shipping_weight = $stock->shipping_weight ? ($shipping_weight + $stock->shipping_weight) : Null;
-
-                // Makes item_description field
-                $attributes = implode(' - ', $stock->attributeValues->pluck('value')->toArray());
-                $cart_item_pivot_data[$stock->id] = [
-                    'inventory_id' => $stock->id,
-                    'item_description'=> $stock->title . ' - ' . $attributes . ' - ' . $stock->condition,
-                    'quantity' => $qtt,
-                    'unit_price' => $unit_price,
-                ];
-            }
-
-            $cart->total = $total;
-            $cart->shipping = Null;
-            $cart->taxes = Null;
-            $cart->shipping_weight = $shipping_weight;
-
-            $cart->save();
-
-            // Save cart items into pivot
-            if (!empty($cart_item_pivot_data))
-                $cart->inventories()->sync($cart_item_pivot_data);
+        $old_cart = Cart::where('shop_id', $item->shop_id);
+        if($customer_id){
+            $old_cart = $old_cart->where(function ($q) use ($customer_id, $request) {
+                $q->where('customer_id', $customer_id)->orWhere('ip_address', $request->ip());
+            });
+        }
+        else{
+            $old_cart = $old_cart->whereNull('customer_id')->where('ip_address', $request->ip());
         }
 
-        return redirect()->route('cart.index');
+        $old_cart = $old_cart->first();
+
+        // Check if the item is alrealy in the cart
+        if($old_cart){
+            $find = \DB::table('cart_items')->where('cart_id', $old_cart->id)->where('inventory_id', $item->id)->first();
+            if($find) return response('Item alrealy in cart', 444);
+        }
+
+        $qtt = 1;
+        $unit_price = $item->currnt_sale_price();
+
+        // Instantiate new cart if old cart not found for the shop and customer
+        $cart = $old_cart ?? new Cart;
+        $cart->shop_id = $item->shop_id;
+        $cart->customer_id = $customer_id;
+        $cart->ip_address = $request->ip();
+        $cart->item_count = $old_cart ? ($old_cart->item_count + 1) : 1;
+        $cart->quantity = $old_cart ? ($old_cart->quantity + $qtt) : $qtt;
+        $cart->handling = $old_cart ? $old_cart->handling : getShopConfig($item->shop_id, 'order_handling_cost');
+        $cart->total = $old_cart ? ($old_cart->total + ($qtt * $unit_price)) : $unit_price;
+
+        // All items need to have shipping_weight to calculate shipping
+        // If any one the item missing shipping_weight set null to cart shipping_weight
+        if($item->shipping_weight == Null || ($old_cart && $old_cart->shipping_weight == Null))
+            $cart->shipping_weight = Null;
+        else
+            $cart->shipping_weight = $old_cart ? ($old_cart->shipping_weight + $item->shipping_weight) : $item->shipping_weight;
+
+        $cart->save();
+
+
+        // Makes item_description field
+        $attributes = implode(' - ', $item->attributeValues->pluck('value')->toArray());
+        // Prepare pivot data
+        $cart_item_pivot_data = [];
+        $cart_item_pivot_data[$item->id] = [
+            'inventory_id' => $item->id,
+            'item_description'=> $item->title . ' - ' . $attributes . ' - ' . $item->condition,
+            'quantity' => $qtt,
+            'unit_price' => $unit_price,
+        ];
+
+        // Save cart items into pivot
+        if (!empty($cart_item_pivot_data))
+            $cart->inventories()->syncWithoutDetaching($cart_item_pivot_data);
+
+        return response('Item removed', 200);
     }
 
     /**
@@ -170,20 +156,6 @@ class CartController extends Controller
         return response('Item remove failed!', 404);
     }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  \App\Cart  $cart
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, Cart $cart)
-    // {
-    //     $cart->update($request->all());
-
-    //     return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
-    // }
-
     /**
      * Checkout the specified cart.
      *
@@ -198,17 +170,4 @@ class CartController extends Controller
         return view('checkout', compact('cart'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    // public function destroy(Request $request, Cart $cart)
-    // {
-    //     $cart->destroy();
-
-    //     return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
-    // }
 }

@@ -63,6 +63,9 @@
 			    		else{
 							calculateCartTotal(cart);
 			    		}
+
+			    		// Decrease global cart item count by 1
+			    		decreaseCartItem(1);
 			    	}
 			    	else{
 		                @include('layouts.notification', ['message' => trans('theme.notify.failed'), 'type' => 'warning', 'icon' => 'times-circle'])

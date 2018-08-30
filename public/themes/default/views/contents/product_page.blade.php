@@ -75,7 +75,7 @@
 				            </a>
 				        </div><!-- /.seller-info -->
 
-			          	<a href="#" class="btn btn-primary btn-lg btn-block flat space10 sc-add-to-cart">
+			          	<a href="{{ route('cart.addItem', $item->slug) }}" class="btn btn-primary btn-lg btn-block flat space10 sc-add-to-cart">
 			          		<i class="fa fa-shopping-bag"></i> @lang('theme.button.add_to_cart')
 			          	</a>
 
@@ -117,13 +117,9 @@
 				<ul class="sidebar-product-list">
 				    @foreach($linked_items as $linkedItem)
 				        <li class="sc-product-item">
-							<input name="product_price" value="{{ get_formated_decimal($linkedItem->currnt_sale_price(), true, 2) }}" type="hidden" />
-							<input name="product_id" value="{{ $linkedItem->id }}" type="hidden" />
-							<input name="shop_id" value="{{ $linkedItem->shop_id }}" type="hidden" />
-							<input name="product_link" value="{{ route('show.product', $linkedItem->slug) }}" type="hidden" />
 				            <div class="product-widget">
 				                <div class="product-img-wrap">
-				                    <img class="product-img" src="{{ get_storage_file_url(optional($linkedItem->image)->path, 'medium') }}" data-name="product_image" alt="{{ $linkedItem->title }}" title="{{ $linkedItem->title }}" />
+				                    <img class="product-img" src="{{ get_storage_file_url(optional($linkedItem->image)->path, 'medium') }}" alt="{{ $linkedItem->title }}" title="{{ $linkedItem->title }}" />
 				                </div>
 				                <div class="product-info space10">
 				                    @include('layouts.ratings', ['ratings' => $linkedItem->feedbacks->avg('rating')])
@@ -137,7 +133,7 @@
 			                            <i class="fa fa-external-link" data-toggle="tooltip" title="@lang('theme.button.quick_view')"></i> <span>@lang('theme.button.quick_view')</span>
 			                        </a>
 
-						          	<a href="#" class="btn btn-primary btn-xs flat sc-add-to-cart pull-right">
+						          	<a href="{{ route('cart.addItem', $linkedItem->slug) }}" class="btn btn-primary btn-xs flat sc-add-to-cart pull-right">
 						          		<i class="fa fa-shopping-bag"></i> @lang('theme.button.add_to_cart')
 						          	</a>
 				                </div>

@@ -22,12 +22,6 @@
       <a class="fa fa-search navbar-search-submit" onclick="document.getElementById('search-categories-form').submit()"></a>
     {!! Form::close() !!}
     <ul class="nav navbar-nav navbar-right navbar-mob-left">
-      <li>
-        <a href="{{ route('cart.index') }}">
-          <span>{{ trans('theme.your_cart') }}</span><i class="fa fa-shopping-bag"></i> <div id="globalCartItemCount" class="badge">{{$cart_item_count}}</div>
-        </a>
-      </li>
-
       @auth('customer')
         <li class="dropdown">
           <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
@@ -48,6 +42,37 @@
       @else
         <li><a href="#nav-login-dialog" data-toggle="modal" data-target="#loginModal"><span >{{ trans('theme.sing_in') }}</span>{{ trans('theme.your_account') }}</a></li>
       @endauth
+
+      <li class="dropdown" id="smartcart">
+        <a href="#" class="sc-cart-checkout">
+          <span>{{ trans('theme.your_cart') }}</span><i class="fa fa-shopping-bag"></i> <div class="sc-cart-count badge"></div>
+        </a>
+        <div class="dropdown-menu">
+          <ul class="sc-cart-item-list nav-dropdown-cart">
+            <li class="sc-cart-empty-msg">@lang('theme.empty_cart')</li>
+          </ul>
+          <div class="sc-toolbar">
+            <div class="sc-cart-summary-subtotal nav-dropdown-cart-total">@lang('theme.total'):
+              <span class="sc-cart-subtotal pull-right"></span>
+            </div>
+            <div class="space20"></div>
+            <div class="row">
+              <div class="col-md-12">
+                {{-- <div class="btn-group"> --}}
+                  {{-- <button class="btn nopadding-left btn-link confirm sc-cart-clear"><i class="fa fa-trash fa-fw" data-toggle="tooltip" title="{{ trans('theme.button.clear') }}"></i></button> --}}
+                  <button class="sc-cart-checkout btn flat btn-primary pull-right" type="button"><i class="fa fa-shopping-cart fa-fw"></i> {{ trans('theme.button.checkout') }}</button>
+                  {{-- <a href="{{ route('cart.index') }}" class="btn flat btn-primary cart-open-btn sc-cart-checkout"><i class="fa fa-shopping-cart fa-fw"></i> {{ trans('theme.button.checkout') }}</a> --}}
+                {{-- </div> --}}
+              </div>
+            </div>
+            <div class="space10"></div>
+          </div><!-- /.sc-toolbar -->
+
+          {!! Form::open(['route' => 'cart.store', 'id' => 'checkoutForm']) !!}
+              {{-- Data will be appended automatically via js --}}
+          {!! Form::close() !!}
+        </div><!-- /.dropdown-manu -->
+      </li><!-- /#smartcart -->
 
       <div class="navbar-header">
           <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-nav-collapse" area_expanded="false"><span class="sr-only">{{ trans('theme.nav.menu') }}</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
