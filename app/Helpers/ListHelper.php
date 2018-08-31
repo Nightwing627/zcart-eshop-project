@@ -161,6 +161,7 @@ class ListHelper
     {
         $shop = $shop ?: Auth::user()->merchantId(); //Get current user's shop_id
         $settings = \DB::table('configs')->where('shop_id', $shop)->first();
+
         $result = [];
         if($settings){
             foreach ($settings as $key => $value) {
@@ -180,7 +181,8 @@ class ListHelper
 
     public static function plans()
     {
-        $plans = \DB::table('subscription_plans')->where('deleted_at', Null)->orderBy('order', 'asc')->select( 'plan_id', 'name', 'cost')->get();
+        $plans = \DB::table('subscription_plans')->where('deleted_at', Null)->orderBy('order', 'asc')
+        ->select( 'plan_id', 'name', 'cost')->get();
 
         $result = [];
         foreach ($plans as $plan)
@@ -216,8 +218,7 @@ class ListHelper
         else{
             $roles->orWhere(
                 function($query){
-                    $query->whereNull('shop_id')
-                        ->where('public', 1);
+                    $query->whereNull('shop_id')->where('public', 1);
                 });
         }
 
@@ -270,7 +271,8 @@ class ListHelper
      */
     public static function thisCatSubGrps($category)
     {
-        return \DB::table('category_sub_groups')->where('deleted_at', Null)->where('category_group_id', $category)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('category_sub_groups')->where('deleted_at', Null)
+        ->where('category_group_id', $category)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -301,18 +303,14 @@ class ListHelper
     public static function catGrpSubGrpListArray()
     {
         $grps = [];
-
-        foreach (self::categoryGrps() as $key => $value)
-        {
+        foreach (self::categoryGrps() as $key => $value){
             $list = [];
 
-            foreach (self::thisCatSubGrps($key) as $key2 => $value2)
-            {
+            foreach (self::thisCatSubGrps($key) as $key2 => $value2){
                 $list[$key2] = $value2;
             }
 
-            if(count($list))
-            {
+            if(count($list)){
                 $grps[$value] = $list;
             }
         }
@@ -367,7 +365,8 @@ class ListHelper
      */
     public static function platform_users()
     {
-        return \DB::table('users')->where('shop_id', Null)->where('role_id', '!=', 3)->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('users')->where('shop_id', Null)->where('role_id', '!=', 3)
+        ->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     public static function shipping_zones($shop = Null)
@@ -410,9 +409,7 @@ class ListHelper
      */
     public static function open_tickets()
     {
-        return Ticket::open()->orderBy('priority', 'desc')->with('category')->withCount('replies')
-                        ->latest()->limit(10)
-                        ->get();
+        return Ticket::open()->orderBy('priority', 'desc')->with('category')->withCount('replies')->latest()->limit(10)->get();
     }
 
     /**
@@ -422,10 +419,7 @@ class ListHelper
      */
     public static function top_customers()
     {
-        return Customer::with('image', 'orders')->withCount('orders')
-                        ->orderBy('orders_count', 'desc')
-                        ->limit(5)
-                        ->get();
+        return Customer::with('image', 'orders')->withCount('orders')->orderBy('orders_count', 'desc')->limit(5)->get();
     }
 
     /**
@@ -435,10 +429,7 @@ class ListHelper
      */
     public static function top_vendors()
     {
-        return Shop::with('image', 'revenue')->withCount('inventories')
-                        ->get()
-                        ->sortByDesc('revenue')
-                        ->take(5);
+        return Shop::with('image', 'revenue')->withCount('inventories')->get()->sortByDesc('revenue')->take(5);
     }
 
     /**
@@ -448,11 +439,8 @@ class ListHelper
      */
     public static function merchants()
     {
-        return \DB::table('users')
-                ->where('role_id', 3)
-                ->where('deleted_at', Null)
-                ->orderBy('name', 'asc')
-                ->pluck('name', 'id');
+        return \DB::table('users')->where('role_id', 3)->where('deleted_at', Null)
+        ->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -462,12 +450,8 @@ class ListHelper
      */
     public static function new_merchants()
     {
-        return \DB::table('users')
-                ->whereNull('shop_id')
-                ->whereNull('deleted_at')
-                ->where('role_id', Role::MERCHANT)
-                ->orderBy('name', 'asc')
-                ->pluck('name', 'id');
+        return \DB::table('users')->whereNull('shop_id')->whereNull('deleted_at')
+        ->where('role_id', Role::MERCHANT)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -479,7 +463,8 @@ class ListHelper
     {
         $shop = $shop ?: Auth::user()->merchantId(); //Get current user's shop_id
 
-        return \DB::table('users')->where('shop_id', $shop)->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('users')->where('shop_id', $shop)->where('deleted_at', Null)
+        ->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -489,7 +474,8 @@ class ListHelper
      */
     public static function suppliers()
     {
-        return \DB::table('suppliers')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('suppliers')->where('shop_id', Auth::user()->merchantId())
+        ->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -509,7 +495,8 @@ class ListHelper
      */
     public static function warehouses()
     {
-        return \DB::table('warehouses')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('warehouses')->where('shop_id', Auth::user()->merchantId())
+        ->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -519,7 +506,8 @@ class ListHelper
      */
     public static function carriers()
     {
-        return \DB::table('carriers')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('carriers')->where('shop_id', Auth::user()->merchantId())
+        ->where('deleted_at', Null)->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -529,15 +517,12 @@ class ListHelper
      */
     public static function taxes()
     {
-        return \DB::table('taxes')
-                ->where('active', 1)
-                ->where('deleted_at', Null)
-                ->where( function ($query) {
-                    $query->where('public', 1)
-                    ->orWhere('shop_id', Auth::user()->merchantId());
-                })
-                ->orderBy('name', 'asc')
-                ->pluck('name', 'id');
+        return \DB::table('taxes')->where('active', 1)->where('deleted_at', Null)
+        ->where( function ($query) {
+            $query->where('public', 1)
+            ->orWhere('shop_id', Auth::user()->merchantId());
+        })
+        ->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -558,7 +543,8 @@ class ListHelper
         if(!$shop)
             $shop = Auth::user()->merchantId();
 
-        return \DB::table('inventories')->where('shop_id', $shop)->where('deleted_at', Null)->orderBy('title', 'asc')->pluck('title', 'id');
+        return \DB::table('inventories')->where('shop_id', $shop)->where('deleted_at', Null)
+        ->orderBy('title', 'asc')->pluck('title', 'id');
     }
 
     /**
@@ -575,15 +561,13 @@ class ListHelper
             $items->where('inventories.shop_id', Auth::user()->shop_id);
 
         return $items->with('image')
-                    ->select(
-                        'inventories.id','inventories.sku','products.name','inventories.product_id',
-                        \DB::raw('SUM(order_items.quantity) as sold_qtt')
-                    )
-                    ->join('products', 'inventories.product_id', 'products.id')
-                    ->join('order_items', 'inventories.id', 'order_items.inventory_id')
-                    ->groupBy('inventory_id')
-                    ->limit($count)
-                    ->get();
+        ->select(
+            'inventories.id','inventories.sku','products.name','inventories.product_id',
+            \DB::raw('SUM(order_items.quantity) as sold_qtt')
+        )
+        ->join('products', 'inventories.product_id', 'products.id')
+        ->join('order_items', 'inventories.id', 'order_items.inventory_id')
+        ->groupBy('inventory_id')->limit($count)->get();
     }
 
     /**
@@ -593,25 +577,9 @@ class ListHelper
     public static function popular_items($days = 7, $count = 15)
     {
         return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
-                    ->available()
-                    ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
-                    ->withCount('orders')
-                    ->orderBy('orders_count', 'desc')
-                    ->limit($count)
-                    ->get();
-
-        // return Product::with(['featuredImage:path', 'inventories:product_id,sale_price'])
-        //             ->select(
-        //                 'products.id','products.name','products.slug',
-        //                 \DB::raw('COUNT(order_items.order_id) as order_count')
-        //             )
-        //             ->join('inventories', 'inventories.product_id', 'products.id')
-        //             ->join('order_items', 'inventories.id', 'order_items.inventory_id')
-        //             ->where('order_items.created_at', '>=', Carbon::now()->subDays($days))
-        //             ->groupBy('products.id')
-        //             ->orderBy('order_count', 'desc')
-        //             ->limit($count)
-        //             ->get();
+        ->available()->withCount('orders')->orderBy('orders_count', 'desc')
+        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
+        ->limit($count)->get();
     }
 
     /**
@@ -621,9 +589,7 @@ class ListHelper
      */
     public static function latest_products()
     {
-        return Product::with('featuredImage')
-                ->latest()->limit(10)
-                ->get();
+        return Product::with('featuredImage')->latest()->limit(10)->get();
     }
 
     /**
@@ -633,9 +599,8 @@ class ListHelper
     public static function latest_available_items($limit = 10)
     {
         return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
-                    ->available()
-                    ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
-                    ->latest()->limit($limit)->get();
+        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
+        ->available()->latest()->limit($limit)->get();
     }
 
     /**
@@ -645,11 +610,12 @@ class ListHelper
     public static function variants_of_product($item, $shop = Null)
     {
         $variants = Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
-                    ->where('product_id', $item->product_id);
-        if($shop)
-            $variants->where('shop_id', $shop);
+        ->where('product_id', $item->product_id)->available();
 
-        return $variants->with(['images:path,imageable_id,imageable_type', 'attributeValues:id,value,color'])->available()->get();
+        if($shop)
+            $variants = $variants->where('shop_id', $shop);
+
+        return $variants->with(['images:path,imageable_id,imageable_type', 'attributeValues:id,value,color'])->get();
         // return $variants->with('attributeValues:id,value,color')->available()->get();
     }
 
@@ -663,17 +629,10 @@ class ListHelper
 
         $productIDs = \DB::table('category_product')->whereIn('category_id', $catIds)->pluck('product_id');
 
-        // $products = Product::whereIn('id', $productIDs)->active()->whereHas('inventories', function ($query) {
-        //                         $query->available();
-        //                     })
-        //                     ->with(['inventories:product_id,sale_price', 'featuredImage'])
-        //                     ->inRandomOrder()->limit($limit)->get();
-
         return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
-                    ->whereIn('product_id', $productIDs)
-                    ->available()->inRandomOrder()
-                    ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
-                    ->limit($limit)->get();
+        ->whereIn('product_id', $productIDs)->available()->inRandomOrder()
+        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
+        ->limit($limit)->get();
     }
 
     /**
@@ -685,9 +644,9 @@ class ListHelper
         $linked_items = unserialize($item->linked_items);
 
         return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
-                    ->whereIn('id', $linked_items)
-                    ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
-                    ->available()->get();
+        ->whereIn('id', $linked_items)
+        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
+        ->available()->get();
     }
 
     /**
@@ -697,8 +656,8 @@ class ListHelper
     public static function random_items($limit = 10)
     {
         return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
-                    ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
-                    ->available()->inRandomOrder()->limit($limit)->get();
+        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
+        ->available()->inRandomOrder()->limit($limit)->get();
     }
 
     public static function recentlyViewedItems()
@@ -718,8 +677,6 @@ class ListHelper
     public static function orders()
     {
         return Order::mine()->orderBy('order_number', 'asc')->pluck('order_number', 'id')->toArray();
-
-        // return \DB::table('orders')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->orderBy('order_number', 'asc')->pluck('order_number', 'id')->toArray();
     }
 
     /**
@@ -729,10 +686,7 @@ class ListHelper
      */
     public static function latest_orders()
     {
-        return Order::mine()->with('customer', 'status')
-                ->latest()
-                ->limit(10)
-                ->get();
+        return Order::mine()->with('customer', 'status')->latest()->limit(10)->get();
     }
 
     /**
@@ -743,9 +697,9 @@ class ListHelper
     public static function paid_orders()
     {
         return \DB::table('orders')->where('shop_id', Auth::user()->merchantId())
-                ->where('payment_status', Order::PAYMENT_STATUS_PAID)
-                ->where('deleted_at', Null)->orderBy('order_number', 'asc')
-                ->pluck('order_number', 'id')->toArray();
+        ->where('payment_status', Order::PAYMENT_STATUS_PAID)
+        ->where('deleted_at', Null)->orderBy('order_number', 'asc')
+        ->pluck('order_number', 'id')->toArray();
     }
 
     /**
@@ -765,10 +719,7 @@ class ListHelper
      */
     public static function latest_stocks()
     {
-        return Inventory::mine()->with('product', 'image')
-                ->latest()
-                ->limit(10)
-                ->get();
+        return Inventory::mine()->with('product', 'image')->latest()->limit(10)->get();
     }
 
     /**
@@ -778,11 +729,7 @@ class ListHelper
      */
     public static function low_qtt_stocks()
     {
-        return Inventory::mine()->lowQtt()
-                ->with('product', 'image')
-                ->latest()
-                ->limit(10)
-                ->get();
+        return Inventory::mine()->lowQtt()->with('product', 'image')->latest()->limit(10)->get();
     }
 
     // /**
@@ -822,7 +769,8 @@ class ListHelper
      */
     public static function packagings()
     {
-        return \DB::table('packagings')->where('shop_id', Auth::user()->merchantId())->where('active', 1)->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('packagings')->where('shop_id', Auth::user()->merchantId())
+        ->where('active', 1)->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -855,7 +803,8 @@ class ListHelper
      */
     public static function currencies()
     {
-        $currencies = \DB::table('currencies')->select('name', 'iso_code', 'id')->where('active', 1)->orderBy('priority', 'asc')->orderBy('name', 'asc')->get();
+        $currencies = \DB::table('currencies')->select('name', 'iso_code', 'id')->where('active', 1)
+        ->orderBy('priority', 'asc')->orderBy('name', 'asc')->get();
         // $currencies = \DB::table('currencies')->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
 
         $result = [];
@@ -872,7 +821,8 @@ class ListHelper
      */
     public static function attributes()
     {
-        return \DB::table('attributes')->where('shop_id', Auth::user()->merchantId())->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
+        return \DB::table('attributes')->where('shop_id', Auth::user()->merchantId())
+        ->where('deleted_at', Null)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**
@@ -965,44 +915,24 @@ class ListHelper
     }
 
     /**
-     * Get cart item count for customer.
-     */
-    public static function cart_item_count($request)
-    {
-        $customer_id = Auth::guard('customer')->check() ? Auth::guard('customer')->user()->id : Null;
-
-        $cart_list = \DB::table('carts')->join('cart_items', 'cart_items.cart_id', '=', 'carts.id');
-        if($customer_id){
-            $cart_list = $cart_list->where(function ($q) use ($customer_id, $request) {
-                $q->where('customer_id', $customer_id)->orWhere('ip_address', $request->ip());
-            });
-        }
-        else{
-            $cart_list = $cart_list->whereNull('customer_id')->where('ip_address', $request->ip());
-        }
-
-        return $cart_list->count();
-    }
-
-    /**
      * Get cart_list list for customer.
      */
-    public static function cart_list()
-    {
-        $customer = Auth::guard('customer')->user();
-        // $customer->load('carts.inventories');
-        // $carts = $customer->carts->inventories;
+    // public static function cart_list()
+    // {
+    //     $customer = Auth::guard('customer')->user();
+    //     // $customer->load('carts.inventories');
+    //     // $carts = $customer->carts->inventories;
 
-        $cart_list = \DB::table('carts')->join('cart_items', 'cart_items.cart_id', '=', 'carts.id')
-        ->leftJoin('images', function ($join) {
-            $join->on('images.imageable_id', '=', 'cart_items.inventory_id')->where('images.imageable_type', '=', 'App\Inventory');
-        })
-        ->select('cart_items.inventory_id as product_id','cart_items.item_description as product_name','cart_items.quantity as product_quantity','cart_items.unit_price as product_price','cart_items.inventory_id as unique_key','images.path as product_image')
-        ->where('carts.customer_id', $customer->id)->whereNull('carts.deleted_at')->get();
+    //     $cart_list = \DB::table('carts')->join('cart_items', 'cart_items.cart_id', '=', 'carts.id')
+    //     ->leftJoin('images', function ($join) {
+    //         $join->on('images.imageable_id', '=', 'cart_items.inventory_id')->where('images.imageable_type', '=', 'App\Inventory');
+    //     })
+    //     ->select('cart_items.inventory_id as product_id','cart_items.item_description as product_name','cart_items.quantity as product_quantity','cart_items.unit_price as product_price','cart_items.inventory_id as unique_key','images.path as product_image')
+    //     ->where('carts.customer_id', $customer->id)->whereNull('carts.deleted_at')->get();
 
-        \Log::info($cart_list->toJson());
-        return $cart_list;
-    }
+    //     \Log::info($cart_list->toJson());
+    //     return $cart_list;
+    // }
 
     /**
      * Get tags list for form dropdown.

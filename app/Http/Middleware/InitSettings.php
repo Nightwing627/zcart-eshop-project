@@ -55,7 +55,8 @@ class InitSettings
         }
 
         // update the visitor table for state
-        updateVisitorTable($request);
+        if( !$request->ajax() )
+            updateVisitorTable($request);
 
         return $next($request);
     }

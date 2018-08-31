@@ -36,9 +36,6 @@
             }) as $offer)
                 <tr class="sc-product-item">
                     <td class="vertical-center text-center">
-                        <input name="product_price" value="{{ get_formated_decimal($offer->currnt_sale_price(), true, 2) }}" type="hidden"/>
-                        <input name="product_id" value="{{ $offer->id }}" type="hidden"/>
-                        <input name="shop_id" value="{{ $offer->id }}" type="hidden"/>
                         @include('layouts.pricing', ['item' => $offer])
                     </td>
                     <td class="vertical-center">
@@ -48,7 +45,7 @@
                         </p>
                     </td>
                     <td>
-                        <a href="{{ route('show.product', $offer->slug) }}" class="product-info-title" data-name="product_name">{{ $offer->title }}</a>
+                        <a href="{{ route('show.product', $offer->slug) }}" class="product-info-title">{{ $offer->title }}</a>
                         <span class="small">
                             @include('layouts.ratings', ['ratings' => $offer->feedbacks->avg('rating'), 'count' => $offer->feedbacks->count()])
                         </span>
@@ -78,7 +75,7 @@
                             <i class="fa fa-external-link" data-toggle="tooltip" title="@lang('theme.button.quick_view')"></i> <span>@lang('theme.button.quick_view')</span>
                         </a>
 
-                        <a class="btn btn-primary flat btn-block sc-add-to-cart" href="#">
+                        <a class="btn btn-primary flat btn-block sc-add-to-cart" href="{{ route('cart.addItem', $offer->slug) }}">
                             <i class="fa fa-shopping-cart"></i> @lang('theme.button.add_to_cart')
                         </a>
 

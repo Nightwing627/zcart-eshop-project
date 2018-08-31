@@ -77,20 +77,22 @@ class HomeController extends Controller
      */
     public function product($slug)
     {
-        $item = Inventory::where('slug', $slug)
-        ->with([
+        $item = Inventory::where('slug', $slug)->available()->withCount('feedbacks')->firstOrFail();
+
+        $item->load([
             'product' => function($q){
-                $q->select('id', 'slug', 'description', 'manufacturer_id')->withCount('inventories');
+                $q->select('id', 'slug', 'description', 'manufacturer_id')
+                ->withCount(['inventories' => function($query){
+                    $query->available();
+                }]);
             },
             'attributeValues' => function($q){
                 $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')->with('attribute');
             },
             // 'attributeValues:id,attribute_id,value,color,order',
             'feedbacks.customer:id,nice_name,name',
-        ])
-        // ->with(['image:path,imageable_id,imageable_type', 'feedbacks.customer:id,name,nice_name'])
-        ->withCount('feedbacks')->firstOrFail();
-        // echo "<pre>"; print_r($item->toArray()); echo "</pre>"; exit();
+            'images:path,imageable_id,imageable_type',
+        ]);
 
         $this->update_recently_viewed_items($item); //update_recently_viewed_items
 
@@ -122,7 +124,7 @@ class HomeController extends Controller
      */
     public function quickViewItem($slug)
     {
-        $item = Inventory::where('slug', $slug)
+        $item = Inventory::where('slug', $slug)->available()
         ->with([
             'images:path,imageable_id,imageable_type',
             'product' => function($q){
@@ -148,10 +150,13 @@ class HomeController extends Controller
     public function offers($slug)
     {
         $product = Product::where('slug', $slug)
-        ->with([
+        ->with(['inventories' => function($q){
+                $q->available();
+            },
             'inventories.attributeValues.attribute',
             'inventories.feedbacks:rating,feedbackable_id,feedbackable_type',
-            'inventories.shop.feedbacks:rating,feedbackable_id,feedbackable_type'
+            'inventories.shop.feedbacks:rating,feedbackable_id,feedbackable_type',
+            'inventories.shop.image:path,imageable_id,imageable_type',
         ])->firstOrFail();
 
         return view('offers', compact('product'));
@@ -166,6 +171,10 @@ class HomeController extends Controller
     public function shop($slug)
     {
         $shop = Shop::select('id','name','slug','description')->where('slug', $slug)->firstOrFail();
+
+        // Check shop maintenance_mode
+        if(getShopConfig($shop->id, 'maintenance_mode'))
+            return response()->view('errors.503', [], 503);
 
         $products = Inventory::where('shop_id', $shop->id)->filter(request()->all())
         ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])

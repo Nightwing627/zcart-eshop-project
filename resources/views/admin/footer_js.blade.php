@@ -756,7 +756,7 @@
 			    }
 			    else if(check == 'true'){
 				    node.closest( ".form-group" ).removeClass('has-error');
-			    	msg = "{{ ends_with(config('app.url'),'/') ? config('app.url') : config('app.url') . '/' }}" + url + slug;
+			    	msg = "{{ str_finish(config('app.url'), '/') }}" + url + slug;
 			    }
 		  	}
 

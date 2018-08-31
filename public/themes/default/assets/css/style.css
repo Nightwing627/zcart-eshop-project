@@ -2601,6 +2601,13 @@ ul.key_feature_list li{
   font-size: 13px;
   color: #636363;
 }
+.side-widget.text-disable,
+.side-widget.text-disable a,
+.shopping-cart-item-table td.text-disable,
+.shopping-cart-item-table td.text-disable a,
+.shopping-cart-item-table td.text-disable > * {
+  color: #a3a3a3!important;
+}
 /******* side widget ********/
 .widget-title,
 .side-widget h3.side-widget-title {

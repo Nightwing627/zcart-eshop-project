@@ -45,7 +45,7 @@
 				                  	<p>@lang('theme.quantity'):</p>
 				                  	<div class="product-info-qty-item">
 				                      	<button class="product-info-qty product-info-qty-minus">-</button>
-				                      	<input class="product-info-qty product-info-qty-input" data-name="product_quantity" data-max="{{$item->stock_quantity}}" type="text" value="1">
+				                      	<input class="product-info-qty product-info-qty-input" data-name="product_quantity" data-min="{{$item->min_order_quantity}}" data-max="{{$item->stock_quantity}}" type="text" value="{{$item->min_order_quantity}}">
 				                      	<button class="product-info-qty product-info-qty-plus">+</button>
 					                </div>
 				                  	<span class="available-qty-count">@lang('theme.stock_count', ['count' => $item->stock_quantity])</span>
@@ -119,7 +119,7 @@
 				        <li class="sc-product-item">
 				            <div class="product-widget">
 				                <div class="product-img-wrap">
-				                    <img class="product-img" src="{{ get_storage_file_url(optional($linkedItem->image)->path, 'medium') }}" alt="{{ $linkedItem->title }}" title="{{ $linkedItem->title }}" />
+				                    <img class="product-img" src="{{ get_storage_file_url(optional($linkedItem->image)->path, 'small') }}" alt="{{ $linkedItem->title }}" title="{{ $linkedItem->title }}" />
 				                </div>
 				                <div class="product-info space10">
 				                    @include('layouts.ratings', ['ratings' => $linkedItem->feedbacks->avg('rating')])

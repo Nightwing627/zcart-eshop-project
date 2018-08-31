@@ -581,6 +581,10 @@ a:focus {
   border-radius: 0;
 }
 
+.jconfirm .jconfirm-box .jconfirm-buttons button,
+.jconfirm.jconfirm-white .jconfirm-box, .jconfirm.jconfirm-light .jconfirm-box {
+  border-radius: 0;
+}
 
 /* Navbar */
 .main-header .navbar .nav > li > a:hover,

@@ -334,7 +334,9 @@ class Inventory extends Model
      */
     public function scopeAvailable($query)
     {
-        return $query->where([
+        return $query->whereHas('shop', function ($q) {
+            $q->active();
+        })->where([
             ['active', '=', 1],
             ['stock_quantity', '>', 0],
             ['available_from', '<=', Carbon::now()]

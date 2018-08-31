@@ -68,7 +68,7 @@
 			                    	@if($order->shop)
 				                    	<a href="{{ route('show.store', $order->shop->slug) }}"> {{ $order->shop->name }}</a>
 				                    @else
-			                      		@land('theme.shop_not_available')
+			                      		@lang('theme.store_not_available')
 			                    	@endif
 			                  	</h5>
 			                  	<h5>

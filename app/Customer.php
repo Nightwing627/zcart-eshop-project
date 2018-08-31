@@ -3,6 +3,7 @@
 namespace App;
 
 use Hash;
+use App\Common\Billable;
 use App\Common\Taggable;
 use App\Common\Imageable;
 use App\Common\Addressable;
@@ -18,7 +19,7 @@ use App\Notifications\Auth\CustomerResetPasswordNotification;
 class Customer extends Authenticatable
 {
 
-    use SoftDeletes, Notifiable, Addressable, Taggable, Imageable, HasActivity, Searchable;
+    use SoftDeletes, Billable, Notifiable, Addressable, Taggable, Imageable, HasActivity, Searchable;
 
    /**
      * The guard used by the model.
@@ -100,9 +101,13 @@ class Customer extends Authenticatable
                 'dob',
                 'sex',
                 'description',
+                'stripe_id',
+                'card_holder_name',
+                'card_brand',
+                'card_last_four',
+                'active',
                 'remember_token',
                 'verification_token',
-                'active',
                 'accepts_marketing',
             ];
 
@@ -215,6 +220,16 @@ class Customer extends Authenticatable
     public function gift_cards()
     {
         return $this->hasMany(GiftCard::class);
+    }
+
+    /**
+     * Check if the customer has billing token
+     *
+     * @return bool
+     */
+    public function hasBillingToken()
+    {
+        return $this->hasStripeId();
     }
 
     /**

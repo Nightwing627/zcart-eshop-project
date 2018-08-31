@@ -29,7 +29,7 @@
                           <p>@lang('theme.quantity'):</p>
                           <div class="product-info-qty-item">
                                 <button class="product-info-qty product-info-qty-minus">-</button>
-                                <input class="product-info-qty product-info-qty-input" data-name="product_quantity" data-max="{{$item->stock_quantity}}" type="text" value="1">
+                                <input class="product-info-qty product-info-qty-input" data-name="product_quantity" data-min="{{$item->min_order_quantity}}" data-max="{{$item->stock_quantity}}" type="text" value="{{$item->min_order_quantity}}">
                                 <button class="product-info-qty product-info-qty-plus">+</button>
                             </div>
                             <span class="available-qty-count">@lang('theme.stock_count', ['count' => $item->stock_quantity])</span>

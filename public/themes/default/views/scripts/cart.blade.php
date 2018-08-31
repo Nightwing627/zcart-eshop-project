@@ -5,10 +5,14 @@
         // Delete the cart info from localStorage
         // localStorage.removeItem('cart');
 
-    	$('.shopping-cart-table-wrap').each(function(){
+    	$('.shopping-cart-table-wrap').each(function(e){
 			var cart = $(this).data('cart');
+	        var shop = $('#shop-id'+cart).val();
 
-			setShippingOptions(cart);
+			if(!shop)
+				disableCartCheckout(cart);
+			else
+				setShippingOptions(cart);
     	});
 
         // Update shipping options
@@ -452,7 +456,15 @@
       	{
       		$('#checkout-btn'+cart).attr("disabled", "disabled");
       		$('#table'+cart+' > tfoot').addClass('hidden');
-      		$('#notice'+cart).removeClass('hidden');
+
+	        var shop = $('#shop-id'+cart).val();
+	        if(!shop){
+ 	     		$('#store-unavailable-notice'+cart).removeClass('hidden');
+ 	     		$('#table'+cart+' td, #cart-summary'+cart).addClass('text-disable');
+	        }
+ 	     	else{
+ 	     		$('#shipping-notice'+cart).removeClass('hidden');
+ 	     	}
       	}
     });
 }(window.jQuery, window, document));

@@ -71,6 +71,7 @@ return [
     'error' => 'Error!',
     'notice' => 'Notice!',
     'marketplace_name' => 'Marketplace name',
+    'marketplace_down' => 'Be right back',
     'platform' => 'Platform',
     'currency' => 'Currency',
     'currencies' => 'Currencies',

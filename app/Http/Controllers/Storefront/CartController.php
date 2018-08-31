@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Storefront;
 
 use Auth;
+use App\Shop;
 use App\Cart;
 use App\Order;
 use App\Coupon;
@@ -20,7 +21,12 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
-        $carts = Cart::where('ip_address', $request->ip());
+        $carts = Cart::where('ip_address', $request->ip())
+        ->with(['shop' => function($q) {
+            $q->with(['packagings' => function($query){
+                $query->active();
+            }])->active();
+        }, 'inventories.image', 'shippingPackage']);
 
         if(Auth::guard('customer')->check())
             $carts = $carts->orWhere('customer_id', Auth::guard('customer')->user()->id);
@@ -29,11 +35,12 @@ class CartController extends Controller
 
         $carts = $carts->get();
 
-        $countries = ListHelper::countries();
+        $countries = ListHelper::countries(); // Country list for shop_to dropdown
 
-        return view('cart', compact('carts','countries'));
+        $platformDefaultPackaging = getPlatformDefaultPackaging(); // Get platform's default packaging
+
+        return view('cart', compact('carts','countries','platformDefaultPackaging'));
     }
-
 
     /**
      * Validate coupon.
@@ -65,7 +72,7 @@ class CartController extends Controller
             if($find) return response('Item alrealy in cart', 444);
         }
 
-        $qtt = 1;
+        $qtt = $item->min_order_quantity;
         $unit_price = $item->currnt_sale_price();
 
         // Instantiate new cart if old cart not found for the shop and customer
@@ -77,6 +84,7 @@ class CartController extends Controller
         $cart->quantity = $old_cart ? ($old_cart->quantity + $qtt) : $qtt;
         $cart->handling = $old_cart ? $old_cart->handling : getShopConfig($item->shop_id, 'order_handling_cost');
         $cart->total = $old_cart ? ($old_cart->total + ($qtt * $unit_price)) : $unit_price;
+        // $cart->packaging_id = $old_cart ? $old_cart->packaging_id : 1;
 
         // All items need to have shipping_weight to calculate shipping
         // If any one the item missing shipping_weight set null to cart shipping_weight
@@ -160,14 +168,20 @@ class CartController extends Controller
      * Checkout the specified cart.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function checkout(Request $request, Cart $cart)
+    public function checkout(Request $request)
     {
-        // print_r(json_decode($request->input('cart_list')));
         // echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
-        return view('checkout', compact('cart'));
+        $shop = Shop::where('id', $request->shop_id)->active()->with(['paymentMethods' => function($q){
+            $q->active();
+        }, 'config'])->first();
+
+        // $payment_options = Shop::findOrFail($request->shop_id);
+        // echo "<pre>"; print_r($shop->paymentMethods); echo "</pre>"; exit();
+        $customer = Auth::guard('customer')->check() ? Auth::guard('customer')->user() : Null;
+
+        return view('checkout', compact('customer', 'shop'));
     }
 
 }

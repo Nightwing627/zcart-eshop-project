@@ -20,6 +20,11 @@ class Storefront
      */
     public function handle($request, Closure $next)
     {
+        // Check platform maintenance_mode
+        if(config('system_settings.maintenance_mode'))
+            return response()->view('errors.503', [], 503);
+
+        // Get theme view path
         $paths = [
             theme_views_path(),
             theme_views_path('default'),
@@ -35,7 +40,6 @@ class Storefront
             View::share('recently_viewed_items', ListHelper::recentlyViewedItems());
             View::share('featured_categories', ListHelper::hot_categories());
             View::share('pages', ListHelper::pages(\App\Page::VISIBILITY_PUBLIC));
-            View::share('cart_item_count', ListHelper::cart_item_count($request));
         }
 
         return $next($request);

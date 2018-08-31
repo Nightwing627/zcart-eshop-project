@@ -125,9 +125,17 @@ class Shop extends Model
     }
 
     /**
-     * Get the ShippingZones for the order.
+     * Get the ShippingZones for the shop.
      */
     public function shippingZones()
+    {
+        return $this->hasMany(ShippingZone::class);
+    }
+
+    /**
+     * Get the ShippingZones for the shop.
+     */
+    public function shipping_zones()
     {
         return $this->hasMany(ShippingZone::class);
     }
@@ -138,14 +146,6 @@ class Shop extends Model
     public function carriers()
     {
         return $this->hasMany(Carrier::class);
-    }
-
-    /**
-     * Get the user shipping_zones.
-     */
-    public function shipping_zones()
-    {
-        return $this->hasMany(ShippingZone::class);
     }
 
     /**
@@ -220,8 +220,7 @@ class Shop extends Model
      */
     public function paymentMethods()
     {
-        return $this->belongsToMany(PaymentMethod::class, 'shop_payment_methods', 'shop_id', 'payment_method_id')
-                    ->withTimestamps();
+        return $this->belongsToMany(PaymentMethod::class, 'shop_payment_methods', 'shop_id', 'payment_method_id')->withTimestamps();
     }
 
     /**
@@ -240,13 +239,51 @@ class Shop extends Model
         return $this->hasMany(Supplier::class);
     }
 
+    /**
+     * Get the packagings for the product.
+     */
+    public function packagings()
+    {
+        return $this->hasMany(Packaging::class);
+    }
+
+    /**
+     * Get the defaultPackaging for the product.
+     */
+    public function defaultPackaging()
+    {
+        return $this->hasOne(Packaging::class)->where('default',1)->withDefault();
+    }
+
     public function revenue()
     {
-        return $this->hasMany(Order::class)
-                    ->selectRaw('SUM(total) as total, shop_id')
-                    ->groupBy('shop_id');
-
+        return $this->hasMany(Order::class)->selectRaw('SUM(total) as total, shop_id')->groupBy('shop_id');
     }
+
+   //  /**
+   //   * Get the stripe for the shop.
+   //   */
+   //  public function stripe()
+   //  {
+   //      return $this->hasOne(ConfigStripe::class, 'shop_id');
+   //  }
+
+   //  /**
+   //   * Get the paypalExpress for the shop.
+   //   */
+   //  public function paypalExpress()
+   //  {
+   //      return $this->hasOne(ConfigPaypalExpress::class, 'shop_id');
+   //  }
+
+   // /**
+   //   * Get the manualPaymentMethods for the shop.
+   //   */
+   //  public function manualPaymentMethods()
+   //  {
+   //      return $this->belongsToMany(PaymentMethod::class, 'config_manual_payments', 'shop_id', 'payment_method_id')
+   //      ->withPivot('additional_details', 'payment_instructions')->withTimestamps();
+   //  }
 
     /**
      * Get the timezone the shop.
@@ -354,6 +391,19 @@ class Shop extends Model
      */
     public function scopeActive($query)
     {
-        return $query->where('active', 1);
+        return $query->where('active', 1)
+        ->whereHas('config', function ($q) {
+            $q->live();
+        });
+    }
+
+    /**
+     * Check if the system is down or live.
+     *
+     * @return bool
+     */
+    public function isDown()
+    {
+        return $this->config->maintenance_mode;
     }
 }

@@ -15,10 +15,10 @@
               <td width="25%" class="store-info">
                 <h5>
                   <span>@lang('theme.store'):</span>
-                  @if($order->shop)
+                  @if($order->shop->name)
                     <a href="{{ route('show.store', $order->shop->slug) }}"> {{ $order->shop->name }}</a>
                   @else
-                    @land('theme.shop_not_available')
+                    @lang('theme.store_not_available')
                   @endif
                 </h5>
                 <h5>

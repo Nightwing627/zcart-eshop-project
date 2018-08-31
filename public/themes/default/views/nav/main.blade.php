@@ -24,7 +24,9 @@
     <ul class="nav navbar-nav navbar-right navbar-mob-left">
       <li>
         <a href="{{ route('cart.index') }}">
-          <span>{{ trans('theme.your_cart') }}</span><i class="fa fa-shopping-bag"></i> <div id="globalCartItemCount" class="badge">{{$cart_item_count}}</div>
+          <span>{{ trans('theme.your_cart') }}</span>
+          <i class="fa fa-shopping-bag"></i>
+          <div id="globalCartItemCount" class="badge">{{ cart_item_count() }}</div>
         </a>
       </li>
 

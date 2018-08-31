@@ -47,8 +47,7 @@ class PaymentMethod extends Model
      */
     public function shops()
     {
-        return $this->belongsToMany(Shop::class, 'shop_payment_methods', 'payment_method_id','shop_id')
-                    ->withTimestamps();
+        return $this->belongsToMany(Shop::class, 'shop_payment_methods', 'payment_method_id','shop_id')->withTimestamps();
     }
 
     /**

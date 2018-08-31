@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>@lang('theme.shop_down')</title>
+        <title>@lang('app.marketplace_down')</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
@@ -33,21 +33,16 @@
 
             .title {
                 font-size: 52px;
+                margin-top: 20px;
                 margin-bottom: 40px;
-            }
-            a {
-                text-decoration: none;
             }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <a href="{{ url('/') }}">
-                    <img src="{{ asset('images/logo.png') }}" alt="LOGO" title="LOGO" />
-                </a>
-                <div class="title">@lang('theme.shop_down')</div>
-                <a href="{{ url('/') }}">@lang('theme.button.go_back')</a>
+                <img src="{{ asset('images/logo.png') }}" alt="LOGO" title="LOGO" />
+                <div class="title">@lang('app.marketplace_down')</div>
             </div>
         </div>
     </body>

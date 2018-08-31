@@ -26,21 +26,26 @@
         @php
           $shop_id = $cart->shop_id;
           $cart_total = 0;
-          $default_packaging = isset($cart->packaging_id) ? $cart->shippingPackage : getDefaultPackaging($shop_id);
+          if($cart->shop){
+              $default_packaging = $cart->shippingPackage ??
+                                optional($cart->shop->packagings)->where('default',1)->first() ??
+                                $platformDefaultPackaging;
+          }
+          else{
+              $default_packaging = $cart->shippingPackage ?? $platformDefaultPackaging;
+          }
 
           $shipping_zone = get_shipping_zone_of($shop_id, $shipping_country_id, $shipping_state_id);
 
           $shipping_options = $shipping_zone ? getShippingRates($shipping_zone->id) : 'NaN';
 
-          $packaging_options = getPackagings($shop_id);
-
-          // \Log::info($packaging_options);
+          $packaging_options = optional($cart->shop)->packagings;
         @endphp
 
         <div class="row shopping-cart-table-wrap space30" id="cartId{{$cart->id}}" data-cart="{{$cart->id}}">
           {!! Form::open(['route' => 'checkout', 'id' => 'formId'.$cart->id]) !!}
             {{ Form::hidden('cart_id', $cart->id, ['id' => 'cart-id'.$cart->id]) }}
-            {{ Form::hidden('shop_id', $cart->shop_id, ['id' => 'shop-id'.$cart->id]) }}
+            {{ Form::hidden('shop_id', optional($cart->shop)->id, ['id' => 'shop-id'.$cart->id]) }}
             {{ Form::hidden('zone_id', $shipping_zone ? $shipping_zone->id : Null, ['id' => 'zone-id'.$cart->id]) }}
             {{ Form::hidden('tax_id', $shipping_zone ? $shipping_zone->tax_id : Null, ['id' => 'tax-id'.$cart->id]) }}
             {{ Form::hidden('taxrate', Null, ['id' => 'cart-taxrate'.$cart->id]) }}
@@ -53,12 +58,12 @@
                   @if($cart->shop)
                     <a href="{{ route('show.store', $cart->shop->slug) }}"> {{ $cart->shop->name }}</a>
                   @else
-                    @land('theme.shop_not_available')
+                    @lang('theme.store_not_available')
                   @endif
 
                   <span class="pull-right">
                       @lang('theme.ship_to'):
-                      <select name="sort_by" class="selectBoxIt ship_to" id="shipTo{{$cart->id}}" data-cart="{{$cart->id}}">
+                      <select name="ship_to" class="selectBoxIt ship_to" id="shipTo{{$cart->id}}" data-cart="{{$cart->id}}">
                         {!! $country_dropdown !!}
                       </select>
                   </span>
@@ -79,7 +84,8 @@
                     <tbody>
                       @foreach($cart->inventories as $item)
                         @php
-                          $item_total = $item->pivot->unit_price * $item->pivot->quantity;
+                          $unit_price = $item->currnt_sale_price();
+                          $item_total = $unit_price * $item->pivot->quantity;
                           $cart_total += $item_total;
                         @endphp
                         <tr class="cart-item-tr">
@@ -94,13 +100,13 @@
                           </td>
                           <td class="shopping-cart-item-price">
                             <span>{{ get_formated_currency_symbol() }}
-                              <span id="item-price{{$cart->id}}-{{$item->id}}" data-value="{{$item->pivot->unit_price}}">{{ number_format($item->pivot->unit_price, 2, '.', '') }}</span>
+                              <span id="item-price{{$cart->id}}-{{$item->id}}" data-value="{{$unit_price}}">{{ number_format($unit_price, 2, '.', '') }}</span>
                             </span>
                           </td>
                           <td>
                             <div class="product-info-qty-item">
                               <button class="product-info-qty product-info-qty-minus">-</button>
-                              <input class="product-info-qty product-info-qty-input" data-name="product_quantity" data-cart="{{$cart->id}}" data-item="{{$item->id}}" data-max="{{$item->stock_quantity}}" type="text" value="{{$item->pivot->quantity}}">
+                              <input name="quantity[{{$item->id}}]" class="product-info-qty product-info-qty-input" data-cart="{{$cart->id}}" data-item="{{$item->id}}" data-min="{{$item->min_order_quantity}}" data-max="{{$item->stock_quantity}}" type="text" value="{{$item->pivot->quantity}}">
                               <button class="product-info-qty product-info-qty-plus">+</button>
                             </div>
                           </td>
@@ -135,13 +141,16 @@
                     </tfoot>
                 </table>
 
-                <div class="notice notice-warning notice-sm hidden" id="notice{{$cart->id}}">
+                <div class="notice notice-warning notice-sm hidden" id="shipping-notice{{$cart->id}}">
                   <strong>{{ trans('theme.warning') }}</strong> @lang('theme.notify.seller_doesnt_ship')
+                </div>
+                <div class="notice notice-danger notice-sm hidden" id="store-unavailable-notice{{$cart->id}}">
+                  <strong>{{ trans('theme.warning') }}</strong> @lang('theme.notify.store_not_available')
                 </div>
             </div><!-- /.col-md-9 -->
 
             <div class="col-md-3 space20">
-                <div class="side-widget">
+                <div class="side-widget" id="cart-summary{{$cart->id}}">
                     <h3 class="side-widget-title"><span>{{ trans('theme.cart_summary') }}</span></h3>
                     <ul class="shopping-cart-summary">
                         <li>
@@ -202,7 +211,7 @@
                 </div>
 
                 <button class="btn btn-primary btn-sm flat pull-right" id="checkout-btn{{$cart->id}}" type="submit"><i class="fa fa-shopping-cart"></i> {{ trans('theme.button.buy_from_this_seller') }}</button>
-            </div><!-- /.col-md-3 -->
+            </div> <!-- /.col-md-3 -->
           {!! Form::close() !!}
         </div> <!-- /.row -->
       @endforeach

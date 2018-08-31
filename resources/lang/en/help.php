@@ -93,9 +93,9 @@ return [
 
     'shop_status' => 'If active, the shop will be live immediately.',
 
-    'shop_maintenance_mode_handle' => 'If maintenance mode is on, the shop will be offline and the maintenance mode flag will be shown on the shop\'s landing page.',
+    'shop_maintenance_mode_handle' => 'If maintenance mode is on, the shop will be offline and all listings will be down from the marketplace until maintenance off.',
 
-    'system_maintenance_mode_handle' => 'If maintenance mode is on, the marketplace will be offline and the maintenance mode flag will be shown to the visitors',
+    'system_maintenance_mode_handle' => 'If maintenance mode is on, the marketplace will be offline and the maintenance mode flag will be shown to the visitors. Still merchants can access their admin panel.',
 
     'system_physical_address' => 'The physical location of the marketplace/office',
 

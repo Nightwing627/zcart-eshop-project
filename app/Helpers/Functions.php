@@ -901,6 +901,30 @@ if ( ! function_exists('get_id_of_model') )
     }
 }
 
+if ( ! function_exists('cart_item_count') )
+{
+    /**
+     * Get cart item count for customer.
+     */
+    function cart_item_count($customer_id = Null)
+    {
+        if(!$customer_id)
+            $customer_id = \Auth::guard('customer')->check() ? \Auth::guard('customer')->user()->id : Null;
+
+        $cart_list = \DB::table('carts')->join('cart_items', 'cart_items.cart_id', '=', 'carts.id');
+        if($customer_id){
+            $cart_list = $cart_list->where(function ($q) use ($customer_id) {
+                $q->where('customer_id', $customer_id)->orWhere('ip_address', request()->ip());
+            });
+        }
+        else{
+            $cart_list = $cart_list->whereNull('customer_id')->where('ip_address', request()->ip());
+        }
+
+        return $cart_list->count();
+    }
+}
+
 if ( ! function_exists('getTaxRate') )
 {
     /**
@@ -928,7 +952,7 @@ if ( ! function_exists('getShippingRates') )
 
         return \DB::table('shipping_zones')
         ->join('shipping_rates', 'shipping_zones.id', 'shipping_rates.shipping_zone_id')
-        ->where('shipping_zones.shop_id', Auth::user()->merchantId())
+        ->where('shipping_zones.shop_id', \Auth::user()->merchantId())
         ->where('shipping_zones.active', 1)->orderBy('shipping_rates.rate', 'asc')->get();
     }
 }
@@ -989,6 +1013,19 @@ if ( ! function_exists('filterShippingOptions') )
     }
 }
 
+if ( ! function_exists('getPlatformDefaultPackaging') )
+{
+    /**
+     * Return default packaging ID for given shop
+     *
+     * @param $int shop
+     */
+    function getPlatformDefaultPackaging($shop = null)
+    {
+        return \DB::table('packagings')->select('id', 'name', 'cost')->whereNull('shop_id')->where('id', 1)->first();
+    }
+}
+
 if ( ! function_exists('getDefaultPackaging') )
 {
     /**
@@ -998,13 +1035,13 @@ if ( ! function_exists('getDefaultPackaging') )
      */
     function getDefaultPackaging($shop = null)
     {
-        $shop = $shop ?: Auth::user()->merchantId();
+        $shop = $shop ?: \Auth::user()->merchantId();
 
         $packaging = \DB::table('packagings')->select('id', 'name', 'cost')->where('shop_id', $shop)->where('default', 1)->where('active', 1)->whereNull('deleted_at')->first();
 
         if ($packaging) return $packaging;
 
-        return \DB::table('packagings')->select('id', 'name', 'cost')->where('id', 1)->first();
+        return getPlatformDefaultPackaging();
     }
 }
 
@@ -1017,7 +1054,7 @@ if ( ! function_exists('getPackagings') )
      */
     function getPackagings($shop = null)
     {
-        $shop = $shop ?: Auth::user()->merchantId();
+        $shop = $shop ?: \Auth::user()->merchantId();
 
         return \DB::table('packagings')->select('id', 'name', 'cost')->where('shop_id', $shop)->where('active', 1)->whereNull('deleted_at')->get();
     }
