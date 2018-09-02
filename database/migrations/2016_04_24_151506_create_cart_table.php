@@ -30,10 +30,12 @@ class CreateCartTable extends Migration
             $table->decimal('taxes', 20, 6)->nullable();
             $table->decimal('grand_total', 20, 6)->nullable();
 
+            $table->decimal('taxrate', 20, 6)->nullable();
             $table->decimal('shipping_weight', 20, 2)->nullable();
             $table->bigInteger('billing_address')->unsigned()->nullable();
             $table->bigInteger('shipping_address')->unsigned()->nullable();
 
+            $table->bigInteger('coupon_id')->unsigned()->nullable();
             $table->integer('payment_status')->default(1);
             $table->integer('payment_method_id')->unsigned()->nullable();
             $table->text('message_to_customer')->nullable();

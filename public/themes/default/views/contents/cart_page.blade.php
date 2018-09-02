@@ -27,7 +27,7 @@
           $shop_id = $cart->shop_id;
           $cart_total = 0;
           if($cart->shop){
-              $default_packaging = $cart->shippingPackage ??
+            $default_packaging = $cart->shippingPackage ??
                                 optional($cart->shop->packagings)->where('default',1)->first() ??
                                 $platformDefaultPackaging;
           }

@@ -35,6 +35,7 @@ class Cart extends Model
                         'ip_address',
                         'shipping_rate_id',
                         'packaging_id',
+                        'taxrate',
                         'item_count',
                         'quantity',
                         'total',
@@ -47,6 +48,7 @@ class Cart extends Model
                         'shipping_weight',
                         'shipping_address',
                         'billing_address',
+                        'coupon_id',
                         'payment_method_id',
                         'payment_status',
                         'message_to_customer',
@@ -115,13 +117,20 @@ class Cart extends Model
     }
 
     /**
+     * Get the coupon associated with the order.
+     */
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
+    }
+
+    /**
      * Get the inventories for the product.
      */
     public function inventories()
     {
         return $this->belongsToMany(Inventory::class, 'cart_items')
-                    ->withPivot('item_description', 'quantity', 'unit_price')
-                    ->withTimestamps();
+        ->withPivot('item_description', 'quantity', 'unit_price')->withTimestamps();
     }
 
     /**
@@ -130,6 +139,26 @@ class Cart extends Model
     public function paymentMethod()
     {
         return $this->belongsTo(PaymentMethod::class);
+    }
+
+    /**
+     * Return shipping cost with handling fee
+     *
+     * @return number
+     */
+    public function get_shipping_cost()
+    {
+        return $this->shipping + $this->handling;
+    }
+
+    /**
+     * Return grand tolal
+     *
+     * @return number
+     */
+    public function grand_total()
+    {
+        return ($this->total + $this->handling + $this->taxes + $this->shipping + $this->packaging) - $this->discount;
     }
 
     /**

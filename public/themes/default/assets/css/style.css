@@ -2673,6 +2673,10 @@ ul.key_feature_list li{
   margin-bottom: 0px;
   color: #666;
 }
+
+#payment-instructions > p:first-child {
+  display: inline!important;
+}
 /******* Footer ********/
 .main-footer {
     background-color: #e8e8e8;

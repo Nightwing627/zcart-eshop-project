@@ -192,6 +192,29 @@ class Coupon extends Model
     }
 
     /**
+     * Check if the coupon has a minimum order amount value
+     *
+     * @return bool
+     */
+    public function passMinAmount($total)
+    {
+        return $this->min_order_amount == Null || $total < $this->min_order_amount;
+    }
+
+    /**
+     * Check if the coupon is Active
+     *
+     * @return bool
+     */
+    public function isValidForTheCart($total, $zone = Null, $customer = Null)
+    {
+        $customer = $customer ?? \Auth::guard('customer')->id();
+
+        return $this->passMinAmount($total) && $this->isActive() && $this->isLive() &&
+        $this->isValidCustomer($customer) && $this->isValidZone($zone) && $this->hasQtt();
+    }
+
+    /**
      * Setters
      */
     public function setQuantityAttribute($value)
@@ -210,7 +233,6 @@ class Coupon extends Model
     {
         if($value) $this->attributes['ending_time'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
     }
-
 
     /**
      * Getters

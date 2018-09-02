@@ -243,6 +243,11 @@ class Inventory extends Model
         return FALSE;
     }
 
+    /**
+     * Return currnt sale price
+     *
+     * @return number
+     */
     public function currnt_sale_price()
     {
         if($this->hasOffer())

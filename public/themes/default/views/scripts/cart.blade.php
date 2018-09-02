@@ -28,7 +28,11 @@
 		    var options = getFromPHPHelper('getShippingRates', [zone.id]);
 			$("#shipping-options"+cart).data('options', JSON.parse(options));
 
+			// Set shipping options for the zone
 			setShippingOptions(cart);
+
+			// Remove the discount if the zone changes as discount can be depends on zone
+			resetDiscount(cart);
     	});
 
         // Update Item total on qty change
@@ -95,9 +99,14 @@
 				    dataType: 'JSON',
 				    success: function (data, textStatus, xhr) {
 				    	if(200 == xhr.status){
-				    		setDiscount(cart, data);
-
-		                    @include('layouts.notification', ['message' => trans('theme.notify.coupon_applied'), 'type' => 'success', 'icon' => 'check-circle'])
+							if(data.min_order_amount && totalPrice < data.min_order_amount){
+				                @include('layouts.notification', ['message' => trans('theme.notify.coupon_min_order_value'), 'type' => 'danger', 'icon' => 'times-circle'])
+								resetDiscount(cart);
+							}
+							else{
+					    		setDiscount(cart, data);
+			                    @include('layouts.notification', ['message' => trans('theme.notify.coupon_applied'), 'type' => 'success', 'icon' => 'check-circle'])
+							}
 				    	}
 				    }
 				})
@@ -421,6 +430,12 @@
 			var value = coupon.value;
 			var name = coupon.name;
 			var totalPrice  = getOrderTotal(cart);
+
+			if(coupon.min_order_amount && totalPrice < coupon.min_order_amount){
+                @include('layouts.notification', ['message' => trans('theme.notify.coupon_min_order_value'), 'type' => 'danger', 'icon' => 'times-circle'])
+				resetDiscount(cart);
+				return;
+			}
 
 			if('percent' == coupon.type){
 				value = ( coupon.value * (totalPrice/100) );

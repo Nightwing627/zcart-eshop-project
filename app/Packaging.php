@@ -11,6 +11,8 @@ class Packaging extends Model
 {
     use SoftDeletes, Imageable;
 
+    const FREE_PACKAGING_ID = 1;
+
     /**
      * The database table used by the model.
      *

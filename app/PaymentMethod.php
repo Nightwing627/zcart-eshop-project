@@ -40,6 +40,7 @@ class PaymentMethod extends Model
                     'terms_conditions_link',
                     'description',
                     'enabled',
+                    'order',
                 ];
 
     /**

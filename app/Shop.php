@@ -220,7 +220,8 @@ class Shop extends Model
      */
     public function paymentMethods()
     {
-        return $this->belongsToMany(PaymentMethod::class, 'shop_payment_methods', 'shop_id', 'payment_method_id')->withTimestamps();
+        return $this->belongsToMany(PaymentMethod::class, 'shop_payment_methods', 'shop_id', 'payment_method_id')
+        ->orderBy('order')->withTimestamps();
     }
 
     /**
@@ -394,7 +395,8 @@ class Shop extends Model
         return $query->where('active', 1)
         ->whereHas('config', function ($q) {
             $q->live();
-        });
+        })
+        ->whereHas('paymentMethods');
     }
 
     /**

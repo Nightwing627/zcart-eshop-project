@@ -932,9 +932,13 @@ if ( ! function_exists('getTaxRate') )
      *
      * @param $tax
      */
-    function getTaxRate($tax)
+    function getTaxRate($tax = Null)
     {
-        return \DB::table('taxes')->select('taxrate')->where('id', $tax)->first()->taxrate;
+        $tax = $tax ?? \App\Tax::DEFAULT_TAX_ID;
+
+        $rate = \DB::table('taxes')->select('taxrate')->where('id', $tax)->first();
+
+        return $rate ? $rate->taxrate : Null;
     }
 }
 
@@ -1022,7 +1026,8 @@ if ( ! function_exists('getPlatformDefaultPackaging') )
      */
     function getPlatformDefaultPackaging($shop = null)
     {
-        return \DB::table('packagings')->select('id', 'name', 'cost')->whereNull('shop_id')->where('id', 1)->first();
+        return \DB::table('packagings')->select('id', 'name', 'cost')
+        ->whereNull('shop_id')->where('id', \App\Packaging::FREE_PACKAGING_ID)->first();
     }
 }
 

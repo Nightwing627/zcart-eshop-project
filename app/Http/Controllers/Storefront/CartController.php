@@ -8,6 +8,8 @@ use App\Cart;
 use App\Order;
 use App\Coupon;
 use App\Inventory;
+use App\Packaging;
+use App\ShippingRate;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -172,16 +174,88 @@ class CartController extends Controller
      */
     public function checkout(Request $request)
     {
-        // echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
         $shop = Shop::where('id', $request->shop_id)->active()->with(['paymentMethods' => function($q){
             $q->active();
         }, 'config'])->first();
+
+        $cart = Cart::findOrFail($request->cart_id);
+
+        $shipping_weight = 0;
+        $quantity = 0;
+        $taxes = 0;
+        $discount = 0;
+        $total = 0;
+        $grand_total = 0;
+
+        foreach ($cart->inventories as $item) {
+            $temp_qtt = $request->quantity[$item->id];
+            $unit_price = $item->currnt_sale_price();
+            $temp_total = $unit_price * $temp_qtt;
+
+            $shipping_weight = $item->shipping_weight * $temp_qtt;
+            $quantity += $temp_qtt;
+            $total += $temp_total;
+            $grand_total += $total;
+
+            // Update the cart item pivot table
+            $cart->inventories()->updateExistingPivot($item->id, ['quantity' => $temp_qtt, 'unit_price' => $unit_price]);
+        }
+
+        if($request->zone_id){
+            $taxrate = $request->tax_id ? getTaxRate($request->tax_id) : Null;
+            $taxes = ($total * $taxrate)/100;
+
+            $cart->taxrate = $taxrate;
+        }
+
+        if($request->shipping_rate_id){
+            $shippingRate = ShippingRate::select('rate')->where([
+                ['id', '=', $request->shipping_rate_id],
+                ['shipping_zone_id', '=', $request->zone_id]
+            ])->firstOrFail();
+        }
+
+        if($request->discount_id){
+            $coupon = Coupon::where([
+                ['id', '=', $request->discount_id],
+                ['shop_id', '=', $cart->shop_id],
+                ['code', '=', $request->coupon]
+            ])->active()->first();
+
+            if($coupon && $coupon->isValidForTheCart($total, $request->zone_id)){
+                $discount = ('percent' == $coupon->type) ? ($coupon->value * ($total/100)) : $coupon->value;
+            }
+        }
+
+        if($request->packaging_id && $request->packaging_id != Packaging::FREE_PACKAGING_ID){
+            $packagingCost = Packaging::select('cost')->where([
+                ['id', '=', $request->packaging_id],
+                ['shop_id', '=', $cart->shop_id]
+            ])->active()->first();
+        }
+
+        $cart->shipping_rate_id = $request->shipping_rate_id;
+        $cart->packaging_id = $request->packaging_id;
+        $cart->coupon_id = $request->discount_id;
+        $cart->shipping_weight = $shipping_weight;
+        $cart->quantity = $quantity;
+        $cart->shipping = isset($shippingRate) ? $shippingRate->rate : 0;
+        $cart->packaging = isset($packagingCost) ? $packagingCost->cost : 0;
+        $cart->taxes = $taxes;
+        $cart->total = $total;
+        $cart->discount = $discount;
+        $cart->save();
+
+        // $cart->load(['shippingPackage']);
+
+        // echo "<pre>"; print_r($request->all()); echo "</pre>";
+        // echo "<pre>"; print_r($cart->toArray()); echo "</pre>"; exit();
 
         // $payment_options = Shop::findOrFail($request->shop_id);
         // echo "<pre>"; print_r($shop->paymentMethods); echo "</pre>"; exit();
         $customer = Auth::guard('customer')->check() ? Auth::guard('customer')->user() : Null;
 
-        return view('checkout', compact('customer', 'shop'));
+        return view('checkout', compact('cart', 'customer', 'shop'));
     }
 
 }
