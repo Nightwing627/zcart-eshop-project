@@ -43,7 +43,7 @@
         @endphp
 
         <div class="row shopping-cart-table-wrap space30" id="cartId{{$cart->id}}" data-cart="{{$cart->id}}">
-          {!! Form::open(['route' => 'checkout', 'id' => 'formId'.$cart->id]) !!}
+          {!! Form::model($cart, ['method' => 'PUT', 'route' => ['cart.update', $cart->id], 'id' => 'formId'.$cart->id]) !!}
             {{ Form::hidden('cart_id', $cart->id, ['id' => 'cart-id'.$cart->id]) }}
             {{ Form::hidden('shop_id', optional($cart->shop)->id, ['id' => 'shop-id'.$cart->id]) }}
             {{ Form::hidden('zone_id', $shipping_zone ? $shipping_zone->id : Null, ['id' => 'zone-id'.$cart->id]) }}
@@ -90,7 +90,8 @@
                         @endphp
                         <tr class="cart-item-tr">
                           <td>
-                            {{ Form::hidden('shipping_weight['.$item->id.']', $item->shipping_weight, ['class' => 'itemWeight'.$cart->id]) }}
+                            <input type="hidden" id="unitWeight{{$item->id}}" value="{{$item->shipping_weight}}">
+                            {{ Form::hidden('shipping_weight['.$item->id.']', ($item->shipping_weight * $item->pivot->quantity), ['id' => 'itemWeight'.$item->id, 'class' => 'itemWeight'.$cart->id]) }}
                             <img src="{{ get_storage_file_url(optional($item->image)->path, 'mini') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
                           </td>
                           <td>
@@ -106,7 +107,7 @@
                           <td>
                             <div class="product-info-qty-item">
                               <button class="product-info-qty product-info-qty-minus">-</button>
-                              <input name="quantity[{{$item->id}}]" class="product-info-qty product-info-qty-input" data-cart="{{$cart->id}}" data-item="{{$item->id}}" data-min="{{$item->min_order_quantity}}" data-max="{{$item->stock_quantity}}" type="text" value="{{$item->pivot->quantity}}">
+                              <input name="quantity[{{$item->id}}]" id="itemQtt{{$item->id}}" class="product-info-qty product-info-qty-input" data-cart="{{$cart->id}}" data-item="{{$item->id}}" data-min="{{$item->min_order_quantity}}" data-max="{{$item->stock_quantity}}" type="text" value="{{$item->pivot->quantity}}">
                               <button class="product-info-qty product-info-qty-plus">+</button>
                             </div>
                           </td>

@@ -526,6 +526,7 @@ return [
     'max_img_size_limit_kb' => 'Image size limit in kb',
     'max_number_of_inventory_imgs' => 'Number of inventory images',
     'allow_guest_checkout' => 'Allow guest checkout',
+    'guest_customer' => 'Guest customer',
     'vendor_can_view_customer_info' => 'Vendor can view customer info',
     // 'date_format' => 'Date format',
     // 'date_separator' => 'Date separator',

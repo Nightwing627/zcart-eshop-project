@@ -108,29 +108,29 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
 
     /**
      * Sync up the inventory
-     * @param  User $user
-     * @param  array $roleIds
+     * @param  Order $order
+     * @param  array $items
      * @return void
      */
     public function syncInventory($order, array $items)
     {
         // Increase stock if any item removed from the order
-        if($order->inventories->count() > 0){
+        if($order->inventories->count() > 0) {
             $newItems = array_column($items, 'inventory_id');
 
-            foreach ($order->inventories as $inventory){
-                if (!in_array($inventory->id, $newItems)){
+            foreach ($order->inventories as $inventory) {
+                if ( ! in_array($inventory->id, $newItems) )
                     Inventory::find($inventory->id)->increment('stock_quantity', $inventory->pivot->quantity);
-                }
             }
         }
 
         $temp = [];
 
-        foreach ($items as $item){
+        foreach ($items as $item) {
             $item = (object) $item;
             $id = $item->inventory_id;
 
+            // Preparing data for the pivot table
             $temp[$id] = [
                 'item_description' => $item->item_description,
                 'quantity' => $item->quantity,

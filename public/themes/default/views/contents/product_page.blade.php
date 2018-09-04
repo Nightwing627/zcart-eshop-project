@@ -54,7 +54,7 @@
 
 				          	<div class="sep"></div>
 
- 				          	<a href="{{ route('checkout') }}" class="btn btn-lg btn-warning flat"><i class="fa fa-rocket"></i> @lang('theme.button.buy_now')</a>
+ 				          	<a href="{{ route('direct.checkout', $item->slug) }}" class="btn btn-lg btn-warning flat"><i class="fa fa-rocket"></i> @lang('theme.button.buy_now')</a>
 
  				          	@if($item->product->inventories_count > 1)
 						        <a href="{{ route('show.offers', $item->product->slug) }}" class="btn btn-sm btn-link">
@@ -110,40 +110,42 @@
 <section>
     <div class="container">
       	<div class="row">
-	        <div class="col-md-3 bg-light nopadding-right nopadding-left">
-		        <div class="section-title">
-		          <p class="lead">@lang('theme.section_headings.bought_together'): </p>
-		        </div>
-				<ul class="sidebar-product-list">
-				    @foreach($linked_items as $linkedItem)
-				        <li class="sc-product-item">
-				            <div class="product-widget">
-				                <div class="product-img-wrap">
-				                    <img class="product-img" src="{{ get_storage_file_url(optional($linkedItem->image)->path, 'small') }}" alt="{{ $linkedItem->title }}" title="{{ $linkedItem->title }}" />
-				                </div>
-				                <div class="product-info space10">
-				                    @include('layouts.ratings', ['ratings' => $linkedItem->feedbacks->avg('rating')])
+      		@if($linked_items->count())
+		        <div class="col-md-3 bg-light nopadding-right nopadding-left">
+			        <div class="section-title">
+			          <p class="lead">@lang('theme.section_headings.bought_together'): </p>
+			        </div>
+					<ul class="sidebar-product-list">
+					    @foreach($linked_items as $linkedItem)
+					        <li class="sc-product-item">
+					            <div class="product-widget">
+					                <div class="product-img-wrap">
+					                    <img class="product-img" src="{{ get_storage_file_url(optional($linkedItem->image)->path, 'small') }}" alt="{{ $linkedItem->title }}" title="{{ $linkedItem->title }}" />
+					                </div>
+					                <div class="product-info space10">
+					                    @include('layouts.ratings', ['ratings' => $linkedItem->feedbacks->avg('rating')])
 
-				                    <a href="{{ route('show.product', $linkedItem->slug) }}" class="product-info-title" data-name="product_name">{{ $linkedItem->title }}</a>
+					                    <a href="{{ route('show.product', $linkedItem->slug) }}" class="product-info-title" data-name="product_name">{{ $linkedItem->title }}</a>
 
-				                    @include('layouts.pricing', ['item' => $linkedItem])
-				                </div>
-				                <div class="btn-group pull-right">
-			                        <a class="btn btn-default btn-xs flat itemQuickView" href="{{ route('quickView.product', $linkedItem->slug) }}">
-			                            <i class="fa fa-external-link" data-toggle="tooltip" title="@lang('theme.button.quick_view')"></i> <span>@lang('theme.button.quick_view')</span>
-			                        </a>
+					                    @include('layouts.pricing', ['item' => $linkedItem])
+					                </div>
+					                <div class="btn-group pull-right">
+				                        <a class="btn btn-default btn-xs flat itemQuickView" href="{{ route('quickView.product', $linkedItem->slug) }}">
+				                            <i class="fa fa-external-link" data-toggle="tooltip" title="@lang('theme.button.quick_view')"></i> <span>@lang('theme.button.quick_view')</span>
+				                        </a>
 
-						          	<a href="{{ route('cart.addItem', $linkedItem->slug) }}" class="btn btn-primary btn-xs flat sc-add-to-cart pull-right">
-						          		<i class="fa fa-shopping-bag"></i> @lang('theme.button.add_to_cart')
-						          	</a>
-				                </div>
-				            </div>
-				        </li>
-				    @endforeach
-				</ul>
-	        </div><!-- /.col-md-2 -->
+							          	<a href="{{ route('cart.addItem', $linkedItem->slug) }}" class="btn btn-primary btn-xs flat sc-add-to-cart pull-right">
+							          		<i class="fa fa-shopping-bag"></i> @lang('theme.button.add_to_cart')
+							          	</a>
+					                </div>
+					            </div>
+					        </li>
+					    @endforeach
+					</ul>
+		        </div><!-- /.col-md-2 -->
+	        @endif
 
-	        <div class="col-md-9" id="product_desc_section">
+	        <div class="col-md-{{$linked_items->count() ? '9' : '12'}}" id="product_desc_section">
           		<div role="tabpanel">
 	              	<ul class="nav nav-tabs" role="tablist">
 						<li role="presentation" class="active">

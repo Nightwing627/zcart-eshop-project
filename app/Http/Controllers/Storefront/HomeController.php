@@ -105,13 +105,16 @@ class HomeController extends Controller
 
         $attributes = \App\Attribute::select('id','name','attribute_type_id','order')
         ->whereIn('id', $attr_pivots->pluck('attribute_id'))
-         ->with(['attributeValues' => function($query) use ($attr_pivots) {
-             $query->whereIn('id', $attr_pivots->pluck('attribute_value_id'))->orderBy('order');
-         }])->orderBy('order')->get();
+        ->with(['attributeValues' => function($query) use ($attr_pivots) {
+            $query->whereIn('id', $attr_pivots->pluck('attribute_value_id'))->orderBy('order');
+        }])->orderBy('order')->get();
 
         // TEST
         $related = ListHelper::related_products($item);
         $linked_items = ListHelper::linked_items($item);
+
+        if( ! $linked_items->count() )
+            $linked_items = $related->random($related->count() >= 3 ? 3 : $related->count());
 
         return view('product', compact('item', 'variants', 'attributes', 'item_attrs', 'related', 'linked_items'));
     }

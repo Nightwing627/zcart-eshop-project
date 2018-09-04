@@ -91,9 +91,13 @@
         // Add-to-cart
         $(".sc-add-to-cart").on("click", function(e) {
             e.preventDefault();
+            var qtt = $(this).closest('.sc-product-item').find('input.product-info-qty-input').val();
             $.ajax({
                 url: $(this).attr('href'),
                 type: 'POST',
+                data: {
+                    'quantity': qtt ? qtt : 1
+                },
                 complete: function (xhr, textStatus) {
                     if(200 == xhr.status){
                         @include('layouts.notification', ['message' => trans('theme.notify.item_added_to_cart'), 'type' => 'success', 'icon' => 'check-circle'])
@@ -174,19 +178,14 @@
             checkboxClass: 'icheckbox_minimal-blue',
             radioClass: 'iradio_minimal-blue',
         });
-        // Register account on payment
-        $('#create-account-checkbox').on('ifChecked', function() {
-            $('#create-account').removeClass('hide');
-        });
-        $('#create-account-checkbox').on('ifUnchecked', function() {
-            $('#create-account').addClass('hide');
-        });
-        $('#shipping-address-checkbox').on('ifChecked', function() {
-            $('#shipping-address').removeClass('hide');
-        });
-        $('#shipping-address-checkbox').on('ifUnchecked', function() {
-            $('#shipping-address').addClass('hide');
-        });
+
+        // On checkout page
+        // $('#shipping-address-checkbox').on('ifChecked', function() {
+        //     $('#shipping-address').removeClass('hide');
+        // });
+        // $('#shipping-address-checkbox').on('ifUnchecked', function() {
+        //     $('#shipping-address').addClass('hide');
+        // });
 
         // View Switcher
         $("a.viewSwitcher").bind("click", function(e){

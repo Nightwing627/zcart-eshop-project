@@ -20,7 +20,7 @@
                 <table class="table no-border">
                     <tr>
                         <th class="text-right">{{ trans('app.order_number') }}: </th>
-                        <td style="width: 60%;">{{ get_formated_order_number($refund->order_id) }}</td>
+                        <td style="width: 60%;">{{ get_formated_order_number(Null, $refund->order_id) }}</td>
                     </tr>
                     <tr>
                         <th class="text-right">{{ trans('app.refund_amount') }}: </th>

@@ -7,7 +7,7 @@ $(document).ready(function(){
     },{
     	// settings
         type: '{{ $type or 'info' }}',
-        delay: 3000,
+        delay: 1500,
         placement: {
             from: "top",
             align: "right"

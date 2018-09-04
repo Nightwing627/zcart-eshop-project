@@ -72,9 +72,9 @@ class AccountController extends Controller
      */
     public function save_address(CreateAddressRequest $request)
     {
-        Auth::guard('customer')->user()->addresses()->create($request->all());
+        $address = Auth::guard('customer')->user()->addresses()->create($request->all());
 
-        return redirect()->route('account', 'account#address-tab')->with('success', trans('theme.notify.address_created'));
+        return redirect()->to(url()->previous().'?address='.$address->id.'#address-tab')->with('success', trans('theme.notify.address_created'));
     }
 
 

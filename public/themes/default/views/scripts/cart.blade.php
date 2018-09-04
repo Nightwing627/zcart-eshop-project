@@ -23,6 +23,7 @@
 
 		    var zone = getFromPHPHelper('get_shipping_zone_of', [shop, countryId]);
 			zone = JSON.parse(zone);
+			$("#zone-id"+cart).val(zone.id);
 			$("#tax-id"+cart).val(zone.tax_id);
 
 		    var options = getFromPHPHelper('getShippingRates', [zone.id]);
@@ -39,11 +40,21 @@
         $(".product-info-qty-input").on('change', function(e) {
 	        var cart = $(this).data('cart');
 	        var item = $(this).data('item');
-        	var total = $('#item-price'+cart+'-'+item).data('value') * $(this).val();
+	        var qtt = $(this).val();
+			var unitWeight = Number($("#unitWeight"+item).val());
 
+			// Set Item Price
+        	var total = $('#item-price'+cart+'-'+item).data('value') * qtt;
 			$('#item-total'+cart+'-'+item).text(getFormatedValue(total));
 
+			// Set Item Weight
+			var itemWeight = unitWeight * qtt;
+			$("#itemWeight"+item).val(itemWeight);
+
 			calculateCartTotal(cart);
+
+			// Set shipping options for the zone
+			setShippingOptions(cart);
     	});
 
     	// Item remove from the cart
@@ -292,18 +303,23 @@
           	return;
       	}
 
+		// function calculateItemWeight(item)
+		// {
+		// 	var unitWeight = Number($("#unitWeight"+item).val());
+
+		// }
+
 		function getCartWeight(cart)
 		{
 	      	var cartWeight = 0;
 	        $(".itemWeight"+cart).each(function()
 	        	{
-	              cartWeight += ($(this).val()) * 1;
+	              cartWeight += ($(this).val() * 1);
 	            }
 	        );
 
 	        return cartWeight;
 		}
-
 
       	function getTotalAmount(cart)
       	{
@@ -382,8 +398,10 @@
 
 			if( ! $.isEmptyObject(filtered) ){
 	            setShippingCost(cart, filtered[0].name, filtered[0].rate, filtered[0].id);
+	            enableCartCheckout(cart);
 			}
 			else{
+	            setShippingCost(cart);
 				disableCartCheckout(cart);
 			}
 
@@ -480,6 +498,12 @@
  	     	else{
  	     		$('#shipping-notice'+cart).removeClass('hidden');
  	     	}
+      	}
+      	function enableCartCheckout(cart)
+      	{
+      		$('#checkout-btn'+cart).removeAttr("disabled");
+      		$('#table'+cart+' > tfoot').removeClass('hidden');
+     		$('#shipping-notice'+cart).addClass('hidden');
       	}
     });
 }(window.jQuery, window, document));

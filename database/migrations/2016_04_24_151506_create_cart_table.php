@@ -17,6 +17,8 @@ class CreateCartTable extends Migration
             $table->integer('shop_id')->unsigned()->nullable();
             $table->bigInteger('customer_id')->unsigned()->nullable();
             $table->ipAddress('ip_address')->nullable();
+            $table->integer('ship_to')->unsigned()->nullable();
+            $table->integer('shipping_zone_id')->unsigned()->nullable();
             $table->integer('shipping_rate_id')->unsigned()->nullable();
             $table->integer('packaging_id')->unsigned()->nullable();
             $table->integer('item_count')->unsigned();

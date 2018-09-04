@@ -627,7 +627,9 @@ class ListHelper
     {
         $catIds = $item->product->categories->pluck('id');
 
-        $productIDs = \DB::table('category_product')->whereIn('category_id', $catIds)->pluck('product_id');
+        $productIDs = \DB::table('category_product')->whereIn('category_id', $catIds)->pluck('product_id')->toArray();
+
+        if(empty($productIDs)) return collect([]);
 
         return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
         ->whereIn('product_id', $productIDs)->available()->inRandomOrder()
@@ -643,10 +645,11 @@ class ListHelper
     {
         $linked_items = unserialize($item->linked_items);
 
+        if(empty($linked_items)) return collect([]);
+
         return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
-        ->whereIn('id', $linked_items)
         ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
-        ->available()->get();
+        ->whereIn('id', $linked_items)->available()->get();
     }
 
     /**
@@ -666,8 +669,8 @@ class ListHelper
 
         if(!$products) return [];
 
-        return Inventory::select('id', 'slug', 'title')->available()->whereIn('id', $products)
-        ->with('image:path,imageable_id,imageable_type')->get();
+        return Inventory::select('id', 'slug', 'title')->whereIn('id', $products)
+        ->available()->with('image:path,imageable_id,imageable_type')->get();
     }
 
     /**

@@ -101,19 +101,6 @@ if ( ! function_exists('get_shop_url') )
     }
 }
 
-if ( ! function_exists('getShopConfig') )
-{
-    /**
-     * Return config value for the given shop and column
-     *
-     * @param $int packaging
-     */
-    function getShopConfig($shop, $column)
-    {
-        return \DB::table('configs')->where('shop_id', $shop)->value($column);
-    }
-}
-
 if ( ! function_exists('get_page_url') )
 {
     /**
@@ -213,6 +200,57 @@ if ( ! function_exists('get_sender_name') )
         return config('system_settings.default_email_sender_name') ?: config('mail.from.name');
     }
 }
+
+if ( ! function_exists('get_address_str_from_request_data') )
+{
+    function get_address_str_from_request_data($request)
+    {
+        $state = is_numeric($request->state_id) ? get_value_from($request->state_id, 'states', 'name') : $request->state_id;
+
+        $str = array();
+        $str [] = $request->address_title;
+        $str [] = $request->address_line_1;
+        $str [] = $request->address_line_2;
+        $str []= $request->city;
+        $str []= $state . ' ' . $request->zip_code;
+        $str []= is_numeric($request->country_id) ? get_value_from($request->country_id, 'countries', 'name') : $request->country_id;
+        if($request->phone)
+            $str [] =  trans('app.phone') . ': ' . e($request->phone);
+
+        return implode(', ', array_filter($str));
+    }
+}
+
+if ( ! function_exists('address_str_to_html') )
+{
+    function address_str_to_html($address, $separator = '<br/>')
+    {
+        $addressStr = str_replace(',', $separator, $address);
+
+        $return = '<address>' . $addressStr . '</address>';
+
+        return $return;
+    }
+}
+
+if ( ! function_exists('address_str_to_geocode_str') )
+{
+    function address_str_to_geocode_str($address)
+    {
+        $t_arr = explode(',', $address);
+        array_shift($t_arr); // Remove address titme/name
+
+        // Remove phone number from address
+        if(preg_match('/^[0-9 +-]*$/', end($t_arr)))
+            array_pop($t_arr);
+
+        // build str string
+        $str = trim( implode(',', array_filter($t_arr)) );
+
+        return str_replace(' ', '+', $str);
+    }
+}
+
 /**
  * Get latitude and longitude of an address from Google API
  */
@@ -674,11 +712,14 @@ if ( ! function_exists('get_formated_weight') )
 
 if ( ! function_exists('get_formated_order_number') )
 {
-    function get_formated_order_number($order_id = null)
+    function get_formated_order_number($shop_id = Null, $order_id = Null)
     {
-        $order_id = $order_id ?: str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT);
+        $order_id = $order_id ?? str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT);
 
-        return config('shop_settings.order_number_prefix') . $order_id . config('shop_settings.order_number_suffix');
+        if($shop_id == Null && auth()->guard('web')->check())
+            $shop_id = auth()->user()->merchantId();
+
+        return getShopConfig($shop_id, 'order_number_prefix') . $order_id . getShopConfig($shop_id, 'order_number_suffix');
     }
 }
 
@@ -908,18 +949,14 @@ if ( ! function_exists('cart_item_count') )
      */
     function cart_item_count($customer_id = Null)
     {
-        if(!$customer_id)
+        if( ! $customer_id )
             $customer_id = \Auth::guard('customer')->check() ? \Auth::guard('customer')->user()->id : Null;
 
-        $cart_list = \DB::table('carts')->join('cart_items', 'cart_items.cart_id', '=', 'carts.id');
-        if($customer_id){
-            $cart_list = $cart_list->where(function ($q) use ($customer_id) {
-                $q->where('customer_id', $customer_id)->orWhere('ip_address', request()->ip());
-            });
-        }
-        else{
-            $cart_list = $cart_list->whereNull('customer_id')->where('ip_address', request()->ip());
-        }
+        $cart_list = \DB::table('carts')->join('cart_items', 'cart_items.cart_id', '=', 'carts.id')
+        ->whereNull('customer_id')->where('ip_address', request()->ip());
+
+        if($customer_id)
+            $cart_list = $cart_list->orWhere('customer_id', $customer_id);
 
         return $cart_list->count();
     }
@@ -1164,7 +1201,7 @@ if ( ! function_exists('get_value_from') )
             }
         }
         else{
-            $value = \DB::table($table)->select($field)->where('id', $ids)->get();
+            $value = \DB::table($table)->select($field)->where('id', $ids)->first();
             if(!empty($value) && isset($value->$field))
                 return $value->$field;
         }

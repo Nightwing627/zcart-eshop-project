@@ -49,6 +49,7 @@ class Order extends Model
                         'order_number',
                         'shop_id',
                         'customer_id',
+                        'ship_to',
                         'shipping_zone_id',
                         'shipping_rate_id',
                         'packaging_id',
@@ -85,11 +86,21 @@ class Order extends Model
                     ];
 
     /**
+     * Get the country associated with the order.
+     */
+    public function shipTo()
+    {
+        return $this->belongsTo(Country::class, 'ship_to');
+    }
+
+    /**
      * Get the customer associated with the order.
      */
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class)->withDefault([
+            'name' => trans('app.guest_customer'),
+        ]);
     }
 
     /**
@@ -113,20 +124,20 @@ class Order extends Model
      *
      * @return Address or null
      */
-    public function billingAddress()
-    {
-        return $this->belongsTo(Address::class, 'billing_address');
-    }
+    // public function billingAddress()
+    // {
+    //     return $this->belongsTo(Address::class, 'billing_address');
+    // }
 
     /**
      * Fetch billing address
      *
      * @return Address or null
      */
-    public function shippingAddress()
-    {
-        return $this->belongsTo(Address::class, 'shipping_address');
-    }
+    // public function shippingAddress()
+    // {
+    //     return $this->belongsTo(Address::class, 'shipping_address');
+    // }
 
     /**
      * Get the tax associated with the order.
@@ -150,8 +161,7 @@ class Order extends Model
     public function inventories()
     {
         return $this->belongsToMany(Inventory::class, 'order_items')
-                    ->withPivot('item_description', 'quantity', 'unit_price','feedback_id')
-                    ->withTimestamps();
+        ->withPivot('item_description', 'quantity', 'unit_price','feedback_id')->withTimestamps();
     }
 
     /**
@@ -240,12 +250,10 @@ class Order extends Model
         $this->attributes['delivery_date'] = Carbon::createFromFormat('Y-m-d', $value);
     }
     public function setShippingAddressAttribute($value){
-        if(is_numeric($value))
-            $this->attributes['shipping_address'] = Address::find($value)->toHtml('<br/>', false);
+        $this->attributes['shipping_address'] = is_numeric($value) ? \App\Address::find($value)->toString(True) : $value;
     }
     public function setBillingAddressAttribute($value){
-        if(is_numeric($value))
-            $this->attributes['billing_address'] = Address::find($value)->toHtml('<br/>', false);
+        $this->attributes['billing_address'] = is_numeric($value) ? \App\Address::find($value)->toString(True) : $value;
     }
 
     /**

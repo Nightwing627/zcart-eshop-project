@@ -33,6 +33,8 @@ class Cart extends Model
                         'shop_id',
                         'customer_id',
                         'ip_address',
+                        'ship_to',
+                        'shipping_zone_id',
                         'shipping_rate_id',
                         'packaging_id',
                         'taxrate',
@@ -54,6 +56,14 @@ class Cart extends Model
                         'message_to_customer',
                         'admin_note',
                     ];
+
+    /**
+     * Get the country associated with the order.
+     */
+    public function shipTo()
+    {
+        return $this->belongsTo(Country::class, 'ship_to');
+    }
 
     /**
      * Get the customer associated with the cart.
@@ -91,6 +101,13 @@ class Cart extends Model
         return $this->belongsTo(Address::class, 'shipping_address');
     }
 
+    /**
+     * Get the shippingZone for the order.
+     */
+    public function shippingZone()
+    {
+        return $this->belongsTo(ShippingZone::class, 'shipping_zone_id');
+    }
 
     /**
      * Get the shippingRate for the order.

@@ -1,10 +1,15 @@
 <?php
 
+use App\Cart;
+use App\Coupon;
 use App\Visitor;
+use App\Packaging;
+use App\ShippingRate;
 use Illuminate\Support\Str;
 use App\Helpers\ListHelper;
 use Laravel\Cashier\Cashier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client as HttpClient;
 
 if ( ! function_exists('updateVisitorTable') )
@@ -79,21 +84,6 @@ if ( ! function_exists('setSystemConfig') )
     }
 }
 
-if ( ! function_exists('setShopConfig') )
-{
-    /**
-     * Set shop settings into the config
-     */
-    function setShopConfig($shop = Null)
-    {
-        if(!config('shop_settings')){
-            $shop_settings = ListHelper::shop_settings($shop);
-
-            config()->set('shop_settings', $shop_settings);
-        }
-    }
-}
-
 if ( ! function_exists('setSystemCurrency') )
 {
     /**
@@ -101,7 +91,7 @@ if ( ! function_exists('setSystemCurrency') )
      */
     function setSystemCurrency()
     {
-        $currency = \DB::table('currencies')->where('id', config('system_settings.currency_id'))->first();
+        $currency = DB::table('currencies')->where('id', config('system_settings.currency_id'))->first();
 
         // Set Cashier Currency
         Cashier::useCurrency($currency->iso_code, $currency->symbol);
@@ -134,6 +124,37 @@ if ( ! function_exists('setDashboardConfig') )
     }
 }
 
+if ( ! function_exists('setShopConfig') )
+{
+    /**
+     * Set shop settings into the config
+     */
+    function setShopConfig($shop = Null)
+    {
+        if(!config('shop_settings')){
+            $shop_settings = ListHelper::shop_settings($shop);
+
+            config()->set('shop_settings', $shop_settings);
+        }
+    }
+}
+
+if ( ! function_exists('getShopConfig') )
+{
+    /**
+     * Return config value for the given shop and column
+     *
+     * @param $int packaging
+     */
+    function getShopConfig($shop, $column)
+    {
+        if( config('shop_settings') && array_key_exists($column, config('shop_settings')) )
+           return config('shop_settings.' . $column);
+
+        return \DB::table('configs')->where('shop_id', $shop)->value($column);
+    }
+}
+
 if ( ! function_exists('setAdditionalCartInfo') )
 {
     /**
@@ -158,18 +179,147 @@ if ( ! function_exists('setAdditionalCartInfo') )
         $request->merge([
             'shop_id' => $request->user()->merchantId(),
             'shipping_weight' => $shipping_weight,
-            'item_count' => count($request->input('cart') ),
-            'quantity' => array_sum(array_column($request->input('cart'), 'quantity') ),
+            'item_count' => count( $request->input('cart') ),
+            'quantity' => array_sum( array_column( $request->input('cart'), 'quantity' ) ),
             'total' => $total,
             'handling' => $handling,
             'grand_total' => $grand_total,
             'billing_address' => $request->input('same_as_shipping_address') ?
-                                $request->input('shipping_address') :
-                                $request->input('billing_address'),
+                                $request->input('shipping_address') : $request->input('billing_address'),
             'approved' => 1,
         ]);
 
         return $request;
+    }
+}
+
+if ( ! function_exists('crosscheckCartOwnership') )
+{
+    /**
+     * Crosscheck the cart ownership
+     *
+     * @param \App\Cart $cart
+     */
+    function crosscheckCartOwnership($request, Cart $cart)
+    {
+        $return = $cart->customer_id == Null && $cart->ip_address == request()->ip();
+
+        if(Auth::guard('customer')->check())
+            return  $return || ($cart->customer_id == Auth::guard('customer')->user()->id);
+
+        return $return;
+    }
+}
+
+if ( ! function_exists('crosscheckAndUpdateOldCartInfo') )
+{
+    /**
+     * Crosscheck old cart info with current listing and update
+     *
+     * @param \App\Cart $cart
+     */
+    function crosscheckAndUpdateOldCartInfo($request, Cart $cart)
+    {
+        $total = 0;
+        $quantity = 0;
+        $shipping_weight = 0;
+        $handling = getShopConfig($cart->shop_id, 'order_handling_cost');
+        // Start with old values
+        $shipping = $cart->shipping;
+        $packaging = $cart->packaging;
+        $discount = $cart->discount;
+
+        // Qtt and Total
+        foreach ($cart->inventories as $item) {
+            $temp_qtt = $request->quantity ? $request->quantity[$item->id] : $item->pivot->quantity;
+            $unit_price = $item->currnt_sale_price();
+            $temp_total = $unit_price * $temp_qtt;
+
+            $shipping_weight = $item->shipping_weight * $temp_qtt;
+            $quantity += $temp_qtt;
+            $total += $temp_total;
+
+            // Update the cart item pivot table
+            $cart->inventories()->updateExistingPivot($item->id, ['quantity' => $temp_qtt, 'unit_price' => $unit_price]);
+        }
+
+        // Taxes
+        if($request->zone_id) {
+            $taxrate = $request->tax_id ? getTaxRate($request->tax_id) : Null;
+            $taxes = ($total * $taxrate)/100;
+
+            $cart->shipping_zone_id = $request->zone_id;
+            $cart->taxrate = $taxrate;
+        }
+        else{
+            $taxes = ($total * $cart->taxrate)/100;
+        }
+
+        // Shipping
+        if($request->shipping_rate_id) {
+            $shippingRate = ShippingRate::select('rate')->where([
+                ['id', '=', $request->shipping_rate_id],
+                ['shipping_zone_id', '=', $request->zone_id]
+            ])->first();
+
+            abort_unless( $shippingRate, 403, trans('theme.notify.seller_doesnt_ship') );
+
+            $shipping = $shippingRate->rate;
+            $cart->shipping_rate_id = $request->shipping_rate_id;
+        }
+
+        // Discount
+        if($request->discount_id) {
+            $coupon = Coupon::where([
+                ['id', '=', $request->discount_id],
+                ['shop_id', '=', $cart->shop_id],
+                ['code', '=', $request->coupon]
+            ])->active()->first();
+
+            if($coupon && $coupon->isValidForTheCart($total, $request->zone_id)){
+                $discount = ('percent' == $coupon->type) ? ($coupon->value * ($total/100)) : $coupon->value;
+            }
+
+            $cart->coupon_id = $request->discount_id;
+        }
+        else if($cart->coupon_id){
+            if($cart->coupon->isValidForTheCart($total, $request->zone_id)){
+                $discount = ('percent' == $cart->coupon->type) ? ($cart->coupon->value * ($total/100)) : $cart->coupon->value;
+            }
+        }
+
+        // Packaging
+        if($request->packaging_id && $request->packaging_id != Packaging::FREE_PACKAGING_ID) {
+            $packagingCost = Packaging::select('cost')->where([
+                ['id', '=', $request->packaging_id],
+                ['shop_id', '=', $cart->shop_id]
+            ])->active()->first();
+
+            $packaging = $packagingCost->cost;
+            $cart->packaging_id = $request->packaging_id;
+        }
+
+        if ($request->payment_method) {
+            $cart->payment_method_id = $request->payment_method;
+        }
+
+        // Set customer_id if not set yet
+        if( ! $cart->customer_id && Auth::guard('customer')->check() )
+            $cart->customer_id = Auth::guard('customer')->user()->id;
+
+        $cart->ship_to = $request->ship_to ?? $request->country_id ?? $cart->ship_to;
+        $cart->shipping_weight = $shipping_weight;
+        $cart->quantity = $quantity;
+        $cart->total = $total;
+        $cart->taxes = $taxes;
+        $cart->shipping = $shipping;
+        $cart->packaging = $packaging;
+        $cart->discount = $discount;
+        $cart->handling = $handling;
+        $cart->grand_total = ($total + $taxes + $shipping + $packaging + $handling) - $discount;
+        $cart->save();
+
+        return $cart;
     }
 }
 

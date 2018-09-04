@@ -26,6 +26,7 @@ class CreateOrderTable extends Migration
             $table->string('order_number')->nullable();
             $table->integer('shop_id')->unsigned()->nullable();
             $table->bigInteger('customer_id')->unsigned()->nullable();
+            $table->integer('ship_to')->unsigned()->nullable();
             $table->integer('shipping_zone_id')->unsigned()->nullable();
             $table->integer('shipping_rate_id')->unsigned()->nullable();
             $table->integer('packaging_id')->unsigned()->nullable();

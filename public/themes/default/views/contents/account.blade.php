@@ -176,7 +176,9 @@
         @endforelse
 
         <div class="col-sm-12 text-center">
-          <a href="#" data-toggle="modal" data-target="#createAddressModal" class="btn btn-black flat">@lang('theme.button.add_new_address')</a>
+          <a href="#" data-toggle="modal" data-target="#createAddressModal" class="btn btn-black flat">
+            <i class="fa fa-address-card-o"></i> @lang('theme.button.add_new_address')
+          </a>
         </div>
       </div>
     </div><!-- /#address-tab -->
@@ -184,4 +186,5 @@
 </div><!-- /.tabpanel -->
 
 <div class="clearfix space50"></div>
+
 @include('modals.create_address')

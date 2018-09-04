@@ -249,25 +249,27 @@
             </span>
           </p>
 
-          <span class="admin-user-widget-text text-muted">
+          @if($order->customer->email)
+            <span class="admin-user-widget-text text-muted">
               {{ trans('app.email') . ': ' . $order->customer->email }}
-          </span>
+            </span>
+          @endif
 
           <fieldset><legend>{{ strtoupper(trans('app.shipping_address')) }}</legend></fieldset>
-          <address>
-            {!! optional($order->shippingAddress)->toHtml('<br/>', false) !!}
-          </address>
-          <iframe width="100%" height="150" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q={{ urlencode(optional($order->shippingAddress)->toGeocodeString()) }}&output=embed"></iframe>
+
+          {!! address_str_to_html($order->shipping_address) !!}
+
+          <iframe width="100%" height="150" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q={{ urlencode(address_str_to_geocode_str($order->shipping_address)) }}&output=embed"></iframe>
+
           <fieldset><legend>{{ strtoupper(trans('app.billing_address')) }}</legend></fieldset>
+
           @if($order->shipping_address == $order->billing_address)
             <small>
               <i class="fa fa-check-square-o"></i>
               {!! Form::label('same_as_shipping_address', strtoupper(trans('app.same_as_shipping_address')), ['class' => 'indent5']) !!}
             </small>
           @else
-            <address>
-              {!! optional($order->billingAddress)->toHtml('<br/>', false) !!}
-            </address>
+            {!! address_str_to_html($order->billing_address) !!}
           @endif
         </div>
       </div>

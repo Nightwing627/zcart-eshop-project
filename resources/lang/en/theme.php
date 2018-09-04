@@ -349,7 +349,11 @@ return [
 
 	'help' => [
 	    'be_honest_when_leave_feedbacks' => 'Your feedback will help other shoppers to make their decision. So, be wise, sincere and honest to leave your feedbacks.',
+		'card_exp_month' => 'Select expiration month',
+		'card_exp_year' => 'Select expiration year',
+	    'create_account_on_checkout' => 'By creating the account you agree our <a href=":link" target="_blank">terms and conditions</a>. Enter a secure password to login your account.',
 	    'customer_paid' => 'You paid <strong><em> :amount </em></strong>, inclusive all taxes, shipping charges and others.',
+		'enter_cardholder_name' => 'Please enter cardholder name',
 		'first_step' => 'First Step',
 		'give_tracking_number_here' => 'Give The Tracking ID',
 		'give_all_feedbacks_together' => 'Give All Feedbacks Together',
@@ -407,6 +411,7 @@ return [
 		'minimum_order_qtt_reached' => 'You can\'t place an order below this quantity',
 		'order_updated' => 'Order updated successfully!',
 		'refund_request_sent' => 'Refund request sent!',
+		'shipping_cost_may_change' => 'Shipping cost may change for the new destination.',
 		'store_not_available' => 'This seller is inactive or not exist on the marketplace. You may find similar items from other sellers.',
 		'subscribed' => 'Cool! You have subscribed successfully!',
 		'we_dont_save_card_info' => 'We do not store your card information.',
@@ -439,6 +444,7 @@ return [
 		'full_name' => 'Full Name',
 		'have_coupon_from_seller' => 'I\'ve a coupon from this seller',
 		'message' => 'Write your message within 500 characters',
+		'message_to_seller' => 'Write your message or instructions to the seller.',
 		'name' => 'Your Name',
 		'nice_name' => 'Nice Name',
 		'password' => 'Password',
@@ -482,5 +488,6 @@ return [
 		'select_from_categories' => 'Select From <span class="text-primary">Categories</span>',
 		'trending_now' => 'Trending <span class="text-primary">Now</span>',
 		'weekly_popular' => 'Weekly <span class="text-primary">Popular</span>',
+		'you_may_also_like' => 'You may also like',
 	],
 ];
