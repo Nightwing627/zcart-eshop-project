@@ -24,8 +24,8 @@ class CheckoutCartRequest extends Request
     public function rules()
     {
         return [
-            'email' =>  'sometimes|required|email|max:255|unique:customers',
-            'password' =>  'required_with:email|confirmed|min:6',
+            'email' =>  'nullable|email|max:255|unique:customers',
+            'password' =>  'nullable|required_with:email|confirmed|min:6',
             'payment_method' => ['required', 'exists:payment_methods,id,enabled,1'],
         ];
     }

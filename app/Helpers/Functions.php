@@ -597,12 +597,29 @@ if ( ! function_exists('get_formated_gender') )
     }
 }
 
+if ( ! function_exists('get_cent_from_doller') )
+{
+    /**
+     * Get cent from decimal amount value.
+     *
+     * @param  decimal $value
+     *
+     * @return int
+     */
+    function get_cent_from_doller($value = 0)
+    {
+        $value = number_format($value, 2);
+
+        return (int) ($value * 100);
+    }
+}
+
 if ( ! function_exists('get_formated_decimal') )
 {
     /**
      * Get the formated decimal value.
      *
-     * @param  integer $value
+     * @param  decimal $value
      * @param  boolean $trim  remove un wanted zeros after decimal point
      *
      * @return decimal

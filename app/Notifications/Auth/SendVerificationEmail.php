@@ -56,8 +56,8 @@ class SendVerificationEmail extends Notification implements ShouldQueue
             $url = route('customer.verify', $this->user->verification_token);
 
         return (new MailMessage)
-                        ->subject( trans('notifications.email_verification.subject', ['marketplace' => get_platform_title()]) )
-                        ->markdown('admin.mail.auth.send_verification_email', ['url' => $url, 'user' => $this->user]);
+        ->subject( trans('notifications.email_verification.subject', ['marketplace' => get_platform_title()]) )
+        ->markdown('admin.mail.auth.send_verification_email', ['url' => $url, 'user' => $this->user]);
     }
 
     /**

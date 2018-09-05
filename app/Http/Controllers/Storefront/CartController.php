@@ -103,7 +103,10 @@ class CartController extends Controller
 
         $shop = Shop::where('id', $cart->shop_id)->active()->with(['paymentMethods' => function($q){
             $q->active();
-        }, 'config'])->firstOrFail();
+        }, 'config'])->first();
+
+        // Abort if the shop is not exist or inactive
+        abort_unless( $shop, 406, trans('theme.notify.seller_has_no_payment_method') );
 
         $customer = Auth::guard('customer')->check() ? Auth::guard('customer')->user() : Null;
         $countries = ListHelper::countries(); // Country list for shop_to dropdown

@@ -296,5 +296,4 @@ class Customer extends Authenticatable
     {
         return $query->where('active', 1);
     }
-
 }

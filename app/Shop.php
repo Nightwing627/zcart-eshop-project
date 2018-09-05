@@ -49,6 +49,13 @@ class Shop extends Model
     protected static $logName = 'shop';
 
     /**
+     * Record events only
+     *
+     * @var array
+     */
+    protected static $recordEvents = ['updated'];
+
+    /**
      * The name that will be ignored when log this model.
      *
      * @var array

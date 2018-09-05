@@ -80,6 +80,9 @@
 							$('#cartId'+cart).remove();
 			    		}
 			    		else{
+							// Set shipping options for the zone
+							setShippingOptions(cart);
+
 							calculateCartTotal(cart);
 			    		}
 

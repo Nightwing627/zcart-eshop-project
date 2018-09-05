@@ -346,6 +346,29 @@ class demoSeeder extends Seeder
         $coupons   = \DB::table('coupons')->pluck('id')->toArray();
         $inventories = \DB::table('inventories')->pluck('id')->toArray();
 
+        // shop_payment_methods
+        foreach ($shops as $shop) {
+            DB::table('shop_payment_methods')->insert([
+                [
+                    'shop_id' => $shop,
+                    'payment_method_id' => 4,
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ]
+            ]);
+
+            DB::table('config_manual_payments')->insert([
+                [
+                    'shop_id' => $shop,
+                    'payment_method_id' => 4,
+                    'additional_details' => 'Our man will collect the payment when deliver the item to your doorstep.',
+                    'payment_instructions' => 'Payment instructions for COD',
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ]
+            ]);
+        }
+
         // attribute_inventory
         foreach ((range(1, $this->veryLongCount)) as $index) {
             $attribute_id = $attributes[array_rand($attributes)];

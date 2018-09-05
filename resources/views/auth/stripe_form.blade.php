@@ -3,7 +3,7 @@
     <!-- Error Message / Stripe Threw Exception -->
     <div class="stripe-errors alert alert-danger hide">{{ trans('messages.trouble_validating_card') }}</div>
     <div class="form-group has-feedback">
-        {!! Form::text('name', isset($billable) ? $billable->card_holder_name : Null, ['class' => 'form-control input-lg', 'placeholder' => trans('app.placeholder.card_holders_name'), 'required']) !!}
+        {!! Form::text('name', isset($billable) ? $billable->card_holder_name : Null, ['class' => 'form-control input-lg', 'data-stripe' => 'name', 'placeholder' => trans('app.placeholder.card_holders_name'), 'required']) !!}
         <i class="glyphicon glyphicon-user form-control-feedback"></i>
         <div class="help-block with-errors"></div>
     </div>
@@ -11,7 +11,7 @@
     <div class="row">
 	    <div class="col-md-8 nopadding-right">
 		    <div class="form-group has-feedback">
-		        {!! Form::text('number', Null, ['class' => 'form-control input-lg', 'data-stripe' => 'number', 'placeholder' => isset($billable) && $billable->card_last_four ? '************' . $billable->card_last_four : trans('app.placeholder.card_number'), 'required']) !!}
+		    	<input type="text" value="{{ old('number') }}" class="form-control input-lg" data-stripe="number" placeholder="{{ isset($billable) && $billable->card_last_four ? '************' . $billable->card_last_four : trans('app.placeholder.card_number') }}" required>
 		        @if(isset($billable))
 			        <i class="fa fa-cc-{{ strtolower($billable->card_brand) }} form-control-feedback"></i>
 				@else
@@ -23,7 +23,7 @@
 
 	    <div class="col-md-4 nopadding-left">
 		    <div class="form-group has-feedback">
-		        {!! Form::text('cvc', Null, ['class' => 'form-control input-lg', 'data-stripe' => 'cvc', 'placeholder' => trans('app.placeholder.cvc'), 'required']) !!}
+                <input type="text" class='form-control input-lg' placeholder="@lang('app.placeholder.cvc')" data-stripe='cvc' required/>
 		        <i class="glyphicon glyphicon-lock form-control-feedback"></i>
 		        <div class="help-block with-errors"></div>
 		    </div>

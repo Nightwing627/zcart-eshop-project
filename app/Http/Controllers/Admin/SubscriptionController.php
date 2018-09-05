@@ -37,10 +37,8 @@ class SubscriptionController extends Controller
     {
 		$merchant = $merchant ? User::findOrFail($merchant) : Auth::user();
 
-        if ( config('system_settings.required_card_upfront') &&  ! $merchant->hasBillingToken() ){
-            return redirect()->route('admin.account.billing')
-                            ->with('error', trans('messages.no_card_added'));
-        }
+        if ( config('system_settings.required_card_upfront') && ! $merchant->hasBillingToken() )
+            return redirect()->route('admin.account.billing')->with('error', trans('messages.no_card_added'));
 
         // create the subscription
         try {

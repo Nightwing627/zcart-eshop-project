@@ -7,9 +7,9 @@ use App\Category;
 use App\Inventory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Pagination\Paginator;
+// use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
+// use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchController extends Controller
 {

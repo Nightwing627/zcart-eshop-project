@@ -79,7 +79,7 @@
                             <i class="fa fa-shopping-cart"></i> @lang('theme.button.add_to_cart')
                         </a>
 
-                        <a href="{{ route('checkout') }}" class="btn btn-block btn-warning flat">
+                        <a href="{{ route('direct.checkout', $offer->slug) }}" class="btn btn-block btn-warning flat">
                             <i class="fa fa-rocket"></i> @lang('theme.button.buy_now')
                         </a>
                     </td>

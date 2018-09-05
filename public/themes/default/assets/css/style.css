@@ -212,6 +212,22 @@ div[data-notify="container"] {
     width: 100%;
     margin: 15px 0 12px;
 }
+.blur-filter{
+  filter: blur(5px);
+  filter: url("blur.svg#gaussian_blur");
+  -webkit-filter: blur(5px);
+}
+
+/* hr tag */
+hr { width: 100%; background-color: #fff; }
+hr.style1 { border-top: 1px solid #8c8b8b; }
+hr.style2 { border-top: 3px double #8c8b8b; }
+hr.style3 { border-top: 1px dotted #8c8b8b; }
+hr.style4 { border-top: 1px dashed #8c8b8b; }
+hr.style5 { border-top: 2px dashed #8c8b8b; }
+hr.style6 { border-top: 2px dotted #8c8b8b; }
+hr.muted { border-color: #d3d3d3!important; }
+
 .space10 {
     margin-bottom: 10px !important;
 }

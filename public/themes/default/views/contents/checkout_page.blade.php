@@ -3,8 +3,20 @@
     {!! Form::open(['route' => ['order.create', $cart], 'id' => 'checkoutForm', 'data-toggle' => 'validator', 'novalidate']) !!}
       <div class="row space30">
         <div class="col-md-3 bg-light">
+          <div class="seller-info">
+            <div class="text-muted small">@lang('theme.sold_by')</div>
+
+            <img src="{{ get_storage_file_url(optional($shop->image)->path, 'tiny') }}" class="seller-info-logo img-sm img-circle" alt="{{ trans('app.logo') }}">
+
+            <a href="{{ route('show.store', $shop->slug) }}" class="seller-info-name">
+              {{ $shop->name }}
+            </a>
+          </div><!-- /.seller-info -->
+
+          <hr class="style1 muted"/>
+
           <h3 class="widget-title">{{ trans('theme.order_info') }}</h3>
-          <ul class="shopping-cart-summary space20">
+          <ul class="shopping-cart-summary ">
             <li>
               <span>{{ trans('theme.subtotal') }}</span>
               <span>{{ get_formated_currency($cart->total, 2) }}</span>
@@ -37,10 +49,14 @@
             </li>
           </ul>
 
-          <div class="clearfix space30"></div>
+          <hr class="style1 muted"/>
 
-          <a class="btn btn-black flat" href="{{ route('cart.index') }}">{{ trans('theme.button.update_cart') }}</a>
-          <a class="btn btn-black flat" href="{{ url('/') }}">{{ trans('theme.button.continue_shopping') }}</a>
+          <div class="clearfix"></div>
+
+          <div class="text-center space20">
+            <a class="btn btn-black flat" href="{{ route('cart.index') }}">{{ trans('theme.button.update_cart') }}</a>
+            <a class="btn btn-black flat" href="{{ url('/') }}">{{ trans('theme.button.continue_shopping') }}</a>
+          </div>
         </div> <!-- /.col-md-3 -->
 
         <div class="col-md-5">
@@ -119,8 +135,10 @@
               {{-- <small class="help-block text-muted pull-right">* {{ trans('theme.help.required_fields') }}</small> --}}
           @endif
 
-          <h3 class="widget-title">{{ trans('theme.leave_message_to_seller') }}</h3>
+          <hr class="style4 muted"/>
+
           <div class="form-group">
+            {!! Form::label('buyer_note', trans('theme.leave_message_to_seller')) !!}
             {!! Form::textarea('buyer_note', Null, ['class' => 'form-control flat summernote-without-toolbar', 'placeholder' => trans('theme.placeholder.message_to_seller'), 'rows' => '2', 'maxlength' => '250']) !!}
             <div class="help-block with-errors"></div>
           </div>
@@ -165,31 +183,32 @@
                 @if($customer && (\App\PaymentMethod::TYPE_CREDIT_CARD == $payment_provider->type) && $customer->hasBillingToken())
                   <div class="form-group">
                     <label>
-                      <input name="payment_method" value="saved_card" class="i-radio-blue payment-option" type="radio" data-info="{{$info}}" data-type="{{ $payment_provider->type }}" required="required" checked /> @lang('theme.card') <i class="fa fa-cc-{{ strtolower($customer->card_brand) }}"></i> ************{{$customer->card_last_four}}
+                      <input name="payment_method" value="saved_card" class="i-radio-blue payment-option" type="radio" data-info="{{$info}}" data-type="{{ $payment_provider->type }}" required="required" checked /> @lang('theme.card'): <i class="fa fa-cc-{{ strtolower($customer->card_brand) }}"></i> ************{{$customer->card_last_four}}
                     </label>
                   </div>
                 @endif
 
                 <div class="form-group">
                   <label>
-                    <input name="payment_method" value="{{ $payment_provider->id }}" data-code="{{ $payment_provider->code }}" class="i-radio-blue payment-option" type="radio" data-info="{{$info}}" data-type="{{ $payment_provider->type }}" required="required"/> {{ $payment_provider->code == 'stripe' ? trans('theme.credit_card') : $payment_provider->name }}
+                    <input name="payment_method" value="{{ $payment_provider->id }}" data-code="{{ $payment_provider->code }}" class="i-radio-blue payment-option" type="radio" data-info="{{$info}}" data-type="{{ $payment_provider->type }}" required="required" {{ old('payment_method') == $payment_provider->id ? 'checked' : '' }}/> {{ $payment_provider->code == 'stripe' ? trans('theme.credit_card') : $payment_provider->name }}
                   </label>
                 </div>
               @endforeach
             </div>
 
             <div id="cc-form" class="cc-form" style="display: none;">
-              <hr/>
+              <hr class="style4 muted">
+              <div class="stripe-errors alert alert-danger flat small hide">{{ trans('messages.trouble_validating_card') }}</div>
               <div class="form-group form-group-cc-name">
-                {!! Form::text('name', Null, ['class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.cardholder_name'), 'data-error' => trans('theme.help.enter_cardholder_name')]) !!}
+                {!! Form::text('name', Null, ['class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.cardholder_name'), 'data-error' => trans('theme.help.enter_cardholder_name'), 'data-stripe' => 'name']) !!}
                 <div class="help-block with-errors"></div>
               </div>
               <div class="form-group form-group-cc-number">
-                {!! Form::text('number', Null, ['class' => 'form-control flat', 'data-stripe' => 'number', 'placeholder' => trans('theme.placeholder.card_number')]) !!}
+                <input type="text" class='form-control flat' placeholder="@lang('theme.placeholder.card_number')" data-stripe='number'/>
                 <div class="help-block with-errors"></div>
               </div>
               <div class="form-group form-group-cc-cvc">
-                {!! Form::text('cvc', Null, ['class' => 'form-control flat', 'data-stripe' => 'cvc', 'placeholder' => trans('theme.placeholder.card_cvc')]) !!}
+                <input type="text" class='form-control flat' placeholder="@lang('theme.placeholder.card_cvc')" data-stripe='cvc'/>
                 <div class="help-block with-errors"></div>
               </div>
 
@@ -207,6 +226,12 @@
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  {!! Form::checkbox('remember_the_card', null, null, ['id' => 'remember-the-card', 'class' => 'i-check']) !!} {!! trans('theme.remember_card_for_future_use') !!}
+                </label>
               </div>
             </div> <!-- /#cc-form -->
 

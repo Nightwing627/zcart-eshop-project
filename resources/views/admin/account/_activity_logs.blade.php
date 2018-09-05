@@ -1,9 +1,9 @@
 <ul class="list-group">
 	@php
 		$logChanges = [
-					'current_billing_plan',
-					'card_last_four',
-				];
+			'current_billing_plan',
+			'card_last_four',
+		];
 	@endphp
 
     @forelse($logger->activities() as $activity)
@@ -13,7 +13,7 @@
 
       	@continue(empty($changes))
 
-        {{-- @if(strtolower($activity->description) == 'updated') --}}
+        @if(strtolower($activity->description) == 'updated')
           	@foreach($changes['attributes'] as $attrbute => $new_value)
 
           		@continue(! in_array($attrbute, $logChanges))
@@ -27,7 +27,7 @@
 		        	<span class="pull-right">{{ $activity->created_at->diffForHumans() . ' ' . trans('app.by') . ' ' . $activity->causer->getName() }}</span>
 		        </li>
           	@endforeach
-        {{-- @endif --}}
+        @endif
     @empty
     	<span class="indent5">{{ trans('messages.no_history_data') }}</span>
     @endforelse
