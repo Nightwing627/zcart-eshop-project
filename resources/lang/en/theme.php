@@ -412,6 +412,8 @@ return [
 		'minimum_order_qtt_reached' => 'You can\'t place an order below this quantity',
 		'order_creation_failed' => 'Ooops! Something went wrong!! Please try again!',
 		'order_updated' => 'Order updated successfully!',
+		'payment_method_config_error' => 'This seller can\'t accept payment using this payment method! Choose from other options or buy from other sellers.',
+		'payment_failed' => 'Ooops! Something went wrong while trying to charge!! Please try again!',
 		'refund_request_sent' => 'Refund request sent!',
 		'shipping_cost_may_change' => 'Shipping cost may change for the new destination.',
 		'store_not_available' => 'This seller is inactive or not exist on the marketplace. You may find similar items from other sellers.',

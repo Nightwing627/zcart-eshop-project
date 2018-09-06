@@ -268,13 +268,13 @@ class Shop extends Model
         return $this->hasMany(Order::class)->selectRaw('SUM(total) as total, shop_id')->groupBy('shop_id');
     }
 
-   //  /**
-   //   * Get the stripe for the shop.
-   //   */
-   //  public function stripe()
-   //  {
-   //      return $this->hasOne(ConfigStripe::class, 'shop_id');
-   //  }
+    /**
+     * Get the stripe for the shop.
+     */
+    public function stripe()
+    {
+        return $this->hasOne(ConfigStripe::class, 'shop_id')->withDefault();
+    }
 
    //  /**
    //   * Get the paypalExpress for the shop.

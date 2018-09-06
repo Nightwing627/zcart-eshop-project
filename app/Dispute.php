@@ -63,7 +63,7 @@ class Dispute extends Model
     */
     public function shop()
     {
-        return $this->belongsTo(Shop::class);
+        return $this->belongsTo(Shop::class)->withDefault();
     }
 
     /**
@@ -71,7 +71,7 @@ class Dispute extends Model
     */
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class)->withDefault();
     }
 
     /**

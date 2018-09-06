@@ -23,10 +23,14 @@ class CheckoutCartRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'email' =>  'nullable|email|max:255|unique:customers',
             'password' =>  'nullable|required_with:email|confirmed|min:6',
-            'payment_method' => ['required', 'exists:payment_methods,id,enabled,1'],
         ];
+
+        if( 'saved_card' != $this->payment_method )
+            $rules['payment_method'] = ['required', 'exists:payment_methods,id,enabled,1'];
+
+        return $rules;
     }
 }

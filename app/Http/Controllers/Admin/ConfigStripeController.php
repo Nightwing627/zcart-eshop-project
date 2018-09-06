@@ -39,12 +39,11 @@ class ConfigStripeController extends Controller
         if(!$request->has('error') && $request->has('code')){
 
             $response = Curl::to('https://connect.stripe.com/oauth/token')
-                            ->withData([
-                                'client_secret' => config('services.stripe.secret'),
-                                'code' => $request->get('code'),
-                                'grant_type' => 'authorization_code',
-                            ])
-                            ->post();
+            ->withData([
+                'client_secret' => config('services.stripe.secret'),
+                'code' => $request->get('code'),
+                'grant_type' => 'authorization_code',
+            ])->post();
 
             $response = json_decode($response);
 
@@ -64,11 +63,13 @@ class ConfigStripeController extends Controller
                     $config->stripe()->create($data);
                 }
 
-                return redirect()->route('admin.setting.config.paymentMethod.index')->with('success', trans('messages.payment_method_activation_success'));
+                return redirect()->route('admin.setting.config.paymentMethod.index')
+                ->with('success', trans('messages.payment_method_activation_success'));
             }
         }
 
-        return redirect()->route('admin.setting.config.paymentMethod.index')->with('error', trans('messages.payment_method_activation_failed'));
+        return redirect()->route('admin.setting.config.paymentMethod.index')
+        ->with('error', trans('messages.payment_method_activation_failed'));
     }
 
     /**
@@ -80,12 +81,11 @@ class ConfigStripeController extends Controller
         $stripe_user_id = optional($config->stripe)->stripe_user_id;
 
         $response = Curl::to('https://connect.stripe.com/oauth/deauthorize')
-                        ->withData([
-                            'client_secret' => config('services.stripe.secret'),
-                            'client_id' => config('services.stripe.client_id'),
-                            'stripe_user_id' => $stripe_user_id,
-                        ])
-                        ->post();
+        ->withData([
+            'client_secret' => config('services.stripe.secret'),
+            'client_id' => config('services.stripe.client_id'),
+            'stripe_user_id' => $stripe_user_id,
+        ])->post();
 
         $response = json_decode($response);
 
@@ -93,9 +93,11 @@ class ConfigStripeController extends Controller
 
             ConfigStripe::destroy(Auth::user()->merchantId());
 
-            return redirect()->route('admin.setting.config.paymentMethod.index')->with('success', trans('messages.payment_method_disconnect_success'));
+            return redirect()->route('admin.setting.config.paymentMethod.index')
+            ->with('success', trans('messages.payment_method_disconnect_success'));
         }
 
-        return redirect()->route('admin.setting.config.paymentMethod.index')->with('error', trans('messages.payment_method_disconnect_failed'));
+        return redirect()->route('admin.setting.config.paymentMethod.index')
+        ->with('error', trans('messages.payment_method_disconnect_failed'));
     }
 }

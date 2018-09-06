@@ -270,7 +270,9 @@ class User extends Authenticatable
      */
     public function getCurrentPlan()
     {
-        $subscription = optional($this->shop)->subscriptions->first();
+        if(!$this->merchantId())         return Null;
+
+        $subscription = optional($this->shop->subscriptions)->first();
 
         if($subscription && $subscription->valid())
             return $subscription;
@@ -355,6 +357,8 @@ class User extends Authenticatable
      */
     public function hasExpiredPlan()
     {
+        if(!$this->merchantId())        return false;
+
         $subscription = $this->shop->subscriptions->first();
 
         if ($subscription && ! is_null($subscription->ends_at))
@@ -370,7 +374,7 @@ class User extends Authenticatable
      */
     public function isSubscribed()
     {
-        if($this->isFromPlatform())
+        if($this->isFromPlatform() || !$this->merchantId())
             return False;
 
         $subscription = optional($this->shop->subscriptions)->first();

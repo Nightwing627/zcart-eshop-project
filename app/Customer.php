@@ -264,9 +264,7 @@ class Customer extends Authenticatable
     }
 
     /**
-     * Set password for the user.
-     *
-     * @return array
+     * Setters.
      */
     public function setPasswordAttribute($password)
     {
@@ -274,6 +272,10 @@ class Customer extends Authenticatable
             $this->attributes['password'] = bcrypt($password);
         else
             $this->attributes['password'] = $password;
+    }
+    public function setAcceptsMarketingAttribute($value)
+    {
+        $this->attributes['accepts_marketing'] = $value ? 1 : null;
     }
 
     /**

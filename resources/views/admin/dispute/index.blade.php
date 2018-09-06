@@ -31,8 +31,8 @@
 					            @endif
 					            <p class="indent10">
 									<strong>{{ $dispute->customer->name }}</strong>
-		    						@if (Auth::user()->isFromPlatform())
-										 <br/><span>{{ trans('app.vendor') . ': ' . $dispute->shop->name }}</span>
+		    						@if (Auth::user()->isFromPlatform() && $dispute->shop)
+										<br/><span>{{ trans('app.vendor') . ': ' . optional($dispute->shop)->name }}</span>
 									@endif
 					            </p>
 							</td>

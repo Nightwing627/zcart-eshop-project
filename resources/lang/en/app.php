@@ -388,6 +388,7 @@ return [
     'subscription_plans' => 'Subscription plans',
     'subscribers' => 'Subscribers',
     'contact_person' => 'Contact person',
+    'vendor' => 'Vendor',
     'tax' => 'Tax',
     'taxes' => 'Taxes',
     'team_size' => 'Team size',

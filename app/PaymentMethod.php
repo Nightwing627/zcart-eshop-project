@@ -35,10 +35,14 @@ class PaymentMethod extends Model
     protected $fillable = [
                     'name',
                     'company_name',
+                    'type',
                     'website',
                     'help_doc_url',
+                    'admin_help_doc_link',
                     'terms_conditions_link',
                     'description',
+                    'instructions',
+                    'admin_description',
                     'enabled',
                     'order',
                 ];
