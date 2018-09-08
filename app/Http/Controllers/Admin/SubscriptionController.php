@@ -48,11 +48,10 @@ class SubscriptionController extends Controller
             if ($currentPlan = $merchant->getCurrentPlan()) {
                 if(! $this->validateSubscriptionSwap($subscription)){
                     return redirect()->route('admin.account.billing')
-                                    ->with('error', trans('messages.using_more_resource', ['plan' => $subscription->name]));
+                    ->with('error', trans('messages.using_more_resource', ['plan' => $subscription->name]));
                 }
 
-                $currentPlan->swap($plan)
-                            ->update([ 'name' => $subscription->name ]);
+                $currentPlan->swap($plan)->update([ 'name' => $subscription->name ]);
 
                 $merchant->shop->forceFill([
                     'current_billing_plan' => $plan
@@ -65,12 +64,10 @@ class SubscriptionController extends Controller
         } catch (\Exception $e) {
             \Log::error('Subscription Failed: ' . $e->getMessage());
 
-	        return redirect()->route('admin.account.billing')
-                            ->with('error', trans('messages.subscription_error'));
+	        return redirect()->route('admin.account.billing')->with('error', trans('messages.subscription_error'));
         }
 
-        return redirect()->route('admin.account.billing')
-                        ->with('success', trans('messages.subscribed'));
+        return redirect()->route('admin.account.billing')->with('success', trans('messages.subscribed'));
     }
 
     /**

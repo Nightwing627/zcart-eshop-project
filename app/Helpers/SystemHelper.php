@@ -1,6 +1,7 @@
 <?php
 
 use App\Cart;
+use App\Order;
 use App\Coupon;
 use App\Visitor;
 use App\Packaging;
@@ -11,6 +12,24 @@ use Laravel\Cashier\Cashier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client as HttpClient;
+
+if ( ! function_exists('getPlatformFeeForOrder') )
+{
+    /**
+     * return calculated application fee for the given order value
+     */
+    function getPlatformFeeForOrder($order)
+    {
+        if ( ! $order instanceof Order )
+            $order = Order::findOrFail($order);
+
+        $plan = $order->shop->plan;
+
+        $commission = ($plan->marketplace_commission > 0) ? ($order->total * $plan->marketplace_commission)/100 : 0;
+
+        return ($commission + $plan->transaction_fee );
+    }
+}
 
 if ( ! function_exists('updateVisitorTable') )
 {

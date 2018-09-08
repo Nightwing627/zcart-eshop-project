@@ -19,6 +19,11 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 	Route::get('brand/{slug}', 'HomeController@brand')->name('show.brand');
 	Route::get('search', 'SearchController@search')->name('inCategoriesSearch');
 
+	// PayPal
+	Route::get('paymentSuccess/{order}', 'OrderController@paymentSuccess')->name('payment.success');
+	Route::get('paymentFailed/{order}', 'OrderController@paymentFailed')->name('payment.failed');
+	Route::get('order/{order}/success', 'OrderController@orderPlaced')->name('order.success');
+
 	Route::middleware(['auth:customer'])->group(function () {
 		include('storefront/Account.php');
 		include('storefront/Order.php');

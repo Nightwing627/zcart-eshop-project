@@ -2,6 +2,13 @@
   <div class="container">
     {!! Form::open(['route' => ['order.create', $cart], 'id' => 'checkoutForm', 'data-toggle' => 'validator', 'novalidate']) !!}
       <div class="row space30">
+
+        @if(Session::has('error'))
+          <div class="notice notice-danger notice-sm">
+            <strong>{{ trans('theme.error') }}</strong> {{ Session::get('error') }}
+          </div>
+        @endif
+
         <div class="col-md-3 bg-light">
           <div class="seller-info">
             <div class="text-muted small">@lang('theme.sold_by')</div>
@@ -62,7 +69,8 @@
         <div class="col-md-5">
           <h3 class="widget-title">{{ trans('theme.ship_to') }}</h3>
           @if(isset($customer))
-            <div class="row customer-address-list space20">
+
+            <div class="row customer-address-list">
               @foreach($customer->addresses as $address)
                 @php
                   if($customer->addresses->count() == 1)
@@ -76,7 +84,7 @@
                 <div class="col-sm-12 col-md-6 nopadding-{{ $loop->iteration%2 == 1 ? 'right' : 'left'}}">
                   <div class="address-list-item {{ $pre_select ? 'selected' : '' }}">
                     {!! $address->toHtml('<br/>', false) !!}
-                    <input type="radio" class="ship-to-address" name="ship_to" value="{{$address->id}}" {{ $pre_select ? 'checked' : '' }}>
+                    <input type="radio" class="ship-to-address" name="ship_to" value="{{$address->id}}" {{ $pre_select ? 'checked' : '' }} required>
                   </div>
                 </div>
                 @if($loop->iteration%2 == 0)
@@ -85,7 +93,10 @@
               @endforeach
             </div>
 
-            <a href="#" data-toggle="modal" data-target="#createAddressModal" class="btn btn-default btn-sm flat space30">
+            <small id="ship-to-error-block" class="text-danger pull-right"></small>
+
+            <div class="space20"></div>
+            <a href="#" data-toggle="modal" data-target="#createAddressModal" class="btn btn-default btn-sm flat space20">
               <i class="fa fa-address-card-o"></i> @lang('theme.button.add_new_address')
             </a>
           @else
@@ -240,15 +251,15 @@
               <span>@lang('theme.placeholder.select_payment_option')</span>
             </p>
 
-            <div class="clearfix"></div>
+            <div id="submit-btn-block" class="clearfix space30" style="display: none;">
+              <button id="pay-now-btn"  class="btn btn-primary btn-lg btn-block" type="submit">
+                <small><i class="fa fa-shield"></i> <span id="pay-now-btn-txt">@lang('theme.button.checkout')</span></small>
+              </button>
 
-            <button id="pay-now-btn"  class="btn btn-primary btn-lg btn-block" type="submit">
-              <small><i class="fa fa-shield"></i> <span id="pay-now-btn-txt">@lang('theme.button.checkout')</span></small>
-            </button>
-
-            <a href id="paypal-express-btn"  class="hide" type="submit">
-              <img src="{{ asset(sys_image_path('payment-methods') . "paypal-express.png") }}" width="70%" alt="paypal express checkout" title="paypal-express" />
-            </a>
+              <a href="#" id="paypal-express-btn" class="hide" type="submit">
+                <img src="{{ asset(sys_image_path('payment-methods') . "paypal-express.png") }}" width="70%" alt="paypal express checkout" title="paypal-express" />
+              </a>
+            </div>
         </div> <!-- /.col-md-4 -->
       </div><!-- /.row -->
     {!! Form::close() !!}

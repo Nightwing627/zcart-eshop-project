@@ -96,7 +96,8 @@ class CartController extends Controller
     {
         // Skip upadting cart info if the request came from cart as its already updated.
         if( empty($request->all()) ){
-            abort_unless( crosscheckCartOwnership($request, $cart), 403, 'Unauthorized.' );
+            if( !crosscheckCartOwnership($request, $cart) )
+                return redirect()->route('cart.index')->with('warning', trans('theme.notify.please_login_to_checkout'));
 
             $cart = crosscheckAndUpdateOldCartInfo($request, $cart);
         }

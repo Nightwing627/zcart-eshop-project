@@ -455,6 +455,7 @@ return [
     'grand_total' => 'Grand total',
     // 'summary' => 'Summary',
     'invoice' => 'Invoice',
+    'purchase_from' => 'Purchase from :marketplace',
     'send_invoice_to_customer' => 'Send the invoice',
     'message_to_customer' => 'Message to customer',
     'notify_customer' => 'Send a notification email to customer',

@@ -179,6 +179,16 @@ class Cart extends Model
     }
 
     /**
+     * Setters
+     */
+    public function setShippingAddressAttribute($value){
+        $this->attributes['shipping_address'] = is_numeric($value) ? $value : Null;
+    }
+    public function setBillingAddressAttribute($value){
+        $this->attributes['billing_address'] = is_numeric($value) ? $value : Null;
+    }
+
+    /**
      * Scope a query to only include records from the users shop.
      *
      * @return \Illuminate\Database\Eloquent\Builder

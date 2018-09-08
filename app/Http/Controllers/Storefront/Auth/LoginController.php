@@ -171,6 +171,6 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect(url()->previous())->with('success', trans('theme.notify.logged_out_successfully'));
+        return redirect()->to('/')->with('success', trans('theme.notify.logged_out_successfully'));
     }
 }

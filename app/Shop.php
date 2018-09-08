@@ -120,7 +120,7 @@ class Shop extends Model
      */
     public function plan()
     {
-        return $this->belongsTo(SubscriptionPlan::class, 'current_billing_plan', 'plan_id');
+        return $this->belongsTo(SubscriptionPlan::class, 'current_billing_plan', 'plan_id')->withDefault();
     }
 
     /**
@@ -276,13 +276,13 @@ class Shop extends Model
         return $this->hasOne(ConfigStripe::class, 'shop_id')->withDefault();
     }
 
-   //  /**
-   //   * Get the paypalExpress for the shop.
-   //   */
-   //  public function paypalExpress()
-   //  {
-   //      return $this->hasOne(ConfigPaypalExpress::class, 'shop_id');
-   //  }
+    /**
+     * Get the paypalExpress for the shop.
+     */
+    public function paypalExpress()
+    {
+        return $this->hasOne(ConfigPaypalExpress::class, 'shop_id')->withDefault();
+    }
 
    // /**
    //   * Get the manualPaymentMethods for the shop.

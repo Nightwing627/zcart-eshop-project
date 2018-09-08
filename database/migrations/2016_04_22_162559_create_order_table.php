@@ -34,7 +34,7 @@ class CreateOrderTable extends Migration
             $table->integer('quantity')->unsigned();
 
             $table->decimal('taxrate', 20, 6)->nullable();
-            $table->decimal('shipping_weight', 20, 2)->nullable();
+            $table->decimal('shipping_weight', 20, 6)->nullable();
             $table->decimal('total', 20, 6)->nullable();
             $table->decimal('discount', 20, 6)->nullable();
             $table->decimal('shipping', 20, 6)->nullable();

@@ -319,6 +319,40 @@ class Order extends Model
     }
 
     /**
+     * Return shipping cost with handling fee
+     *
+     * @return number
+     */
+    public function get_shipping_cost()
+    {
+        return $this->shipping + $this->handling;
+    }
+
+    /**
+     * Calculate and Return grand tolal
+     *
+     * @return number
+     */
+    public function calculate_grand_total()
+    {
+        return ($this->total + $this->handling + $this->taxes + $this->shipping + $this->packaging) - $this->discount;
+    }
+    public function grand_total_for_paypal()
+    {
+        return ( $this->calculate_total_for_paypal() + format_to_number($this->handling) + format_to_number($this->taxes) + format_to_number($this->shipping) + format_to_number($this->packaging) ) - format_to_number($this->discount);
+    }
+    public function calculate_total_for_paypal()
+    {
+        $total = 0;
+        $items = $this->inventories->pluck('pivot');
+        foreach ($items as $item) {
+            $total += (format_to_number($item->unit_price) * $item->quantity);
+        }
+
+        return format_to_number($total);
+    }
+
+    /**
      * Check if the order has been paid
      *
      * @return boolean

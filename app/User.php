@@ -270,7 +270,7 @@ class User extends Authenticatable
      */
     public function getCurrentPlan()
     {
-        if(!$this->merchantId())         return Null;
+        if( ! $this->merchantId() )  return Null;
 
         $subscription = optional($this->shop->subscriptions)->first();
 

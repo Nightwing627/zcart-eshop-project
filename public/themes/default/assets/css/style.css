@@ -213,6 +213,7 @@ div[data-notify="container"] {
     margin: 15px 0 12px;
 }
 .blur-filter{
+  pointer-events: none;
   filter: blur(5px);
   filter: url("blur.svg#gaussian_blur");
   -webkit-filter: blur(5px);
@@ -2713,6 +2714,10 @@ ul.key_feature_list li{
   background-color: #fff4f2;
   color: #333;
   transition: color 1s linear;
+}
+.customer-address-list .address-list-item.has-error{
+  border-style: dashed;
+  border-color: #a94442;
 }
 .address-list-item input[type="radio"].ship-to-address{
   position: absolute;

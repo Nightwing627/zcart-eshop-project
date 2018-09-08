@@ -175,6 +175,7 @@ return [
         Laravel\Scout\ScoutServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Ixudra\Curl\CurlServiceProvider::class,
+        Anouar\Paypalpayment\PaypalpaymentServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -248,6 +249,7 @@ return [
         'Flash' => 'Laracasts\Flash\Flash',
         'Curl' => Ixudra\Curl\Facades\Curl::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Paypalpayment'   => Anouar\Paypalpayment\Facades\PaypalPayment::class,
 
     ],
 

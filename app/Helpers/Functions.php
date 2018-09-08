@@ -614,6 +614,26 @@ if ( ! function_exists('get_cent_from_doller') )
     }
 }
 
+if ( ! function_exists('format_to_number') )
+{
+    /**
+     * Format the input data with decimal places
+     *
+     * Defaults to 2 decimal places
+     *
+     * @param     $value
+     * @param int $decimals
+     * @return null|string
+     */
+    function format_to_number($value, $decimals = 2)
+    {
+        if (trim($value) != null) {
+            return number_format($value, $decimals, '.', '');
+        }
+        return null;
+    }
+}
+
 if ( ! function_exists('get_formated_decimal') )
 {
     /**
@@ -703,6 +723,14 @@ if ( ! function_exists('get_formated_currency_symbol') )
         }
 
         return '';
+    }
+}
+
+if ( ! function_exists('get_currency_code') )
+{
+    function get_currency_code()
+    {
+        return config('system_settings.currency.iso_code') ?? 'USD';
     }
 }
 
