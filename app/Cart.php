@@ -78,7 +78,7 @@ class Cart extends Model
      */
     public function shop()
     {
-        return $this->belongsTo(Shop::class);
+        return $this->belongsTo(Shop::class)->withDefault();
     }
 
     /**
@@ -181,6 +181,9 @@ class Cart extends Model
     /**
      * Setters
      */
+    public function setDiscountAttribute($value){
+        $this->attributes['discount'] = $value ?? Null;
+    }
     public function setShippingAddressAttribute($value){
         $this->attributes['shipping_address'] = is_numeric($value) ? $value : Null;
     }

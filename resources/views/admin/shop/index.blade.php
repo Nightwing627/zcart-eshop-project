@@ -15,7 +15,7 @@
 				<thead>
 					<tr>
 						<th>{{ trans('app.shop_name') }}</th>
-						<th>{{ trans('app.email') }}</th>
+						<th>{{ trans('app.current_billing_plan') }}</th>
 						<th>{{ trans('app.owner') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -39,7 +39,7 @@
 									@endif
 								</p>
 							</td>
-							<td>{{ $shop->email }}</td>
+				          	<td>{{ $shop->current_billing_plan }}</td>
 							<td>
 					            @if($shop->owner->image)
 									<img src="{{ get_storage_file_url(optional($shop->owner->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">

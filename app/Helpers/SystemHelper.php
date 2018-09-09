@@ -241,12 +241,13 @@ if ( ! function_exists('crosscheckAndUpdateOldCartInfo') )
     {
         $total = 0;
         $quantity = 0;
+        $discount = Null;
         $shipping_weight = 0;
         $handling = getShopConfig($cart->shop_id, 'order_handling_cost');
         // Start with old values
         $shipping = $cart->shipping;
         $packaging = $cart->packaging;
-        $discount = $cart->discount;
+        // $discount = $cart->discount;
 
         // Qtt and Total
         foreach ($cart->inventories as $item) {
@@ -297,13 +298,17 @@ if ( ! function_exists('crosscheckAndUpdateOldCartInfo') )
 
             if($coupon && $coupon->isValidForTheCart($total, $request->zone_id)){
                 $discount = ('percent' == $coupon->type) ? ($coupon->value * ($total/100)) : $coupon->value;
+                $cart->coupon_id = $request->discount_id;
             }
-
-            $cart->coupon_id = $request->discount_id;
         }
+        // Validate the old coupon
         else if($cart->coupon_id){
             if($cart->coupon->isValidForTheCart($total, $request->zone_id)){
                 $discount = ('percent' == $cart->coupon->type) ? ($cart->coupon->value * ($total/100)) : $cart->coupon->value;
+            }
+            // Validation failed
+            else{
+                $cart->coupon_id = Null;
             }
         }
 

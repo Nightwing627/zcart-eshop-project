@@ -18,10 +18,10 @@ class BannerPolicy
      * @param  \App\Banner  $banner
      * @return mixed
      */
-    public function index(User $user)
-    {
-        return (new Authorize($user, 'customize_appearance'))->check();
-    }
+    // public function index(User $user)
+    // {
+    //     return (new Authorize($user, 'customize_appearance'))->check();
+    // }
 
     /**
      * Determine whether the user can view the Banner.
@@ -30,10 +30,10 @@ class BannerPolicy
      * @param  \App\Banner  $banner
      * @return mixed
      */
-    public function view(User $user, Banner $banner)
-    {
-        return (new Authorize($user, 'customize_appearance', $banner))->check();
-    }
+    // public function view(User $user, Banner $banner)
+    // {
+    //     return (new Authorize($user, 'customize_appearance', $banner))->check();
+    // }
 
     /**
      * Determine whether the user can create Banners.

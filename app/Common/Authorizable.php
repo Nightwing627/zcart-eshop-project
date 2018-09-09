@@ -83,6 +83,18 @@ trait Authorizable
     ];
 
     /**
+     * List of modules that grouped into a common module named apprearance modules
+     * This will help to set the role permissions
+     *
+     * @var arr
+     */
+    private $appearance_modules = [
+        'theme',
+        'banner',
+        'slider',
+    ];
+
+    /**
      * List of modules that has exceptional permission than the abilities above
      * This will help to set the role permissions
      *
@@ -103,7 +115,7 @@ trait Authorizable
      */
     public function callAction($method, $parameters)
     {
-        if (! $this->checkPermission('', $parameters) )
+        if ( ! $this->checkPermission('', $parameters) )
             return view('errors.forbidden');
 
         return parent::callAction($method, $parameters);
@@ -145,6 +157,9 @@ trait Authorizable
         if($this->isUtility($module))
             return $this->abilities[$action] . '_utility';
 
+        if($this->isAppearance($module))
+            return 'customize_appearance';
+
         if ('update' == $action) {
             if($this->isUpdateException($module))
                 return $action . '_' . snake_case($module);
@@ -175,6 +190,11 @@ trait Authorizable
     private function isUtility($module)
     {
         return in_array($module, $this->utility_modules);
+    }
+
+    private function isAppearance($module)
+    {
+        return in_array($module, $this->appearance_modules);
     }
 
     /**

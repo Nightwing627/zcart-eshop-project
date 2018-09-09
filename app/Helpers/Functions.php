@@ -630,6 +630,7 @@ if ( ! function_exists('format_to_number') )
         if (trim($value) != null) {
             return number_format($value, $decimals, '.', '');
         }
+
         return null;
     }
 }

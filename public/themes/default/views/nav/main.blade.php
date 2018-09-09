@@ -32,7 +32,7 @@
 
       @auth('customer')
         <li class="dropdown">
-          <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+          <a href="{{ route('account', 'dashboard') }}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
             <span>{{ trans('theme.hello') . ', ' . Auth::guard('customer')->user()->getName() }}</span> {{ trans('theme.manage_your_account') }}
           </a>
           <ul class="dropdown-menu nav-list">

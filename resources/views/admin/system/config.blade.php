@@ -522,6 +522,15 @@
 						    		<p class="lead">{{ $type }}</p>
 								@endif
 					    		<p>{!! get_payment_method_type($type_id)['admin_description'] !!}</p>
+					    		@if($type_id == \App\PaymentMethod::TYPE_MANUAL || $type_id == \App\PaymentMethod::TYPE_PAYPAL)
+					    			<div class="spacer20"></div>
+						          	<div class="alert alert-info">
+						            	<strong class="text-uppercase">
+						            		<i class="fa fa-info-circle"></i> {{ trans('app.important') }} :
+							            </strong>
+							            <span>{!! trans('messages.cant_charge_application_fee') !!}</span>
+							        </div>
+								@endif
 					    	</div>
 					    	<div class="col-sm-6">
 				    			@foreach($payment_providers as $payment_provider)

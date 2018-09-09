@@ -58,6 +58,10 @@
             @include('nav.copyright')
         </div><!-- /#global-wrapper -->
 
+        <div id="loading">
+            <img id="loading-image" src="{{ theme_asset_url('img/loading.gif') }}" alt="busy...">
+        </div>
+
         <!-- MODALS -->
         @unless(Auth::guard('customer')->check())
             @include('auth.modals')

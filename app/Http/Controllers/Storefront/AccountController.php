@@ -163,8 +163,8 @@ class AccountController extends Controller
     private function disputes()
     {
         return Auth::guard('customer')->user()->disputes()
-            ->with(['shop:id,name,slug', 'order.inventories:product_id', 'order.inventories.image', 'order.inventories.product'])
-            ->paginate(10);
+        ->with(['shop:id,name,slug', 'order.inventories:product_id', 'order.inventories.image', 'order.inventories.product'])
+        ->paginate(10);
     }
 
     /**
@@ -173,8 +173,8 @@ class AccountController extends Controller
      */
     private function coupons()
     {
-        return Auth::guard('customer')->user()->coupons()->active()
-                ->with('shop:id,name,slug')->paginate(20);
+        return Auth::guard('customer')->user()->coupons()
+        ->active()->with('shop:id,name,slug')->paginate(20);
     }
 
     /**

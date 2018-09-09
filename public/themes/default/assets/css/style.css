@@ -107,7 +107,6 @@ body {
   font-family: 'Roboto', Tahoma, Arial, helvetica, sans-serif;
   font-size: 15px;
   color: #111;
-  min-height: 1000px; /*Temp*/
 }
 iframe{
     display: block;
@@ -212,11 +211,27 @@ div[data-notify="container"] {
     width: 100%;
     margin: 15px 0 12px;
 }
-.blur-filter{
-  pointer-events: none;
-  filter: blur(5px);
-  filter: url("blur.svg#gaussian_blur");
-  -webkit-filter: blur(5px);
+.busy {
+  cursor: wait;
+  /*pointer-events: none;*/
+}
+#loading {
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  opacity: 0.85;
+  background-color: #fff;
+  cursor: wait;
+  text-align: center;
+  z-index: 99;
+}
+#loading-image {
+  position: absolute;
+  top: 45%;
+  z-index: 100;
 }
 
 /* hr tag */

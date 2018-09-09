@@ -399,7 +399,7 @@ class Shop extends Model
      */
     public function scopeActive($query)
     {
-        return $query->where('active', 1)
+        return $query->where('active', 1)->whereNotNull('current_billing_plan')
         ->whereHas('config', function ($q) {
             $q->live();
         })

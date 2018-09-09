@@ -88,7 +88,7 @@
 
     <div class="loader">
       <center>
-        <img class="loading-image" src="{{ asset('gears.gif') }}" alt="busy...">
+        <img class="loading-image" src="{{ theme_asset_url('img/loading.gif') }}" alt="busy...">
       </center>
     </div>
   </body>

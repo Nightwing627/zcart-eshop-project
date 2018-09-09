@@ -4,7 +4,6 @@
 ;(function($, window, document) {
 
     $(document).ready(function(){
-
 		// Check if customer exist
 		var customer = {{ $customer ? 'true' : 'undefined'}};
 
@@ -103,8 +102,7 @@
 				return;
 			}
 
-			// $('.loader').show();
-			$('body').addClass('blur-filter');
+			apply_busy_filter('body');
 
 		  	// Skip the strip payment and submit if the payment method is not stripe
 		  	if ( $('input[name=payment_method]:checked').data('code') !== 'stripe' )
@@ -116,12 +114,11 @@
 
 		    Stripe.card.createToken(form, function(status, response) {
 		        if (response.error) {
-		          form.find('.stripe-errors').text(response.error.message).removeClass('hide');
-		          // $('.loader').hide();
-		          $('body').removeClass('blur-filter');
+		          	form.find('.stripe-errors').text(response.error.message).removeClass('hide');
+					remove_busy_filter('body');
 		        } else {
-		          form.append($('<input type="hidden" name="cc_token">').val(response.id));
-		          form.get(0).submit();
+		          	form.append($('<input type="hidden" name="cc_token">').val(response.id));
+		          	form.get(0).submit();
 		        }
 			});
 	    });

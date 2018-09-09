@@ -2,17 +2,17 @@
 "use strict";
 ;(function($, window, document) {
     $(document).ready(function(){
-        // Delete the cart info from localStorage
-        // localStorage.removeItem('cart');
 
     	$('.shopping-cart-table-wrap').each(function(e){
 			var cart = $(this).data('cart');
 	        var shop = $('#shop-id'+cart).val();
 
-			if(!shop)
+			if(!shop){
 				disableCartCheckout(cart);
-			else
+			}
+			else{
 				setShippingOptions(cart);
+			}
     	});
 
         // Update shipping options
@@ -55,6 +55,9 @@
 
 			// Set shipping options for the zone
 			setShippingOptions(cart);
+
+			// Reset discount
+			resetDiscount(cart);
     	});
 
     	// Item remove from the cart
@@ -222,6 +225,7 @@
 				var current = getShippingName(cart);
 
 				var filtered = getShippingOptions(cart);
+				var handlingCost = $('#handling-cost'+cart).val();
 
 				if($.isEmptyObject(filtered)){
 					var options = '<p class="space10"><span class="space10"></span>{{ trans('theme.seller_doesnt_ship') }}</p>';
@@ -230,11 +234,12 @@
 					var options = '<table class="table table-striped" id="checkout-options-table">';
 					filtered.forEach( function (item){
 				  		var preChecked = String(current) == String(item.name) ? 'checked' : '';
+				  		var shippingRate = Number(item.rate) + Number(handlingCost);
 
 				  		options += '<tr><td><div class="radio"><label id="'+ item.id +'"><input type="radio" name="shipping_option" id="'+ item.name +'" value="'+ getFormatedValue(item.rate) +'" '+ preChecked +'>'+ item.name +'</label></div></td>' +
 				  		'<td>' + item.carrier.name + '</td>' +
 				  		'<td><small class"text-muted">'+ item.delivery_takes +'</small></td>' +
-				  		'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(item.rate) +'</span></td></tr>';
+				  		'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(shippingRate) +'</span></td></tr>';
 					});
 					options += '</table>';
 				}
@@ -413,7 +418,8 @@
 
 		function setShippingCost(cart, name = '', value = 0, id = '')
 		{
-			value = value ? value : 0;
+			var handlingCost = $('#handling-cost'+cart).val();
+			value = Number(value) + Number(handlingCost);
 			$('#summary-shipping'+cart).text(getFormatedValue(value));
 			$('#summary-shipping-name'+cart).text(name);
 			$('#shipping-rate-id'+cart).val(id);

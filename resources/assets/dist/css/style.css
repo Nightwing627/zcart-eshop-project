@@ -3003,6 +3003,7 @@ table.table{
 .table tr td.row-options {
   text-align: right;
   padding-right: 10px;
+  min-width: 30px;
 }
 .table-bordered {
   border: 1px solid #f4f4f4;

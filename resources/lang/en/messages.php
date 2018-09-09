@@ -74,6 +74,7 @@ return [
     'only_merchant_can_change_plan' => 'Only the shop owner can change the billing/subscription plan.',
     'message_send_failed' => 'Sorry, the message cannot be sent now! Please try again later.',
     'resource_uses_out_of' => ':used of :limit',
+    'cant_charge_application_fee' => 'You can\'t charge <b>marketplace commission</b> and per <b>transection fee</b> with this payment method. This is a good option if you only charge subscription fee.',
 
     // 'you_have_disputes_solve' => 'There are :disputes active disputes! Please review and solve disputes.',
     // 'you_have_refund_request' => 'You have :requests refund request. Please review and take action.',

@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\SystemConfig;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\UpdateFeaturedCategories;
 
 class ThemeOptionController extends Controller
 {
+    use Authorizable;
+
     /**
      * Display a listing of the resource.
      *

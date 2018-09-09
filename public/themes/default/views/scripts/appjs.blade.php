@@ -409,8 +409,6 @@
         }
         return rtn;
     }
-
-
 }(window.jQuery, window, document));
 
 
@@ -425,12 +423,20 @@ function decreaseCartItem(value = 1)
 }
 function getCartItemCount()
 {
-    return Number($("#globalCartItemCount").text());
+    return Number(jQuery("#globalCartItemCount").text());
 }
 function setCartItemCount(value = 0)
 {
-    $('#globalCartItemCount').text(value);
+    jQuery('#globalCartItemCount').text(value);
     return;
+}
+function apply_busy_filter(dom = 'body') {
+    jQuery(dom).addClass('busy');
+    jQuery('#loading').show();
+}
+function remove_busy_filter(dom = 'body') {
+    jQuery(dom).removeClass('busy');
+    jQuery('#loading').hide();
 }
 
  /*
@@ -445,7 +451,7 @@ function getFromPHPHelper(funcName, args = null)
 {
     var url = "{{ route('helper.getFromPHPHelper') }}";
     var result = 0;
-    $.ajax({
+    jQuery.ajax({
         url: url,
         data: "funcName="+ funcName + "&args=" + args,
         async: false,

@@ -32,7 +32,7 @@ class CartController extends Controller
 
         // Load related models
         $carts->load(['shop' => function($q) {
-            $q->with(['packagings' => function($query){
+            $q->with(['config', 'packagings' => function($query){
                 $query->active();
             }])->active();
         }, 'inventories.image', 'shippingPackage']);
@@ -95,7 +95,7 @@ class CartController extends Controller
     public function checkout(Request $request, Cart $cart)
     {
         // Skip upadting cart info if the request came from cart as its already updated.
-        if( empty($request->all()) ){
+        if( !empty($request->all()) ){
             if( !crosscheckCartOwnership($request, $cart) )
                 return redirect()->route('cart.index')->with('warning', trans('theme.notify.please_login_to_checkout'));
 

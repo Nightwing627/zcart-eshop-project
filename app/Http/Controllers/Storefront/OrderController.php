@@ -90,103 +90,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Charge using Stripe
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Order  $order
-     *
-     * @return [type]
-     */
-    private function chargeWithPayPal($request, Order $order)
-    {
-        // Get the vendor configs
-        $vendorPaypalConfig = $order->shop->paypalExpress;
-
-        // If the stripe is not cofigured
-        if( ! $vendorPaypalConfig )
-            return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
-
-        // Set vendor's paypal config
-        config()->set('paypal_payment.mode', $vendorPaypalConfig->sandbox ? 'sandbox' : 'live');
-        config()->set('paypal_payment.account.client_id', $vendorPaypalConfig->client_id);
-        config()->set('paypal_payment.account.client_secret', $vendorPaypalConfig->secret);
-
-        // ### Address
-        // Base Address object used as shipping or billing
-        // address in a payment. [Optional]
-        // $shippingAddress= Paypalpayment::shippingAddress();
-        // $shippingAddress->setLine1("3909 Witmer Road")
-        //     ->setLine2("Niagara Falls")
-        //     ->setCity("Niagara Falls")
-        //     ->setState("NY")
-        //     ->setPostalCode("14305")
-        //     ->setCountryCode("US")
-        //     ->setPhone("716-298-1822")
-        //     ->setRecipientName("Jhone");
-
-        // ### Payer
-        // A resource representing a Payer that funds a payment
-        // Use the List of `FundingInstrument` and the Payment Method
-        // as 'credit_card'
-        $payer = Paypalpayment::payer();
-        $payer->setPaymentMethod("paypal");
-
-        $allItems = [];
-        foreach ($order->inventories as $item) {
-            $tempItem = Paypalpayment::item();
-            $tempItem->setName($item->title)->setDescription($item->pivot->item_description)
-            ->setCurrency( get_currency_code() )->setQuantity($item->pivot->quantity)
-            ->setTax($order->taxrate)->setPrice($item->pivot->unit_price);
-
-            $allItems[] = $tempItem;
-        }
-
-        $itemList = Paypalpayment::itemList();
-        $itemList->setItems($allItems);
-        // ->setShippingAddress($shippingAddress);
-
-        $details = Paypalpayment::details();
-        $details->setShipping( $order->get_shipping_cost() )->setTax($order->taxes)
-        ->setGiftWrap($order->packaging)->setShippingDiscount($order->discount)
-        ->setSubtotal($order->calculate_total_for_paypal()); //total of items prices
-
-        //Payment Amount
-        $amount = Paypalpayment::amount();
-        $amount->setCurrency( get_currency_code() )
-        ->setTotal( $order->grand_total_for_paypal() )
-        ->setDetails($details);
-
-        // ### Transaction
-        // A transaction defines the contract of a payment - what is the payment for and who
-        // is fulfilling it. Transaction is created with a `Payee` and `Amount` types
-        $transaction = Paypalpayment::transaction();
-        $transaction->setAmount($amount)
-        ->setItemList($itemList)
-        ->setDescription( trans('app.purchase_from', ['marketplace' => get_platform_title()]) )
-        ->setInvoiceNumber($order->order_number);
-
-        // ### Payment
-        // A Payment Resource; create one using the above types and intent as 'sale'
-        $redirectUrls = Paypalpayment::redirectUrls();
-        $redirectUrls->setReturnUrl(route("payment.success", $order->id))
-        ->setCancelUrl(route("payment.failed", $order->id));
-
-        $payment = Paypalpayment::payment();
-
-        $payment->setIntent("sale")->setPayer($payer)->setRedirectUrls($redirectUrls)->setTransactions([$transaction]);
-
-        try {
-            // ### Create Payment
-            // Create a payment by posting to the APIService using a valid ApiContext The return object contains the status;
-            $payment->create(Paypalpayment::apiContext());
-        } catch (\PPConnectionException $ex) {
-            return response()->json(["error" => $ex->getMessage()], 400);
-        }
-
-        return response()->json([$payment->toArray(), 'approval_url' => $payment->getApprovalLink()], 200);
-    }
-
-    /**
      * Payment done successfully. Sync inventory and trigger event
      *
      * @param  \Illuminate\Http\Request  $request
@@ -360,6 +263,103 @@ class OrderController extends Controller
         ], ["stripe_account" => $vendorStripeAccountId]);
     }
 
+
+    /**
+     * Charge using Stripe
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Order  $order
+     *
+     * @return [type]
+     */
+    private function chargeWithPayPal($request, Order $order)
+    {
+        // Get the vendor configs
+        $vendorPaypalConfig = $order->shop->paypalExpress;
+
+        // If the stripe is not cofigured
+        if( ! $vendorPaypalConfig )
+            return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
+
+        // Set vendor's paypal config
+        config()->set('paypal_payment.mode', $vendorPaypalConfig->sandbox ? 'sandbox' : 'live');
+        config()->set('paypal_payment.account.client_id', $vendorPaypalConfig->client_id);
+        config()->set('paypal_payment.account.client_secret', $vendorPaypalConfig->secret);
+
+        // ### Address
+        // Base Address object used as shipping or billing
+        // address in a payment. [Optional]
+        // $shippingAddress= Paypalpayment::shippingAddress();
+        // $shippingAddress->setLine1("3909 Witmer Road")
+        //     ->setLine2("Niagara Falls")
+        //     ->setCity("Niagara Falls")
+        //     ->setState("NY")
+        //     ->setPostalCode("14305")
+        //     ->setCountryCode("US")
+        //     ->setPhone("716-298-1822")
+        //     ->setRecipientName("Jhone");
+
+        // ### Payer
+        // A resource representing a Payer that funds a payment
+        // Use the List of `FundingInstrument` and the Payment Method
+        // as 'credit_card'
+        $payer = Paypalpayment::payer();
+        $payer->setPaymentMethod("paypal");
+
+        $allItems = [];
+        foreach ($order->inventories as $item) {
+            $tempItem = Paypalpayment::item();
+            $tempItem->setName($item->title)->setDescription($item->pivot->item_description)
+            ->setCurrency( get_currency_code() )->setQuantity($item->pivot->quantity)
+            ->setTax($order->taxrate)->setPrice($item->pivot->unit_price);
+
+            $allItems[] = $tempItem;
+        }
+
+        $itemList = Paypalpayment::itemList();
+        $itemList->setItems($allItems);
+        // ->setShippingAddress($shippingAddress);
+
+        $details = Paypalpayment::details();
+        $details->setShipping( $order->get_shipping_cost() )->setTax($order->taxes)
+        ->setGiftWrap($order->packaging)->setShippingDiscount($order->discount)
+        ->setSubtotal($order->calculate_total_for_paypal()); //total of items prices
+
+        //Payment Amount
+        $amount = Paypalpayment::amount();
+        $amount->setCurrency( get_currency_code() )
+        ->setTotal( $order->grand_total_for_paypal() )
+        ->setDetails($details);
+
+        // ### Transaction
+        // A transaction defines the contract of a payment - what is the payment for and who
+        // is fulfilling it. Transaction is created with a `Payee` and `Amount` types
+        $transaction = Paypalpayment::transaction();
+        $transaction->setAmount($amount)
+        ->setItemList($itemList)
+        ->setDescription( trans('app.purchase_from', ['marketplace' => get_platform_title()]) )
+        ->setInvoiceNumber($order->order_number);
+
+        // ### Payment
+        // A Payment Resource; create one using the above types and intent as 'sale'
+        $redirectUrls = Paypalpayment::redirectUrls();
+        $redirectUrls->setReturnUrl(route("payment.success", $order->id))
+        ->setCancelUrl(route("payment.failed", $order->id));
+
+        $payment = Paypalpayment::payment();
+
+        $payment->setIntent("sale")->setPayer($payer)->setRedirectUrls($redirectUrls)->setTransactions([$transaction]);
+
+        try {
+            // ### Create Payment
+            // Create a payment by posting to the APIService using a valid ApiContext The return object contains the status;
+            $payment->create(Paypalpayment::apiContext());
+        } catch (\PPConnectionException $ex) {
+            return response()->json(["error" => $ex->getMessage()], 400);
+        }
+
+        return response()->json([$payment->toArray(), 'approval_url' => $payment->getApprovalLink()], 200);
+    }
     /**
      * Create a new Customer
      *
@@ -446,7 +446,6 @@ class OrderController extends Controller
      */
     private function revertOrder($order)
     {
-        \Log::info('revertOrder');
         if( !$order instanceOf Order )
             $order = Order::find($order);
 

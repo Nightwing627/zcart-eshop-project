@@ -45,13 +45,15 @@
         <div class="row shopping-cart-table-wrap space30" id="cartId{{$cart->id}}" data-cart="{{$cart->id}}">
           {!! Form::model($cart, ['method' => 'PUT', 'route' => ['cart.update', $cart->id], 'id' => 'formId'.$cart->id]) !!}
             {{ Form::hidden('cart_id', $cart->id, ['id' => 'cart-id'.$cart->id]) }}
-            {{ Form::hidden('shop_id', optional($cart->shop)->id, ['id' => 'shop-id'.$cart->id]) }}
+            {{ Form::hidden('shop_id', $cart->shop->id, ['id' => 'shop-id'.$cart->id]) }}
             {{ Form::hidden('zone_id', $shipping_zone ? $shipping_zone->id : Null, ['id' => 'zone-id'.$cart->id]) }}
             {{ Form::hidden('tax_id', $shipping_zone ? $shipping_zone->tax_id : Null, ['id' => 'tax-id'.$cart->id]) }}
             {{ Form::hidden('taxrate', Null, ['id' => 'cart-taxrate'.$cart->id]) }}
             {{ Form::hidden('packaging_id', $default_packaging ? $default_packaging->id : Null, ['id' => 'packaging-id'.$cart->id]) }}
             {{ Form::hidden('shipping_rate_id', Null, ['id' => 'shipping-rate-id'.$cart->id]) }}
-            {{ Form::hidden('discount_id', Null, ['id' => 'discount-id'.$cart->id]) }}
+            {{ Form::hidden('discount_id', $cart->coupon_id, ['id' => 'discount-id'.$cart->id]) }}
+            {{ Form::hidden('handling_cost', optional($cart->shop->config)->order_handling_cost, ['id' => 'handling-cost'.$cart->id]) }}
+            {{-- <input type="hidden" name="discount_id" id="discount-id{{$cart->id}}"> --}}
             <div class="col-md-9 nopadding">
                 <div class="shopping-cart-header-section">
                   <span>@lang('theme.store'):</span>
@@ -131,7 +133,8 @@
                             <span class="input-group-addon flat">
                               <i class="fa fa-ticket"></i>
                             </span>
-                            {{ Form::text('coupon', Null, ['id' => 'coupon'.$cart->id, 'class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.have_coupon_from_seller')]) }}
+                            {{-- {{ Form::input('coupon', $cart->coupon ? $cart->coupon->code : Null, ['class' => 'form-control flat', 'id' => 'coupon'.$cart->id, 'placeholder' => trans('theme.placeholder.have_coupon_from_seller')]) }} --}}
+                            <input name="coupon" value="{{ $cart->coupon ? $cart->coupon->code : Null }}" id="coupon{{$cart->id}}" class="form-control flat" type="text" placeholder="@lang('theme.placeholder.have_coupon_from_seller')">
                             <span class="input-group-btn">
                               <button class="btn btn-default flat apply_seller_coupon" type="button" data-cart="{{$cart->id}}">@lang('theme.button.apply_coupon')</button>
                             </span>
@@ -188,12 +191,12 @@
                             </span>
                           </li>
                         @endunless
-                        <li id="discount-section-li{{$cart->id}}" style="display: none;">
+                        <li id="discount-section-li{{$cart->id}}" style="display: {{$cart->coupon ? 'block' : 'none'}};">
                           <span>{{ trans('theme.discount') }}
-                            <em id="summary-discount-name{{$cart->id}}" class="small text-muted"></em>
+                            <em id="summary-discount-name{{$cart->id}}" class="small text-muted">{{$cart->coupon ? $cart->coupon->name : ''}}</em>
                           </span>
                           <span>-{{ get_formated_currency_symbol() }}
-                            <span id="summary-discount{{$cart->id}}">{{ number_format(0, 2, '.', '') }}</span>
+                            <span id="summary-discount{{$cart->id}}">{{$cart->coupon ? number_format($cart->discount, 2, '.', '') : number_format(0, 2, '.', '') }}</span>
                           </span>
                         </li>
                         <li id="tax-section-li{{$cart->id}}" style="display: none;">

@@ -116,7 +116,7 @@ class Order extends Model
      */
     public function coupon()
     {
-        return $this->belongsTo(Coupon::class);
+        return $this->belongsTo(Coupon::class)->withDefault();
     }
 
     /**
@@ -152,7 +152,7 @@ class Order extends Model
      */
     public function carrier()
     {
-        return $this->belongsTo(Carrier::class);
+        return $this->belongsTo(Carrier::class)->withDefault();
     }
 
     /**
@@ -171,7 +171,8 @@ class Order extends Model
      */
     public function conversation()
     {
-        return $this->hasOne(Message::class, 'order_id')->where('customer_id', $this->customer_id);
+        return $this->hasOne(Message::class, 'order_id');
+        //->where('customer_id', $this->customer_id);
     }
 
     /**
@@ -197,7 +198,7 @@ class Order extends Model
      */
     public function shippingRate()
     {
-        return $this->belongsTo(ShippingRate::class, 'shipping_rate_id');
+        return $this->belongsTo(ShippingRate::class, 'shipping_rate_id')->withDefault();
     }
 
     /**
@@ -205,7 +206,7 @@ class Order extends Model
      */
     public function shippingZone()
     {
-        return $this->belongsTo(ShippingZone::class, 'shipping_zone_id');
+        return $this->belongsTo(ShippingZone::class, 'shipping_zone_id')->withDefault();
     }
 
     /**
@@ -213,7 +214,7 @@ class Order extends Model
      */
     public function paymentMethod()
     {
-        return $this->belongsTo(PaymentMethod::class);
+        return $this->belongsTo(PaymentMethod::class)->withDefault();
     }
 
     /**
@@ -221,7 +222,7 @@ class Order extends Model
      */
     public function shippingPackage()
     {
-        return $this->belongsTo(Packaging::class, 'packaging_id');
+        return $this->belongsTo(Packaging::class, 'packaging_id')->withDefault();
     }
 
     /**
@@ -229,7 +230,7 @@ class Order extends Model
      */
     public function status()
     {
-        return $this->belongsTo(OrderStatus::class, 'order_status_id');
+        return $this->belongsTo(OrderStatus::class, 'order_status_id')->withDefault();
     }
 
     /**
@@ -237,7 +238,7 @@ class Order extends Model
      */
     public function feedback()
     {
-        return $this->belongsTo(Feedback::class, 'feedback_id');
+        return $this->belongsTo(Feedback::class, 'feedback_id')->withDefault();
     }
 
     /**
