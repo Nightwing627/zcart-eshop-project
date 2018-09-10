@@ -24,6 +24,7 @@ class WishlistController extends Controller
             'product_id'   =>  $item->product_id,
             'customer_id' => $request->user()->id
         ]);
+
         return back()->with('success',  trans('theme.notify.item_added_to_wishlist'));
     }
 

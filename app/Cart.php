@@ -25,6 +25,13 @@ class Cart extends Model
     protected $dates = ['deleted_at'];
 
     /**
+     * Load item count with cart
+     *
+     * @var array
+     */
+    protected $withCount = ['inventories'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

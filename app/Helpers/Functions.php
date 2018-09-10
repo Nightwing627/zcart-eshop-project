@@ -912,7 +912,8 @@ if ( ! function_exists('get_shipping_zone_of') )
         if($state)
             $state_counts = get_state_count_of($country);
 
-        $zones = \DB::table('shipping_zones')->select(['id','name','tax_id','country_ids','state_ids','rest_of_the_world'])->where('shop_id', $shop)->where('active', 1)->get();
+        $zones = \DB::table('shipping_zones')->select(['id','name','tax_id','country_ids','state_ids','rest_of_the_world'])
+        ->where('shop_id', $shop)->where('active', 1)->get();
 
         foreach ($zones as $zone) {
             // Check the the shop has a worldwide shipping zone

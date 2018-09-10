@@ -222,6 +222,7 @@ return [
 	'image' => 'Image',
 	'in_stock' => 'In Stock',
 	'invalid' => 'Invalid',
+	'item_count' => 'Item count',
 	'its_ok' => 'It\'s OK',
 	'leave_message_to_seller' => 'Leave a message for the seller',
     'lifetime' => 'Lifetime',

@@ -153,7 +153,9 @@ class AccountController extends Controller
      */
     private function wishlist()
     {
-        return Wishlist::mine()->with(['inventory', 'inventory.feedbacks:rating,feedbackable_id,feedbackable_type', 'inventory.images:path,imageable_id,imageable_type'])->paginate(7);
+        return Wishlist::mine()->whereHas('inventory', function($q) {
+            $q->available();
+        })->with(['inventory', 'inventory.feedbacks:rating,feedbackable_id,feedbackable_type', 'inventory.images:path,imageable_id,imageable_type'])->paginate(7);
     }
 
     /**

@@ -30,6 +30,10 @@
           <h3 class="widget-title">{{ trans('theme.order_info') }}</h3>
           <ul class="shopping-cart-summary ">
             <li>
+              <span>{{ trans('theme.item_count') }}</span>
+              <span>{{ $cart->inventories_count }}</span>
+            </li>
+            <li>
               <span>{{ trans('theme.subtotal') }}</span>
               <span>{{ get_formated_currency($cart->total, 2) }}</span>
             </li>

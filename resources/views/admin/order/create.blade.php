@@ -12,13 +12,12 @@
 
 @section('content')
   @php
-  // echo "<pre>"; print_r($payment_methods); echo "</pre>"; exit();
     $shipping_address = $customer->shippingAddress ? $customer->shippingAddress : $customer->primaryAddress;
     $billing_address = $customer->billingAddress ? $customer->billingAddress : $shipping_address;
     $shipping_zone = $shipping_address ?
                     get_shipping_zone_of(Auth::user()->merchantId(), $shipping_address->country_id, $shipping_address->state_id) : Null;
 
-    $shipping_options = $shipping_zone ? getShippingRates($shipping_zone->id) : 'NaN';
+    $shipping_options = isset($shipping_zone->id) ? getShippingRates($shipping_zone->id) : 'NaN';
     $packaging_options = getPackagings();
     $default_packaging = isset($cart->packaging_id) ? $cart->shippingPackage : getDefaultPackaging();
   @endphp
@@ -46,7 +45,7 @@
             {{ Form::hidden('packaging_id', $default_packaging ? $default_packaging->id : Null, ['id' => 'packaging_id']) }}
             {{ Form::hidden('packaging', $default_packaging ? $default_packaging->cost : Null, ['id' => 'cart-packaging']) }}
             {{ Form::hidden('shipping', Null, ['id' => 'cart-shipping']) }}
-            {{ Form::hidden('shipping_zone_id', $shipping_zone ? $shipping_zone->id : Null, ['id' => 'shipping_zone_id']) }}
+            {{ Form::hidden('shipping_zone_id', isset($shipping_zone->id) ? $shipping_zone->id : Null, ['id' => 'shipping_zone_id']) }}
             {{ Form::hidden('shipping_rate_id', Null, ['id' => 'shipping_rate_id']) }}
             {{ Form::hidden('shipping_address', $shipping_address ? $shipping_address->id : Null) }}
             {{ Form::hidden('billing_address', $billing_address ? $billing_address->id : Null) }}
@@ -124,7 +123,7 @@
                   <tr>
                     <td class="text-right">{{ trans('app.taxes') }} <br/>
                       <em class="small">
-                        {{ $shipping_zone ? $shipping_zone->name . ' ' : '' }}
+                        {{ isset($shipping_zone->name) ? $shipping_zone->name . ' ' : '' }}
                         <span id="summary-taxrate"></span>%
                       </small>
                     </td>
@@ -322,7 +321,7 @@
       }
 
       // Set default settings based on shop and system configs
-      var taxId = "{{ $shipping_zone ? $shipping_zone->tax_id : config('shop_settings.default_tax_id') }}";
+      var taxId = "{{ isset($shipping_zone->tax_id) ? $shipping_zone->tax_id : config('shop_settings.default_tax_id') }}";
       if( taxId ){
         setTax(taxId);
       }

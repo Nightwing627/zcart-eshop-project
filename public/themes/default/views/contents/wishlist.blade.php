@@ -29,8 +29,8 @@
                             <span>@lang('theme.button.quick_view')</span>
                         </a>
 
-                        <a class="btn btn-primary flat" href="{{ route('show.product', $wish->inventory->slug) }}">
-                            <i class="fa fa-shopping-cart"></i> @lang('theme.button.buy_now')
+                        <a class="btn btn-primary flat" href="{{ route('direct.checkout', $wish->inventory->slug) }}">
+                            <i class="fa fa-rocket"></i> @lang('theme.button.buy_now')
                         </a>
 
                         {!! Form::open(['route' => ['wishlist.remove', $wish], 'method' => 'delete', 'class' => 'data-form']) !!}
