@@ -25,7 +25,14 @@ class SearchController extends Controller
 
         $products = Inventory::search($term)->where('active', 1)->get();
 
-        if($category != 'all_categories'){
+        $products->load(['shop:id,current_billing_plan,active']);
+
+        // Keep results only from active shops
+        $products = $products->filter(function ($product) {
+            return ($product->shop->current_billing_plan !== Null) && ($product->shop->active == 1);
+        });
+
+        if($category != 'all_categories') {
             $category = Category::where('slug', $category)->active()->firstOrFail();
             $listings = $category->listings()->available()->get();
             $products = $products->intersect($listings);
@@ -38,19 +45,19 @@ class SearchController extends Controller
         $priceRange['min'] = floor($products->min('sale_price'));
         $priceRange['max'] = ceil($products->max('sale_price'));
 
-        if($request->has('free_shipping')){
+        if($request->has('free_shipping')) {
             $products = $products->where('free_shipping', 1);
         }
-        if($request->has('new_arraivals')){
+        if($request->has('new_arraivals')) {
             $products = $products->where('created_at', '>', Carbon::now()->subDays(config('system.filter.new_arraival', 7)));
         }
-        if($request->has('has_offers')){
+        if($request->has('has_offers')) {
             $products = $products->where('offer_price', '>', 0)
             ->where('offer_start', '<', Carbon::now())
             ->where('offer_end', '>', Carbon::now());
         }
 
-        if($request->has('sort_by')){
+        if($request->has('sort_by')) {
             switch ($request->get('sort_by')) {
                 case 'newest':
                     $products = $products->sortByDesc('created_at');
@@ -74,22 +81,22 @@ class SearchController extends Controller
             }
         }
 
-        if($request->has('condition')){
+        if($request->has('condition')) {
             $products = $products->whereIn('condition', array_keys($request->input('condition')));
         }
 
-        if($request->has('price')){
+        if($request->has('price')) {
             $price = explode('-', $request->input('price'));
             $products = $products->where('sale_price', '>=', $price[0])->where('sale_price', '<=', $price[1]);
         }
 
-        if($request->has('brand')){
+        if($request->has('brand')) {
             $products = $products->whereIn('brand', array_keys($request->input('brand')));
         }
 
         $products = $products->paginate(config('system.view_listing_per_page', 16));
 
-        $products->load(['product' => function($q){
+        $products->load(['product' => function($q) {
             $q->select('id')->with('categories:id,name,slug');
         }, 'feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type']);
 

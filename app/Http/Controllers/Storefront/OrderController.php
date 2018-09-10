@@ -263,7 +263,6 @@ class OrderController extends Controller
         ], ["stripe_account" => $vendorStripeAccountId]);
     }
 
-
     /**
      * Charge using Stripe
      *

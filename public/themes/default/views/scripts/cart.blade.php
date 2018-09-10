@@ -2,12 +2,19 @@
 "use strict";
 ;(function($, window, document) {
     $(document).ready(function(){
+    	// Check if specific cart is given
+    	var expressId = '{{ $expressId }}';
+    	if( '' != expressId){
+			apply_busy_filter('body');
+    		$('#cartId'+expressId)[0].scrollIntoView({ behavior: 'smooth', block: 'start', offsetTop: 50}); // Scroll screen to target element
+    	}
 
     	$('.shopping-cart-table-wrap').each(function(e){
 			var cart = $(this).data('cart');
 	        var shop = $('#shop-id'+cart).val();
+			var shippingOptions = $("#shipping-options"+cart).data('options');
 
-			if(!shop){
+			if(!shop || !shippingOptions){
 				disableCartCheckout(cart);
 			}
 			else{
@@ -23,6 +30,11 @@
 
 		    var zone = getFromPHPHelper('get_shipping_zone_of', [shop, countryId]);
 			zone = JSON.parse(zone);
+
+			if($.isEmptyObject(zone)){
+	            @include('layouts.notification', ['message' => trans('theme.notify.seller_doesnt_ship'), 'type' => 'warning', 'icon' => 'times-circle'])
+			}
+
 			$("#zone-id"+cart).val(zone.id);
 			$("#tax-id"+cart).val(zone.tax_id);
 
@@ -262,6 +274,9 @@
 			var cartWeight  = getCartWeight(cart);
 			var shippingOptions = $("#shipping-options"+cart).data('options');
 
+			if (!shippingOptions || $.isEmptyObject(shippingOptions))
+				return shippingOptions;
+
 			var filtered = shippingOptions.filter(function (el) {
 			  	var result = el.based_on == 'price' && el.minimum <= totalPrice && (el.maximum >= totalPrice || !el.maximum);
 
@@ -402,9 +417,9 @@
 		function setShippingOptions(cart)
 		{
 			var filtered = getShippingOptions(cart);
-			filtered.sort(function(a, b){return a.rate - b.rate});
 
 			if( ! $.isEmptyObject(filtered) ){
+				filtered.sort(function(a, b){return a.rate - b.rate});
 	            setShippingCost(cart, filtered[0].name, filtered[0].rate, filtered[0].id);
 	            enableCartCheckout(cart);
 			}
@@ -514,6 +529,10 @@
       		$('#table'+cart+' > tfoot').removeClass('hidden');
      		$('#shipping-notice'+cart).addClass('hidden');
       	}
+
+    	// Auto Submit the cart If its express checkout
+    	if( '' != expressId)
+            $("form#formId"+expressId).submit();
     });
 }(window.jQuery, window, document));
 </script>

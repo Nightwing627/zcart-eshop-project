@@ -9,6 +9,11 @@
           </div>
         @endif
 
+        <div class="notice notice-warning notice-sm space20" id="checkout-notice" style="display: {{ $cart->shipping_rate_id ? 'none' : 'block' }};">
+          <strong>{{ trans('theme.warning') }}</strong>
+          <span id="checkout-notice-msg">@lang('theme.notify.seller_doesnt_ship')</span>
+        </div>
+
         <div class="col-md-3 bg-light">
           <div class="seller-info">
             <div class="text-muted small">@lang('theme.sold_by')</div>
@@ -69,22 +74,35 @@
         <div class="col-md-5">
           <h3 class="widget-title">{{ trans('theme.ship_to') }}</h3>
           @if(isset($customer))
-
             <div class="row customer-address-list">
+              @php
+                $pre_select = Null;
+              @endphp
               @foreach($customer->addresses as $address)
                 @php
-                  if($customer->addresses->count() == 1)
-                    $pre_select = true;
-                  else if(Request::has('address'))
-                    $pre_select = request()->address == $address->id;
-                  else
-                    $pre_select = $address->address_type == 'Shipping';
+                  $ship_to_this_address = Null;
+                  if($pre_select == Null){  // If any address not selected yet
+                    if($customer->addresses->count() == 1) {  // Has onely address
+                      $pre_select = 1; $ship_to_this_address = TRUE;
+                    }
+                    elseif(Request::has('address')) { // Just created this address
+                      if(request()->address == $address->id){
+                        $pre_select = 1; $ship_to_this_address = TRUE;
+                      }
+                    }
+                    elseif($cart->ship_to == $address->country_id) {  // Zone selected at cart page
+                      $pre_select = 1; $ship_to_this_address = TRUE;
+                    }
+                    elseif($cart->ship_to == Null && $address->address_type === 'Shipping') {  // Customer's shipping address
+                      $pre_select = 1; $ship_to_this_address = TRUE;
+                    }
+                  }
                 @endphp
 
                 <div class="col-sm-12 col-md-6 nopadding-{{ $loop->iteration%2 == 1 ? 'right' : 'left'}}">
-                  <div class="address-list-item {{ $pre_select ? 'selected' : '' }}">
+                  <div class="address-list-item {{ $ship_to_this_address == true ? 'selected' : '' }}">
                     {!! $address->toHtml('<br/>', false) !!}
-                    <input type="radio" class="ship-to-address" name="ship_to" value="{{$address->id}}" {{ $pre_select ? 'checked' : '' }} required>
+                    <input type="radio" class="ship-to-address" name="ship_to" value="{{$address->id}}" {{ $ship_to_this_address == true ? 'checked' : '' }} data-country="{{$address->country_id}}" required>
                   </div>
                 </div>
                 @if($loop->iteration%2 == 0)

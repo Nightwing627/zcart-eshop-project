@@ -282,10 +282,15 @@ if ( ! function_exists('crosscheckAndUpdateOldCartInfo') )
                 ['shipping_zone_id', '=', $request->zone_id]
             ])->first();
 
-            abort_unless( $shippingRate, 403, trans('theme.notify.seller_doesnt_ship') );
+            // abort_unless( $shippingRate, 403, trans('theme.notify.seller_doesnt_ship') );
 
-            $shipping = $shippingRate->rate;
-            $cart->shipping_rate_id = $request->shipping_rate_id;
+            if($shippingRate){
+                $shipping = $shippingRate->rate;
+                $cart->shipping_rate_id = $request->shipping_rate_id;
+            }
+            else{
+                $cart->shipping_rate_id = Null;
+            }
         }
 
         // Discount

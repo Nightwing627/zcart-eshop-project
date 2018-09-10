@@ -89,7 +89,7 @@
 
 						<div>
 					        <div class="section-title">
-					          <h4>@lang('theme.section_headings.key_features')</h4>
+					          <h4>{!! trans('theme.section_headings.key_features') !!}</h4>
 					        </div>
 							<ul class="key_feature_list">
 								@foreach(unserialize($item->key_features) as $key_feature)
@@ -113,7 +113,7 @@
       		@if($linked_items->count())
 		        <div class="col-md-3 bg-light nopadding-right nopadding-left">
 			        <div class="section-title">
-			          <p class="lead">@lang('theme.section_headings.bought_together'): </p>
+			          <p class="">@lang('theme.section_headings.bought_together'): </p>
 			        </div>
 					<ul class="sidebar-product-list">
 					    @foreach($linked_items as $linkedItem)

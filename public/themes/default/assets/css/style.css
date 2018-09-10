@@ -1985,6 +1985,13 @@ div.datepicker > div {
 .seller-info-opens span{
     color: #009686;
 }
+.product-info .product-info-availability sup{
+  color: #999;
+  margin-left: 5px;
+}
+.product-info .product-info-availability sup .tooltip{
+  min-width: 200px;
+}
 .product-qty-wrapper{
     margin: 0;
     padding: 0;
@@ -2520,6 +2527,11 @@ div.datepicker > div {
   -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.2);
   box-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
+.shopping-cart-table-wrap.selected {
+  padding-top: 10px!important;
+  background-color: #fff4f2!important;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
 .shopping-cart-header-section {
   background-color: #f2f2f2;
   border: 1px solid #ddd;
@@ -2660,6 +2672,9 @@ ul.key_feature_list li{
   padding-right: 10px;
   margin: 0 0 20px;
   z-index: 1;
+}
+.shopping-cart-table-wrap.selected .side-widget h3.side-widget-title span {
+  background-color: #fff4f2!important;
 }
 .side-widget h3.side-widget-title:after {
     content: "";

@@ -1,6 +1,7 @@
 <?php
 
 use App\System;
+use Illuminate\Support\Facades\Auth;
 
 if ( ! function_exists('check_internet_connection') )
 {
@@ -936,7 +937,8 @@ if ( ! function_exists('get_shipping_zone_of') )
                 return $zone;
         }
 
-        return isset($worldwide) ? $worldwide : false;
+        return isset($worldwide) ? $worldwide : new stdClass();
+        // return isset($worldwide) ? $worldwide : false;
     }
 }
 
@@ -1037,9 +1039,12 @@ if ( ! function_exists('getShippingRates') )
             ->with('carrier:id,name')->orderBy('rate', 'asc')->get();
         }
 
+        // Return empty object if zone it is not given and not an user
+        if( ! Auth::guard('web')->check() || Auth::guard('web')->user()->merchantId() ) return new stdClass();
+
         return \DB::table('shipping_zones')
         ->join('shipping_rates', 'shipping_zones.id', 'shipping_rates.shipping_zone_id')
-        ->where('shipping_zones.shop_id', \Auth::user()->merchantId())
+        ->where('shipping_zones.shop_id', \Auth::guard('web')->user()->merchantId())
         ->where('shipping_zones.active', 1)->orderBy('shipping_rates.rate', 'asc')->get();
     }
 }

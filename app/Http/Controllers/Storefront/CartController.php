@@ -13,7 +13,7 @@ use App\ShippingRate;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-// use App\Http\Requests\Validations\UpdateCartRequest;
+use App\Http\Requests\Validations\DirectCheckoutRequest;
 
 class CartController extends Controller
 {
@@ -21,7 +21,7 @@ class CartController extends Controller
      * Display a listing of the resource.
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $expressId = Null)
     {
         $carts = Cart::whereNull('customer_id')->where('ip_address', $request->ip());
 
@@ -41,7 +41,7 @@ class CartController extends Controller
 
         $platformDefaultPackaging = getPlatformDefaultPackaging(); // Get platform's default packaging
 
-        return view('cart', compact('carts','countries','platformDefaultPackaging'));
+        return view('cart', compact('carts','countries','platformDefaultPackaging','expressId'));
     }
 
     /**
@@ -116,19 +116,23 @@ class CartController extends Controller
     }
 
     /**
-     * Direct checkout with single item
+     * Direct checkout with the item/cart
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  str $slug
      *
      * @return \Illuminate\Http\Response
      */
-    public function directCheckout(Request $request, $slug)
+    public function directCheckout(DirectCheckoutRequest $request, $slug)
     {
-        $item = Inventory::where('slug', $slug)->available()->firstOrFail();
+        $cart = $this->addToCart($request, $slug);
 
-        echo "<pre>"; print_r($request->all()); echo "</pre>";
-        echo "<pre>"; print_r($item->toArray()); echo "</pre>"; exit();
+        if (200 == $cart->status())
+            return redirect()->route('cart.index', $cart->getdata()->id);
+        else if (444 == $cart->status())
+            return redirect()->route('cart.index', $cart->getdata()->cart_id);
+
+        return redirect()->back()->with('warning', trans('theme.notify.failed'));
     }
 
     /**
@@ -152,8 +156,8 @@ class CartController extends Controller
 
         // Check if the item is alrealy in the cart
         if($old_cart){
-            $find = \DB::table('cart_items')->where('cart_id', $old_cart->id)->where('inventory_id', $item->id)->first();
-            if($find) return response('Item alrealy in cart', 444);
+            $item_in_cart = \DB::table('cart_items')->where('cart_id', $old_cart->id)->where('inventory_id', $item->id)->first();
+            if($item_in_cart) return response()->json(['cart_id' => $item_in_cart->cart_id], 444);  // Item alrealy in cart
         }
 
         $qtt = $request->quantity ?? $item->min_order_quantity;
@@ -179,7 +183,6 @@ class CartController extends Controller
 
         $cart->save();
 
-
         // Makes item_description field
         $attributes = implode(' - ', $item->attributeValues->pluck('value')->toArray());
         // Prepare pivot data
@@ -195,7 +198,7 @@ class CartController extends Controller
         if (!empty($cart_item_pivot_data))
             $cart->inventories()->syncWithoutDetaching($cart_item_pivot_data);
 
-        return response('Item removed', 200);
+        return response()->json($cart->toArray(), 200);
     }
 
     /**

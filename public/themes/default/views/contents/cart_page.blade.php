@@ -36,18 +36,18 @@
           }
 
           $shipping_zone = get_shipping_zone_of($shop_id, $shipping_country_id, $shipping_state_id);
-
-          $shipping_options = $shipping_zone ? getShippingRates($shipping_zone->id) : 'NaN';
+// echo "<pre>"; print_r($shipping_zone); echo "</pre>"; //exit();
+          $shipping_options = isset($shipping_zone->id) ? getShippingRates($shipping_zone->id) : 'NaN';
 
           $packaging_options = optional($cart->shop)->packagings;
         @endphp
 
-        <div class="row shopping-cart-table-wrap space30" id="cartId{{$cart->id}}" data-cart="{{$cart->id}}">
+        <div class="row shopping-cart-table-wrap space30 {{$expressId == $cart->id ? 'selected' : ''}}" id="cartId{{$cart->id}}" data-cart="{{$cart->id}}">
           {!! Form::model($cart, ['method' => 'PUT', 'route' => ['cart.update', $cart->id], 'id' => 'formId'.$cart->id]) !!}
             {{ Form::hidden('cart_id', $cart->id, ['id' => 'cart-id'.$cart->id]) }}
             {{ Form::hidden('shop_id', $cart->shop->id, ['id' => 'shop-id'.$cart->id]) }}
-            {{ Form::hidden('zone_id', $shipping_zone ? $shipping_zone->id : Null, ['id' => 'zone-id'.$cart->id]) }}
-            {{ Form::hidden('tax_id', $shipping_zone ? $shipping_zone->tax_id : Null, ['id' => 'tax-id'.$cart->id]) }}
+            {{ Form::hidden('zone_id', isset($shipping_zone->id) ? $shipping_zone->id : Null, ['id' => 'zone-id'.$cart->id]) }}
+            {{ Form::hidden('tax_id', isset($shipping_zone->id) ? $shipping_zone->tax_id : Null, ['id' => 'tax-id'.$cart->id]) }}
             {{ Form::hidden('taxrate', Null, ['id' => 'cart-taxrate'.$cart->id]) }}
             {{ Form::hidden('packaging_id', $default_packaging ? $default_packaging->id : Null, ['id' => 'packaging-id'.$cart->id]) }}
             {{ Form::hidden('shipping_rate_id', Null, ['id' => 'shipping-rate-id'.$cart->id]) }}

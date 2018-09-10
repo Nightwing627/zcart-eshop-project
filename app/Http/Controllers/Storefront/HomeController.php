@@ -58,13 +58,11 @@ class HomeController extends Controller
 
         // Filter results
         $products = $all_products->filter($request->all())
-            ->withCount(['feedbacks', 'orders' => function($query){
-                $query->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
-            }])
-            ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])
-            ->paginate(config('system.view_listing_per_page', 16))->appends($request->except('page'));
-
-            // echo "<pre>"; print_r($products->toArray()); echo "</pre>"; exit();
+        ->withCount(['feedbacks', 'orders' => function($query){
+            $query->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
+        }])
+        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])
+        ->paginate(config('system.view_listing_per_page', 16))->appends($request->except('page'));
 
         return view('category', compact('category', 'products', 'brands', 'priceRange'));
     }
@@ -79,14 +77,12 @@ class HomeController extends Controller
     {
         $item = Inventory::where('slug', $slug)->available()->withCount('feedbacks')->firstOrFail();
 
-        $item->load([
-            'product' => function($q){
+        $item->load(['product' => function($q){
                 $q->select('id', 'slug', 'description', 'manufacturer_id')
                 ->withCount(['inventories' => function($query){
                     $query->available();
                 }]);
-            },
-            'attributeValues' => function($q){
+            }, 'attributeValues' => function($q){
                 $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')->with('attribute');
             },
             // 'attributeValues:id,attribute_id,value,color,order',
@@ -131,7 +127,10 @@ class HomeController extends Controller
         ->with([
             'images:path,imageable_id,imageable_type',
             'product' => function($q){
-                $q->select('id', 'slug', 'description')->withCount('inventories');
+                $q->select('id', 'slug', 'description')
+                ->withCount(['inventories' => function($query){
+                    $query->available();
+                }]);
             },
             'attributeValues' => function($q){
                 $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')->with('attribute');
@@ -152,11 +151,9 @@ class HomeController extends Controller
      */
     public function offers($slug)
     {
-        $product = Product::where('slug', $slug)
-        ->with(['inventories' => function($q){
+        $product = Product::where('slug', $slug)->with(['inventories' => function($q){
                 $q->available();
-            },
-            'inventories.attributeValues.attribute',
+            }, 'inventories.attributeValues.attribute',
             'inventories.feedbacks:rating,feedbackable_id,feedbackable_type',
             'inventories.shop.feedbacks:rating,feedbackable_id,feedbackable_type',
             'inventories.shop.image:path,imageable_id,imageable_type',
@@ -173,7 +170,7 @@ class HomeController extends Controller
      */
     public function shop($slug)
     {
-        $shop = Shop::select('id','name','slug','description')->where('slug', $slug)->firstOrFail();
+        $shop = Shop::select('id','name','slug','description')->active()->where('slug', $slug)->firstOrFail();
 
         // Check shop maintenance_mode
         if(getShopConfig($shop->id, 'maintenance_mode'))
@@ -184,7 +181,7 @@ class HomeController extends Controller
         ->withCount(['orders' => function($q){
             $q->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
         }])
-        ->paginate(20);
+        ->active()->paginate(20);
 
         return view('shop', compact('shop', 'products'));
     }
@@ -202,11 +199,14 @@ class HomeController extends Controller
         $ids = Product::where('manufacturer_id', $brand->id)->pluck('id');
 
         $products = Inventory::whereIn('product_id', $ids)->filter(request()->all())
+        ->whereHas('shop', function($q) {
+            $q->select(['id', 'current_billing_plan', 'active'])->active();
+        })
         ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])
         ->withCount(['orders' => function($q){
             $q->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
         }])
-        ->paginate(20);
+        ->active()->paginate(20);
 
         return view('brand', compact('brand', 'products'));
     }
