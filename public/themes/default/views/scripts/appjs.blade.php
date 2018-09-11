@@ -184,11 +184,18 @@
         // Add-to-cart
         $(".sc-add-to-cart").on("click", function(e) {
             e.preventDefault();
-            var qtt = $(this).closest('.sc-product-item').find('input.product-info-qty-input').val();
+            var item = $(this).closest('.sc-product-item');
+            var qtt = item.find('input.product-info-qty-input').val();
+            var shipTo = item.find('select#shipTo').val();
+            var shippingZoneId = item.find('input#shipping-zone-id').val();
+            var shippingRateId = item.find('input#shipping-rate-id').val();
             $.ajax({
                 url: $(this).attr('href'),
                 type: 'POST',
                 data: {
+                    'shipTo' : shipTo,
+                    'shippingZoneId' : shippingZoneId,
+                    'shippingRateId' : shippingRateId,
                     'quantity': qtt ? qtt : 1
                 },
                 complete: function (xhr, textStatus) {
@@ -393,6 +400,12 @@
     }
 }(window.jQuery, window, document));
 
+// Helpers
+function getFormatedValue(value = 0, dec = {{config('system_settings.decimals', 2)}})
+{
+    value = value ? value : 0;
+    return parseFloat(value).toFixed(dec);
+}
 
 // Update global cart item count
 function increaseCartItem(value = 1)
@@ -412,6 +425,7 @@ function setCartItemCount(value = 0)
     jQuery('#globalCartItemCount').text(value);
     return;
 }
+
 function apply_busy_filter(dom = 'body') {
     jQuery(dom).addClass('busy');
     jQuery('#loading').show();

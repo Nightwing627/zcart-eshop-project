@@ -1,3 +1,11 @@
+@php
+	$shipping_country_id = get_id_of_model('countries', 'iso_3166_2', $geoip->iso_code);
+	$shipping_state_id = $geoip->state;
+
+	$shipping_zone = get_shipping_zone_of($item->shop_id, $shipping_country_id, $shipping_state_id);
+	$shipping_options = isset($shipping_zone->id) ? getShippingRates($shipping_zone->id) : 'NaN';
+@endphp
+
 <section>
 	<div class="container">
 		<div class="row sc-product-item">
@@ -39,22 +47,65 @@
 				              		@endforeach --}}
 				              	</div><!-- /.row .select-box-wrapper -->
 
-				              	<div class="space10"></div>
+				              	{{-- <div class="space10"></div> --}}
 
-				              	<dir class="product-qty-wrapper">
-				                  	<p>@lang('theme.quantity'):</p>
-				                  	<div class="product-info-qty-item">
-				                      	<button class="product-info-qty product-info-qty-minus">-</button>
-				                      	<input class="product-info-qty product-info-qty-input" data-name="product_quantity" data-min="{{$item->min_order_quantity}}" data-max="{{$item->stock_quantity}}" type="text" value="{{$item->min_order_quantity}}">
-				                      	<button class="product-info-qty product-info-qty-plus">+</button>
-					                </div>
-				                  	<span class="available-qty-count">@lang('theme.stock_count', ['count' => $item->stock_quantity])</span>
-				              	</dir>
+			                  	<div class="row">
+								  	<div class="col-sm-3 col-xs-6">
+			    	              		<span class="info-label" data-options="{{ $shipping_options }}" id="shipping-options" >@lang('theme.shipping'):</span>
+							            {{ Form::hidden('shipping_zone_id', Null, ['id' => 'shipping-zone-id']) }}
+							            {{ Form::hidden('shipping_rate_id', Null, ['id' => 'shipping-rate-id']) }}
+									</div>
+								  	<div class="col-sm-9 col-xs-6 nopadding-left">
+				                        <div id="product-info-shipping-detail">
+				                            <span id="summary-shipping-cost" data-value="0"></span>
+				                            <span>
+				                            	{{ strtolower(trans('theme.to')) }}
+						                      	<select name="ship_to" class="ship_to" id="shipTo">
+												    @foreach($countries as $country_id => $country_name)
+														<option value="{{$country_id}}" {{$country_id == $shipping_country_id ? 'selected' : ''}}>{{$country_name}}</option>
+												    @endforeach
+						                      	</select>
+												<select id="width_tmp_select"><option id="width_tmp_option"></option></select>
+				                            </span>
+
+									  		<span class="dynamic-shipping-rates" data-toggle="popover" title= "{{ trans('theme.shipping_options') }}">
+					                            <span id="summary-shipping-carrier"></span>
+					                            <small><i class="fa fa-caret-square-o-down"></i></small>
+									  		</span>
+								  		</div>
+								  		<small class="text-muted" id="delivery-time"></small>
+					              	</div><!-- /.col-sm-9 .col-xs-6 -->
+				              	</div><!-- /.row -->
+
+			                  	<div class="row">
+								  	<div class="col-sm-3 col-xs-6">
+			    	              		<span class="info-label qtt-label">@lang('theme.quantity'):</span>
+									</div>
+								  	<div class="col-sm-9 col-xs-6 nopadding">
+						              	<div class="product-qty-wrapper">
+						                  	<div class="product-info-qty-item">
+						                      	<button class="product-info-qty product-info-qty-minus">-</button>
+						                      	<input class="product-info-qty product-info-qty-input" data-name="product_quantity" data-min="{{$item->min_order_quantity}}" data-max="{{$item->stock_quantity}}" type="text" value="{{$item->min_order_quantity}}">
+						                      	<button class="product-info-qty product-info-qty-plus">+</button>
+							                </div>
+						                  	<span class="available-qty-count">@lang('theme.stock_count', ['count' => $item->stock_quantity])</span>
+						              	</div>
+					              	</div><!-- /.col-sm-9 .col-xs-6 -->
+			                  	</div>
+
+			                  	<div class="row" id="order-total-row">
+								  	<div class="col-sm-3 col-xs-6">
+			    	              		<span class="info-label">@lang('theme.total'):</span>
+									</div>
+								  	<div class="col-sm-9 col-xs-6 nopadding">
+			                            <span id="summary-total" class="text-muted">{{ trans('theme.notify.will_calculated_on_select') }}</span>
+					              	</div><!-- /.col-sm-9 .col-xs-6 -->
+				              	</div><!-- /.row -->
 				          	</div><!-- /.product-option -->
 
 				          	<div class="sep"></div>
 
- 				          	<a href="{{ route('direct.checkout', $item->slug) }}" class="btn btn-lg btn-warning flat"><i class="fa fa-rocket"></i> @lang('theme.button.buy_now')</a>
+ 				          	<a href="{{ route('direct.checkout', $item->slug) }}" class="btn btn-lg btn-warning flat" id="buy-now-btn"><i class="fa fa-rocket"></i> @lang('theme.button.buy_now')</a>
 
  				          	@if($item->product->inventories_count > 1)
 						        <a href="{{ route('show.offers', $item->product->slug) }}" class="btn btn-sm btn-link">

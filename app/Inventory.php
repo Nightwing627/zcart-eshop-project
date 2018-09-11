@@ -71,7 +71,6 @@ class Inventory extends Model
                         'free_shipping',
                         'available_from',
                         'min_order_quantity',
-                        // 'alert_quantity',
                         'linked_items',
                         'slug',
                         'meta_title',

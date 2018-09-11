@@ -161,7 +161,7 @@
 
                 <p class="text-info small">
                   <i class="fa fa-info-circle"></i>
-                  @lang('theme.help.create_account_on_checkout', ['link' => get_page_url(\App\Page::PAGE_TNC_FOR_CUSTOMER)])
+                  {!! trans('theme.help.create_account_on_checkout', ['link' => get_page_url(\App\Page::PAGE_TNC_FOR_CUSTOMER)]) !!}
                 </p>
               </div>
 

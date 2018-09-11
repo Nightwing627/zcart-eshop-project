@@ -112,7 +112,10 @@ class HomeController extends Controller
         if( ! $linked_items->count() )
             $linked_items = $related->random($related->count() >= 3 ? 3 : $related->count());
 
-        return view('product', compact('item', 'variants', 'attributes', 'item_attrs', 'related', 'linked_items'));
+        $geoip = geoip(request()->ip()); // Set the location of the user
+        $countries = ListHelper::countries(); // Country list for shop_to dropdown
+
+        return view('product', compact('item', 'variants', 'attributes', 'item_attrs', 'related', 'linked_items', 'geoip', 'countries'));
     }
 
     /**

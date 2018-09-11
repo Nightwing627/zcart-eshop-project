@@ -227,7 +227,20 @@
 			        	options + apply_btn +
 			        '</div>';
 			}
-		});
+		}).on('mouseenter', function () {
+            var _this = this;
+            $(this).popover('show');
+            $('.popover').on('mouseleave', function () {
+                $(_this).popover('hide');
+            });
+        }).on('mouseleave', function () {
+            var _this = this;
+            setTimeout(function () {
+                if (!$('.popover:hover').length) {
+                    $(_this).popover('hide');
+                }
+            }, 100);
+        });
 
 		$('a.dynamic-shipping-rates').popover({
 			html: true,
@@ -259,15 +272,22 @@
 				return '<div class="popover-form" id="shipping-options-popover" data-cart="'+ cart +'">'+
 			        options + apply_btn + '</div>';
 			}
-		});
+		}).on('mouseenter', function () {
+            var _this = this;
+            $(this).popover('show');
+            $('.popover').on('mouseleave', function () {
+                $(_this).popover('hide');
+            });
+        }).on('mouseleave', function () {
+            var _this = this;
+            setTimeout(function () {
+                if (!$('.popover:hover').length) {
+                    $(_this).popover('hide');
+                }
+            }, 100);
+        });
 
 	    // Functions
-	    function getFormatedValue(value = 0)
-	    {
-        	value = value ? value : 0;
-        	return parseFloat(value).toFixed(2);
-      	}
-
       	function getShippingOptions(cart)
       	{
 			var totalPrice  = getOrderTotal(cart);

@@ -244,18 +244,13 @@ hr.style5 { border-top: 2px dashed #8c8b8b; }
 hr.style6 { border-top: 2px dotted #8c8b8b; }
 hr.muted { border-color: #d3d3d3!important; }
 
-.space10 {
-    margin-bottom: 10px !important;
-}
-.space20 {
-    margin-bottom: 20px !important;
-}
-.space30 {
-    margin-bottom: 30px !important;
-}
-.space50 {
-    margin-bottom: 50px !important;
-}
+.indent10 { margin-left: 10px !important; }
+.indent20 { margin-left: 20px !important; }
+
+.space10 { margin-bottom: 10px !important; }
+.space20 { margin-bottom: 20px !important; }
+.space30 { margin-bottom: 30px !important; }
+.space50 { margin-bottom: 50px !important; }
 @media (min-width: 1200px){
     .container {
         width: 95%;
@@ -1970,7 +1965,17 @@ div.datepicker > div {
 }
 .product-single .product-info-price{
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 9px;
+}
+.product-single .product-info-price .percent-off{
+  margin-left: 10px;
+  padding: 4px 7px;
+  color: #fff;
+  background-color: #d6644a;
+  font-size: 0.5em;
+  font-weight: 100;
+  line-height: 0.5em;
+  text-transform: uppercase;
 }
 .product-info .btn-link{
     padding-left: 0px;
@@ -2005,9 +2010,9 @@ div.datepicker > div {
 }
 .product-info-qty {
   background: #fff;
-  height: 39px;
-  width: 39px;
-  line-height: 39px;
+  height: 33px;
+  width: 33px;
+  line-height: 33px;
   float: left;
   display: block;
   text-align: center;
@@ -2020,17 +2025,51 @@ div.datepicker > div {
 .product-info-qty-input {
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
-  width: 50px;
+  width: 45px;
 }
 .product-qty-wrapper .available-qty-count{
     margin-left: 10px;
-    line-height: 39px;
+    line-height: 33px;
     vertical-align: middle;
     font-style: italic;
     color: #767676 !important;
 }
-.product-single .product-info-options{
-    margin: 20px 0 30px;
+.product-single .product-info-options {
+  /*padding: 10px 0;*/
+}
+.product-single .product-info-options .row {
+  margin-bottom: 15px;
+}
+
+.product-single .product-info-options .row#order-total-row span{
+  line-height: 21px;
+  font-weight: 400;
+}
+.product-single .product-info-options #product-info-shipping-detail,
+.product-single .product-info-options .info-label {
+  font-size: 14px;
+}
+.product-single .product-info-options .qtt-label {
+  line-height: 33px;
+}
+.product-single .product-info-options select.ship_to {
+  display: inline;
+  width: 40%;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px dotted #999;
+  border-radius: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-overflow: '';
+}
+.product-single .product-info-options select.ship_to::-ms-expand {
+  display: none;
+}
+.product-single .product-info-options select.ship_to:focus {
+  outline: none;
 }
 .product-info-options .color-option {
     width: 26px;
@@ -2082,8 +2121,8 @@ div.datepicker > div {
   margin-bottom: 3px;
   padding: 0;
   overflow: hidden;
-  font-size: 19px;
-  line-height: 19px;
+  font-size: 17px;
+  line-height: 17px;
   min-height: 21px;
   color: #767676;
 }
@@ -2233,6 +2272,19 @@ div.datepicker > div {
 }
 /****** End Product Widget ******/
 
+#width_tmp_select {
+  display : none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.dynamic-shipping-rates {
+  cursor: pointer;
+}
+.dynamic-shipping-rates i.fa-caret-square-o-down {
+  color: #999;
+  margin-left: 3px;
+}
 /****** Product Zoom ******/
 .zoomPad {
   position: relative;
@@ -2548,7 +2600,12 @@ div.datepicker > div {
   display: inline-block;
 }
 .shopping-cart-item-table .product-info-qty-item {
-  zoom: 0.75!important;
+  zoom: 0.85!important;
+}
+@media (max-width: 992px) {
+  .shopping-cart-item-table .product-info-qty-item {
+    zoom: 0.50!important;
+  }
 }
 .shopping-cart-item-table > tfoot > tr > td,
 .shopping-cart-item-table > thead > tr > th {
@@ -2699,6 +2756,9 @@ ul.key_feature_list li{
 }
 .popover #shipping-options-popover {
   /*margin: 0px -5px;*/
+}
+.popover #item-shipping-options-table {
+  min-width: 430px;
 }
 .popover-form table tr:last-child {
   border-bottom: 1px solid #ddd;
