@@ -306,7 +306,8 @@ hr.muted { border-color: #d3d3d3!important; }
 }
 .breadcrumb>li+li:before{
     padding: 0 2px;
-    content: "›\00a0";
+    content: "/\00a0";
+    /*content: "›\00a0";*/
     zoom: 1.25;
 }
 .nav-tabs {
@@ -1285,18 +1286,28 @@ div.datepicker > div {
     /*overflow: hidden;*/
 }
 .section-title h4{
-    display: inline-block;
-    position: relative;
-    font-size: 19px;
-    font-weight: 400;
-    color: #555;
-    padding: 0px 20px;
+  display: inline-block;
+  position: relative;
+  font-size: 19px;
+  font-weight: 400;
+  color: #555;
+  padding: 0px 20px;
 }
 .section-title h4.small{
     font-size: 16px;
 }
 .section-title .text-primary {
     color: #009686 !important;
+}
+
+.modal-content .section-title {
+  display: inline-block;
+  position: relative;
+  font-size: 17px;
+  font-weight: 400;
+  color: #555;
+  padding: 0px;
+  margin: 0;
 }
 
 /* *** Seller Info Widget*** */
@@ -1953,7 +1964,7 @@ div.datepicker > div {
 .product-info-price > span.old-price {
     font-size: 16px !important;
     font-weight: lighter;
-    margin-right: 7px;
+    /*margin-right: 7px;*/
     color: #879596 !important;
     text-decoration: line-through !important;
 }
@@ -1964,10 +1975,12 @@ div.datepicker > div {
   margin-bottom: 0;
 }
 .product-single .product-info-price{
+  font-family: 'Roboto', Tahoma, Arial, helvetica, sans-serif;
   margin-top: 5px;
   margin-bottom: 9px;
 }
-.product-single .product-info-price .percent-off{
+.product-info-price .percent-off{
+  display: none;
   margin-left: 10px;
   padding: 4px 7px;
   color: #fff;
@@ -1977,24 +1990,34 @@ div.datepicker > div {
   line-height: 0.5em;
   text-transform: uppercase;
 }
+.product-single .product-info-price .percent-off {
+  display: unset;
+}
+table .product-info-price .percent-off {
+  display: block;
+  padding: 7px;
+  margin: 7px;
+}
 .product-info .btn-link{
     padding-left: 0px;
 }
 .product-info .product-info-availability,
+.product-info .product-info-condition,
 .product-single .product-info-options,
 .seller-info-opens{
     font-size: 13px;
     color: #555;
 }
 .product-info .product-info-availability span,
+.product-info .product-info-condition span,
 .seller-info-opens span{
     color: #009686;
 }
-.product-info .product-info-availability sup{
+.product-info .product-info-condition sup{
   color: #999;
   margin-left: 5px;
 }
-.product-info .product-info-availability sup .tooltip{
+.product-info .product-info-condition sup .tooltip{
   min-width: 200px;
 }
 .product-qty-wrapper{
@@ -2011,7 +2034,7 @@ div.datepicker > div {
 .product-info-qty {
   background: #fff;
   height: 33px;
-  width: 33px;
+  width: 32px;
   line-height: 33px;
   float: left;
   display: block;
@@ -2040,7 +2063,12 @@ div.datepicker > div {
 .product-single .product-info-options .row {
   margin-bottom: 15px;
 }
-
+.modal-content .product-single .product-info-options .row {
+  margin-bottom: 10px;
+}
+.product-single .product-info-options .product-attribute .color-options {
+  /*line-height: 24px;*/
+}
 .product-single .product-info-options .row#order-total-row span{
   line-height: 21px;
   font-weight: 400;
@@ -2052,7 +2080,10 @@ div.datepicker > div {
 .product-single .product-info-options .qtt-label {
   line-height: 33px;
 }
-.product-single .product-info-options select.ship_to {
+.product-single .product-info-options .row.product-attribute {
+  margin-bottom: 20px;
+}
+.product-single #calculation-section select.ship_to {
   display: inline;
   width: 40%;
   background-color: transparent;
@@ -2065,10 +2096,10 @@ div.datepicker > div {
   -moz-appearance: none;
   text-overflow: '';
 }
-.product-single .product-info-options select.ship_to::-ms-expand {
+.product-single #calculation-section select.ship_to::-ms-expand {
   display: none;
 }
-.product-single .product-info-options select.ship_to:focus {
+.product-single #calculation-section select.ship_to:focus {
   outline: none;
 }
 .product-info-options .color-option {
@@ -2099,17 +2130,17 @@ div.datepicker > div {
   box-shadow: 0 1px 1px rgba(0,0,0,0.3);
 }
 .share a {
-    width: 28px;
-    height: 28px;
-    background: #444;
-    font-size: 14px;
-    border-radius: 3px;
-    line-height: 28px;
-    text-align: center;
-    color: #FFF;
-    display: inline-block;
-    margin-right: 5px;
-    text-decoration: none;
+  width: 27px;
+  height: 27px;
+  background: #444;
+  font-size: 16px;
+  border-radius: 3px;
+  line-height: 27px;
+  text-align: center;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: 3px;
 }
 .share a:hover {
     color: #FFF;
@@ -2599,8 +2630,9 @@ div.datepicker > div {
 .shopping-cart-item-table .shopping-cart-item-title {
   display: inline-block;
 }
+.modal-content .product-info-qty-item,
 .shopping-cart-item-table .product-info-qty-item {
-  zoom: 0.85!important;
+  zoom: 0.8!important;
 }
 @media (max-width: 992px) {
   .shopping-cart-item-table .product-info-qty-item {

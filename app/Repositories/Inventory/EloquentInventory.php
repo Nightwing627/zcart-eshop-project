@@ -61,7 +61,6 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
 
     public function storeWithVariant(Request $request)
     {
-        // echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
         $product = json_decode($request->input('product'));
         // Common informations
         $commonInfo['user_id'] = $request->user()->id; //Set user_id

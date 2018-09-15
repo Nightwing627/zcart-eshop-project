@@ -180,7 +180,7 @@
         <div class="col-md-4">
             <h3 class="widget-title">{{ trans('theme.payment_options') }}</h3>
             @php
-              $activeManualPaymentMethods = $shop->config->manualPaymentMethods;
+              $activeManualPaymentMethods = $shop->manualPaymentMethods;
             @endphp
 
             <div class="space30">
@@ -188,12 +188,12 @@
                 @php
                   switch ($payment_provider->code) {
                     case 'stripe':
-                      $has_config = $shop->config->stripe ? TRUE : FALSE;
+                      $has_config = $shop->stripe ? TRUE : FALSE;
                       $info = trans('theme.notify.we_dont_save_card_info');
                       break;
 
                     case 'paypal-express':
-                      $has_config = $shop->config->paypalExpress ? TRUE : FALSE;
+                      $has_config = $shop->paypalExpress ? TRUE : FALSE;
                       $info = trans('theme.notify.you_will_be_redirected_to_paypal');
                       break;
 

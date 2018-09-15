@@ -18,7 +18,7 @@
       	</div>
   	</div>
   	<div class="col-sm-6 col-xs-12 nopadding-left">
-      	<div class="product-info-availability space10">
+      	<div class="product-info-condition space10">
 
           @lang('theme.condition'): <span><b>{{ $item->condition }}</b></span>
 

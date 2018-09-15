@@ -6,4 +6,3 @@
 	Route::put('cart/{cart}', 'CartController@update')->name('cart.update');
 	Route::get('cart/{cart}/checkout', 'CartController@checkout')->name('cart.checkout');
 	Route::get('checkout/{slug}', 'CartController@directCheckout')->name('direct.checkout');
-	Route::post('order/{cart}', 'OrderController@create')->name('order.create');

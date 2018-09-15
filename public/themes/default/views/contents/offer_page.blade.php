@@ -23,7 +23,7 @@
     <table class="table" id="buyer-payment-detail-table">
         <thead>
             <tr>
-                <th width="10%">@lang('theme.price')</th>
+                <th width="12%">@lang('theme.price')</th>
                 <th width="23%">@lang('theme.condition')</th>
                 <th>@lang('theme.attributes')</th>
                 <th>@lang('theme.seller')</th>
@@ -49,7 +49,7 @@
                         <span class="small">
                             @include('layouts.ratings', ['ratings' => $offer->feedbacks->avg('rating'), 'count' => $offer->feedbacks->count()])
                         </span>
-                        <ul>
+                        <ul class="list-inline">
                             @foreach($offer->attributeValues as $attributeValue)
                                 <li class="small">
                                     <span class="text-muted small">{{ $attributeValue->attribute->name }}: </span>

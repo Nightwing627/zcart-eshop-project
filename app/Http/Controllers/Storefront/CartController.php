@@ -129,7 +129,8 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        abort_unless( crosscheckCartOwnership($request, $cart), 403, 'Unauthorized.' );
+        if( !crosscheckCartOwnership($request, $cart) )
+                return redirect()->route('cart.index')->with('warning', trans('theme.notify.please_login_to_checkout'));
 
         $cart = crosscheckAndUpdateOldCartInfo($request, $cart);
 
@@ -144,13 +145,10 @@ class CartController extends Controller
      */
     public function checkout(Request $request, Cart $cart)
     {
-        // Skip upadting cart info if the request came from cart as its already updated.
-        if( !empty($request->all()) ){
-            if( !crosscheckCartOwnership($request, $cart) )
-                return redirect()->route('cart.index')->with('warning', trans('theme.notify.please_login_to_checkout'));
+        if( !crosscheckCartOwnership($request, $cart) )
+            return redirect()->route('cart.index')->with('warning', trans('theme.notify.please_login_to_checkout'));
 
-            $cart = crosscheckAndUpdateOldCartInfo($request, $cart);
-        }
+        $cart = crosscheckAndUpdateOldCartInfo($request, $cart);
 
         $shop = Shop::where('id', $cart->shop_id)->active()->with(['paymentMethods' => function($q){
             $q->active();

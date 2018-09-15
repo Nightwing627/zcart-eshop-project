@@ -684,7 +684,7 @@ if ( ! function_exists('get_formated_price') )
     {
         $price = get_formated_currency($value, $decimal);
 
-        $arr = explode(config('system_settings.currency.decimal_mark', '.'), $price);
+        $arr = explode( config('system_settings.currency.decimal_mark', '.'), $price );
 
         if(isset($arr[1]))
             return $arr[1] > 0 ? $arr[0] . '<sup class="price-fractional">' . $arr[1] .'</sup>' : $arr[0];
@@ -793,8 +793,8 @@ if ( ! function_exists('generate_ranges') )
 
 if ( ! function_exists('get_percentage_of') )
 {
-    function get_percentage_of($org_num, $new_num){
-        return get_formated_decimal((($org_num - $new_num)*100) / $org_num) ;
+    function get_percentage_of($old_num, $new_num){
+        return get_formated_decimal((($old_num - $new_num)*100) / $old_num) ;
     }
 }
 

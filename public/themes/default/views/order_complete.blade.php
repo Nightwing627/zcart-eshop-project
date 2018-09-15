@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- HEADER SECTION -->
-    {{-- @include('headers.order_detail') --}}
+    @include('headers.order_detail')
 
     <!-- CONTENT SECTION -->
 	@include('contents.order_complete')

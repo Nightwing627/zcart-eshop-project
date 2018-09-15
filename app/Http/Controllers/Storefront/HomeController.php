@@ -83,9 +83,8 @@ class HomeController extends Controller
                     $query->available();
                 }]);
             }, 'attributeValues' => function($q){
-                $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')->with('attribute');
+                $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')->with('attribute:id,name,attribute_type_id,order');
             },
-            // 'attributeValues:id,attribute_id,value,color,order',
             'feedbacks.customer:id,nice_name,name',
             'images:path,imageable_id,imageable_type',
         ]);
@@ -104,6 +103,8 @@ class HomeController extends Controller
         ->with(['attributeValues' => function($query) use ($attr_pivots) {
             $query->whereIn('id', $attr_pivots->pluck('attribute_value_id'))->orderBy('order');
         }])->orderBy('order')->get();
+
+        $variants = $variants->toJson(JSON_HEX_QUOT);
 
         // TEST
         $related = ListHelper::related_products($item);
@@ -130,13 +131,13 @@ class HomeController extends Controller
         ->with([
             'images:path,imageable_id,imageable_type',
             'product' => function($q){
-                $q->select('id', 'slug', 'description')
+                $q->select('id', 'slug')
                 ->withCount(['inventories' => function($query){
                     $query->available();
                 }]);
             },
             'attributeValues' => function($q){
-                $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')->with('attribute');
+                $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')->with('attribute:id,name,attribute_type_id');
             },
         ])
         ->withCount('feedbacks')->firstOrFail();
@@ -184,7 +185,7 @@ class HomeController extends Controller
         ->withCount(['orders' => function($q){
             $q->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
         }])
-        ->active()->paginate(20);
+        ->available()->paginate(20);
 
         return view('shop', compact('shop', 'products'));
     }

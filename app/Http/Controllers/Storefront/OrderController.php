@@ -99,6 +99,9 @@ class OrderController extends Controller
      */
     public function paymentSuccess(Request $request, $order)
     {
+        if ( ! $request->has('token') ||  ! $request->has('paymentId') || ! $request->has('PayerID') )
+            return redirect()->route("payment.failed", $order);
+
         if( !$order instanceOf Order )
             $order = Order::find($order);
 
@@ -123,6 +126,9 @@ class OrderController extends Controller
      */
     public function paymentFailed(Request $request, $order)
     {
+        if ( ! $request->has('token') )
+            return redirect()->route('cart.index');
+
         $cart = $this->revertOrder($order);
 
         return redirect()->route('cart.checkout', $cart)->with('error', trans('theme.notify.payment_failed'))->withInput();

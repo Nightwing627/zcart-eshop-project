@@ -284,14 +284,14 @@ class Shop extends Model
         return $this->hasOne(ConfigPaypalExpress::class, 'shop_id')->withDefault();
     }
 
-   // /**
-   //   * Get the manualPaymentMethods for the shop.
-   //   */
-   //  public function manualPaymentMethods()
-   //  {
-   //      return $this->belongsToMany(PaymentMethod::class, 'config_manual_payments', 'shop_id', 'payment_method_id')
-   //      ->withPivot('additional_details', 'payment_instructions')->withTimestamps();
-   //  }
+   /**
+     * Get the manualPaymentMethods for the shop.
+     */
+    public function manualPaymentMethods()
+    {
+        return $this->belongsToMany(PaymentMethod::class, 'config_manual_payments', 'shop_id', 'payment_method_id')
+        ->withPivot('additional_details', 'payment_instructions')->withTimestamps();
+    }
 
     /**
      * Get the timezone the shop.

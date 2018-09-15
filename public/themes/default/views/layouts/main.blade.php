@@ -7,6 +7,9 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="author" content="Munna Khan">
+        @if(isset($item))
+            <meta property="og:image" content="{{ get_product_img_src($item, 'large') }}">
+        @endif
         <title> {{ get_platform_title() }} </title>
         <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon" />
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">

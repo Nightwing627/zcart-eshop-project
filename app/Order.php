@@ -393,17 +393,18 @@ class Order extends Model
     public function paymentStatusName()
     {
         switch ($this->payment_status) {
-            case static::PAYMENT_STATUS_UNPAID: return '<span class="label label-danger">' . strtoupper(trans('app.statuses.unpaid')) . '</span>';
-
-            case static::PAYMENT_STATUS_PENDING: return '<span class="label label-info">' . strtoupper(trans('app.statuses.pending')) . '</span>';
-
-            case static::PAYMENT_STATUS_PAID: return '<span class="label label-outline">' . strtoupper(trans('app.statuses.paid')) . '</span>';
-
-            case static::PAYMENT_STATUS_INITIATED_REFUND:  return '<span class="label label-info">' . strtoupper(trans('app.statuses.refund_initiated')) . '</span>';
-
-            case static::PAYMENT_STATUS_PARTIALLY_REFUNDED: return '<span class="label label-info">' . strtoupper(trans('app.statuses.partially_refunded')) . '</span>';
-
-            case static::PAYMENT_STATUS_REFUNDED: return '<span class="label label-danger">' . strtoupper(trans('app.statuses.refunded')) . '</span>';
+            case static::PAYMENT_STATUS_UNPAID:
+                return '<span class="label label-danger">' . strtoupper(trans('app.statuses.unpaid')) . '</span>';
+            case static::PAYMENT_STATUS_PENDING:
+                return '<span class="label label-info">' . strtoupper(trans('app.statuses.pending')) . '</span>';
+            case static::PAYMENT_STATUS_PAID:
+                return '<span class="label label-outline">' . strtoupper(trans('app.statuses.paid')) . '</span>';
+            case static::PAYMENT_STATUS_INITIATED_REFUND:
+                return '<span class="label label-info">' . strtoupper(trans('app.statuses.refund_initiated')) . '</span>';
+            case static::PAYMENT_STATUS_PARTIALLY_REFUNDED:
+                return '<span class="label label-info">' . strtoupper(trans('app.statuses.partially_refunded')) . '</span>';
+            case static::PAYMENT_STATUS_REFUNDED:
+                return '<span class="label label-danger">' . strtoupper(trans('app.statuses.refunded')) . '</span>';
         }
     }
 }

@@ -45,7 +45,7 @@ class Role extends Model
     {
         parent::boot();
 
-        if(Auth::check() && ! Auth::user()->isSuperAdmin() ){
+        if(Auth::guard('web')->check() && ! Auth::guard('web')->user()->isSuperAdmin() ){
             static::addGlobalScope(new RoleScope);
         }
     }
@@ -55,7 +55,7 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->hasMany('App\User');
+        return $this->hasMany(User::class);
     }
 
     /**
@@ -63,7 +63,7 @@ class Role extends Model
      */
     public function permissions()
     {
-        return $this->belongsToMany('App\Permission')->withTimestamps();
+        return $this->belongsToMany(Permission::class)->withTimestamps();
     }
 
     /**
@@ -83,13 +83,13 @@ class Role extends Model
      */
     public function isLowerPrivileged($role = Null)
     {
-        if (!Auth::user()->role->level)
+        if (!Auth::guard('web')->user()->role->level)
             return $this->level == Null;
 
         if ($role)
-             return $role->level == Null || $role->level > Auth::user()->role->level;
+             return $role->level == Null || $role->level > Auth::guard('web')->user()->role->level;
 
-         return $this->level == Null || $this->level > Auth::user()->role->level;
+         return $this->level == Null || $this->level > Auth::guard('web')->user()->role->level;
     }
 
     /**
@@ -109,17 +109,17 @@ class Role extends Model
      */
     public function scopeLowerPrivileged($query)
     {
-        if (Auth::user()->isFromPlatform()){
-            if (Auth::user()->role->level)
-                return $query->whereNull('level')->orWhere('level', '>', Auth::user()->role->level);
+        if (Auth::guard('web')->user()->isFromPlatform()){
+            if (Auth::guard('web')->user()->role->level)
+                return $query->whereNull('level')->orWhere('level', '>', Auth::guard('web')->user()->role->level);
 
             return $query->whereNull('level');
         }
 
-        if (Auth::user()->role->level)
-            return $query->where('shop_id', Auth::user()->merchantId())->whereNull('level')->orWhere('level', '>', Auth::user()->role->level);
+        if (Auth::guard('web')->user()->role->level)
+            return $query->where('shop_id', Auth::guard('web')->user()->merchantId())->whereNull('level')->orWhere('level', '>', Auth::guard('web')->user()->role->level);
 
-        return $query->where('shop_id', Auth::user()->merchantId())->whereNull('level');
+        return $query->where('shop_id', Auth::guard('web')->user()->merchantId())->whereNull('level');
     }
 
     /**
@@ -149,6 +149,6 @@ class Role extends Model
      */
     public function scopeMine($query)
     {
-        return $query->where('shop_id', Auth::user()->merchantId());
+        return $query->where('shop_id', Auth::guard('web')->user()->merchantId());
     }
 }

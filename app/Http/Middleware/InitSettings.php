@@ -31,12 +31,12 @@ class InitSettings
                 Auth::onceUsingId(Request::session()->get('impersonated'));
 
             // If the user from the platform then no need to set shop settings
-            if( ! Auth::user()->isFromPlatform() && Auth::user()->merchantId()){
+            if( ! Auth::guard('web')->user()->isFromPlatform() && Auth::guard('web')->user()->merchantId()){
 
                 // $shop_settings = ListHelper::shop_settings();
                 // config()->set('shop_settings', $shop_settings);
 
-                setShopConfig(Auth::user()->merchantId());
+                setShopConfig(Auth::guard('web')->user()->merchantId());
 
                 // Some extra permissions for vendor users in platform modules
                 // $extra_permissions = ['reply_ticket'];

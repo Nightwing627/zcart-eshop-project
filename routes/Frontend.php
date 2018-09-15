@@ -6,7 +6,13 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
    // Auth route for customers
 	include('storefront/Auth.php');
 	include('storefront/Cart.php');
+	include('storefront/Order.php');
 	include('storefront/GiftCard.php');
+
+	Route::middleware(['auth:customer'])->group(function () {
+		include('storefront/Account.php');
+		include('storefront/Feedback.php');
+	});
 
 	Route::get('/', 'HomeController@index')->name('homepage');
 	Route::get('page/{page}', 'HomeController@openPage')->name('page.open');
@@ -18,17 +24,6 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 	Route::get('shop/{slug}', 'HomeController@shop')->name('show.store');
 	Route::get('brand/{slug}', 'HomeController@brand')->name('show.brand');
 	Route::get('search', 'SearchController@search')->name('inCategoriesSearch');
-
-	// PayPal
-	Route::get('paymentSuccess/{order}', 'OrderController@paymentSuccess')->name('payment.success');
-	Route::get('paymentFailed/{order}', 'OrderController@paymentFailed')->name('payment.failed');
-	Route::get('order/{order}/success', 'OrderController@orderPlaced')->name('order.success');
-
-	Route::middleware(['auth:customer'])->group(function () {
-		include('storefront/Account.php');
-		include('storefront/Order.php');
-		include('storefront/Feedback.php');
-	});
 });
 
 // Route for merchant landing theme

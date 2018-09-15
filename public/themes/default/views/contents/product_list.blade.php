@@ -4,7 +4,6 @@
     @foreach($products as $item)
         <div class="col-md-3">
             <div class="product product-grid-view sc-product-item">
-
                 <ul class="product-info-labels">
                     @if($item->orders_count >= config('system.popular.hot_item.sell_count', 3))
                         <li>@lang('theme.hot_item')</li>
@@ -68,5 +67,5 @@
 <div class="sep"></div>
 
 <div class="row pagenav-wrapper">
-  {{ $products->links('layouts.pagination') }}
+    {{ $products->links('layouts.pagination') }}
 </div><!-- /.row .pagenav-wrapper -->

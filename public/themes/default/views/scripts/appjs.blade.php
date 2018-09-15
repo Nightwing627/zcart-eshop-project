@@ -71,12 +71,20 @@
             });
         });
 
+        $("#buy-now-btn").on("click", function(e) {
+            apply_busy_filter('body');
+        });
+
         // Item Quick View Modal
         $(".itemQuickView").on("click", function(e) {
             e.preventDefault();
+            apply_busy_filter('body');
+
             var url = $(this).attr('href');
             $.get(url, function(data) {
-                $('#quickViewModal').modal().html(data);
+                remove_busy_filter('body');
+
+                $('#quickViewModal').html(data).modal();
 
                 //Initialize application plugins after ajax load the content
                 if (typeof initAppPlugins == 'function') {
@@ -405,6 +413,21 @@ function getFormatedValue(value = 0, dec = {{config('system_settings.decimals', 
 {
     value = value ? value : 0;
     return parseFloat(value).toFixed(dec);
+}
+
+function getFormatedPrice(value = 0, trim = true)
+{
+    var symbol = '';
+    if ('{{config('system_settings.show_currency_symbol')}}')
+        symbol = '{{ config('system_settings.currency.symbol') . (config('system_settings.show_space_after_symbol') ? ' ' : '') }}';
+
+    var value = getFormatedValue(value);
+    var arr = value.split(".");
+
+    if(arr[1])
+        value = arr[1] > 0 ? arr[0] + '<sup class="price-fractional">' + arr[1] + '</sup>' : arr[0];
+
+    return symbol + value;
 }
 
 // Update global cart item count

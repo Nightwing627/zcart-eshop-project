@@ -383,7 +383,7 @@ class ListHelper
      */
     public static function authorizations(User $user = null)
     {
-        $user = $user ?: Auth::user(); //Get current user
+        $user = $user ?: Auth::guard('web')->user(); //Get current user
 
         if($user->isSuperAdmin()){
             return [];
@@ -609,7 +609,7 @@ class ListHelper
      */
     public static function variants_of_product($item, $shop = Null)
     {
-        $variants = Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
+        $variants = Inventory::select('id','slug','title','stock_quantity','condition','sale_price','offer_price','offer_start','offer_end','min_order_quantity')
         ->where('product_id', $item->product_id)->available();
 
         if($shop)
