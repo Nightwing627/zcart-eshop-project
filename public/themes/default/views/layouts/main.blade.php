@@ -14,7 +14,7 @@
         <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon" />
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
         <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}">
-        <link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
 
         <link href="{{ theme_asset_url('css/vendor.css') }}" rel="stylesheet">
