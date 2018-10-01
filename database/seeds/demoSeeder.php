@@ -18,12 +18,19 @@ class demoSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Visitor::class, $this->veryLongCount)->create();
+        // factory(App\Role::class, $this->tinycount)->create();
 
-        factory(App\Role::class, $this->tinycount)->create();
-
-        factory(App\User::class, $this->longCount)
-            ->create()
+        factory(App\User::class, 1)
+            ->create([
+                'id' => 2,
+                'shop_id' => Null,
+                'role_id' => \App\Role::ADMIN,
+                'nice_name' => 'Admin',
+                'name' => 'Admin User',
+                'email' => 'admin@demo.com',
+                'password' => bcrypt('123456'),
+                'active' => 1,
+            ])
             ->each(function($user){
                 $user->dashboard()->save(factory(App\Dashboard::class)->make());
 
@@ -32,8 +39,17 @@ class demoSeeder extends Seeder
                 );
             });
 
-        factory(App\Merchant::class, $this->longCount)
-            ->create()
+        factory(App\Merchant::class, 1)
+            ->create([
+                'id' => 3,
+                'shop_id' => 1,
+                'role_id' => \App\Role::MERCHANT,
+                'nice_name' => 'Merchant',
+                'name' => 'Merchant User',
+                'email' => 'merchant@demo.com',
+                'password' => bcrypt('123456'),
+                'active' => 1,
+            ])
             ->each(function($merchant){
                 $merchant->dashboard()->save(factory(App\Dashboard::class)->make());
 
@@ -42,63 +58,73 @@ class demoSeeder extends Seeder
                 );
             });
 
+        $this->call('ShopsSeeder');
+
         // Demo customers with real text
-        DB::table('customers')->insert([
-            [
-                'id' => 1,
+        // DB::table('customers')->insert([
+        //     [
+        //         'id' => 1,
+        //         'nice_name' => 'CustomerOne',
+        //         'name' => 'Customer One',
+        //         'email' => 'customer1@demo.com',
+        //         'sex' => 'app.male',
+        //         'password' => bcrypt('123456'),
+        //         'active' => 1,
+        //         'created_at' => Carbon::Now(),
+        //         'updated_at' => Carbon::Now(),
+        //     ]
+        // ]);
+        // DB::table('addresses')->insert([
+        //     [
+        //         'address_type' => 'Primary',
+        //         'addressable_type' => 'App\Customer',
+        //         'addressable_id' => 1,
+        //         'address_title' => 'Customer One',
+        //         'state_id' => 1221,
+        //         'country_id' => 840,
+        //         'created_at' => Carbon::Now(),
+        //         'updated_at' => Carbon::Now(),
+        //     ],[
+        //         'address_type' => 'Shipping',
+        //         'addressable_type' => 'App\Customer',
+        //         'addressable_id' => 1,
+        //         'address_title' => 'Customer One',
+        //         'state_id' => 1221,
+        //         'country_id' => 840,
+        //         'created_at' => Carbon::Now(),
+        //         'updated_at' => Carbon::Now(),
+        //     ],[
+        //         'address_type' => 'Billing',
+        //         'addressable_type' => 'App\Customer',
+        //         'addressable_id' => 1,
+        //         'address_title' => 'Billing Address',
+        //         'state_id' => 1221,
+        //         'country_id' => 840,
+        //         'created_at' => Carbon::Now(),
+        //         'updated_at' => Carbon::Now(),
+        //     ]
+        // ]);
+
+        factory(App\Customer::class, 1)
+            ->create([
                 'nice_name' => 'CustomerOne',
                 'name' => 'Customer One',
                 'email' => 'customer1@demo.com',
+                'password' => bcrypt('123456'),
                 'sex' => 'app.male',
-                'password' => bcrypt('123456'),
                 'active' => 1,
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'id' => 2,
-                'nice_name' => 'CustomerTwo',
-                'name' => 'Customer Two',
-                'email' => 'customer2@demo.com',
-                'sex' => 'app.female',
-                'password' => bcrypt('123456'),
-                'active' => 1,
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ]
-        ]);
-        DB::table('addresses')->insert([
-            [
-                'address_type' => 'Primary',
-                'addressable_type' => 'App\Customer',
-                'addressable_id' => 1,
-                'address_title' => 'Primary Address',
-                'state_id' => 1221,
-                'country_id' => 840,
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'address_type' => 'Primary',
-                'addressable_type' => 'App\Customer',
-                'addressable_id' => 2,
-                'address_title' => 'Primary Address',
-                'state_id' => 1221,
-                'country_id' => 840,
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ]
-        ]);
-
-        factory(App\Customer::class, $this->longCount)
-            ->create()
+            ])
             ->each(function($customer){
                 $customer->addresses()->save(factory(App\Address::class)->make(['address_title' => $customer->name, 'address_type' => 'Primary']));
                 $customer->addresses()->save(factory(App\Address::class)->make(['address_type' => 'Billing']));
                 $customer->addresses()->save(factory(App\Address::class)->make(['address_type' => 'Shipping']));
             });
 
-        factory(App\Manufacturer::class, $this->count)->create();
+        $this->call('CategoriesSeeder');
 
-        factory(App\Supplier::class, $this->longCount)
+        factory(App\Manufacturer::class, $this->tinycount)->create();
+
+        factory(App\Supplier::class, $this->tinycount)
             ->create()
             ->each(function($supplier){
                 $supplier->addresses()->save(factory(App\Address::class)->make(['address_title' => $supplier->name, 'address_type' => 'Primary']));
@@ -106,65 +132,26 @@ class demoSeeder extends Seeder
 
         factory(App\Product::class, $this->longCount)->create();
 
-        factory(App\Shop::class, $this->count)
-            ->create()
-            ->each(function($shop){
-                $shop->addresses()->save(factory(App\Address::class)->make(['address_title' => $shop->name, 'address_type' => 'Primary']));
-                $shop->config()->save(factory(App\Config::class)->make());
-                $shop->shippingZones()->save(factory(App\ShippingZone::class)->make());
-                $shop->shippingZones()->create(
-                    [
-                        'name' => 'Worldwide',
-                        'tax_id' => rand(1, 31),
-                        'country_ids' => [],
-                        'state_ids' => [],
-                        'rest_of_the_world' => true,
-                        'created_at' => Carbon::Now(),
-                        'updated_at' => Carbon::Now(),
-                    ]
-                );
-            });
+        // factory(App\Shop::class, $this->count)
+        //     ->create()
+        //     ->each(function($shop){
+        //         $shop->addresses()->save(factory(App\Address::class)->make(['address_title' => $shop->name, 'address_type' => 'Primary']));
+        //         $shop->config()->save(factory(App\Config::class)->make());
+        //         $shop->shippingZones()->save(factory(App\ShippingZone::class)->make());
+        //         $shop->shippingZones()->create(
+        //             [
+        //                 'name' => 'Worldwide',
+        //                 'tax_id' => rand(1, 31),
+        //                 'country_ids' => [],
+        //                 'state_ids' => [],
+        //                 'rest_of_the_world' => true,
+        //                 'created_at' => Carbon::Now(),
+        //                 'updated_at' => Carbon::Now(),
+        //             ]
+        //         );
+        //     });
 
-        // Demo SubscriptionPlan with real text
-        DB::table('subscription_plans')->insert([
-            [
-                'name' => 'Individual',
-                'plan_id' => 'individual',
-                'cost' => 9,
-                'transaction_fee' => 2.5,
-                'marketplace_commission' => 3,
-                'team_size' => 1,
-                'inventory_limit' => 20,
-                'featured' => false,
-                'order' => 1,
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'name' => 'Business',
-                'plan_id' => 'business',
-                'cost' => 29,
-                'transaction_fee' => 1.9,
-                'marketplace_commission' => 2.5,
-                'team_size' => 5,
-                'inventory_limit' => 200,
-                'featured' => true,
-                'order' => 2,
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'name' => 'Professional',
-                'plan_id' => 'professional',
-                'cost' => 49,
-                'transaction_fee' => 1,
-                'marketplace_commission' => 1.5,
-                'team_size' => 10,
-                'inventory_limit' => 500,
-                'featured' => false,
-                'order' => 3,
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ]
-        ]);
+        $this->call('SlidersSeeder');
 
         // Demo Categories with real text
         DB::table('category_groups')->insert([
@@ -291,29 +278,31 @@ class demoSeeder extends Seeder
 
         // factory(App\CategoryGroup::class, $this->count)->create();
 
-        factory(App\CategorySubGroup::class, $this->longCount)->create();
+        factory(App\CategorySubGroup::class, $this->count)->create();
 
-        factory(App\Category::class, $this->longLongCount)->create();
+        factory(App\Category::class, $this->longCount)->create();
 
-        factory(App\AttributeValue::class, $this->longLongCount)->create();
+        factory(App\AttributeValue::class, $this->longCount)->create();
 
-        factory(App\Warehouse::class, $this->longCount)
+        factory(App\Warehouse::class, 1)
             ->create()
             ->each(function($warehouse){
                 $warehouse->addresses()->save(factory(App\Address::class)->make(['address_title' => $warehouse->name, 'address_type' => 'Primary']));
             });
 
-        factory(App\Tax::class, $this->longCount)->create();
+        factory(App\ShippingRate::class, $this->count)->create();
 
-        factory(App\Carrier::class, $this->longCount)->create();
+        factory(App\Tax::class, $this->count)->create();
 
-        factory(App\Packaging::class, $this->longCount)->create();
+        factory(App\Carrier::class, $this->count)->create();
 
-        factory(App\Inventory::class, $this->longLongCount)->create();
+        factory(App\Packaging::class, $this->count)->create();
 
-        factory(App\Order::class, $this->longLongCount)->create();
+        factory(App\Inventory::class, $this->longCount)->create();
 
-        factory(App\Dispute::class, $this->count)->create();
+        factory(App\Order::class, $this->count)->create();
+
+        factory(App\Dispute::class, 3)->create();
 
         factory(App\Blog::class, $this->tinycount)->create();
 
@@ -321,17 +310,15 @@ class demoSeeder extends Seeder
 
         factory(App\Tag::class, $this->longCount)->create();
 
-        factory(App\GiftCard::class, $this->longCount)->create();
+        // factory(App\GiftCard::class, $this->count)->create();
 
-        factory(App\Coupon::class, $this->veryLongCount)->create();
+        factory(App\Coupon::class, $this->longCount)->create();
 
-        factory(App\Message::class, $this->longCount)->create();
+        factory(App\Message::class, $this->count)->create();
 
-        factory(App\Ticket::class, $this->longCount)->create();
+        factory(App\Ticket::class, $this->tinycount)->create();
 
         factory(App\Reply::class, $this->veryLongCount)->create();
-
-        factory(App\ShippingRate::class, $this->longLongCount)->create();
 
         //PIVOT TABLE SEEDERS
 
@@ -370,7 +357,7 @@ class demoSeeder extends Seeder
         }
 
         // attribute_inventory
-        foreach ((range(1, $this->veryLongCount)) as $index) {
+        foreach ((range(1, $this->longCount)) as $index) {
             $attribute_id = $attributes[array_rand($attributes)];
             $attribute_values = \DB::table('attribute_values')->where('attribute_id', $attribute_id)->pluck('id')->toArray();
             DB::table('attribute_inventory')->insert(
@@ -430,16 +417,16 @@ class demoSeeder extends Seeder
         }
 
         // user_warehouse
-        foreach ((range(1, $this->longCount)) as $index) {
-            DB::table('user_warehouse')->insert(
-                [
-                    'warehouse_id' => $warehouses[array_rand($warehouses)],
-                    'user_id' => $users[array_rand($users)],
-                    'created_at' => Carbon::Now(),
-                    'updated_at' => Carbon::Now(),
-                ]
-            );
-        }
+        // foreach ((range(1, $this->longCount)) as $index) {
+        //     DB::table('user_warehouse')->insert(
+        //         [
+        //             'warehouse_id' => $warehouses[array_rand($warehouses)],
+        //             'user_id' => $users[array_rand($users)],
+        //             'created_at' => Carbon::Now(),
+        //             'updated_at' => Carbon::Now(),
+        //         ]
+        //     );
+        // }
 
         // foreach ((range(1, 30)) as $index) {
         //     DB::table('taggables')->insert(
@@ -452,7 +439,7 @@ class demoSeeder extends Seeder
         // }
 
         // coupon_customers
-        foreach ((range(1, $this->veryLongCount)) as $index) {
+        foreach ((range(1, $this->count)) as $index) {
             DB::table('coupon_customer')->insert(
                 [
                     'coupon_id' => $coupons[array_rand($coupons)],
@@ -489,7 +476,11 @@ class demoSeeder extends Seeder
             'group_id' => 'bottom'
         ]);
 
-        factory(App\Wishlist::class, $this->veryLongCount)->create();
-        factory(App\Feedback::class, $this->veryLongCount)->create();
+        factory(App\Wishlist::class, $this->count)->create();
+        factory(App\Feedback::class, $this->longCount)->create();
+
+        $this->call('EmailTemplateSeeder');
+
+        factory(App\Visitor::class, $this->longLongCount)->create();
     }
 }

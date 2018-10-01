@@ -368,6 +368,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if the user has outrange generic plan
+     *
+     * @return bool
+     */
+    public function hasExpiredOnGenericTrial()
+    {
+        return $this->shop->trial_ends_at && $this->shop->trial_ends_at->isPast();
+    }
+
+    /**
      * Check if the user is subscribed
      *
      * @return bool

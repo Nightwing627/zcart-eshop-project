@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Product::class, function (Faker $faker) {
     return [
-        'shop_id' => rand(0, 1) ? rand(1, 15) : Null,
+        'shop_id' => rand(0, 1) ? 1 : Null,
         'manufacturer_id' => $faker->randomElement(\DB::table('manufacturers')->pluck('id')->toArray()),
         'brand' => $faker->word,
         'name' => $faker->sentence,

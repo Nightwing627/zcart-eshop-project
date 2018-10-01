@@ -128,7 +128,7 @@ class Inventory extends Model
      */
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->withDefault();
     }
 
     /**
@@ -136,7 +136,7 @@ class Inventory extends Model
      */
     public function supplier()
     {
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsTo(Supplier::class)->withDefault();
     }
 
     // public function manufacturer()
@@ -177,8 +177,7 @@ class Inventory extends Model
     public function attributes()
     {
         return $this->belongsToMany(Attribute::class, 'attribute_inventory')
-                    ->withPivot('attribute_value_id')
-                    ->withTimestamps();
+        ->withPivot('attribute_value_id')->withTimestamps();
     }
 
     /**
@@ -187,8 +186,7 @@ class Inventory extends Model
     public function attributeValues()
     {
         return $this->belongsToMany(AttributeValue::class, 'attribute_inventory')
-                    ->withPivot('attribute_id')
-                    ->withTimestamps();
+        ->withPivot('attribute_id')->withTimestamps();
     }
 
     /**
@@ -197,8 +195,7 @@ class Inventory extends Model
     public function carts()
     {
         return $this->belongsToMany(Cart::class, 'cart_items')
-                    ->withPivot('item_description', 'quantity', 'unit_price')
-                    ->withTimestamps();
+        ->withPivot('item_description', 'quantity', 'unit_price')->withTimestamps();
     }
 
     /**

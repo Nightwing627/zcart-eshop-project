@@ -130,6 +130,8 @@ return [
     'shipping_range_maximum_min' => 'Maximum range can\'t be less than minimum value',
     'csv_mimes'                => 'The :attribute must be a file of type csv.',
     'import_data_required' => 'The dataset is not valid to import. Please check your data and try again.',
+    'do_action_required'    => 'You didn\'t provide the input.',
+    'do_action_invalid'    => 'The given input is not valid.',
 
     /*
     |--------------------------------------------------------------------------

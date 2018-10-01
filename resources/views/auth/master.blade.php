@@ -50,6 +50,12 @@
           </div>
       @endif
 
+      @if (Session::has('message'))
+          <div class="alert alert-success">
+            {{ Session::get('message') }}
+          </div>
+      @endif
+
       <div class="login-logo">
         <a href="{{ url('/') }}">{{ get_site_title() }}</a>
       </div>

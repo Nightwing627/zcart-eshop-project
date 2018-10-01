@@ -14,7 +14,7 @@
 <a href="{{ $tracking_url }}" target="_blank">{{ trans('messages.tracking_id') }}</a>: {{ $order_detail->tracking_id }}<br/>
 @endif
 <br/>
-{!! trans('messages.shipping_address') . ': ' . $order_detail->shippingAddress->toString() !!}<br/><br/>
-{!! trans('messages.billing_address') . ': ' . $order_detail->billingAddress->toString() !!}<br/>
+{!! trans('messages.shipping_address') . ': ' . $order_detail->shipping_address !!}<br/><br/>
+{!! trans('messages.billing_address') . ': ' . $order_detail->billing_address !!}<br/>
 @endcomponent
 <br/>

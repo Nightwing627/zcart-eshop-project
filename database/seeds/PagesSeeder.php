@@ -95,7 +95,7 @@ class PagesSeeder extends Seeder
                 'author_id' => \App\Role::SUPER_ADMIN,
                 'title' => 'Career',
                 'slug' => 'career',
-                'content' => 'Job post',
+                'content' => 'Job posts',
                 'visibility' => \App\Page::VISIBILITY_PUBLIC,
                 'published_at' => Carbon::now(),
                 'position' => 'footer_2nd_column',

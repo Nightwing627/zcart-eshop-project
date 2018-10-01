@@ -44,8 +44,9 @@ class SystemConfigUpdated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.system_config_updated.subject', ['marketplace' => get_platform_title()]) )
-                    ->markdown('admin.mail.system.config_updated', ['url' => route('admin.setting.system.config'), 'system' => $this->system]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.system_config_updated.subject', ['marketplace' => get_platform_title()]) )
+        ->markdown('admin.mail.system.config_updated', ['url' => route('admin.setting.system.config'), 'system' => $this->system]);
     }
 
     /**

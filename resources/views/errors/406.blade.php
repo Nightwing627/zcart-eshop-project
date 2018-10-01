@@ -37,13 +37,17 @@
                 margin-top: 20px;
                 margin-bottom: 40px;
             }
+            .brand-logo {
+              max-width: 140px;
+              max-height: 50px;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
                 <a href="{{ url('/') }}">
-                    <img src="{{ asset('images/logo.png') }}" alt="LOGO" title="LOGO" />
+                    <img src="{{ asset('images/logo.png') }}" class="brand-logo" alt="LOGO" title="LOGO" />
                 </a>
                 <div class="title">{{ $exception->getMessage() ?? trans('theme.shop_down') }}</div>
                 <a href="{{ url()->previous() }}">@lang('theme.button.go_back')</a>

@@ -51,8 +51,9 @@ class DisputeAppealed extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.dispute_appealed.subject', ['order_id' => $this->reply->repliable->order->order_number]) )
-                    ->markdown('admin.mail.super_admin.dispute_appealed', ['url' => route('admin.support.dispute.show', $this->reply->repliable_id), 'reply' => $this->reply]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.dispute_appealed.subject', ['order_id' => $this->reply->repliable->order->order_number]) )
+        ->markdown('admin.mail.super_admin.dispute_appealed', ['url' => route('admin.support.dispute.show', $this->reply->repliable_id), 'reply' => $this->reply]);
     }
 
     /**

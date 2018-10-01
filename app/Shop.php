@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use App\SubscriptionPlan;
 use App\Common\Billable;
 use App\Common\Loggable;
@@ -399,7 +400,12 @@ class Shop extends Model
      */
     public function scopeActive($query)
     {
-        return $query->where('active', 1)->whereNotNull('current_billing_plan')
+        return $query->where('active', 1)->where(function($q) {
+            $q->whereNotNull('current_billing_plan')
+            ->where(function($x) {
+                $x->whereNull('trial_ends_at')->orWhere('trial_ends_at', '>', Carbon::now());
+            });
+        })
         ->whereHas('config', function ($q) {
             $q->live();
         })

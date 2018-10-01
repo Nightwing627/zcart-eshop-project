@@ -46,9 +46,9 @@ class Replied extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->from(get_sender_email($this->reply->repliable->shop_id), get_sender_name($this->reply->repliable->shop_id))
-                    ->subject( trans('notifications.message_replied.subject', ['user' => $this->reply->user->getName(), 'subject' => $this->reply->repliable->subject]) )
-                    ->markdown('admin.mail.message.replied', ['url' => route('admin.support.message.show', $this->reply->repliable_id), 'reply' => $this->reply, 'receiver' => $this->receiver]);
+        ->from(get_sender_email($this->reply->repliable->shop_id), get_sender_name($this->reply->repliable->shop_id))
+        ->subject( trans('notifications.message_replied.subject', ['user' => $this->reply->user->getName(), 'subject' => $this->reply->repliable->subject]) )
+        ->markdown('admin.mail.message.replied', ['url' => route('admin.support.message.show', $this->reply->repliable_id), 'reply' => $this->reply, 'receiver' => $this->receiver]);
     }
 
     /**

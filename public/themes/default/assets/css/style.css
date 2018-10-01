@@ -129,6 +129,22 @@ ul, li {
     list-style: none;
     padding: 0;
 }
+#global-announcement {
+  font-family: helvetica;
+  padding: 11px;
+  color: #e3e3e3;
+  line-height: 1.2em;
+  font-weight: lighter;
+  text-align: center;
+  letter-spacing: 1px;
+  background-color: #555;
+  border: thin solid #d6644a;
+}
+#global-announcement p {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
 #global-wrapper{
     width: 100%;
     min-height: 100%;
@@ -730,7 +746,7 @@ div.datepicker > div {
 }
 .navbar-main .navbar-nav > li:hover > a {
     background: #fff;
-    color: #486d97;
+    color: #FF4747;
 }
 .navbar-main .navbar-nav > li.open > a {
   background: #2b415b !important;
@@ -755,7 +771,7 @@ div.datepicker > div {
 }
 .navbar-brand > img {
   max-width: 120px;
-  max-height: 50px;
+  max-height: 40px;
 }
 .navbar-item-mergin-top {
   margin-top: 12px;
@@ -817,13 +833,13 @@ div.datepicker > div {
   }
 }
 .navbar-light .dropdown-menu {
-  border-top: 2px solid #486d97;
+  border-top: 2px solid #FF4747;
   box-shadow: 0 0 1px rgba(0,0,0,0.3);
   -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.3);
 }
 .navbar-light .navbar-nav > li:hover > a {
   color: #fff;
-  background: #486d97;
+  background: #FF4747;
 }
 .navbar-light .navbar-search {
   -webkit-box-shadow: 0 0 0 1px #d9d9d9;
@@ -941,8 +957,9 @@ div.datepicker > div {
   background: #fff;
 }
 .category-section-inner {
-  position: relative;
+  position: absolute;
   height: 100%;
+  width: 100%;
 }
 .category-section-content {
   position: relative;
@@ -1086,7 +1103,7 @@ div.datepicker > div {
 }
 .navbar-light .navbar-search-submit {
     color: #fff;
-    background: #486d97;
+    background: #FF4747;
     cursor: pointer;
 }
 .dropdown-menu>li>a.btn-primary {
@@ -1205,7 +1222,7 @@ div.datepicker > div {
   margin-top: 0px;
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  color: #b5b5b5;
+  color: #666;
 }
 .ei-slider-thumbs{
     height: 3px;
@@ -2598,7 +2615,7 @@ table .product-info-price .percent-off {
   font-weight: lighter;
   padding: 3px 9px;
   letter-spacing: 1px;
-  background-color: #d6644a;
+  background-color: #FF4747;
 }
 .selectBoxIt.ship_to {
   width: 250px!important;

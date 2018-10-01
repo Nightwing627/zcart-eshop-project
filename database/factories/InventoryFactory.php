@@ -6,7 +6,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Inventory::class, function (Faker $faker) {
     $num = $faker->randomFloat($nbMaxDecimals = NULL, $min = 100, $max = 400);
     return [
-        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
+        'shop_id' => 1,
         'title' => $faker->sentence,
         'brand' => $faker->randomElement(\DB::table('manufacturers')->pluck('name')->toArray()),
         'sku' => $faker->word,
@@ -18,7 +18,7 @@ $factory->define(App\Inventory::class, function (Faker $faker) {
         'damaged_quantity' => 0,
         'product_id' => $faker->randomElement(\DB::table('products')->pluck('id')->toArray()),
         'supplier_id' => $faker->randomElement(\DB::table('suppliers')->pluck('id')->toArray()),
-        'user_id' => $faker->randomElement(\DB::table('users')->pluck('id')->toArray()),
+        'user_id' => 3,
         'purchase_price' => $num,
         'sale_price' => $num+rand(50, 200),
         'offer_price' => rand(1, 0) ? $num+rand(1, 49) : Null,

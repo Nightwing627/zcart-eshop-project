@@ -24,12 +24,12 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		include('admin/Billing.php');
 	});
 
+	Route::get('secretLogout', 'DashboardController@secretLogout')->name('secretLogout');
 	Route::middleware(['subscribed'])->group(function () {
 		// Dashboard
 		Route::put('dashboard/config/{node}/toggle', 'DashboardController@toggleConfig')->name('dashboard.config.toggle')->middleware('ajax');
 		Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard')->middleware('dashboard');
 		Route::get('secretLogin/{user}', 'DashboardController@secretLogin')->name('user.secretLogin');
-		Route::get('secretLogout', 'DashboardController@secretLogout')->name('secretLogout');
 
 		include('admin/Notification.php');
 

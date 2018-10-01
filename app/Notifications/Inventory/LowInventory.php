@@ -41,8 +41,9 @@ class LowInventory extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.low_inventory_notification.subject') )
-                    ->markdown('admin.mail.inventory.low_inventory_notification', ['url' => url('admin/stock/inventory')]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.low_inventory_notification.subject') )
+        ->markdown('admin.mail.inventory.low_inventory_notification', ['url' => url('admin/stock/inventory')]);
     }
 
     /**

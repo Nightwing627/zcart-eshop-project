@@ -44,8 +44,9 @@ class ShopDownForMaintainace extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.shop_down_for_maintainace.subject') )
-                    ->markdown('admin.mail.shop.down_for_maintainace', ['url' => route('admin.setting.config.general'), 'shop' => $this->shop]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.shop_down_for_maintainace.subject') )
+        ->markdown('admin.mail.shop.down_for_maintainace', ['url' => route('admin.setting.config.general'), 'shop' => $this->shop]);
     }
 
     /**
@@ -57,7 +58,7 @@ class ShopDownForMaintainace extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user' => auth()->user()->getName(),
+            // 'user' => auth()->user()->getName(),
             'name' => $this->shop->name,
             'status' => trans('messages.shop_down_for_maintainace'),
         ];

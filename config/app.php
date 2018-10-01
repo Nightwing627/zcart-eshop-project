@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'zCart'),
 
     /*
     |--------------------------------------------------------------------------
@@ -173,7 +173,7 @@ return [
         'Intervention\Image\ImageServiceProvider',
         'Laracasts\Flash\FlashServiceProvider',
         Laravel\Scout\ScoutServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+        // Barryvdh\Debugbar\ServiceProvider::class,
         Ixudra\Curl\CurlServiceProvider::class,
         Anouar\Paypalpayment\PaypalpaymentServiceProvider::class,
 

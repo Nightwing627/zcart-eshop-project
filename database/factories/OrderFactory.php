@@ -7,12 +7,13 @@ $factory->define(App\Order::class, function (Faker $faker) {
     $num = $faker->randomFloat($nbMaxDecimals = NULL, $min = 100, $max = 400);
     $num1 = $faker->randomFloat($nbMaxDecimals = NULL, $min = 100, $max = 400);
     $num2 = rand(1,9);
-    $customer_id = $faker->randomElement(\DB::table('customers')->pluck('id')->toArray());
+    // $customer_id = $faker->randomElement(\DB::table('customers')->pluck('id')->toArray());
+    $customer_id = 1;
     // $billing_address = \DB::table('addresses')->where('addressable_type', 'App\Customer')->where('addressable_id', $customer_id)->first()->id;
     $billing_address = App\Address::where('addressable_type', 'App\Customer')->where('addressable_id', $customer_id)->first()->toHtml('<br/>', false);
 
     return [
-        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
+        'shop_id' => 1,
         'order_number' => '#' . str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT),
         'customer_id' => $customer_id,
         'shipping_rate_id' => $faker->randomElement(\DB::table('shipping_rates')->pluck('id')->toArray()),

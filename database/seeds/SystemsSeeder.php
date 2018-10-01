@@ -13,8 +13,8 @@ class SystemsSeeder extends Seeder
     public function run()
     {
         DB::table('systems')->insert([
-            'name' => 'Incevio',
-            'legal_name' => 'Incevio Inc.',
+            'name' => 'zCart',
+            'legal_name' => 'Zcart Inc.',
             'email' => 'notify@demo.com',
             // 'description' => 'Etc marketplace.',
             'support_email' => 'support@demo.com',
@@ -68,7 +68,7 @@ class SystemsSeeder extends Seeder
 
         DB::table('addresses')->insert([
             'address_type' => 'Primary',
-            'address_line_1' => 'Demo Platform Address',
+            'address_line_1' => 'Platform Address',
             'state_id' => 806,
             'zip_code' => 63585,
             'country_id' => 604,

@@ -44,8 +44,9 @@ class Registered extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.customer_registered.subject', ['marketplace' => get_platform_title()]) )
-                    ->markdown('admin.mail.customer.welcome', ['url' => route('customer.verify', $this->customer->verification_token), 'customer' => $this->customer]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.customer_registered.subject', ['marketplace' => get_platform_title()]) )
+        ->markdown('admin.mail.customer.welcome', ['url' => route('customer.verify', $this->customer->verification_token), 'customer' => $this->customer]);
     }
 
     /**

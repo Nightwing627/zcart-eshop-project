@@ -70,7 +70,7 @@ class CharttHelper
 		if(!$start)
 			$start = Carbon::today();
 
-		$dateRange = static::Days($days, 'F-d', $start);
+		$dateRange = static::Days($days, 'M-d', $start);
 
         $sales = Order::select('total', 'created_at')
         			->mine()->withTrashed() //Include the arcived orders also

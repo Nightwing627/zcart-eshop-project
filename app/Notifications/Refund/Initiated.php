@@ -44,9 +44,9 @@ class Initiated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->from(get_sender_email($this->refund->shop_id), get_sender_name($this->refund->shop_id))
-                    ->subject( trans('notifications.refund_initiated.subject', ['order' => $this->refund->order->order_number]) )
-                    ->markdown('admin.mail.refund.initiated', ['refund' => $this->refund]);
+        ->from(get_sender_email($this->refund->shop_id), get_sender_name($this->refund->shop_id))
+        ->subject( trans('notifications.refund_initiated.subject', ['order' => $this->refund->order->order_number]) )
+        ->markdown('admin.mail.refund.initiated', ['refund' => $this->refund]);
     }
 
     /**

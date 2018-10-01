@@ -19,6 +19,9 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
+
+        //The Application Middlewares
+        \App\Http\Middleware\CheckForInstallation::class,
     ];
 
     /**
@@ -37,7 +40,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
             //The Application Middlewares
-            \App\Http\Middleware\InitSettings::class,
+            \App\Http\Middleware\InitSettings::class, //This need to be here
         ],
 
         'api' => [

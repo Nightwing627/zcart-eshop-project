@@ -36,12 +36,16 @@
                 margin-top: 20px;
                 margin-bottom: 40px;
             }
+            .brand-logo {
+              max-width: 140px;
+              max-height: 50px;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <img src="{{ asset('images/logo.png') }}" alt="LOGO" title="LOGO" />
+                <img src="{{ asset('images/logo.png') }}" class="brand-logo" alt="LOGO" title="LOGO"/>
                 <div class="title">@lang('app.marketplace_down')</div>
             </div>
         </div>

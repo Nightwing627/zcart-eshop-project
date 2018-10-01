@@ -44,8 +44,9 @@ class SystemIsLive extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.system_is_live.subject', ['marketplace' => get_platform_title()]) )
-                    ->markdown('admin.mail.system.is_live', ['url' => route('login'), 'system' => $this->system]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.system_is_live.subject', ['marketplace' => get_platform_title()]) )
+        ->markdown('admin.mail.system.is_live', ['url' => route('login'), 'system' => $this->system]);
     }
 
     /**

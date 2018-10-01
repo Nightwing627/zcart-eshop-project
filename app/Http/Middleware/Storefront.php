@@ -35,11 +35,13 @@ class Storefront
 
         //Supply important data to all views if not ajax request
         if( ! $request->ajax() ){
+            // View::share('active_announcement', ListHelper::activeAnnouncement());
             View::share('all_categories', ListHelper::categoriesForTheme());
             View::share('search_category_list', ListHelper::search_categories());
             View::share('recently_viewed_items', ListHelper::recentlyViewedItems());
             View::share('featured_categories', ListHelper::hot_categories());
             View::share('pages', ListHelper::pages(\App\Page::VISIBILITY_PUBLIC));
+            session(['global_announcement' => ListHelper::activeAnnouncement()]);
         }
 
         return $next($request);

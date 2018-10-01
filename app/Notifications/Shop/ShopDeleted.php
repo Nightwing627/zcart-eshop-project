@@ -44,8 +44,9 @@ class ShopDeleted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.shop_deleted.subject', ['marketplace' => get_platform_title()]) )
-                    ->markdown('admin.mail.shop.deleted');
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.shop_deleted.subject', ['marketplace' => get_platform_title()]) )
+        ->markdown('admin.mail.shop.deleted');
     }
 
     /**

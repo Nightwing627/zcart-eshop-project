@@ -271,7 +271,7 @@
 														@endif
 													</td>
 											        <td>{{ $order->created_at->diffForHumans() }}</td>
-													<td>{{ $order->customer->name }}</td>
+													<td>{{ optional($order->customer)->name }}</td>
 													<td>{{ get_formated_currency($order->grand_total )}}</td>
 													<td>{!! $order->paymentStatusName() !!}</td>
 													<td>
@@ -328,7 +328,7 @@
 														<img src="{{ get_storage_file_url(optional($inventory->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 													</td>
 													<td>{{ $inventory->sku }}</td>
-													<td>{{ $inventory->product->name }}</td>
+													<td>{{ optional($inventory->product)->name }}</td>
 													<td>
 														@if(($inventory->offer_price > 0) && ($inventory->offer_end > \Carbon\Carbon::now()))
 															<?php $offer_price_help =
@@ -391,7 +391,7 @@
 														<img src="{{ get_storage_file_url(optional($inventory->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 													</td>
 													<td>{{ $inventory->sku }}</td>
-													<td>{{ $inventory->product->name }}</td>
+													<td>{{ optional($inventory->product)->name }}</td>
 													<td class="qtt-{{$inventory->id}}">{{ ($inventory->stock_quantity > 0) ? $inventory->stock_quantity : trans('app.out_of_stock') }}</td>
 													<td>{{ ($inventory->active) ? trans('app.active') : trans('app.inactive') }}</td>
 													<td class="row-options">

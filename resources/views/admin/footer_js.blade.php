@@ -32,10 +32,8 @@
 		    // Support for AJAX loaded modal window.
 		    $('body').on('click', '.ajax-modal-btn', function(e) {
 				e.preventDefault();
-				//Disable mouse pointer events and set the busy filter
-				$('body').css("pointer-events", "none");
-				$('.loader').show();
-				$(".wrapper").addClass('blur-filter');
+
+				apply_busy_filter();
 
 				var url = $(this).attr('href');
 				if (url.indexOf('#') == 0) {
@@ -43,10 +41,9 @@
 				}
 		      	else {
 			        $.get(url, function(data) {
-			        	//Enable mouse pointer events and remove the busy filter
-						$('body').css("pointer-events", "auto");
-						$(".wrapper").removeClass('blur-filter');
-						$('.loader').hide();
+
+			        	remove_busy_filter();
+
 						//Load modal data
 						$('#myDynamicModal').modal().html(data);
 
@@ -92,10 +89,7 @@
 			              keys: ['enter'],
 			              btnClass: 'btn-red',
 			              action: function () {
-					      	//Disable mouse pointer events and set the busy filter
-			              	$('body').css("pointer-events", "none");
-							$('.loader').show();
-							$(".wrapper").addClass('blur-filter');
+				            apply_busy_filter();
 
 			                if (typeof url != 'undefined') {
 			                  	location.href = url;
@@ -953,6 +947,8 @@
 	        	return;
 	      	}
 
+			apply_busy_filter();
+
 	      	var action = this.action;
 	      	var data = $( this ).serialize();
 	      	$.ajax({
@@ -961,6 +957,8 @@
 		        data: data,
 		        success: function (data) {
 		            $('#myDynamicModal').modal('hide');
+		            remove_busy_filter();
+
 		            if (data == 'success'){
 		              	notie.alert(1, "{{ trans('responses.success') }}", 3);
 		            }
@@ -971,6 +969,8 @@
 		        },
 		        error: function (data) {
 		            $('#myDynamicModal').modal('hide');
+		            remove_busy_filter();
+
 		            if (data.status == 403){
 		              notie.alert(2, "{{ trans('responses.denied') }}", 3);
 		            }
@@ -1094,6 +1094,18 @@
 	}
 	//End Mass selection and action section
 
+	function apply_busy_filter(dom = 'body') {
+      	//Disable mouse pointer events and set the busy filter
+      	jQuery(dom).css("pointer-events", "none");
+		jQuery('.loader').show();
+		jQuery(".wrapper").addClass('blur-filter');
+	}
+	function remove_busy_filter(dom = 'body') {
+    	//Enable mouse pointer events and remove the busy filter
+		jQuery(dom).css("pointer-events", "auto");
+		jQuery(".wrapper").removeClass('blur-filter');
+		jQuery('.loader').hide();
+	}
 	/*************************************
 	*** END Initialise application plugins ***
 	**************************************/

@@ -184,7 +184,7 @@ if ( ! function_exists('get_sender_email') )
         if ($shop)
             return config('shop_settings.default_sender_email_address') ?: config('mail.from.address');
 
-        return config('system_settings.default_sender_email_address') ?: config('mail.from.address');
+        return config('system_settings.default_sender_email_address') ?? get_value_from(1, 'systems', 'default_sender_email_address') ?? config('mail.from.address');
     }
 }
 
@@ -198,7 +198,7 @@ if ( ! function_exists('get_sender_name') )
         if ($shop)
             return config('shop_settings.default_email_sender_name') ?: config('mail.from.name');
 
-        return config('system_settings.default_email_sender_name') ?: config('mail.from.name');
+        return config('system_settings.default_email_sender_name') ?? get_value_from(1, 'systems', 'default_email_sender_name') ?? config('mail.from.name');
     }
 }
 
@@ -395,7 +395,7 @@ if ( ! function_exists('get_placeholder_img') )
         $size = config("image.sizes.{$size}");
 
         if ($size && is_array($size))
-            return "http://placehold.it/{$size['w']}x{$size['h']}/eee?text=" . trans('app.no_img_available');
+            return "https://placehold.it/{$size['w']}x{$size['h']}/eee?text=" . trans('app.no_img_available');
 
         return url("images/demo/no_img.png");
     }

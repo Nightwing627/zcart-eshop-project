@@ -120,13 +120,18 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Product view sizes
+        | Logo sizes
         |--------------------------------------------------------------------------
         |
-        | The system will create a banner image using this size
+        | The system will create a logo image using this size
         | Don't modify this values if you are not sure
         |
         */
+        'logo' => [
+            'w' => 140,
+            'h' => 50,
+            'fit' => 'contain'
+        ],
 
         /*
         |--------------------------------------------------------------------------

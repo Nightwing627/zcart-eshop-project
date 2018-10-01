@@ -135,16 +135,16 @@
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
-    </div>
-    <!-- ./wrapper -->
+
+      <!--Modal-->
+      <div id="myDynamicModal" class="modal fade" aria-hidden="true"></div>
+    </div><!-- ./wrapper -->
+
     <div class="loader">
       <center>
         <img class="loading-image" src="{{ asset('images/gears.gif') }}" alt="busy...">
       </center>
     </div>
-
-    <!--Modal-->
-    <div id="myDynamicModal" class="modal fade" aria-hidden="true"></div>
 
     <script src="{{ mix("js/app.js") }}"></script>
     <script src="{{ mix("js/vendor.js") }}"></script>

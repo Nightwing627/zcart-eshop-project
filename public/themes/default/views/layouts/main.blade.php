@@ -13,7 +13,7 @@
         <title> {{ get_platform_title() }} </title>
         <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon" />
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-        <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}">
+        <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
         <link href='https://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
 
@@ -26,11 +26,18 @@
           <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
 
-        <div class="{{ Session::has('global_announcement') ? '' : 'hidden'}}" style="background-color: #FFFDDE; height:30px; border:thin solid #EDDD00;">
-            </ul>
-                <li style='padding-top:5px;text-align:center;font-family:Verdana'>A N N O U C E M E N T: {GLOBAL ANNOUNCEMENT}</li>
-            </ul>
-        </div>
+        @if(Session::has('global_announcement'))
+            <div id="global-announcement">
+                {!! session('global_announcement')->parsed_body !!}
+                @if(session('global_announcement')->action_url)
+                  <span class="indent10">
+                    <a href="{{ session('global_announcement')->action_url }}" class="btn btn-primary flat btn-sm">
+                        {{ session('global_announcement')->action_text }}
+                    </a>
+                  </span>
+                @endif
+            </div>
+        @endif
 
         <div id="global-wrapper" class="clearfix">
             <!-- VALIDATION ERRORS -->

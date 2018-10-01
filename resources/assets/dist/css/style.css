@@ -74,8 +74,7 @@ body {
   left: 50%;
   z-index: 10;
 }
-.loader
-{
+.loader {
   display: none;
   width:200px;
   height: 200px;
@@ -85,7 +84,7 @@ body {
   text-align:center;
   margin-left: -50px;
   margin-top: -100px;
-  z-index:2;
+  z-index:1100;
   overflow: auto;
 }
 
@@ -366,6 +365,14 @@ a:focus {
 }
 .main-header .navbar-brand {
   color: #fff;
+}
+.brand-logo {
+  max-width: 300px;
+  max-height: 200px;
+}
+.brand-logo.sm {
+  max-width: 140px;
+  max-height: 50px;
 }
 .content-header {
   position: relative;
