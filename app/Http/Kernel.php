@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
             //The Application Middlewares
+            // \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\InitSettings::class, //This need to be here
         ],
 

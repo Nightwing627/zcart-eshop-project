@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Hash;
 use App\System;
-use App\Http\Requests;
+// use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Jobs\ResetDbAndImportDemoData;
@@ -63,11 +62,11 @@ class SystemController extends Controller
 
         event(new SystemInfoUpdated($system));
 
-        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
-            $system->deleteImage();
+        if ($request->hasFile('icon'))
+            $request->file('icon')->storeAs('','icon.png');
 
-        if ($request->hasFile('image'))
-            $system->saveImage($request->file('image'));
+        if ($request->hasFile('logo'))
+            $request->file('logo')->storeAs('','logo.png');
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }

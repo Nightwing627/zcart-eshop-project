@@ -155,6 +155,10 @@ return [
 
     'logo_img_size' => 'Logo image size should be minimum 300x300px',
 
+    'brand_logo_size' => 'Logo image size should be 120x40px and .png',
+
+    'brand_icon_size' => 'Icon image size should be 32x32px and .png',
+
     'config_alert_quantity' => 'A notification email will be send your inventory goes below the alert quantity',
 
     'config_max_img_size_limit_kb' => 'The maximum image size limit system can upload for product/inventory/logo/avatar. The size in kilobytes.',

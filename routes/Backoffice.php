@@ -14,7 +14,9 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 
 	// Merchant only routes
 	Route::middleware(['merchant'])->group(function () {
-		include('admin/ShopReport.php');
+		Route::group(['namespace' => 'Report'], function(){
+			include('admin/ShopReport.php');
+		});
 	});
 
 	// Account Routes for Merchant and Admin

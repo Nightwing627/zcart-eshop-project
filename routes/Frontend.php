@@ -23,6 +23,7 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 	Route::get('category/{slug}', 'HomeController@browseCategory')->name('category.browse');
 	Route::get('shop/{slug}', 'HomeController@shop')->name('show.store');
 	Route::get('brand/{slug}', 'HomeController@brand')->name('show.brand');
+	Route::get('locale/{locale?}', 'HomeController@changeLanguage')->name('locale.change');
 	Route::get('search', 'SearchController@search')->name('inCategoriesSearch');
 });
 

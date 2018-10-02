@@ -2,7 +2,11 @@
   <div class="container">
     <div class="navbar-header">
       <a class="navbar-brand" href="{{ url('/') }}">
-        <img src="{{ asset('images/logo.png') }}" alt="LOGO" title="LOGO" />
+        @if( Storage::exists('logo.png') )
+          <img src="{{ Storage::url('logo.png') }}" alt="LOGO" title="LOGO" />
+        @else
+          <img src="https://placehold.it/140x60/eee?text=LOGO" alt="LOGO" title="LOGO" />
+        @endif
       </a>
     </div>
     {!! Form::open(['route' => 'inCategoriesSearch', 'method' => 'GET', 'id' => 'search-categories-form', 'class' => 'navbar-left navbar-form navbar-search', 'role' => 'search']) !!}
@@ -123,17 +127,16 @@
         </li>
         <li><a href="{{ get_page_url(\App\Page::PAGE_CONTACT_US) }}" class="navbar-item-mergin-top" target="_blank">{{ trans('theme.nav.support') }}</a>
         </li>
+        {{--
         <li class="dropdown">
           <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
-            <span>{{ trans('theme.nav.lang') }}</span><i class="fa fa-globe"></i> EN
+            <span>{{ trans('theme.nav.lang') }}</span><i class="fa fa-globe"></i> {{ strtoupper( \App::getLocale() ) }}
           </a>
-            <ul class="dropdown-menu">
-                <li><a href="#">English</a></li>
-                <li><a href="#">Frence</a></li>
-                <li><a href="#">Español</a></li>
-                <li><a href="#">Bengali</a></li>
-            </ul>
-        </li>
+          <ul class="dropdown-menu">
+            <li><a href="{{ route('locale.change', 'en') }}">English</a></li>
+            <li><a href="{{ route('locale.change', 'es') }}">Español</a></li>
+          </ul>
+        </li> --}}
       </ul>
     </div>
   </div>

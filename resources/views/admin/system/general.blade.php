@@ -104,11 +104,26 @@
 										<label for="exampleInputFile" class="with-help col-sm-3 control-label"> {{ trans('app.form.logo') }}</label>
 								      	<div class="col-md-6 nopadding">
 											<input id="uploadFile" placeholder="{{ trans('app.placeholder.logo') }}" class="form-control" disabled="disabled" style="height: 28px;" />
+									  		<div class="help-block with-errors">{{ trans('help.brand_logo_size') }}</div>
 								    	</div>
 									    <div class="col-md-2 nopadding-left">
 										  	<div class="fileUpload btn btn-primary btn-block btn-flat">
 										      <span>{{ trans('app.form.upload') }}</span>
-											    <input type="file" name="image" id="uploadBtn" class="upload" />
+											    <input type="file" name="logo" id="uploadBtn" class="upload" />
+									      	</div>
+									    </div>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputFile" class="with-help col-sm-3 control-label"> {{ trans('app.form.icon') }}</label>
+								      	<div class="col-md-6 nopadding">
+											<input id="uploadFile1" placeholder="{{ trans('app.placeholder.icon') }}" class="form-control" disabled="disabled" style="height: 28px;" />
+									  		<div class="help-block with-errors">{{ trans('help.brand_icon_size') }}</div>
+								    	</div>
+									    <div class="col-md-2 nopadding-left">
+										  	<div class="fileUpload btn btn-primary btn-block btn-flat">
+										      <span>{{ trans('app.form.upload') }}</span>
+											    <input type="file" name="icon" id="uploadBtn1" class="upload" />
 									      	</div>
 									    </div>
 									</div>
@@ -155,14 +170,17 @@
 							        <div class="spacer30"></div>
 								</div>
 
-							  	@if(isset($system) && $system->image)
+							  	@if( Storage::exists('icon.png') )
 									<div class="form-group text-center">
-										<label class="with-help control-label"> {{ trans('app.logo') }}</label>
-										<img src="{{ get_storage_file_url(optional($system->image)->path, 'medium') }}" width="100%" alt="{{ trans('app.logo') }}">
-								        <div class="spacer20"></div>
-										<label>
-									    	{!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_logo') }}
-										</label>
+										<label class="with-help control-label"> {{ trans('app.icon') }}: </label>
+										<img src="{{ Storage::url('icon.png') }}" class="brand-icon" alt="{{ trans('app.icon') }}">
+									</div>
+							  	@endif
+
+							  	@if( Storage::exists('logo.png') )
+									<div class="form-group text-center">
+										<label class="with-help control-label"> {{ trans('app.logo') }}: </label>
+										<img src="{{ Storage::url('logo.png') }}" class="brand-logo sm" alt="{{ trans('app.logo') }}">
 									</div>
 							  	@endif
 							</div>

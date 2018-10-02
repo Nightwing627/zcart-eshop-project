@@ -103,6 +103,16 @@ class Statistics
         return Order::mine()->withTrashed()->whereDate('created_at', \Carbon\Carbon::yesterday())->sum('total');
     }
 
+    public static function sales_data_by_period(Carbon $startTime, Carbon $endTime)
+    {
+        return Order::select('total', 'discount', 'created_at')
+        ->mine()->withTrashed() //Include the arcived orders also
+        ->where('created_at', '<=' , $startTime)
+        ->where('created_at', '>=' , $endTime)
+        ->orderBy('created_at', 'DESC')
+        ->get();
+    }
+
     public static function latest_refund_total($period = 15)
     {
         return Refund::mine()->statusOf(Refund::STATUS_APPROVED)->whereDate('updated_at', '>=', Carbon::today()->subDays($period))->sum('amount');
@@ -117,6 +127,11 @@ class Statistics
     {
         return Order::mine()->withTrashed()->whereDate('created_at', \Carbon\Carbon::today())->count();
     }
+
+    // public static function orders_count_by_period($from = '', $to = '')
+    // {
+    //     return Order::mine()->withTrashed()->whereDate('created_at', '>=', Carbon::today()->subDays($period))->count();
+    // }
 
     public static function unfulfilled_order_count()
     {

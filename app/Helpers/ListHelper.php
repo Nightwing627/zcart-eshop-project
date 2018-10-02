@@ -19,6 +19,7 @@ use App\Dispute;
 use App\Customer;
 use App\FaqTopic;
 use App\Category;
+use App\Supplier;
 use App\Inventory;
 use App\Attribute;
 use App\Permission;
@@ -233,7 +234,7 @@ class ListHelper
     public static function categoriesForTheme()
     {
         return CategoryGroup::select('id','name','icon')
-        ->with(['image', 'subGroups' => function($query){
+        ->with(['image:path,imageable_id,imageable_type', 'subGroups' => function($query){
             $query->select('id','category_group_id','name')
                 ->active()->has('categories.products.inventories')
                 ->withCount('categories')->orderBy('categories_count', 'desc');
@@ -417,9 +418,33 @@ class ListHelper
      *
      * @return [type] [description]
      */
-    public static function top_customers()
+    public static function top_customers($limit = 5)
     {
-        return Customer::with('image', 'orders')->withCount('orders')->orderBy('orders_count', 'desc')->limit(5)->get();
+        return Customer::select('id','nice_name','name','email')
+        ->with(['image:path,imageable_id,imageable_type', 'orders' => function($query){
+            $query->select('customer_id','shop_id','total')->withArchived();
+            if (Auth::user()->merchantId())
+                $query->mine();
+        }])->withCount(['orders' => function($q){
+            $q->withArchived();
+            if (Auth::user()->merchantId())
+                $q->mine();
+        }])->orderBy('orders_count', 'desc')->limit($limit)->get();
+    }
+
+    /**
+     * [returning_customers description]
+     *
+     * @return [type] [description]
+     */
+    public static function returning_customers($limit = 5)
+    {
+        $customers = static::top_customers($limit);
+
+        // Return customer has more than one orders
+        return $customers->filter(function ($customer, $key) {
+            return $customer->orders->count() > 1;
+        });
     }
 
     /**
@@ -429,7 +454,7 @@ class ListHelper
      */
     public static function top_vendors()
     {
-        return Shop::with('image', 'revenue')->withCount('inventories')->get()->sortByDesc('revenue')->take(5);
+        return Shop::with('image:path,imageable_id,imageable_type', 'revenue')->withCount('inventories')->get()->sortByDesc('revenue')->take(5);
     }
 
     /**
@@ -558,16 +583,38 @@ class ListHelper
         if(Auth::user()->isFromPlatform() && $shop)
             $items->where('inventories.shop_id', $shop);
         else
-            $items->where('inventories.shop_id', Auth::user()->shop_id);
+            $items->where('inventories.shop_id', Auth::user()->merchantId());
 
-        return $items->with('image')
+        return $items->with('image:path,imageable_id,imageable_type', 'attributeValues:id,value')
         ->select(
             'inventories.id','inventories.sku','products.name','inventories.product_id',
-            \DB::raw('SUM(order_items.quantity) as sold_qtt')
+            \DB::raw('SUM(order_items.quantity) as sold_qtt'),
+            \DB::raw('SUM(order_items.unit_price) as gross_sales')
         )
         ->join('products', 'inventories.product_id', 'products.id')
         ->join('order_items', 'inventories.id', 'order_items.inventory_id')
-        ->groupBy('inventory_id')->limit($count)->get();
+        ->groupBy('inventory_id')->orderBy('sold_qtt', 'decs')->limit($count)->get();
+    }
+
+    /**
+     * Get top categories list for merchnat.
+     * @return array
+     */
+    public static function top_categories($count = 5)
+    {
+        return Category::select('id','slug','name','active')->whereHas('listings', function($query){
+            $query->mine();
+        })->withCount('listings')->orderBy('listings_count', 'decs')->limit($count)->get();
+    }
+
+    /**
+     * Get top suppliers list for merchnat.
+     * @return array
+     */
+    public static function top_suppliers($count = 5)
+    {
+        return Supplier::select('id','shop_id','name','active')->mine()->with('image:path,imageable_id,imageable_type')->withCount('inventories')
+        ->orderBy('inventories_count', 'decs')->limit($count)->get();
     }
 
     /**
@@ -577,7 +624,9 @@ class ListHelper
     public static function popular_items($days = 7, $count = 15)
     {
         return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
-        ->available()->withCount('orders')->orderBy('orders_count', 'desc')
+        ->available()->withCount(['orders' => function($q){
+            $q->withArchived();
+        }])->orderBy('orders_count', 'desc')
         ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
         ->limit($count)->get();
     }
@@ -722,7 +771,7 @@ class ListHelper
      */
     public static function latest_stocks()
     {
-        return Inventory::mine()->with('product', 'image')->latest()->limit(10)->get();
+        return Inventory::mine()->with('product', 'image:path,imageable_id,imageable_type')->latest()->limit(10)->get();
     }
 
     /**
@@ -732,7 +781,7 @@ class ListHelper
      */
     public static function low_qtt_stocks()
     {
-        return Inventory::mine()->lowQtt()->with('product', 'image')->latest()->limit(10)->get();
+        return Inventory::mine()->lowQtt()->with('product', 'image:path,imageable_id,imageable_type')->latest()->limit(10)->get();
     }
 
     // /**

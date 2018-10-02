@@ -9,7 +9,7 @@ use Carbon\Carbon;
 // use App\Helpers\Period;
 use Spatie\Analytics\Period;
 use App\Helpers\GoogleAnalytics;
-
+use Illuminate\Database\Eloquent\Collection;
 /**
 * This is a helper class to prodive data to charts
 */
@@ -24,7 +24,7 @@ class CharttHelper
    	public static function Days($days = Null, $format = 'F d', $start = Null)
     {
     	if(!$days)
-    		$days = config('charts.default.days', 15);
+    		$days = config('charts.default.days', 30);
 
 		if(!$start)
 			$start = Carbon::today();
@@ -46,7 +46,7 @@ class CharttHelper
    	public static function Months($months = Null, $format = 'F', $start = Null)
     {
     	if(!$months)
-    		$months = config('charts.default.months', 6);
+    		$months = config('charts.default.months', 12);
 
 		if(!$start)
 			$start = Carbon::today()->startOfMonth();
@@ -73,16 +73,16 @@ class CharttHelper
 		$dateRange = static::Days($days, 'M-d', $start);
 
         $sales = Order::select('total', 'created_at')
-        			->mine()->withTrashed() //Include the arcived orders also
-        			->whereDate('created_at', '>=', Carbon::today()->subDays($days))
-                    ->orderBy('created_at', 'DESC')->get()
-        			->groupBy(function($item){
-        				return $item->created_at->format('M-d');
-        			})
-        			->map(function ($item) {
-					    return $item->sum('total');
-					})
-					->toArray();
+        		->mine()->withTrashed() //Include the arcived orders also
+        		->whereDate('created_at', '>=', $start->subDays($days))
+                ->orderBy('created_at', 'DESC')->get()
+        		->groupBy(function($item){
+        			return $item->created_at->format('M-d');
+        		})
+        		->map(function ($item) {
+        		    return $item->sum('total');
+        		})
+        		->toArray();
 
 		$data = [];
 		foreach ($dateRange as $day) {
@@ -94,6 +94,69 @@ class CharttHelper
 
     	return $data;
     }
+
+    /**
+     * Return formated sales total array to make chart
+     *
+     * @param integer $days
+     * @return array
+     */
+    public static function prepareSaleTotal(Collection $salesData, $grp_by = 'M')
+    {
+        // $start = static::getStartDate();
+        // $end = $start->copy()->subMonths(12)->startOfMonth();
+
+        if($grp_by == 'D'){
+            $grp_by = 'M-d';
+            // $dateRange = static::Days(30, $grp_by, $start);
+        }
+        else{
+            $grp_by = 'F';
+            // $dateRange = static::Months(12);
+        }
+
+        $sales = $salesData->groupBy(function($item) use ($grp_by){
+                    return $item->created_at->format($grp_by);
+                })
+                ->map(function ($item) {
+                    return $item->sum('total');
+                })
+                ->toArray();
+        return $sales;
+
+        // $data = [];
+        // foreach ($dateRange as $day) {
+        //     if(array_key_exists($day, $sales))
+        //         $data[] = round($sales[$day]);
+        //     else
+        //         $data[] = 0;
+        // }
+
+        // return $data;
+    }
+
+    /**
+     * Return formated Discounts total array to make chart
+     *
+     * @param integer $days
+     * @return array
+     */
+    // public static function prepareDiscountTotal(Collection $salesData, $grp_by = 'M')
+    // {
+    //     if($grp_by == 'D')
+    //         $grp_by = 'M-d';
+    //     else
+    //         $grp_by = 'F';
+
+    //     $sales = $salesData->groupBy(function($item) use ($grp_by){
+    //                 return $item->created_at->format($grp_by);
+    //             })
+    //             ->map(function ($item) {
+    //                 return $item->sum('discount');
+    //             })
+    //             ->toArray();
+    //     return $sales;
+    // }
 
     /**
      * Return formated visitors data array to make chart
@@ -341,5 +404,25 @@ class CharttHelper
     {
         return Analytics::performQuery(Period::months($period), $metrics, $others);
     }
+
+    public static function getStartDate($date = Null)
+    {
+        if ($date)
+            return Carbon::parse($date);
+
+        return Carbon::today();
+    }
+
+    // public static function getEndDate($date = Null, $period = 'day')
+    // {
+    //     if ($date)
+    //         return Carbon::parse($date);
+
+    //     if($period == 'month')
+
+
+    //     return $date ? Carbon::parse($date) : Carbon::today();
+    //     return $start->subMonths(12)->startOfMonth();
+    // }
 
 }

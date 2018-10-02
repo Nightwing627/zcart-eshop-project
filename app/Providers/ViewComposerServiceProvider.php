@@ -12,6 +12,7 @@ use App\Charts\Referrers;
 use App\Charts\DeviceTypes;
 use App\Charts\VisitorTypes;
 use App\Charts\LatestSales;
+use App\Charts\SalesByPeriod;
 use App\Helpers\ListHelper;
 use App\Helpers\Statistics;
 use App\Helpers\CharttHelper;
@@ -97,6 +98,8 @@ class ViewComposerServiceProvider extends ServiceProvider
         $this->composePageForm();
 
         $this->composePlatformKpi();
+
+        $this->composeMerchantKpi();
 
         $this->composeProductForm();
 
@@ -837,25 +840,82 @@ class ViewComposerServiceProvider extends ServiceProvider
     }
 
     /**
-     * compose visitors report for admin
+     * compose KPI report
      */
     private function composePlatformKpi()
     {
         View::composer(
 
-                'admin.report.platform.kpi',
+        'admin.report.platform.kpi',
 
-                function($view)
-                {
-                    $view->with([
-                        'new_vendor_count' => Statistics::new_vendor_count(),
-                        'monthly_recuring_revenue' => 0,
-                        'last_30_days_commission' => 0,
-                        // 'chartReferrers' => $chartReferrers,
-                        // 'chartVisitorTypes' => $chartVisitorTypes,
-                        // 'chartDevices' => $chartDevices,
-                    ]);
-                });
+        function($view)
+        {
+            $view->with([
+                'new_vendor_count' => Statistics::new_vendor_count(),
+                'monthly_recuring_revenue' => 0,
+                'last_30_days_commission' => 0,
+                // 'chartReferrers' => $chartReferrers,
+                // 'chartVisitorTypes' => $chartVisitorTypes,
+                // 'chartDevices' => $chartDevices,
+            ]);
+        });
+    }
+
+    /**
+     * compose KPI report
+     */
+    private function composeMerchantKpi()
+    {
+        View::composer(
+
+        'admin.report.merchant.kpi',
+
+        function($view)
+        {
+            // Charts
+            $start = CharttHelper::getStartDate();
+            $end = $start->copy()->subMonths(config('charts.default.months'))->startOfMonth();
+
+            $chart = new SalesByPeriod($start, $end, 'M');
+
+            $salesData = Statistics::sales_data_by_period($start, $end);
+
+            // Preparing Sales amount dataset
+            $salesTotal = CharttHelper::prepareSaleTotal($salesData, 'M');
+            foreach ($chart->labels as $key => $label)
+                $dataset[$key] = array_key_exists($label, $salesTotal) ? round($salesTotal[$label]) : 0;
+
+            $chart->dataset(trans('app.sale'), 'column', $dataset);
+
+            // $dispute_count = Statistics::dispute_count(Auth::user()->merchantId());
+            // $refund_request_count = Statistics::open_refund_request_count();
+            // $current_plan  = Auth::user()->shop->plan;
+
+            $period = $start->diffInDays($end);
+
+            $view->with([
+                'chart' => $chart,
+                'top_listings'                 => ListHelper::top_listing_items(Auth::user()->merchantId(), 10),
+                'top_suppliers'                => ListHelper::top_suppliers(5),
+                'top_categories'               => ListHelper::top_categories(5),
+                'top_customers'                => ListHelper::top_customers(10),
+                'returning_customers'          => ListHelper::returning_customers(10),
+                // 'latest_orders'             => ListHelper::latest_orders(),
+                // 'latest_stocks'             => ListHelper::latest_stocks(),
+                // 'low_qtt_stocks'            => ListHelper::low_qtt_stocks(),
+                // 'unfulfilled_order_count'   => Statistics::unfulfilled_order_count(),
+                'orders_count'                 => Statistics::latest_order_count($period),
+                // 'todays_order_count'        => Statistics::todays_order_count(),
+                // 'stock_out_count'           => Statistics::stock_out_count(),
+                // 'stock_count'               => Statistics::shop_inventories_count(),
+                // 'todays_sale_amount'        => Statistics::todays_sale_amount(),
+                // 'yesterdays_sale_amount'    => Statistics::yesterdays_sale_amount(),
+                // 'last_sale'                 => Statistics::last_sale(),
+                'latest_refund_total'       => Statistics::latest_refund_total($period),
+                'sales_total'                   => $salesData->sum('total'),
+                'discount_total'                => $salesData->sum('discount'),
+            ]);
+        });
     }
 
     /**

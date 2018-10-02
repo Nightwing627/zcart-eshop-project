@@ -6,10 +6,11 @@ use App\Shop;
 use Carbon\Carbon;
 use App\SubscriptionPlan;
 use App\Charts\Subscribers;
+// use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Contracts\Repositories\PerformanceIndicatorsRepository;
 
-class PerformanceIndicatorsController extends Controller
+class ShopPerformanceIndicatorsController extends Controller
 {
     /**
      * The performance indicators repository instance.
@@ -40,7 +41,7 @@ class PerformanceIndicatorsController extends Controller
             'indicators' => $this->indicators->all(60),
             'last_month' => $this->indicators->forDate(Carbon::today()->subMonths(1)),
             'last_year' => $this->indicators->forDate(Carbon::today()->subYears(1)),
-            'subscribers' => $this->subscribers(),
+            'subscribers' => [],
             // 'subscribers' => $this->subscribers(),
         ];
 
@@ -51,49 +52,7 @@ class PerformanceIndicatorsController extends Controller
         $chartSubscribers->dataset(trans('app.subscribers'), 'pie', array_column($data['subscribers'], 'count'))->color([ '#e4d354', '#7CB5EC']);
         $chartSubscribers = $chartSubscribers;
 
-        return view('admin.report.platform.kpi', compact('data', 'chartSubscribers'));
+        return view('admin.report.merchant.kpi', compact('data', 'chartSubscribers'));
     }
 
-    /**
-     * Get the revenue amounts for the application.
-     *
-     * @return Response
-     */
-    public function revenue()
-    {
-        return [
-            'monthlyRecurringRevenue' => $this->indicators->monthlyRecurringRevenue(),
-            'totalVolume' => $this->indicators->totalVolume(),
-        ];
-    }
-
-    /**
-     * Get the subscriber counts by plan.
-     *
-     * @return Response
-     */
-    public function subscribers()
-    {
-        $plans = [];
-        foreach (SubscriptionPlan::all() as $plan) {
-            $plans[] = [
-                'name' => $plan->name,
-                'cost' => $plan->cost,
-                'count' => $this->indicators->subscribers($plan),
-                'trialing' => $this->indicators->trialing($plan),
-            ];
-        }
-
-        return collect($plans)->sortByDesc('count')->values()->all();
-    }
-
-    /**
-     * Get the number of users who are on a generic trial.
-     *
-     * @return Response
-     */
-    public function trialUsers()
-    {
-        return Shop::where('trial_ends_at', '>=', Carbon::now())->count();
-    }
 }

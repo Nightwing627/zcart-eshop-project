@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Storefront;
 
 use DB;
+use Session;
 use Carbon\Carbon;
 use App\Page;
 use App\Shop;
@@ -239,17 +240,31 @@ class HomeController extends Controller
     }
 
     /**
+     * Change Language
+     *
+     * @param  string $locale
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function changeLanguage($locale = 'en')
+    {
+        Session::put('locale', $locale);
+
+        return redirect()->back();
+    }
+
+    /**
      * Push product ID to session for the recently viewed items section
      *
      * @param  [type] $item [description]
      */
     private function update_recently_viewed_items($item)
     {
-        $items = session()->get('products.recently_viewed_items', []);
+        $items = Session::get('products.recently_viewed_items', []);
 
-        if( ! in_array($item->getKey(), $items) ){
-            session()->push('products.recently_viewed_items', $item->getKey());
-        }
+        if( ! in_array($item->getKey(), $items) )
+            Session::push('products.recently_viewed_items', $item->getKey());
+
         return;
     }
 }

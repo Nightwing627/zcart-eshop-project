@@ -28,7 +28,8 @@ class UpdateBasicSystemConfigRequest extends Request
            'legal_name' => 'required',
            'timezone_id' => 'required',
            'email' =>  'required|email|max:255',
-           'image' => 'max:' . config('system_settings.max_img_size_limit_kb') . '|mimes:jpg,jpeg,png,gif',
+           'icon' => 'max:' . config('system_settings.max_img_size_limit_kb') . '|mimes:jpg,jpeg,png',
+           'logo' => 'max:' . config('system_settings.max_img_size_limit_kb') . '|mimes:jpg,jpeg,png',
         ];
     }
 
@@ -40,8 +41,8 @@ class UpdateBasicSystemConfigRequest extends Request
     public function messages()
     {
         return [
-            'image.max' => trans('validation.brand_logo_max'),
-            'image.mimes' => trans('validation.brand_logo_mimes'),
+            'logo.max' => trans('validation.brand_logo_max'),
+            'logo.mimes' => trans('validation.brand_logo_mimes'),
         ];
     }
 }

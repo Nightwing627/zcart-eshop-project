@@ -268,6 +268,16 @@ class Order extends Model
     }
 
     /**
+     * Scope a query to only include records from the users shop.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithArchived($query)
+    {
+        return $query->withTrashed();
+    }
+
+    /**
      * Scope a query to only include active orders.
      *
      * @return \Illuminate\Database\Eloquent\Builder

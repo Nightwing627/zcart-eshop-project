@@ -19,8 +19,8 @@ return [
 
     // Default values for charts
     'default' => [
-        'months' => 6,
-        'days' => 15,
+        'months' => 12,
+        'days' => 30,
     ],
 
     // Config for dashboard charts only

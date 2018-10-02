@@ -236,6 +236,8 @@
           </li>
         @endif
 
+        {{-- temporarily hidden from super admin --}}
+        @if(!Auth::user()->isSuperAdmin())
         @if(Gate::allows('index', \App\Coupon::class) || Gate::allows('index', \App\GiftCard::class))
           <li class="treeview {{ Request::is('admin/promotion*') ? 'active' : '' }}">
             <a href="#">
@@ -260,6 +262,7 @@
               @endcan --}}
             </ul>
           </li>
+        @endif
         @endif
 
         @if(Gate::allows('index', \App\OrderStatus::class) || Gate::allows('index', \App\Currency::class))
@@ -458,13 +461,16 @@
                   <i class="fa fa-angle-double-right"></i> {{ trans('nav.system_settings') }}
                 </a>
               </li>
+            @endcan
 
+            @can('view', \App\SystemConfig::class)
               <li class=" {{ Request::is('admin/setting/system/config*') ? 'active' : '' }}">
                 <a href="{{ url('admin/setting/system/config') }}">
                   <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}
                 </a>
               </li>
             @endcan
+
             @if(Auth::user()->isAdmin())
               <li class=" {{ Request::is('admin/setting/announcement*') ? 'active' : '' }}">
                 <a href="{{ url('admin/setting/announcement') }}">
@@ -476,7 +482,7 @@
         </li>
 
         @if(Auth::user()->isAdmin() || Auth::user()->isMerchant())
-          <li class="treeview {{ Request::is('admin/report*') ? 'active' : '' }}">
+          <li class="treeview {{ Request::is('admin/report*') || Request::is('admin/shop/report*') ? 'active' : '' }}">
             <a href="#">
               <i class="fa fa-map"></i>
               <span>{{ trans('nav.reports') }}</span>

@@ -3447,6 +3447,10 @@ a:focus {
   max-width: 140px;
   max-height: 50px;
 }
+.brand-icon {
+  max-width: 64px;
+  max-height: 64px;
+}
 .content-header {
   position: relative;
   padding: 15px 15px 0 15px;
