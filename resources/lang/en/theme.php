@@ -295,6 +295,7 @@ return [
 	'remember_card_for_future_use' => 'Remeber the card for future use',
     'remove_item' => 'Remove Item',
     'return_goods' => 'Return Goods',
+    'return_and_refund_policy' 	=> 'Return and Refund Policy',
     'review' => 'Review',
 	'reviews' => '{0,1} :count Review|{2,*} :count Reviews',
 	// 'reviews_count' => ':count reviews',

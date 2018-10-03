@@ -100,7 +100,7 @@
 							{!! Form::label('description', trans('app.form.description') . ':', ['class' => 'with-help col-sm-3 control-label']) !!}
 						  	<div class="col-sm-8 nopadding-left">
 						  		@if($can_update)
-									{!! Form::textarea('description', $shop->description, ['class' => 'form-control summernote-min', 'placeholder' => trans('app.placeholder.description'), 'rows' => '3']) !!}
+									{!! Form::textarea('description', $shop->description, ['class' => 'form-control summernote-without-toolbar', 'placeholder' => trans('app.placeholder.description'), 'rows' => '3']) !!}
 								@else
 									<span>{{ $shop->description }}</span>
 								@endif

@@ -447,6 +447,7 @@
 								    <!-- /.row -->
 								</fieldset>
 					    	</div>
+
 					    	<div class="col-sm-6">
 					    		<fieldset>
 					    			<legend>{{ trans('app.config_promotions') }}</legend>
@@ -463,7 +464,7 @@
 									  	</div>
 									</div>
 
-									<div class="form-group">
+									{{-- <div class="form-group">
 								        {!! Form::label('gift_card_pin_size', '*' . trans('app.config_gift_card_pin_size'). ':', ['class' => 'with-help col-sm-7 control-label']) !!}
 									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_gift_card_pin_size') }}"></i>
 									  	<div class="col-sm-4 nopadding-left">
@@ -487,7 +488,7 @@
 												<span>{{ $system->gift_card_serial_number_size }}</span>
 											@endif
 									  	</div>
-									</div>
+									</div>--}}
 								</fieldset>
 					    	</div>
 					    	<div class="col-sm-12">

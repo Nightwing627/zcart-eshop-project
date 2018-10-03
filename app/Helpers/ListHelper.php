@@ -431,17 +431,6 @@ class ListHelper
             if (Auth::user()->merchantId())
                 $q->mine();
         }])->orderBy('orders_count', 'desc')->limit($limit)->get();
-
-        // return Customer::select('id','nice_name','name','email')
-        // ->with(['image:path,imageable_id,imageable_type', 'orders' => function($query){
-        //     $query->select('customer_id','shop_id','total')->withArchived();
-        //     if (Auth::user()->merchantId())
-        //         $query->mine();
-        // }])->withCount(['orders' => function($q){
-        //     $q->withArchived();
-        //     if (Auth::user()->merchantId())
-        //         $q->mine();
-        // }])->orderBy('orders_count', 'desc')->limit($limit)->get();
     }
 
     /**

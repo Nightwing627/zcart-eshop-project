@@ -1,4 +1,4 @@
-@extends('vendor.installer.layouts.master')
+@extends('installer.layouts.master')
 
 @section('template_title')
     {{ trans('installer_messages.requirements.templateTitle') }}
@@ -40,7 +40,7 @@
 
     @if ( ! isset($requirements['errors']) && $phpSupportInfo['supported'] )
         <div class="buttons">
-            <a class="button" href="{{ route('LaravelInstaller::permissions') }}">
+            <a class="button" href="{{ route('Installer.permissions') }}">
                 {{ trans('installer_messages.requirements.next') }}
                 <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>
             </a>

@@ -44,7 +44,7 @@
         <div class="container">
             <div class="content">
                 <a href="{{ url('/') }}">
-                    <img src="{{ asset('images/logo.png') }}" alt="LOGO" title="LOGO" />
+                    <img src="{{ Storage::url('logo.png') }}" alt="LOGO" title="LOGO" />
                 </a>
                 <div class="title">@lang('theme.shop_down')</div>
                 <a href="{{ url()->previous() }}">@lang('theme.button.go_back')</a>

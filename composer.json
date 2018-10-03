@@ -21,7 +21,6 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
         "league/glide-laravel": "^1.0",
-        "rachidlaasri/laravel-installer": "^4.0",
         "ramsey/uuid": "^3.7",
         "rap2hpoutre/fast-excel": "^0.3.2",
         "spatie/laravel-activitylog": "^2.5",

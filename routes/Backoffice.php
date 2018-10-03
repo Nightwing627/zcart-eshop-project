@@ -1,4 +1,6 @@
 <?php
+// Installer routes
+include('admin/Installer.php');
 
 include('admin/Auth.php');
 

@@ -1,4 +1,4 @@
-@extends('vendor.installer.layouts.master')
+@extends('installer.layouts.master')
 
 @section('template_title')
     {{ trans('installer_messages.environment.wizard.templateTitle') }}
@@ -33,7 +33,7 @@
             {{ trans('installer_messages.environment.wizard.tabs.application') }}
         </label>
 
-        <form method="post" action="{{ route('LaravelInstaller::environmentSaveWizard') }}" class="tabs-wrap">
+        <form method="post" action="{{ route('Installer.environmentSaveWizard') }}" class="tabs-wrap">
             <div class="tab" id="tab1content">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 

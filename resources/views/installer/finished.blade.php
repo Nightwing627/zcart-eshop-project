@@ -1,4 +1,4 @@
-@extends('vendor.installer.layouts.master')
+@extends('installer.layouts.master')
 
 @section('template_title')
     {{ trans('installer_messages.final.templateTitle') }}
@@ -16,8 +16,8 @@
 		<pre><code>{{ session('message')['dbOutputLog'] }}</code></pre>
 	@endif --}}
 
-	<p><strong><small>{{ trans('installer_messages.final.console') }}</small></strong></p>
-	<pre><code>{{ $finalMessages }}</code></pre>
+	{{-- <p><strong><small>{{ trans('installer_messages.final.console') }}</small></strong></p>
+	<pre><code>{{ $finalMessages }}</code></pre> --}}
 
 	{{-- <p><strong><small>{{ trans('installer_messages.final.log') }}</small></strong></p> --}}
 	{{-- <code>{{ $finalStatusMessage }}</code> --}}
@@ -28,12 +28,12 @@
 	<br/><br/>
 
     <div class="buttons">
-        <a href="{{ route('LaravelInstaller::seedDemo') }}" class="button" onclick="btnBusy(event)" style="background-color: transparent; color: #1d73a2; border: 1px solid #1d73a2;" >
+        <a href="{{ route('Installer.seedDemo') }}" class="button" onclick="btnBusy(event)" style="background-color: transparent; color: #1d73a2; border: 1px solid #1d73a2;" >
          	{!! trans('installer_messages.final.import_demo_data') !!}
             <i class="fa fa-angle-double-right fa-fw" aria-hidden="true"></i>
         </a>
 
-        <a href="{{ route('LaravelInstaller::finish') }}" class="button">{{ trans('installer_messages.final.exit') }}</a>
+        <a href="{{ route('Installer.finish') }}" class="button">{{ trans('installer_messages.final.exit') }}</a>
     </div>
 
 @endsection

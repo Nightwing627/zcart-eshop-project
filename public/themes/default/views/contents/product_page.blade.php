@@ -210,7 +210,13 @@
 							{!! $item->product->description !!}
 		                </div>
          		        <div role="tabpanel" class="tab-pane fade" id="seller_desc_tab">
+
                 		  	{!! $item->description !!}
+
+                		  	<br/><br/><hr class="style4 muted"/><br/>
+
+                		  	<h4>{{ trans('theme.return_and_refund_policy') }}: </h4>
+                		  	{!! $item->shop->config->return_refund !!}
 	                  	</div>
 		              	<div role="tabpanel" class="tab-pane fade" id="reviews_tab">
                       		<div class="reviews-tab">

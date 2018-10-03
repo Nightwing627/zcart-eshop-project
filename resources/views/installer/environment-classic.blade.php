@@ -1,4 +1,4 @@
-@extends('vendor.installer.layouts.master')
+@extends('installer.layouts.master')
 
 @section('template_title')
     {{ trans('installer_messages.environment.classic.templateTitle') }}
@@ -11,10 +11,10 @@
 @section('container')
 
     <div class="alert alert-warning"><i class="fa fa-info-circle"></i> {!! trans('installer_messages.environment.classic.backup') !!}</div>
-    <form method="post" action="{{ route('LaravelInstaller::environmentSaveClassic') }}">
+    <form method="post" action="{{ route('Installer.environmentSaveClassic') }}">
         {!! csrf_field() !!}
 
-        <textarea class="textarea" name="envConfig">{{ $envConfig }}</textarea>
+        <textarea class="textarea" name="envConfig" style="background-color: #2b303b; color: #c0c5ce">{{ $envConfig }}</textarea>
 
         <div class="buttons buttons--right">
             <button class="button button--light" type="submit" onclick="btnBusy(event)">
@@ -26,7 +26,7 @@
 
     @if( ! isset($environment['errors']))
         <div class="buttons">
-            <a class="button" href="{{ route('LaravelInstaller::database') }}" onclick="changeText()">
+            <a class="button" href="{{ route('Installer.database') }}" onclick="changeText()">
                 <i class="fa fa-check fa-fw" aria-hidden="true"></i>
                 {!! trans('installer_messages.environment.classic.install') !!}
                 <i class="fa fa-angle-double-right fa-fw" aria-hidden="true"></i>

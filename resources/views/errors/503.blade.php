@@ -45,7 +45,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <img src="{{ asset('images/logo.png') }}" class="brand-logo" alt="LOGO" title="LOGO"/>
+                <img src="{{ Storage::url('logo.png') }}" class="brand-logo" alt="LOGO" title="LOGO"/>
                 <div class="title">@lang('app.marketplace_down')</div>
             </div>
         </div>

@@ -71,5 +71,6 @@ class Kernel extends HttpKernel
         'selling' => \App\Http\Middleware\SellingTheme::class,
         'dashboard' => \App\Http\Middleware\DashboardSetup::class,
         'ajax' => \App\Http\Middleware\AllowOnlyAjaxRequests::class,
+        'install' => \App\Http\Middleware\CanInstall::class,
     ];
 }

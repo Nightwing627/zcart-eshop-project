@@ -481,6 +481,6 @@ class demoSeeder extends Seeder
 
         $this->call('EmailTemplateSeeder');
 
-        factory(App\Visitor::class, $this->longLongCount)->create();
+        // factory(App\Visitor::class, $this->longLongCount)->create();
     }
 }

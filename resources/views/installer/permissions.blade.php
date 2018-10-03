@@ -1,4 +1,4 @@
-@extends('vendor.installer.layouts.master')
+@extends('installer.layouts.master')
 
 @section('template_title')
     {{ trans('installer_messages.permissions.templateTitle') }}
@@ -25,7 +25,7 @@
 
     @if ( ! isset($permissions['errors']))
         <div class="buttons">
-            <a href="{{ route('LaravelInstaller::environmentClassic') }}" class="button">
+            <a href="{{ route('Installer.environmentClassic') }}" class="button">
                 {{ trans('installer_messages.permissions.next') }}
                 <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>
             </a>
