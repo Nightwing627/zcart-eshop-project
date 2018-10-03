@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use Auth;
 use App\User;
+use App\Cart;
 use App\Order;
 use App\Refund;
 use App\Visitor;
@@ -136,6 +137,11 @@ class Statistics
     public static function unfulfilled_order_count()
     {
         return Order::mine()->unfulfilled()->count();
+    }
+
+    public static function abandoned_carts_count($period = 15)
+    {
+        return Cart::mine()->whereDate('created_at', '>=', Carbon::today()->subDays($period))->count();
     }
 
     public static function shop_user_count($shop_id = Null)

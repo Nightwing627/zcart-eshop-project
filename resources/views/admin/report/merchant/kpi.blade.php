@@ -8,17 +8,15 @@
           <span class="info-box-icon bg-yellow"><i class="fa fa-credit-card"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">{{ trans('app.monthly_recuring_revenue') }}</span>
+            <span class="info-box-text">{{ trans('app.revenue') }}</span>
               <span class="info-box-number">
-                  {{-- {{ get_formated_currency($monthly_recuring_revenue) }} --}}
+                  {{ get_formated_currency($sales_total) }}
               </span>
               <div class="progress" style="background: transparent;"></div>
               <span class="progress-description text-muted">
-                  <i class="fa fa-clock-o"></i>
-                  {{ trans('app.in_days', ['days' => 30]) }}
+                  <i class="fa fa-clock-o"></i> {{ trans('app.latest_months', ['months' => config('charts.default.months')]) }}
               </span>
-          </div>
-          <!-- /.info-box-content -->
+          </div><!-- /.info-box-content -->
         </div><!-- /.info-box -->
       </div><!-- /.col -->
 
@@ -27,21 +25,17 @@
           <span class="info-box-icon bg-aqua"><i class="fa fa-percent"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">{{ trans('app.last_30_days_commission') }}</span>
+              <span class="info-box-text">{{ trans('app.conversion_rate') }}</span>
                 <span class="info-box-number">
-                    {{-- {{ get_formated_currency($last_30_days_commission) }} --}}
+                  {{ get_formated_decimal(( $orders_count / ($orders_count + $abandoned_carts_count) ) * 100, true, 1) }} {{ trans('app.percent') }}
                 </span>
                 <div class="progress" style="background: transparent;"></div>
                 <span class="progress-description text-muted">
-                  <i class="fa fa-clock-o"></i>
-                  {{ trans('app.in_days', ['days' => 30]) }}
+                  <i class="fa fa-clock-o"></i> {{ trans('app.latest_months', ['months' => config('charts.default.months')]) }}
                 </span>
-            </div>
-            <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
+            </div><!-- /.info-box-content -->
+        </div><!-- /.info-box -->
+      </div><!-- /.col -->
 
       <!-- fix for small devices only -->
       <div class="clearfix visible-sm-block"></div>
@@ -49,22 +43,23 @@
       <div class="col-md-3 col-sm-6 col-xs-12 nopadding-right nopadding-left">
         <div class="info-box">
           <span class="info-box-icon bg-red">
-            <i class="fa fa-users"></i>
+            <i class="fa fa-cart-arrow-down"></i>
           </span>
 
           <div class="info-box-content">
-            <span class="info-box-text">{{ trans('app.trialing_vendors') }}</span>
+            <span class="info-box-text">{{ trans('app.abandoned_carts') }}</span>
                 <span class="info-box-number">
-                  {{-- {{ array_sum(array_column($data['subscribers'], 'trialing')) }} --}}
+                  {{ $abandoned_carts_count }}
                 </span>
                 <div class="progress" style="background: transparent;"></div>
-                <span class="progress-description text-muted"></span>
+                <span class="progress-description text-muted">
+                  <i class="fa fa-clock-o"></i> {{ trans('app.latest_months', ['months' => config('charts.default.months')]) }}
+                </span>
           </div><!-- /.info-box-content -->
         </div>
       </div><!-- /.col -->
 
       <div class="col-md-3 col-sm-6 col-xs-12 nopadding-left">
-
         <div class="info-box">
           <span class="info-box-icon bg-green">
             <i class="fa fa-calculator"></i>
@@ -79,8 +74,7 @@
                 <span class="progress-description text-muted">
                   <i class="fa fa-clock-o"></i> {{ trans('app.latest_months', ['months' => config('charts.default.months')]) }}
                 </span>
-          </div>
-          <!-- /.info-box-content -->
+          </div><!-- /.info-box-content -->
         </div><!-- /.info-box -->
       </div><!-- /.col -->
   </div><!-- /.row -->

@@ -3,6 +3,9 @@
 		<div class="banner-caption">
 			<img src="{{ get_storage_file_url(optional($shop->logo)->path, 'mini') }}" class="img-rounded">
 			<h5 class="banner-title">{{ $shop->name }}</h5>
+            <span class="small">
+	            @include('layouts.ratings', ['ratings' => $shop->feedbacks->avg('rating'), 'count' => $shop->feedbacks->count()])
+	        </span>
 			<p class="banner-desc">{{ $shop->description }}</p>
 		</div>
 	</div>

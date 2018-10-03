@@ -887,10 +887,6 @@ class ViewComposerServiceProvider extends ServiceProvider
 
             $chart->dataset(trans('app.sale'), 'column', $dataset);
 
-            // $dispute_count = Statistics::dispute_count(Auth::user()->merchantId());
-            // $refund_request_count = Statistics::open_refund_request_count();
-            // $current_plan  = Auth::user()->shop->plan;
-
             $period = $start->diffInDays($end);
 
             $view->with([
@@ -900,20 +896,20 @@ class ViewComposerServiceProvider extends ServiceProvider
                 'top_categories'               => ListHelper::top_categories(5),
                 'top_customers'                => ListHelper::top_customers(10),
                 'returning_customers'          => ListHelper::returning_customers(10),
-                // 'latest_orders'             => ListHelper::latest_orders(),
+                'orders_count'                 => Statistics::latest_order_count($period),
                 // 'latest_stocks'             => ListHelper::latest_stocks(),
                 // 'low_qtt_stocks'            => ListHelper::low_qtt_stocks(),
                 // 'unfulfilled_order_count'   => Statistics::unfulfilled_order_count(),
-                'orders_count'                 => Statistics::latest_order_count($period),
                 // 'todays_order_count'        => Statistics::todays_order_count(),
                 // 'stock_out_count'           => Statistics::stock_out_count(),
                 // 'stock_count'               => Statistics::shop_inventories_count(),
                 // 'todays_sale_amount'        => Statistics::todays_sale_amount(),
                 // 'yesterdays_sale_amount'    => Statistics::yesterdays_sale_amount(),
                 // 'last_sale'                 => Statistics::last_sale(),
-                'latest_refund_total'       => Statistics::latest_refund_total($period),
-                'sales_total'                   => $salesData->sum('total'),
-                'discount_total'                => $salesData->sum('discount'),
+                'abandoned_carts_count'        => Statistics::abandoned_carts_count($period),
+                'latest_refund_total'          => Statistics::latest_refund_total($period),
+                'sales_total'                  => $salesData->sum('total'),
+                'discount_total'               => $salesData->sum('discount'),
             ]);
         });
     }

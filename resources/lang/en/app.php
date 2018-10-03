@@ -736,6 +736,7 @@ return [
     'top_categories' => 'Top categories',
     'top_selling_items' => 'Top Selling Items',
     'returning_customers' => 'Returning customers',
+    'conversion_rate' => 'Conversion rate',
     'visitors_graph' => 'Visitors graph',
     'abandoned_carts' => 'Abandoned carts',
     'unique_visits' => 'Unique visits',
