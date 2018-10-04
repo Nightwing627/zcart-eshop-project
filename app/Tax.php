@@ -11,6 +11,8 @@ class Tax extends Model
 {
     use SoftDeletes;
 
+    const DEFAULT_TAX_ID = 1;
+
     /**
      * The database table used by the model.
      *

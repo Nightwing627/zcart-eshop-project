@@ -148,4 +148,20 @@ class ShippingZoneController extends Controller
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
+
+    /**
+     * Return tax rate
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    public function ajaxGetTaxRate(Request $request)
+    {
+        if ($request->ajax()){
+            $taxrate = getTaxRate($request->input('ID'));
+
+            return get_formated_decimal($taxrate, true, 2);
+        }
+
+        return false;
+    }
 }

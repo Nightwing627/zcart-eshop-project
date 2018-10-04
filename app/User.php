@@ -141,7 +141,7 @@ class User extends Authenticatable
     */
     public function shop()
     {
-        return $this->belongsTo(Shop::class);
+        return $this->belongsTo(Shop::class)->withDefault();
     }
 
     /**
@@ -149,7 +149,7 @@ class User extends Authenticatable
     */
     public function owns()
     {
-        return $this->hasOne(Shop::class, 'owner_id');
+        return $this->hasOne(Shop::class, 'owner_id')->withDefault();
     }
 
     /**
@@ -270,7 +270,9 @@ class User extends Authenticatable
      */
     public function getCurrentPlan()
     {
-        $subscription = optional($this->shop)->subscriptions->first();
+        if( ! $this->merchantId() )  return Null;
+
+        $subscription = optional($this->shop->subscriptions)->first();
 
         if($subscription && $subscription->valid())
             return $subscription;
@@ -355,6 +357,8 @@ class User extends Authenticatable
      */
     public function hasExpiredPlan()
     {
+        if(!$this->merchantId())        return false;
+
         $subscription = $this->shop->subscriptions->first();
 
         if ($subscription && ! is_null($subscription->ends_at))
@@ -364,13 +368,23 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if the user has outrange generic plan
+     *
+     * @return bool
+     */
+    public function hasExpiredOnGenericTrial()
+    {
+        return $this->shop->trial_ends_at && $this->shop->trial_ends_at->isPast();
+    }
+
+    /**
      * Check if the user is subscribed
      *
      * @return bool
      */
     public function isSubscribed()
     {
-        if($this->isFromPlatform())
+        if($this->isFromPlatform() || !$this->merchantId())
             return False;
 
         $subscription = optional($this->shop->subscriptions)->first();

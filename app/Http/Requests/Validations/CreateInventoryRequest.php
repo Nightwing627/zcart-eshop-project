@@ -25,17 +25,19 @@ class CreateInventoryRequest extends Request
     {
         $user = Request::user(); //Get current user
         Request::merge([
-            'shop_id' => $user->merchantId(),
-            'user_id' => $user->id
+                'shop_id' => $user->merchantId(),
+                'user_id' => $user->id
             ]);
 
         return [
+            'title' => 'required',
             'sku' => 'required|unique:inventories,sku',
             'sale_price' => 'required|numeric|min:0',
             'offer_price' => 'nullable|numeric',
             'available_from' => 'nullable|date',
             'offer_start' => 'nullable|date|required_with:offer_price|after_or_equal:now',
             'offer_end' => 'nullable|date|required_with:offer_price|after:offer_start',
+            'slug' => 'required|unique:inventories,slug',
             'image' => 'mimes:jpeg,png',
         ];
     }

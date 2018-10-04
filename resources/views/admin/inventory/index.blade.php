@@ -28,7 +28,7 @@
 							<tr>
 								<th>{{ trans('app.image') }}</th>
 								<th>{{ trans('app.sku') }}</th>
-								<th>{{ trans('app.name') }}</th>
+								<th>{{ trans('app.title') }}</th>
 								<th>{{ trans('app.condition') }}</th>
 								<th>{{ trans('app.price') }} <small>( {{ trans('app.excl_tax') }} )</small> </th>
 								<th>{{ trans('app.quantity') }}</th>
@@ -46,7 +46,7 @@
 										@endif
 									</td>
 									<td>{{ $inventory->sku }}</td>
-									<td>{{ $inventory->product->name }}</td>
+									<td>{{ $inventory->title }}</td>
 									<td>{{ $inventory->condition }}</td>
 									<td>
 										@if(($inventory->offer_price > 0) && ($inventory->offer_end > \Carbon\Carbon::now()))
@@ -102,7 +102,7 @@
 							<tr>
 								<th>{{ trans('app.image') }}</th>
 								<th>{{ trans('app.sku') }}</th>
-								<th>{{ trans('app.name') }}</th>
+								<th>{{ trans('app.title') }}</th>
 								<th>{{ trans('app.condition') }}</th>
 								<th>{{ trans('app.price') }} <small>( {{ trans('app.excl_tax') }} )</small> </th>
 								<th>{{ trans('app.quantity') }}</th>
@@ -120,7 +120,7 @@
 										@endif
 									</td>
 									<td>{{ $inventory->sku }}</td>
-									<td>{{ $inventory->product->name }}</td>
+									<td>{{ $inventory->title }}</td>
 									<td>{{ $inventory->condition }}</td>
 									<td>
 										@if(($inventory->offer_price > 0) && ($inventory->offer_end > \Carbon\Carbon::now()))
@@ -166,7 +166,7 @@
 							<tr>
 								<th>{{ trans('app.image') }}</th>
 								<th>{{ trans('app.sku') }}</th>
-								<th>{{ trans('app.name') }}</th>
+								<th>{{ trans('app.title') }}</th>
 								<th>{{ trans('app.condition') }}</th>
 								<th>{{ trans('app.price') }} <small>( {{ trans('app.excl_tax') }} )</small> </th>
 								<th>{{ trans('app.quantity') }}</th>
@@ -184,7 +184,7 @@
 										@endif
 									</td>
 									<td>{{ $inventory->sku }}</td>
-									<td>{{ $inventory->product->name }}</td>
+									<td>{{ $inventory->title }}</td>
 									<td>{{ $inventory->condition }}</td>
 									<td>
 										@if(($inventory->offer_price > 0) && ($inventory->offer_end > \Carbon\Carbon::now()))
@@ -249,7 +249,7 @@
 					<tr>
 						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.sku') }}</th>
-						<th>{{ trans('app.name') }}</th>
+						<th>{{ trans('app.title') }}</th>
 						<th>{{ trans('app.condition') }}</th>
 						<th>{{ trans('app.price') }}</th>
 						<th>{{ trans('app.quantity') }}</th>
@@ -268,7 +268,7 @@
 							@endif
 						</td>
 						<td>{{ $trash->sku }}</td>
-						<td>{{ $trash->product->name }}</td>
+						<td>{{ $trash->title }}</td>
 						<td>{{ $trash->condition }}</td>
 						<td>{{ get_formated_currency($trash->sale_price) }}</td>
 						<td>{{ $trash->stock_quantity }}</td>

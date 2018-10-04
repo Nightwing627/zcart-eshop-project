@@ -94,7 +94,7 @@ class Authorize
 	private function permissionSlugs()
 	{
 		// For current user just return permissions from cinfig
-		if( Auth::user()->id == $this->user->id )
+		if( Auth::guard('web')->user()->id == $this->user->id )
 	        return config('permissions');
 
         return $this->user->role->permissions()->pluck('slug')->toArray();

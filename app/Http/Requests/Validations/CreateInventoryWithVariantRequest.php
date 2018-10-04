@@ -25,16 +25,20 @@ class CreateInventoryWithVariantRequest extends Request
     {
         // echo "<pre>"; print_r(Request::all()); echo "</pre>"; exit();
         $user = Request::user(); //Get current user
-        Request::merge( [ 'shop_id' => $user->shop_id ] ); //Set shop_id
-        Request::merge( [ 'user_id' => $user->id ] ); //Set user_id
+        Request::merge([
+                        'shop_id' => $user->shop_id,
+                        'user_id' => $user->id
+                    ]); //Set user_id
 
         return [
+            'title' => 'required',
             'variants.*' => 'required',
-            'sku.*' => 'required|unique:inventories,sku',
+            'sku.*' => 'required|distinct|unique:inventories,sku',
             'sale_price.*' => 'bail|required|numeric|min:0',
             'stock_quantity.*' => 'bail|required|integer',
             'offer_price.*' => 'sometimes|nullable|numeric',
             'available_from' => 'nullable|date',
+            'description' => 'required',
             'offer_start' => 'nullable|required_with:offer_price.*|date|after_or_equal:now',
             'offer_end' => 'nullable|required_with:offer_price.*|date|after:offer_start.*',
             'image.*' => 'mimes:jpeg,png',
@@ -57,7 +61,8 @@ class CreateInventoryWithVariantRequest extends Request
         ];
 
         foreach($this->request->get('sku') as $key => $val){
-            $messages['sku.'.$key.'.unique'] = $val .' '. trans('validation.sku-unique');
+            $messages['sku.'.$key.'.unique'] = trans('validation.sku-unique', ['attribute' => $key+1, 'value' => $val]);
+            $messages['sku.'.$key.'.distinct'] = trans('validation.sku-distinct', ['attribute' => $key+1]);
         }
 
         foreach($this->request->get('offer_price') as $key => $val){

@@ -92,7 +92,7 @@
   </div>
   <!-- /.row -->
 
-	<div class="box">
+{{-- 	<div class="box">
 		<div class="box-header with-border">
 			<h3 class="box-title">{{ trans('app.earnings') }}</h3>
 			<div class="box-tools pull-right">
@@ -101,10 +101,10 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-	              {{-- <div>{!! $chartVisitors->container() !!}</div> --}}
+      <div>{!! $chartVisitors->container() !!}</div>
 		</div> <!-- /.box-body -->
 	</div> <!-- /.box -->
-
+ --}}
 	<div class="box">
 		<div class="box-header with-border">
 			<h3 class="box-title">{{ trans('app.subscription_plans') }}</h3>

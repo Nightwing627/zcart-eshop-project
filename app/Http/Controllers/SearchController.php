@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use View;
 use Response;
-use App\Customer;
 use App\Product;
 use App\Message;
+use App\Customer;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller

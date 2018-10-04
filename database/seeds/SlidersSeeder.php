@@ -13,25 +13,26 @@ class SlidersSeeder extends Seeder
      */
     public function run()
     {
+        $slugs = \DB::table('categories')->pluck('slug')->toArray();
         DB::table('sliders')->insert([
             [
                 'title' => NULL,
                 'sub_title' => NULL,
-                'link' => '#',
+                'link' => '/category/' . $slugs[array_rand($slugs)],
                 'order' => 1,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
                 'title' => NULL,
                 'sub_title' => NULL,
-                'link' => '#',
+                'link' => '/category/' . $slugs[array_rand($slugs)],
                 'order' => 2,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
                 'title' => 'Demo Slider',
                 'sub_title' => 'You can change this',
-                'link' => '#',
+                'link' => '/category/' . $slugs[array_rand($slugs)],
                 'order' => 4,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),

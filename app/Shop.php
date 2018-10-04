@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use App\SubscriptionPlan;
 use App\Common\Billable;
 use App\Common\Loggable;
@@ -47,6 +48,13 @@ class Shop extends Model
      * @var tring
      */
     protected static $logName = 'shop';
+
+    /**
+     * Record events only
+     *
+     * @var array
+     */
+    protected static $recordEvents = ['updated'];
 
     /**
      * The name that will be ignored when log this model.
@@ -113,7 +121,7 @@ class Shop extends Model
      */
     public function plan()
     {
-        return $this->belongsTo(SubscriptionPlan::class, 'current_billing_plan', 'plan_id');
+        return $this->belongsTo(SubscriptionPlan::class, 'current_billing_plan', 'plan_id')->withDefault();
     }
 
     /**
@@ -125,9 +133,17 @@ class Shop extends Model
     }
 
     /**
-     * Get the ShippingZones for the order.
+     * Get the ShippingZones for the shop.
      */
     public function shippingZones()
+    {
+        return $this->hasMany(ShippingZone::class);
+    }
+
+    /**
+     * Get the ShippingZones for the shop.
+     */
+    public function shipping_zones()
     {
         return $this->hasMany(ShippingZone::class);
     }
@@ -138,14 +154,6 @@ class Shop extends Model
     public function carriers()
     {
         return $this->hasMany(Carrier::class);
-    }
-
-    /**
-     * Get the user shipping_zones.
-     */
-    public function shipping_zones()
-    {
-        return $this->hasMany(ShippingZone::class);
     }
 
     /**
@@ -221,7 +229,7 @@ class Shop extends Model
     public function paymentMethods()
     {
         return $this->belongsToMany(PaymentMethod::class, 'shop_payment_methods', 'shop_id', 'payment_method_id')
-                    ->withTimestamps();
+        ->orderBy('order')->withTimestamps();
     }
 
     /**
@@ -240,12 +248,50 @@ class Shop extends Model
         return $this->hasMany(Supplier::class);
     }
 
+    /**
+     * Get the packagings for the product.
+     */
+    public function packagings()
+    {
+        return $this->hasMany(Packaging::class);
+    }
+
+    /**
+     * Get the defaultPackaging for the product.
+     */
+    public function defaultPackaging()
+    {
+        return $this->hasOne(Packaging::class)->where('default',1)->withDefault();
+    }
+
     public function revenue()
     {
-        return $this->hasMany(Order::class)
-                    ->selectRaw('SUM(total) as total, shop_id')
-                    ->groupBy('shop_id');
+        return $this->hasMany(Order::class)->selectRaw('SUM(total) as total, shop_id')->groupBy('shop_id');
+    }
 
+    /**
+     * Get the stripe for the shop.
+     */
+    public function stripe()
+    {
+        return $this->hasOne(ConfigStripe::class, 'shop_id')->withDefault();
+    }
+
+    /**
+     * Get the paypalExpress for the shop.
+     */
+    public function paypalExpress()
+    {
+        return $this->hasOne(ConfigPaypalExpress::class, 'shop_id')->withDefault();
+    }
+
+   /**
+     * Get the manualPaymentMethods for the shop.
+     */
+    public function manualPaymentMethods()
+    {
+        return $this->belongsToMany(PaymentMethod::class, 'config_manual_payments', 'shop_id', 'payment_method_id')
+        ->withPivot('additional_details', 'payment_instructions')->withTimestamps();
     }
 
     /**
@@ -354,6 +400,25 @@ class Shop extends Model
      */
     public function scopeActive($query)
     {
-        return $query->where('active', 1);
+        return $query->where('active', 1)->where(function($q) {
+            $q->whereNotNull('current_billing_plan')
+            ->where(function($x) {
+                $x->whereNull('trial_ends_at')->orWhere('trial_ends_at', '>', Carbon::now());
+            });
+        })
+        ->whereHas('config', function ($q) {
+            $q->live();
+        })
+        ->whereHas('paymentMethods');
+    }
+
+    /**
+     * Check if the system is down or live.
+     *
+     * @return bool
+     */
+    public function isDown()
+    {
+        return $this->config->maintenance_mode;
     }
 }

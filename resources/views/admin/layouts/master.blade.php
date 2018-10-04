@@ -6,9 +6,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
     <title>{{ $title or get_site_title() }}</title>
-    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon" />
+    <link rel="icon" href="{{ Storage::url('icon.png') }}" type="image/x-icon" />
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-    <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}">
+    <link rel="apple-touch-icon" href="{{ Storage::url('icon.png') }}">
 
     <!-- Scripts -->
     <link href="{{ mix("css/app.css") }}" rel="stylesheet">
@@ -135,16 +135,16 @@
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
-    </div>
-    <!-- ./wrapper -->
+
+      <!--Modal-->
+      <div id="myDynamicModal" class="modal fade" aria-hidden="true"></div>
+    </div><!-- ./wrapper -->
+
     <div class="loader">
       <center>
         <img class="loading-image" src="{{ asset('images/gears.gif') }}" alt="busy...">
       </center>
     </div>
-
-    <!--Modal-->
-    <div id="myDynamicModal" class="modal fade" aria-hidden="true"></div>
 
     <script src="{{ mix("js/app.js") }}"></script>
     <script src="{{ mix("js/vendor.js") }}"></script>

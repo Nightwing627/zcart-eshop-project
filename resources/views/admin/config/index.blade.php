@@ -319,11 +319,12 @@
 								</div>
 
 								<div class="form-group">
-							        {!! Form::label('return_refund', trans('app.form.config_return_refund'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+							        {!! Form::label('return_refund', '*' . trans('app.form.config_return_refund'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
 								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_return_refund') }}"></i>
 								  	<div class="col-sm-6 nopadding-left">
 								  		@if($can_update)
-											{!! Form::textarea('return_refund', $config->return_refund, ['class' => 'form-control summernote-without-toolbar', 'placeholder' => trans('app.placeholder.config_return_refund')]) !!}
+											{!! Form::textarea('return_refund', $config->return_refund, ['class' => 'form-control summernote-without-toolbar', 'placeholder' => trans('app.placeholder.config_return_refund'), 'required']) !!}
+									      	<div class="help-block with-errors"></div>
 										@else
 											<span>{{ $config->return_refund }}</span>
 										@endif

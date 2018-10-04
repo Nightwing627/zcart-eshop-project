@@ -26,6 +26,7 @@ class CreateShippingRateRequest extends Request
         return [
            'name' => 'required',
            'shipping_zone_id' => 'required|integer',
+           'delivery_takes' => 'required',
            'based_on' => 'required',
            'minimum' => 'required|numeric|min:0',
            'maximum' => 'nullable|numeric|min:'.(int)$this->minimum,

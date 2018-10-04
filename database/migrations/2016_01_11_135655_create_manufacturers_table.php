@@ -25,8 +25,6 @@ class CreateManufacturersTable extends Migration
             $table->boolean('active')->default(1);
             $table->softDeletes();
             $table->timestamps();
-
-            $table->unique(array('shop_id', 'name'));
         });
     }
 

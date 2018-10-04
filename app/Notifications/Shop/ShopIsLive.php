@@ -44,8 +44,9 @@ class ShopIsLive extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.shop_is_live.subject', ['merchant' => $this->shop->owner->getName()]) )
-                    ->markdown('admin.mail.shop.is_live', ['url' => route('login'), 'shop' => $this->shop]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.shop_is_live.subject', ['merchant' => optional($this->shop->owner)->getName()]) )
+        ->markdown('admin.mail.shop.is_live', ['url' => route('login'), 'shop' => $this->shop]);
     }
 
     /**
@@ -57,7 +58,7 @@ class ShopIsLive extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user' => auth()->user()->getName(),
+            // 'user' => auth()->user()->getName(),
             'name' => $this->shop->name,
             'status' => trans('messages.shop_is_live'),
         ];

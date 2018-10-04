@@ -25,6 +25,13 @@ class Cart extends Model
     protected $dates = ['deleted_at'];
 
     /**
+     * Load item count with cart
+     *
+     * @var array
+     */
+    protected $withCount = ['inventories'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -32,8 +39,12 @@ class Cart extends Model
     protected $fillable = [
                         'shop_id',
                         'customer_id',
+                        'ip_address',
+                        'ship_to',
+                        'shipping_zone_id',
                         'shipping_rate_id',
                         'packaging_id',
+                        'taxrate',
                         'item_count',
                         'quantity',
                         'total',
@@ -43,13 +54,23 @@ class Cart extends Model
                         'handling',
                         'taxes',
                         'grand_total',
+                        'shipping_weight',
                         'shipping_address',
                         'billing_address',
+                        'coupon_id',
                         'payment_method_id',
                         'payment_status',
                         'message_to_customer',
                         'admin_note',
                     ];
+
+    /**
+     * Get the country associated with the order.
+     */
+    public function shipTo()
+    {
+        return $this->belongsTo(Country::class, 'ship_to');
+    }
 
     /**
      * Get the customer associated with the cart.
@@ -64,7 +85,7 @@ class Cart extends Model
      */
     public function shop()
     {
-        return $this->belongsTo(Shop::class);
+        return $this->belongsTo(Shop::class)->withDefault();
     }
 
     /**
@@ -87,6 +108,13 @@ class Cart extends Model
         return $this->belongsTo(Address::class, 'shipping_address');
     }
 
+    /**
+     * Get the shippingZone for the order.
+     */
+    public function shippingZone()
+    {
+        return $this->belongsTo(ShippingZone::class, 'shipping_zone_id');
+    }
 
     /**
      * Get the shippingRate for the order.
@@ -113,13 +141,20 @@ class Cart extends Model
     }
 
     /**
+     * Get the coupon associated with the order.
+     */
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
+    }
+
+    /**
      * Get the inventories for the product.
      */
     public function inventories()
     {
         return $this->belongsToMany(Inventory::class, 'cart_items')
-                    ->withPivot('item_description', 'quantity', 'unit_price')
-                    ->withTimestamps();
+        ->withPivot('item_description', 'quantity', 'unit_price')->withTimestamps();
     }
 
     /**
@@ -128,6 +163,39 @@ class Cart extends Model
     public function paymentMethod()
     {
         return $this->belongsTo(PaymentMethod::class);
+    }
+
+    /**
+     * Return shipping cost with handling fee
+     *
+     * @return number
+     */
+    public function get_shipping_cost()
+    {
+        return $this->shipping + $this->handling;
+    }
+
+    /**
+     * Return grand tolal
+     *
+     * @return number
+     */
+    public function grand_total()
+    {
+        return ($this->total + $this->handling + $this->taxes + $this->shipping + $this->packaging) - $this->discount;
+    }
+
+    /**
+     * Setters
+     */
+    public function setDiscountAttribute($value){
+        $this->attributes['discount'] = $value ?? Null;
+    }
+    public function setShippingAddressAttribute($value){
+        $this->attributes['shipping_address'] = is_numeric($value) ? $value : Null;
+    }
+    public function setBillingAddressAttribute($value){
+        $this->attributes['billing_address'] = is_numeric($value) ? $value : Null;
     }
 
     /**

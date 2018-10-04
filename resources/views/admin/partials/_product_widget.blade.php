@@ -14,11 +14,8 @@
             {{ trans('app.model_number').': '.$product->model_number }}
         </span>
         <span class="admin-user-widget-text text-muted">
-            {{ trans('app.brand').': '.$product->brand }}
-        </span>
-        <span class="admin-user-widget-text text-muted">
             {{ trans('app.manufacturer').': '.$product->manufacturer->name }}
             <i class="fa fa-check-square-o pull-right" style="position: absolute; right: 30px; top: 90px; font-size: 40px; color: rgba(0, 0, 0, 0.2);"></i>
         </span>
     </div>            <!-- /.admin-user-widget-content -->
-</div>          <!-- /.admin-user-widget -->
+</div>

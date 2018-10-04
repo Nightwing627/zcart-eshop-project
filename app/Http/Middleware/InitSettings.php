@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Auth;
 use Closure;
-use Request;
 use App\Helpers\ListHelper; // TEMPORARY
 
 class InitSettings
@@ -18,6 +17,9 @@ class InitSettings
      */
     public function handle($request, Closure $next)
     {
+        // Ignore the setup routes
+        if($request->is('install*')) return $next($request);
+
         // TEMPORARY :: Must move somewhere more appropriate
         // $system_settings = ListHelper::system_settings();
         // config()->set('system_settings', $system_settings);
@@ -27,16 +29,16 @@ class InitSettings
         if(Auth::guard('web')->check()){
 
             // Check if the user has impersonated
-            if(Request::session()->has('impersonated'))
-                Auth::onceUsingId(Request::session()->get('impersonated'));
+            if($request->session()->has('impersonated'))
+                Auth::onceUsingId($request->session()->get('impersonated'));
 
             // If the user from the platform then no need to set shop settings
-            if( ! Auth::user()->isFromPlatform() && Auth::user()->merchantId()){
+            if( ! Auth::guard('web')->user()->isFromPlatform() && Auth::guard('web')->user()->merchantId()){
 
                 // $shop_settings = ListHelper::shop_settings();
                 // config()->set('shop_settings', $shop_settings);
 
-                setShopConfig(Auth::user()->merchantId());
+                setShopConfig(Auth::guard('web')->user()->merchantId());
 
                 // Some extra permissions for vendor users in platform modules
                 // $extra_permissions = ['reply_ticket'];
@@ -55,7 +57,8 @@ class InitSettings
         }
 
         // update the visitor table for state
-        updateVisitorTable($request);
+        if( !$request->ajax() )
+            updateVisitorTable($request);
 
         return $next($request);
     }

@@ -35,11 +35,16 @@ class PaymentMethod extends Model
     protected $fillable = [
                     'name',
                     'company_name',
+                    'type',
                     'website',
                     'help_doc_url',
+                    'admin_help_doc_link',
                     'terms_conditions_link',
                     'description',
+                    'instructions',
+                    'admin_description',
                     'enabled',
+                    'order',
                 ];
 
     /**
@@ -47,8 +52,7 @@ class PaymentMethod extends Model
      */
     public function shops()
     {
-        return $this->belongsToMany(Shop::class, 'shop_payment_methods', 'payment_method_id','shop_id')
-                    ->withTimestamps();
+        return $this->belongsToMany(Shop::class, 'shop_payment_methods', 'payment_method_id','shop_id')->withTimestamps();
     }
 
     /**

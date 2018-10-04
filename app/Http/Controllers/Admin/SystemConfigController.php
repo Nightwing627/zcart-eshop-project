@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\SystemConfig;
 use App\PaymentMethod;
 use App\Http\Requests;
-use App\Common\Authorizable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Events\System\SystemConfigUpdated;
@@ -13,8 +12,6 @@ use App\Http\Requests\Validations\UpdateSystemConfigRequest;
 
 class SystemConfigController extends Controller
 {
-    use Authorizable;
-
     private $model_name;
 
     /**
@@ -35,6 +32,8 @@ class SystemConfigController extends Controller
     public function view()
     {
         $system = SystemConfig::orderBy('id', 'asc')->first();
+
+        $this->authorize('view', $system); // Check permission
 
         return view('admin.system.config', compact('system'));
     }

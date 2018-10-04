@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Storefront;
 
-use App\Product;
 use App\Wishlist;
+use App\Inventory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,13 +16,15 @@ class WishlistController extends Controller
      * @param  \App\Wishlist  $wishlist
      * @return \Illuminate\Http\Response
      */
-    public function add(Request $request, Product $product)
+    public function add(Request $request, Inventory $item)
     {
         $wishlist = new Wishlist;
-        $wishlist->updateOrcreate([
-            'product_id'   =>  $product->id,
+        $wishlist->updateOrCreate([
+            'inventory_id'   =>  $item->id,
+            'product_id'   =>  $item->product_id,
             'customer_id' => $request->user()->id
         ]);
+
         return back()->with('success',  trans('theme.notify.item_added_to_wishlist'));
     }
 

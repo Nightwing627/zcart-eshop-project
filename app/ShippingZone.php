@@ -29,13 +29,13 @@ class ShippingZone extends Model
      * @var array
      */
     protected $fillable = [
-                    'shop_id',
-                    'name',
-                    'tax_id',
-                    'country_ids',
-                    'state_ids',
-                    'rest_of_the_world',
-                    'active',
+                        'shop_id',
+                        'name',
+                        'tax_id',
+                        'country_ids',
+                        'state_ids',
+                        'rest_of_the_world',
+                        'active',
                     ];
 
     /**
@@ -63,16 +63,12 @@ class ShippingZone extends Model
     }
 
     /**
-     * Set the rest_of_the_world
+     * Setters
      */
     public function setRestOfTheWorldAttribute($value)
     {
         $this->attributes['rest_of_the_world'] = (bool) $value;
     }
-
-    /**
-     * Setters
-     */
     public function setCountryIdsAttribute($value)
     {
         $this->attributes['country_ids'] = serialize($value);

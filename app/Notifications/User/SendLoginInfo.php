@@ -48,13 +48,14 @@ class SendLoginInfo extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.user_created.subject', ['admin' => $this->admin, 'marketplace' => get_platform_title()]) )
-                    ->markdown('admin.mail.user.send_login_info', [
-                        'url' => route('admin.account.profile'),
-                        'admin' => $this->admin,
-                        'user' => $this->user,
-                        'password' => $this->password
-                    ]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.user_created.subject', ['admin' => $this->admin, 'marketplace' => get_platform_title()]) )
+        ->markdown('admin.mail.user.send_login_info', [
+            'url' => route('admin.account.profile'),
+            'admin' => $this->admin,
+            'user' => $this->user,
+            'password' => $this->password
+        ]);
     }
 
     /**

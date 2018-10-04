@@ -1,6 +1,18 @@
-<div class="form-group">
-  {!! Form::label('title', trans('app.form.page_title').'*') !!}
-  {!! Form::text('title', null, ['class' => isset($page) ? 'form-control' : 'form-control makeSlug', 'placeholder' => trans('app.placeholder.page_title'), 'required']) !!}
+<div class="row">
+  <div class="col-md-8 nopadding-right">
+    <div class="form-group">
+      {!! Form::label('title', trans('app.form.page_title').'*') !!}
+      {!! Form::text('title', null, ['class' => isset($page) ? 'form-control' : 'form-control makeSlug', 'placeholder' => trans('app.placeholder.page_title'), 'required']) !!}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+  <div class="col-md-4 nopadding-left">
+    <div class="form-group">
+      {!! Form::label('position', trans('app.form.view_area').'*') !!}
+      {!! Form::select('position', $positions, Null, ['class' => 'form-control select2-normal', 'required']) !!}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
 </div>
 
 @unless(isset($page))
@@ -14,6 +26,7 @@
 <div class="form-group">
   {!! Form::label('content', trans('app.form.content').'*') !!}
   {!! Form::textarea('content', null, ['class' => 'form-control summernote-long', 'placeholder' => trans('app.placeholder.content'), 'required']) !!}
+  <div class="help-block with-errors"></div>
 </div>
 
 @unless(isset($page) && in_array($page->id, config('system.freeze.pages')))

@@ -28,7 +28,7 @@ trait Imageable {
 	 */
 	public function images()
     {
-        return $this->morphMany(\App\Image::class, 'imageable')->whereNull('featured')->orderBy('order', 'asc');
+        return $this->morphMany(\App\Image::class, 'imageable')->where('featured','!=',1)->orderBy('order', 'asc');
     }
 
 	/**
@@ -42,13 +42,23 @@ trait Imageable {
     }
 
 	/**
+	 * Return the logo related to the logoable
+	 *
+	 * @return Illuminate\Database\Eloquent\Collection
+	 */
+	public function logo()
+    {
+        return $this->morphOne(\App\Image::class, 'imageable')->where('featured','!=',1);
+    }
+
+	/**
 	 * Return the featured Image related to the imageable
 	 *
 	 * @return Illuminate\Database\Eloquent\Collection
 	 */
 	public function featuredImage()
     {
-        return $this->morphOne(\App\Image::class, 'imageable')->whereNotNull('featured');
+        return $this->morphOne(\App\Image::class, 'imageable')->where('featured',1);
     }
 
 	/**
@@ -60,16 +70,9 @@ trait Imageable {
 	 */
 	public function saveImage($image, $featured = null)
 	{
-        $file = Storage::put(image_storage_dir(), $image);
+        $path = Storage::put(image_storage_dir(), $image);
 
-        return $this->image()->create([
-            'path' => $file,
-            'name' => $image->getClientOriginalName(),
-            // 'name' => str_slug($image->getClientOriginalName(), '-'),
-            'extension' => $image->getClientOriginalExtension(),
-            'featured' => $featured ? 1 : Null,
-            'size' => $image->getClientSize()
-        ]);
+        return $this->createImage($path, $image->getClientOriginalName(), $image->getClientOriginalExtension(), $image->getClientSize(), $featured);
 	}
 
 	/**
@@ -81,26 +84,24 @@ trait Imageable {
 	 */
 	public function saveImageFromUrl($url, $featured = null)
 	{
+		// Get file info and validate
     	$file_info = get_headers($url, TRUE);
+    	if( ! isset($file_info['Content-Length']) ) return;
 
-    	if( ! isset($file_info['Content-Length']) )			return;
+    	// Get file size
+    	$size = $file_info['Content-Length'];
+    	if(is_array($size))
+	    	$size =  array_key_exists(1, $size) ? $size[1] : $size[0];
 
-		$name = substr($url, strrpos($url, '/') + 1);
-		$path = image_storage_dir() . '/' . $name;
-    	$extension = substr($name, strrpos($name, '.') + 1);
-    	$size = (int) $file_info['Content-Length'];
+    	// Get file ext
+    	$extension = substr($url, strrpos($url, '.', -1) + 1);
+    	$extension = in_array($extension, config('image.mime_types')) ? $extension : 'jpeg';
 
+    	// Make path and upload
 		$path = image_storage_dir() . '/' . str_random(40) . '.' . $extension;
+    	Storage::put($path, file_get_contents($url));
 
-    	$file = Storage::put($path, file_get_contents($url));
-
-        return $this->image()->create([
-            'path' => $path,
-            'name' => $name,
-            'extension' => $extension,
-            'featured' => (bool) $featured,
-            'size' => $size,
-        ]);
+        return $this->createImage($path, $url, $extension, $size, $featured);
 	}
 
 	/**
@@ -110,6 +111,7 @@ trait Imageable {
 	 */
 	public function deleteImage($image = Null)
 	{
+		// echo "<pre>"; print_r($image); echo "</pre>"; exit();
 		if (!$image)
 			$image = $this->image;
 
@@ -130,7 +132,21 @@ trait Imageable {
 	 */
 	public function deleteFeaturedImage()
 	{
-		return $this->deleteImage($this->featuredImage);
+		if($img = $this->featuredImage)
+			$this->deleteImage($img);
+		return;
+	}
+
+	/**
+	 * Deletes the Brand Logo Image of this model.
+	 *
+	 * @return bool
+	 */
+	public function deleteLogo()
+	{
+		if($img = $this->logo)
+			$this->deleteImage($img);
+		return;
 	}
 
 	/**
@@ -143,7 +159,26 @@ trait Imageable {
 		foreach ($this->images as $image)
 			$this->deleteImage($image);
 
-		return $this->deleteFeaturedImage();
+		$this->deleteLogo();
+		$this->deleteFeaturedImage();
+
+		return;
+	}
+
+	/**
+	 * Create image model
+	 *
+	 * @return array
+	 */
+	private function createImage($path, $name, $ext = '.jpeg', $size = Null, $featured = Null)
+	{
+        return $this->image()->create([
+            'path' => $path,
+            'name' => $name,
+            'extension' => $ext,
+            'featured' => (bool) $featured,
+            'size' => $size,
+        ]);
 	}
 
 	/**

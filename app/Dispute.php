@@ -63,7 +63,7 @@ class Dispute extends Model
     */
     public function shop()
     {
-        return $this->belongsTo(Shop::class);
+        return $this->belongsTo(Shop::class)->withDefault();
     }
 
     /**
@@ -71,7 +71,7 @@ class Dispute extends Model
     */
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class)->withDefault();
     }
 
     /**
@@ -96,6 +96,17 @@ class Dispute extends Model
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    /**
+     * Setters
+     */
+    public function setProductIdAttribute($value)
+    {
+        if(is_numeric($value))
+            $this->attributes['product_id'] = $value;
+        else
+            $this->attributes['product_id'] = Null;
     }
 
     /**

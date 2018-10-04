@@ -27,6 +27,8 @@
 @endsection
 
 @section('page-script')
+    @include('plugins.dynamic-inputs')
+
     <script language="javascript" type="text/javascript">
       ;(function($, window, document) {
 

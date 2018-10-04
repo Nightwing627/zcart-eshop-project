@@ -20,9 +20,9 @@ class EloquentCoupon extends EloquentRepository implements BaseRepository, Coupo
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->get();
+            return $this->model->mine()->withCount(['customers', 'shippingZones'])->get();
 
-        return parent::all();
+        return $this->model->withCount(['customers', 'shippingZones'])->get();
     }
 
     public function customer_list($coupon)
@@ -51,6 +51,9 @@ class EloquentCoupon extends EloquentRepository implements BaseRepository, Coupo
         if ($request->input('customer_list'))
             $this->syncCustomers($coupon, $request->input('customer_list'));
 
+        if ($request->input('zone_list'))
+            $this->syncZones($coupon, $request->input('zone_list'));
+
         return $coupon;
     }
 
@@ -60,12 +63,19 @@ class EloquentCoupon extends EloquentRepository implements BaseRepository, Coupo
 
         $this->syncCustomers($coupon, $request->input('customer_list') ?: []);
 
+        $this->syncZones($coupon, $request->input('zone_list') ?: []);
+
         return $coupon;
     }
 
     public function syncCustomers($coupon, array $ids)
     {
         $coupon->customers()->sync($ids);
+    }
+
+    public function syncZones($coupon, array $ids)
+    {
+        $coupon->shippingZones()->sync($ids);
     }
 
 }

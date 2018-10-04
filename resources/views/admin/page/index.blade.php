@@ -17,6 +17,7 @@
 	          <th>{{ trans('app.image') }}</th>
 	          <th>{{ trans('app.page_title') }}</th>
 	          <th>{{ trans('app.visibility') }}</th>
+	          <th>{{ trans('app.view_position') }}</th>
 	          <th>{{ trans('app.author') }}</th>
 	          <th>{{ trans('app.date') }}</th>
 	          <th>&nbsp;</th>
@@ -39,6 +40,7 @@
 					        @endif
 			          </td>
 			          <td>{!! $page->visibilityName() !!}</td>
+			          <td>{!! $page->viewPosition() !!}</td>
 			          <td>{{ $page->author->getName() }}</td>
 			          <td class="small">
 			          	@if($page->published_at)

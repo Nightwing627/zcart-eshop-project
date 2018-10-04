@@ -100,13 +100,15 @@
         <div class="col-md-8 col-sm-offset-1">
           <div class="row">
             {!! Form::model($account, ['method' => 'PUT', 'route' => 'my.password.update', 'class' => 'form-horizontal', 'data-toggle' => 'validator']) !!}
-              <div class="form-group">
-                {!! Form::label('current_password', trans('theme.current_password').'*', ['class' => 'col-sm-4 control-label']) !!}
-                <div class="col-sm-8">
-                  {!! Form::password('current_password', ['class' => 'form-control flat', 'id' => 'current_password', 'placeholder' => trans('theme.placeholder.current_password'), 'data-minlength' => '6', 'required']) !!}
-                  <div class="help-block with-errors"></div>
+              @if($account->password)
+                <div class="form-group">
+                  {!! Form::label('current_password', trans('theme.current_password').'*', ['class' => 'col-sm-4 control-label']) !!}
+                  <div class="col-sm-8">
+                    {!! Form::password('current_password', ['class' => 'form-control flat', 'id' => 'current_password', 'placeholder' => trans('theme.placeholder.current_password'), 'data-minlength' => '6', 'required']) !!}
+                    <div class="help-block with-errors"></div>
+                  </div>
                 </div>
-              </div>
+              @endif
 
               <div class="form-group">
                 {!! Form::label('password', trans('theme.new_password').'*', ['class' => 'col-sm-4 control-label']) !!}
@@ -174,7 +176,9 @@
         @endforelse
 
         <div class="col-sm-12 text-center">
-          <a href="#" data-toggle="modal" data-target="#createAddressModal" class="btn btn-black flat">@lang('theme.button.add_new_address')</a>
+          <a href="#" data-toggle="modal" data-target="#createAddressModal" class="btn btn-black flat">
+            <i class="fa fa-address-card-o"></i> @lang('theme.button.add_new_address')
+          </a>
         </div>
       </div>
     </div><!-- /#address-tab -->
@@ -182,4 +186,5 @@
 </div><!-- /.tabpanel -->
 
 <div class="clearfix space50"></div>
+
 @include('modals.create_address')

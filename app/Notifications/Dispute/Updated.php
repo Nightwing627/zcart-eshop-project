@@ -42,8 +42,8 @@ class Updated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.dispute_updated.subject', ['order_id' => $this->reply->repliable->order->order_number]) )
-                    ->markdown('admin.mail.dispute.updated', ['url' => route('admin.support.dispute.show', $this->reply->repliable_id), 'reply' => $this->reply]);
+        ->subject( trans('notifications.dispute_updated.subject', ['order_id' => $this->reply->repliable->order->order_number]) )
+        ->markdown('admin.mail.dispute.updated', ['url' => route('admin.support.dispute.show', $this->reply->repliable_id), 'reply' => $this->reply]);
     }
 
     /**

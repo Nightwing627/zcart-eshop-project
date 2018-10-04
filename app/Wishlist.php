@@ -21,6 +21,7 @@ class Wishlist extends Model
     protected $fillable = [
                     'customer_id',
                     'product_id',
+                    'inventory_id',
                 ];
 
     /**
@@ -29,6 +30,14 @@ class Wishlist extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    /**
+     * Get the inventory for the list.
+     */
+    public function inventory()
+    {
+        return $this->belongsTo(Inventory::class);
     }
 
     /**

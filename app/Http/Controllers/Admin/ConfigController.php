@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
@@ -78,10 +77,14 @@ class ConfigController extends Controller
         event(new ShopUpdated($config->shop));
 
         if ($request->hasFile('image') || ($request->input('delete_image') == 1))
-            $config->shop->deleteImage();
-
+            $config->shop->deleteLogo();
         if ($request->hasFile('image'))
             $config->shop->saveImage($request->file('image'));
+
+        if ($request->hasFile('cover_image') || ($request->input('delete_cover_image') == 1))
+            $config->shop->deleteFeaturedImage();
+        if ($request->hasFile('cover_image'))
+            $config->shop->saveImage($request->file('cover_image'), true);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }

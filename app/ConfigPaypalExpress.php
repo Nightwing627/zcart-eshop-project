@@ -21,6 +21,15 @@ class ConfigPaypalExpress extends Model
     protected $primaryKey = 'shop_id';
 
     /**
+     * The attributes that should be casted to boolean types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'sandbox' => 'boolean',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

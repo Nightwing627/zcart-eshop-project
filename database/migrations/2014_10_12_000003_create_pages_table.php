@@ -21,6 +21,7 @@ class CreatePagesTable extends Migration
             $table->longtext('content')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->integer('visibility')->default(1);
+            $table->string('position', 50)->nullable();
             $table->softDeletes();
             $table->timestamps();
 

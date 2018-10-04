@@ -1,19 +1,8 @@
-<div class="row">
-  <div class="col-md-8 nopadding-right">
-    <div class="form-group">
-      {!! Form::label('name', trans('app.form.name') . '*', ['class' => 'with-help']) !!}
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.gift_card_name') }}"></i>
-      {!! Form::text('name', null, ['class' => 'form-control makeSlug', 'placeholder' => trans('app.placeholder.name'), 'required']) !!}
-      <div class="help-block with-errors"></div>
-    </div>
-  </div>
-  <div class="col-md-4 nopadding-left">
-    <div class="form-group">
-      {!! Form::label('active', trans('app.form.status') . '*', ['class' => 'with-help']) !!}
-      {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), 'required']) !!}
-      <div class="help-block with-errors"></div>
-    </div>
-  </div>
+<div class="form-group">
+  {!! Form::label('name', trans('app.form.name') . '*', ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.gift_card_name') }}"></i>
+  {!! Form::text('name', null, ['class' => 'form-control makeSlug', 'placeholder' => trans('app.placeholder.name'), 'required']) !!}
+  <div class="help-block with-errors"></div>
 </div>
 
 <div class="form-group">
@@ -21,6 +10,7 @@
   {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'placeholder' => trans('app.placeholder.description')]) !!}
 </div>
 
+@unless(isset($giftCard))
 <div class="row">
   <div class="col-md-6 nopadding-right">
     <div class="form-group">
@@ -50,6 +40,7 @@
     </div>
   </div>
 </div>
+@endunless
 
 <div class="row">
   <div class="col-md-4 nopadding-right">
@@ -129,4 +120,26 @@
   </div>
 </div>
 
+<div class="form-group">
+  <label for="exampleInputFile">{{ trans('app.form.featured_image') }}</label>
+  @if(isset($giftCard) && Storage::exists(optional($giftCard->image)->path))
+  <label>
+    <img src="{{ get_storage_file_url(optional($giftCard->image)->path, 'small') }}" width="" alt="{{ trans('app.featured_image') }}">
+    <span style="margin-left: 10px;">
+      {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
+    </span>
+  </label>
+  @endif
+  <div class="row">
+    <div class="col-md-9 nopadding-right">
+      <input id="uploadFile" placeholder="{{ trans('app.placeholder.featured_image') }}" class="form-control" disabled="disabled" style="height: 28px;" />
+    </div>
+    <div class="col-md-3 nopadding-left">
+      <div class="fileUpload btn btn-primary btn-block btn-flat">
+          <span>{{ trans('app.form.upload') }}</span>
+          <input type="file" name="image" id="uploadBtn" class="upload" />
+      </div>
+    </div>
+  </div>
+</div>
 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>

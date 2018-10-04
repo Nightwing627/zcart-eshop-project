@@ -106,7 +106,8 @@ return [
     'offer_end_required'            => 'When you have an offer price, the offer end date is required.',
     'offer_end_after'               => ' The offer end time must be a time after the offer start time.',
     'variants_required'             => 'Variants required',
-    'sku-unique'                    => ' has already been taken. Try new one.',
+    'sku-unique'                    => 'The sku :value has already been taken. Try new one.',
+    'sku-distinct'                  => 'Variant :attribute has a duplicate sku value.',
     'offer_price-numeric'           => ' is not a valid price value. The offer price must be a number.',
     'email_template_id_required'    => 'Email template is required.',
     // 'merchant_have_shop'            => 'This merchant have a shop.',
@@ -129,6 +130,8 @@ return [
     'shipping_range_maximum_min' => 'Maximum range can\'t be less than minimum value',
     'csv_mimes'                => 'The :attribute must be a file of type csv.',
     'import_data_required' => 'The dataset is not valid to import. Please check your data and try again.',
+    'do_action_required'    => 'You didn\'t provide the input.',
+    'do_action_invalid'    => 'The given input is not valid.',
 
     /*
     |--------------------------------------------------------------------------

@@ -44,9 +44,9 @@ class ShopCreated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    // ->from(get_sender_email(), get_sender_name())
-                    ->subject( trans('notifications.shop_created.subject') )
-                    ->markdown('admin.mail.shop.created', ['url' => route('login'), 'shop' => $this->shop]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.shop_created.subject') )
+        ->markdown('admin.mail.shop.created', ['url' => route('login'), 'shop' => $this->shop]);
     }
 
     /**

@@ -11,7 +11,17 @@
 		    $(this).hide();
 		});
 
+        // Activate the tab if the url has any #hash
+        $('.nav a').on('show.bs.tab', function (e) {
+            window.location = $(this).attr('href');
+        });
+        $(function () {
+            var hash = window.location.hash;
+            hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+        });
+
 		$(document).ready(function(){
+
 		    $(".ajax-modal-btn").show(); // show the ajax functional button when the page loaded completely
 
 		    // Initialise all plugins
@@ -22,10 +32,8 @@
 		    // Support for AJAX loaded modal window.
 		    $('body').on('click', '.ajax-modal-btn', function(e) {
 				e.preventDefault();
-				//Disable mouse pointer events and set the busy filter
-				$('body').css("pointer-events", "none");
-				$('.loader').show();
-				$(".wrapper").addClass('blur-filter');
+
+				apply_busy_filter();
 
 				var url = $(this).attr('href');
 				if (url.indexOf('#') == 0) {
@@ -33,10 +41,9 @@
 				}
 		      	else {
 			        $.get(url, function(data) {
-			        	//Enable mouse pointer events and remove the busy filter
-						$('body').css("pointer-events", "auto");
-						$(".wrapper").removeClass('blur-filter');
-						$('.loader').hide();
+
+			        	remove_busy_filter();
+
 						//Load modal data
 						$('#myDynamicModal').modal().html(data);
 
@@ -55,7 +62,7 @@
 				            window.location = "{{ route('login') }}";
 				        }
 				        else{
-				        	alert("{{ trans('responses.error') }}");
+				        	console.log("{{ trans('responses.error') }}");
 				        }
 			        });
 		      	}
@@ -82,10 +89,7 @@
 			              keys: ['enter'],
 			              btnClass: 'btn-red',
 			              action: function () {
-					      	//Disable mouse pointer events and set the busy filter
-			              	$('body').css("pointer-events", "none");
-							$('.loader').show();
-							$(".wrapper").addClass('blur-filter');
+				            apply_busy_filter();
 
 			                if (typeof url != 'undefined') {
 			                  	location.href = url;
@@ -365,7 +369,7 @@
 		        datatype: 'JSON',
 		        success : function(attribute_type)
 		        {
-		          if (attribute_type == 1)
+		          if (attribute_type == {{\App\Attribute::TYPE_COLOR}})
 		          {
 		            $('#color-option').removeClass('hidden').addClass('show');
 		          }
@@ -616,14 +620,22 @@
 	  	});
 
 	  	// Coupon form
-	  	$('input#limited').on('ifChecked', function () {
+	  	$('input#for_limited_customer').on('ifChecked', function () {
 	    	$('#customers_field').removeClass('hidden').addClass('show');
-	    	$('input#limited').attr('required', 'required');
+	    	$('select#customer_list_field').attr('required', 'required');
+	  	});
+	  	$('input#for_limited_customer').on('ifUnchecked', function () {
+	    	$('#customers_field').removeClass('show').addClass('hidden');
+	    	$('select#customer_list_field').removeAttr('required');
 	  	});
 
-	  	$('input#limited').on('ifUnchecked', function () {
-	    	$('#customers_field').removeClass('show').addClass('hidden');
-	    	$('input#limited').removeAttr('required');
+	  	$('input#for_limited_shipping_zones').on('ifChecked', function () {
+	    	$('#zones_field').removeClass('hidden').addClass('show');
+	    	$('select#zone_list_field').attr('required', 'required');
+	  	});
+	  	$('input#for_limited_shipping_zones').on('ifUnchecked', function () {
+	    	$('#zones_field').removeClass('show').addClass('hidden');
+	    	$('select#zone_list_field').removeAttr('required');
 	  	});
 	  	//END Coupon form
 
@@ -714,21 +726,21 @@
 				    var tbl = 'categories';
 					var url = '/category/';
 				}
-				else if(route.match(/product/i)){
-				    var tbl = 'products';
-					var url = '/';
+				else if(route.match(/inventory/i)){
+				    var tbl = 'inventories';
+					var url = 'product/';
 				}
 				else if(route.match(/page/i)){
 				    var tbl = 'pages';
-					var url = '/';
+					var url = 'page/';
 				}
 				else if(route.match(/blog/i)){
 				    var tbl = 'blogs';
-					var url = '/blog/';
+					var url = 'blog/';
 				}
 				else{
 				    var tbl = 'shops';
-					var url = '/shop/';
+					var url = 'shop/';
 				}
 
 			    var check = getFromPHPHelper('verifyUniqueSlug', [slug, tbl]);
@@ -738,7 +750,7 @@
 			    }
 			    else if(check == 'true'){
 				    node.closest( ".form-group" ).removeClass('has-error');
-			    	msg = "{{ config('app.url') }}" + url + slug;
+			    	msg = "{{ str_finish(config('app.url'), '/') }}" + url + slug;
 			    }
 		  	}
 
@@ -768,6 +780,11 @@
 	  	if( $('#uploadBtn').length ){
 		    document.getElementById("uploadBtn").onchange = function () {
 		      document.getElementById("uploadFile").value = this.value;
+		    };
+	  	}
+	  	if( $('#uploadBtn1').length ){
+		    document.getElementById("uploadBtn1").onchange = function () {
+		      document.getElementById("uploadFile1").value = this.value;
 		    };
 	  	}
 
@@ -930,6 +947,8 @@
 	        	return;
 	      	}
 
+			apply_busy_filter();
+
 	      	var action = this.action;
 	      	var data = $( this ).serialize();
 	      	$.ajax({
@@ -938,6 +957,8 @@
 		        data: data,
 		        success: function (data) {
 		            $('#myDynamicModal').modal('hide');
+		            remove_busy_filter();
+
 		            if (data == 'success'){
 		              	notie.alert(1, "{{ trans('responses.success') }}", 3);
 		            }
@@ -948,6 +969,8 @@
 		        },
 		        error: function (data) {
 		            $('#myDynamicModal').modal('hide');
+		            remove_busy_filter();
+
 		            if (data.status == 403){
 		              notie.alert(2, "{{ trans('responses.denied') }}", 3);
 		            }
@@ -1071,6 +1094,18 @@
 	}
 	//End Mass selection and action section
 
+	function apply_busy_filter(dom = 'body') {
+      	//Disable mouse pointer events and set the busy filter
+      	jQuery(dom).css("pointer-events", "none");
+		jQuery('.loader').show();
+		jQuery(".wrapper").addClass('blur-filter');
+	}
+	function remove_busy_filter(dom = 'body') {
+    	//Enable mouse pointer events and remove the busy filter
+		jQuery(dom).css("pointer-events", "auto");
+		jQuery(".wrapper").removeClass('blur-filter');
+		jQuery('.loader').hide();
+	}
 	/*************************************
 	*** END Initialise application plugins ***
 	**************************************/
@@ -1085,7 +1120,7 @@
 	 */
 	function getFromPHPHelper(funcName, args = null)
 	{
-	    var url = "{{ url('admin/system/ajax/getFromPHPHelper') }}";
+	    var url = "{{ route('helper.getFromPHPHelper') }}";
 	    var result = 0;
 	    $.ajax({
 	        url: url,

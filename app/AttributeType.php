@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class AttributeType extends Model
 {
-
     /**
      * The database table used by the model.
      *

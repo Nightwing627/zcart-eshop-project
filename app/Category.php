@@ -22,7 +22,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'description', 'active'];
+    protected $fillable = ['name', 'slug', 'description', 'active', 'featured'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -30,6 +30,14 @@ class Category extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * Get all listings for the category.
+     */
+    public function listings()
+    {
+        return $this->belongsToMany(Inventory::class, 'category_product', null, 'product_id', null, 'product_id');
+    }
 
     /**
      * Get the subGroups for the category.
@@ -48,6 +56,14 @@ class Category extends Model
     }
 
     /**
+     * Setters
+     */
+    public function setFeaturedAttribute($value)
+    {
+        $this->attributes['featured'] = (bool) $value;
+    }
+
+    /**
      * Get subGroups list for the category.
      *
      * @return array
@@ -61,6 +77,16 @@ class Category extends Model
     // {
     //     return $this->where('slug', $slug)->firstOrFail();
     // }
+
+    /**
+     * Scope a query to only include Featured records.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFeatured($query)
+    {
+        return $query->where('featured', 1);
+    }
 
     /**
      * Scope a query to only include active categories.

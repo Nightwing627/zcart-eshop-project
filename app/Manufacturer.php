@@ -59,6 +59,14 @@ class Manufacturer extends Model
     }
 
     /**
+     * Get all of the inventories for the country.
+     */
+    public function inventories()
+    {
+        return $this->hasManyThrough(Inventory::class, Product::class);
+    }
+
+    /**
      * Setters
      */
     // public function setSlugAttribute($value)

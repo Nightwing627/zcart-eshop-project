@@ -11,6 +11,8 @@ class Packaging extends Model
 {
     use SoftDeletes, Imageable;
 
+    const FREE_PACKAGING_ID = 1;
+
     /**
      * The database table used by the model.
      *
@@ -73,6 +75,16 @@ class Packaging extends Model
     public function setDefaultAttribute($value)
     {
         $this->attributes['default'] = (bool) $value;
+    }
+
+    /**
+     * Scope a query to only include active shops.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
     }
 
     /**

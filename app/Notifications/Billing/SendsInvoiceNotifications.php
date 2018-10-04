@@ -59,9 +59,11 @@ class SendsInvoiceNotifications extends Notification implements ShouldQueue
                             'product' => 'Subscription',
                         ];
 
-        return (new MailMessage)->subject( trans('notifications.invoice_created.subject', ['marketplace' => get_platform_title()]) )
-                                ->markdown('admin.mail.billing.invoice_otification', ['url' => route('login'), 'shop' => $this->shop])
-                                ->attachData($this->invoice->pdf($invoiceData), 'invoice.pdf');
+        return (new MailMessage)
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.invoice_created.subject', ['marketplace' => get_platform_title()]) )
+        ->markdown('admin.mail.billing.invoice_otification', ['url' => route('login'), 'shop' => $this->shop])
+        ->attachData($this->invoice->pdf($invoiceData), 'invoice.pdf');
     }
 
     /**

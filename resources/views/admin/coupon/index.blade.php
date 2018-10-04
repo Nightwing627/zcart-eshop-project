@@ -11,40 +11,41 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-short">
+			<table class="table table-hover table-option">
 				<thead>
 					<tr>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.code') }}</th>
+						<th>{{ trans('app.restricted') }}</th>
 						<th>{{ trans('app.value') }}</th>
 						<th>{{ trans('app.starting_time') }}</th>
 						<th>{{ trans('app.ending_time') }}</th>
-						<th>{{ trans('app.restricted') }}</th>
-						<th>{{ trans('app.status') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($coupons as $coupon )
 					<tr>
-						<td>{{ $coupon->name }}</td>
-						<td>{{ $coupon->code }}</td>
 						<td>
-							{{ $coupon->type == 'amount' ? get_formated_currency($coupon->value) : get_formated_decimal($coupon->value) . ' ' . trans('app.percent') }}
+							{{ $coupon->name }}
+							@if($coupon->ending_time < \Carbon\Carbon::now())
+					          	<span class="label label-default indent10">{{ strtoupper(trans('app.expired')) }}</span>
+							@elseif( ! $coupon->isActive() )
+					          	<span class="label label-info indent10">{{ strtoupper(trans('app.inactive')) }}</span>
+							@endif
+						</td>
+						<td>{{ $coupon->code }}</td>
+						<td>{{ get_yes_or_no(($coupon->customers_count || $coupon->shipping_zones_count)) }}</td>
+						<td>
+							<strong>
+								{{ $coupon->type == 'amount' ? get_formated_currency($coupon->value) : get_formated_decimal($coupon->value) . ' ' . trans('app.percent') }}
+							</strong>
 						</td>
 						<td>
 							{{ $coupon->starting_time ? $coupon->starting_time->toDayDateTimeString() : '' }}
 						</td>
 						<td>
 							{{ $coupon->ending_time ? $coupon->ending_time->toDayDateTimeString() : '' }}
-						</td>
-						<td>{{ get_yes_or_no($coupon->limited) }}</td>
-						<td>
-							@if($coupon->ending_time < \Carbon\Carbon::now())
-								{{ trans('app.expired') }}
-							@else
-								{{ ($coupon->active) ? trans('app.active') : trans('app.inactive') }}
-							@endif
 						</td>
 						<td class="row-options">
 							@can('view', $coupon)

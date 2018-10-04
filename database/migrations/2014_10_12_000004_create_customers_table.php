@@ -17,12 +17,17 @@ class CreateCustomersTable extends Migration
             $table->string('name');
             $table->string('nice_name')->nullable();
             $table->string('email')->unique();
-            $table->string('password', 60);
+            $table->string('password', 60)->nullable();
             $table->date('dob')->nullable();
             $table->string('sex')->nullable();
             $table->longtext('description')->nullable();
             $table->timestampTz('last_visited_at')->nullable();
             $table->ipAddress('last_visited_from')->nullable();
+            // $table->string('braintree_id')->nullable();
+            $table->string('stripe_id')->nullable();
+            $table->text('card_holder_name')->nullable();
+            $table->string('card_brand')->nullable();
+            $table->string('card_last_four')->nullable();
             $table->boolean('active')->nullable();
             $table->boolean('accepts_marketing')->nullable();
             $table->string('verification_token', 100)->nullable();

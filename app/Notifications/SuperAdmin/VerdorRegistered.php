@@ -51,8 +51,9 @@ class VerdorRegistered extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.verdor_registered.subject') )
-                    ->markdown('admin.mail.super_admin.verdor_registered', ['url' => route('admin.vendor.shop.index'), 'merchant' => $this->merchant]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.verdor_registered.subject') )
+        ->markdown('admin.mail.super_admin.verdor_registered', ['url' => route('admin.vendor.shop.index'), 'merchant' => $this->merchant]);
     }
 
     /**

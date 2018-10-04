@@ -19,9 +19,11 @@ class ShopsSeeder extends Seeder
             'legal_name' => 'Demo Shop Ltd.',
             'slug' => 'demo-shop',
             'email' => 'shop@demo.com',
+            'current_billing_plan' => 'business',
             'description' => 'The shop is for demo application.',
             'timezone_id' => 73,
         	'active' => 1,
+            'trial_ends_at' => Carbon::Now()->addDays(13),
             'created_at' => Carbon::Now(),
             'updated_at' => Carbon::Now(),
         ]);

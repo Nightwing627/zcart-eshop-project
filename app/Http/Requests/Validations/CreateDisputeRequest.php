@@ -43,8 +43,8 @@ class CreateDisputeRequest extends Request
            'dispute_type_id' => 'required',
            'order_received' => 'required',
            'description' => 'required',
-           'product_id' => 'nullable|numeric',
-           'refund_amount' => 'nullable|numeric|max:' . $order->grand_total,
+           'product_id' => 'required_with:order_received',
+           'refund_amount' => 'required|numeric|max:' . $order->grand_total,
         ];
     }
 
@@ -57,6 +57,7 @@ class CreateDisputeRequest extends Request
     {
         return [
             'dispute_type_id.required' => trans('theme.validation.dispute_type_id_required'),
+            'product_id.required_with' => trans('theme.validation.dispute_product_id_required_with'),
         ];
     }
 }

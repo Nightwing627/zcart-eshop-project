@@ -2,6 +2,7 @@
 <footer class="main-footer">
   <!-- To the right -->
   <div class="pull-right hidden-xs">
+    {{-- zCart version: 1.0 --}}
     Developed by <a href="#">Munna Khan</a>
   </div>
   <!-- Default to the left -->

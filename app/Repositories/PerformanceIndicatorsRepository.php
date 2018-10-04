@@ -64,13 +64,12 @@ class PerformanceIndicatorsRepository implements Contract
     public function subscribers(SubscriptionPlan $plan)
     {
         return DB::table('subscriptions')
-                    ->where('stripe_plan', $plan->plan_id)
-                    ->where(function ($query) {
-                        $query->whereNull('trial_ends_at')
-                              ->orWhere('trial_ends_at', '<=', Carbon::now());
-                    })
-                    ->whereNull('ends_at')
-                    ->count();
+        ->where('stripe_plan', $plan->plan_id)
+        ->where(function ($query) {
+            $query->whereNull('trial_ends_at')
+            ->orWhere('trial_ends_at', '<=', Carbon::now());
+        })
+        ->whereNull('ends_at')->count();
     }
 
     /**

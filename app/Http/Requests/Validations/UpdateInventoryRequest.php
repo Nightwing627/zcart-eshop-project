@@ -27,11 +27,13 @@ class UpdateInventoryRequest extends Request
 
         return [
             'sku' => 'required|composite_unique:inventories,sku, '.$id,
+            'title' => 'required',
             'sale_price' => 'required|numeric',
             'offer_price' => 'nullable|numeric',
             'available_from' => 'nullable|date',
             'offer_start' => 'nullable|date|required_with:offer_price',
             'offer_end' => 'nullable|date|required_with:offer_price|after:offer_start',
+            'slug' => 'required|composite_unique:inventories,slug, '.$id,
             'image' => 'mimes:jpg,jpeg,png,gif',
         ];
     }

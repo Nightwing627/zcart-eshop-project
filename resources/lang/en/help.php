@@ -13,6 +13,10 @@ return [
     |
     */
 
+    'add_input_field' => 'Add input field',
+
+    'remove_input_field' => 'Remove this input field',
+
     'marketplace_name' => 'The name of the marketplace name. Visitors will see this name.',
 
     'system_legal_name' => 'The legal name of the business',
@@ -32,6 +36,12 @@ return [
     'set_role_permissions' => 'Set role permissions very carefully. Choose the \'Role Type\' to get approperit modules.',
 
     'permission_modules' => 'Enable the module to set permission for the module',
+
+    'shipping_rate_delivery_takes' => 'Be specific, customer will see this.',
+
+    'type_dbreset' => 'Type the exact word "RESET" in the box to confirm your wish.',
+
+    'type_environment' => 'Type the exact word "ENVIRONMENT" in the box to confirm your wish.',
 
     'module' => [
         'name' => 'All users under this role will be able to do specified actions to manage :module.',
@@ -54,6 +64,8 @@ return [
     'currency_decimalpoint' => 'Example: 13.21, 13,21',
 
     'currency_thousands_separator' => 'Example: 1,000, 1.000, 1 000',
+
+    'cover_img_size' => 'Image size should be 1280x300px',
 
     'slug' => 'Slug are usually a search engine friendly URL',
 
@@ -85,9 +97,9 @@ return [
 
     'shop_status' => 'If active, the shop will be live immediately.',
 
-    'shop_maintenance_mode_handle' => 'If maintenance mode is on, the shop will be offline and the maintenance mode flag will be shown on the shop\'s landing page.',
+    'shop_maintenance_mode_handle' => 'If maintenance mode is on, the shop will be offline and all listings will be down from the marketplace until maintenance off.',
 
-    'system_maintenance_mode_handle' => 'If maintenance mode is on, the marketplace will be offline and the maintenance mode flag will be shown to the visitors',
+    'system_maintenance_mode_handle' => 'If maintenance mode is on, the marketplace will be offline and the maintenance mode flag will be shown to the visitors. Still merchants can access their admin panel.',
 
     'system_physical_address' => 'The physical location of the marketplace/office',
 
@@ -140,6 +152,12 @@ return [
     'required_card_upfront' => 'Do you want to take card information when merchant register?',
 
     'leave_empty_to_save_as_draft' => 'Leave empty to save as draft',
+
+    'logo_img_size' => 'Logo image size should be minimum 300x300px',
+
+    'brand_logo_size' => 'Logo image size should be 120x40px and .png',
+
+    'brand_icon_size' => 'Icon image size should be 32x32px and .png',
 
     'config_alert_quantity' => 'A notification email will be send your inventory goes below the alert quantity',
 
@@ -204,6 +222,16 @@ return [
     // 'external_url' => 'If you own a website you can put the external link here',
 
     'shop_external_url' => 'If you own a website you can put the external link here, the url can be set as shop\'s landing page.',
+
+    'product_name' => 'Customers will not see this. This name only helps merchants to find the item for listing.',
+
+    'product_featured_image' =>  'Customers will not see this. This only helps merchants to find the item for listing.',
+
+    'product_images' => 'Customers will see this images only if the merchant\'s listing has no images to display.',
+
+    'product_active' => 'Merchants will find active items only.',
+
+    'product_description' => 'Customers will see this. This is the core and common product description.',
 
     'model_number' => 'An identifier of a product given by its manufacturer. Not required but recommended',
 
@@ -363,6 +391,8 @@ return [
 
     'shipping_zone_carrier' => 'You can link the shipping carrier. Customer will see this at checkout.',
 
+    'free_shipping' => 'If enabled, The free shipping label will be displayed on the product listing page.',
+
     'shipping_rate' => 'Check the \'Free shipping\' option or give 0 amount for free shipping',
 
     'shipping_zone_tax' => 'This tax profile will be applicable when customer make a purchase from this shipping zone',
@@ -425,9 +455,11 @@ return [
 
     'exclude_offer_items' => 'Exclude items that already have a running offer or discount',
 
-    'coupon_partial_use' => 'Allow partial use of the total coupon value',
+    // 'coupon_partial_use' => 'Allow partial use of the total coupon value',
 
-    'coupon_limited' => 'Choose if you want to make the coupon for specific customers only',
+    'coupon_limited_to_customers' => 'Choose if you want to make the coupon for specific customers only',
+
+    'coupon_limited_to_shipping_zones' => 'Choose if you want to make the coupon for specific shipping zones only',
 
     'coupon_limited_to' => 'Use email address or name to find customers',
 
@@ -435,9 +467,9 @@ return [
 
     'gift_card_name' => 'The name of the gift card.',
 
-    'gift_card_pin_code' => 'The unique secret code. The pin code is the passcode for the card.',
+    'gift_card_pin_code' => 'The unique secret code. The pin code is the passcode for the card. You can\'t change this value later.',
 
-    'gift_card_serial_number' => 'The unique serial number for the card.',
+    'gift_card_serial_number' => 'The unique serial number for the card. You can\'t change this value later.',
 
     'gift_card_value' => 'The value of the card. The customer will receive same amount of discount.',
 
@@ -503,6 +535,8 @@ return [
 
     'google_analytic_report' => 'You should only enable this, If the system is configured with Google analytics. Otherwise, it may cause errors. Check the documentation for help. Alternatively you can use the application\'s built in report system. ',
 
+    'inventory_linked_items' => 'The linked items will display on the product page as frequently bought together items. This is optional but important.',
+
     'notify_new_message' => 'Send me a notification when a new message arrived',
 
     'notify_alert_quantity' => 'Send me a notification when any item on my inventory reach the alert quantity level',
@@ -529,11 +563,13 @@ return [
 
     'user_category_slug' => 'Use category <strong>slug</strong> in category field.',
 
-    'cat_cover_img' => 'This image will display on the top of category page',
+    'cover_img' => 'This image will display on the top of the :page page',
 
     'cat_grp_img' => 'This image will display on the background of the category dropdown box',
 
     'cat_grp_desc' => 'Customer will not see this. But Merchants will see this.',
+
+    'inactive_for_back_office' => 'If inactive, Customers can still visit the :page page. But merchants will not able to use this :page for future listing.',
 
     'invalid_rows_will_ignored' => 'Invalid rows will be <strong>ignored</strong>.',
 

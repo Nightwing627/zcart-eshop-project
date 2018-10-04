@@ -26,6 +26,7 @@ class CreateOrderTable extends Migration
             $table->string('order_number')->nullable();
             $table->integer('shop_id')->unsigned()->nullable();
             $table->bigInteger('customer_id')->unsigned()->nullable();
+            $table->integer('ship_to')->unsigned()->nullable();
             $table->integer('shipping_zone_id')->unsigned()->nullable();
             $table->integer('shipping_rate_id')->unsigned()->nullable();
             $table->integer('packaging_id')->unsigned()->nullable();
@@ -33,7 +34,7 @@ class CreateOrderTable extends Migration
             $table->integer('quantity')->unsigned();
 
             $table->decimal('taxrate', 20, 6)->nullable();
-            $table->decimal('shipping_weight', 20, 2)->nullable();
+            $table->decimal('shipping_weight', 20, 6)->nullable();
             $table->decimal('total', 20, 6)->nullable();
             $table->decimal('discount', 20, 6)->nullable();
             $table->decimal('shipping', 20, 6)->nullable();
@@ -49,6 +50,7 @@ class CreateOrderTable extends Migration
             $table->date('shipping_date')->nullable();
             $table->date('delivery_date')->nullable();
             $table->string('tracking_id')->nullable();
+            $table->bigInteger('coupon_id')->unsigned()->nullable();
             $table->integer('carrier_id')->unsigned()->nullable();
 
             $table->integer('payment_status')->default(1);

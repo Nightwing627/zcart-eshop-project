@@ -22,9 +22,9 @@
       {!! Form::label('code', trans('app.form.code') . '*', ['class' => 'with-help']) !!}
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.coupon_code') }}"></i>
       <div class="input-group code-field">
-        {!! Form::text('code', null, ['class' => 'form-control code', 'placeholder' => trans('app.placeholder.code'), 'required']) !!}
+        {!! Form::text('code', null, ['class' => 'form-control code', 'placeholder' => trans('app.placeholder.code'), isset($coupon) ? 'disabled' : 'required']) !!}
         <span class="input-group-btn">
-          <button id="coupon" class="btn btn-lg btn-default generate-code" type="button" ><i class="fa fa-rocket"></i> Generate</button>
+          <button id="coupon" class="btn btn-lg btn-default generate-code" type="button" {{ isset($coupon) ? 'disabled' : '' }}><i class="fa fa-rocket"></i> Generate</button>
         </span>
       </div>
       <div class="help-block with-errors"></div>
@@ -37,7 +37,7 @@
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.coupon_value') }}"></i>
       <div class="input-group">
         {!! Form::number('value' , null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.coupon_value'), 'required']) !!}
-        {!! Form::select('type', ['amount' => config('system_settings.currency_symbol') ?: '$', 'percent' => trans('app.percent')], null, ['class' => 'selectpicker', 'required']) !!}
+        {!! Form::select('type', ['amount' => config('system_settings.currency_symbol') ?: '$', 'percent' => trans('app.percent')], null, ['class' => 'selectpicker']) !!}
       </div>
       <div class="help-block with-errors"></div>
     </div>
@@ -85,11 +85,10 @@
   <div class="col-md-6 nopadding-right">
     <div class="form-group">
       <div class="input-group">
-        {{ Form::hidden('exclude_tax_n_shipping', 0) }}
-        {!! Form::checkbox('exclude_tax_n_shipping', null, null, ['id' => 'exclude_tax_n_shipping', 'class' => 'icheckbox_line']) !!}
-        {!! Form::label('exclude_tax_n_shipping', trans('app.form.exclude_tax_n_shipping')) !!}
+        {!! Form::checkbox('for_limited_shipping_zones', null, (isset($coupon) && $coupon->forLimitedZone()), ['id' => 'for_limited_shipping_zones', 'class' => 'icheckbox_line']) !!}
+        {!! Form::label('for_limited_shipping_zones', trans('app.form.limited_to_shipping_zone')) !!}
         <span class="input-group-addon" id="">
-          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.exclude_tax_n_shipping') }}"></i>
+          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.coupon_limited_to_shipping_zones') }}"></i>
         </span>
       </div>
     </div>
@@ -98,51 +97,25 @@
   <div class="col-md-6 nopadding-left">
     <div class="form-group">
       <div class="input-group">
-        {{ Form::hidden('exclude_offer_items', 0) }}
-        {!! Form::checkbox('exclude_offer_items', null, null, ['class' => 'icheckbox_line']) !!}
-        {!! Form::label('exclude_offer_items', trans('app.form.exclude_offer_items')) !!}
+        {!! Form::checkbox('for_limited_customer', null, (isset($coupon) && $coupon->forLimitedCustomer()), ['id' => 'for_limited_customer', 'class' => 'icheckbox_line']) !!}
+        {!! Form::label('for_limited_customer', trans('app.form.limited_to_customer')) !!}
         <span class="input-group-addon" id="">
-          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.exclude_offer_items') }}"></i>
-        </span>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-6 nopadding-right">
-    <div class="form-group">
-      <div class="input-group">
-        {{ Form::hidden('partial_use', 0) }}
-        {!! Form::checkbox('partial_use', null, null, ['id' => 'partial_use', 'class' => 'icheckbox_line']) !!}
-        {!! Form::label('partial_use', trans('app.form.allow_partial_use')) !!}
-        <span class="input-group-addon" id="">
-          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.coupon_partial_use') }}"></i>
-        </span>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-6 nopadding-left">
-    <div class="form-group">
-      <div class="input-group">
-        {{ Form::hidden('limited', 0) }}
-        {!! Form::checkbox('limited', null, null, ['id' => 'limited', 'class' => 'icheckbox_line']) !!}
-        {!! Form::label('limited', trans('app.form.coupon_limited')) !!}
-        <span class="input-group-addon" id="">
-          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.coupon_limited') }}"></i>
+          <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.coupon_limited_to_customers') }}"></i>
         </span>
       </div>
     </div>
   </div>
 </div>
 
-<div id="customers_field" class="
-  {{
-    (
-      isset($coupon) &&
-      $coupon->limited
-    )
-    ? 'show' : 'hidden'
-  }}">
+<div id="zones_field" class="{{ (isset($coupon) && $coupon->forLimitedZone()) ? 'show' : 'hidden' }}">
+    <div class="form-group">
+      {!! Form::label('zone_list[]', trans('app.form.shipping_zones').'*', ['class' => 'with-help']) !!}
+      {!! Form::select('zone_list[]', $shipping_zones , Null, ['id' => 'zone_list_field', 'class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
+      <div class="help-block with-errors"></div>
+    </div>
+</div>
+
+<div id="customers_field" class="{{ (isset($coupon) && $coupon->forLimitedCustomer()) ? 'show' : 'hidden' }}">
 
   @include('admin.partials._search_customer_multiple')
 

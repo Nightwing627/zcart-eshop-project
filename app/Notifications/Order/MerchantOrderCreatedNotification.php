@@ -44,8 +44,9 @@ class MerchantOrderCreatedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.merchant_order_created_notification.subject', ['order' => $this->order->order_number]) )
-                    ->markdown('admin.mail.order.merchant_order_created_notification', ['url' => url('admin.order.order.show', $this->order->id), 'order' => $this->order]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.merchant_order_created_notification.subject', ['order' => $this->order->order_number]) )
+        ->markdown('admin.mail.order.merchant_order_created_notification', ['url' => url('admin.order.order.show', $this->order->id), 'order' => $this->order]);
     }
 
     /**
@@ -58,7 +59,7 @@ class MerchantOrderCreatedNotification extends Notification
     {
         return [
             'order' => $this->order->order_number,
-            'customer' => $this->order->customer->getName(),
+            'customer' => $this->order->customer->name,
         ];
     }
 }

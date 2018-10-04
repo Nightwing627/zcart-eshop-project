@@ -26,6 +26,7 @@ class CreatePaymentMethodsTable extends Migration
             $table->text('admin_description')->nullable();
             $table->text('admin_help_doc_link')->nullable();
             $table->boolean('enabled')->default(1);
+            $table->integer('order')->default(99);
             $table->timestamps();
         });
 

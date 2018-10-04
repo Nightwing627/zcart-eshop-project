@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'zCart'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Dhaka',
+    'timezone' => env('APP_TIMEZONE', 'America/New_York'),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('APP_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -173,9 +173,9 @@ return [
         'Intervention\Image\ImageServiceProvider',
         'Laracasts\Flash\FlashServiceProvider',
         Laravel\Scout\ScoutServiceProvider::class,
-        TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Ixudra\Curl\CurlServiceProvider::class,
+        Anouar\Paypalpayment\PaypalpaymentServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -249,6 +249,7 @@ return [
         'Flash' => 'Laracasts\Flash\Flash',
         'Curl' => Ixudra\Curl\Facades\Curl::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Paypalpayment'   => Anouar\Paypalpayment\Facades\PaypalPayment::class,
 
     ],
 

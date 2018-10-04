@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Storefront\Auth;
 
 use Auth;
 use Socialite;
+use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -66,9 +67,9 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function redirectToProvider()
+    public function redirectToProvider($provider)
     {
-        return Socialite::driver('facebook')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
     /**
@@ -76,11 +77,36 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback()
+    public function handleProviderCallback(Request $request, $provider)
     {
-        $user = Socialite::driver('facebook')->user();
+        try {
+            $user = Socialite::driver($provider)->stateless()->user();
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = json_decode($e->getResponse()->getBody()->getContents(), true);
 
-        // $user->token;
+            return redirect()->route('customer.login')
+            ->withErrors(trans('theme.notify.authentication_failed', ['msg' => $response['error']['message']]));
+        }
+
+        $customer = Customer::where('email', $user->email)->first();
+        if ($customer){
+            Auth::guard('customer')->login($customer);
+
+            return redirect()->intended('/')->with('success', trans('theme.notify.logged_in_successfully'));
+        }
+
+        $customer = new Customer;
+        $customer->name = $user->getName();
+        $customer->nice_name = $user->getNickname();
+        $customer->email = $user->getEmail();
+        $customer->active = 1;
+        $customer->save();
+
+        $customer->saveImageFromUrl($user->avatar_original ?? $user->getAvatar());
+
+        Auth::guard('customer')->login($customer);
+
+        return redirect()->intended('/')->with('success', trans('theme.notify.logged_in_successfully'));
     }
 
     /**
@@ -108,7 +134,7 @@ class LoginController extends Controller
       if ($this->attemptLogin($request)) {
         // if successful, then redirect to their intended location
 
-        return redirect()->intended('/')->with('success', trans('theme.notify.logged_in_successfully'));
+        return redirect()->intended(url()->previous())->with('success', trans('theme.notify.logged_in_successfully'));
       }
 
       // If the login attempt was unsuccessful we will increment the number of attempts
@@ -145,6 +171,6 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect('/')->with('success', trans('theme.notify.logged_out_successfully'));
+        return redirect()->to('/')->with('success', trans('theme.notify.logged_out_successfully'));
     }
 }

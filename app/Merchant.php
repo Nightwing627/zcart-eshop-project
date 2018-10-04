@@ -146,7 +146,7 @@ class Merchant extends Authenticatable
     */
     public function shop()
     {
-        return $this->belongsTo(Shop::class);
+        return $this->belongsTo(Shop::class)->withDefault();
     }
 
     /**
@@ -154,7 +154,7 @@ class Merchant extends Authenticatable
     */
     public function owns()
     {
-        return $this->hasOne(Shop::class, 'owner_id');
+        return $this->hasOne(Shop::class, 'owner_id')->withDefault();
     }
 
     /**

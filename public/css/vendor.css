@@ -3147,8 +3147,7 @@ body {
   left: 50%;
   z-index: 10;
 }
-.loader
-{
+.loader {
   display: none;
   width:200px;
   height: 200px;
@@ -3158,7 +3157,7 @@ body {
   text-align:center;
   margin-left: -50px;
   margin-top: -100px;
-  z-index:2;
+  z-index:1100;
   overflow: auto;
 }
 
@@ -3440,6 +3439,18 @@ a:focus {
 .main-header .navbar-brand {
   color: #fff;
 }
+.brand-logo {
+  max-width: 300px;
+  max-height: 200px;
+}
+.brand-logo.sm {
+  max-width: 140px;
+  max-height: 50px;
+}
+.brand-icon {
+  max-width: 64px;
+  max-height: 64px;
+}
 .content-header {
   position: relative;
   padding: 15px 15px 0 15px;
@@ -3654,6 +3665,10 @@ a:focus {
   border-radius: 0;
 }
 
+.jconfirm .jconfirm-box .jconfirm-buttons button,
+.jconfirm.jconfirm-white .jconfirm-box, .jconfirm.jconfirm-light .jconfirm-box {
+  border-radius: 0;
+}
 
 /* Navbar */
 .main-header .navbar .nav > li > a:hover,
@@ -6072,6 +6087,7 @@ table.table{
 .table tr td.row-options {
   text-align: right;
   padding-right: 10px;
+  min-width: 30px;
 }
 .table-bordered {
   border: 1px solid #f4f4f4;
@@ -6596,7 +6612,7 @@ li.dt-button.button-page-length.active a{
 .modal-header {
     color: #444;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 10px 10px 5px 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
     /*padding: 15px 0 8px;*/
@@ -8696,7 +8712,6 @@ li.dt-button.button-page-length.active a{
 }
 .admin-user-widget-title {
   display: block;
-  font-weight: bold;
   font-size: 18px;
 }
 .admin-user-widget-text {

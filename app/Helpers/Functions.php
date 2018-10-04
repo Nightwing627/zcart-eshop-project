@@ -1,6 +1,7 @@
 <?php
 
 use App\System;
+use Illuminate\Support\Facades\Auth;
 
 if ( ! function_exists('check_internet_connection') )
 {
@@ -67,6 +68,23 @@ if ( ! function_exists('get_site_title') )
     }
 }
 
+if ( ! function_exists('get_social_media_links') )
+{
+    /**
+     * Return social_media_links
+     */
+    function get_social_media_links()
+    {
+        $media = ['facebook','twitter','google_plus','pinterest','instagram','youtube'];
+        $links = [];
+        foreach ($media as $value) {
+            if ($link = config('system_settings.'.$value.'_link'))
+                $links[str_replace('_', '-', $value)] = $link;
+        }
+        return $links;
+    }
+}
+
 if ( ! function_exists('get_shop_url') )
 {
     /**
@@ -130,6 +148,17 @@ if ( ! function_exists('is_serialized') )
     }
 }
 
+if ( ! function_exists('remove_url_parameter') )
+{
+    /**
+     * Remove given parameter from the given url str
+     */
+    function remove_url_parameter($url, $key = false)
+    {
+        return preg_replace( '/'. ($key ? '(\&|)' . $key . '(\=(.*?)((?=&(?!amp\;))|$)|(.*?)\b)' : '(\?.*)').'/i' , '', $url);
+    }
+}
+
 if ( ! function_exists('get_gravatar_url') )
 {
     function get_gravatar_url($email, $size = 'small')
@@ -155,7 +184,7 @@ if ( ! function_exists('get_sender_email') )
         if ($shop)
             return config('shop_settings.default_sender_email_address') ?: config('mail.from.address');
 
-        return config('system_settings.default_sender_email_address') ?: config('mail.from.address');
+        return config('system_settings.default_sender_email_address') ?? get_value_from(1, 'systems', 'default_sender_email_address') ?? config('mail.from.address');
     }
 }
 
@@ -169,9 +198,60 @@ if ( ! function_exists('get_sender_name') )
         if ($shop)
             return config('shop_settings.default_email_sender_name') ?: config('mail.from.name');
 
-        return config('system_settings.default_email_sender_name') ?: config('mail.from.name');
+        return config('system_settings.default_email_sender_name') ?? get_value_from(1, 'systems', 'default_email_sender_name') ?? config('mail.from.name');
     }
 }
+
+if ( ! function_exists('get_address_str_from_request_data') )
+{
+    function get_address_str_from_request_data($request)
+    {
+        $state = is_numeric($request->state_id) ? get_value_from($request->state_id, 'states', 'name') : $request->state_id;
+
+        $str = array();
+        $str [] = $request->address_title;
+        $str [] = $request->address_line_1;
+        $str [] = $request->address_line_2;
+        $str []= $request->city;
+        $str []= $state . ' ' . $request->zip_code;
+        $str []= is_numeric($request->country_id) ? get_value_from($request->country_id, 'countries', 'name') : $request->country_id;
+        if($request->phone)
+            $str [] =  trans('app.phone') . ': ' . e($request->phone);
+
+        return implode(', ', array_filter($str));
+    }
+}
+
+if ( ! function_exists('address_str_to_html') )
+{
+    function address_str_to_html($address, $separator = '<br/>')
+    {
+        $addressStr = str_replace(',', $separator, $address);
+
+        $return = '<address>' . $addressStr . '</address>';
+
+        return $return;
+    }
+}
+
+if ( ! function_exists('address_str_to_geocode_str') )
+{
+    function address_str_to_geocode_str($address)
+    {
+        $t_arr = explode(',', $address);
+        array_shift($t_arr); // Remove address titme/name
+
+        // Remove phone number from address
+        if(preg_match('/^[0-9 +-]*$/', end($t_arr)))
+            array_pop($t_arr);
+
+        // build str string
+        $str = trim( implode(',', array_filter($t_arr)) );
+
+        return str_replace(' ', '+', $str);
+    }
+}
+
 /**
  * Get latitude and longitude of an address from Google API
  */
@@ -303,6 +383,7 @@ if ( ! function_exists('get_storage_file_url') )
         if ( !$path )
             return get_placeholder_img($size);
 
+        // return asset("image/{$path}?p={$size}");
         return url("image/{$path}?p={$size}");
     }
 }
@@ -314,44 +395,44 @@ if ( ! function_exists('get_placeholder_img') )
         $size = config("image.sizes.{$size}");
 
         if ($size && is_array($size))
-            return "http://placehold.it/{$size['w']}x{$size['h']}/eee?text=" . trans('app.no_img_available');
+            return "https://placehold.it/{$size['w']}x{$size['h']}/eee?text=" . trans('app.no_img_available');
 
-        return 'images/demo/no_img.png';
+        return url("images/demo/no_img.png");
     }
 }
 
 if ( ! function_exists('get_product_img_src') )
 {
-    function get_product_img_src($product = null, $size = 'medium', $type = 'primary')
+    function get_product_img_src($item = null, $size = 'medium', $type = 'primary')
     {
-        if ($product){
-            if ( !($product instanceof \App\Product) && is_int($product) )
-                $product = \App\Product::findorFail($product);
+        if (is_int($item) && !($item instanceof \App\Inventory))
+            $item = \App\Inventory::findorFail($item);
 
-            $hasFeaturedImage = $product->featuredImage ? TRUE : FALSE;
-            $images_count = $product->images->count();
+        $images_count = $item->images->count();
 
-            if($type == 'alt'){
-                if($hasFeaturedImage && $images_count){
-                    $path = $product->images->first()->path;
-                }
-                else if($images_count > 1){
-                    $imgs = $product->images->toArray();
-                    $path = $imgs[1]['path'];
-                }
+        if($images_count){
+            if($type == 'alt' && $images_count > 1){
+                $imgs = $item->images->toArray();
+                $path = $imgs[1]['path'];
             }
             else{
-                if($hasFeaturedImage)
-                    $path = $product->featuredImage->path;
-                else if($images_count)
-                    $path = $product->images->first()->path;
+                $path = $item->images->first()->path;
             }
-
-            if(isset($path))
-                return url("image/{$path}?p={$size}");
+            return url("image/{$path}?p={$size}");
         }
 
         return asset('images/demo/no_img.png');
+    }
+}
+
+if ( ! function_exists('get_cover_img_src') )
+{
+    function get_cover_img_src($model, $type = 'category')
+    {
+        if(isset($model->featuredImage->path) && Storage::exists($model->featuredImage->path))
+            return get_storage_file_url($model->featuredImage->path, 'cover');
+        else
+            return asset('images/demo/'. $type .'_cover.jpg');
     }
 }
 
@@ -517,12 +598,50 @@ if ( ! function_exists('get_formated_gender') )
     }
 }
 
+if ( ! function_exists('get_cent_from_doller') )
+{
+    /**
+     * Get cent from decimal amount value.
+     *
+     * @param  decimal $value
+     *
+     * @return int
+     */
+    function get_cent_from_doller($value = 0)
+    {
+        $value = number_format($value, 2);
+
+        return (int) ($value * 100);
+    }
+}
+
+if ( ! function_exists('format_to_number') )
+{
+    /**
+     * Format the input data with decimal places
+     *
+     * Defaults to 2 decimal places
+     *
+     * @param     $value
+     * @param int $decimals
+     * @return null|string
+     */
+    function format_to_number($value, $decimals = 2)
+    {
+        if (trim($value) != null) {
+            return number_format($value, $decimals, '.', '');
+        }
+
+        return null;
+    }
+}
+
 if ( ! function_exists('get_formated_decimal') )
 {
     /**
      * Get the formated decimal value.
      *
-     * @param  integer $value
+     * @param  decimal $value
      * @param  boolean $trim  remove un wanted zeros after decimal point
      *
      * @return decimal
@@ -565,10 +684,10 @@ if ( ! function_exists('get_formated_price') )
     {
         $price = get_formated_currency($value, $decimal);
 
-        $arr = explode(config('system_settings.currency.decimal_mark', '.'), $price);
+        $arr = explode( config('system_settings.currency.decimal_mark', '.'), $price );
 
         if(isset($arr[1]))
-            return $arr[0] . '<sup class="price-fractional">' . $arr[1] .'</sup>';
+            return $arr[1] > 0 ? $arr[0] . '<sup class="price-fractional">' . $arr[1] .'</sup>' : $arr[0];
 
         return $price;
     }
@@ -585,7 +704,7 @@ if ( ! function_exists('get_formated_currency') )
      */
     function get_formated_currency($value = 0, $decimal = null)
     {
-        $value =  get_formated_decimal($value, true, $decimal);
+        $value =  get_formated_decimal($value, $decimal ? false : true, $decimal);
 
         if (config('system_settings.currency.symbol_first'))
             return get_formated_currency_symbol() . $value;
@@ -606,6 +725,14 @@ if ( ! function_exists('get_formated_currency_symbol') )
         }
 
         return '';
+    }
+}
+
+if ( ! function_exists('get_currency_code') )
+{
+    function get_currency_code()
+    {
+        return config('system_settings.currency.iso_code') ?? 'USD';
     }
 }
 
@@ -632,11 +759,42 @@ if ( ! function_exists('get_formated_weight') )
 
 if ( ! function_exists('get_formated_order_number') )
 {
-    function get_formated_order_number($order_id = null)
+    function get_formated_order_number($shop_id = Null, $order_id = Null)
     {
-        $order_id = $order_id ?: str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT);
+        $order_id = $order_id ?? str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT);
 
-        return config('shop_settings.order_number_prefix') . $order_id . config('shop_settings.order_number_suffix');
+        if($shop_id == Null && auth()->guard('web')->check())
+            $shop_id = auth()->user()->merchantId();
+
+        return getShopConfig($shop_id, 'order_number_prefix') . $order_id . getShopConfig($shop_id, 'order_number_suffix');
+    }
+}
+
+if ( ! function_exists('generate_ranges') )
+{
+    /**
+     * Return array of different ranges
+     */
+    function generate_ranges($min, $max, $number_of_ranges)
+    {
+        $range = ($max - $min) / $number_of_ranges;
+        $ranges = [];
+
+        for ($i = 0; $i < $number_of_ranges; $i++) {
+            $end = (int) ($min + $range);
+            $ranges[$i]['lower'] = $min;
+            $ranges[$i]['upper'] = $end;
+            $min = $end;
+        }
+
+        return $ranges;
+    }
+}
+
+if ( ! function_exists('get_percentage_of') )
+{
+    function get_percentage_of($old_num, $new_num){
+        return get_formated_decimal((($old_num - $new_num)*100) / $old_num) ;
     }
 }
 
@@ -735,9 +893,27 @@ if ( ! function_exists('get_shipping_zone_of') )
      * @param $tax
      */
     function get_shipping_zone_of($shop, $country, $state = null){
-        $state_counts = get_state_count_of($country);
+        // If the iso_2 code given as country
+        if( ! is_numeric($country) ){
+            $temp = \DB::table('countries')->select('id')->where('iso_3166_2', $country)->first();
+            $country = optional($temp)->id;
+        }
 
-        $zones = \DB::table('shipping_zones')->select(['id','name','tax_id','country_ids','state_ids','rest_of_the_world'])->where('shop_id', $shop)->where('active', 1)->get();
+        // If the iso_2 code given as state
+        if($state && !is_numeric($state) ){
+            $temp = \DB::table('states')->select('id')->whereNotNull('iso_3166_2')->where([
+                ['iso_3166_2', '=', $state],
+                ['country_id', '=', $country]
+            ])->first();
+
+            $state = optional($temp)->id;
+        }
+
+        if($state)
+            $state_counts = get_state_count_of($country);
+
+        $zones = \DB::table('shipping_zones')->select(['id','name','tax_id','country_ids','state_ids','rest_of_the_world'])
+        ->where('shop_id', $shop)->where('active', 1)->get();
 
         foreach ($zones as $zone) {
             // Check the the shop has a worldwide shipping zone
@@ -750,19 +926,20 @@ if ( ! function_exists('get_shipping_zone_of') )
 
             if( ! in_array($country, $countries) ) continue;
 
-            // If the country has no states and the given country matched then return the zone
-            if ( $state_counts == 0 )
+            // If the country has no state or the state is not given, then return the zone
+            if ( $state == null || $state_counts == 0)
                 return $zone;
 
             $states = unserialize($zone->state_ids);
 
-            if ( $state_counts > 0 && ! $state ) continue;
+            if ( $state_counts > 0 && $state == null ) continue;
 
             if( in_array($state, $states) )
                 return $zone;
         }
 
-        return isset($worldwide) ? $worldwide : false;
+        return isset($worldwide) ? $worldwide : new stdClass();
+        // return isset($worldwide) ? $worldwide : false;
     }
 }
 
@@ -796,6 +973,44 @@ if ( ! function_exists('get_states_of') )
     }
 }
 
+if ( ! function_exists('get_id_of_model') )
+{
+    /**
+     * Return ID og the given table using where
+     *
+     * @param  str $table Name of the table
+     * @param  str $where Name of the field
+     * @param  str $value The value conpire to
+     *
+     * @return int
+     */
+    function get_id_of_model($table, $where, $value)
+    {
+        $temp = \DB::table($table)->select('id')->where($where, $value)->first();
+        return optional($temp)->id;
+    }
+}
+
+if ( ! function_exists('cart_item_count') )
+{
+    /**
+     * Get cart item count for customer.
+     */
+    function cart_item_count($customer_id = Null)
+    {
+        if( ! $customer_id )
+            $customer_id = \Auth::guard('customer')->check() ? \Auth::guard('customer')->user()->id : Null;
+
+        $cart_list = \DB::table('carts')->join('cart_items', 'cart_items.cart_id', '=', 'carts.id')
+        ->whereNull('customer_id')->where('ip_address', request()->ip());
+
+        if($customer_id)
+            $cart_list = $cart_list->orWhere('customer_id', $customer_id);
+
+        return $cart_list->count();
+    }
+}
+
 if ( ! function_exists('getTaxRate') )
 {
     /**
@@ -803,9 +1018,13 @@ if ( ! function_exists('getTaxRate') )
      *
      * @param $tax
      */
-    function getTaxRate($tax)
+    function getTaxRate($tax = Null)
     {
-        return \DB::table('taxes')->select('taxrate')->where('id', $tax)->first()->taxrate;
+        $tax = $tax ?? \App\Tax::DEFAULT_TAX_ID;
+
+        $rate = \DB::table('taxes')->select('taxrate')->where('id', $tax)->first();
+
+        return $rate ? $rate->taxrate : Null;
     }
 }
 
@@ -816,15 +1035,18 @@ if ( ! function_exists('getShippingRates') )
      */
     function getShippingRates($zone = Null)
     {
-        if($zone)
-            return \DB::table('shipping_rates')->where('shipping_zone_id', $zone)->orderBy('rate', 'asc')->get();
+        if($zone){
+            return \App\ShippingRate::where('shipping_zone_id', $zone)
+            ->with('carrier:id,name')->orderBy('rate', 'asc')->get();
+        }
+
+        // Return empty object if zone it is not given and not an user
+        if( ! Auth::guard('web')->check() || Auth::guard('web')->user()->merchantId() ) return new stdClass();
 
         return \DB::table('shipping_zones')
-                    ->join('shipping_rates', 'shipping_zones.id', 'shipping_rates.shipping_zone_id')
-                    ->where('shipping_zones.shop_id', Auth::user()->merchantId())
-                    ->where('shipping_zones.active', 1)
-                    ->orderBy('shipping_rates.rate', 'asc')
-                    ->get();
+        ->join('shipping_rates', 'shipping_zones.id', 'shipping_rates.shipping_zone_id')
+        ->where('shipping_zones.shop_id', \Auth::guard('web')->user()->merchantId())
+        ->where('shipping_zones.active', 1)->orderBy('shipping_rates.rate', 'asc')->get();
     }
 }
 
@@ -884,6 +1106,20 @@ if ( ! function_exists('filterShippingOptions') )
     }
 }
 
+if ( ! function_exists('getPlatformDefaultPackaging') )
+{
+    /**
+     * Return default packaging ID for given shop
+     *
+     * @param $int shop
+     */
+    function getPlatformDefaultPackaging($shop = null)
+    {
+        return \DB::table('packagings')->select('id', 'name', 'cost')
+        ->whereNull('shop_id')->where('id', \App\Packaging::FREE_PACKAGING_ID)->first();
+    }
+}
+
 if ( ! function_exists('getDefaultPackaging') )
 {
     /**
@@ -893,13 +1129,13 @@ if ( ! function_exists('getDefaultPackaging') )
      */
     function getDefaultPackaging($shop = null)
     {
-        $shop = $shop ?: Auth::user()->merchantId();
+        $shop = $shop ?: \Auth::user()->merchantId();
 
-        $found = \DB::table('packagings')->select('id', 'name', 'cost')->where('shop_id', $shop)->where('default', 1)->where('active', 1)->whereNull('deleted_at')->first();
+        $packaging = \DB::table('packagings')->select('id', 'name', 'cost')->where('shop_id', $shop)->where('default', 1)->where('active', 1)->whereNull('deleted_at')->first();
 
-        if ($found) return $found;
+        if ($packaging) return $packaging;
 
-        return \DB::table('packagings')->select('id', 'name', 'cost')->where('id', 1)->first();
+        return getPlatformDefaultPackaging();
     }
 }
 
@@ -912,7 +1148,7 @@ if ( ! function_exists('getPackagings') )
      */
     function getPackagings($shop = null)
     {
-        $shop = $shop ?: Auth::user()->merchantId();
+        $shop = $shop ?: \Auth::user()->merchantId();
 
         return \DB::table('packagings')->select('id', 'name', 'cost')->where('shop_id', $shop)->where('active', 1)->whereNull('deleted_at')->get();
     }
@@ -921,7 +1157,7 @@ if ( ! function_exists('getPackagings') )
 if ( ! function_exists('getPackagingCost') )
 {
     /**
-     * Return Shipping Cost and Handling fee for the given carrier
+     * Return packaging Cost for the given id
      *
      * @param $int packaging
      */
@@ -1017,7 +1253,7 @@ if ( ! function_exists('get_value_from') )
             }
         }
         else{
-            $value = \DB::table($table)->select($field)->where('id', $ids)->get();
+            $value = \DB::table($table)->select($field)->where('id', $ids)->first();
             if(!empty($value) && isset($value->$field))
                 return $value->$field;
         }
@@ -1037,7 +1273,7 @@ if ( ! function_exists('get_yes_or_no') )
      */
     function get_yes_or_no($value = null)
     {
-        return $value ? trans('app.yes') : trans('app.no');
+        return $value == 1 ? trans('app.yes') : trans('app.no');
     }
 }
 
@@ -1145,6 +1381,27 @@ if ( ! function_exists('get_activity_title') )
             return trans('app.system') . ' ' . $activity->description . ' ' . trans('app.this') . ' ' . $activity->log_name;
 
         return title_case($activity->description) . ' ' . trans('app.by') . ' ' . $activity->causer->getName();
+    }
+}
+
+if ( ! function_exists('isActive'))
+{
+    /**
+     * Set the active class to the current opened menu.
+     *
+     * @param  string|array $route
+     * @param  string       $className
+     * @return string
+     */
+    function isActive($route, $className = 'active')
+    {
+        if (is_array($route)) {
+            return in_array(Route::currentRouteName(), $route) ? $className : '';
+        }
+        if (Route::currentRouteName() == $route) {
+            return $className;
+        }
+        if (strpos(URL::current(), $route)) return $className;
     }
 }
 

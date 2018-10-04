@@ -40,9 +40,9 @@ class NewContactUsMessage extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                ->from($this->message->email)
-                ->subject(trans('notifications.new_contact_us_message.subject', ['subject' => $this->message->subject]))
-                ->markdown('admin.mail.system.new_contact_us_message', ['message' => $this->message]);
+        ->from($this->message->email)
+        ->subject(trans('notifications.new_contact_us_message.subject', ['subject' => $this->message->subject]))
+        ->markdown('admin.mail.system.new_contact_us_message', ['message' => $this->message]);
     }
 
     /**

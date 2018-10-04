@@ -18,7 +18,7 @@ class EloquentCategoryGroup extends EloquentRepository implements BaseRepository
 
     public function all()
     {
-        return $this->model->withCount('subGroups')->orderBy('order', 'asc')->get();
+        return $this->model->withCount('subGroups')->with('image')->orderBy('order', 'asc')->get();
     }
 
     public function trashOnly()

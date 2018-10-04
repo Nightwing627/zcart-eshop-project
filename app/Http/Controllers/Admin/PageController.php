@@ -59,7 +59,7 @@ class PageController extends Controller
         $page = Page::create($request->all());
 
         if ($request->hasFile('image'))
-            $page->saveImage($request->file('image'));
+            $page->saveImage($request->file('image'), true);
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }
@@ -87,10 +87,10 @@ class PageController extends Controller
         $page->update($request->all());
 
         if ($request->hasFile('image') || ($request->input('delete_image') == 1))
-            $page->deleteImage();
+            $page->deleteFeaturedImage();
 
         if ($request->hasFile('image'))
-            $page->saveImage($request->file('image'));
+            $page->saveImage($request->file('image'), true);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
