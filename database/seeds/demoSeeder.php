@@ -290,13 +290,13 @@ class demoSeeder extends Seeder
                 $warehouse->addresses()->save(factory(App\Address::class)->make(['address_title' => $warehouse->name, 'address_type' => 'Primary']));
             });
 
-        factory(App\ShippingRate::class, $this->count)->create();
+        factory(App\ShippingRate::class, $this->tinycount)->create();
 
-        factory(App\Tax::class, $this->count)->create();
+        factory(App\Tax::class, $this->tinycount)->create();
 
-        factory(App\Carrier::class, $this->count)->create();
+        factory(App\Carrier::class, $this->tinycount)->create();
 
-        factory(App\Packaging::class, $this->count)->create();
+        factory(App\Packaging::class, $this->tinycount)->create();
 
         factory(App\Inventory::class, $this->longCount)->create();
 
@@ -308,11 +308,11 @@ class demoSeeder extends Seeder
 
         factory(App\BlogComment::class, $this->longCount)->create();
 
-        factory(App\Tag::class, $this->longCount)->create();
+        factory(App\Tag::class, $this->count)->create();
 
         // factory(App\GiftCard::class, $this->count)->create();
 
-        factory(App\Coupon::class, $this->longCount)->create();
+        factory(App\Coupon::class, $this->count)->create();
 
         factory(App\Message::class, $this->count)->create();
 

@@ -30,11 +30,13 @@ class CreateProductRequest extends Request
                 ]); //Set shop_id and slug
 
         return [
-           'category_list' => 'required',
-           'name' => 'required|unique:products',
-           'description' => 'required',
-           'active' => 'required',
-           'image' => 'mimes:jpg,jpeg,png,gif',
+            'category_list' => 'required',
+            'name' => 'required|unique:products',
+            'description' => 'required',
+            'active' => 'required',
+            'min_price' => 'nullable|numeric|min:0',
+            'max_price' => 'nullable|numeric|min:' . $this->min_price ?? 0,
+            'image' => 'mimes:jpg,jpeg,png,gif',
         ];
     }
 

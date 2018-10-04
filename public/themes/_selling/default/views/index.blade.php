@@ -24,7 +24,7 @@
                         <div class="col-md-4">
                             <span class="fa-stack fa-4x">
                                 <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                                <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                                <i class="fa fa-{{ trans('theme.benefit.one.icon') }} fa-stack-1x fa-inverse"></i>
                             </span>
                             <h4 class="service-heading">{{ trans('theme.benefit.one.title') }}</h4>
                             <p class="text-muted">{{ trans('theme.benefit.one.detail') }}</p>
@@ -32,7 +32,7 @@
                         <div class="col-md-4">
                             <span class="fa-stack fa-4x">
                                 <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                                <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+                                <i class="fa fa-{{ trans('theme.benefit.two.icon') }} fa-stack-1x fa-inverse"></i>
                             </span>
                             <h4 class="service-heading">{{ trans('theme.benefit.two.title') }}</h4>
                             <p class="text-muted">{{ trans('theme.benefit.two.detail') }}</p>
@@ -40,7 +40,7 @@
                         <div class="col-md-4">
                             <span class="fa-stack fa-4x">
                                 <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                                <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
+                                <i class="fa fa-{{ trans('theme.benefit.three.icon') }} fa-stack-1x fa-inverse"></i>
                             </span>
                             <h4 class="service-heading">{{ trans('theme.benefit.three.title') }}</h4>
                             <p class="text-muted">{{ trans('theme.benefit.three.detail') }}</p>
@@ -66,10 +66,10 @@
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
                                             <h4>&nbsp;</h4>
-                                            <h4 class="subheading">{{ trans('theme.steps.step_1.title') }}</h4>
+                                            <h4 class="subheading">{{ trans('theme.how_it_work_steps.step_1.title') }}</h4>
                                         </div>
                                         <div class="timeline-body">
-                                            <p class="text-muted">{!! trans('theme.steps.step_1.detail') !!}</p>
+                                            <p class="text-muted">{!! trans('theme.how_it_work_steps.step_1.detail') !!}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -80,10 +80,10 @@
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
                                             <h4>&nbsp;</h4>
-                                            <h4 class="subheading">{{ trans('theme.steps.step_2.title') }}</h4>
+                                            <h4 class="subheading">{{ trans('theme.how_it_work_steps.step_2.title') }}</h4>
                                         </div>
                                         <div class="timeline-body">
-                                            <p class="text-muted">{!! trans('theme.steps.step_2.detail') !!}</p>
+                                            <p class="text-muted">{!! trans('theme.how_it_work_steps.step_2.detail') !!}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -94,10 +94,10 @@
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
                                             <h4>&nbsp;</h4>
-                                            <h4 class="subheading">{{ trans('theme.steps.step_3.title') }}</h4>
+                                            <h4 class="subheading">{{ trans('theme.how_it_work_steps.step_3.title') }}</h4>
                                         </div>
                                         <div class="timeline-body">
-                                            <p class="text-muted">{!! trans('theme.steps.step_3.detail') !!}</p>
+                                            <p class="text-muted">{!! trans('theme.how_it_work_steps.step_3.detail') !!}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -108,16 +108,16 @@
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
                                             <h4>&nbsp;</h4>
-                                            <h4 class="subheading">{{ trans('theme.steps.step_4.title') }}</h4>
+                                            <h4 class="subheading">{{ trans('theme.how_it_work_steps.step_4.title') }}</h4>
                                         </div>
                                         <div class="timeline-body">
-                                            <p class="text-muted">{!! trans('theme.steps.step_4.detail') !!}</p>
+                                            <p class="text-muted">{!! trans('theme.how_it_work_steps.step_4.detail') !!}</p>
                                         </div>
                                     </div>
                                 </li>
                                 <li class="timeline-inverted">
                                     <div class="timeline-image">
-                                        <h4>{!! trans('theme.steps.ending') !!}</h4>
+                                        <h4>{!! trans('theme.how_it_work_steps.ending') !!}</h4>
                                     </div>
                                 </li>
                             </ul>

@@ -6,7 +6,7 @@
                 <span class="sr-only">Toggle navigation</span> {{ trans('theme.nav.menu') }} <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand page-scroll" href="#page-top">
-                <img src="{{ asset('images/logo.png') }}" class="brand-logo" alt="LOGO" title="LOGO" />
+                <img src="{{ Storage::url('logo.png') }}" class="brand-logo" alt="LOGO" title="LOGO" />
                 {{-- {{ get_site_title() }} --}}
             </a>
         </div>

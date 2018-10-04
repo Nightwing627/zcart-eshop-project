@@ -18,7 +18,7 @@ class EloquentShop extends EloquentRepository implements BaseRepository, ShopRep
 
     public function all()
     {
-        return $this->model->with('owner', 'logo', 'primaryAddress')->get();
+        return $this->model->with('owner.image', 'logo', 'primaryAddress')->get();
     }
 
     public function trashOnly()

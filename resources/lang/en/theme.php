@@ -91,16 +91,19 @@ return [
 
 	'benefit' => [
 		'one' => [
-			'title' => 'Start selling in minutes',
-			'detail' => 'Get straight to growing your business. We handles everything from marketing and payments, to secure checkout. Now you can focus on the things you love.',
+			'title' => 'Start Selling in Minutes',
+			'icon' => 'rocket',
+			'detail' => 'Get straight to growing your business. We handle everything to sell online. So you can focus on your business rather managing the infrastructure.',
 		],
 		'two' => [
-			'title' => 'Comprehensive dashboard',
-			'detail' => 'Get a holistic and detailed view of your business to better understand sales, orders, and audience to better tailor your products and service.',
+			'title' => 'Comprehensive Dashboard',
+			'icon' => 'tablet',
+			'detail' => 'Get a holistic and detailed view of your business to better understand sales, orders, and customers to better tailor your products.',
 		],
 		'three' => [
-			'title' => 'Get paid quickly and securely',
-			'detail' => 'Multiple payment methods to choose. Stripe Payments allows you to accept credit cards instantly and PayPal is just most loved by customers. Offline payment options are also available.',
+			'title' => 'Get Paid Directly and Securely',
+			'icon' => 'credit-card',
+			'detail' => 'We don\'t keep your money! The payment goes to you directly as soon as a buyer pays.',
 		],
 	],
 
@@ -114,22 +117,22 @@ return [
         'transaction_fee' => ':fee Per Transaction',
 	],
 
-	'steps' => [
+	'how_it_work_steps' => [
 		'step_1' => [
 			'title' => 'Register as Merchant',
-			'detail' => 'Create your account is very simple, the Merchant Dashboard where you will also manage your selling account.',
+			'detail' => 'Creating an account is very simple, Your merchant dashboard will be ready as soon as you\'re registered. You can manage everything that belongs to your store and running the business.',
 		],
 		'step_2' => [
-			'title' => 'List Your Products',
-			'detail' => 'Listing your products is really simple through our easy to use self-serve portal. You can add products to the the Marketplace catalog one at a time, or you can add large batches of items using bulk tools.',
+			'title' => 'List Your Items',
+			'detail' => 'Listing your products is really simple through our easy to use self-serve portal. Upload including high-quality product images and add details.',
 		],
 		'step_3' => [
 			'title' => 'Sell & Fulfill Orders',
-			'detail' => 'After you list your offers, customers can see them on the Marketplace. Make sure that when customers see your offer it is accurate and complete, including high-quality product images. We\'ll notify you when customers place an order. Fulfill the order on promised time is very important.',
+			'detail' => 'After you list your offers, customers can visit them on the Marketplace. We\'ll notify you when customers place an order. Fulfill the order on promised time is very important.',
 		],
 		'step_4' => [
-			'title' => 'Get Paid',
-			'detail' => 'Being paid through multiple payment gateways integrated with the Marketplace is very easy and haggle free.',
+			'title' => 'Get Paid Instantly',
+			'detail' => 'We dont hold your money, the payment will be sent to your connected account directly.',
 		],
 		'ending' => 'Be Part <br/>of Our <br/>Story!',
 	],

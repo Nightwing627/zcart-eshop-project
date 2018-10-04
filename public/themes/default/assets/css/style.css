@@ -2653,7 +2653,7 @@ table .product-info-price .percent-off {
 }
 .modal-content .product-info-qty-item,
 .shopping-cart-item-table .product-info-qty-item {
-  zoom: 0.8!important;
+  zoom: 0.81!important;
 }
 @media (max-width: 992px) {
   .shopping-cart-item-table .product-info-qty-item {

@@ -6,14 +6,17 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
         <title> {{ get_platform_title() }} </title>
-        <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon" />
+        <link rel="icon" href="{{ Storage::url('icon.png') }}" type="image/x-icon" />
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-        <link rel="apple-touch-icon" href="{{ asset('images/icon.png') }}">
+        <link rel="apple-touch-icon" href="{{ Storage::url('icon.png') }}">
 
         <!-- Theme CSS -->
         <link href="{{ selling_theme_asset_url('css/vendor.css') }}" rel="stylesheet">
         <link href="{{ selling_theme_asset_url('css/agency.css') }}" rel="stylesheet">
         <link href="{{ selling_theme_asset_url('css/style.css') }}" rel="stylesheet">
+
+        <!-- Ionicons -->
+        {{-- <link href="https://unpkg.com/ionicons@4.4.4/dist/css/ionicons.min.css" rel="stylesheet"> --}}
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

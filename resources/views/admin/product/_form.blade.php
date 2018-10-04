@@ -140,7 +140,7 @@
                   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.catalog_min_price') }}"></i>
                     <div class="input-group">
                       <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
-                      {!! Form::number('min_price' , null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.catalog_min_price')]) !!}
+                      {!! Form::number('min_price' , null, ['class' => 'form-control', 'step' => 'any', 'min' => '0','placeholder' => trans('app.placeholder.catalog_min_price')]) !!}
                     </div>
                     <div class="help-block with-errors"></div>
                 </div>
@@ -151,7 +151,7 @@
                   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.catalog_max_price') }}"></i>
                   <div class="input-group">
                     <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
-                    {!! Form::number('max_price' , null, ['class' => 'form-control', 'step' => 'any', 'placeholder' => trans('app.placeholder.catalog_max_price')]) !!}
+                    {!! Form::number('max_price' , null, ['class' => 'form-control', 'step' => 'any', 'min' => '0', 'placeholder' => trans('app.placeholder.catalog_max_price')]) !!}
                   </div>
                   <div class="help-block with-errors"></div>
                 </div>
