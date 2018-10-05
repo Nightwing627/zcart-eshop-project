@@ -6,6 +6,7 @@ use Auth;
 use App\Ticket;
 use App\Config;
 use App\Inventory;
+use App\SystemConfig;
 use App\PaymentMethod;
 use App\Charts\Visitors;
 use App\Charts\Referrers;
@@ -96,7 +97,9 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeRefundInitiationForm();
 
-        $this->composeReportAboutVisitors();
+        if(config('system_settings.google_analytic_report') && SystemConfig::isGgoogleAnalyticConfigured()) {
+            $this->composeReportAboutVisitors();
+        }
 
         $this->composeRoleForm();
 
