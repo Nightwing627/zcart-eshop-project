@@ -49,6 +49,7 @@ class Order extends Model
                         'order_number',
                         'shop_id',
                         'customer_id',
+                        'ship_to',
                         'shipping_zone_id',
                         'shipping_rate_id',
                         'packaging_id',
@@ -68,6 +69,7 @@ class Order extends Model
                         'shipping_date',
                         'delivery_date',
                         'tracking_id',
+                        'coupon_id',
                         'carrier_id',
                         'message_to_customer',
                         'send_invoice_to_customer',
@@ -84,11 +86,21 @@ class Order extends Model
                     ];
 
     /**
+     * Get the country associated with the order.
+     */
+    public function shipTo()
+    {
+        return $this->belongsTo(Country::class, 'ship_to');
+    }
+
+    /**
      * Get the customer associated with the order.
      */
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class)->withDefault([
+            'name' => trans('app.guest_customer'),
+        ]);
     }
 
     /**
@@ -100,13 +112,11 @@ class Order extends Model
     }
 
     /**
-     * Fetch billing address
-     *
-     * @return Address or null
+     * Get the coupon associated with the order.
      */
-    public function billingAddress()
+    public function coupon()
     {
-        return $this->belongsTo(Address::class, 'billing_address');
+        return $this->belongsTo(Coupon::class)->withDefault();
     }
 
     /**
@@ -114,10 +124,20 @@ class Order extends Model
      *
      * @return Address or null
      */
-    public function shippingAddress()
-    {
-        return $this->belongsTo(Address::class, 'shipping_address');
-    }
+    // public function billingAddress()
+    // {
+    //     return $this->belongsTo(Address::class, 'billing_address');
+    // }
+
+    /**
+     * Fetch billing address
+     *
+     * @return Address or null
+     */
+    // public function shippingAddress()
+    // {
+    //     return $this->belongsTo(Address::class, 'shipping_address');
+    // }
 
     /**
      * Get the tax associated with the order.
@@ -132,7 +152,7 @@ class Order extends Model
      */
     public function carrier()
     {
-        return $this->belongsTo(Carrier::class);
+        return $this->belongsTo(Carrier::class)->withDefault();
     }
 
     /**
@@ -141,8 +161,7 @@ class Order extends Model
     public function inventories()
     {
         return $this->belongsToMany(Inventory::class, 'order_items')
-                    ->withPivot('item_description', 'quantity', 'unit_price','feedback_id')
-                    ->withTimestamps();
+        ->withPivot('item_description', 'quantity', 'unit_price','feedback_id')->withTimestamps();
     }
 
     /**
@@ -152,7 +171,8 @@ class Order extends Model
      */
     public function conversation()
     {
-        return $this->hasOne(Message::class, 'order_id')->where('customer_id', $this->customer_id);
+        return $this->hasOne(Message::class, 'order_id');
+        //->where('customer_id', $this->customer_id);
     }
 
     /**
@@ -178,7 +198,7 @@ class Order extends Model
      */
     public function shippingRate()
     {
-        return $this->belongsTo(ShippingRate::class, 'shipping_rate_id');
+        return $this->belongsTo(ShippingRate::class, 'shipping_rate_id')->withDefault();
     }
 
     /**
@@ -186,7 +206,7 @@ class Order extends Model
      */
     public function shippingZone()
     {
-        return $this->belongsTo(ShippingZone::class, 'shipping_zone_id');
+        return $this->belongsTo(ShippingZone::class, 'shipping_zone_id')->withDefault();
     }
 
     /**
@@ -194,7 +214,7 @@ class Order extends Model
      */
     public function paymentMethod()
     {
-        return $this->belongsTo(PaymentMethod::class);
+        return $this->belongsTo(PaymentMethod::class)->withDefault();
     }
 
     /**
@@ -202,7 +222,7 @@ class Order extends Model
      */
     public function shippingPackage()
     {
-        return $this->belongsTo(Packaging::class, 'packaging_id');
+        return $this->belongsTo(Packaging::class, 'packaging_id')->withDefault();
     }
 
     /**
@@ -210,7 +230,7 @@ class Order extends Model
      */
     public function status()
     {
-        return $this->belongsTo(OrderStatus::class, 'order_status_id');
+        return $this->belongsTo(OrderStatus::class, 'order_status_id')->withDefault();
     }
 
     /**
@@ -218,7 +238,7 @@ class Order extends Model
      */
     public function feedback()
     {
-        return $this->belongsTo(Feedback::class, 'feedback_id');
+        return $this->belongsTo(Feedback::class, 'feedback_id')->withDefault();
     }
 
     /**
@@ -231,12 +251,10 @@ class Order extends Model
         $this->attributes['delivery_date'] = Carbon::createFromFormat('Y-m-d', $value);
     }
     public function setShippingAddressAttribute($value){
-        if(is_numeric($value))
-            $this->attributes['shipping_address'] = Address::find($value)->toHtml('<br/>', false);
+        $this->attributes['shipping_address'] = is_numeric($value) ? \App\Address::find($value)->toString(True) : $value;
     }
     public function setBillingAddressAttribute($value){
-        if(is_numeric($value))
-            $this->attributes['billing_address'] = Address::find($value)->toHtml('<br/>', false);
+        $this->attributes['billing_address'] = is_numeric($value) ? \App\Address::find($value)->toString(True) : $value;
     }
 
     /**
@@ -247,6 +265,16 @@ class Order extends Model
     public function scopeArchived($query)
     {
         return $query->onlyTrashed();
+    }
+
+    /**
+     * Scope a query to only include records from the users shop.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithArchived($query)
+    {
+        return $query->withTrashed();
     }
 
     /**
@@ -302,6 +330,40 @@ class Order extends Model
     }
 
     /**
+     * Return shipping cost with handling fee
+     *
+     * @return number
+     */
+    public function get_shipping_cost()
+    {
+        return $this->shipping + $this->handling;
+    }
+
+    /**
+     * Calculate and Return grand tolal
+     *
+     * @return number
+     */
+    public function calculate_grand_total()
+    {
+        return ($this->total + $this->handling + $this->taxes + $this->shipping + $this->packaging) - $this->discount;
+    }
+    public function grand_total_for_paypal()
+    {
+        return ( $this->calculate_total_for_paypal() + format_to_number($this->handling) + format_to_number($this->taxes) + format_to_number($this->shipping) + format_to_number($this->packaging) ) - format_to_number($this->discount);
+    }
+    public function calculate_total_for_paypal()
+    {
+        $total = 0;
+        $items = $this->inventories->pluck('pivot');
+        foreach ($items as $item) {
+            $total += (format_to_number($item->unit_price) * $item->quantity);
+        }
+
+        return format_to_number($total);
+    }
+
+    /**
      * Check if the order has been paid
      *
      * @return boolean
@@ -341,17 +403,18 @@ class Order extends Model
     public function paymentStatusName()
     {
         switch ($this->payment_status) {
-            case static::PAYMENT_STATUS_UNPAID: return '<span class="label label-danger">' . strtoupper(trans('app.statuses.unpaid')) . '</span>';
-
-            case static::PAYMENT_STATUS_PENDING: return '<span class="label label-info">' . strtoupper(trans('app.statuses.pending')) . '</span>';
-
-            case static::PAYMENT_STATUS_PAID: return '<span class="label label-outline">' . strtoupper(trans('app.statuses.paid')) . '</span>';
-
-            case static::PAYMENT_STATUS_INITIATED_REFUND:  return '<span class="label label-info">' . strtoupper(trans('app.statuses.refund_initiated')) . '</span>';
-
-            case static::PAYMENT_STATUS_PARTIALLY_REFUNDED: return '<span class="label label-info">' . strtoupper(trans('app.statuses.partially_refunded')) . '</span>';
-
-            case static::PAYMENT_STATUS_REFUNDED: return '<span class="label label-danger">' . strtoupper(trans('app.statuses.refunded')) . '</span>';
+            case static::PAYMENT_STATUS_UNPAID:
+                return '<span class="label label-danger">' . strtoupper(trans('app.statuses.unpaid')) . '</span>';
+            case static::PAYMENT_STATUS_PENDING:
+                return '<span class="label label-info">' . strtoupper(trans('app.statuses.pending')) . '</span>';
+            case static::PAYMENT_STATUS_PAID:
+                return '<span class="label label-outline">' . strtoupper(trans('app.statuses.paid')) . '</span>';
+            case static::PAYMENT_STATUS_INITIATED_REFUND:
+                return '<span class="label label-info">' . strtoupper(trans('app.statuses.refund_initiated')) . '</span>';
+            case static::PAYMENT_STATUS_PARTIALLY_REFUNDED:
+                return '<span class="label label-info">' . strtoupper(trans('app.statuses.partially_refunded')) . '</span>';
+            case static::PAYMENT_STATUS_REFUNDED:
+                return '<span class="label label-danger">' . strtoupper(trans('app.statuses.refunded')) . '</span>';
         }
     }
 }

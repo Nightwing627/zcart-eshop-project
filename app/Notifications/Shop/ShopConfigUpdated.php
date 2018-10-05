@@ -47,8 +47,9 @@ class ShopConfigUpdated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.shop_config_updated.subject') )
-                    ->markdown('admin.mail.shop.config_updated', ['url' => route('login'), 'shop' => $this->shop]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.shop_config_updated.subject') )
+        ->markdown('admin.mail.shop.config_updated', ['url' => route('login'), 'shop' => $this->shop]);
     }
 
     /**

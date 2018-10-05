@@ -71,8 +71,7 @@ class Config extends Model
      */
     public function paymentMethods()
     {
-        return $this->belongsToMany(PaymentMethod::class, 'shop_payment_methods', 'shop_id', 'payment_method_id')
-                    ->withTimestamps();
+        return $this->belongsToMany(PaymentMethod::class, 'shop_payment_methods', 'shop_id', 'payment_method_id')->withTimestamps();
     }
 
    /**
@@ -81,8 +80,7 @@ class Config extends Model
     public function manualPaymentMethods()
     {
         return $this->belongsToMany(PaymentMethod::class, 'config_manual_payments', 'shop_id', 'payment_method_id')
-                    ->withPivot('additional_details', 'payment_instructions')
-                    ->withTimestamps();
+        ->withPivot('additional_details', 'payment_instructions')->withTimestamps();
     }
 
     /**
@@ -140,7 +138,7 @@ class Config extends Model
      */
     public function scopeLive($query)
     {
-        return $query->where('maintenance_mode', false);
+        return $query->where('maintenance_mode', 0)->orWhereNull('maintenance_mode');
     }
 
     /**

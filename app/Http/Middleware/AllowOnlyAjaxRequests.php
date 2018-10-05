@@ -15,8 +15,7 @@ class AllowOnlyAjaxRequests
      */
     public function handle($request, Closure $next)
     {
-        if(!$request->ajax())
-        {
+        if(!$request->ajax()){
             return response('', 405);
         }
 

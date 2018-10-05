@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call('SlidersSeeder');
         $this->call('BannerGroupsSeeder');
         $this->call('CountriesSeeder');
         $this->call('StatesSeeder');
@@ -23,22 +22,21 @@ class DatabaseSeeder extends Seeder
         $this->call('RolesSeeder');
         $this->call('SystemsSeeder');
         $this->call('UsersSeeder');
-        $this->call('ShopsSeeder');
         $this->call('ModulesSeeder');
         $this->call('PermissionSeeder');
         $this->call('AttributeSeeder');
         $this->call('GtinSeeder');
         $this->call('PaymentMethodsSeeder');
-        $this->call('EmailTemplateSeeder');
         $this->call('OrderStatusesSeeder');
         $this->call('AddressTypesSeeder');
         $this->call('TicketCategoriesSeeder');
         $this->call('DisputeTypesSeeder');
         $this->call('TaxesSeeder');
         $this->call('PackagingsSeeder');
+        $this->call('SubscriptionPlansSeeder');
         $this->call('PagesSeeder');
         $this->call('FaqsSeeder');
-        $this->call('demoSeeder');
+        // $this->call('demoSeeder');
         $this->command->info('Seeding complete!');
 
         Model::reguard();

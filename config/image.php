@@ -50,6 +50,19 @@ return [
     */
     'max_size' => 5000,
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mime types
+    |--------------------------------------------------------------------------
+    |
+    | Specify the mime types of image can be uploaded
+    |
+    */
+    'mime_types' => [
+        'jpeg','jpg','png','gif'
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Image sizes
@@ -79,6 +92,11 @@ return [
             'h' => 30,
             'fit' => 'contain'
         ],
+        'mini' => [
+            'w' => 60,
+            'h' => 60,
+            'fit' => 'contain'
+        ],
         'small' => [
             'w' => 100,
             'h' => 100,
@@ -102,13 +120,18 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Product view sizes
+        | Logo sizes
         |--------------------------------------------------------------------------
         |
-        | The system will create a banner image using this size
+        | The system will create a logo image using this size
         | Don't modify this values if you are not sure
         |
         */
+        'logo' => [
+            'w' => 140,
+            'h' => 50,
+            'fit' => 'contain'
+        ],
 
         /*
         |--------------------------------------------------------------------------

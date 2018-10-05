@@ -86,6 +86,10 @@
 														        @break
 														@endswitch
 
+												  		@unless($has_config)
+												  			<div class="alert alert-danger">@lang('app.payment_method_configuration_issue')</div>
+														@endunless
+
 														<a href="{{ route('admin.setting.paymentMethod.activate', $payment_provider->id) }}" class="btn {{ $payment_provider->code != 'stripe' ? 'ajax-modal-btn' : '' }} btn-info">{{ trans('app.update') }}</a>
 
 														<a href="{{ route('admin.setting.paymentMethod.deactivate', $payment_provider->id) }}" class="btn btn-default ajax-silent confirm"> {{ trans('app.deactivate') }}</a>

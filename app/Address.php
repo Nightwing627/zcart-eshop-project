@@ -88,14 +88,15 @@ class Address extends Model
     public function toGeocodeString()
     {
         $data = [];
-        $data[] = $this->address_line_1 ?: '';
-        $data[] = $this->address_line_2 ?: '';
-        $data[] = $this->city ?: '';
+        $data[] = $this->address_line_1 ?? '';
+        $data[] = $this->address_line_2 ?? '';
+        $data[] = $this->city ?? '';
         if ($this->state_id)
             $data[] = $this->state->name;
-        $data[] = $this->zip_code ?: '';
+        $data[] = $this->zip_code ?? '';
         if ($this->country_id)
             $data[] = $this->country->name;
+
         // build str string
         $str = trim( implode(', ', array_filter($data)) );
 
@@ -147,12 +148,12 @@ class Address extends Model
     /**
      * Return a "string formatted" version of the address
      */
-    public function toString()
+    public function toString($title = False)
     {
-        $str = array();
-        if(config('system_settings.show_address_title')){
+        $str = [];
+
+        if($title || config('system_settings.show_address_title'))
             $str [] = $this->address_title;
-        }
 
         if(strlen($this->address_line_1))
             $str [] = $this->address_line_1;

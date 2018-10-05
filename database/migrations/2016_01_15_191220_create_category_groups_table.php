@@ -38,6 +38,7 @@ class CreateCategoryGroupsTable extends Migration
             $table->string('slug',200)->unique();
             $table->text('description')->nullable();
             $table->boolean('active')->default(1);
+            $table->boolean('featured')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

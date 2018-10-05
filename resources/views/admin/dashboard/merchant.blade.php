@@ -271,7 +271,7 @@
 														@endif
 													</td>
 											        <td>{{ $order->created_at->diffForHumans() }}</td>
-													<td>{{ $order->customer->name }}</td>
+													<td>{{ optional($order->customer)->name }}</td>
 													<td>{{ get_formated_currency($order->grand_total )}}</td>
 													<td>{!! $order->paymentStatusName() !!}</td>
 													<td>
@@ -328,7 +328,7 @@
 														<img src="{{ get_storage_file_url(optional($inventory->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 													</td>
 													<td>{{ $inventory->sku }}</td>
-													<td>{{ $inventory->product->name }}</td>
+													<td>{{ optional($inventory->product)->name }}</td>
 													<td>
 														@if(($inventory->offer_price > 0) && ($inventory->offer_end > \Carbon\Carbon::now()))
 															<?php $offer_price_help =
@@ -391,7 +391,7 @@
 														<img src="{{ get_storage_file_url(optional($inventory->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 													</td>
 													<td>{{ $inventory->sku }}</td>
-													<td>{{ $inventory->product->name }}</td>
+													<td>{{ optional($inventory->product)->name }}</td>
 													<td class="qtt-{{$inventory->id}}">{{ ($inventory->stock_quantity > 0) ? $inventory->stock_quantity : trans('app.out_of_stock') }}</td>
 													<td>{{ ($inventory->active) ? trans('app.active') : trans('app.inactive') }}</td>
 													<td class="row-options">
@@ -557,8 +557,7 @@
 	                	<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	                	<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
 	              	</div>
-	            </div>
-	            <!-- /.box-header -->
+	            </div><!-- /.box-header -->
 	            <div class="box-body">
 	                <div class="table-responsive">
 	                  	<table class="table no-margin table-condensed">
@@ -576,17 +575,20 @@
 											<img src="{{ get_storage_file_url(optional($inventory->image)->path, 'small') }}" class="img-md" alt="{{ trans('app.image') }}">
 										</td>
 										<td>
-				                            <h4 class="nopadding">
+				                            <h5 class="nopadding">
 				                            	<small>{{ trans('app.sku') . ': ' }}</small>
 				                                @can('view', $inventory)
 				                                    <a href="{{ route('admin.stock.inventory.show', $inventory->id) }}" class="ajax-modal-btn modal-btn">{{ $inventory->sku }}</a>
 				                                @else
 				                                  {{ $inventory->sku }}
 				                                @endcan
-				                            </h4>
+				                            </h5>
 
 				                        	<span class="text-muted">
 				                          		{{ $inventory->name }}
+												@if($inventory->attributeValues->count())
+					                          		<small>({{ implode(' | ', array_column($inventory->attributeValues->toArray(), 'value') ) }})</small>
+				                                @endif
 				                        	</span>
 										</td>
 										<td>{{ trans('app.sold_units', ['units' => $inventory->sold_qtt]) }}</td>
@@ -595,20 +597,15 @@
 	                      	</tbody>
 	                  	</table>
 	              	</div>
-	            </div>
-	            <!-- /.box-body -->
+	            </div><!-- /.box-body -->
 	            <div class="box-footer text-center">
 					<a href="{{ route('admin.stock.inventory.index') }}" class="btn btn-default btn-flat pull-right">
 						<i class="icon ion-md-cube"></i> {{ trans('app.inventories') }}
 					</a>
-	            </div>
-	            <!-- /.box-footer -->
-	        </div>
-	        <!-- /.box -->
-	    </div>
-      	<!-- /.col-*-* -->
-    </div>
-    <!-- /.row -->
+	            </div><!-- /.box-footer -->
+	        </div><!-- /.box -->
+	    </div><!-- /.col-*-* -->
+    </div><!-- /.row -->
 @endsection
 
 @section('page-script')

@@ -40,6 +40,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Inventory
+    |--------------------------------------------------------------------------
+    |
+    | Config values for inventory. System needs this to manage inventory.
+    |
+    */
+    'inventory' => [
+        'max_key_features' => 7, // Maximum Number of key features can be added when creating an inventory
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Pagination
+    |--------------------------------------------------------------------------
+    |
+    | Number of product will be display on the product lisitng page and search result.
+    |
+    */
+    'view_listing_per_page' => 16,
+
+    /*
+    |--------------------------------------------------------------------------
     | Popular
     |--------------------------------------------------------------------------
     |
@@ -50,12 +72,31 @@ return [
         // Number of Days
         'period' => [
             'trending'  => 2,
-            'weekly     => 7'
+            'weekly'    => 7
         ],
-        // Number of Products
+        // Number of top selling products will be picked
         'take' => [
             'trending'  => 15,
-            'weekly     => 5'
+            'weekly'    => 5
+        ],
+
+        // This will use to lebel product list as hot item
+        'hot_item' => [
+            'period'        => 24, //hrs
+            'sell_count'    => 3,
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Filter
+    |--------------------------------------------------------------------------
+    |
+    | This values (Days) will be used to filter product lintings.
+    |
+    */
+    'filter' => [
+        'new_arraival' => 7, //Days
+    ],
+
 ];

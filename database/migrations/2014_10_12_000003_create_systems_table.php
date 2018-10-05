@@ -46,6 +46,7 @@ class CreateSystemsTable extends Migration
             $table->string('google_plus_link')->nullable();
             $table->string('twitter_link')->nullable();
             $table->string('pinterest_link')->nullable();
+            $table->string('instagram_link')->nullable();
             $table->string('youtube_link')->nullable();
 
             // Units and Formating

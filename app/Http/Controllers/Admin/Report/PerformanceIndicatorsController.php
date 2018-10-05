@@ -36,7 +36,6 @@ class PerformanceIndicatorsController extends Controller
      */
     public function all()
     {
-
         $data = [
             'indicators' => $this->indicators->all(60),
             'last_month' => $this->indicators->forDate(Carbon::today()->subMonths(1)),
@@ -45,7 +44,7 @@ class PerformanceIndicatorsController extends Controller
             // 'subscribers' => $this->subscribers(),
         ];
 
-// echo "<pre>"; print_r(array_column($data['subscribers'], 'count')); echo "</pre>"; exit();
+        // echo "<pre>"; print_r(array_column($data['subscribers'], 'count')); echo "</pre>"; exit();
 
         // Chart
         $chartSubscribers = new Subscribers(collect($data['subscribers'])->pluck('name'));

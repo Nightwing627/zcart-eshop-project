@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\SystemConfig;
 use Illuminate\Http\Request;
+use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 
 class ThemeController extends Controller
 {
+    use Authorizable;
+
     /**
      * All themes installed
      *

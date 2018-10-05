@@ -19,6 +19,7 @@ class SubscriptionPlanController extends Controller
     public function __construct()
     {
         parent::__construct();
+
         $this->model_name = trans('app.model.subscription_plan');
     }
 
@@ -54,7 +55,9 @@ class SubscriptionPlanController extends Controller
      */
     public function store(CreateSubscriptionPlanRequest $request)
     {
-        SubscriptionPlan::create($request->all());
+        $plan = new SubscriptionPlan;
+
+        $plan->fill($request->all())->save();
 
         return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
     }

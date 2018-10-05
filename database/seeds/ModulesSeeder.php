@@ -75,10 +75,10 @@ class ModulesSeeder extends Seeder
             'actions' => 'view,add,edit,delete'
         ],
 
-        'Gift Card' => [
-            'access' => 'Platform',
-            'actions' => 'view,add,edit,delete'
-        ],
+        // 'Gift Card' => [
+        //     'access' => 'Platform',
+        //     'actions' => 'view,add,edit,delete'
+        // ],
 
         'Inventory' => [
             'access' => 'Merchant',

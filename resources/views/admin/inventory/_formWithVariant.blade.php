@@ -10,7 +10,17 @@
    @endphp
 @endif
 
-{{ Form::hidden('product_id', $product->id) }}
+{{ Form::hidden('product', $product) }}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      {!! Form::label('title', trans('app.form.title').'*') !!}
+      {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.title'), 'required']) !!}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-lg-3 col-md-6 nopadding-right">
@@ -67,7 +77,20 @@
         <div class="help-block with-errors"></div>
       </div>
     </div>
-    <div class="col-lg-6 col-md-12">
+    <div class="col-lg-3 col-md-6 nopadding-right">
+      <div class="form-group">
+        <label class="with-help">&nbsp;</label>
+        <div class="input-group">
+          {{ Form::hidden('free_shipping', 0) }}
+          {!! Form::checkbox('free_shipping', null, null, ['id' => 'free_shipping', 'class' => 'icheckbox_line']) !!}
+          {!! Form::label('free_shipping', trans('app.form.free_shipping')) !!}
+          <span class="input-group-addon" id="">
+            <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.free_shipping') }}"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 nopadding-left">
       <div class="form-group">
         {!! Form::label('packaging_list[]', trans('app.form.packaging'), ['class' => 'with-help']) !!}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.select_packagings') }}"></i>
@@ -206,9 +229,12 @@
 
 <div class="spacer30"></div>
 
+@include('admin.inventory._common')
+
 <div class="form-group">
-  {!! Form::label('description', trans('app.form.description'), ['class' => 'with-help']) !!}
-  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_description') }}"></i>
-  {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'placeholder' => trans('app.placeholder.description')]) !!}
+  {!! Form::label('linked_items[]', trans('app.form.linked_items'), ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.inventory_linked_items') }}"></i>
+  {!! Form::select('linked_items[]', $inventories , Null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
+  <div class="help-block with-errors"></div>
 </div>
 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>

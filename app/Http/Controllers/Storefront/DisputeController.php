@@ -39,14 +39,14 @@ class DisputeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function refund_request(RefundRequest $request, Order $order)
-    {
-        $refund = $order->refunds()->create($request->all());
+    // public function refund_request(RefundRequest $request, Order $order)
+    // {
+    //     $refund = $order->refunds()->create($request->all());
 
-        // event(new RefundCreated($refund));
+    //     // event(new RefundCreated($refund));
 
-        return redirect()->route('order.detail', $order)->with('success', trans('theme.notify.refund_request_sent'));
-    }
+    //     return redirect()->route('order.detail', $order)->with('success', trans('theme.notify.refund_request_sent'));
+    // }
 
     /**
      * open_dispute

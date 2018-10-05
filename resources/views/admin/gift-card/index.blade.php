@@ -12,37 +12,33 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-short">
+			<table class="table table-hover table-option">
 				<thead>
 					<tr>
 						<th>{{ trans('app.name') }}</th>
-						<th>{{ trans('app.pin_code') }}</th>
-						<th>{{ trans('app.serial_number') }}</th>
 						<th>{{ trans('app.value') }}</th>
 						<th>{{ trans('app.activation_time') }}</th>
 						<th>{{ trans('app.expiry_time') }}</th>
-						<th>{{ trans('app.status') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($valid_cards as $card )
 						<tr>
-							<td>{{ $card->name }}</td>
-							<td>{{ $card->pin_code }}</td>
-							<td>{{ $card->serial_number }}</td>
+							<td>
+								<img src="{{ get_storage_file_url(optional($card->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
+								<span class="indent10">
+									{{ $card->name }}
+								</span>
+								@if($card->isInUse())
+									<span class="label label-primary indent5">{{ trans('app.in_use') }}</span>
+								@endif
+							</td>
 							<td>{{ get_formated_currency($card->value) }}</td>
 							<td>
 								{{ $card->activation_time ? $card->activation_time->toDayDateTimeString() : '' }}
 							</td>
 							<td>{{ $card->expiry_time ? $card->expiry_time->toDayDateTimeString() : '' }}</td>
-							<td>
-								@if($card->expiry_time < \Carbon\Carbon::now())
-									{{ trans('app.expired') }}
-								@else
-									{{ ($card->active) ? trans('app.active') : trans('app.inactive') }}
-								@endif
-							</td>
 							<td class="row-options">
 								@can('view', $card)
 									<a href="{{ route('admin.promotion.giftCard.show', $card->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
@@ -74,53 +70,48 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-short">
+			<table class="table table-hover table-option">
 				<thead>
 					<tr>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.pin_code') }}</th>
 						<th>{{ trans('app.serial_number') }}</th>
 						<th>{{ trans('app.value') }}</th>
-						<th>{{ trans('app.activation_time') }}</th>
 						<th>{{ trans('app.expiry_time') }}</th>
-						<th>{{ trans('app.status') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($expired_cards as $card )
-					<tr>
-						<td>{{ $card->name }}</td>
-						<td>{{ $card->pin_code }}</td>
-						<td>{{ $card->serial_number }}</td>
-						<td>{{ get_formated_currency($card->value) }}</td>
-						<td>
-							{{ $card->activation_time ? $card->activation_time->toDayDateTimeString() : '' }}
-						</td>
-						<td>{{ $card->expiry_time ? $card->expiry_time->toDayDateTimeString() : '' }}</td>
-						<td>
-							@if($card->expiry_time < \Carbon\Carbon::now())
-								{{ trans('app.expired') }}
-							@else
-								{{ ($card->active) ? trans('app.active') : trans('app.inactive') }}
-							@endif
-						</td>
-						<td class="row-options">
-							@can('view', $card)
-								<a href="{{ route('admin.promotion.giftCard.show', $card->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
-							@endcan
+					@foreach($invalid_cards as $card )
+						<tr>
+							<td>
+								{{ $card->name }}
+								@if(!$card->hasRemaining())
+									<span class="label label-info indent5">{{ trans('app.used') }}</span>
+								@endif
+							</td>
+							<td>{{ $card->pin_code }}</td>
+							<td>{{ $card->serial_number }}</td>
+							<td>{{ get_formated_currency($card->value) }}</td>
+							<td>
+								{{ $card->expiry_time->toDayDateTimeString() }}
+							</td>
+							<td class="row-options">
+								@can('view', $card)
+									<a href="{{ route('admin.promotion.giftCard.show', $card->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								@endcan
 
-							@can('update', $card)
-								<a href="{{ route('admin.promotion.giftCard.edit', $card->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
-							@endcan
+								@can('update', $card)
+									<a href="{{ route('admin.promotion.giftCard.edit', $card->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								@endcan
 
-							@can('delete', $card)
-								{!! Form::open(['route' => ['admin.promotion.giftCard.trash', $card->id], 'method' => 'delete', 'class' => 'data-form']) !!}
-									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-								{!! Form::close() !!}
-							@endcan
-						</td>
-					</tr>
+								@can('delete', $card)
+									{!! Form::open(['route' => ['admin.promotion.giftCard.trash', $card->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+										{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+									{!! Form::close() !!}
+								@endcan
+							</td>
+						</tr>
 					@endforeach
 				</tbody>
 			</table>
@@ -153,7 +144,7 @@
 						<td>
 							{{ $trash->serial_number }}
 							@if($trash->expiry_time < \Carbon\Carbon::now())
-								({{ trans('app.expired') }})
+								({{ trans('app.invalid') }})
 							@endif
 						</td>
 						<td>{{ get_formated_currency($trash->value) }}</td>

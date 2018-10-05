@@ -44,9 +44,9 @@ class OrderBeenPaid extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->from(get_sender_email($this->order->shop_id), get_sender_name($this->order->shop_id))
-                    ->subject( trans('notifications.order_paid.subject', ['order' => $this->order->order_number]) )
-                    ->markdown('admin.mail.order.paid', ['url' => url('/'), 'order' => $this->order]);
+        ->from(get_sender_email($this->order->shop_id), get_sender_name($this->order->shop_id))
+        ->subject( trans('notifications.order_paid.subject', ['order' => $this->order->order_number]) )
+        ->markdown('admin.mail.order.paid', ['url' => url('/'), 'order' => $this->order]);
     }
 
     /**

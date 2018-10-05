@@ -10,4 +10,5 @@
 
 @section('page-script')
     @include('plugins.dropzone-upload')
+    @include('plugins.dynamic-inputs')
 @endsection

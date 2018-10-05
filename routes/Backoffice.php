@@ -1,4 +1,6 @@
 <?php
+// Installer routes
+include('admin/Installer.php');
 
 include('admin/Auth.php');
 
@@ -14,7 +16,9 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 
 	// Merchant only routes
 	Route::middleware(['merchant'])->group(function () {
-		include('admin/ShopReport.php');
+		Route::group(['namespace' => 'Report'], function(){
+			include('admin/ShopReport.php');
+		});
 	});
 
 	// Account Routes for Merchant and Admin
@@ -24,12 +28,12 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		include('admin/Billing.php');
 	});
 
+	Route::get('secretLogout', 'DashboardController@secretLogout')->name('secretLogout');
 	Route::middleware(['subscribed'])->group(function () {
 		// Dashboard
 		Route::put('dashboard/config/{node}/toggle', 'DashboardController@toggleConfig')->name('dashboard.config.toggle')->middleware('ajax');
 		Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard')->middleware('dashboard');
 		Route::get('secretLogin/{user}', 'DashboardController@secretLogin')->name('user.secretLogin');
-		Route::get('secretLogout', 'DashboardController@secretLogout')->name('secretLogout');
 
 		include('admin/Notification.php');
 
@@ -138,17 +142,9 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		// AJAX routes
 		Route::group(['middleware' => 'ajax'], function()
 		{
-		    // Route::post('message/massUpdate/{statusOrLabel}/{type?}', 'MessageController@massUpdate')->name('support.message.massUpdate');
-
 			Route::get('catalog/ajax/getParrentAttributeType', 'AttributeController@ajaxGetParrentAttributeType')->name('ajax.getParrentAttributeType');
 
-			Route::get('order/ajax/getTaxRate', 'OrderController@ajaxGetTaxRate')->name('ajax.getTaxRate');
-
 			Route::get('order/ajax/filterShippingOptions', 'AjaxController@filterShippingOptions')->name('ajax.filterShippingOptions');
-
-			// Route::get('order/ajax/getPackagingCost', 'OrderController@ajaxGetPackagingCost')->name('ajax.getPackagingCost');
-
-			Route::get('system/ajax/getFromPHPHelper', 'AjaxController@ajaxGetFromPHPHelper')->name('ajax.getFromPHPHelper');
 		});
 	});
 });

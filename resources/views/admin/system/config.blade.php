@@ -447,6 +447,7 @@
 								    <!-- /.row -->
 								</fieldset>
 					    	</div>
+
 					    	<div class="col-sm-6">
 					    		<fieldset>
 					    			<legend>{{ trans('app.config_promotions') }}</legend>
@@ -463,7 +464,7 @@
 									  	</div>
 									</div>
 
-									<div class="form-group">
+									{{-- <div class="form-group">
 								        {!! Form::label('gift_card_pin_size', '*' . trans('app.config_gift_card_pin_size'). ':', ['class' => 'with-help col-sm-7 control-label']) !!}
 									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_gift_card_pin_size') }}"></i>
 									  	<div class="col-sm-4 nopadding-left">
@@ -487,7 +488,7 @@
 												<span>{{ $system->gift_card_serial_number_size }}</span>
 											@endif
 									  	</div>
-									</div>
+									</div>--}}
 								</fieldset>
 					    	</div>
 					    	<div class="col-sm-12">
@@ -522,6 +523,15 @@
 						    		<p class="lead">{{ $type }}</p>
 								@endif
 					    		<p>{!! get_payment_method_type($type_id)['admin_description'] !!}</p>
+					    		@if($type_id == \App\PaymentMethod::TYPE_MANUAL || $type_id == \App\PaymentMethod::TYPE_PAYPAL)
+					    			<div class="spacer20"></div>
+						          	<div class="alert alert-info">
+						            	<strong class="text-uppercase">
+						            		<i class="fa fa-info-circle"></i> {{ trans('app.important') }} :
+							            </strong>
+							            <span>{!! trans('messages.cant_charge_application_fee') !!}</span>
+							        </div>
+								@endif
 					    	</div>
 					    	<div class="col-sm-6">
 				    			@foreach($payment_providers as $payment_provider)
@@ -709,6 +719,19 @@
 										    	</div>
 											@else
 												<span>{{ $system->pinterest_link }}</span>
+											@endif
+									  	</div>
+									</div>
+									<div class="form-group">
+								        {!! Form::label('instagram_link', trans('app.instagram_link'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+									  	<div class="col-sm-6 nopadding-left">
+									  		@if($can_update)
+											    <div class="input-group">
+											        <span class="input-group-addon"><i class="fa fa-instagram"></i></span>
+													{!! Form::text('instagram_link', $system->instagram_link, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.instagram_link')]) !!}
+										    	</div>
+											@else
+												<span>{{ $system->instagram_link }}</span>
 											@endif
 									  	</div>
 									</div>

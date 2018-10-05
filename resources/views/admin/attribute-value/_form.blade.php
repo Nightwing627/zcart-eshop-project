@@ -10,7 +10,7 @@
 	<div class="form-group">
 	  	{!! Form::label('value', trans('app.form.attribute_value').'*') !!}
 		<div class="input-group">
-			{!! Form::text('value', null, ['class' => 'form-control makeSlug', 'placeholder' => trans('app.placeholder.attribute_value'), 'required']) !!}
+			{!! Form::text('value', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.attribute_value'), 'required']) !!}
 		    <span class="input-group-addon" id="basic-addon1">
 		      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.attribute_value') }}"></i>
 		    </span>
@@ -22,7 +22,7 @@
     <div class="form-group">
       {!! Form::label('order', trans('app.form.list_order')) !!}
       <div class="input-group">
-        {!! Form::number('order', null, ['class' => 'form-control makeSlug', 'placeholder' => trans('app.placeholder.list_order')]) !!}
+        {!! Form::number('order', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.list_order')]) !!}
         <span class="input-group-addon" id="basic-addon1">
           <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.list_order') }}"></i>
         </span>

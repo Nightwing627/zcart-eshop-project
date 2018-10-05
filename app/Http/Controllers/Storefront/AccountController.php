@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Storefront;
 
 use Auth;
 use View;
+use App\Address;
 use App\Wishlist;
 use App\Customer;
 use App\Helpers\ListHelper;
@@ -26,8 +27,8 @@ class AccountController extends Controller
      */
     public function index($tab = 'dashboard')
     {
-        if( ! method_exists($this, $tab) )
-            abort(404);
+        // Auth::guard('customer')->loginUsingId(33);
+        if( ! method_exists($this, $tab) ) abort(404);
 
         // Call the methods dynamically to load needed models
         $$tab = $this->$tab();
@@ -71,9 +72,9 @@ class AccountController extends Controller
      */
     public function save_address(CreateAddressRequest $request)
     {
-        Auth::guard('customer')->user()->addresses()->create($request->all());
+        $address = Auth::guard('customer')->user()->addresses()->create($request->all());
 
-        return redirect()->route('account', 'account#address-tab')->with('success', trans('theme.notify.address_created'));
+        return redirect()->to(url()->previous().'?address='.$address->id.'#address-tab')->with('success', trans('theme.notify.address_created'));
     }
 
 
@@ -143,7 +144,7 @@ class AccountController extends Controller
     private function orders()
     {
         return Auth::guard('customer')->user()->orders()
-                ->with(['shop:id,name,slug', 'inventories.product:id,slug'])->paginate(10);
+        ->with(['shop:id,name,slug', 'inventories:id,title,slug,product_id', 'status'])->paginate(10);
     }
 
     /**
@@ -152,7 +153,9 @@ class AccountController extends Controller
      */
     private function wishlist()
     {
-        return Wishlist::mine()->with('product.inventories:product_id,sale_price')->paginate(7);
+        return Wishlist::mine()->whereHas('inventory', function($q) {
+            $q->available();
+        })->with(['inventory', 'inventory.feedbacks:rating,feedbackable_id,feedbackable_type', 'inventory.images:path,imageable_id,imageable_type'])->paginate(7);
     }
 
     /**
@@ -162,8 +165,8 @@ class AccountController extends Controller
     private function disputes()
     {
         return Auth::guard('customer')->user()->disputes()
-            ->with(['shop:id,name,slug', 'order.inventories:product_id', 'order.inventories.image', 'order.inventories.product'])
-            ->paginate(10);
+        ->with(['shop:id,name,slug', 'order.inventories:product_id,slug', 'order.inventories.image', 'order.inventories.product'])
+        ->paginate(10);
     }
 
     /**
@@ -172,8 +175,8 @@ class AccountController extends Controller
      */
     private function coupons()
     {
-        return Auth::guard('customer')->user()->coupons()->active()
-                ->with('shop:id,name,slug')->paginate(20);
+        return Auth::guard('customer')->user()->coupons()
+        ->active()->with('shop:id,name,slug')->paginate(20);
     }
 
     /**
@@ -195,6 +198,6 @@ class AccountController extends Controller
      */
     private function gift_cards()
     {
-        return Auth::guard('customer')->user()->gift_cards()->active()->paginate(20);
+        return Auth::guard('customer')->user()->gift_cards()->paginate(20);
     }
 }

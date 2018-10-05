@@ -232,20 +232,4 @@ class OrderController extends Controller
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
-
-    /**
-     * Return tax rate
-     * @param  \Illuminate\Http\Request  $request
-     * @return string
-     */
-    public function ajaxGetTaxRate(Request $request)
-    {
-        if ($request->ajax()){
-            $taxrate = getTaxRate($request->input('ID'));
-
-            return get_formated_decimal($taxrate);
-        }
-
-        return false;
-    }
 }

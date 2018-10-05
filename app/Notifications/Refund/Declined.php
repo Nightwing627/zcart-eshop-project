@@ -44,9 +44,9 @@ class Declined extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->from(get_sender_email($this->refund->shop_id), get_sender_name($this->refund->shop_id))
-                    ->subject( trans('notifications.refund_declined.subject', ['order' => $this->refund->order->order_number]) )
-                    ->markdown('admin.mail.refund.declined', ['refund' => $this->refund]);
+        ->from(get_sender_email($this->refund->shop_id), get_sender_name($this->refund->shop_id))
+        ->subject( trans('notifications.refund_declined.subject', ['order' => $this->refund->order->order_number]) )
+        ->markdown('admin.mail.refund.declined', ['refund' => $this->refund]);
     }
 
     /**

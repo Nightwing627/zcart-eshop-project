@@ -15,13 +15,16 @@ class CreateInventoryTable extends Migration
         Schema::create('inventories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('shop_id')->unsigned()->nullable();
+            $table->text('title');
             $table->integer('warehouse_id')->unsigned()->nullable();
             $table->bigInteger('product_id')->unsigned();
+            $table->string('brand')->nullable();
             $table->integer('supplier_id')->unsigned()->nullable();
             $table->string('sku', 200);
             $table->enum('condition', ['New', 'Used', 'Refurbished']);
             $table->text('condition_note')->nullable();
             $table->longtext('description')->nullable();
+            $table->text('key_features')->nullable();
             $table->integer('stock_quantity')->default(0);
             $table->integer('damaged_quantity')->nullable();
 
@@ -39,9 +42,15 @@ class CreateInventoryTable extends Migration
             // $table->decimal('shipping_height', 20, 2)->nullable();
             // $table->decimal('shipping_depth', 20, 2)->nullable();
             $table->decimal('shipping_weight', 20, 2)->nullable();
+            $table->boolean('free_shipping')->nullable();
 
             $table->timestamp('available_from')->useCurrent();
             $table->integer('min_order_quantity')->default(1);
+            $table->string('slug', 200)->unique();
+            $table->text('linked_items')->nullable();
+            $table->text('meta_title')->nullable();
+            $table->longtext('meta_description')->nullable();
+            $table->boolean('stuff_pick')->nullable();
             $table->boolean('active')->default(1);
             $table->softDeletes();
             $table->timestamps();

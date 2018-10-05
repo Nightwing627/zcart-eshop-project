@@ -1,68 +1,78 @@
 //Theme JavaScript
-$(function() {
-  $("#contactForm input, #contactForm textarea").jqBootstrapValidation({
-    preventSubmit: true,
-    submitError: function($form, event, errors) {
-      // additional error messages or events
-    },
-    submitSuccess: function($form, event) {
-        event.preventDefault(); // prevent default submit behaviour
-
-        var form = $("form#contactForm");
-        var data = form.serialize();
-
-        $submmitBtn = $("button[type=submit]");
-        $submmitBtn.prop("disabled", true); // Disable submit button until AJAX call is complete to prevent duplicate messages
-        $.ajax({
-            url: form.attr("action"),
-            type: "POST",
-            data: data,
+;(function($, window, document) {
+    "use strict";
+    $(document).ready(function(){
+        $.ajaxSetup ({
             cache: false,
-            success: function(response, textStatus, xhr) {
-                $('#success').html("<div class='alert alert-success'><strong>"+ response +"</strong></div>");
-            },
-            error: function(response, textStatus, xhr) {
-                if( jqXhr.status === 422 ) {
-                    var errors = response.responseJSON.errors;
-                    if(errors){
-                        var errorsHtml= '<ul>';
-                        $.each( errors, function( key, value ) {
-                            errorsHtml += '<li>' + value[0] + '</li>';
-                        });
-                        errorsHtml += '</ul>';
-                        $('#success').html("<div class='alert alert-danger'>"+ errorsHtml +"</div>");
-                    }
-                }
-                else{
-                    $('#success').html("<div class='alert alert-danger'><strong>"+ response.responseText +"</strong></div>");
-                }
-            },
-            complete: function(xhr, textStatus) {
-              $('#contactForm').trigger("reset"); //clear all fields
-              setTimeout(function() {
-                $submmitBtn.prop("disabled", false); // Re-enable submit button when AJAX call is complete
-              }, 1000);
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
             }
         });
-    },
-    filter: function() {
-      return $(this).is(":visible");
-    },
-  });
+    });
 
-  $("a[data-toggle=\"tab\"]").click(function(e) {
-    e.preventDefault();
-    $(this).tab("show");
-  });
-});
+    // Activate the tab if the url has any #hash
+    $('.nav a').on('show.bs.tab', function (e) {
+        window.location = $(this).attr('href');
+    });
+    $(function () {
+        var hash = window.location.hash;
+        hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+    });
 
-/*When clicking on Full hide fail/success boxes */
-$('#name').focus(function() {
-  $('#success').html('');
-});
+    $("#contactForm input, #contactForm textarea").jqBootstrapValidation({
+        preventSubmit: true,
+        submitError: function($form, event, errors) {
+          // additional error messages or events
+        },
+        submitSuccess: function($form, event) {
+            event.preventDefault(); // prevent default submit behaviour
 
-(function($) {
-    "use strict"; // Start of use strict
+            var form = $("form#contactForm");
+            var data = form.serialize();
+
+            var submmitBtn = $("button[type=submit]");
+            submmitBtn.prop("disabled", true); // Disable submit button until AJAX call is complete to prevent duplicate messages
+            $.ajax({
+                url: form.attr("action"),
+                type: "POST",
+                data: data,
+                cache: false,
+                success: function(response, textStatus, xhr) {
+                    $('#success').html("<div class='alert alert-success'><strong>"+ response +"</strong></div>");
+                },
+                error: function(response, textStatus, xhr) {
+                    if( jqXhr.status === 422 ) {
+                        var errors = response.responseJSON.errors;
+                        if(errors){
+                            var errorsHtml= '<ul>';
+                            $.each( errors, function( key, value ) {
+                                errorsHtml += '<li>' + value[0] + '</li>';
+                            });
+                            errorsHtml += '</ul>';
+                            $('#success').html("<div class='alert alert-danger'>"+ errorsHtml +"</div>");
+                        }
+                    }
+                    else{
+                        $('#success').html("<div class='alert alert-danger'><strong>"+ response.responseText +"</strong></div>");
+                    }
+                },
+                complete: function(xhr, textStatus) {
+                  $('#contactForm').trigger("reset"); //clear all fields
+                  setTimeout(function() {
+                    submmitBtn.prop("disabled", false); // Re-enable submit button when AJAX call is complete
+                  }, 1000);
+                }
+            });
+        },
+        filter: function() {
+          return $(this).is(":visible");
+        },
+    });
+
+    $("a[data-toggle=\"tab\"]").click(function(e) {
+        e.preventDefault();
+        $(this).tab("show");
+    });
 
     // jQuery for page scrolling feature - requires jQuery Easing plugin
     $('a.page-scroll').bind('click', function(event) {
@@ -91,4 +101,9 @@ $('#name').focus(function() {
         }
     })
 
-})(jQuery); // End of use strict
+    /*When clicking on Full hide fail/success boxes */
+    $('#name').focus(function() {
+      $('#success').html('');
+    });
+
+}(window.jQuery, window, document));

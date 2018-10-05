@@ -37,6 +37,7 @@ class NotifyCustomerOrderPlaced implements ShouldQueue
         if(!config('system_settings'))
             setSystemConfig($event->order->shop_id);
 
-        $event->order->customer->notify(new OrderCreatedNotification($event->order));
+        if ($event->order->customer_id)
+            $event->order->customer->notify(new OrderCreatedNotification($event->order));
     }
 }

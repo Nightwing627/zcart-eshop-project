@@ -44,10 +44,10 @@ class PaymentFailed extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->from(get_sender_email($this->order->shop_id), get_sender_name($this->order->shop_id))
-                    ->error()
-                    ->subject( trans('notifications.order_payment_failed.subject', ['order' => $this->order->order_number]) )
-                    ->markdown('admin.mail.order.payment_failed', ['url' => url('/'), 'order' => $this->order]);
+        ->from(get_sender_email($this->order->shop_id), get_sender_name($this->order->shop_id))
+        ->error()
+        ->subject( trans('notifications.order_payment_failed.subject', ['order' => $this->order->order_number]) )
+        ->markdown('admin.mail.order.payment_failed', ['url' => url('/'), 'order' => $this->order]);
     }
 
     /**

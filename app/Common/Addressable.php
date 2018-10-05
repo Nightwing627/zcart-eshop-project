@@ -20,6 +20,16 @@ trait Addressable {
 	}
 
 	/**
+	 * Return any address related to the model model
+	 *
+	 * @return Illuminate\Database\Eloquent\Collection
+	 */
+	public function address()
+	{
+        return $this->addresses->first();
+	}
+
+	/**
 	 * Return collection of addresses related to the tagged model
 	 *
 	 * @return Illuminate\Database\Eloquent\Collection

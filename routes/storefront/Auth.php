@@ -2,8 +2,8 @@
    // Auth route for customers
    Route::group(['as' => 'customer.', 'prefix' => 'customer'], function() {
       Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-      Route::get('login/github', 'Auth\LoginController@redirectToProvider')->name('login.github');
-      Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
+      Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('login.social');
+      Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('login.social.callback');
       Route::post('/login', 'Auth\LoginController@login')->name('login.submit');
       Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 

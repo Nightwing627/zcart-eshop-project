@@ -15,7 +15,7 @@
 				<thead>
 					<tr>
 						<th>{{ trans('app.shop_name') }}</th>
-						<th>{{ trans('app.email') }}</th>
+						<th>{{ trans('app.current_billing_plan') }}</th>
 						<th>{{ trans('app.owner') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -24,7 +24,7 @@
 					@foreach($shops as $shop )
 						<tr>
 							<td>
-								<img src="{{ get_storage_file_url(optional($shop->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+								<img src="{{ get_storage_file_url(optional($shop->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
 								<p class="indent10">
 									@can('view', $shop)
 										<a href="{{ route('admin.vendor.shop.show', $shop->id) }}"  class="ajax-modal-btn">{{ $shop->name }}</a>
@@ -39,7 +39,7 @@
 									@endif
 								</p>
 							</td>
-							<td>{{ $shop->email }}</td>
+				          	<td>{{ $shop->current_billing_plan }}</td>
 							<td>
 					            @if($shop->owner->image)
 									<img src="{{ get_storage_file_url(optional($shop->owner->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
@@ -110,7 +110,7 @@
 					@foreach($trashes as $trash )
 					<tr>
 						<td>
-							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+							<img src="{{ get_storage_file_url(optional($trash->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
 							<p class="indent10">
 								{{ $trash->name }}
 							</p>

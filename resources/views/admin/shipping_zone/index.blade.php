@@ -126,8 +126,9 @@
 									  <li class="list-group-item">
 									    <h4 class="list-group-item-heading">
 									    	{{ $shipping->name }}
+
 									    	@if($shipping->carrier)
-										    	<small class="indent20"> {{ trans('app.by') . ' ' . $shipping->carrier->name }} </small>
+										    	<small class="indent20"> {{ trans('app.by') . ' ' . $shipping->carrier->name . ' ' . trans('app.and_takes', ['time' => $shipping->delivery_takes]) }} </small>
 									    	@endif
 
 											@can('delete', $shipping)

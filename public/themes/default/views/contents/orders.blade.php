@@ -15,10 +15,10 @@
               <td width="25%" class="store-info">
                 <h5>
                   <span>@lang('theme.store'):</span>
-                  @if($order->shop)
+                  @if($order->shop->name)
                     <a href="{{ route('show.store', $order->shop->slug) }}"> {{ $order->shop->name }}</a>
                   @else
-                    @land('theme.shop_not_available')
+                    @lang('theme.store_not_available')
                   @endif
                 </h5>
                 <h5>
@@ -39,10 +39,10 @@
             <tr class="order-body">
               <td colspan="2">
                   <div class="product-img-wrap">
-                    <img src="{{ get_storage_file_url(optional($item->image)->path, 'small') }}" alt="{{ $item->product->slug }}" title="{{ $item->product->slug }}" />
+                    <img src="{{ get_storage_file_url(optional($item->image)->path, 'small') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
                   </div>
                   <div class="product-info">
-                      <a href="{{ route('show.product', $item->product->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>
+                      <a href="{{ route('show.product', $item->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>
                       <div class="order-info-amount">
                           <span>{{ get_formated_currency($item->pivot->unit_price) }} x {{ $item->pivot->quantity }}</span>
                       </div>

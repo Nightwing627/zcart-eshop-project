@@ -2,7 +2,7 @@
 	<section class="bg-light">
 	  <div class="container full-width">
 	    <div class="section-title">
-	      <h4 class="small">@lang('theme.section_headings.recently_viewed')</h4>
+	      <h4 class="small">{!! trans('theme.section_headings.recently_viewed') !!}</h4>
 	    </div>
 	    <div class="section-content">
 

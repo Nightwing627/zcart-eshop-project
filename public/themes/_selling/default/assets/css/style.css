@@ -4,7 +4,13 @@ ul[role="alert"]{
 ul[role="alert"] li, div.alert ul li{
   list-style: none;
 }
-
+.navbar-brand {
+  padding: 7px 15px!important;
+}
+.brand-logo {
+  max-height: 40px;
+  max-width: 120px;
+}
 .nav-tabs {
 	border-bottom: 2px solid #DDD;
 }

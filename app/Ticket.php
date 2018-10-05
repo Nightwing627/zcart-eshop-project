@@ -67,7 +67,7 @@ class Ticket extends Model
     */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault();
     }
 
     /**
@@ -83,7 +83,7 @@ class Ticket extends Model
     */
     public function assignedTo()
     {
-        return $this->belongsTo(User::class, 'assigned_to');
+        return $this->belongsTo(User::class, 'assigned_to')->withDefault();
     }
 
     /**

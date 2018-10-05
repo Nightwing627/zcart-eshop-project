@@ -23,14 +23,16 @@ class CreateGiftCardRequest extends Request
      */
     public function rules()
     {
+        $this->merge(['remaining_value' => $this->get('value')]); //Set remaining_value
+
         return [
            'name' => 'required',
+           'value' => 'required|numeric',
            'pin_code' => 'required|unique:gift_cards',
            'serial_number' => 'required|unique:gift_cards',
-           'value' => 'required|numeric',
-           'activation_time' => 'required|nullable|date|after_or_equal:now',
-           'expiry_time' => 'required|nullable|date|after:starting_time',
-           'active' => 'required|boolean',
+           'activation_time' => 'required|nullable|date',
+           'expiry_time' => 'required|date|after:starting_time',
+           'image' => 'mimes:jpg,jpeg,png',
         ];
     }
 
@@ -42,9 +44,7 @@ class CreateGiftCardRequest extends Request
     public function messages()
     {
         return [
-            'activation_time.after_or_equal' => trans('validation.offer_start_after'),
             'expiry_time.after' => trans('validation.offer_end_after'),
         ];
     }
-
 }

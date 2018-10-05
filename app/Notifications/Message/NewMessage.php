@@ -46,9 +46,9 @@ class NewMessage extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->from(get_sender_email($this->message->shop_id), get_sender_name($this->message->shop_id))
-                    ->subject( trans('notifications.new_message.subject', ['subject' => $this->message->subject]) )
-                    ->markdown('admin.mail.message.new_message', ['url' => route('admin.support.message.show', $this->message->id), 'message' => $this->message, 'receiver' => $this->receiver]);
+        ->from(get_sender_email($this->message->shop_id), get_sender_name($this->message->shop_id))
+        ->subject( trans('notifications.new_message.subject', ['subject' => $this->message->subject]) )
+        ->markdown('admin.mail.message.new_message', ['url' => route('admin.support.message.show', $this->message->id), 'message' => $this->message, 'receiver' => $this->receiver]);
     }
 
     /**

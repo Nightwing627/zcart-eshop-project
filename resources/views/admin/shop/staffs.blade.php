@@ -53,7 +53,7 @@
 				          </td>
 				          <td>{{ ($user->active) ? trans('app.active') : trans('app.inactive') }}</td>
 				          <td class="row-options">
-				          	@unless($user->id == $shop->owner_id)
+				          	@if( Auth::user()->isSuperAdmin() || ($user->id != $shop->owner_id))
 								@can('view', $user)
 					        	    <a href="{{ route('admin.admin.user.show', $user->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
 								@endcan
@@ -77,7 +77,7 @@
 						                {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 									{!! Form::close() !!}
 								@endcan
-							@endunless
+							@endif
 				          </td>
 				        </tr>
 				    @endforeach

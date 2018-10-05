@@ -7,10 +7,12 @@
         </div>
         <div class="modal-body">
             {!! Form::open(['route' => 'my.address.save', 'data-toggle' => 'validator']) !!}
-                <div class="form-group">
-                  {!! Form::select('address_type', $address_types, null, ['class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.address_type'), 'required']) !!}
-                  <div class="help-block with-errors"></div>
-                </div>
+                @if(isset($address_types))
+                    <div class="form-group">
+                      {!! Form::select('address_type', $address_types, null, ['class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.address_type'), 'required']) !!}
+                      <div class="help-block with-errors"></div>
+                    </div>
+                @endif
 
                 @include('forms.address')
 

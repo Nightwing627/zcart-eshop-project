@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('activitylog:clean')->daily(); //Clean older activity logs
-        $schedule->command('incevio:kpi')->dailyAt('23:58');
+        // $schedule->command('incevio:kpi')->dailyAt('23:58');
 
 
         // $schedule->command('inspire')

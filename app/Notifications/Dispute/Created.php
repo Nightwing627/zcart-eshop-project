@@ -42,8 +42,9 @@ class Created extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.dispute_created.subject', ['order_id' => $this->dispute->order->order_number]) )
-                    ->markdown('admin.mail.dispute.created', ['url' => route('admin.support.dispute.show', $this->dispute->id), 'dispute' => $this->dispute]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.dispute_created.subject', ['order_id' => $this->dispute->order->order_number]) )
+        ->markdown('admin.mail.dispute.created', ['url' => route('admin.support.dispute.show', $this->dispute->id), 'dispute' => $this->dispute]);
     }
 
     /**

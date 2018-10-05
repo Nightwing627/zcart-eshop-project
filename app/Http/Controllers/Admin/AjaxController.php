@@ -17,16 +17,20 @@ class AjaxController extends Controller
      */
     public function ajaxGetFromPHPHelper(Request $request)
     {
-        // \Log::info('called');
+        // \Log::info($request->all());
+
         if ($request->ajax()) {
             $funcName = $request->input('funcName');
             $args = $request->input('args');
 
             $args = is_array($args) ? $args : explode(',', $args);
 
-            return call_user_func_array($funcName, $args);
+            $results = call_user_func_array($funcName, $args);
 
-            // return call_user_func($funcName, $args);
+            if(is_object($results))
+                return json_encode($results);
+
+            return $results;
         }
 
         return false;

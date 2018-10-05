@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use Auth;
 use App\User;
+use App\Cart;
 use App\Order;
 use App\Refund;
 use App\Visitor;
@@ -103,6 +104,16 @@ class Statistics
         return Order::mine()->withTrashed()->whereDate('created_at', \Carbon\Carbon::yesterday())->sum('total');
     }
 
+    public static function sales_data_by_period(Carbon $startTime, Carbon $endTime)
+    {
+        return Order::select('total', 'discount', 'created_at')
+        ->mine()->withTrashed() //Include the arcived orders also
+        ->where('created_at', '<=' , $startTime)
+        ->where('created_at', '>=' , $endTime)
+        ->orderBy('created_at', 'DESC')
+        ->get();
+    }
+
     public static function latest_refund_total($period = 15)
     {
         return Refund::mine()->statusOf(Refund::STATUS_APPROVED)->whereDate('updated_at', '>=', Carbon::today()->subDays($period))->sum('amount');
@@ -118,9 +129,19 @@ class Statistics
         return Order::mine()->withTrashed()->whereDate('created_at', \Carbon\Carbon::today())->count();
     }
 
+    // public static function orders_count_by_period($from = '', $to = '')
+    // {
+    //     return Order::mine()->withTrashed()->whereDate('created_at', '>=', Carbon::today()->subDays($period))->count();
+    // }
+
     public static function unfulfilled_order_count()
     {
         return Order::mine()->unfulfilled()->count();
+    }
+
+    public static function abandoned_carts_count($period = 15)
+    {
+        return Cart::mine()->whereDate('created_at', '>=', Carbon::today()->subDays($period))->count();
     }
 
     public static function shop_user_count($shop_id = Null)

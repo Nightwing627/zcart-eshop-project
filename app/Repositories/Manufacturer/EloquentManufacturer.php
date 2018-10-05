@@ -20,17 +20,17 @@ class EloquentManufacturer extends EloquentRepository implements BaseRepository,
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('country', 'image')->withCount('products')->get();
+            return $this->model->mine()->with('country', 'logo')->withCount('products')->get();
 
-        return $this->model->with('country', 'image')->withCount('products')->get();
+        return $this->model->with('country', 'logo')->withCount('products')->get();
     }
 
     public function trashOnly()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('image')->onlyTrashed()->get();
+            return $this->model->mine()->with('logo')->onlyTrashed()->get();
 
-        return $this->model->with('image')->onlyTrashed()->get();
+        return $this->model->with('logo')->onlyTrashed()->get();
     }
 
     public function store(Request $request)
@@ -40,6 +40,9 @@ class EloquentManufacturer extends EloquentRepository implements BaseRepository,
         if ($request->hasFile('image'))
             $manufacturer->saveImage($request->file('image'));
 
+        if ($request->hasFile('cover_image'))
+            $manufacturer->saveImage($request->file('cover_image'), true);
+
         return $manufacturer;
     }
 
@@ -48,10 +51,14 @@ class EloquentManufacturer extends EloquentRepository implements BaseRepository,
         $manufacturer = parent::update($request, $id);
 
         if ($request->hasFile('image') || ($request->input('delete_image') == 1))
-            $manufacturer->deleteImage();
-
+            $manufacturer->deleteLogo();
         if ($request->hasFile('image'))
             $manufacturer->saveImage($request->file('image'));
+
+        if ($request->hasFile('cover_image') || ($request->input('delete_cover_image') == 1))
+            $manufacturer->deleteFeaturedImage();
+        if ($request->hasFile('cover_image'))
+            $manufacturer->saveImage($request->file('cover_image'), true);
 
         return $manufacturer;
     }

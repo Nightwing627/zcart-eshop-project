@@ -14,24 +14,24 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.full_name'), 'data-validation-required-message' => trans('validation.required', ['attribute' => 'name']), 'required']) !!}
+                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('theme.placeholder.name'), 'data-validation-required-message' => trans('validation.required', ['attribute' => 'name']), 'required']) !!}
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="form-group">
-                            <input name="email" type="email" class="form-control" placeholder="Your Email *" id="email" required data-validation-required-message="Please enter your email address.">
+                            {!! Form::email('email', null, ['id' => 'email', 'class' => 'form-control', 'placeholder' => trans('theme.placeholder.email'), 'data-validation-required-message' => trans('validation.required', ['attribute' => 'email']), 'required']) !!}
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="form-group">
-                            {!! Form::text('phone', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.phone')]) !!}
+                            {!! Form::text('phone', null, ['class' => 'form-control', 'placeholder' => trans('theme.placeholder.phone_number')]) !!}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            {!! Form::text('subject', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.subject'), 'data-validation-required-message' => trans('validation.required', ['attribute' => 'subject']), 'required']) !!}
+                            {!! Form::text('subject', null, ['class' => 'form-control', 'placeholder' => trans('theme.placeholder.contact_us_subject'), 'data-validation-required-message' => trans('validation.required', ['attribute' => 'subject']), 'required']) !!}
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="form-group">
-                            {!! Form::textarea('message', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.message'), 'rows' => '3', 'data-validation-required-message' => trans('validation.required', ['attribute' => 'message']), 'required']) !!}
+                            {!! Form::textarea('message', null, ['class' => 'form-control', 'placeholder' => trans('theme.placeholder.message'), 'rows' => '3', 'data-validation-required-message' => trans('validation.required', ['attribute' => 'message']), 'required']) !!}
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>

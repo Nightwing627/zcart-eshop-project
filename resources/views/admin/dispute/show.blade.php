@@ -24,23 +24,25 @@
 						{{ trans('app.latest_days', ['days' => 30]) }}:
 						<span class="label label-info"><strong>{{ \App\Helpers\Statistics::dispute_count($dispute->shop_id, 30) }}</strong></span>
 					</p>
-					<hr/>
-					<div class="form-group">
-					  	<label>{{ trans('app.owner') }}</label>
-						<p>
-				            @if($dispute->shop->owner->image)
-								<img src="{{ get_storage_file_url(optional($dispute->shop->owner->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-				            @else
-			            		<img src="{{ get_gravatar_url($dispute->shop->owner->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-				            @endif
-							&nbsp;
-							@if(Gate::allows('view', $dispute->shop->owner))
-					            <a href="{{ route('admin.admin.user.show', $dispute->shop->owner_id) }}" class="ajax-modal-btn small"><span class="lead">{{ $dispute->shop->owner->getName() }}</span></a>
-							@else
-								<span class="small">{{ $dispute->shop->owner->getName() }}</span>
-							@endif
-				        </p>
-					</div>
+		            @if($dispute->shop->owner)
+						<hr/>
+						<div class="form-group">
+						  	<label>{{ trans('app.owner') }}</label>
+							<p>
+					            @if($dispute->shop->owner->image)
+									<img src="{{ get_storage_file_url(optional($dispute->shop->owner->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @else
+				            		<img src="{{ get_gravatar_url($dispute->shop->owner->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+					            @endif
+								&nbsp;
+								@if(Gate::allows('view', $dispute->shop->owner))
+						            <a href="{{ route('admin.admin.user.show', $dispute->shop->owner_id) }}" class="ajax-modal-btn small"><span class="lead">{{ $dispute->shop->owner->getName() }}</span></a>
+								@else
+									<span class="small">{{ $dispute->shop->owner->getName() }}</span>
+								@endif
+					        </p>
+						</div>
+		            @endif
 	    		</div>
 	    	</div>
 	    </div>

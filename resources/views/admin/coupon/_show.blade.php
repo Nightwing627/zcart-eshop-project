@@ -67,18 +67,6 @@
 			                	<th>{{ trans('app.code') }}: </th>
 			                	<td>{{ $coupon->code }}</td>
 			                </tr>
-			                <tr>
-			                	<th>{{ trans('app.allow_partial_use') }}: </th>
-			                	<td>{!! $coupon->partial_use ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' !!}</td>
-			                </tr>
-			                <tr>
-			                	<th>{{ trans('app.exclude_offer_items') }}: </th>
-			                	<td>{!! $coupon->exclude_offer_items ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' !!}</td>
-			                </tr>
-			                <tr>
-			                	<th>{{ trans('app.exclude_tax_n_shipping') }}: </th>
-			                	<td>{!! $coupon->exclude_tax_n_shipping ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' !!}</td>
-			                </tr>
 				            @if($coupon->quantity_per_customer && $coupon->quantity_per_customer != 0)
 				                <tr>
 				                	<th>{{ trans('app.coupon_quantity_per_customer') }}: </th>

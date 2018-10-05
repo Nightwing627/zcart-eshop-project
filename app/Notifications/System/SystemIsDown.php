@@ -44,8 +44,9 @@ class SystemIsDown extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.system_is_down.subject', ['marketplace' => get_platform_title()]) )
-                    ->markdown('admin.mail.system.is_down', ['url' => route('admin.setting.system.general'), 'system' => $this->system]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.system_is_down.subject', ['marketplace' => get_platform_title()]) )
+        ->markdown('admin.mail.system.is_down', ['url' => route('admin.setting.system.general'), 'system' => $this->system]);
     }
 
     /**

@@ -5,8 +5,10 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Message::class, function (Faker $faker) {
     return [
-        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
-        'customer_id' => $faker->randomElement(\DB::table('customers')->pluck('id')->toArray()),
+        // 'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
+        // 'customer_id' => $faker->randomElement(\DB::table('customers')->pluck('id')->toArray()),
+        'shop_id' => 1,
+        'customer_id' => 1,
         'order_id' => $faker->randomElement(\DB::table('orders')->pluck('id')->toArray()),
         'subject' => $faker->sentence,
         'message' => $faker->paragraph,

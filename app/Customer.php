@@ -3,6 +3,7 @@
 namespace App;
 
 use Hash;
+use App\Common\Billable;
 use App\Common\Taggable;
 use App\Common\Imageable;
 use App\Common\Addressable;
@@ -18,7 +19,7 @@ use App\Notifications\Auth\CustomerResetPasswordNotification;
 class Customer extends Authenticatable
 {
 
-    use SoftDeletes, Notifiable, Addressable, Taggable, Imageable, HasActivity, Searchable;
+    use SoftDeletes, Billable, Notifiable, Addressable, Taggable, Imageable, HasActivity, Searchable;
 
    /**
      * The guard used by the model.
@@ -100,9 +101,13 @@ class Customer extends Authenticatable
                 'dob',
                 'sex',
                 'description',
+                'stripe_id',
+                'card_holder_name',
+                'card_brand',
+                'card_last_four',
+                'active',
                 'remember_token',
                 'verification_token',
-                'active',
                 'accepts_marketing',
             ];
 
@@ -177,7 +182,7 @@ class Customer extends Authenticatable
      */
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class)->orderBy('created_at', 'desc');
     }
 
     /**
@@ -189,11 +194,11 @@ class Customer extends Authenticatable
     }
 
     /**
-     * Get the user cart.
+     * Get the user carts.
      */
-    public function cart()
+    public function carts()
     {
-        return $this->hasOne(Cart::class);
+        return $this->hasMany(Cart::class);
     }
 
     /**
@@ -215,6 +220,16 @@ class Customer extends Authenticatable
     public function gift_cards()
     {
         return $this->hasMany(GiftCard::class);
+    }
+
+    /**
+     * Check if the customer has billing token
+     *
+     * @return bool
+     */
+    public function hasBillingToken()
+    {
+        return $this->hasStripeId();
     }
 
     /**
@@ -249,9 +264,7 @@ class Customer extends Authenticatable
     }
 
     /**
-     * Set password for the user.
-     *
-     * @return array
+     * Setters.
      */
     public function setPasswordAttribute($password)
     {
@@ -259,6 +272,10 @@ class Customer extends Authenticatable
             $this->attributes['password'] = bcrypt($password);
         else
             $this->attributes['password'] = $password;
+    }
+    public function setAcceptsMarketingAttribute($value)
+    {
+        $this->attributes['accepts_marketing'] = $value ? 1 : null;
     }
 
     /**
@@ -281,5 +298,4 @@ class Customer extends Authenticatable
     {
         return $query->where('active', 1);
     }
-
 }

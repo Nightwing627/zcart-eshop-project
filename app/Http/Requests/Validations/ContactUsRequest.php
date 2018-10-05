@@ -25,10 +25,10 @@ class ContactUsRequest extends Request
     {
       return [
          'name' => 'required',
-         'phone' => 'nullable|string',
+         'phone' => 'nullable|string|max:50',
          'email' => 'required|email',
-         'subject' => 'required',
-         'message' => 'required',
+         'subject' => 'required|max:200',
+         'message' => 'required|max:500',
       ];
     }
 }

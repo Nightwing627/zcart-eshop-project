@@ -28,5 +28,6 @@ return [
     'no_product_found_for_inventory' => 'No result found! Please try different search key',
     'searching' => 'Searching...',
     'you_are_blocked' => 'You\'re temporarily blocked from this site!',
+    '404_not_found' => 'Sorry, the page you are looking for could not be found.',
 
 ];

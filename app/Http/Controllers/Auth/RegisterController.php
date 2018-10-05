@@ -115,8 +115,7 @@ class RegisterController extends Controller
             $system->superAdmin()->notify(new VerdorRegisteredNotification($merchant));
         }
 
-        return $this->registered($request, $merchant)
-                        ?: redirect($this->redirectPath());
+        return $this->registered($request, $merchant) ?: redirect($this->redirectPath());
     }
 
     /**
@@ -159,7 +158,7 @@ class RegisterController extends Controller
      */
     public function verify($token = null)
     {
-        if(!$token){
+        if( ! $token ){
             $user = Auth::user();
 
             $user->verification_token = str_random(40);

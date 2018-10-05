@@ -13,6 +13,7 @@ use App\Charts\Referrers;
 use App\Charts\DeviceTypes;
 use App\Charts\VisitorTypes;
 use App\Charts\LatestSales;
+use App\Charts\SalesByPeriod;
 use App\Helpers\ListHelper;
 use App\Helpers\Statistics;
 use App\Helpers\CharttHelper;
@@ -63,6 +64,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeConfigPage();
 
+        $this->composeCouponForm();
+
         $this->composeDashboardForAdmin();
 
         $this->composeDashboardForMerhcant();
@@ -79,6 +82,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeFaqForm();
 
+        $this->composeFeaturedCategoriesForm();
+
         $this->composeInventoryForm();
 
         $this->composeInventoryVariantForm();
@@ -91,7 +96,11 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeOrderUpdateForm();
 
+        $this->composePageForm();
+
         $this->composePlatformKpi();
+
+        $this->composeMerchantKpi();
 
         $this->composeProductForm();
 
@@ -122,6 +131,8 @@ class ViewComposerServiceProvider extends ServiceProvider
         $this->composeSystemConfigPage();
 
         $this->composeTaxForm();
+
+        $this->composeThemeOption();
 
         $this->composeTicketCreateForm();
 
@@ -345,6 +356,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                     $view->with('suppliers', ListHelper::suppliers());
 
+                    $view->with('inventories', ListHelper::inventories());
+
                     $view->with('tags', ListHelper::tags());
                 });
     }
@@ -365,6 +378,8 @@ class ViewComposerServiceProvider extends ServiceProvider
                     $view->with('warehouses', ListHelper::warehouses());
 
                     $view->with('suppliers', ListHelper::suppliers());
+
+                    $view->with('inventories', ListHelper::inventories());
 
                     $view->with('tags', ListHelper::tags());
                 });
@@ -794,25 +809,103 @@ class ViewComposerServiceProvider extends ServiceProvider
     }
 
     /**
-     * compose visitors report for admin
+     * compose Coupon Form
+     */
+    private function composeCouponForm()
+    {
+        View::composer(
+
+            'admin.coupon._form',
+
+            function($view)
+            {
+                $view->with([
+                    'shipping_zones' => ListHelper::shipping_zones(),
+                ]);
+            });
+    }
+
+    /**
+     * compose page create form
+     */
+    private function composePageForm()
+    {
+        View::composer(
+
+            'admin.page._form',
+
+            function($view)
+            {
+                $view->with([
+                    'positions' => ListHelper::page_positions(),
+                ]);
+            });
+    }
+
+    /**
+     * compose KPI report
      */
     private function composePlatformKpi()
     {
         View::composer(
 
-                'admin.report.platform.kpi',
+        'admin.report.platform.kpi',
 
-                function($view)
-                {
-                    $view->with([
-                        'new_vendor_count' => Statistics::new_vendor_count(),
-                        'monthly_recuring_revenue' => 0,
-                        'last_30_days_commission' => 0,
-                        // 'chartReferrers' => $chartReferrers,
-                        // 'chartVisitorTypes' => $chartVisitorTypes,
-                        // 'chartDevices' => $chartDevices,
-                    ]);
-                });
+        function($view)
+        {
+            $view->with([
+                'new_vendor_count' => Statistics::new_vendor_count(),
+                'monthly_recuring_revenue' => 0,
+                'last_30_days_commission' => 0,
+                // 'chartReferrers' => $chartReferrers,
+                // 'chartVisitorTypes' => $chartVisitorTypes,
+                // 'chartDevices' => $chartDevices,
+            ]);
+        });
+    }
+
+    /**
+     * compose KPI report
+     */
+    private function composeMerchantKpi()
+    {
+        View::composer(
+
+        'admin.report.merchant.kpi',
+
+        function($view)
+        {
+            // Charts
+            $start = CharttHelper::getStartDate();
+            $end = $start->copy()->subMonths(config('charts.default.months'))->startOfMonth();
+
+            $chart = new SalesByPeriod($start, $end, 'M');
+
+            $salesData = Statistics::sales_data_by_period($start, $end);
+
+            // Preparing Sales amount dataset
+            $salesTotal = CharttHelper::prepareSaleTotal($salesData, 'M');
+            foreach ($chart->labels as $key => $label)
+                $dataset[$key] = array_key_exists($label, $salesTotal) ? round($salesTotal[$label]) : 0;
+
+            $chart->dataset(trans('app.sale'), 'column', $dataset);
+
+            $period = $start->diffInDays($end);
+
+            $view->with([
+                'chart' => $chart,
+                'top_listings'                 => ListHelper::top_listing_items(Auth::user()->merchantId(), 10),
+                'top_suppliers'                => ListHelper::top_suppliers(5),
+                'top_categories'               => ListHelper::top_categories(5),
+                'top_customers'                => ListHelper::top_customers(10),
+                'returning_customers'          => ListHelper::returning_customers(10),
+                'orders_count'                 => Statistics::latest_order_count($period),
+                'abandoned_carts_count'        => Statistics::abandoned_carts_count($period),
+                'latest_refund_total'          => Statistics::latest_refund_total($period),
+                'sales_total'                  => $salesData->sum('total'),
+                'discount_total'               => $salesData->sum('discount'),
+            ]);
+        });
     }
 
     /**
@@ -1058,6 +1151,39 @@ class ViewComposerServiceProvider extends ServiceProvider
             function($view)
             {
                 $view->with('groups', ListHelper::banner_groups());
+            }
+        );
+    }
+
+    /**
+     * compose partial view of Theme Option
+     */
+    private function composeThemeOption()
+    {
+        View::composer(
+
+            'admin.theme.options',
+
+            function($view)
+            {
+                $view->with('featured_categories', ListHelper::featured_categories());
+            }
+        );
+    }
+
+    /**
+     * compose partial view of Theme Option
+     */
+    private function composeFeaturedCategoriesForm()
+    {
+        View::composer(
+
+            'admin.theme._edit_featured_categories',
+
+            function($view)
+            {
+                $view->with('categories', ListHelper::categories());
+                $view->with('featured_categories', ListHelper::featured_categories()->toArray());
             }
         );
     }

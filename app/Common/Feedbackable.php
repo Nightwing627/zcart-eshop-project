@@ -31,8 +31,7 @@ trait Feedbackable {
 
 	public function averageFeedback()
     {
-        // return $this->morphMany(\App\Feedback::class, 'feedbackable')->avg('rating');
-        return $this->feedbacks()->avg('rating');
+        return $this->morphMany(\App\Feedback::class, 'feedbackable')->avg('rating');
     }
 
     public function sumFeedback()

@@ -44,8 +44,9 @@ class TicketAssigned extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject( trans('notifications.ticket_assigned.subject', ['ticket_id' => $this->ticket->id, 'subject' => $this->ticket->subject]) )
-                    ->markdown('admin.mail.ticket.assigned', ['url' => route('admin.support.ticket.show', $this->ticket->id), 'ticket' => $this->ticket]);
+        ->from(get_sender_email(), get_sender_name())
+        ->subject( trans('notifications.ticket_assigned.subject', ['ticket_id' => $this->ticket->id, 'subject' => $this->ticket->subject]) )
+        ->markdown('admin.mail.ticket.assigned', ['url' => route('admin.support.ticket.show', $this->ticket->id), 'ticket' => $this->ticket]);
     }
 
     /**

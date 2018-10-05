@@ -143,10 +143,10 @@ class RegisterController extends Controller
             $customer->verification_token = Null;
 
             if($customer->save())
-                return redirect()->route('customer.dashboard')->with('success', trans('auth.verification_successful'));
+                return redirect()->route('account', 'dashboard')->with('success', trans('auth.verification_successful'));
 
         } catch(\Exception $e){
-            return redirect()->route('customer.dashboard')->with('error', trans('auth.verification_failed'));
+            return redirect()->route('account', 'dashboard')->with('error', trans('auth.verification_failed'));
         }
     }
 

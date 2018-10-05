@@ -16,9 +16,8 @@
 					<tr>
 					  <th>{{ trans('app.nice_name') }}</th>
 					  <th>{{ trans('app.full_name') }}</th>
-					  <th>{{ trans('app.email') }}</th>
 					  <th>{{ trans('app.shop') }}</th>
-					  <th>{{ trans('app.status') }}</th>
+					  <th>{{ trans('app.current_billing_plan') }}</th>
 					  <th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
@@ -33,6 +32,10 @@
 				            @endif
 							<p class="indent10">
 								{{ $merchant->nice_name }}
+
+			            		@unless($merchant->active)
+				            		<span class="label label-default indent10">{{ trans('app.inactive') }}</span>
+								@endunless
 							</p>
 				          </td>
 				          <td>
@@ -42,9 +45,8 @@
 					          	{{ $merchant->name }}
 							@endcan
 				          </td>
-				          <td>{{ $merchant->email }}</td>
 				          <td>
-				          	@if($merchant->owns)
+				          	@if($merchant->owns->name)
 								<img src="{{ get_storage_file_url(optional($merchant->owns->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
 								<p class="indent10">
 						            <a href="{{ route('admin.vendor.shop.show', $merchant->owns->id) }}" class="ajax-modal-btn">
@@ -53,7 +55,7 @@
 								</p>
 				          	@endif
 				          </td>
-				          <td>{{ ($merchant->active) ? trans('app.active') : trans('app.inactive') }}</td>
+				          <td>{{ $merchant->owns->current_billing_plan }}</td>
 				          <td class="row-options">
 							@can('view', $merchant)
 					            <a href="{{ route('admin.vendor.merchant.show', $merchant->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.profile') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
