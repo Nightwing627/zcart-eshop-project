@@ -20,7 +20,7 @@ class Permission extends Model
      */
     public function module()
     {
-        return $this->belongsTo('App\Module');
+        return $this->belongsTo(Module::class);
     }
 
     /**
@@ -28,7 +28,7 @@ class Permission extends Model
      */
     public function roles()
     {
-        return $this->belongsToMany('App\Role')->withTimestamps();
+        return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
 }

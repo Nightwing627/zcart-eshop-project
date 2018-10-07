@@ -7,7 +7,7 @@ $factory->define(App\ShippingZone::class, function (Faker $faker) {
     $state_ids = \DB::table('states')->whereIn('country_id', $country_ids)->pluck('id')->toArray();
     return [
         'name' => 'Domestic',
-        'tax_id' => $faker->randomElement(\DB::table('taxes')->pluck('id')->toArray()),
+        'tax_id' => 1,
         'country_ids' => $country_ids,
         'state_ids' => $state_ids,
     ];

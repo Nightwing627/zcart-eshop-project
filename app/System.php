@@ -42,26 +42,6 @@ class System extends Model
     protected static $logName = 'system';
 
     /**
-     * Route notifications for the mail channel.
-     *
-     * @return string
-     */
-    public function routeNotificationForMail()
-    {
-        return $this->support_email ? $this->support_email : $this->email;
-    }
-
-    /**
-     * Route notifications for the Nexmo channel.
-     *
-     * @return string
-     */
-    public function routeNotificationForNexmo()
-    {
-        return $this->support_phone ? $this->support_phone : $this->primaryAddress->phone;
-    }
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -84,6 +64,26 @@ class System extends Model
     protected $casts = [
         'maintenance_mode' => 'boolean',
     ];
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return $this->support_email ? $this->support_email : $this->email;
+    }
+
+    /**
+     * Route notifications for the Nexmo channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForNexmo()
+    {
+        return $this->support_phone ? $this->support_phone : $this->primaryAddress->phone;
+    }
 
     /**
      * Get the currency associated with the blog post.
