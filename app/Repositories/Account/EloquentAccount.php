@@ -21,6 +21,25 @@ class EloquentAccount extends EloquentRepository implements BaseRepository, Acco
         return Auth::user()->update($request->all());
     }
 
+    public function updatePhoto(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($request->hasFile('image'))
+            $user->saveImage($request->file('image'));
+
+        return $user;
+    }
+
+    public function deletePhoto(Request $request)
+    {
+        $user = Auth::user();
+
+        $user->deleteImage();
+
+        return $user;
+    }
+
     public function updatePassword(Request $request)
     {
        return $request->user()->fill([

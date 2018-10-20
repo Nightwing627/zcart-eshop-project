@@ -13,4 +13,5 @@ yakpro-po.cnf
 npm-debug.log
 yarn-error.log
 .DS_Store
+.env.demo
 .env
