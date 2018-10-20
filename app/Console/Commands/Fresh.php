@@ -40,7 +40,7 @@ class Fresh extends Command
         // if ($this->confirm('Are you sure? This action is not revertible!')) {
             $this->call('incevio:clear-storage');
 
-            $this->call('migrate:fresh', ["--force"=> true]);
+            $this->call('migrate:refresh', ["--force"=> true]);
 
             $this->call('db:seed', ['--force' => true]);
 

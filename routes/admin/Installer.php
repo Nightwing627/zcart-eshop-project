@@ -8,6 +8,8 @@ Route::group(['middleware' => ['install'], 'namespace' => 'Installer', 'as' => '
 	Route::get('requirements', 'RequirementsController@requirements')->name('requirements');
 	Route::get('permissions', 'PermissionsController@permissions')->name('permissions');
 	Route::get('database', 'DatabaseController@database')->name('database');
+	Route::get('activate', 'ActivateController@activate')->name('activate');
+	Route::post('verify', 'ActivateController@verify')->name('verify');
 	Route::get('final', 'FinalController@final')->name('final');
 	Route::get('finish', 'FinalController@finish')->name('finish');
 	Route::get('demo', 'FinalController@seedDemo')->name('seedDemo');

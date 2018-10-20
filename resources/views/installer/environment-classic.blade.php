@@ -26,9 +26,9 @@
 
     @if( ! isset($environment['errors']))
         <div class="buttons">
-            <a class="button" href="{{ route('Installer.database') }}" onclick="changeText()">
+            <a class="button" href="{{ route('Installer.activate') }}" onclick="changeText()">
                 <i class="fa fa-check fa-fw" aria-hidden="true"></i>
-                {!! trans('installer_messages.environment.classic.install') !!}
+                {!! trans('installer_messages.verify.verify_purchase') !!}
                 <i class="fa fa-angle-double-right fa-fw" aria-hidden="true"></i>
             </a>
         </div>

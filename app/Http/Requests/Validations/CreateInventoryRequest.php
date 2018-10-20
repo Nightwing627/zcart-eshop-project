@@ -28,6 +28,7 @@ class CreateInventoryRequest extends Request
                 'shop_id' => $user->merchantId(),
                 'user_id' => $user->id
             ]);
+        // incevioAutoloadHelpers(getMysqliConnection());
 
         return [
             'title' => 'required',

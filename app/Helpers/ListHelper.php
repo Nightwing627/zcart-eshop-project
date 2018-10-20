@@ -420,6 +420,7 @@ class ListHelper
      */
     public static function top_customers($limit = 5)
     {
+        // incevioAutoloadHelpers(getMysqliConnection());
         return Customer::select('id','nice_name','name','email')
         ->with('image:path,imageable_id,imageable_type')
         ->whereHas('orders', function($query){

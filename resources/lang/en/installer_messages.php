@@ -173,7 +173,22 @@ return [
         'errors' => 'Unable to save the .env file, Please create it manually.',
     ],
 
+    'verify' => [
+        'verify_purchase' => 'Verify Purchase',
+        'submit' => 'Submit',
+        'form' => [
+            'email_address_label' => 'Email Address',
+            'email_address_placeholder' => 'Email Address',
+            'purchase_code_label' => 'Purchase Code',
+            'purchase_code_placeholder' => 'Purchase Code or License Key',
+            'root_url_label' => 'Root Url',
+            'root_url_placeholder' => 'ROOT URL (without / at the end)',
+        ],
+    ],
+
     'install' => 'Install',
+    'verified' => 'License has been successfully verified.',
+    'verification_failed' => 'License verification failed!',
 
     /**
      *

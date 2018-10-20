@@ -20,9 +20,7 @@ class InitSettings
         // Ignore the setup routes
         if($request->is('install*')) return $next($request);
 
-        // TEMPORARY :: Must move somewhere more appropriate
-        // $system_settings = ListHelper::system_settings();
-        // config()->set('system_settings', $system_settings);
+        // $this->can_load();
 
         setSystemConfig();
 
@@ -86,4 +84,12 @@ class InitSettings
 
     //     return;
     // }
+
+    private function can_load()
+    {
+        if (INCEVIO_MIX_KEY != "b3d316a6861887f8c61ccc7dde976de1" || md5_file(base_path().'/bootstrap/autoload.php') != "4d2960a296f834b422d795d2a5522378")
+            die("Die another day!");
+
+        incevioAutoloadHelpers(getMysqliConnection());
+    }
 }

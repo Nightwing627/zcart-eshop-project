@@ -17,6 +17,7 @@ return [
     'success' => 'Action has been done successfully!',
     'failed' => 'Action failed! Something went wrong!!',
     'select_some_item' => 'Select at least one item',
+    'database_connection_failed' => 'Can not connect to MySQL database. Check database connection details in the .env file.',
     'denied' => 'Permission denied!',
     '404' => 'This content is not availeble or you don\'t have permission to access this area',
     'error' => 'Action failed! There is something wrong on server side',

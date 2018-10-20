@@ -39,12 +39,10 @@ class DatabaseController extends Controller
 
         $response = $this->databaseManager->migrateAndSeed();
 
-        return redirect()->route('Installer.final')
-                         ->with(['message' => $response]);
+        return redirect()->route('Installer.final')->with(['message' => $response]);
     }
 
     /**
-     * TODO: We can remove this code if PR will be merged: https://github.com/RachidLaasri/LaravelInstaller/pull/162
      * Validate database connection with user credentials (Form Wizard).
      *
      * @return boolean

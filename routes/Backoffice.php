@@ -5,18 +5,23 @@ include('admin/Installer.php');
 include('admin/Auth.php');
 
 // Admin Routes
-Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function(){
+Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function()
+{
 	// Markerplace Admin only routes
-	Route::middleware(['admin'])->group(function () {
-		Route::group(['namespace' => 'Report'], function(){
+	Route::middleware(['admin'])->group(function ()
+	{
+		Route::group(['namespace' => 'Report'], function()
+		{
 			include('admin/Report.php');
 			include('admin/Visitor.php');
 		});
 	});
 
 	// Merchant only routes
-	Route::middleware(['merchant'])->group(function () {
-		Route::group(['namespace' => 'Report'], function(){
+	Route::middleware(['merchant'])->group(function ()
+	{
+		Route::group(['namespace' => 'Report'], function()
+		{
 			include('admin/ShopReport.php');
 		});
 	});
@@ -29,7 +34,8 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 	});
 
 	Route::get('secretLogout', 'DashboardController@secretLogout')->name('secretLogout');
-	Route::middleware(['subscribed'])->group(function () {
+	Route::middleware(['subscribed'])->group(function ()
+	{
 		// Dashboard
 		Route::put('dashboard/config/{node}/toggle', 'DashboardController@toggleConfig')->name('dashboard.config.toggle')->middleware('ajax');
 		Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard')->middleware('dashboard');
@@ -143,7 +149,6 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		Route::group(['middleware' => 'ajax'], function()
 		{
 			Route::get('catalog/ajax/getParrentAttributeType', 'AttributeController@ajaxGetParrentAttributeType')->name('ajax.getParrentAttributeType');
-
 			Route::get('order/ajax/filterShippingOptions', 'AjaxController@filterShippingOptions')->name('ajax.filterShippingOptions');
 		});
 	});

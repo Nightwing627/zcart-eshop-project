@@ -174,6 +174,18 @@ if ( ! function_exists('getShopConfig') )
     }
 }
 
+
+if ( ! function_exists('getMysqliConnection') )
+{
+    /**
+     * Return Mysqli connection object
+     */
+    function getMysqliConnection()
+    {
+        return mysqli_connect(env('DB_HOST', '127.0.0.1'), env('DB_USERNAME', 'root'), env('DB_PASSWORD', 'root'), env('DB_DATABASE'), env('DB_PORT', '3306'));
+    }
+}
+
 if ( ! function_exists('setAdditionalCartInfo') )
 {
     /**

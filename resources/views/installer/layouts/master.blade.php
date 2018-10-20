@@ -27,6 +27,16 @@
                         <i class="step__icon fa fa-server" aria-hidden="true"></i>
                     </li>
                     <li class="step__divider"></li>
+                    <li class="step__item {{ isActive('Installer.activate') }}">
+                        @if(Request::is('install/activate') || Request::is('install/verify') || Request::is('install/environment/wizard') || Request::is('install/environment/classic') )
+                            <a href="{{ route('Installer.activate') }}">
+                                <i class="step__icon fa fa-key" aria-hidden="true"></i>
+                            </a>
+                        @else
+                            <i class="step__icon fa fa-key" aria-hidden="true"></i>
+                        @endif
+                    </li>
+                    <li class="step__divider"></li>
                     <li class="step__item {{ isActive('Installer.environment')}} {{ isActive('Installer.environmentWizard')}} {{ isActive('Installer.environmentClassic')}}">
                         @if(Request::is('install/environment') || Request::is('install/environment/wizard') || Request::is('install/environment/classic') )
                             <a href="{{ route('Installer.environment') }}">

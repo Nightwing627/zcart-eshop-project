@@ -24,6 +24,7 @@ return [
     'requirements' => [
         'php' => [
             'openssl',
+            'MySQLi',
             'pdo',
             'mbstring',
             'tokenizer',
