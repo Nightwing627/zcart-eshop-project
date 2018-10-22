@@ -867,7 +867,6 @@
 	              	"_method": "PUT",
 	          	},
 	          	success: function (data) {
-			  		console.log(data);
 		            if (data == 'success'){
 		              	notie.alert(1, "{{ trans('responses.success') }}", 2);
 		            }
@@ -879,6 +878,9 @@
 	          	error: function (data) {
 		            if (data.status == 403){
 		              	notie.alert(2, "{{ trans('responses.denied') }}", 2);
+		            }
+		            else if (data.status == 444){
+		              notie.alert(2, "{{ trans('messages.demo_restriction') }}", 5);
 		            }
 		            else{
 		            	notie.alert(3, "{{ trans('responses.error') }}", 2);
@@ -970,9 +972,11 @@
 		        error: function (data) {
 		            $('#myDynamicModal').modal('hide');
 		            remove_busy_filter();
-
 		            if (data.status == 403){
 		              notie.alert(2, "{{ trans('responses.denied') }}", 3);
+		            }
+		            else if (data.status == 444){
+		              notie.alert(2, "{{ trans('messages.demo_restriction') }}", 5);
 		            }
 		            else{
 		              	notie.alert(3, "{{ trans('responses.error') }}", 3);

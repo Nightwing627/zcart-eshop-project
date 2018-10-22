@@ -99,4 +99,21 @@ return [
         'new_arraival' => 7, //Days
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Demo Mode
+    |--------------------------------------------------------------------------
+    |
+    | This values will be used for the demo mode settings. You dont have so change this
+    |
+    */
+    'demo' => [
+        'users' => 3,
+        'roles' => 3,
+        'shops' => 1,
+        'customers' => 1,
+        'category_groups' => 9,
+        'plans' => ['business', 'individual', 'professional'],
+    ],
+
 ];

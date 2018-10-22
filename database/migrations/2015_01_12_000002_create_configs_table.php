@@ -68,6 +68,6 @@ class CreateConfigsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('settings');
+        Schema::drop('configs');
     }
 }

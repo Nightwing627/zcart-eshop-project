@@ -84,6 +84,9 @@ class CategoryGroupController extends Controller
      */
     public function update(UpdateCategoryGroupRequest $request, $id)
     {
+        if( env('APP_DEMO') == true && $id <= config('system.demo.category_groups', 9) )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $this->categoryGroup->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
@@ -98,6 +101,9 @@ class CategoryGroupController extends Controller
      */
     public function trash(Request $request, $id)
     {
+        if( env('APP_DEMO') == true && $id <= config('system.demo.category_groups', 9) )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $this->categoryGroup->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));

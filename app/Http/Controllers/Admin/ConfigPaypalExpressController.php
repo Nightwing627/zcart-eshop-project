@@ -29,6 +29,9 @@ class ConfigPaypalExpressController extends Controller
      */
     public function activate()
     {
+        if( env('APP_DEMO') == true )
+            return view('demo_modal');
+
         $paypalExpress = ConfigPaypalExpress::firstOrCreate(['shop_id' => Auth::user()->merchantId()]);
 
         return view('admin.config.payment-method.paypal_express', compact('paypalExpress'));

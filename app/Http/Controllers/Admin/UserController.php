@@ -108,6 +108,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
+        if( env('APP_DEMO') == true && $id <= config('system.demo.users', 3) )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $user = $this->user->update($request, $id);
 
         event(new UserUpdated($user));
@@ -124,6 +127,9 @@ class UserController extends Controller
      */
     public function trash(Request $request, $id)
     {
+        if( env('APP_DEMO') == true && $id <= config('system.demo.users', 3) )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $user = $this->user->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));

@@ -23,6 +23,7 @@ return [
     'restored'          => ':model has been restored successfully!',
     'deleted'           => ':model has been deleted permanently!',
     'card_updated' => 'Credit card updated successfully!',
+    'demo_restriction' => 'This action is restricted for the demo mode!',
     'subscription_cancelled' => 'Subscription has been cancelled!',
     'subscription_resumed' => 'Subscription resumed successfully!',
     'subscribed' => 'Congratulation! Subscribed successfully!!',

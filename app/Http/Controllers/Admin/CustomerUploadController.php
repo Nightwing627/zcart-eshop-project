@@ -55,6 +55,9 @@ class CustomerUploadController extends Controller
 	 */
 	public function import(CustomerImportRequest $request)
 	{
+        if( env('APP_DEMO') )
+            return redirect()->route('admin.admin.customer.index')->with('warning', trans('messages.demo_restriction'));
+
 		// Reset the Failed list
 		$this->failed_list = [];
 

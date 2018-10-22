@@ -107,9 +107,10 @@ class demoSeeder extends Seeder
 
         factory(App\Customer::class, 1)
             ->create([
-                'nice_name' => 'CustomerOne',
-                'name' => 'Customer One',
-                'email' => 'customer1@demo.com',
+                'id' => 1,
+                'nice_name' => 'Customer',
+                'name' => 'Customer Name',
+                'email' => 'customer@demo.com',
                 'password' => bcrypt('123456'),
                 'sex' => 'app.male',
                 'active' => 1,
@@ -341,11 +342,23 @@ class demoSeeder extends Seeder
                     'payment_method_id' => 4,
                     'created_at' => Carbon::Now(),
                     'updated_at' => Carbon::Now(),
+                ], [
+                    'shop_id' => $shop,
+                    'payment_method_id' => 3,
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
                 ]
             ]);
 
             DB::table('config_manual_payments')->insert([
                 [
+                    'shop_id' => $shop,
+                    'payment_method_id' => 3,
+                    'additional_details' => 'Send the payment via Bank Wire Transfer.',
+                    'payment_instructions' => 'Payment instructions for Bank Wire Transfer',
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ], [
                     'shop_id' => $shop,
                     'payment_method_id' => 4,
                     'additional_details' => 'Our man will collect the payment when deliver the item to your doorstep.',

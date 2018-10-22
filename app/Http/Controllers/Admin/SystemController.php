@@ -54,6 +54,9 @@ class SystemController extends Controller
      */
     public function update(UpdateBasicSystemConfigRequest $request)
     {
+        if( env('APP_DEMO') == true )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $system = System::orderBy('id', 'asc')->first();
 
         $this->authorize('update', $system); // Check permission
@@ -91,6 +94,9 @@ class SystemController extends Controller
      */
     public function saveEnvFile(SaveEnvFileRequest $request)
     {
+        if( env('APP_DEMO') == true )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         if(Hash::check($request->password, $request->user()->password)) {
             try {
 
@@ -135,6 +141,9 @@ class SystemController extends Controller
      */
     public function resetDatabase(ResetDatabaseRequest $request)
     {
+        if( env('APP_DEMO') == true )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         if(Hash::check($request->password, $request->user()->password)) {
             // Start transaction!
             DB::beginTransaction();
@@ -173,6 +182,9 @@ class SystemController extends Controller
      */
     public function toggleMaintenanceMode(UpdateSystemRequest $request)
     {
+        if( env('APP_DEMO') == true )
+            return response('error', 444);
+
         $system = System::orderBy('id', 'asc')->first();
 
         $this->authorize('update', $system); // Check permission

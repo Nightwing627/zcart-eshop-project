@@ -19,9 +19,15 @@
             </div>
 
             <p class="text-danger"><i class="fa fa-exclamation-triangle"></i> {!! trans('messages.import_demo_contents') !!}</p>
+
+            @if( env('APP_DEMO') == true )
+                <div class="alert alert-warning"> {{ trans('messages.demo_restriction') }} </div>
+            @endif
         </div>
         <div class="modal-footer">
-            {!! Form::submit(trans('app.form.import'), ['class' => 'btn btn-flat btn-new confirm']) !!}
+            {{-- @unless( env('APP_DEMO') == true ) --}}
+                {!! Form::submit(trans('app.form.import'), ['class' => 'btn btn-flat btn-new confirm']) !!}
+            {{-- @endunless --}}
         </div>
         {!! Form::close() !!}
     </div> <!-- / .modal-content -->

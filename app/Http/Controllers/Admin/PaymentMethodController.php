@@ -62,6 +62,9 @@ class PaymentMethodController extends Controller
 
     public function deactivate(Request $request, $id)
     {
+        if( env('APP_DEMO') == true )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $config = $this->checkPermission($request);
 
         $paymentMethod = PaymentMethod::findOrFail($id);
@@ -87,6 +90,9 @@ class PaymentMethodController extends Controller
 
     public function deactivateManualPaymentMethod(Request $request, $code)
     {
+        if( env('APP_DEMO') == true )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $config = $this->checkPermission($request);
 
         $paymentMethod = PaymentMethod::where('code', $code)->firstOrFail();
@@ -98,6 +104,9 @@ class PaymentMethodController extends Controller
 
     public function updateManualPaymentMethod(Request $request, $code)
     {
+        if( env('APP_DEMO') == true )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $config = $this->checkPermission($request);
 
         $paymentMethod = PaymentMethod::where('code', $code)->firstOrFail();

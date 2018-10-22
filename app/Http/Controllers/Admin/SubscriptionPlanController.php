@@ -93,6 +93,9 @@ class SubscriptionPlanController extends Controller
      */
     public function update(UpdateSubscriptionPlanRequest $request, SubscriptionPlan $subscriptionPlan)
     {
+        if( env('APP_DEMO') == true && in_array($subscriptionPlan->plan_id, config('system.demo.plans', ['business', 'individual', 'professional'])) )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $subscriptionPlan->update($request->all());
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
@@ -107,6 +110,9 @@ class SubscriptionPlanController extends Controller
      */
     public function trash(Request $request, SubscriptionPlan $subscriptionPlan)
     {
+        if( env('APP_DEMO') == true && in_array($subscriptionPlan->plan_id, config('system.demo.plans', ['business', 'individual', 'professional'])) )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $subscriptionPlan->delete();
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));

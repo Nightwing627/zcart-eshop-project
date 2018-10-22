@@ -44,7 +44,7 @@ class Fresh extends Command
 
             $this->call('db:seed', ['--force' => true]);
 
-            $this->info('All done!');
+            $this->info('Database is ready!');
         // }
     }
 }

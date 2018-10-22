@@ -57,6 +57,9 @@ class InventoryUploadController extends Controller
 	 */
 	public function import(ProductImportRequest $request)
 	{
+        if( env('APP_DEMO') )
+            return redirect()->route('admin.catalog.product.index')->with('warning', trans('messages.demo_restriction'));
+
 		// Reset the Failed list
 		$this->failed_list = [];
 
