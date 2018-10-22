@@ -26,9 +26,6 @@ class ResetDbAndImportDemoData
      */
     public function handle()
     {
-        ini_set('max_execution_time', 120); //120 seconds = 2 minutes
-
-        Artisan::call('incevio:fresh');
-        Artisan::call('incevio:demo');
+        Artisan::call('incevio:reset-demo');
     }
 }

@@ -149,7 +149,7 @@ class SystemController extends Controller
             DB::beginTransaction();
 
             try {
-                // Dispatching ResetDbAndImportDemoData job
+
                 ResetDbAndImportDemoData::dispatch();
 
             } catch(\Exception $e){

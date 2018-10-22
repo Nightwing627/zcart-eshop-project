@@ -4,21 +4,21 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class Fresh extends Command
+class ResetDemoApp extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'incevio:fresh';
+    protected $signature = 'incevio:reset-demo';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Reset the application by clear all files, cache, drop all tables, re-run migrations, seed the database';
+    protected $description = 'Reset the demo application';
 
     /**
      * Create a new command instance.
@@ -37,15 +37,14 @@ class Fresh extends Command
      */
     public function handle()
     {
-        // if ($this->confirm('Are you sure? This action is not revertible!')) {
+        ini_set('max_execution_time', 180); //180 seconds = 2 minutes
 
-            $this->call('incevio:clear-storage');
+        $this->call('down'); // Maintenance mode on
 
-            $this->call('migrate:refresh', ["--force"=> true]);
+        $this->call('incevio:fresh');
 
-            $this->call('db:seed', ['--force' => true]);
+        $this->call('incevio:demo');
 
-            $this->info('Database is ready!');
-        // }
+        $this->call('up'); // Maintenance mode off
     }
 }
