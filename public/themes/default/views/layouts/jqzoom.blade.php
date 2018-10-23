@@ -8,7 +8,7 @@
 	@foreach($item->images as $img)
 		<li>
 			<a class="{{ $loop->first ? 'zoomThumbActive' : '' }}" href="javascript:void(0)" data-rel="{gallery:'gal-1', smallimage: '{{ get_storage_file_url($img->path, 'large') }}', largeimage: '{{ get_storage_file_url($img->path, 'full') }}'}">
-				<img src="{{ get_storage_file_url($img->path, 'small') }}" alt="Thumb" title="{{ $item->title }}" />
+				<img src="{{ get_storage_file_url($img->path, 'mini') }}" alt="Thumb" title="{{ $item->title }}" />
 			</a>
 		</li>
 	@endforeach

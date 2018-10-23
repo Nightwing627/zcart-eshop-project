@@ -32,8 +32,6 @@
 
 	    var initialPreviewConfig = [<?=isset($preview) ? $preview['configs'] : '';?>];
 
-	      // console.log(initialPreviewConfig);
-
 	    $("#dropzone-input").fileinput({
 	        uploadUrl: "{{ route('image.upload') }}",
 	        uploadExtraData: function () {

@@ -181,6 +181,6 @@ return [
     | for full list of available color visit "http://glide.thephpleague.com/1.0/api/colors/"
     |
     */
-    'background_color' => 'red',
+    'background_color' => 'white',
 
 ];

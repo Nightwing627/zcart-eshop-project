@@ -28,7 +28,10 @@ trait Imageable {
 	 */
 	public function images()
     {
-        return $this->morphMany(\App\Image::class, 'imageable')->where('featured','!=',1)->orderBy('order', 'asc');
+        return $this->morphMany(\App\Image::class, 'imageable')
+        ->where(function($q){
+        	$q->whereNull('featured')->orWhere('featured', 0);
+        })->orderBy('order', 'asc');
     }
 
 	/**
@@ -111,11 +114,9 @@ trait Imageable {
 	 */
 	public function deleteImage($image = Null)
 	{
-		// echo "<pre>"; print_r($image); echo "</pre>"; exit();
 		if (!$image)
 			$image = $this->image;
 
-		// \Log::info($image);
 		if (optional($image)->path) {
 	    	Storage::delete($image->path);
 			Storage::deleteDirectory(image_cache_path($image->path));

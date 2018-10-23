@@ -38,12 +38,13 @@ class ImageController extends Controller
 		        $path = Storage::put($dir, $file);
 
 				$data[] = [
-					            'path' => $path,
-					            'name' => str_slug($file->getClientOriginalName(), '-'),
-					            'extension' => $file->getClientOriginalExtension(),
-					            'size' => $file->getClientSize(),
-					            'order' => $order
-					        ];
+		            'path' => $path,
+		            'name' => $file->getClientOriginalName(),
+		            // 'name' => str_slug($file->getClientOriginalName(), '-'),
+		            'extension' => $file->getClientOriginalExtension(),
+		            'size' => $file->getClientSize(),
+		            'order' => $order
+		        ];
 			}
 
         	$model = get_qualified_model($request->input('model_name'));
