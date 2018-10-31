@@ -125,7 +125,7 @@
       <div class="modal-body">
         {!! Form::open(['route' => 'customer.password.email', 'id' => 'psswordRecoverForm', 'data-toggle' => 'validator', 'novalidate']) !!}
           <div class="form-group">
-            <input class="form-control input-lg flat" placeholder="{{ trans('theme.placeholder.your_email') }}" type="email" required />
+            <input name="email" class="form-control input-lg flat" placeholder="{{ trans('theme.placeholder.your_email') }}" type="email" required />
             <div class="help-block with-errors"></div>
           </div>
           <input class="btn btn-block flat btn-primary" type="submit" value="{{ trans('theme.button.recover_password') }}" />
