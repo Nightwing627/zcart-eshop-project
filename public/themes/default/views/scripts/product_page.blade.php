@@ -4,7 +4,8 @@
     var shop_id = '{{ $item->shop_id }}';
     var handlingCost = getFromPHPHelper('getShopConfig', [shop_id, 'order_handling_cost']);
     var unitPrice = {{ $item->currnt_sale_price() }};
-    var variants = JSON.parse('{!! $variants !!}');
+    var variants = '{!! $variants !!}';
+    // var variants = JSON.parse('{!! $variants !!}');
     var itemWrapper = $("#single-product-wrapper");
 
     var buyNowBaseUrl = $("#buy-now-btn").attr('href');

@@ -40,5 +40,7 @@ class ImportDemoData extends Command
         $this->call('db:seed', ['--force' => true, '--class' => 'demoSeeder']);
 
         $this->info('Demo data seeded!');
+
+        \Log::info('DEMO DATA IMPORTED!');
     }
 }

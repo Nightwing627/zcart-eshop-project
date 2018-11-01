@@ -51,7 +51,7 @@ class ShippingZone extends Model
      */
     public function tax()
     {
-        return $this->belongsTo(Tax::class);
+        return $this->belongsTo(Tax::class)->withDefault();
     }
 
     /**

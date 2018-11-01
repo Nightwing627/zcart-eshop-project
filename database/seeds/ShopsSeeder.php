@@ -61,7 +61,7 @@ class ShopsSeeder extends Seeder
             [
                 'shop_id' => 1,
                 'name' => 'Domestic',
-                'tax_id' => rand(1, 31),
+                'tax_id' => 1,
                 'country_ids' => serialize($country_ids),
                 'state_ids' => serialize($state_ids),
                 'rest_of_the_world' => false,
@@ -70,7 +70,7 @@ class ShopsSeeder extends Seeder
             ],[
                 'shop_id' => 1,
                 'name' => 'Worldwide',
-                'tax_id' => rand(1, 31),
+                'tax_id' => 1,
                 'country_ids' => null,
                 'state_ids' => null,
                 'rest_of_the_world' => true,

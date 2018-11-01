@@ -31,6 +31,7 @@ class SystemsSeeder extends Seeder
             // 'currency_format' => 'x,xxx.xx',
             'show_currency_symbol' => 1,
             'show_space_after_symbol' => 0,
+            'google_analytic_report' => 0,
 
             // Temoporary for dev
             'required_card_upfront' => Null,

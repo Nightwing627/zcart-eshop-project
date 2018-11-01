@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('incevio:kpi')->dailyAt('23:58');
 
         if( env('APP_DEMO') == true )
-            $schedule->command('incevio:reset-demo')->daily(); //Reset the demo applcoation
+            $schedule->command('incevio:reset-demo')->twiceDaily(1, 13); //Reset the demo applcoation
 
         // $schedule->command('inspire')
         //          ->hourly();
