@@ -152,66 +152,8 @@ class demoSeeder extends Seeder
         //         );
         //     });
 
-        $this->call('SlidersSeeder');
-
         // Demo Categories with real text
-        DB::table('category_groups')->insert([
-            [
-                'name' => 'Home & Garden',
-                'description' => 'Cookware, Dining, Bath, Home Decor and more',
-                'icon' => 'fa-home',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'name' => 'Electronics',
-                'description' => 'Mobile, Computer, Tablet, Camera etc',
-                'icon' => 'fa-plug',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'name' => 'Kids and Toy',
-                'description' => 'Toys, Footwear etc',
-                'icon' => 'fa-gamepad',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'name' => 'Clothing and Shoes',
-                'description' => 'Shoes, Clothing, Life style items',
-                'icon' => 'fa-tags',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'name' => 'Beauty and Health',
-                'description' => 'Cosmetics, Foods and more.',
-                'icon' => 'fa-leaf',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'name' => 'Sports',
-                'description' => 'Cycle, Tennis, Boxing, Cricket and more.',
-                'icon' => 'fa-futbol-o',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'name' => 'Jewelry',
-                'description' => 'Necklances, Rings, Pendants and more.',
-                'icon' => 'fa-diamond',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'name' => 'Pets',
-                'description' => 'Pet foods and supplies.',
-                'icon' => 'fa-paw',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'name' => 'Hobbies & DIY',
-                'description' => 'Craft Sewing, Supplies and more.',
-                'icon' => 'fa-bicycle',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ]
-        ]);
+        $this->call('CategoryGroupsSeeder');
 
         DB::table('category_sub_groups')->insert([
             [
@@ -285,8 +227,7 @@ class demoSeeder extends Seeder
 
         factory(App\AttributeValue::class, $this->longCount)->create();
 
-        factory(App\Warehouse::class, 1)
-            ->create()
+        factory(App\Warehouse::class, 1)->create()
             ->each(function($warehouse){
                 $warehouse->addresses()->save(factory(App\Address::class)->make(['address_title' => $warehouse->name, 'address_type' => 'Primary']));
             });
@@ -299,7 +240,7 @@ class demoSeeder extends Seeder
 
         factory(App\Packaging::class, $this->tinycount)->create();
 
-        factory(App\Inventory::class, $this->longCount)->create();
+        $this->call('InventoriesSeeder');
 
         factory(App\Order::class, $this->count)->create();
 
@@ -464,30 +405,10 @@ class demoSeeder extends Seeder
         }
 
         // Frontend Seeder
-        factory(App\Banner::class, 3)->create([
-            'columns' => 4,
-            'group_id' => 'best_deals'
-        ]);
-        factory(App\Banner::class, 2)->create([
-            'columns' => 6,
-            'group_id' => 'place_one'
-        ]);
-        factory(App\Banner::class)->create([
-            'columns' => 12,
-            'group_id' => 'place_two'
-        ]);
-        factory(App\Banner::class, 2)->create([
-            'columns' => 6,
-            'group_id' => 'place_three'
-        ]);
-        factory(App\Banner::class, 2)->create([
-            'columns' => 12,
-            'group_id' => 'sidebar'
-        ]);
-        factory(App\Banner::class)->create([
-            'columns' => 12,
-            'group_id' => 'bottom'
-        ]);
+
+        $this->call('SlidersSeeder');
+
+        $this->call('BannersSeeder');
 
         factory(App\Wishlist::class, $this->count)->create();
         factory(App\Feedback::class, $this->longCount)->create();

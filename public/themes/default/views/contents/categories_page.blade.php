@@ -1,8 +1,8 @@
 <section>
   <div class="container">
     <div class="row">
-      <div class="section-title">
-        <h4>@lang('theme.section_headings.select_from_categories')</h4>
+      <div class="section-title space20">
+        <h4>{!! trans('theme.section_headings.select_from_categories') !!}</h4>
       </div>
       @foreach($all_categories as $categoryGroup)
         @if($categoryGroup->subGroups->count())

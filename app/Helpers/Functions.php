@@ -259,10 +259,10 @@ if ( ! function_exists('getGeocode') )
 {
     function getGeocode($address)
     {
-        if(is_object($address)){
+        if(is_object($address)) {
             $address = $address->toGeocodeString();
         }
-        else if(is_numeric($address)){
+        else if(is_numeric($address)) {
             $address = \DB::table('addresses')->find($address);
             $address = $address->toGeocodeString();
         }
@@ -272,11 +272,11 @@ if ( ! function_exists('getGeocode') )
         $result = [];
 
         // try to get geo codes
-        if ( $geocode = file_get_contents($url) ){
+        if ( $geocode = file_get_contents($url) ) {
             $output = json_decode($geocode);
 
-            if ( count($output->results) && isset($output->results[0]) ){
-                if ( $geo = $output->results[0]->geometry ){
+            if ( count($output->results) && isset($output->results[0]) ) {
+                if ( $geo = $output->results[0]->geometry ) {
                     $result['latitude'] = $geo->location->lat;
                     $result['longitude'] = $geo->location->lng;
                 }
@@ -315,7 +315,7 @@ if ( ! function_exists('highlightWords') )
      {
         if($words == null) return $content;
 
-        if(is_array($words)){
+        if(is_array($words)) {
             foreach ( $words as $word )
                 $content = str_ireplace($word, '<mark>'.$word.'</mark>', $content);
 
@@ -397,7 +397,7 @@ if ( ! function_exists('get_placeholder_img') )
         if ($size && is_array($size))
             return "https://placehold.it/{$size['w']}x{$size['h']}/eee?text=" . trans('app.no_img_available');
 
-        return url("images/demo/no_img.png");
+        return url("images/placeholders/no_img.png");
     }
 }
 
@@ -410,8 +410,14 @@ if ( ! function_exists('get_product_img_src') )
 
         $images_count = $item->images->count();
 
-        if($images_count){
-            if($type == 'alt' && $images_count > 1){
+        // If the listing has no images then pick the product images
+        if( ! $images_count ) {
+            $item = $item->product;
+            $images_count = $item->images->count();
+        }
+
+        if($images_count) {
+            if($type == 'alt' && $images_count > 1) {
                 $imgs = $item->images->toArray();
                 $path = $imgs[1]['path'];
             }
@@ -421,7 +427,7 @@ if ( ! function_exists('get_product_img_src') )
             return url("image/{$path}?p={$size}");
         }
 
-        return asset('images/demo/no_img.png');
+        return asset('images/placeholders/no_img.png');
     }
 }
 
@@ -432,7 +438,7 @@ if ( ! function_exists('get_cover_img_src') )
         if(isset($model->featuredImage->path) && Storage::exists($model->featuredImage->path))
             return get_storage_file_url($model->featuredImage->path, 'cover');
         else
-            return asset('images/demo/'. $type .'_cover.jpg');
+            return asset('images/placeholders/'. $type .'_cover.jpg');
     }
 }
 
@@ -514,7 +520,7 @@ if ( ! function_exists('generateUniqueSrt') )
     {
         $characters = implode(range('A', 'Z')) . implode(range(0, 9));
         $uniqueStr = '';
-        for($i=0; $i<$size; $i++){
+        for($i=0; $i<$size; $i++) {
             $uniqueStr .= $characters[mt_rand(0, strlen($characters) - 1)];
         }
 
@@ -587,10 +593,10 @@ if ( ! function_exists('get_formated_gender') )
     function get_formated_gender($sex)
     {
         $icon = '';
-        if ("Male" == $sex || "app.male" == $sex){
+        if ("Male" == $sex || "app.male" == $sex) {
             $icon =  "<i class='fa fa-mars'></i> ";
         }
-        elseif ("Female" == $sex || "app.female" == $sex){
+        elseif ("Female" == $sex || "app.female" == $sex) {
             $icon =  "<i class='fa fa-venus'></i> ";
         }
 
@@ -648,7 +654,7 @@ if ( ! function_exists('get_formated_decimal') )
      */
     function get_formated_decimal($value = 0, $trim = true, $decimal = 0)
     {
-        if (!$decimal){
+        if (!$decimal) {
             if ($decimal === 0)
                 $decimal = 0;
             else
@@ -659,9 +665,9 @@ if ( ! function_exists('get_formated_decimal') )
 
         $value = number_format( $value, $decimal, $decimal_mark, config('system_settings.currency.thousands_separator', ',') );
 
-        if ($trim){
+        if ($trim) {
             $arr = explode($decimal_mark, $value);
-            if(count($arr) == 2){
+            if(count($arr) == 2) {
                 $temp = rtrim($arr[1], '0');
                 $value = $temp ? $arr[0] . $decimal_mark . $temp : $arr[0];
             }
@@ -793,7 +799,7 @@ if ( ! function_exists('generate_ranges') )
 
 if ( ! function_exists('get_percentage_of') )
 {
-    function get_percentage_of($old_num, $new_num){
+    function get_percentage_of($old_num, $new_num) {
         return get_formated_decimal((($old_num - $new_num)*100) / $old_num) ;
     }
 }
@@ -805,7 +811,7 @@ if ( ! function_exists('get_formated_shipping_range_of') )
      *
      * @param $tax
      */
-    function get_formated_shipping_range_of($rate){
+    function get_formated_shipping_range_of($rate) {
         if( !is_object($rate) )
             $rate = \DB::table('shipping_rates')->find($rate);
 
@@ -833,12 +839,12 @@ if ( ! function_exists('get_countries_name_with_states') )
      *
      * @param $country
      */
-    function get_countries_name_with_states($ids){
-        if (is_array($ids)){
+    function get_countries_name_with_states($ids) {
+        if (is_array($ids)) {
             $countries = \DB::table('countries')->select('iso_3166_2', 'name', 'id')->whereIn('id', $ids)->get()->toArray();
             $all_states = \DB::table('states')->whereIn('country_id', $ids)->pluck('country_id', 'id')->toArray();
 
-            if(!empty($countries)){
+            if(!empty($countries)) {
                 $result = [];
                 foreach ($countries as $country) {
                     $states = array_filter($all_states, function ($value) use ($country) {
@@ -865,14 +871,14 @@ if ( ! function_exists('get_formated_country_name') )
      *
      * @param $country
      */
-    function get_formated_country_name($country, $code = null){
-        if (is_numeric($country)){
+    function get_formated_country_name($country, $code = null) {
+        if (is_numeric($country)) {
             $country_data = \DB::table('countries')->select('iso_3166_2', 'name')->find($country);
             $country = $country_data->name;
             $code = $country_data->iso_3166_2;
         }
 
-        if($code){
+        if($code) {
             $full_path = sys_image_path('flags') . $code . '.png';
 
             if(!file_exists($full_path))
@@ -892,15 +898,15 @@ if ( ! function_exists('get_shipping_zone_of') )
      *
      * @param $tax
      */
-    function get_shipping_zone_of($shop, $country, $state = null){
+    function get_shipping_zone_of($shop, $country, $state = null) {
         // If the iso_2 code given as country
-        if( ! is_numeric($country) ){
+        if( ! is_numeric($country) ) {
             $temp = \DB::table('countries')->select('id')->where('iso_3166_2', $country)->first();
             $country = optional($temp)->id;
         }
 
         // If the iso_2 code given as state
-        if($state && !is_numeric($state) ){
+        if($state && !is_numeric($state) ) {
             $temp = \DB::table('states')->select('id')->whereNotNull('iso_3166_2')->where([
                 ['iso_3166_2', '=', $state],
                 ['country_id', '=', $country]
@@ -950,7 +956,7 @@ if ( ! function_exists('get_state_count_of') )
      *
      * @param $tax
      */
-    function get_state_count_of($country){
+    function get_state_count_of($country) {
         return \DB::table('states')->where('country_id', $country)->count();
     }
 }
@@ -1035,7 +1041,7 @@ if ( ! function_exists('getShippingRates') )
      */
     function getShippingRates($zone = Null)
     {
-        if($zone){
+        if($zone) {
             return \App\ShippingRate::where('shipping_zone_id', $zone)
             ->with('carrier:id,name')->orderBy('rate', 'asc')->get();
         }
@@ -1085,16 +1091,16 @@ if ( ! function_exists('filterShippingOptions') )
     {
         $results = \DB::table('shipping_rates')->where('shipping_zone_id', $zone);
 
-        $results->where(function($query) use ($price, $weight){
+        $results->where(function($query) use ($price, $weight) {
             $query->where('based_on', 'price')
                 ->where('minimum', '<=', $price)
-                ->where(function($q) use ($price){
+                ->where(function($q) use ($price) {
                     $q->where('maximum', '>=', $price)
                     ->orWhereNull('maximum');
                 });
 
             if ($weight) {
-                $query->orWhere(function($q) use ($weight){
+                $query->orWhere(function($q) use ($weight) {
                     $q->where('based_on', 'weight')
                         ->where('minimum', '<=', $weight)
                         ->where('maximum', '>=', $weight);
@@ -1242,9 +1248,9 @@ if ( ! function_exists('get_value_from') )
      */
     function get_value_from($ids, $table, $field)
     {
-        if(is_array($ids)){
+        if(is_array($ids)) {
             $values = \DB::table($table)->select($field)->whereIn('id', $ids)->get()->toArray();
-            if(!empty($values)){
+            if(!empty($values)) {
                 $result = [];
                 foreach ($values as $value) {
                     $result[] = $value->$field;
@@ -1376,7 +1382,7 @@ if ( ! function_exists('get_disput_status_name') )
 
 if ( ! function_exists('get_activity_title') )
 {
-    function get_activity_title($activity){
+    function get_activity_title($activity) {
         if(!$activity->causer)
             return trans('app.system') . ' ' . $activity->description . ' ' . trans('app.this') . ' ' . $activity->log_name;
 

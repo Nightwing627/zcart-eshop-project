@@ -39,42 +39,49 @@ class SlidersSeeder extends Seeder
             ]
         ]);
 
-        // copy(public_path('images/demo/1.jpeg'), image_storage_dir() . '/1.jpg');
-        // copy(public_path('/images/demo/2.jpeg'), image_storage_dir() . '/2.jpg');
-        // copy(public_path('/images/demo/3.jpeg'), image_storage_dir() . '/3.jpg');
+        if (env('APP_DEMO') == true && File::isDirectory(public_path('images/demo'))) {
+            $path = storage_path('app/public/'.image_storage_dir());
 
-        // DB::table('images')->insert([
-        //     [
-        //         'name' => '1.jpg',
-        //         'path' => 'images/1.jpeg',
-        //         'extension' => 'jpg',
-        //         'order' => 1,
-        //         'featured' => 1,
-        //         'imageable_id' => 1,
-        //         'imageable_type' => 'App\Slider',
-        //         'created_at' => Carbon::Now(),
-        //         'updated_at' => Carbon::Now(),
-        //     ], [
-        //         'name' => '2.jpg',
-        //         'path' => 'images/2.jpeg',
-        //         'extension' => 'jpg',
-        //         'order' => 2,
-        //         'featured' => 1,
-        //         'imageable_id' => 2,
-        //         'imageable_type' => 'App\Slider',
-        //         'created_at' => Carbon::Now(),
-        //         'updated_at' => Carbon::Now(),
-        //     ], [
-        //         'name' => '3.jpg',
-        //         'path' => 'images/3.jpeg',
-        //         'extension' => 'jpg',
-        //         'order' => 3,
-        //         'featured' => 1,
-        //         'imageable_id' => 3,
-        //         'imageable_type' => 'App\Slider',
-        //         'created_at' => Carbon::Now(),
-        //         'updated_at' => Carbon::Now(),
-        //     ]
-        // ]);
+            if(!File::isDirectory($path))
+                File::makeDirectory($path);
+
+            File::copy(public_path('images/demo/sliders/1.jpg'), $path . '/slider_1.jpg');
+            File::copy(public_path('images/demo/sliders/2.jpg'), $path . '/slider_2.jpg');
+            File::copy(public_path('images/demo/sliders/3.jpg'), $path . '/slider_3.jpg');
+
+            DB::table('images')->insert([
+                [
+                    'name' => 'slider_1.jpg',
+                    'path' => image_storage_dir().'/slider_1.jpg',
+                    'extension' => 'jpg',
+                    'order' => 1,
+                    'featured' => 1,
+                    'imageable_id' => 1,
+                    'imageable_type' => 'App\Slider',
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ], [
+                    'name' => 'slider_2.jpg',
+                    'path' => image_storage_dir().'/slider_2.jpg',
+                    'extension' => 'jpg',
+                    'order' => 2,
+                    'featured' => 1,
+                    'imageable_id' => 2,
+                    'imageable_type' => 'App\Slider',
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ], [
+                    'name' => 'slider_3.jpg',
+                    'path' => image_storage_dir().'/slider_3.jpg',
+                    'extension' => 'jpg',
+                    'order' => 3,
+                    'featured' => 1,
+                    'imageable_id' => 3,
+                    'imageable_type' => 'App\Slider',
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ]
+            ]);
+        }
     }
 }

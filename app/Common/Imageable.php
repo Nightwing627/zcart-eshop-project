@@ -192,7 +192,7 @@ trait Imageable {
 		$urls = '';
 		$configs = '';
 
-		foreach ($this->images as $image){
+		foreach ($this->images as $image) {
 	    	Storage::url($image->path);
             $path = Storage::url($image->path);
             $deleteUrl = route('image.delete', $image->id);

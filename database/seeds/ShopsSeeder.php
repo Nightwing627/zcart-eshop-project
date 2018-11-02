@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 
 class ShopsSeeder extends Seeder
 {
@@ -46,8 +47,8 @@ class ShopsSeeder extends Seeder
             'default_sender_email_address' => 'noreply.shop@demo.com',
             'default_email_sender_name' => 'Support Agent',
             'order_number_prefix' => '#',
-            'default_tax_id' => rand(1, 31),
-            'default_packaging_ids' => serialize(array_rand(range(1,30), 3)),
+            'default_tax_id' => 1,
+            'default_packaging_ids' => serialize(array_rand(range(1,6), 3)),
             'order_handling_cost' => 2,
             'maintenance_mode' => false,
             'created_at' => Carbon::Now(),
@@ -78,5 +79,27 @@ class ShopsSeeder extends Seeder
                 'updated_at' => Carbon::Now(),
             ]
         ]);
+
+        if (env('APP_DEMO') == true && File::isDirectory(public_path('images/demo'))) {
+            $path = storage_path('app/public/'.image_storage_dir());
+            if(!File::isDirectory($path)) File::makeDirectory($path);
+
+            $logos = glob(public_path('images/demo/logos/*.png'));
+
+            File::copy($logos[array_rand($logos)], $path . "/shop_1_logo.png");
+
+            DB::table('images')->insert([
+                [
+                    'name' => 'shop_1_logo.png',
+                    'path' => image_storage_dir()."/shop_1_logo.png",
+                    'extension' => 'png',
+                    'featured' => 0,
+                    'imageable_id' => 1,
+                    'imageable_type' => 'App\Shop',
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ]
+            ]);
+        }
     }
 }
