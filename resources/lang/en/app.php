@@ -565,7 +565,7 @@ return [
     'trial_days' => 'Trial period',
     'config_trial_days' => 'Trial period',
     'general_settings' => 'General settings',
-    'envioronment_config' => 'Envioronment Config',
+    'environment_config' => 'Environment Config',
     'notifications' => 'Notifications',
     'notify_new_message' => 'New message',
     'notify_new_ticket' => 'New ticket',

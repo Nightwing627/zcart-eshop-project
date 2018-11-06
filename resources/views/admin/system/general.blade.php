@@ -14,7 +14,7 @@
 				</a></li>
 				<li><a href="#envioronment_config_tab" data-toggle="tab">
 					<i class="fa fa-cog hidden-sm"></i>
-					{{ trans('app.envioronment_config') }}
+					{{ trans('app.environment_config') }}
 				</a></li>
 			</ul>
 			<div class="tab-content">

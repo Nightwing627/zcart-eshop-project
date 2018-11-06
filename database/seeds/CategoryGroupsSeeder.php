@@ -15,54 +15,63 @@ class CategoryGroupsSeeder extends Seeder
     {
         DB::table('category_groups')->insert([
             [
+                'id' => 1,
                 'name' => 'Home & Garden',
                 'description' => 'Cookware, Dining, Bath, Home Decor and more',
                 'icon' => 'fa-home',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'id' => 2,
                 'name' => 'Electronics',
                 'description' => 'Mobile, Computer, Tablet, Camera etc',
                 'icon' => 'fa-plug',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'id' => 3,
                 'name' => 'Kids and Toy',
                 'description' => 'Toys, Footwear etc',
                 'icon' => 'fa-gamepad',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'id' => 4,
                 'name' => 'Clothing and Shoes',
                 'description' => 'Shoes, Clothing, Life style items',
                 'icon' => 'fa-tags',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'id' => 5,
                 'name' => 'Beauty and Health',
                 'description' => 'Cosmetics, Foods and more.',
                 'icon' => 'fa-leaf',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'id' => 6,
                 'name' => 'Sports',
                 'description' => 'Cycle, Tennis, Boxing, Cricket and more.',
                 'icon' => 'fa-futbol-o',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'id' => 7,
                 'name' => 'Jewelry',
                 'description' => 'Necklances, Rings, Pendants and more.',
                 'icon' => 'fa-diamond',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'id' => 8,
                 'name' => 'Pets',
                 'description' => 'Pet foods and supplies.',
                 'icon' => 'fa-paw',
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'id' => 9,
                 'name' => 'Hobbies & DIY',
                 'description' => 'Craft Sewing, Supplies and more.',
                 'icon' => 'fa-bicycle',
