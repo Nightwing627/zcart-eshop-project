@@ -17,7 +17,7 @@ class CreateImagesTable extends Migration
             $table->text('path');
             $table->text('name')->nullable();
             $table->string('extension')->nullable();
-            $table->string('size')->nullable();
+            $table->string('size')->nullable()->default(0);
             $table->integer('order')->default(0);
             $table->boolean('featured')->nullable();
             $table->unsignedInteger('imageable_id');

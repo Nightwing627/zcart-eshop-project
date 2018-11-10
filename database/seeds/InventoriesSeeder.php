@@ -39,6 +39,7 @@ class InventoriesSeeder extends Seeder
                             'name' => $img_name,
                             'path' => image_storage_dir()."/{$img_name}",
                             'extension' => 'png',
+                            'size' => 0,
                             'imageable_id' => $item,
                             'imageable_type' => 'App\Inventory',
                             'created_at' => Carbon::Now(),

@@ -1,6 +1,7 @@
 <script type="text/javascript">
 "use strict";
 ;(function($, window, document) {
+    var free_shipping = '{{ $item->free_shipping }}';
     var shop_id = '{{ $item->shop_id }}';
     var handlingCost = getFromPHPHelper('getShopConfig', [shop_id, 'order_handling_cost']);
     var unitPrice = {{ $item->currnt_sale_price() }};
@@ -17,8 +18,10 @@
     $(document).ready(function(){
         $('select.color-options').simplecolorpicker();
 
-        resizeShipToSelectBox();    // Dynamic width for country list
-        setShippingOptions();       // Set shipping options
+        // if (free_shipping != 1) {
+            resizeShipToSelectBox();    // Dynamic width for country list
+            setShippingOptions();       // Set shipping options
+        // }
 
         var apply_btn = '<div class="space5"></div><button class="popover-submit-btn btn btn-black btn-block flat" type="button">{{ trans('theme.button.ok') }}</button>';
 

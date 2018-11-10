@@ -12,6 +12,7 @@
         @forelse($logger->activities() as $activity)
           @php
             $changes = $activity->changes()->all();
+            // \Log::info($changes);
           @endphp
 
           <a class="list-group-item" data-toggle="collapse" data-target="#sl-{{ $activity->id }}" data-parent="#menu">

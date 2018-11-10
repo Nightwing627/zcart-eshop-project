@@ -448,9 +448,15 @@ if ( ! function_exists('get_activity_str') )
 
             case 'carrier_id':
                 $attrbute = trans('app.shipping_carrier');
-                $carrier = \App\Carrier::find([$old, $new])->pluck('name', 'id');
+
+                if(is_null($old)){
+                    $carrier = \App\Carrier::find($new)->pluck('name', 'id');
+                }
+                else {
+                    $carrier = \App\Carrier::find([$old, $new])->pluck('name', 'id');
+                    $old  = $carrier[$old];
+                }
                 $new  = $carrier[$new];
-                $old  = $carrier[$old];
                 break;
 
             case 'tracking_id':

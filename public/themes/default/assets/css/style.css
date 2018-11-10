@@ -1994,7 +1994,23 @@ div.datepicker > div {
 .product-single .product-info-price{
   font-family: 'Roboto', Tahoma, Arial, helvetica, sans-serif;
   margin-top: 5px;
-  margin-bottom: 9px;
+  margin-bottom: 11px;
+}
+.product-single ul.product-info-feature-labels {
+  display: inline-block !important;
+  list-style: none;
+}
+.product-single ul.product-info-feature-labels li {
+  display: inline;
+  padding: 4px 7px;
+  color: #fff;
+  background-color: #d6644a;
+  font-size: 0.5em;
+  font-weight: 100;
+  text-transform: uppercase;
+}
+.product-single ul.product-info-feature-labels li:first-child {
+  margin-left: 10px;
 }
 .product-info-price .percent-off{
   display: none;
@@ -2507,7 +2523,7 @@ table .product-info-price .percent-off {
     padding-right: 7.5px;
     margin-bottom: 15px;
 }
-.row.featured > [class^="col-"]:first-child {
+.row.featured > [class^="col-"]first-child {
     padding-left: 0px;
 }
 .row.featured > [class^="col-"]:last-child {

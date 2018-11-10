@@ -9,6 +9,7 @@ use App\Refund;
 use App\Observers\ShopObserver;
 use App\Observers\RefundObserver;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -22,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
+
         Shop::observe(ShopObserver::class);
         Order::observe(OrderObserver::class);
         Refund::observe(RefundObserver::class);
@@ -66,6 +69,5 @@ class AppServiceProvider extends ServiceProvider
                 ]);
             }
         );
-
     }
 }

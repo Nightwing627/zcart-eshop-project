@@ -52,20 +52,23 @@
 									  	<div class="col-sm-9 col-xs-8 nopadding-left">
 					                        <div id="product-info-shipping-detail">
 					                            <span id="summary-shipping-cost" data-value="0"></span>
-					                            <span>
-					                            	{{ strtolower(trans('theme.to')) }}
-							                      	<select name="ship_to" class="ship_to" id="shipTo">
-													    @foreach($countries as $country_id => $country_name)
-															<option value="{{$country_id}}" {{$country_id == $shipping_country_id ? 'selected' : ''}}>{{$country_name}}</option>
-													    @endforeach
-							                      	</select>
-													<select id="width_tmp_select"><option id="width_tmp_option"></option></select>
-					                            </span>
+					                            {{-- @if($item->free_shipping != 1) --}}
+						                            <span>{{ strtolower(trans('theme.to')) }}
+								                      	<select name="ship_to" class="ship_to" id="shipTo">
+														    @foreach($countries as $country_id => $country_name)
+																<option value="{{$country_id}}" {{$country_id == $shipping_country_id ? 'selected' : ''}}>{{$country_name}}</option>
+														    @endforeach
+								                      	</select>
+														<select id="width_tmp_select"><option id="width_tmp_option"></option></select>
+						                            </span>
 
-										  		<span class="dynamic-shipping-rates" data-toggle="popover" title= "{{ trans('theme.shipping_options') }}">
-						                            <span id="summary-shipping-carrier"></span>
-						                            <small><i class="fa fa-caret-square-o-down"></i></small>
-										  		</span>
+											  		<span class="dynamic-shipping-rates" data-toggle="popover" title="{{ trans('theme.shipping_options') }}">
+							                            <span id="summary-shipping-carrier"></span>
+							                            <small><i class="fa fa-caret-square-o-down"></i></small>
+											  		</span>
+					                            {{-- @else --}}
+					                            	{{-- <span>{{ strtolower(trans('theme.free_shipping')) }}</span> --}}
+					                            {{-- @endif --}}
 									  		</div>
 									  		<small class="text-muted" id="delivery-time"></small>
 						              	</div><!-- /.col-sm-9 .col-xs-6 -->
