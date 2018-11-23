@@ -8,6 +8,7 @@ $factory->define(App\ShippingRate::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
         'shipping_zone_id' => rand(1,2),
+        'carrier_id' => rand(1,5),
         'delivery_takes' => $delivery_takes . '-' . ( $delivery_takes + rand(1,20) ) . ' days',
         'based_on' => $based_on,
         'minimum' => 0,

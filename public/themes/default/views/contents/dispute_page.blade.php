@@ -3,16 +3,16 @@
   <div class="container">
     <div class="row">
       <div class="col-md-4 bg-light">
-        <p class="section-title lead space20">@lang('theme.section_headings.how_to_open_a_dispute')</p>
+        <p class="section-title lead space20">{!! trans('theme.section_headings.how_to_open_a_dispute') !!}</p>
         <dl>
-          <dt>@lang('theme.help.first_step'):</dt>
-          <dd>@lang('theme.help.how_to_open_a_dispute_first_step')</dd>
+          <dt>{!! trans('theme.help.first_step') !!}:</dt>
+          <dd>{!! trans('theme.help.how_to_open_a_dispute_first_step') !!}</dd>
           <br/>
-          <dt>@lang('theme.help.second_step'):</dt>
-          <dd>@lang('theme.help.how_to_open_a_dispute_second_step')</dd>
+          <dt>{!! trans('theme.help.second_step') !!}:</dt>
+          <dd>{!! trans('theme.help.how_to_open_a_dispute_second_step') !!}</dd>
           <br/>
-          <dt>@lang('theme.help.third_step'):</dt>
-          <dd>@lang('theme.help.how_to_open_a_dispute_third_step')</dd>
+          <dt>{!! trans('theme.help.third_step') !!}:</dt>
+          <dd>{!! trans('theme.help.how_to_open_a_dispute_third_step') !!}</dd>
         </dl>
       </div><!-- /.col-md-4 .bg-light -->
 
@@ -45,7 +45,7 @@
                 <li class="{{ $progress > 33 ? 'done' : 'active' }}">
                   <a id="step1">
                     <span class="step">1</span>
-                    <span class="title">@lang('theme.open_a_dispute')</span>
+                    <span class="title">{!! trans('theme.open_a_dispute') !!}</span>
                   </a>
                 </li>
                 <li class="
@@ -57,7 +57,7 @@
                 ">
                   <a id="step2">
                     <span class="step">2</span>
-                    <span class="title">@lang('theme.seller_helps_you')</span>
+                    <span class="title">{!! trans('theme.seller_helps_you') !!}</span>
                   </a>
                 </li>
                 <li class="
@@ -69,15 +69,15 @@
                 ">
                   <a id="step3">
                       <span class="step">3</span>
-                      <span class="title">@lang('theme.marketplace_steps_in', ['marketplace' => get_platform_title()])<br/>
-                          <i class="small hidden-xs">@lang('theme.help.when_marketplace_steps_in')</i>
+                      <span class="title">{!! trans('theme.marketplace_steps_in', ['marketplace' => get_platform_title()]) !!}<br/>
+                          <i class="small hidden-xs">{!! trans('theme.help.when_marketplace_steps_in') !!}</i>
                       </span>
                   </a>
                 </li>
                 <li class="{{ $progress == 100 ? 'done' : '' }}">
                   <a id="step4">
                     <span class="step">4</span>
-                    <span class="title">@lang('theme.dispute_finished')</span>
+                    <span class="title">{!! trans('theme.dispute_finished') !!}</span>
                   </a>
                 </li>
               </ul>
@@ -89,33 +89,33 @@
         @if($order->dispute)
           <table class="table" id="buyer-order-table">
               <thead>
-                  <tr><th colspan="3">@lang('theme.dispute_detail')</th></tr>
+                  <tr><th colspan="3">{!! trans('theme.dispute_detail') !!}</th></tr>
               </thead>
               <tbody>
                   <tr class="order-info-head">
                       <td width="50%">
-                        <h5><span>@lang('theme.order_id'): </span>{{ $order->order_number }}</h5>
-                        <h5><span>@lang('theme.order_time_date'): </span>{{ $order->created_at->toDayDateTimeString() }}</h5>
+                        <h5><span>{!! trans('theme.order_id') !!}: </span>{{ $order->order_number }}</h5>
+                        <h5><span>{!! trans('theme.order_time_date') !!}: </span>{{ $order->created_at->toDayDateTimeString() }}</h5>
                       </td>
                       <td width="25%" class="store-info">
                         <h5>
-                          <span>@lang('theme.store'):</span>
+                          <span>{!! trans('theme.store') !!}:</span>
                           @if($order->shop)
                             <a href="{{ route('show.store', $order->shop->slug) }}"> {{ $order->shop->name }}</a>
                           @else
-                            @land('theme.seller')
+                            {!! trans('theme.seller') !!}
                           @endif
                         </h5>
                         <h5>
-                            <span>@lang('theme.status')</span>
+                            <span>{!! trans('theme.status') !!}</span>
                             {{ optional($order->status)->name }}
                         </h5>
                       </td>
                       <td width="25%" class="order-amount">
-                        <h5><span>@lang('theme.order_amount'): </span>{{ get_formated_currency($order->grand_total) }}</h5>
+                        <h5><span>{!! trans('theme.order_amount') !!}: </span>{{ get_formated_currency($order->grand_total) }}</h5>
                         <div class="btn-group" role="group">
-                          <a class="btn btn-xs btn-default flat" href="{{ route('order.detail', $order) }}">@lang('theme.button.order_detail')</a>
-                          <a class="btn btn-xs btn-default flat" href="{{ route('order.detail', $order) . '#message-section' }}">@lang('theme.button.contact_seller')</a>
+                          <a class="btn btn-xs btn-default flat" href="{{ route('order.detail', $order) }}">{!! trans('theme.button.order_detail') !!}</a>
+                          <a class="btn btn-xs btn-default flat" href="{{ route('order.detail', $order) . '#message-section' }}">{!! trans('theme.button.contact_seller') !!}</a>
                         </div>
                       </td>
                   </tr> <!-- /.order-info-head -->
@@ -136,7 +136,7 @@
                                   <li>Color: <span>RED</span></li>
                               </ul> --}}
                               @if($order->dispute->product_id == $item->product_id)
-                                <span class="label label-danger">@lang('theme.disputed')</span>
+                                <span class="label label-danger">{!! trans('theme.disputed') !!}</span>
                               @endif
                           </div>
                       </td>
@@ -152,7 +152,7 @@
                     <tr class="message_from_seller">
                       <td colspan="3">
                         <p>
-                          <strong>@lang('theme.message_from_seller'): </strong> {{ $order->message_to_customer }}
+                          <strong>{!! trans('theme.message_from_seller') !!}: </strong> {{ $order->message_to_customer }}
                         </p>
                       </td>
                     </tr>
@@ -162,7 +162,7 @@
                     <tr class="order-info-footer">
                       <td colspan="3">
                         <p class="order-detail-buyer-note">
-                          <span>@lang('theme.note'): </span> {{ $order->buyer_note }}
+                          <span>{!! trans('theme.note') !!}: </span> {{ $order->buyer_note }}
                         </p>
                       </td>
                     </tr>
@@ -171,20 +171,20 @@
           </table>
         @else
           <p class="text-center">
-              <a href="{{ route('order.detail', $order) . '#message-section' }}" class="btn btn-primary flat">@lang('theme.button.contact_seller')</a>
+              <a href="{{ route('order.detail', $order) . '#message-section' }}" class="btn btn-primary flat">{!! trans('theme.button.contact_seller') !!}</a>
 
               @unless($order->dispute)
-                <a href="#" data-toggle="modal" data-target="#disputeOpenModal" class="btn btn-black flat">@lang('theme.button.open_dispute')</a>
+                <a href="#" data-toggle="modal" data-target="#disputeOpenModal" class="btn btn-black flat">{!! trans('theme.button.open_dispute') !!}</a>
               @endunless
           </p>
           <div class="sep"></div>
           <p class="text-muted">
-              <h5>@lang('theme.button.refund_request'):</h5>
-              <span>@lang('theme.help.reason_to_refund_request')</span>
+              <h5>{!! trans('theme.button.refund_request') !!}:</h5>
+              <span>{!! trans('theme.help.reason_to_refund_request') !!}</span>
           </p>
           <p class="text-muted">
-              <h5>@lang('theme.button.return_goods'):</h5>
-              <span>@lang('theme.help.reason_to_return_goods')</span>
+              <h5>{!! trans('theme.button.return_goods') !!}:</h5>
+              <span>{!! trans('theme.help.reason_to_return_goods') !!}</span>
           </p>
         @endif
       </div><!-- /.col-md-8 -->

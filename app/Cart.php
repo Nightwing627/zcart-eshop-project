@@ -137,7 +137,7 @@ class Cart extends Model
      */
     public function carrier()
     {
-        return $this->shippingRate->carrier();
+        return optional($this->shippingRate)->carrier();
     }
 
     /**
@@ -172,7 +172,7 @@ class Cart extends Model
      */
     public function get_shipping_cost()
     {
-        return $this->shipping + $this->handling;
+        return $this->is_free_shipping() ? 0 : $this->shipping + $this->handling;
     }
 
     /**
@@ -182,7 +182,23 @@ class Cart extends Model
      */
     public function grand_total()
     {
+        if($this->is_free_shipping())
+            return ($this->total + $this->taxes + $this->packaging) - $this->discount;
+
         return ($this->total + $this->handling + $this->taxes + $this->shipping + $this->packaging) - $this->discount;
+    }
+
+    /**
+     * Check if the cart eligable for free shipping
+     *
+     * @return bool
+     */
+    public function is_free_shipping()
+    {
+        if( ! $this->shipping_rate_id )
+            return TRUE;
+
+        return FALSE;
     }
 
     /**

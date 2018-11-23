@@ -13,6 +13,7 @@ class SystemsSeeder extends Seeder
     public function run()
     {
         DB::table('systems')->insert([
+            'install_verion' => '1.1.2',
             'name' => 'zCart',
             'legal_name' => 'Zcart Inc.',
             'email' => 'notify@demo.com',

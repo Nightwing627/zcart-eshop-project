@@ -24,7 +24,7 @@ class CreateWarehouseTable extends Migration
             $table->timestamps();
 
             // $table->foreign('incharge')->references('id')->on('users');
-            $table->unique(array('shop_id', 'email', 'name'));
+            // $table->unique(array('shop_id', 'email', 'name'));
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
         });
 

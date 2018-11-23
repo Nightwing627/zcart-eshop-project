@@ -12,13 +12,22 @@
     	$('.shopping-cart-table-wrap').each(function(e){
 			var cart = $(this).data('cart');
 	        var shop = $('#shop-id'+cart).val();
-			var shippingOptions = $("#shipping-options"+cart).data('options');
+			// var shippingOptions = $("#shipping-options"+cart).data('options');
+			var shippingOptions = getShippingOptions(cart);
 
-			if(!shop || !shippingOptions){
+			if( ! shop || ! shippingOptions ){
 				disableCartCheckout(cart);
 			}
 			else{
-				setShippingOptions(cart);
+				var shippingRateId = Number($('#shipping-rate-id'+cart).val());
+				var shippingRate = $.grep(shippingOptions, function(el){
+					return el.id === shippingRateId;
+				})[0];
+
+				if (shippingRate)
+		            setShippingCost(cart, shippingRate.name, shippingRate.rate, shippingRate.id);
+				else
+					setShippingOptions(cart);
 			}
     	});
 
@@ -248,8 +257,10 @@
 			content: function(){
 				var cart = $(this).data('cart');
 				var current = getShippingName(cart);
+				var preChecked = String(current) == String('{{ trans('theme.free_shipping') }}') ? 'checked' : '';
 
 				var filtered = getShippingOptions(cart);
+				var free_shipping = isFreeShipping(cart);
 				var handlingCost = $('#handling-cost'+cart).val();
 
 				if($.isEmptyObject(filtered)){
@@ -257,8 +268,15 @@
 				}
 				else{
 					var options = '<table class="table table-striped" id="checkout-options-table">';
+
+					if(free_shipping){
+						options += '<tr><td><div class="radio"><label id="0"><input type="radio" name="shipping_option" id="{{ trans('theme.free_shipping') }}" value="'+ getFormatedValue(0) +'" '+ preChecked +'>{{ trans('theme.free_shipping') }}</label></div></td>' +
+						'<td>&nbsp;</td><td>&nbsp;</td>' +
+						'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(0) +'</span></td></tr>';
+					}
+
 					filtered.forEach( function (item){
-				  		var preChecked = String(current) == String(item.name) ? 'checked' : '';
+				  		preChecked = String(current) == String(item.name) ? 'checked' : '';
 				  		var shippingRate = Number(item.rate) + Number(handlingCost);
 
 				  		options += '<tr><td><div class="radio"><label id="'+ item.id +'"><input type="radio" name="shipping_option" id="'+ item.name +'" value="'+ getFormatedValue(item.rate) +'" '+ preChecked +'>'+ item.name +'</label></div></td>' +
@@ -288,6 +306,18 @@
         });
 
 	    // Functions
+		function isFreeShipping(cart)
+		{
+			var notFree = $(".freeShipping"+cart).filter(function() {
+				return this.value != 1;
+			});
+
+			if (notFree.length == 0)
+				return true;
+
+			return false;
+		}
+
       	function getShippingOptions(cart)
       	{
 			var totalPrice  = getOrderTotal(cart);
@@ -345,12 +375,6 @@
           	$("#summary-grand-total"+cart).text(getFormatedValue(grand));
           	return;
       	}
-
-		// function calculateItemWeight(item)
-		// {
-		// 	var unitWeight = Number($("#unitWeight"+item).val());
-
-		// }
 
 		function getCartWeight(cart)
 		{
@@ -440,7 +464,14 @@
 
 			if( ! $.isEmptyObject(filtered) ){
 				filtered.sort(function(a, b){return a.rate - b.rate});
-	            setShippingCost(cart, filtered[0].name, filtered[0].rate, filtered[0].id);
+
+				if(isFreeShipping(cart)) {
+		            setShippingCost(cart, '{{ trans('theme.free_shipping') }}', 0, 0);
+				}
+				else {
+		            setShippingCost(cart, filtered[0].name, filtered[0].rate, filtered[0].id);
+				}
+
 	            enableCartCheckout(cart);
 			}
 			else{
@@ -453,7 +484,7 @@
 
 		function setShippingCost(cart, name = '', value = 0, id = '')
 		{
-			var handlingCost = $('#handling-cost'+cart).val();
+			var handlingCost = isFreeShipping(cart) && value == 0 ? 0 : $('#handling-cost'+cart).val();
 			value = Number(value) + Number(handlingCost);
 			$('#summary-shipping'+cart).text(getFormatedValue(value));
 			$('#summary-shipping-name'+cart).text(name);

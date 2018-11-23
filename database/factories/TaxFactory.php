@@ -8,8 +8,7 @@ $factory->define(App\Tax::class, function (Faker $faker) {
     $state_id = $faker->randomElement(\DB::table('states')->where('country_id', $country_id)->pluck('id')->toArray());
 
     return [
-        // 'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
-        'shop_id' => 1,
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'name' => $faker->word . ' ' . round($num, 2) . '%',
         'country_id' => $country_id,
         'state_id' => $state_id,

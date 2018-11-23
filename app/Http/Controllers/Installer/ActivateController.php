@@ -46,6 +46,10 @@ class ActivateController extends Controller
         if ( ! $mysqli_connection )
             return redirect()->route('Installer.activate')->with(['failed' => trans('responses.database_connection_failed')])->withInput($request->all());
 
+        $purchase_verification = aplVerifyEnvatoPurchase($request->purchase_code);
+        if (!empty($purchase_verification)) //protected script can't connect to your licensing server
+            return redirect()->route('Installer.activate')->with(['failed' => 'Connection to remote server can\'t be established'])->withInput($request->all());
+
         $license_notifications_array = incevioVerify($request->root_url, $request->email_address, $request->purchase_code, $mysqli_connection);
 
         if ($license_notifications_array['notification_case'] == "notification_license_ok")

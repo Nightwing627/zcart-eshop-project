@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Packaging::class, function (Faker $faker) {
     return [
-        'shop_id' => 1,
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'name' => $faker->word,
         'cost' => rand(1,10),
         'width' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 50),

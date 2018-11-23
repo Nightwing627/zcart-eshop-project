@@ -4,13 +4,13 @@ use Carbon\Carbon;
 use Faker\Generator as Faker;
 
 $factory->define(App\Dispute::class, function (Faker $faker) {
-    $order_id = $faker->randomElement(\DB::table('orders')->pluck('id')->toArray());
+    $order = $faker->randomElement(\DB::table('orders')->get()->toArray());
 
     return [
         'dispute_type_id' => rand(1, 7),
-        'shop_id' => 1,
+        'shop_id' => $order->shop_id,
         'customer_id' => 1,
-        'order_id' => $order_id ?: rand(1, 15),
+        'order_id' => $order->id,
         'description' => $faker->text(100),
         'return_goods' => $faker->boolean,
         'order_received' => $faker->boolean,

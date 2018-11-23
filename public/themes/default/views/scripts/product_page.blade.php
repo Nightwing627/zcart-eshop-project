@@ -6,6 +6,7 @@
     var handlingCost = getFromPHPHelper('getShopConfig', [shop_id, 'order_handling_cost']);
     var unitPrice = {{ $item->currnt_sale_price() }};
     var variants = '{!! $variants !!}';
+    // console.log(handlingCost);
     // var variants = JSON.parse('{!! $variants !!}');
     var itemWrapper = $("#single-product-wrapper");
 
@@ -18,10 +19,9 @@
     $(document).ready(function(){
         $('select.color-options').simplecolorpicker();
 
-        // if (free_shipping != 1) {
-            resizeShipToSelectBox();    // Dynamic width for country list
-            setShippingOptions();       // Set shipping options
-        // }
+        resizeShipToSelectBox();    // Dynamic width for country list
+
+        setShippingOptions();       // Set shipping options
 
         var apply_btn = '<div class="space5"></div><button class="popover-submit-btn btn btn-black btn-block flat" type="button">{{ trans('theme.button.ok') }}</button>';
 
@@ -31,14 +31,22 @@
             content: function(){
                 var current = $('#shipping-rate-id').val();
                 var filtered = getShippingOptions();
+                var preChecked = (current == 'Null' && free_shipping) ? 'checked' : '';
 
                 if($.isEmptyObject(filtered)){
                     var options = '<p class="space10"><span class="space10"></span>{{ trans('theme.seller_doesnt_ship') }}</p>';
                 }
                 else{
                     var options = '<table class="table table-striped" id="item-shipping-options-table">';
+
+                    if(free_shipping){
+                        options += "<tr><td><div class='radio'><label id='0' data-option='" + JSON.stringify({name: '{{ trans('theme.free_shipping') }}', rate: 0}) + "'><input type='radio' name='shipping_option' id='{{ trans('theme.free_shipping') }}' value='"+ getFormatedValue(0) +"' "+ preChecked +">{{ trans('theme.free_shipping') }}</label></div></td>" +
+                        '<td>&nbsp;</td><td>&nbsp;</td>' +
+                        '<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(0) +'</span></td></tr>';
+                    }
+
                     filtered.forEach( function (item){
-                        var preChecked = String(current) == String(item.id) ? 'checked' : '';
+                        preChecked = String(current) == String(item.id) ? 'checked' : '';
                         var shippingRate = Number(item.rate) + Number(handlingCost);
 
                         options += "<tr><td><div class='radio'><label id='" + item.id + "' data-option='" + JSON.stringify(item) + "'><input type='radio' name='shipping_option' id='" + item.name + "' value='" + (item.rate) + "' " + preChecked + '>' + item.name + '</label></div></td>' +
@@ -179,7 +187,7 @@
     });
 
     //////////////////////////
-    /// Attribute Changes
+    /// Attribute Changes ///
     //////////////////////////
     function updateUrls(item)
     {
@@ -283,20 +291,29 @@
         $('#summary-shipping-cost, #summary-total').removeClass('text-danger text-uppercase');
         $('#buy-now-btn').removeAttr("disabled");
 
-        var value = Number(shipping.rate) + Number(handlingCost);
-
-        $('#summary-shipping-cost').attr('data-value', value).html( getFormatedPrice(value) );
-
-        if (shipping.carrier.name != ' ')
-            $('#summary-shipping-carrier').text(' {{ strtolower(trans('theme.by')) }} ' + shipping.carrier.name);
-        else
+        if (free_shipping == 1 && shipping.rate == 0) {
+            $('#summary-shipping-cost').attr('data-value', 0).html(shipping.name);
             $('#summary-shipping-carrier').text(' ');
 
-        var delivery_takes = shipping.delivery_takes ? '{{ trans('theme.estimated_delivery_time') }}: ' + shipping.delivery_takes : '';
+            $('#delivery-time').text(' ');
+            $('#shipping-rate-id').val('Null');
+        }
+        else {
+            var value = Number(shipping.rate) + Number(handlingCost);
 
-        $('#delivery-time').text(delivery_takes);
-        $('#shipping-zone-id').val(shipping.shipping_zone_id);
-        $('#shipping-rate-id').val(shipping.id);
+            $('#summary-shipping-cost').attr('data-value', value).html( getFormatedPrice(value) );
+
+            if (shipping.carrier.name != ' ')
+                $('#summary-shipping-carrier').text(' {{ strtolower(trans('theme.by')) }} ' + shipping.carrier.name);
+            else
+                $('#summary-shipping-carrier').text(' ');
+
+            var delivery_takes = shipping.delivery_takes ? '{{ trans('theme.estimated_delivery_time') }}: ' + shipping.delivery_takes : '';
+
+            $('#delivery-time').text(delivery_takes);
+            $('#shipping-zone-id').val(shipping.shipping_zone_id);
+            $('#shipping-rate-id').val(shipping.id);
+        }
 
         calculateOrderTotal();      // Calculate Order Total
 
@@ -311,8 +328,13 @@
             var filtered = getShippingOptions();
 
             if(filtered.length){
-                filtered.sort(function(a, b){return a.rate - b.rate});
-                setShippingCost(filtered[0]);
+                if (free_shipping == 1) {
+                    setShippingCost({name: '{{ trans('theme.free_shipping') }}', rate: 0});       // Set free shipping
+                }
+                else {
+                    filtered.sort(function(a, b){return a.rate - b.rate});
+                    setShippingCost(filtered[0]);
+                }
             }
             else{
                 canNotDeliver();

@@ -5,8 +5,9 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Inventory::class, function (Faker $faker) {
     $num = $faker->randomFloat($nbMaxDecimals = NULL, $min = 100, $max = 400);
+
     return [
-        'shop_id' => 1,
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'title' => $faker->sentence,
         'brand' => $faker->randomElement(\DB::table('manufacturers')->pluck('name')->toArray()),
         'sku' => $faker->word,

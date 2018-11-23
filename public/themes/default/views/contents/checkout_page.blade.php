@@ -9,7 +9,7 @@
           </div>
         @endif
 
-        <div class="notice notice-warning notice-sm space20" id="checkout-notice" style="display: {{ $cart->shipping_rate_id ? 'none' : 'block' }};">
+        <div class="notice notice-warning notice-sm space20" id="checkout-notice" style="display: {{ ($cart->shipping_rate_id || $cart->is_free_shipping()) ? 'none' : 'block' }};">
           <strong>{{ trans('theme.warning') }}</strong>
           <span id="checkout-notice-msg">@lang('theme.notify.seller_doesnt_ship')</span>
         </div>
@@ -40,7 +40,7 @@
             <li>
               <span>{{ trans('theme.shipping') }}</span>
               <span>
-                {{ $cart->get_shipping_cost() > 0 ? get_formated_currency($cart->get_shipping_cost(), 2) : trans('theme.free') }}
+                {{ $cart->get_shipping_cost() > 0 ? get_formated_currency($cart->get_shipping_cost(), 2) : trans('theme.free_shipping') }}
               </span>
             </li>
             @if($cart->packaging > 0)

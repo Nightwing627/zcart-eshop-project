@@ -13,7 +13,7 @@ $factory->define(App\Order::class, function (Faker $faker) {
     $billing_address = App\Address::where('addressable_type', 'App\Customer')->where('addressable_id', $customer_id)->first()->toHtml('<br/>', false);
 
     return [
-        'shop_id' => 1,
+        'shop_id' => rand(1,3),
         'order_number' => '#' . str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT),
         'customer_id' => $customer_id,
         'shipping_rate_id' => $faker->randomElement(\DB::table('shipping_rates')->pluck('id')->toArray()),

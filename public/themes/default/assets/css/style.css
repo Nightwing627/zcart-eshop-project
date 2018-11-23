@@ -2108,8 +2108,13 @@ table .product-info-price .percent-off {
 }
 .product-single .product-info-options #product-info-shipping-detail,
 .product-single .product-info-options .info-label {
+  display: inline;
   font-size: 14px;
 }
+.product-single .product-info-options #delivery-time{
+  display: block;
+}
+
 .product-single .product-info-options .qtt-label {
   line-height: 33px;
 }

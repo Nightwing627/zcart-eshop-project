@@ -11,8 +11,6 @@
 			checkShippingZone(selected_address.data('country'));
 		}
 
-		// console.log(selected_address.data('country'));
-
 		// Disable checkout if seller has no payment option
 		if ($('.payment-option').length == 0) {
 			disableCartCheckout('{{ trans('theme.notify.seller_has_no_payment_method') }}');
@@ -141,7 +139,6 @@
     {
         var shop = '{{ $cart->shop_id }}';
         // var countryId = $(this).val();
-
 	    var zone = getFromPHPHelper('get_shipping_zone_of', [shop, countryId]);
 		zone = JSON.parse(zone);
 
@@ -169,6 +166,7 @@
 		$('#cc-form').show().find('input, select').attr('required', 'required');
 		$('#pay-now-btn-txt').html('{!!trans('theme.button.pay_now') . ' <small>(' . get_formated_currency($cart->grand_total(), 2) . ')</small>'!!}');
     }
+
     function hideCardForm()
     {
 		$('#cc-form').hide().find('input, select').removeAttr('required');

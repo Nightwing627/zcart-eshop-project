@@ -32,6 +32,7 @@ return [
             'Ctype',
             'JSON',
             'cURL',
+            'GD',
         ],
         'apache' => [
             'mod_rewrite',

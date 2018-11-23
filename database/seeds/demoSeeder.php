@@ -39,26 +39,7 @@ class demoSeeder extends Seeder
                 );
             });
 
-        factory(App\Merchant::class, 1)
-            ->create([
-                'id' => 3,
-                'shop_id' => 1,
-                'role_id' => \App\Role::MERCHANT,
-                'nice_name' => 'Merchant',
-                'name' => 'Merchant User',
-                'email' => 'merchant@demo.com',
-                'password' => bcrypt('123456'),
-                'active' => 1,
-            ])
-            ->each(function($merchant){
-                $merchant->dashboard()->save(factory(App\Dashboard::class)->make());
-
-                $merchant->addresses()->save(
-                    factory(App\Address::class)->make(['address_title' => $merchant->name, 'address_type' => 'Primary'])
-                );
-            });
-
-        $this->call('ShopsSeeder');
+        $this->call('VendorsSeeder');
 
         // Demo customers with real text
         // DB::table('customers')->insert([
@@ -232,7 +213,13 @@ class demoSeeder extends Seeder
                 $warehouse->addresses()->save(factory(App\Address::class)->make(['address_title' => $warehouse->name, 'address_type' => 'Primary']));
             });
 
-        factory(App\ShippingRate::class, $this->tinycount)->create();
+        $shipping_zones   = \DB::table('shipping_zones')->pluck('id')->toArray();
+
+        foreach ($shipping_zones as $zone) {
+            factory(App\ShippingRate::class, $this->tinycount)->create([
+                'shipping_zone_id' => $zone,
+            ]);
+        }
 
         factory(App\Tax::class, $this->tinycount)->create();
 
@@ -242,9 +229,9 @@ class demoSeeder extends Seeder
 
         $this->call('InventoriesSeeder');
 
-        factory(App\Order::class, $this->count)->create();
+        factory(App\Order::class, $this->tinycount)->create();
 
-        factory(App\Dispute::class, 3)->create();
+        factory(App\Dispute::class, $this->tinycount)->create();
 
         factory(App\Blog::class, $this->tinycount)->create();
 
@@ -260,7 +247,7 @@ class demoSeeder extends Seeder
 
         factory(App\Ticket::class, $this->tinycount)->create();
 
-        factory(App\Reply::class, $this->veryLongCount)->create();
+        factory(App\Reply::class, $this->longCount)->create();
 
         //PIVOT TABLE SEEDERS
 
@@ -314,6 +301,8 @@ class demoSeeder extends Seeder
         foreach ((range(1, $this->longCount)) as $index) {
             $attribute_id = $attributes[array_rand($attributes)];
             $attribute_values = \DB::table('attribute_values')->where('attribute_id', $attribute_id)->pluck('id')->toArray();
+            if (empty($attribute_values)) continue;
+
             DB::table('attribute_inventory')->insert(
                 [
                     'attribute_id' => $attribute_id,
@@ -326,24 +315,26 @@ class demoSeeder extends Seeder
         }
 
         // order_items
-        foreach ((range(1, $this->longLongCount)) as $index) {
-            $shop_id = $shops[array_rand($shops)];
-            $orders = \DB::table('orders')->where('shop_id', $shop_id)->pluck('id')->toArray();
-            $inventories = \DB::table('inventories')->where('shop_id', $shop_id)->pluck('id')->toArray();
+        $orders = \DB::table('orders')->get();
+        foreach ($orders as $order) {
+            $inventories = \DB::table('inventories')->where('shop_id', $order->shop_id)->pluck('id')->toArray();
 
-            if(empty($orders) || empty($inventories)) continue;
+            if(empty($inventories)) continue;
 
-            DB::table('order_items')->insert(
-                [
-                    'order_id' => $orders[array_rand($orders)],
-                    'inventory_id' => $inventories[array_rand($inventories)],
-                    'item_description' => 'Demo product detail ' . rand(1,9999),
-                    'quantity' => rand(1,5),
-                    'unit_price' => rand(1,500),
-                    'created_at' => Carbon::Now(),
-                    'updated_at' => Carbon::Now(),
-                ]
-            );
+            $z = rand(1,3);
+            for ($i = 1; $i <= $z; $i++) {
+                DB::table('order_items')->insert(
+                    [
+                        'order_id' => $order->id,
+                        'inventory_id' => $inventories[array_rand($inventories)],
+                        'item_description' => 'Demo product detail ' . rand(1,9999),
+                        'quantity' => rand(1,3),
+                        'unit_price' => rand(1,500),
+                        'created_at' => Carbon::Now(),
+                        'updated_at' => Carbon::Now(),
+                    ]
+                );
+            }
         }
 
         // category_category_sub_group
@@ -414,6 +405,20 @@ class demoSeeder extends Seeder
         factory(App\Feedback::class, $this->longCount)->create();
 
         $this->call('EmailTemplateSeeder');
+
+        // announcement seeder
+        $deals = ['**Deal** of the day', 'Fashion accessories **deals**', 'Kids item **deals**', 'Black Friday **Deals**!', 'ONLY FOR TODAY:: **80% Off!**', 'Everyday essentials **deals**', '**Save** up to 40%', '**FLASH SALE ::** 20% **Discount** only for TODAY!!!'];
+        DB::table('announcements')->insert(
+            [
+                'id' => '9e274a6b-1340-4862-8ca2-525331830725',
+                'user_id' => 1,
+                'body' => $deals[array_rand($deals)],
+                'action_text' => 'Shop Now',
+                'action_url' => '/',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ]
+        );
 
         // factory(App\Visitor::class, $this->longLongCount)->create();
     }

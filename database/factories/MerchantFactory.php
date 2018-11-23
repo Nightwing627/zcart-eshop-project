@@ -5,8 +5,8 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Merchant::class, function (Faker $faker) {
     return [
-        'shop_id' => rand(0,1) == 1 ? rand(1, 15) : Null,
-        'role_id' => 3,
+        'shop_id' => rand(2, 3),
+        'role_id' => \App\Role::MERCHANT,
         'nice_name' => $faker->lastName,
         'name' => $faker->name,
         'email' => $faker->email,
@@ -14,9 +14,9 @@ $factory->define(App\Merchant::class, function (Faker $faker) {
         'dob' => $faker->date,
         'sex' => $faker->randomElement(['app.male', 'app.female']),
         'description' => $faker->text(500),
-        'active' => $faker->boolean,
-        'remember_token' => str_random(10),
-        'verification_token' => rand(0,1) == 1 ? Null : str_random(10),
+        'active' => 1,
+        // 'remember_token' => str_random(10),
+        // 'verification_token' => rand(0,1) == 1 ? Null : str_random(10),
         'created_at' => Carbon::Now()->subDays(rand(0, 15)),
         'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
     ];

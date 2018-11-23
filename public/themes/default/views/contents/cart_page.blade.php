@@ -28,8 +28,8 @@
           $cart_total = 0;
           if($cart->shop){
             $default_packaging = $cart->shippingPackage ??
-                                optional($cart->shop->packagings)->where('default',1)->first() ??
-                                $platformDefaultPackaging;
+            optional($cart->shop->packagings)->where('default',1)->first() ??
+            $platformDefaultPackaging;
           }
           else{
               $default_packaging = $cart->shippingPackage ?? $platformDefaultPackaging;
@@ -50,10 +50,10 @@
             {{ Form::hidden('tax_id', isset($shipping_zone->id) ? $shipping_zone->tax_id : Null, ['id' => 'tax-id'.$cart->id]) }}
             {{ Form::hidden('taxrate', Null, ['id' => 'cart-taxrate'.$cart->id]) }}
             {{ Form::hidden('packaging_id', $default_packaging ? $default_packaging->id : Null, ['id' => 'packaging-id'.$cart->id]) }}
-            {{ Form::hidden('shipping_rate_id', Null, ['id' => 'shipping-rate-id'.$cart->id]) }}
+            {{ Form::hidden('shipping_rate_id', $cart->shipping_rate_id, ['id' => 'shipping-rate-id'.$cart->id]) }}
+            {{-- {{ Form::hidden('shipping_rate_id', Null, ['id' => 'shipping-rate-id'.$cart->id]) }} --}}
             {{ Form::hidden('discount_id', $cart->coupon_id, ['id' => 'discount-id'.$cart->id]) }}
             {{ Form::hidden('handling_cost', optional($cart->shop->config)->order_handling_cost, ['id' => 'handling-cost'.$cart->id]) }}
-            {{-- <input type="hidden" name="discount_id" id="discount-id{{$cart->id}}"> --}}
             <div class="col-md-9 nopadding">
                 <div class="shopping-cart-header-section">
                   <span>@lang('theme.store'):</span>
@@ -92,6 +92,7 @@
                         @endphp
                         <tr class="cart-item-tr">
                           <td>
+                            <input type="hidden" class="freeShipping{{$cart->id}}" value="{{$item->free_shipping}}">
                             <input type="hidden" id="unitWeight{{$item->id}}" value="{{$item->shipping_weight}}">
                             {{ Form::hidden('shipping_weight['.$item->id.']', ($item->shipping_weight * $item->pivot->quantity), ['id' => 'itemWeight'.$item->id, 'class' => 'itemWeight'.$cart->id]) }}
                             <img src="{{ get_storage_file_url(optional($item->image)->path, 'mini') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" />

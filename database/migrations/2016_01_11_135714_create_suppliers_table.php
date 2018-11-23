@@ -32,7 +32,7 @@ class CreateSuppliersTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->unique(array('shop_id', 'email', 'name'));
+            // $table->unique(array('shop_id', 'email', 'name'));
             // $table->foreign('shop_id')->references('id')->on('shops');
         });
     }

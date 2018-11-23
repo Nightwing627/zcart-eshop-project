@@ -15,6 +15,7 @@ class CreateSystemsTable extends Migration
         Schema::create('systems', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('maintenance_mode')->nullable();
+            $table->string('install_verion')->nullable();
             // Mandatory Settings
             $table->string('name')->default('Marketplace');
             $table->text('slogan')->nullable();

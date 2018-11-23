@@ -47,14 +47,15 @@ class System extends Model
      * @var array
      */
     protected $fillable = [
-                        'maintenance_mode',
-                        'name',
-                        'legal_name',
-                        'slogan',
-                        'email',
-                        'timezone_id',
-                        'currency_id',
-                    ];
+            'install_verion',
+            'maintenance_mode',
+            'name',
+            'legal_name',
+            'slogan',
+            'email',
+            'timezone_id',
+            'currency_id',
+        ];
 
     /**
      * The attributes that should be casted to native types.

@@ -409,13 +409,19 @@ class OrderController extends Controller
         else
             $address = get_address_str_from_request_data($request);
 
+        // Set shipping_rate_id and handling cost to NULL if its free shipping
+        if($cart->is_free_shipping()) {
+            $cart->shipping_rate_id = Null;
+            $cart->handling = Null;
+        }
+
         // Save the order
         $order = new Order;
         $order->fill(
             array_merge($cart->toArray(), [
                 'grand_total' => $cart->grand_total(),
                 'order_number' => get_formated_order_number($cart->shop_id),
-                'carrier_id' => $cart->carrier->id,
+                'carrier_id' => $cart->carrier() ? $cart->carrier->id : NULL,
                 'shipping_address' => $address,
                 'billing_address' => $address,
                 'buyer_note' => $request->buyer_note
