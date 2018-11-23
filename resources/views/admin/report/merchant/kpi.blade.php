@@ -27,7 +27,11 @@
             <div class="info-box-content">
               <span class="info-box-text">{{ trans('app.conversion_rate') }}</span>
                 <span class="info-box-number">
-                  {{ get_formated_decimal(( $orders_count / ($orders_count + $abandoned_carts_count) ) * 100, true, 1) }} {{ trans('app.percent') }}
+                  @if($orders_count)
+                    {{ get_formated_decimal(( $orders_count / ($orders_count + $abandoned_carts_count) ) * 100, true, 1) }} {{ trans('app.percent') }}
+                  @else
+                    0
+                  @endif
                 </span>
                 <div class="progress" style="background: transparent;"></div>
                 <span class="progress-description text-muted">
@@ -68,7 +72,11 @@
           <div class="info-box-content">
             <span class="info-box-text">{{ trans('app.avg_order_value') }}</span>
                 <span class="info-box-number">
-                  {{ get_formated_currency($sales_total/$orders_count) }}
+                  @if($orders_count)
+                    {{ get_formated_currency($sales_total/$orders_count) }}
+                  @else
+                    0
+                  @endif
                 </span>
                 <div class="progress" style="background: transparent;"></div>
                 <span class="progress-description text-muted">
@@ -80,7 +88,7 @@
   </div><!-- /.row -->
 
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-8 nopadding-right">
       <div class="box box-solid">
         <div class="box-header with-border">
           <h3 class="box-title text-warning">
@@ -201,7 +209,7 @@
   Top Customers
    -->
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6 nopadding-right">
       <div class="box box-solid">
         <div class="box-header with-border">
           <h3 class="box-title text-warning">
@@ -254,7 +262,7 @@
         </div><!-- /.box-body -->
       </div><!-- /.box -->
     </div><!-- /.col -->
-    <div class="col-sm-6">
+    <div class="col-sm-6 nopadding-left">
       <div class="box box-solid">
         <div class="box-header with-border">
           <h3 class="box-title text-warning">
@@ -313,7 +321,7 @@
    -->
 
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6 nopadding-right">
       <div class="box box-solid">
         <div class="box-header with-border">
           <h3 class="box-title text-warning">
@@ -348,7 +356,7 @@
         </div><!-- /.box-body -->
       </div><!-- /.box -->
     </div><!-- /.col -->
-    <div class="col-sm-6">
+    <div class="col-sm-6 nopadding-left">
       <div class="box box-solid">
         <div class="box-header with-border">
           <h3 class="box-title text-warning">

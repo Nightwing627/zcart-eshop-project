@@ -580,16 +580,16 @@ class ListHelper
      */
     public static function top_listing_items($shop = Null, $count = 5)
     {
-        $items = new Inventory;
-
-        if(Auth::user()->isFromPlatform() && $shop)
-            $items->where('inventories.shop_id', $shop);
-        else
-            $items->where('inventories.shop_id', Auth::user()->merchantId());
+        if(Auth::user()->isFromPlatform() && $shop){
+            $items = Inventory::where('inventories.shop_id', $shop);
+        }
+        else{
+            $items = Inventory::where('inventories.shop_id', Auth::user()->merchantId());
+        }
 
         return $items->with('image:path,imageable_id,imageable_type', 'attributeValues:id,value')
         ->select(
-            'inventories.id','inventories.sku','products.name','inventories.product_id',
+            'inventories.id','inventories.shop_id','inventories.sku','products.name','inventories.product_id',
             \DB::raw('SUM(order_items.quantity) as sold_qtt'),
             \DB::raw('SUM(order_items.unit_price) as gross_sales')
         )
