@@ -22,7 +22,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'description', 'active', 'featured'];
+    protected $fillable = ['name', 'category_sub_group_id', 'slug', 'description', 'active', 'featured'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -67,15 +67,15 @@ class Category extends Model
         $this->attributes['featured'] = (bool) $value;
     }
 
-    /**
-     * Get subGroups list for the category.
-     *
-     * @return array
-     */
-    public function getCatSubGrpsAttribute()
-    {
-        if (count($this->subGroups)) return $this->subGroups->pluck('id')->toArray();
-    }
+    // /**
+    //  * Get subGroups list for the category.
+    //  *
+    //  * @return array
+    //  */
+    // public function getCatSubGrpsAttribute()
+    // {
+    //     if (count($this->subGroups)) return $this->subGroups->pluck('id')->toArray();
+    // }
 
     // public static function findBySlug($slug)
     // {

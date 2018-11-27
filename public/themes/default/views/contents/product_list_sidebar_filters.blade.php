@@ -3,7 +3,6 @@
         <div class="category-filters-section">
             <h3>@lang('theme.category')</h3>
             <ul class="cateogry-filters-list">
-                {{-- @foreach($categories as $slug => $category) --}}
                 @foreach($categories as $slug => $category)
                     @if(Request::is('search'))
                         <li>

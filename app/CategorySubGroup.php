@@ -40,40 +40,6 @@ class CategorySubGroup extends Model
         // return $this->belongsToMany(Category::class)->orderBy('name', 'asc')->withTimestamps();
     }
 
-    public function listings()
-    {
-        return $this->hasManyDeep(
-            Inventory::class,
-            [Category::class, 'category_product', Product::class]
-        );
-
-        return $this->hasManyDeep('App\Inventory', ['App\Category', 'App\Product'])->withIntermediate('App\Category')->withIntermediate('App\Product');
-
-
-
-        $items = Inventory::select('inventories.*','products.slug as product_slug','categories.slug as category_slug')
-        ->where([
-            ['inventories.active', '=', 1],
-            ['categories.active', '=', 1],
-            ['products.active', '=', 1]
-        ])
-        ->join('products', 'inventories.product_id', 'products.id')
-        ->join('category_product', 'inventories.product_id', 'category_product.product_id')
-        ->join('categories', 'category_product.category_id', 'categories.id')
-        ->get();
-
-        return $this->hasManyThrough(
-            'App\Inventory',          // The model to access to
-            'App\Pivots\SubGrpListings', // The intermediate table that connects the User with the Podcast.
-            'category_id',                 // The column of the intermediate table that connects to this model by its ID.
-            'product_id',              // The column of the intermediate table that connects the Podcast by its ID.
-            'id',                      // The column that connects this model with the intermediate model table.
-            'product_id'               // The column of the Audio Files table that ties it to the Podcast.
-        );
-
-        // return $this->hasMany(Inventory::class)->using('App\Pivots\SubGrpListings');
-    }
-
     // /**
     //  * Get all listings for the category.
     //  */

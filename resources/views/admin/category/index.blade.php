@@ -17,9 +17,9 @@
 	        <tr>
 			  <th>{{ trans('app.cover_image') }}</th>
 	          <th>{{ trans('app.category_name') }}</th>
-	          <th>{{ trans('app.parents') }}</th>
-	          <th>{{ trans('app.product') }}</th>
-	          <th>{{ trans('app.status') }}</th>
+	          <th>{{ trans('app.parent') }}</th>
+	          <th>{{ trans('app.products') }}</th>
+	          <th>{{ trans('app.listings') }}</th>
 	          <th>{{ trans('app.option') }}</th>
 	        </tr>
 	        </thead>
@@ -35,6 +35,9 @@
 			          			@if($category->featured)
 				          			<small class="label label-primary indent10">{{ trans('app.featured') }}</small>
 			          			@endif
+								@unless($category->active)
+									<span class="label label-default indent5 small">{{ trans('app.inactive') }}</span>
+								@endunless
 			          		</h5>
 			          		@if($category->description)
 				          		<span class="excerpt-td small">
@@ -42,17 +45,9 @@
 				          		</span>
 				          	@endif
 			          	</td>
-			          	<td>
-			          		@foreach($category->subGroups as $subGroup)
-				          		<span class="label label-outline">{{ $subGroup->name }}</span>
-				        	@endforeach
-			          	</td>
-			          	<td>
-				          	<span class="label label-default">{{ $category->products_count }}</span>
-			          	</td>
-			          	<td>
-			          		{{ ($category->active) ? trans('app.active') : trans('app.inactive') }}
-			          	</td>
+				        <td><span class="label label-outline">{{ $category->subGroup->name }}</span></td>
+			          	<td><span class="label label-default">{{ $category->products_count }}</span></td>
+			          	<td><span class="label label-warning">{{ $category->listings_count }}</span></td>
 				        <td class="row-options">
 							@can('update', $category)
 		                	    <a href="{{ route('admin.catalog.category.edit', $category->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;

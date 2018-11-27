@@ -26,7 +26,7 @@ class UpdateCategoryRequest extends Request
         $id = Request::segment(count(Request::segments())); //Current model ID
 
         return [
-            'cat_sub_grps' => 'required',
+            'category_sub_group_id' => 'required',
             'name' =>  'required|composite_unique:categories, '.$id,
             'slug' =>  'required|composite_unique:categories, '.$id,
             'image' => 'mimes:jpg,jpeg,png',

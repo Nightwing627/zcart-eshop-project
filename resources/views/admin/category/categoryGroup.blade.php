@@ -19,7 +19,6 @@
 				<th>{{ trans('app.category_group') }}</th>
 				<th>{{ trans('app.sub_groups') }}</th>
 				<th>{{ trans('app.order') }}</th>
-				<th>{{ trans('app.status') }}</th>
 				<th>&nbsp;</th>
 	        </tr>
 	        </thead>
@@ -30,7 +29,12 @@
 						<img src="{{ get_storage_file_url(optional($categoryGrp->image)->path, 'small') }}" class="" alt="{{ trans('app.featured_image') }}">
 			          </td>
 			          <td>
-			          	<h5><i class="fa {{$categoryGrp->icon}}"></i> {{ $categoryGrp->name }}</h5>
+			          	<h5>
+			          		<i class="fa {{$categoryGrp->icon}}"></i> {{ $categoryGrp->name }}
+							@unless($categoryGrp->active)
+								<span class="label label-default indent5 small">{{ trans('app.inactive') }}</span>
+							@endunless
+			          	</h5>
 			          	@if($categoryGrp->description)
 				          	<span class="excerpt-td small">{!! str_limit($categoryGrp->description, 220) !!}</span>
 			          	@endif
@@ -39,7 +43,6 @@
 				          	<span class="label label-default">{{ $categoryGrp->sub_groups_count }}</span>
 				      </td>
 			          <td>{{ $categoryGrp->order }}</td>
-			          <td>{{ ($categoryGrp->active) ? trans('app.active') : trans('app.inactive') }}</td>
 			          <td class="row-options">
 						@can('update', $categoryGrp)
 	                	    <a href="{{ route('admin.catalog.categoryGroup.edit', $categoryGrp->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;

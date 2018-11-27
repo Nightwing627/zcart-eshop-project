@@ -18,7 +18,7 @@ class EloquentCategory extends EloquentRepository implements BaseRepository, Cat
 
     public function all()
     {
-        return $this->model->with('subGroups', 'featuredImage')->withCount('products')->get();
+        return $this->model->with('subGroup:id,name', 'featuredImage')->withCount('products','listings')->get();
     }
 
     public function trashOnly()
@@ -30,7 +30,7 @@ class EloquentCategory extends EloquentRepository implements BaseRepository, Cat
     {
         $category = parent::store($request);
 
-        $category->subGroups()->sync($request->input('cat_sub_grps'));
+        // $category->subGroups()->sync($request->input('cat_sub_grps'));
 
         if ($request->hasFile('image'))
             $category->saveImage($request->file('image'), true);
@@ -42,7 +42,7 @@ class EloquentCategory extends EloquentRepository implements BaseRepository, Cat
     {
         $category = parent::update($request, $id);
 
-        $category->subGroups()->sync($request->input('cat_sub_grps'));
+        // $category->subGroups()->sync($request->input('cat_sub_grps'));
 
         if ($request->hasFile('image') || ($request->input('delete_image') == 1))
             $category->deleteFeaturedImage();

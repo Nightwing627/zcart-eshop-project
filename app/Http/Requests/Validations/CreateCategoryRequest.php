@@ -24,7 +24,7 @@ class CreateCategoryRequest extends Request
     public function rules()
     {
         return [
-           'cat_sub_grps' => 'required',
+           'category_sub_group_id' => 'required',
            'name' => 'required|unique:categories',
            'slug' => 'required|unique:categories',
            'image' => 'mimes:jpg,jpeg,png',

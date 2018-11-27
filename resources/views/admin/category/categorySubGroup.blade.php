@@ -15,23 +15,21 @@
 	        <thead>
 	        <tr>
 	          <th>{{ trans('app.category_sub_group') }}</th>
-	          <th>{{ trans('app.parents') }}</th>
+	          <th>{{ trans('app.parent') }}</th>
 	          <th>{{ trans('app.categories') }}</th>
-	          <th>{{ trans('app.status') }}</th>
 	          <th>{{ trans('app.option') }}</th>
 	        </tr>
 	        </thead>
 	        <tbody>
 		        @foreach($categorySubGrps as $categorySubGrp )
 			        <tr>
-			          <td>{{ $categorySubGrp->name }}</td>
-			          <td>
-				          	<span class="label label-outline">{{ $categorySubGrp->group->name }}</span>
+			          <td>	{{ $categorySubGrp->name }}
+							@unless($categorySubGrp->active)
+								<span class="label label-default indent5 small">{{ trans('app.inactive') }}</span>
+							@endunless
 			          </td>
-			          <td>
-				          	<span class="label label-default">{{ $categorySubGrp->categories_count }}</span>
-				      </td>
-			          <td>{{ ($categorySubGrp->active) ? trans('app.active') : trans('app.inactive') }}</td>
+			          <td><span class="label label-outline">{{ $categorySubGrp->group->name }}</span></td>
+			          <td><span class="label label-default">{{ $categorySubGrp->categories_count }}</span></td>
 			          <td class="row-options">
 						@can('update', $categorySubGrp)
 	                	    <a href="{{ route('admin.catalog.categorySubGroup.edit', $categorySubGrp->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="Edit" class="fa fa-edit"></i></a>&nbsp;

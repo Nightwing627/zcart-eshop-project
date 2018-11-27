@@ -1,6 +1,6 @@
 <div class="form-group">
-  {!! Form::label('cat_sub_grps[]', trans('app.form.category_sub_groups').'*') !!}
-  {!! Form::select('cat_sub_grps[]', $catList , null, ['class' => 'form-control select2-categories', 'multiple' => 'multiple', 'required']) !!}
+  {!! Form::label('category_sub_group_id', trans('app.form.category_sub_group').'*') !!}
+  {!! Form::select('category_sub_group_id', $catList , null, ['class' => 'form-control select2-categories', 'placeholder' => trans('app.placeholder.category_sub_group'), 'required']) !!}
   <div class="help-block with-errors"></div>
 </div>
 
