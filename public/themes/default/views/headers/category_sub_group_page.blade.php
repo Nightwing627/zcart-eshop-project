@@ -5,8 +5,7 @@
                 <div class="col-md-12">
                     <ol class="breadcrumb nav-breadcrumb">
                       @include('headers.lists.categories')
-                      @include('headers.lists.category_grp', ['category' => $category->subGroup->group])
-                      @include('headers.lists.category_subgrp', ['category' => $category->subGroup])
+                      @include('headers.lists.category_grp', ['category' => $category->group])
                       <li class="active">{{ $category->name }}</li>
                     </ol>
                 </div>

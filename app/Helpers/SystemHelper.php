@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use App\Cart;
 use App\Order;
 use App\Coupon;
@@ -174,7 +175,6 @@ if ( ! function_exists('getShopConfig') )
     }
 }
 
-
 if ( ! function_exists('getMysqliConnection') )
 {
     /**
@@ -221,6 +221,34 @@ if ( ! function_exists('setAdditionalCartInfo') )
         ]);
 
         return $request;
+    }
+}
+
+if ( ! function_exists('prepareFilteredListings') )
+{
+    /**
+     * Prepare Result result for front end
+     *
+     * @param  Request $request
+     * @param  collection $items
+     *
+     * @return collection
+     */
+    function prepareFilteredListings($request, $categoryGroup)
+    {
+        $t_listings = [];
+        foreach ($categoryGroup->categories as $t_category) {
+            $t_products = $t_category->listings()->available()->filter($request->all())
+            ->withCount(['feedbacks', 'orders' => function($query){
+                $query->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
+            }])
+            ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])->get();
+
+            foreach ($t_products as $t_product)
+                $t_listings[] = $t_product;
+        }
+
+        return collect($t_listings);
     }
 }
 

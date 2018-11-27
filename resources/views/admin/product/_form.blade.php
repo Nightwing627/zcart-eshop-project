@@ -186,6 +186,7 @@
               </div>
           </div>
         </fieldset>
+
         <fieldset>
           <legend>{{ trans('app.branding') }}</legend>
           <div class="form-group">

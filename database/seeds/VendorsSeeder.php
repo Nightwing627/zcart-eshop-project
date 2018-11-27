@@ -33,7 +33,7 @@ class VendorsSeeder extends Seeder
             });
 
 
-        factory(App\Merchant::class, 2)
+        factory(App\Merchant::class, 1)
             ->create()
             ->each(function($merchant){
                 $merchant->dashboard()->save(factory(App\Dashboard::class)->make());

@@ -24,7 +24,7 @@ class SaveEnvFileRequest extends Request
     public function rules()
     {
         return [
-           'do_action' =>  'required|in:INVIRONMENT',
+           'do_action' =>  'required|in:ENVIRONMENT',
            'password' =>  'required|min:6',
         ];
     }

@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Merchant::class, function (Faker $faker) {
     return [
-        'shop_id' => rand(2, 3),
+        'shop_id' => 2,
         'role_id' => \App\Role::MERCHANT,
         'nice_name' => $faker->lastName,
         'name' => $faker->name,

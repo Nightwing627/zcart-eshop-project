@@ -781,7 +781,7 @@ if ( ! function_exists('generate_ranges') )
     /**
      * Return array of different ranges
      */
-    function generate_ranges($min, $max, $number_of_ranges)
+    function generate_ranges($min, $max, $number_of_ranges = 5)
     {
         $range = ($max - $min) / $number_of_ranges;
         $ranges = [];

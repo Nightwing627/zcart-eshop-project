@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Storefront;
 use Carbon\Carbon;
 use App\Category;
 use App\Inventory;
+use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 // use Illuminate\Pagination\Paginator;
@@ -41,9 +42,8 @@ class SearchController extends Controller
         $products = $products->where('stock_quantity', '>', 0)->where('available_from', '<=', Carbon::now());
 
         // Attributes for filters
-        $brands = $products->pluck('brand')->unique();
-        $priceRange['min'] = floor($products->min('sale_price'));
-        $priceRange['max'] = ceil($products->max('sale_price'));
+        $brands = ListHelper::get_unique_brand_names_from_linstings($products);
+        $priceRange = ListHelper::get_price_ranges_from_linstings($products);
 
         if($request->has('free_shipping')) {
             $products = $products->where('free_shipping', 1);
@@ -100,7 +100,7 @@ class SearchController extends Controller
             $q->select('id')->with('categories:id,name,slug');
         }, 'feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type']);
 
-        $categories = $products->pluck('product.categories')->flatten()->pluck('name','slug')->unique();
+        $categories = $products->pluck('product.categories')->flatten()->unique();
 
         return view('search_results', compact('products', 'category', 'categories', 'brands', 'priceRange'));
     }

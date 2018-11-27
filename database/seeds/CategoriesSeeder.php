@@ -13,8 +13,10 @@ class CategoriesSeeder extends Seeder
      */
     public function run()
     {
+        $category_sub_groups = \DB::table('category_sub_groups')->pluck('id')->toArray();
         DB::table('categories')->insert([
             [
+                'category_sub_group_id' => $category_sub_groups[array_rand($category_sub_groups)],
                 'name' => 'Mobile',
                 'slug' => 'mobile',
                 'description' => 'Mobile Phones',
@@ -22,6 +24,7 @@ class CategoriesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'category_sub_group_id' => $category_sub_groups[array_rand($category_sub_groups)],
                 'name' => 'Mobile Accessories',
                 'slug' => 'mobile-accessories',
                 'description' => 'Headphone, Adapter, Casing etc',
@@ -29,6 +32,7 @@ class CategoriesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'category_sub_group_id' => $category_sub_groups[array_rand($category_sub_groups)],
                 'name' => 'Laptop',
                 'slug' => 'laptop',
                 'description' => 'Laptop',
@@ -36,6 +40,7 @@ class CategoriesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'category_sub_group_id' => $category_sub_groups[array_rand($category_sub_groups)],
                 'name' => 'Desktop',
                 'slug' => 'desktop',
                 'description' => 'Desktop',
@@ -43,6 +48,7 @@ class CategoriesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'category_sub_group_id' => $category_sub_groups[array_rand($category_sub_groups)],
                 'name' => 'Tablet',
                 'slug' => 'tablet',
                 'description' => 'Tablet Computer and Accessories',
@@ -50,6 +56,7 @@ class CategoriesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'category_sub_group_id' => $category_sub_groups[array_rand($category_sub_groups)],
                 'name' => 'TVs',
                 'slug' => 'tvs',
                 'description' => 'TVs and Accessories',
@@ -57,6 +64,7 @@ class CategoriesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'category_sub_group_id' => $category_sub_groups[array_rand($category_sub_groups)],
                 'name' => 'Home Theater System',
                 'slug' => 'home-theater',
                 'description' => 'Home Theater Sound System and Accessories',
@@ -64,6 +72,7 @@ class CategoriesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'category_sub_group_id' => $category_sub_groups[array_rand($category_sub_groups)],
                 'name' => 'Point & Shoot Camera',
                 'slug' => 'pns-camera',
                 'description' => 'PnS Camera and Accessories',
@@ -71,6 +80,7 @@ class CategoriesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'category_sub_group_id' => $category_sub_groups[array_rand($category_sub_groups)],
                 'name' => 'DSLR',
                 'slug' => 'dslr',
                 'description' => 'DSLR Camera and Accessories',
@@ -78,6 +88,7 @@ class CategoriesSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ],[
+                'category_sub_group_id' => $category_sub_groups[array_rand($category_sub_groups)],
                 'name' => 'Video Camera',
                 'slug' => 'video-camera',
                 'description' => 'Video Camera and Accessories',

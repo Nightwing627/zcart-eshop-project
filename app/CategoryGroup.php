@@ -15,7 +15,7 @@ class CategoryGroup extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'icon', 'order', 'active'];
+    protected $fillable = ['name', 'description', 'slug', 'icon', 'order', 'active'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -30,6 +30,19 @@ class CategoryGroup extends Model
     public function subGroups()
     {
         return $this->hasMany(CategorySubGroup::class, 'category_group_id');
+    }
+
+    /**
+     * Get the categories associated with the CategoryGroup.
+    */
+    public function categories()
+    {
+        return $this->hasManyThrough(Category::class, CategorySubGroup::class,
+            'category_group_id', // Foreign key on CategorySubGroup table...
+            'category_sub_group_id', // Foreign key on Category table...
+            'id', // Local key on CategoryGroup table...
+            'id' // Local key on CategorySubGroup table...
+        );
     }
 
     /**

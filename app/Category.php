@@ -42,10 +42,14 @@ class Category extends Model
     /**
      * Get the subGroups for the category.
      */
-    public function subGroups()
+    public function subGroup()
     {
-        return $this->belongsToMany(CategorySubGroup::class);
+        return $this->belongsTo(CategorySubGroup::class, 'category_sub_group_id');
     }
+    // public function subGroups()
+    // {
+    //     return $this->belongsToMany(CategorySubGroup::class);
+    // }
 
     /**
      * Get the products for the category.

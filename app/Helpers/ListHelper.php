@@ -235,12 +235,12 @@ class ListHelper
     {
         return CategoryGroup::select('id','name','icon')
         ->with(['image:path,imageable_id,imageable_type', 'subGroups' => function($query){
-            $query->select('id','category_group_id','name')
+            $query->select('id','slug','category_group_id','name')
                 ->active()->has('categories.products.inventories')
                 ->withCount('categories')->orderBy('categories_count', 'desc');
         },
         'subGroups.categories' => function($query){
-            $query->select('id','name','slug','description')->active();
+            $query->select('id','category_sub_group_id','name','slug','description')->active();
         }])
         ->has('subGroups.categories')->active()->orderBy('order', 'asc')->get();
     }
@@ -313,6 +313,36 @@ class ListHelper
 
             if(count($list)){
                 $grps[$value] = $list;
+            }
+        }
+
+        return $grps;
+    }
+
+    /**
+     * Get all catWithSubGrpList
+     *
+     * @return array
+     */
+    public static function catWithSubGrpListArray()
+    {
+        $categoryGroups = CategoryGroup::select(['id','name'])->active()->orderBy('name', 'asc')
+        ->with(['subGroups' => function($q){
+            $q->select(['id','name','category_group_id'])->orderBy('name', 'asc')->active();
+        },'subGroups.categories' => function($q){
+            $q->select(['id','name'])->active();
+        }])->get();
+
+        $grps = [];
+        foreach ($categoryGroups as $categoryGroup){
+            foreach ($categoryGroup->subGroups as $categorySubGroup){
+                $list = [];
+
+                foreach ($categorySubGroup->categories as $category)
+                    $list[$category->id] = $category->name;
+
+                if(count($list))
+                    $grps[$categoryGroup->name.': '.$categorySubGroup->name] = $list;
             }
         }
 
@@ -457,6 +487,31 @@ class ListHelper
     public static function top_vendors()
     {
         return Shop::with('image:path,imageable_id,imageable_type', 'revenue')->withCount('inventories')->get()->sortByDesc('revenue')->take(5);
+    }
+
+    /**
+     * Return unique brand names from the given linstings
+     *
+     * @return array
+     */
+    public static function get_unique_brand_names_from_linstings($listings)
+    {
+        return $listings->pluck('brand')->unique();
+    }
+
+    /**
+     * Return minimum and maximum price from the given linstings
+     *
+     * @return array
+     */
+    public static function get_price_ranges_from_linstings($listings)
+    {
+        $priceRange = [];
+
+        $priceRange['min'] = floor($listings->min('sale_price'));
+        $priceRange['max'] = ceil($listings->max('sale_price'));
+
+        return $priceRange;
     }
 
     /**

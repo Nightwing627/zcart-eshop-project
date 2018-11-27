@@ -102,7 +102,90 @@ class demoSeeder extends Seeder
                 $customer->addresses()->save(factory(App\Address::class)->make(['address_type' => 'Shipping']));
             });
 
+        // Demo Categories with real text
+        $this->call('CategoryGroupsSeeder');
+
+        DB::table('category_sub_groups')->insert([
+            [
+                'category_group_id' => 1,
+                'name' => 'Mobile & Accessories',
+                'slug' => 'mobile-accessories',
+                'description' => 'Cell Phones and Accessories',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'category_group_id' => 1,
+                'name' => 'Computer & Accessories',
+                'slug' => 'computer-accessories',
+                'description' => 'Tablet, Laptop, Desktop and Accessories',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'category_group_id' => 1,
+                'name' => 'Home Entertainment',
+                'slug' => 'home-entertainment',
+                'description' => 'TVs, Home Theaters etc',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'category_group_id' => 1,
+                'name' => 'Photo & Video',
+                'slug' => 'photo-video',
+                'description' => 'PnS, DSLR, Video Camera and Accessories',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'category_group_id' => 2,
+                'name' => 'Indoor',
+                'slug' => 'indoor',
+                'description' => 'Puzzle, Keram etc',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'category_group_id' => 2,
+                'name' => 'Outdoor',
+                'slug' => 'outdoor',
+                'description' => 'Cycle, Dron etc',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'category_group_id' => 3,
+                'name' => 'Men\'s Fashion',
+                'slug' => 'mens-fashion',
+                'description' => 'Lots of fashion products.',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'category_group_id' => 3,
+                'name' => 'Women\'s Fashion',
+                'slug' => 'womens-fashion',
+                'description' => 'Lots of fashion products.',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'category_group_id' => 4,
+                'name' => 'Kitchen',
+                'slug' => 'kitchen',
+                'description' => 'Kitchen and cooking products.',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ],[
+                'category_group_id' => 4,
+                'name' => 'Garden',
+                'slug' => 'garden',
+                'description' => 'Gardening related products.',
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ]
+        ]);
+
+        // factory(App\CategoryGroup::class, $this->count)->create();
+
+        factory(App\CategorySubGroup::class, $this->count)->create();
+
         $this->call('CategoriesSeeder');
+
+        factory(App\Category::class, $this->longCount)->create();
 
         factory(App\Manufacturer::class, $this->tinycount)->create();
 
@@ -132,79 +215,6 @@ class demoSeeder extends Seeder
         //             ]
         //         );
         //     });
-
-        // Demo Categories with real text
-        $this->call('CategoryGroupsSeeder');
-
-        DB::table('category_sub_groups')->insert([
-            [
-                'category_group_id' => 1,
-                'name' => 'Mobile & Accessories',
-                // 'description' => 'Cell Phones and Accessories',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'category_group_id' => 1,
-                'name' => 'Computer & Accessories',
-                // 'description' => 'Tablet, Laptop, Desktop and Accessories',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'category_group_id' => 1,
-                'name' => 'Home Entertainment',
-                // 'description' => 'TVs, Home Theaters etc',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'category_group_id' => 1,
-                'name' => 'Photo & Video',
-                // 'description' => 'PnS, DSLR, Video Camera and Accessories',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'category_group_id' => 2,
-                'name' => 'Indoor',
-                // 'description' => 'Puzzle, Keram etc',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'category_group_id' => 2,
-                'name' => 'Outdoor',
-                // 'description' => 'Cycle, Dron etc',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'category_group_id' => 3,
-                'name' => 'Men\'s Fashion',
-                // 'description' => 'Lots of fashion products.',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'category_group_id' => 3,
-                'name' => 'Women\'s Fashion',
-                // 'description' => 'Lots of fashion products.',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'category_group_id' => 4,
-                'name' => 'Kitchen',
-                // 'description' => 'Kitchen and cooking products.',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ],[
-                'category_group_id' => 4,
-                'name' => 'Garden',
-                // 'description' => 'Gardening related products.',
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ]
-        ]);
-
-        // factory(App\CategoryGroup::class, $this->count)->create();
-
-        factory(App\CategorySubGroup::class, $this->count)->create();
-
-        factory(App\Category::class, $this->longCount)->create();
 
         factory(App\AttributeValue::class, $this->longCount)->create();
 
@@ -338,27 +348,29 @@ class demoSeeder extends Seeder
         }
 
         // category_category_sub_group
-        foreach ((range(1, $this->longLongCount)) as $index) {
-            DB::table('category_category_sub_group')->insert(
-                [
-                    'category_id' => $categories[array_rand($categories)],
-                    'category_sub_group_id' => $category_sub_groups[array_rand($category_sub_groups)],
-                    'created_at' => Carbon::Now(),
-                    'updated_at' => Carbon::Now(),
-                ]
-            );
-        }
+        // foreach ((range(1, $this->longLongCount)) as $index) {
+        //     DB::table('category_category_sub_group')->insert(
+        //         [
+        //             'category_id' => $categories[array_rand($categories)],
+        //             'category_sub_group_id' => $category_sub_groups[array_rand($category_sub_groups)],
+        //             'created_at' => Carbon::Now(),
+        //             'updated_at' => Carbon::Now(),
+        //         ]
+        //     );
+        // }
 
         // category_product
-        foreach ((range(1, $this->longLongCount)) as $index) {
-            DB::table('category_product')->insert(
-                [
-                    'category_id' => $categories[array_rand($categories)],
-                    'product_id' => $products[array_rand($products)],
-                    'created_at' => Carbon::Now(),
-                    'updated_at' => Carbon::Now(),
-                ]
-            );
+        foreach ($products as $product) {
+            foreach ((range(1, 2)) as $index) {
+                DB::table('category_product')->insert(
+                    [
+                        'category_id' => $categories[array_rand($categories)],
+                        'product_id' => $product,
+                        'created_at' => Carbon::Now(),
+                        'updated_at' => Carbon::Now(),
+                    ]
+                );
+            }
         }
 
         // user_warehouse

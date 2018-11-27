@@ -14,6 +14,7 @@ use App\Category;
 use App\Inventory;
 use App\Manufacturer;
 use App\CategoryGroup;
+use App\CategorySubGroup;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -48,15 +49,18 @@ class HomeController extends Controller
      */
     public function browseCategory(Request $request, $slug, $sortby = Null)
     {
-        $category = Category::where('slug', $slug)->active()->firstOrFail();
+        $category = Category::where('slug', $slug)->with(['subGroup' => function($q){
+            $q->select(['id','slug','name','category_group_id'])->active();
+        }, 'subGroup.group' => function($q){
+            $q->select(['id','slug','name'])->active();
+        }])->active()->firstOrFail();
 
         // Take only available items
         $all_products = $category->listings()->available();
 
         // Parameter for filter options
-        $brands = $all_products->pluck('brand')->unique();
-        $priceRange['min'] = floor($all_products->min('sale_price'));
-        $priceRange['max'] = ceil($all_products->max('sale_price'));
+        $brands = ListHelper::get_unique_brand_names_from_linstings($all_products);
+        $priceRange = ListHelper::get_price_ranges_from_linstings($all_products);
 
         // Filter results
         $products = $all_products->filter($request->all())
@@ -67,6 +71,59 @@ class HomeController extends Controller
         ->paginate(config('system.view_listing_per_page', 16))->appends($request->except('page'));
 
         return view('category', compact('category', 'products', 'brands', 'priceRange'));
+    }
+
+    /**
+     * Browse listings by category sub group
+     *
+     * @param  slug  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function browseCategorySubGrp(Request $request, $slug, $sortby = Null)
+    {
+        $categorySubGroup = CategorySubGroup::where('slug', $slug)->with(['categories' => function($q){
+            $q->select(['id','slug','category_sub_group_id','name'])->whereHas('listings')->active();
+        }])->active()->firstOrFail();
+
+        $categories = $categorySubGroup->categories;
+
+        $all_products = prepareFilteredListings($request, $categorySubGroup);
+
+        // Get brands ans price ranges
+        $brands = ListHelper::get_unique_brand_names_from_linstings($all_products);
+        $priceRange = ListHelper::get_price_ranges_from_linstings($all_products);
+
+        // Paginate the results
+        $products = $all_products->paginate(config('system.view_listing_per_page', 16))->appends($request->except('page'));
+
+        return view('category_sub_group', compact('categorySubGroup', 'categories', 'products', 'brands', 'priceRange'));
+    }
+
+    /**
+     * Browse listings by category group
+     *
+     * @param  slug  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function browseCategoryGroup(Request $request, $slug, $sortby = Null)
+    {
+        $categoryGroup = CategoryGroup::where('slug', $slug)->with(['categories' => function($q){
+            $q->select(['categories.id','categories.slug','categories.category_sub_group_id','categories.name'])
+            ->where('categories.active', 1)->whereHas('listings')->withCount('listings');
+        }])->active()->firstOrFail();
+
+        $categories = $categoryGroup->categories;
+
+        $all_products = prepareFilteredListings($request, $categoryGroup);
+
+        // Get brands ans price ranges
+        $brands = ListHelper::get_unique_brand_names_from_linstings($all_products);
+        $priceRange = ListHelper::get_price_ranges_from_linstings($all_products);
+
+        // Paginate the results
+        $products = $all_products->paginate(config('system.view_listing_per_page', 16))->appends($request->except('page'));
+
+        return view('category_group', compact('categoryGroup', 'categories', 'products', 'brands', 'priceRange'));
     }
 
     /**

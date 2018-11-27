@@ -116,6 +116,14 @@ class Inventory extends Model
     }
 
     /**
+     * Get all categories for the category.
+     */
+    // public function categories()
+    // {
+    //     return $this->belongsToMany(Category::class, 'category_product','product_id', null);
+    // }
+
+    /**
      * Get the Warehouse associated with the inventory.
      */
     public function warehouse()

@@ -325,7 +325,7 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                 function($view)
                 {
-                    $view->with('categories', ListHelper::categories());
+                    $view->with('categories', ListHelper::catWithSubGrpListArray());
 
                     $view->with('manufacturers', ListHelper::manufacturers());
 

@@ -69,6 +69,4 @@ class InventoryFilter extends ModelFilter
     {
     	return $this->whereIn('brand', array_keys($brand));
     }
-
-
 }
