@@ -972,10 +972,12 @@ div.datepicker > div {
   right: 0;
   z-index: 998;
 }
-.nav-category-inner-title {
+.nav-category-inner-title,
+.nav-category-inner-title a{
   font-weight: 500;
   color: #486d97;
   font-size: 20px;
+  text-decoration: none;
 }
 .nav-category-inner-list {
   list-style: none;
@@ -2598,14 +2600,15 @@ table .product-info-price .percent-off {
     text-align: center!important;
     padding: 0 50px;
 }
-
 .banner-title {
     font-size: 25px;
     display: block;
-    margin: 0;
-    margin-bottom: 5px;
+    margin: 5px 0px;
     font-weight: 600;
     text-transform: uppercase;
+}
+.banner-title a {
+  color: inherit;
 }
 .banner-desc {
     font-size: 17px;
@@ -2629,9 +2632,11 @@ table .product-info-price .percent-off {
     max-width: 50%;
     -webkit-filter: drop-shadow(1px 1px 3px rgba(0,0,0,0.2));
 }
-
 .banner .product-info-rating-count {
   color: #fff!important;
+}
+.member-since {
+  opacity: 0.9;
 }
 
 /******* Shopping cart ********/
@@ -3214,6 +3219,57 @@ ul.footer-social-list{
   color: #d73814;
 }
 
+/*
+ * Shop Profile modal widget
+ */
+.box-widget {
+    border: none;
+    position: relative;
+    margin-bottom: 20px;
+}
+.widget-shop .widget-shop-header {
+    padding: 22px;
+    margin-bottom: 10px;
+    height: 120px;
+    border-radius: 0px;
+    color: #fff !important;
+    opacity: 0.9;
+    background-size: 100% 120px;
+    background-repeat: no-repeat;
+    background-color: #00a7d0 !important;
+}
+.widget-shop .widget-shop-name {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 25px;
+    font-weight: 300;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+.widget-shop .widget-shop-image {
+    position: absolute;
+    top: 65px;
+    left: 50%;
+    margin-left: -45px;
+}
+.widget-shop .widget-shop-image > img {
+    width: 90px;
+    height: auto;
+    border: 3px solid #fff;
+}
+.description-block {
+    display: block;
+    margin: 10px 0;
+    text-align: center;
+    font-weight: 100;
+}
+.description-block > .description-header {
+    padding: 0;
+    font-weight: 400;
+    font-size: 17px;
+}
+.description-block > .description-text {
+    text-transform: uppercase;
+}
 /* ==========================================================================
    Helper classes
    ========================================================================== */

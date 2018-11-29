@@ -2,7 +2,7 @@
     <div class="modal-content">
         <div class="modal-body" style="padding: 0px;">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9;">×</button>
-	        <div class=" box-widget widget-user">
+	        <div class="box-widget widget-user">
 	            <div class="widget-user-header bg-aqua-active card-background">
 	              	<h3 class="widget-user-username">{{ $customer->getName() }}</h3>
 	              	<h5 class="widget-user-desc">

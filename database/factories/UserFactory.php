@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\User::class, function (Faker $faker) {
     return [
-        'shop_id' => rand(0,1) == 1 ? rand(1, 15) : Null,
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'role_id' => $faker->randomElement(\DB::table('roles')->whereNotIn('id', [1,3])->pluck('id')->toArray()),
     	'nice_name' => $faker->lastName,
         'name' => $faker->name,

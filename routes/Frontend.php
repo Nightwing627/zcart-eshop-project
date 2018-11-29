@@ -24,6 +24,7 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 	Route::get('categories/{slug}', 'HomeController@browseCategorySubGrp')->name('categories.browse');
 	Route::get('categorygrp/{slug}', 'HomeController@browseCategoryGroup')->name('categoryGrp.browse');
 	Route::get('shop/{slug}', 'HomeController@shop')->name('show.store');
+	// Route::get('shop/reviews/{slug}', 'HomeController@shopReviews')->name('reviews.store');
 	Route::get('brand/{slug}', 'HomeController@brand')->name('show.brand');
 	Route::get('locale/{locale?}', 'HomeController@changeLanguage')->name('locale.change');
 	Route::get('search', 'SearchController@search')->name('inCategoriesSearch');

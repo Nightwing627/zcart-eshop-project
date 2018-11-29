@@ -9,4 +9,7 @@
 
     <!-- BROWSING ITEMS -->
     @include('sliders.browsing_items')
+
+    <!-- MODALS -->
+    @include('modals.shopReviews')
 @endsection

@@ -233,7 +233,7 @@ class ListHelper
      */
     public static function categoriesForTheme()
     {
-        return CategoryGroup::select('id','name','icon')
+        return CategoryGroup::select('id','name','slug','icon')
         ->with(['image:path,imageable_id,imageable_type', 'subGroups' => function($query){
             $query->select('id','slug','category_group_id','name')
                 ->active()->has('categories.products.inventories')

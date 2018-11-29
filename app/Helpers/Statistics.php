@@ -78,6 +78,21 @@ class Statistics
         return Order::withTrashed()->where('customer_id', $customer)->count();
     }
 
+    // public static function active_listings_count($shop = Null)
+    // {
+    //     return Inventory::where()
+    //     return \DB::table('order_items')->where('orders.shop_id', $shop)
+    //     ->join('orders', 'orders.id', '=', 'order_items.order_id')
+    //     ->select('order_items.quantity')->sum('order_items.quantity');
+    // }
+
+    public static function sold_items_count($shop = Null)
+    {
+        return \DB::table('order_items')->where('orders.shop_id', $shop)
+        ->join('orders', 'orders.id', '=', 'order_items.order_id')
+        ->select('order_items.quantity')->sum('order_items.quantity');
+    }
+
     public static function total_spent($customer)
     {
         return Order::withTrashed()->where('customer_id', $customer)->sum('total');
@@ -116,12 +131,14 @@ class Statistics
 
     public static function latest_refund_total($period = 15)
     {
-        return Refund::mine()->statusOf(Refund::STATUS_APPROVED)->whereDate('updated_at', '>=', Carbon::today()->subDays($period))->sum('amount');
+        return Refund::mine()->statusOf(Refund::STATUS_APPROVED)
+        ->whereDate('updated_at', '>=', Carbon::today()->subDays($period))->sum('amount');
     }
 
     public static function latest_order_count($period = 15)
     {
-        return Order::mine()->withTrashed()->whereDate('created_at', '>=', Carbon::today()->subDays($period))->count();
+        return Order::mine()->withTrashed()
+        ->whereDate('created_at', '>=', Carbon::today()->subDays($period))->count();
     }
 
     public static function todays_order_count()

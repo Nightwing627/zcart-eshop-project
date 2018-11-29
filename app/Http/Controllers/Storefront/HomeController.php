@@ -179,7 +179,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Open product page
+     * Open product quick review modal
      *
      * @param  slug  $slug
      * @return \Illuminate\Http\Response
@@ -233,7 +233,14 @@ class HomeController extends Controller
      */
     public function shop($slug)
     {
-        $shop = Shop::select('id','name','slug','description')->active()->where('slug', $slug)->firstOrFail();
+        // $shop = Shop::select('id','name','slug','description')->active()->where('slug', $slug)->firstOrFail();
+        $shop = Shop::where('slug', $slug)->active()
+        ->with(['feedbacks' => function($q){
+            $q->with('customer:id,nice_name,name')->latest()->take(10);
+        }])
+        ->withCount(['inventories' => function($q){
+            $q->available();
+        }])->firstOrFail();
 
         // Check shop maintenance_mode
         if(getShopConfig($shop->id, 'maintenance_mode'))

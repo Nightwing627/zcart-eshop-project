@@ -74,14 +74,16 @@
           <ul class="dropdown-menu menu-category-dropdown" aria-labelledby="dLabel">
             @foreach($all_categories as $catGroup)
               @if($catGroup->subGroups->count())
-                <li><a><i class="fa {{ $catGroup->icon or 'fa-cube' }} fa-fw category-icon"></i>{{ $catGroup->name }}</a>
+                <li><a href="{{ route('categoryGrp.browse', $catGroup->slug) }}"><i class="fa {{ $catGroup->icon or 'fa-cube' }} fa-fw category-icon"></i>{{ $catGroup->name }}</a>
                   <div class="category-section">
                     <div class="category-section-inner">
                       <div class="category-section-content">
                         <div class="row">
                           @foreach($catGroup->subGroups as $subGroup)
                             <div class="col-md-6">
-                              <h5 class="nav-category-inner-title">{{ $subGroup->name }}</h5>
+                              <h5 class="nav-category-inner-title">
+                                <a href="{{ route('categories.browse', $subGroup->slug) }}">{{ $subGroup->name }}</a>
+                              </h5>
                               <ul class="nav-category-inner-list">
                                 @foreach($subGroup->categories as $cat)
                                   <li><a href="{{ route('category.browse', $cat->slug) }}">{{ $cat->name }}</a>

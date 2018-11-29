@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Coupon::class, function (Faker $faker) {
     return [
-        'shop_id' => 1,
+        'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         'name' => $faker->word,
         'code' => $faker->unique->randomNumber(),
         'description' => $faker->text(1500),

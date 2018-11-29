@@ -180,6 +180,16 @@ class Shop extends Model
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * Get sold items count.
+     *
+     * @return integer
+     */
+    public function soldItemsCount()
+    {
+        return $this->orders->sum('pivot.quantity');
+    }
+
     // public function top_listings()
     // {
     //     return $this->inventories->sum('pivot.quantity');

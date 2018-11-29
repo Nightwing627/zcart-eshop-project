@@ -148,6 +148,7 @@ return [
 
     //Store Front
     'account' => 'Account',
+    'active_listings' => 'Active listings',
     // 'actions' => 'Actions',
     'address' => 'Address',
     'addresses' => 'Addresses',
@@ -227,7 +228,9 @@ return [
 	'in_stock' => 'In Stock',
 	'invalid' => 'Invalid',
 	'item_count' => 'Item count',
+	'items_sold' => 'Items sold',
 	'its_ok' => 'It\'s OK',
+	'latest_reviews' => 'Latest reviews',
 	'leave_message_to_seller' => 'Leave a message for the seller',
     'lifetime' => 'Lifetime',
     'like_it' => 'Like it',
@@ -236,6 +239,7 @@ return [
     'love_it' => 'Love it',
 	'low_to_high' => 'Low to High',
     'main_searchbox_placeholder' => 'I\'m shopping for...',
+    'member_since' => 'Member since',
     'manage_your_account' => 'Manage Account',
 	'marketplace_steps_in' => ':marketplace Steps In',
     'me' => 'Me',
@@ -327,6 +331,7 @@ return [
 	'store' => 'Store',
 	'shop_down' => 'This store is unavailable right now',
 	'store_not_available' => 'Store not available',
+	// 'store_profile' => 'Store Profile',
 	'stuff_pick' => 'Stuff Pick',
     'status' => 'Status',
     'stay_connected' => 'Stay Connected',
