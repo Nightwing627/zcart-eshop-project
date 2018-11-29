@@ -28,8 +28,8 @@ class UpdateCategorySubGroupRequest extends Request
         return [
             'category_group_id' => 'required|integer',
             'name' =>  'required|composite_unique:category_sub_groups, '.$id,
+            'slug' =>  'required|composite_unique:category_sub_groups, '.$id,
             'active' => 'required'
         ];
     }
-
 }

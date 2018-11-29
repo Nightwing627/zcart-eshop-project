@@ -2,7 +2,7 @@
   <div class="col-md-8 nopadding-right">
     <div class="form-group">
       {!! Form::label('name', trans('app.form.category_name').'*', ['class' => 'with-help']) !!}
-      {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.category_name'), 'required']) !!}
+      {!! Form::text('name', null, ['class' => 'form-control makeSlug', 'placeholder' => trans('app.placeholder.category_name'), 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -21,6 +21,7 @@
   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.cat_grp_desc') }}"></i>
   {!! Form::textarea('description', null, ['class' => 'form-control summernote-without-toolbar', 'placeholder' => trans('app.placeholder.description'), 'rows' => '2']) !!}
 </div>
+
 <div class="row">
 	<div class="col-md-6 nopadding-right">
 		<div class="form-group">
@@ -40,6 +41,14 @@
 		</div>
 	</div>
 </div>
+
+<div class="form-group">
+  {!! Form::label('slug', trans('app.form.slug').'*', ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.slug') }}"></i>
+  {!! Form::text('slug', null, ['class' => 'form-control slug', 'placeholder' => trans('app.placeholder.slug'), 'required']) !!}
+  <div class="help-block with-errors"></div>
+</div>
+
 <div class="form-group">
   {!! Form::label('exampleInputFile', trans('app.featured_image'), ['class' => 'with-help']) !!}
   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.cat_grp_img') }}"></i>

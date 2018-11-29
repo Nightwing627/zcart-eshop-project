@@ -25,8 +25,8 @@ class CreateCategoryGroupRequest extends Request
     {
         return [
            'name' => 'required|unique:category_groups',
+           'slug' => 'required|unique:category_groups',
            'active' => 'required'
         ];
     }
-
 }

@@ -78,14 +78,6 @@ class Statistics
         return Order::withTrashed()->where('customer_id', $customer)->count();
     }
 
-    // public static function active_listings_count($shop = Null)
-    // {
-    //     return Inventory::where()
-    //     return \DB::table('order_items')->where('orders.shop_id', $shop)
-    //     ->join('orders', 'orders.id', '=', 'order_items.order_id')
-    //     ->select('order_items.quantity')->sum('order_items.quantity');
-    // }
-
     public static function sold_items_count($shop = Null)
     {
         return \DB::table('order_items')->where('orders.shop_id', $shop)

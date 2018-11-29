@@ -27,8 +27,8 @@ class UpdateCategoryGroupRequest extends Request
 
         return [
             'name' =>  'required|composite_unique:category_groups, '.$id,
+            'slug' =>  'required|composite_unique:category_groups, '.$id,
             'active' => 'required'
         ];
     }
-
 }
