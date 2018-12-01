@@ -330,7 +330,7 @@ class ListHelper
         ->with(['subGroups' => function($q){
             $q->select(['id','name','category_group_id'])->orderBy('name', 'asc')->active();
         },'subGroups.categories' => function($q){
-            $q->select(['id','name'])->active();
+            $q->select(['id','category_sub_group_id','name'])->active();
         }])->get();
 
         $grps = [];
