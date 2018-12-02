@@ -14,6 +14,13 @@ class System extends Model
     use SystemUsers, Notifiable, Addressable, Imageable, LogsActivity;
 
     /**
+     * The zCart version.
+     *
+     * @var string
+     */
+    const VERSION = '1.1.1'; // The current version
+
+    /**
      * The database table used by the model.
      *
      * @var string
