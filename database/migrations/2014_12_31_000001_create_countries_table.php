@@ -76,7 +76,8 @@ class CreateCountriesTable extends Migration
             $table->integer('offset')->nullable();
             $table->boolean('isdst')->nullable();
             $table->string('text')->nullable();
-            $table->json('utc')->nullable();
+            $table->text('utc')->nullable();
+            // $table->json('utc')->nullable();
             $table->timestamps();
         });
 

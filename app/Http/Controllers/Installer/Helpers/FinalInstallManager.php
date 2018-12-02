@@ -20,9 +20,6 @@ class FinalInstallManager
         $this->generateKey($outputLog);
         $this->publishVendorAssets($outputLog);
 
-        // Generate Symlink
-        Artisan::call('storage:link');
-
         return $outputLog->fetch();
     }
 

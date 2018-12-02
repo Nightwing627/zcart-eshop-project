@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Installer;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Artisan;
 
 class WelcomeController extends Controller
 {
@@ -15,6 +16,9 @@ class WelcomeController extends Controller
      */
     public function welcome()
     {
+        // Generate Symlink
+        Artisan::call('storage:link');
+
         return view('installer.welcome');
     }
 

@@ -32,6 +32,7 @@ return [
             'Ctype',
             'JSON',
             'cURL',
+            'Fileinfo',
             'GD',
         ],
         'apache' => [

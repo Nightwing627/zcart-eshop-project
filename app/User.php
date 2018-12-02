@@ -287,7 +287,7 @@ class User extends Authenticatable
      */
     public function isSuperAdmin()
     {
-        return $this->role_id === Role::SUPER_ADMIN;
+        return $this->role_id == Role::SUPER_ADMIN;
     }
 
     /**
