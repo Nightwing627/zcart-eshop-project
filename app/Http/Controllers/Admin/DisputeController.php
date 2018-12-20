@@ -44,7 +44,9 @@ class DisputeController extends Controller
     {
         $disputes = $this->dispute->open();
 
-        return view('admin.dispute.index', compact('disputes'));
+        $closed = $this->dispute->closed();
+
+        return view('admin.dispute.index', compact('disputes', 'closed'));
     }
 
     /**

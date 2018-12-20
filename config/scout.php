@@ -11,11 +11,11 @@ return [
     | using Laravel Scout. This connection is used when syncing all models
     | to the search service. You should adjust this based on your needs.
     |
-    | Supported: "algolia", "tntsearch", "null"
+    | Supported: "algolia", "null"
     |
     */
 
-    'driver' => env('SCOUT_DRIVER', 'tntsearch'),
+    'driver' => env('SCOUT_DRIVER', 'algolia'),
 
     /*
     |--------------------------------------------------------------------------
@@ -99,5 +99,4 @@ return [
         'asYouType' => false,
         'searchBoolean' => env('TNTSEARCH_BOOLEAN', false),
     ],
-
 ];

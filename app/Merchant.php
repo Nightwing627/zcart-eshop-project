@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Spatie\Activitylog\Traits\HasActivity;
+// use Spatie\Activitylog\Traits\HasActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Merchant extends Authenticatable
 {
-    use SoftDeletes, Notifiable, Addressable, Imageable, HasActivity;
+    use SoftDeletes, Notifiable, Addressable, Imageable;
 
    /**
      * The database table used by the model.

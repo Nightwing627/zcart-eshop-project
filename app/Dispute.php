@@ -116,7 +116,7 @@ class Dispute extends Model
      */
     public function scopeAppealed($query)
     {
-        return $query->where('status', Dispute::STATUS_APPEALED);
+        return $query->where('status', static::STATUS_APPEALED);
     }
 
     /**
@@ -136,7 +136,7 @@ class Dispute extends Model
      */
     public function scopeOpen($query)
     {
-        return $query->where('status' , '<', Dispute::STATUS_SOLVED);
+        return $query->where('status' , '<', static::STATUS_SOLVED);
     }
 
     /**
@@ -146,7 +146,7 @@ class Dispute extends Model
      */
     public function scopeClosed($query)
     {
-        return $query->where('status', '>=', Dispute::STATUS_SOLVED);
+        return $query->where('status', '>=', static::STATUS_SOLVED);
     }
 
     /**

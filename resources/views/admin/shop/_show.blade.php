@@ -136,7 +136,7 @@
 				    </div>
 				    <!-- /.tab-pane -->
 				    <div class="tab-pane" id="description">
-			            {!! $shop->description or trans('app.description_not_available') !!}
+			            {!! $shop->description ?? trans('app.description_not_available') !!}
 				    </div>
 				    <!-- /.tab-pane -->
 				    <div class="tab-pane" id="contact">

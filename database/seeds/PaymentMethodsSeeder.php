@@ -36,19 +36,35 @@ class PaymentMethodsSeeder extends Seeder
             'description' => 'Stripe is one of the best and safe option to charge credit and debit cards around the world. Stripe has a simple fee structure and no hidden costs. No other gateway or merchant account is required. <br/><strong>By using Stripe: </strong><br/>- You have to connect our platform to your Stripe account. <br/>- You agree to Stripe\'s <a href="https://stripe.com/us/privacy" target="_blank">Terms of Service</a>.',
             'admin_description' => 'Stripe is one of the best and safe option to charge credit and debit cards around the world. Stripe has a product for marketplace like this. To enable Stripe to your vendors, you must have to register your platform with Stripe.<br/><strong> Follow This Simple steps:</strong><br/>- Create an Stripe application using the bellow information. <a href="https://stripe.com/docs/connect/quickstart" target="_blank">Check their documentation for help.</a><br/>- Update the .env file on your server with Stripe API credentials.<br/><br/><strong>Remember </strong> when you register your platform use this information: <br/>- Name: \'' . get_platform_title() . '\'<br/>- Website URL: \'' . route('homepage') . '\'<br/>- Redirect URL: \'' . route('admin.setting.stripe.redirect') .'\'',
             'admin_help_doc_link' => 'https://stripe.com/docs/connect/quickstart',
-            'order' => 0,
+            'order' => 2,
             'created_at' => Carbon::Now(),
             'updated_at' => Carbon::Now(),
         ]);
         DB::table('payment_methods')->insert([
-            'name' => 'Bank Wire Transfer',
-            'code' => 'wire',
-            'type' => 3,
-            'company_name' => 'Pay by bank wire transfer',
-            'description' => 'Pay by bank wire transfer,  transfer the invoice amount via wire tranfer to the merchant account and confirm manually. After payment confirmation the goods will be shipped.',
-            'admin_description' => 'Pay by bank wire transfer,  transfer the invoice amount via wire tranfer to the merchant account and confirm manually. After payment confirmation the goods will be shipped.',
-            'admin_help_doc_link' => '',
-            'order' => 2,
+            'name' => 'Authorize.Net',
+            'code' => 'authorize-net',
+            'type' => 2,
+            'company_name' => 'Authorize.Net',
+            'website' => 'https://www.authorize.net/',
+            'help_doc_link' => 'https://www.authorize.net/support/',
+            'description' => 'More solutions for your business. More support when you need it. More strength to stand on. <br/><strong>By using Authorize.Net: </strong><br/>- You have to have an Authorize.Net account. <br/>- You agree to Authorize.Net\'s <a href="https://www.authorize.net/about-us/terms/" target="_blank">Terms of Use</a>.',
+            'admin_description' => 'Authorize.Net helps makes it simple to accept electronic and credit card payments.',
+            'admin_help_doc_link' => 'https://www.authorize.net/about-us/',
+            'order' => 3,
+            'created_at' => Carbon::Now(),
+            'updated_at' => Carbon::Now(),
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Paystack',
+            'code' => 'paystack',
+            'type' => 4,
+            'company_name' => 'Paystack',
+            'website' => 'https://paystack.com/',
+            'help_doc_link' => 'https://paystack.helpscoutdocs.com/',
+            'description' => 'Modern online and offline payments for Africa. Paystack helps businesses in Africa get paid by anyone, anywhere in the world. <br/><strong>By using Paystack: </strong><br/>- You agree to Paystack\'s <a href="https://paystack.com/terms" target="_blank">Terms of Service</a>.',
+            'admin_description' => 'Modern online and offline payments for Africa. Paystack helps businesses in Africa get paid by anyone, anywhere in the world.',
+            'admin_help_doc_link' => 'https://paystack.helpscoutdocs.com/',
+            'order' => 4,
             'created_at' => Carbon::Now(),
             'updated_at' => Carbon::Now(),
         ]);
@@ -60,9 +76,21 @@ class PaymentMethodsSeeder extends Seeder
             'description' => 'Cash on delivery (COD), sometimes called collect on delivery, is the sale of goods by mail order where payment is made on delivery rather than in advance.',
             'admin_description' => 'Cash on delivery (COD), sometimes called collect on delivery, is the sale of goods by mail order where payment is made on delivery rather than in advance.',
             'admin_help_doc_link' => '',
-            'order' => 3,
+            'order' => 5,
             'created_at' => Carbon::Now(),
             'updated_at' => Carbon::Now(),
-		]);
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Bank Wire Transfer',
+            'code' => 'wire',
+            'type' => 3,
+            'company_name' => 'Pay by bank wire transfer',
+            'description' => 'Pay by bank wire transfer,  transfer the invoice amount via wire tranfer to the merchant account and confirm manually. After payment confirmation the goods will be shipped.',
+            'admin_description' => 'Pay by bank wire transfer,  transfer the invoice amount via wire tranfer to the merchant account and confirm manually. After payment confirmation the goods will be shipped.',
+            'admin_help_doc_link' => '',
+            'order' => 6,
+            'created_at' => Carbon::Now(),
+            'updated_at' => Carbon::Now(),
+        ]);
     }
 }

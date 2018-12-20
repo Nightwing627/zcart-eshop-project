@@ -20,9 +20,9 @@ class EloquentCart extends EloquentRepository implements BaseRepository, CartRep
     public function all()
     {
         if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->get();
+            return $this->model->mine()->whereHas('customer')->get();
 
-        return parent::all();
+        return $this->model->whereHas('customer')->all();
     }
 
     public function trashOnly()

@@ -49,7 +49,7 @@
 				<div class="tab-content">
 				    <div class="tab-pane active" id="tab_1">
 					  <div class="box-body">
-			            {!! $supplier->description or trans('app.description_not_available') !!}
+			            {!! $supplier->description ?? trans('app.description_not_available') !!}
 					  </div>
 				    </div>
 				    <!-- /.tab-pane -->

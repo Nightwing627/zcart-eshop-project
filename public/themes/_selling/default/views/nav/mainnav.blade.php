@@ -6,8 +6,11 @@
                 <span class="sr-only">Toggle navigation</span> {{ trans('theme.nav.menu') }} <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand page-scroll" href="#page-top">
-                <img src="{{ Storage::url('logo.png') }}" class="brand-logo" alt="LOGO" title="LOGO" />
-                {{-- {{ get_site_title() }} --}}
+                @if( Storage::exists('logo.png') )
+                  <img src="{{ Storage::url('logo.png') }}" alt="LOGO" title="LOGO" />
+                @else
+                  <img src="https://placehold.it/140x60/eee?text={{ get_platform_title() }}" alt="LOGO" title="LOGO" />
+                @endif
             </a>
         </div>
 

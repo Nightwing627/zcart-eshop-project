@@ -184,7 +184,7 @@
 			          	<div class="col-xs-2 nopadding-right">
 			          		@unless($msg->customer_id)
 				              	<div class="message-user-info">
-				                  	<div class="message-user-name" title="seller">{{ $order->shop->name or lang('theme.seller')}}</div>
+				                  	<div class="message-user-name" title="seller">{{ $order->shop->name ?? lang('theme.seller')}}</div>
 					                <div class="message-date">{{ $msg->created_at->toDayDateTimeString() }}</div>
 					            </div>
 			          		@endunless

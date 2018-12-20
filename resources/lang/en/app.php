@@ -364,6 +364,7 @@ return [
     'seo' => 'SEO',
     'external_url' => 'External url',
     'type' => 'Type',
+    'timezone' => 'Timezone',
     'value' => 'Value',
     'values' => 'Values',
     'entity' => 'Entity',
@@ -405,6 +406,7 @@ return [
     'subscribers' => 'Subscribers',
     'contact_person' => 'Contact person',
     'vendor' => 'Vendor',
+    'vendor_not_available' => 'Vendor not exist',
     'tax' => 'Tax',
     'taxes' => 'Taxes',
     'team_size' => 'Team size',
@@ -813,6 +815,11 @@ return [
             'name' => 'Accept credit cards',
             'description' => 'Accept credit card payments on checkout. This can be offered with other payment solutions such as PayPal Express Checkout.',
             'admin_description' => 'Enable at least one credit card payment method to allow vendors to charge credit cards. This can be offered with other payment solutions such as PayPal Express Checkout.',
+        ],
+        'others' => [
+            'name' => 'Other payment options',
+            'description' => 'Offer customers more payment options.',
+            'admin_description' => 'Enabling more payment options will allow vendors to change their customer in more flexible ways.',
         ],
         'manual' => [
             'name' => 'Manual payment',

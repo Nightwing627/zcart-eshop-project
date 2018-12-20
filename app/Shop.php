@@ -423,6 +423,16 @@ class Shop extends Model
     }
 
     /**
+     * Activities for the loggable model
+     *
+     * @return [type] [description]
+     */
+    public function logs()
+    {
+        return $this->activities()->orderBy('created_at', 'desc')->get();
+    }
+
+    /**
      * Check if the system is down or live.
      *
      * @return bool

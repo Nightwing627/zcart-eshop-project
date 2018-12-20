@@ -5,7 +5,6 @@
             {{ trans('app.form.form') }}
         </div>
         <div class="modal-body">
-
             <form role="form" method="POST" action="{{ url('/login') }}">
                 {!! csrf_field() !!}
                 <div class="form-group has-feedback">
@@ -31,9 +30,13 @@
                     <!-- /.col -->
                 </div>
             </form>
-
         </div>
         <div class="modal-footer">
+            @if(env('APP_DEMO') == TRUE)
+                <h4>Demo Login::</h4>
+                <p><strong>ADMIN::</strong> Username: <strong>superadmin@demo.com</strong> | Password: <strong>123456</strong> </p>
+                <p><strong>MERCHANT::</strong> Username: <strong>merchant@demo.com</strong> | Password: <strong>123456</strong> </p>
+            @endif
         </div>
     </div> <!-- / .modal-content -->
 </div> <!-- / .modal-dialog -->

@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>{{ $title or get_site_title() }}</title>
+
+    <title>{{ $title ?? get_site_title() }}</title>
+
     <link rel="icon" href="{{ Storage::url('icon.png') }}" type="image/x-icon" />
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     <link rel="apple-touch-icon" href="{{ Storage::url('icon.png') }}">
@@ -64,8 +66,8 @@
           @if (View::hasSection('buttons') || isset($page_title))
             <section class="content-header">
               <h1>
-                {{ $page_title or '' }}
-                <small>{{ $page_description or '' }}</small>
+                {{ $page_title ?? '' }}
+                <small>{{ $page_description ?? '' }}</small>
               </h1>
               <span class='opt-button'>
 

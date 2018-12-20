@@ -36,4 +36,16 @@
         <a class="btn btn-link" href="{{ route('password.request') }}">{{ trans('app.form.forgot_password') }}</a>
         <a class="btn btn-link" href="{{ route('register') }}" class="text-center">{{ trans('app.form.register_as_merchant') }}</a>
     </div>
+
+    @if(env('APP_DEMO') == TRUE)
+        <div class="box login-box-body">
+            <div class="box-header with-border">
+              <h3 class="box-title">Demo Login::</h3>
+            </div> <!-- /.box-header -->
+            <div class="box-body">
+                <p><strong>ADMIN::</strong> Username: <strong>superadmin@demo.com</strong> | Password: <strong>123456</strong> </p>
+                <p><strong>MERCHANT::</strong> Username: <strong>merchant@demo.com</strong> | Password: <strong>123456</strong> </p>
+            </div>
+        </div>
+    @endif
 @endsection

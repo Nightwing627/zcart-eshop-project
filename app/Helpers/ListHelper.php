@@ -46,6 +46,7 @@ class ListHelper
             PaymentMethod::TYPE_PAYPAL      => trans("app.payment_method_type.paypal.name"),
             PaymentMethod::TYPE_CREDIT_CARD => trans("app.payment_method_type.credit_card.name"),
             PaymentMethod::TYPE_MANUAL      => trans("app.payment_method_type.manual.name"),
+            PaymentMethod::TYPE_OTHERS      => trans("app.payment_method_type.others.name"),
         ];
     }
     public static function payment_statuses()

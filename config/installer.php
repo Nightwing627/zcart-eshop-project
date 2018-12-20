@@ -25,7 +25,8 @@ return [
         'php' => [
             'openssl',
             'MySQLi',
-            'pdo',
+            'SQLite',
+            'PDO',
             'mbstring',
             'tokenizer',
             'XML',
@@ -81,7 +82,7 @@ return [
                 'app_debug'             => ['required', 'in:1,0'],
                 // 'app_debug'             => [
                 //     'required',
-                //     Rule::in(['true', 'false']),
+                //     // Rule::in(['true', 'false']),
                 // ],
                 'app_log_level'         => 'required|string|max:50',
                 'app_url'               => 'required|url',

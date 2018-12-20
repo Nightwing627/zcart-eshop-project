@@ -9,22 +9,24 @@
   <div class="box-body">
     <div id="menu">
       <div class="panel list-group">
-        @forelse($logger->activities() as $activity)
+        @forelse($logger->logs() as $log)
           @php
-            $changes = $activity->changes()->all();
+          // echo "<pre>"; print_r($log); echo "</pre>"; exit('fffff');
+            $changes = $log->changes;
+            // $changes = $log->changes()->all();
             // \Log::info($changes);
           @endphp
 
-          <a class="list-group-item" data-toggle="collapse" data-target="#sl-{{ $activity->id }}" data-parent="#menu">
+          <a class="list-group-item" data-toggle="collapse" data-target="#sl-{{ $log->id }}" data-parent="#menu">
             <span class="fa-stack fa-md">
               <i class="fa fa-circle-thin fa-stack-2x"></i>
               <i class="fa fa-check fa-stack-1x"></i>
             </span>
-            {{ get_activity_title($activity) }}
-            <span class="pull-right">{{ $activity->created_at->diffForHumans() }}</span>
+            {{ get_activity_title($log) }}
+            <span class="pull-right">{{ $log->created_at->diffForHumans() }}</span>
           </a>
-          <div id="sl-{{ $activity->id }}" class="sublinks collapse">
-            @if( ! empty($changes) && (strtolower($activity->description) == 'updated'))
+          <div id="sl-{{ $log->id }}" class="sublinks collapse">
+            @if( ! empty($changes) && (strtolower($log->description) == 'updated'))
               @foreach($changes['attributes'] as $attrbute => $new_value)
                 <p class="list-group-item  list-group-item-info">
                   <i class="fa fa-arrow-circle-o-right indent20"></i>

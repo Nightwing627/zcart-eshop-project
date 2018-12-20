@@ -439,7 +439,7 @@ if ( ! function_exists('generate_combinations') )
 if ( ! function_exists('get_activity_str') )
 {
     function get_activity_str($model, $attrbute, $new, $old){
-
+        // \Log::info($attrbute);
         switch ($attrbute) {
             case 'trial_ends_at':
                 return trans('app.activities.trial_started');
@@ -489,6 +489,12 @@ if ( ! function_exists('get_activity_str') )
 
             case 'tracking_id':
                 $attrbute = trans('app.tracking_id');
+                break;
+
+            case 'timezone_id':
+                $attrbute = trans('app.timezone');
+                $old  = get_value_from($old, 'timezones', 'value');
+                $new  = get_value_from($new, 'timezones', 'value');
                 break;
 
             case 'status':

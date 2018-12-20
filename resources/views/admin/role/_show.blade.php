@@ -19,7 +19,7 @@
 		            </tr>
 					<tr>
 						<th class="text-right">{{ trans('app.role_level') }}:</th>
-						<td style="width: 75%;"><span class="label label-default">{{ $role->level or trans('app.not_set') }}</span></td>
+						<td style="width: 75%;"><span class="label label-default">{{ $role->level ?? trans('app.not_set') }}</span></td>
 					</tr>
 					<tr>
 						<th class="text-right">{{ trans('app.available_from') }}:</th>

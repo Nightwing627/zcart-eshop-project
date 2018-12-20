@@ -95,7 +95,6 @@
 						{!! Form::close() !!}
 					</span>
 					<div class="spacer50"></div>
-
 			  	</div>
 
 			  	<div class="col-md-3">

@@ -1,12 +1,11 @@
 <?php
 
-
 return [
 
     /*
      * If set to false, no activities will be saved to the database.
      */
-    'enabled' => env('APP_LOG_ACTIVITY', true),
+    'enabled' => env('ACTIVITY_LOGGER_ENABLED', true),
 
     /*
      * When the clean-command is executed, all recording activities older than
@@ -36,4 +35,10 @@ return [
      * it should be or extend the Spatie\Activitylog\Models\Activity model.
      */
     'activity_model' => \Spatie\Activitylog\Models\Activity::class,
+
+    /*
+     * This is the name of the table that will be created by the migration and
+     * used by the Activity model shipped with this package.
+     */
+    'table_name' => 'activity_log',
 ];

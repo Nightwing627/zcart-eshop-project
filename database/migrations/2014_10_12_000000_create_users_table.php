@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->boolean('active')->default(1);
             $table->timestamp('read_announcements_at')->nullable();
             $table->string('verification_token', 100)->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

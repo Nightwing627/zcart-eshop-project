@@ -59,7 +59,9 @@ class Ticket extends Model
     */
     public function shop()
     {
-        return $this->belongsTo(Shop::class);
+        return $this->belongsTo(Shop::class)->withDefault([
+            'name' => trans('app.vendor_not_available'),
+        ]);
     }
 
     /**
@@ -83,7 +85,7 @@ class Ticket extends Model
     */
     public function assignedTo()
     {
-        return $this->belongsTo(User::class, 'assigned_to')->withDefault();
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 
     /**

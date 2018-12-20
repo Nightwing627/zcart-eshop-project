@@ -60,7 +60,7 @@
                 <div class="tab-content nopadding">
                     <div class="tab-pane active" id="tab_1">
                         <div class="box-body">
-                            {!! $refund->description or trans('app.description_not_available') !!}
+                            {!! $refund->description ?? trans('app.description_not_available') !!}
                         </div>
                     </div>
                 </div>

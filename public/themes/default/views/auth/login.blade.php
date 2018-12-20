@@ -41,4 +41,15 @@
             <a class="btn btn-link" href="{{ route('customer.register') }}" class="text-center">{{ trans('app.form.register_as_customer') }}</a>
         </div>
     </div>
+
+    @if(env('APP_DEMO') == TRUE)
+        <div class="box login-box-body">
+            <div class="box-header with-border">
+              <h3 class="box-title">Demo Login::</h3>
+            </div> <!-- /.box-header -->
+            <div class="box-body">
+                <p>Username: <strong>customer@demo.com</strong> | Password: <strong>123456</strong> </p>
+            </div>
+        </div>
+    @endif
 @endsection

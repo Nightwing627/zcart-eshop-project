@@ -11,7 +11,7 @@ use Laravel\Scout\Searchable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Activitylog\Traits\HasActivity;
+// use Spatie\Activitylog\Traits\HasActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\Auth\CustomerResetPasswordNotification;
@@ -19,7 +19,7 @@ use App\Notifications\Auth\CustomerResetPasswordNotification;
 class Customer extends Authenticatable
 {
 
-    use SoftDeletes, Billable, Notifiable, Addressable, Taggable, Imageable, HasActivity, Searchable;
+    use SoftDeletes, Billable, Notifiable, Addressable, Taggable, Imageable, Searchable;
 
    /**
      * The guard used by the model.

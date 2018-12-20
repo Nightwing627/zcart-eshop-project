@@ -277,12 +277,12 @@ class demoSeeder extends Seeder
             DB::table('shop_payment_methods')->insert([
                 [
                     'shop_id' => $shop,
-                    'payment_method_id' => 4,
+                    'payment_method_id' => 6,
                     'created_at' => Carbon::Now(),
                     'updated_at' => Carbon::Now(),
                 ], [
                     'shop_id' => $shop,
-                    'payment_method_id' => 3,
+                    'payment_method_id' => 5,
                     'created_at' => Carbon::Now(),
                     'updated_at' => Carbon::Now(),
                 ]
@@ -291,14 +291,14 @@ class demoSeeder extends Seeder
             DB::table('config_manual_payments')->insert([
                 [
                     'shop_id' => $shop,
-                    'payment_method_id' => 3,
+                    'payment_method_id' => 5,
                     'additional_details' => 'Send the payment via Bank Wire Transfer.',
                     'payment_instructions' => 'Payment instructions for Bank Wire Transfer',
                     'created_at' => Carbon::Now(),
                     'updated_at' => Carbon::Now(),
                 ], [
                     'shop_id' => $shop,
-                    'payment_method_id' => 4,
+                    'payment_method_id' => 6,
                     'additional_details' => 'Our man will collect the payment when deliver the item to your doorstep.',
                     'payment_instructions' => 'Payment instructions for COD',
                     'created_at' => Carbon::Now(),

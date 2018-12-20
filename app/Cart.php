@@ -77,7 +77,9 @@ class Cart extends Model
      */
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class)->withDefault([
+            'name' => trans('app.guest_customer'),
+        ]);
     }
 
     /**

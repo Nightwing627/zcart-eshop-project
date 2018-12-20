@@ -77,7 +77,7 @@
 				        </table>
 				    </div> <!-- /.tab-pane -->
 				    <div class="tab-pane" id="tab_2">
-			            {!! $user->description or trans('app.info_not_found') !!}
+			            {!! $user->description ?? trans('app.info_not_found') !!}
 				    </div> <!-- /.tab-pane -->
 				    <div class="tab-pane" id="tab_3">
 				        <table class="table">

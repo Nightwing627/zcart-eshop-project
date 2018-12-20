@@ -9,6 +9,7 @@ use App\Refund;
 use App\Observers\ShopObserver;
 use App\Observers\RefundObserver;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Collection;
@@ -24,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        Blade::withoutDoubleEncoding();
+        Paginator::useBootstrapThree();
 
         Shop::observe(ShopObserver::class);
         Order::observe(OrderObserver::class);

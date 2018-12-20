@@ -10,6 +10,7 @@ class PaymentMethod extends Model
     const TYPE_PAYPAL       = 1;
     const TYPE_CREDIT_CARD  = 2;
     const TYPE_MANUAL       = 3;
+    const TYPE_OTHERS        = 4;
 
     /**
      * The database table used by the model.

@@ -23,12 +23,12 @@ trait Loggable
     protected static $logOnlyDirty = true;
 
 	/**
-	 * Activities for the loggable model
+	 * Loggs for the loggable model
 	 *
 	 * @return [type] [description]
 	 */
-    public function activities()
+    public function logs()
     {
-        return $this->activity()->orderBy('created_at', 'desc')->get();
+        return $this->activities()->orderBy('created_at', 'desc')->get();
     }
 }
