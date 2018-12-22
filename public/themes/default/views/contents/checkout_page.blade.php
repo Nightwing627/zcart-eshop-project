@@ -124,6 +124,11 @@
           @else
               @include('forms.address')
 
+              <div class="form-group">
+                {!! Form::email('email', Null, ['class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.email'), 'maxlength' => '100', 'required']) !!}
+                <div class="help-block with-errors"></div>
+              </div>
+
               <div class="checkbox">
                 <label>
                   {!! Form::checkbox('create-account', Null, Null, ['id' => 'create-account-checkbox', 'class' => 'i-check']) !!} {!! trans('theme.create_account') !!}
@@ -131,11 +136,6 @@
               </div>
 
               <div id="create-account" class="space30" style="display: none;">
-                <div class="form-group">
-                  {!! Form::email('email', Null, ['class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.email'), 'maxlength' => '100']) !!}
-                  <div class="help-block with-errors"></div>
-                </div>
-
                 <div class="row">
                   <div class="col-md-6 nopadding-right">
                     <div class="form-group">

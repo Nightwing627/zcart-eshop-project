@@ -83,6 +83,7 @@ class Order extends Model
                         'approved',
                         'feedback_id',
                         'disputed',
+                        'email'
                     ];
 
     /**

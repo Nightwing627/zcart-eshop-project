@@ -197,7 +197,7 @@ class OrderController extends Controller
 
         $paystack = new \Yabacon\Paystack($vendorPaystackConfig->secret);
         $tranx = $paystack->transaction->initialize([
-            'email' => 'bd.munna@hotmail.com',
+            'email' => $request->email,
             'amount' => (int) ($order->grand_total * 100),
             'quantity' => $order->quantity,
             'orderID' => $order->id,
@@ -512,6 +512,7 @@ class OrderController extends Controller
                 'carrier_id' => $cart->carrier() ? $cart->carrier->id : NULL,
                 'shipping_address' => $address,
                 'billing_address' => $address,
+                'email' => $request->email,
                 'buyer_note' => $request->buyer_note
             ])
         );

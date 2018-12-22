@@ -24,8 +24,8 @@ class CheckoutCartRequest extends Request
     public function rules()
     {
         $rules = [
-            'email' =>  'nullable|email|max:255|unique:customers',
-            'password' =>  'nullable|required_with:email|confirmed|min:6',
+            'email' =>  'required|email|max:255|unique:customers',
+            'password' =>  'nullable|required_with:create-account|confirmed|min:6',
         ];
 
         if( 'saved_card' != $this->payment_method )

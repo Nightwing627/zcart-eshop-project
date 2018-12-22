@@ -246,6 +246,10 @@
               @else
                 {{ $order->customer->getName() }}
               @endif
+
+              @if($order->email)
+                <br/><small>{{ trans('app.email') . ': ' . $order->email }}</small>
+              @endif
             </span>
           </p>
 
