@@ -447,6 +447,7 @@ return [
 		'we_dont_save_card_info' => 'We do not store your card information.',
 		'you_will_be_redirected_to_paypal' => 'You will be redirected to PayPal to securely complete your payment.',
 		'your_feedback_saved' => 'Thank you for your feedback!',
+		'you_will_be_redirected_to_paystack' => 'You will be redirected to paystack.',
 	],
 
 	'input_label' => [

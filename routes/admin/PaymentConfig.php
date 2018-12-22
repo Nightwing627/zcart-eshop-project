@@ -19,3 +19,7 @@
 	Route::put('paypalExpress/{paypalExpress}/update', 'ConfigPaypalExpressController@update')->name('paypalExpress.update');
 	Route::get('paypalExpress/deactivate', 'ConfigPaypalExpressController@deactivate')->name('paypalExpress.deactivate');
 
+	// Paystack
+	Route::get('paystack/activate', 'ConfigPaystackController@activate')->name('paystack.activate');
+	Route::put('paystack/{paystack}/update', 'ConfigPaystackController@update')->name('paystack.update');
+	Route::get('paystack/deactivate', 'ConfigPaystackController@deactivate')->name('paystack.deactivate');

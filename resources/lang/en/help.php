@@ -513,6 +513,12 @@ return [
 
     'config_paypal_express_secret' => 'The PayPal API Secret Key. You\'ll find this value on the My Apps & Credentials section on your PayPal dashboard.',
 
+    'config_paystack_merchant_email' => 'The merchant email of your Paystack account.',
+
+    'config_paystack_public_key' => 'The Public Key is a long unique identifier of your Paystack application. You\'ll find this value on the API keys and Webhooks section in the settings on your Paystack dashboard.',
+
+    'config_paystack_secret' => 'The Paystack API Secret Key. You\'ll find this value on the API keys and Webhooks section in the settings on your Paystack dashboard.',
+
     'config_auto_archive_order' => 'Automatically archive the order. Select this feature if you do not want to manually archive all orders after they have been fulfilled.',
 
     // 'config_stripe_secret_key' => 'Secret API keys will be required to charge the customer while checkout.',

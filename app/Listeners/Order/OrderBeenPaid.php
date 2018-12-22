@@ -37,6 +37,7 @@ class OrderBeenPaid implements ShouldQueue
         if(!config('system_settings'))
             setSystemConfig($event->order->shop_id);
 
-        $event->order->customer->notify(new OrderBeenPaidNotification($event->order));
+        if ($event->order->customer->id)
+            $event->order->customer->notify(new OrderBeenPaidNotification($event->order));
     }
 }

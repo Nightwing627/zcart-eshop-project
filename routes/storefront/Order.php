@@ -6,6 +6,9 @@
 	Route::get('paymentFailed/{order}', 'OrderController@paymentFailed')->name('payment.failed');
 	Route::get('order/{order}/success', 'OrderController@orderPlaced')->name('order.success');
 
+	// Paystack
+	Route::get('paystackSuccess/{order}/{cart}', 'OrderController@paystackPaymentSuccess')->name('paystack.success');;
+
 	Route::middleware(['auth:customer'])->group(function () {
 		Route::get('order/{order}', 'OrderController@detail')->name('order.detail');
 		Route::get('order/track/{order}', 'OrderController@track')->name('order.track');

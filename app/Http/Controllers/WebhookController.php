@@ -7,13 +7,14 @@ use App\Events\Subscription\SubscriptionCancelled;
 use App\Notifications\Billing\SendsInvoiceNotifications;
 use Laravel\Cashier\Http\Controllers\WebhookController as CashierController;
 
-class StripeWebhookController extends CashierController
+class WebhookController extends CashierController
 {
 
-    public function __construct()
+    public function handleStripeCallback()
     {
         \Log::info('Stripe response arived!');
     }
+
     /**
      * Handle a successful invoice payment from a Stripe subscription.
      *

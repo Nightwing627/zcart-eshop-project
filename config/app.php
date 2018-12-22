@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' =>  env('APP_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -181,7 +181,6 @@ return [
         App\Providers\HelperServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
-
     ],
 
     /*
@@ -241,7 +240,6 @@ return [
         // 'Curl' => Ixudra\Curl\Facades\Curl::class,
         // 'Debugbar' => Barryvdh\Debugbar\Facade::class,
         // 'Paypalpayment'   => Anouar\Paypalpayment\Facades\PaypalPayment::class,
-
     ],
 
 ];

@@ -1,12 +1,12 @@
 $(document).ready(function(){
     $.notify({
         // oprions
-        icon: 'fa fa-{{$icon or 'paw'}}',
+        icon: 'fa fa-{{$icon ?? 'paw'}}',
         title: "<strong>{{ $type == 'danger' ? 'Error' : $type }}:</strong> ",
-        message: '{{ $message or '' }}'
+        message: '{{ $message ?? '' }}'
     },{
     	// settings
-        type: '{{ $type or 'info' }}',
+        type: '{{ $type ?? 'info' }}',
         delay: 1500,
         placement: {
             from: "top",

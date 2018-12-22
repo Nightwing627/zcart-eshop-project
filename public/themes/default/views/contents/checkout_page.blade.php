@@ -197,6 +197,11 @@
                       $info = trans('theme.notify.you_will_be_redirected_to_paypal');
                       break;
 
+                    case 'paystack':
+                      $has_config = $shop->paystack ? TRUE : FALSE;
+                      $info = trans('theme.notify.you_will_be_redirected_to_paystack');
+                      break;
+
                     case 'wire':
                     case 'cod':
                       $has_config = in_array($payment_provider->id, $activeManualPaymentMethods->pluck('id')->toArray()) ? TRUE : FALSE;

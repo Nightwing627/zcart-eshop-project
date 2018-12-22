@@ -38,7 +38,8 @@ class OrderBeenFulfilled implements ShouldQueue
             if(!config('system_settings'))
                 setSystemConfig($event->order->shop_id);
 
-            $event->order->customer->notify(new OrderFulfilledNotification($event->order));
+            if ($event->order->customer_id)
+                $event->order->customer->notify(new OrderFulfilledNotification($event->order));
         }
     }
 }

@@ -86,7 +86,7 @@ class CartController extends Controller
 
         //Reset if the old cart exist, bcoz shipping rate will change after adding new item
         $cart->shipping_zone_id = $old_cart ? Null : $request->shippingZoneId;
-        $cart->shipping_rate_id = $old_cart ? Null : $request->shippingRateId;
+        $cart->shipping_rate_id = $old_cart ? Null : $request->shippingRateId == 'Null' ? Null : $request->shippingRateId;
 
         $cart->handling = $old_cart ? $old_cart->handling : getShopConfig($item->shop_id, 'order_handling_cost');
         $cart->total = $old_cart ? ($old_cart->total + ($qtt * $unit_price)) : $unit_price;

@@ -76,6 +76,14 @@
 											    				@endif
 														        @break
 
+														    @case('paystack')
+														    	@if($config->paystack)
+														    		@php
+														    			$has_config = TRUE;
+														    		@endphp
+											    				@endif
+														        @break
+
 														    @case('wire')
 														    @case('cod')
 														    	@php

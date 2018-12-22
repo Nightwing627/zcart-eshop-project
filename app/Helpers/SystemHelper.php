@@ -463,8 +463,12 @@ if ( ! function_exists('get_activity_str') )
 
             case 'order_status_id':
                 $attrbute = trans('app.status');
-                $statues = \App\OrderStatus::find([$old, $new])->pluck('name', 'id');
-                $old  = $statues[$old];
+                if($old){
+                    $statues = \App\OrderStatus::find([$old, $new])->pluck('name', 'id');
+                    $old  = $statues[$old];
+                } else {
+                    $statues = \App\OrderStatus::find($new)->pluck('name', 'id');
+                }
                 $new  = $statues[$new];
                 break;
 

@@ -29,6 +29,7 @@ $factory->define(App\Inventory::class, function (Faker $faker) {
         'shipping_weight' => rand(100,1999),
         'free_shipping' => $faker->boolean,
         'linked_items' => array_rand(range(1,50), rand(2,3)),
+        'available_from' => Carbon::Now()->subDays(rand(1, 3))->format('Y-m-d h:i a'),
         'slug' => $faker->slug,
         'meta_title' => $faker->sentence,
         'meta_description' => $faker->realText,

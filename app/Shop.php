@@ -295,6 +295,14 @@ class Shop extends Model
         return $this->hasOne(ConfigPaypalExpress::class, 'shop_id')->withDefault();
     }
 
+    /**
+     * Get the paystack for the shop.
+     */
+    public function paystack()
+    {
+        return $this->hasOne(ConfigPaystack::class, 'shop_id')->withDefault();
+    }
+
    /**
      * Get the manualPaymentMethods for the shop.
      */

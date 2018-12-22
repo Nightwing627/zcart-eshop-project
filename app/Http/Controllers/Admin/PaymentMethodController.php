@@ -49,6 +49,10 @@ class PaymentMethodController extends Controller
                 return redirect()->route('admin.setting.paypalExpress.activate');
                 break;
 
+            case 'paystack':
+                return redirect()->route('admin.setting.paystack.activate');
+                break;
+
             case 'wire':
             case 'cod':
                 return redirect()->route('admin.setting.manualPaymentMethod.activate', $paymentMethod->code);

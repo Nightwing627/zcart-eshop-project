@@ -100,6 +100,14 @@ class Config extends Model
     }
 
     /**
+     * Get the paystack for the shop.
+     */
+    public function paystack()
+    {
+        return $this->hasOne(ConfigPaystack::class, 'shop_id');
+    }
+
+    /**
      * Get the supplier.
      */
     public function supplier()
