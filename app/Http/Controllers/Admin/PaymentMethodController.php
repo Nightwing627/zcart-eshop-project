@@ -49,6 +49,10 @@ class PaymentMethodController extends Controller
                 return redirect()->route('admin.setting.authorizeNet.activate');
                 break;
 
+            case 'instamojo':
+                return redirect()->route('admin.setting.instamojo.activate');
+                break;
+
             case 'paypal-express':
                 return redirect()->route('admin.setting.paypalExpress.activate');
                 break;

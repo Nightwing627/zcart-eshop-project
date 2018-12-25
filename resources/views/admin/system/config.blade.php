@@ -505,7 +505,7 @@
 			    <!-- /.tab-pane -->
 
 			    <div class="tab-pane" id="payment_method_tab">
-			    	<div class="jumbotron">
+			    	<div class="jumbotron" style="padding: 20px; margin-bottom: 10px;">
 			    		<p class="text-center">{{ trans('help.config_enable_payment_method') }}</p>
 			    	</div>
 	    			@foreach($payment_method_types as $type_id => $type)
@@ -552,6 +552,8 @@
 												{!! $payment_provider->admin_description !!}
 											</p>
 								    		@if($payment_provider->code == 'authorize-net' ||
+								    		    $payment_provider->code == 'instamojo' ||
+								    		    $payment_provider->code == 'paystack' ||
 								    			$type_id == \App\PaymentMethod::TYPE_PAYPAL ||
 								    			$type_id == \App\PaymentMethod::TYPE_MANUAL
 								    		)

@@ -448,7 +448,8 @@ return [
 		'we_dont_save_card_info' => 'No almacenamos la información de su tarjeta.',
 		'you_will_be_redirected_to_paypal' => 'Será redirigido a PayPal para completar su pago de forma segura.',
 		'your_feedback_saved' => '¡Gracias por tus comentarios!',
-		'you_will_be_redirected_to_paystack' => 'Serás redirigido a paystack.',
+		'you_will_be_redirected_to_paystack' => 'Serás redirigido a Paystack.',
+		'you_will_be_redirected_to_instamojo' => 'Serás redirigido a Instamojo.',
 	],
 
 	'input_label' => [

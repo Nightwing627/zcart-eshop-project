@@ -14,6 +14,11 @@
 	Route::get('stripe/redirect', 'ConfigStripeController@redirect')->name('stripe.redirect');
 	Route::get('stripe/disconnect', 'ConfigStripeController@disconnect')->name('stripe.disconnect');
 
+	// Instamojo
+	Route::get('instamojo/activate', 'ConfigInstamojoController@activate')->name('instamojo.activate');
+	Route::put('instamojo/{instamojo}/update', 'ConfigInstamojoController@update')->name('instamojo.update');
+	Route::get('instamojo/deactivate', 'ConfigInstamojoController@deactivate')->name('instamojo.deactivate');
+
 	// AuthorizeNet
 	Route::get('authorizeNet/activate', 'ConfigAuthorizeNetController@activate')->name('authorizeNet.activate');
 	Route::put('authorizeNet/{authorizeNet}/update', 'ConfigAuthorizeNetController@update')->name('authorizeNet.update');

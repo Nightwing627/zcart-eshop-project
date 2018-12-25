@@ -1,10 +1,13 @@
 <?php
 	Route::post('order/{cart}', 'OrderController@create')->name('order.create');
+	Route::get('paymentFailed/{order}', 'OrderController@paymentFailed')->name('payment.failed');
 
 	// PayPal
 	Route::get('paymentSuccess/{order}', 'OrderController@paymentSuccess')->name('payment.success');
-	Route::get('paymentFailed/{order}', 'OrderController@paymentFailed')->name('payment.failed');
 	Route::get('order/{order}/success', 'OrderController@orderPlaced')->name('order.success');
+
+	// Paystack
+	Route::get('instamojoRedirect/{order}/{cart}', 'OrderController@instamojoSuccess')->name('instamojo.redirect');;
 
 	// Paystack
 	Route::get('paystackSuccess/{order}/{cart}', 'OrderController@paystackPaymentSuccess')->name('paystack.success');;

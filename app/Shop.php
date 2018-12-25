@@ -304,6 +304,14 @@ class Shop extends Model
     }
 
     /**
+     * Get the instamojo for the shop.
+     */
+    public function instamojo()
+    {
+        return $this->hasOne(ConfigInstamojo::class, 'shop_id')->withDefault();
+    }
+
+    /**
      * Get the paystack for the shop.
      */
     public function paystack()

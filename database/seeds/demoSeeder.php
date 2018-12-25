@@ -272,17 +272,19 @@ class demoSeeder extends Seeder
         $coupons   = \DB::table('coupons')->pluck('id')->toArray();
         $inventories = \DB::table('inventories')->pluck('id')->toArray();
 
+        $wire = \DB::table('payment_methods')->where('code', 'wire')->first()->id;
+        $cod = \DB::table('payment_methods')->where('code', 'cod')->first()->id;
         // shop_payment_methods
         foreach ($shops as $shop) {
             DB::table('shop_payment_methods')->insert([
                 [
                     'shop_id' => $shop,
-                    'payment_method_id' => 6,
+                    'payment_method_id' => $cod,
                     'created_at' => Carbon::Now(),
                     'updated_at' => Carbon::Now(),
                 ], [
                     'shop_id' => $shop,
-                    'payment_method_id' => 5,
+                    'payment_method_id' => $wire,
                     'created_at' => Carbon::Now(),
                     'updated_at' => Carbon::Now(),
                 ]
@@ -291,14 +293,14 @@ class demoSeeder extends Seeder
             DB::table('config_manual_payments')->insert([
                 [
                     'shop_id' => $shop,
-                    'payment_method_id' => 5,
+                    'payment_method_id' => $wire,
                     'additional_details' => 'Send the payment via Bank Wire Transfer.',
                     'payment_instructions' => 'Payment instructions for Bank Wire Transfer',
                     'created_at' => Carbon::Now(),
                     'updated_at' => Carbon::Now(),
                 ], [
                     'shop_id' => $shop,
-                    'payment_method_id' => 6,
+                    'payment_method_id' => $cod,
                     'additional_details' => 'Our man will collect the payment when deliver the item to your doorstep.',
                     'payment_instructions' => 'Payment instructions for COD',
                     'created_at' => Carbon::Now(),

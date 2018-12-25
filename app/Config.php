@@ -96,7 +96,7 @@ class Config extends Model
      */
     public function authorizeNet()
     {
-        return $this->hasOne(ConfigAuthorizeNet::class, 'shop_id')->withDefault();
+        return $this->hasOne(ConfigAuthorizeNet::class, 'shop_id');
     }
 
     /**
@@ -105,6 +105,14 @@ class Config extends Model
     public function paypalExpress()
     {
         return $this->hasOne(ConfigPaypalExpress::class, 'shop_id');
+    }
+
+    /**
+     * Get the instamojo for the shop.
+     */
+    public function instamojo()
+    {
+        return $this->hasOne(ConfigInstamojo::class, 'shop_id');
     }
 
     /**

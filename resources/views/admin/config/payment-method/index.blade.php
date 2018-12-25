@@ -68,6 +68,14 @@
 											    				@endif
 														        @break
 
+														    @case('instamojo')
+														    	@if($config->instamojo)
+														    		@php
+														    			$has_config = TRUE;
+														    		@endphp
+											    				@endif
+														        @break
+
 														    @case('authorize-net')
 														    	@if($config->authorizeNet)
 														    		@php

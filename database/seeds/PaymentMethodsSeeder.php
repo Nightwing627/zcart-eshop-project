@@ -55,6 +55,20 @@ class PaymentMethodsSeeder extends Seeder
             'updated_at' => Carbon::Now(),
         ]);
         DB::table('payment_methods')->insert([
+            'name' => 'Instamojo',
+            'code' => 'instamojo',
+            'type' => 2,
+            'company_name' => 'Instamojo Technologies Pvt. Ltd.',
+            'website' => 'https://instamojo.com/',
+            'help_doc_link' => 'https://instamojo.com/docs/checkout/tutorial',
+            'description' => 'Instamojo is one of the most popular and Multi-Channel Payment Gateway for India - Accept Credit/Debit Cards, Wallets, Net Banking, UPI & EMI. <br/><strong>By using Instamojo: </strong><br/>- You have to have your Instamojo business account. <br/>- You agree to Instamojo\'s <a href="https://www.instamojo.com/terms/" target="_blank">Terms of Service</a>.',
+            'admin_description' => 'Instamojo is one of the most popular and Multi-Channel Payment Gateway for India - Accept Credit/Debit Cards, Wallets, Net Banking, UPI & EMI. Enable Instamojo to your vendors.',
+            'admin_help_doc_link' => 'https://www.instamojo.com/',
+            'order' => 2,
+            'created_at' => Carbon::Now(),
+            'updated_at' => Carbon::Now(),
+        ]);
+        DB::table('payment_methods')->insert([
             'name' => 'Paystack',
             'code' => 'paystack',
             'type' => 4,

@@ -192,6 +192,11 @@
                       $info = trans('theme.notify.we_dont_save_card_info');
                       break;
 
+                    case 'instamojo':
+                      $has_config = $shop->instamojo ? TRUE : FALSE;
+                      $info = trans('theme.notify.you_will_be_redirected_to_instamojo');
+                      break;
+
                     case 'authorize-net':
                       $has_config = $shop->authorizeNet ? TRUE : FALSE;
                       $info = trans('theme.notify.we_dont_save_card_info');
@@ -221,7 +226,7 @@
                 @endphp
 
                 {{-- Skip the payment option if not confirured --}}
-                @continue(!$has_config)
+                @continue( ! $has_config )
 
                 @if($customer && (\App\PaymentMethod::TYPE_CREDIT_CARD == $payment_provider->type) && $customer->hasBillingToken())
                   <div class="form-group">
@@ -249,12 +254,10 @@
               </div>
               <div class="form-group form-group-cc-number">
                 {!! Form::text('cnumber', Null, ['id' => 'cnumber', 'class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.card_number')]) !!}
-                {{-- <input name="cnumber" id="cnumber" type="text" class='form-control flat' placeholder="@lang('theme.placeholder.card_number')"/> --}}
                 <div class="help-block with-errors"></div>
               </div>
               <div class="form-group form-group-cc-cvc">
                 {!! Form::text('ccode', Null, ['id' => 'ccode', 'class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.card_cvc')]) !!}
-                {{-- <input name="ccode" id="ccode" type="text" class='form-control flat' placeholder="@lang('theme.placeholder.card_cvc')"/> --}}
                 <div class="help-block with-errors"></div>
               </div>
 

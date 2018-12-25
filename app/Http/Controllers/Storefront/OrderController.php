@@ -8,6 +8,7 @@ use App\Cart;
 use App\Order;
 use App\Customer;
 use Paypalpayment;
+use Instamojo\Instamojo;
 use Illuminate\Http\Request;
 use App\Events\Order\OrderPaid;
 use App\Events\Order\OrderCreated;
@@ -57,15 +58,21 @@ class OrderController extends Controller
                         $this->chargeWithStripe($request, $order);
                         break;
 
-                    case 'paystack':
+                    case 'instamojo':
                         DB::commit();           // Everything is fine. Now commit the transaction Don't change it
-                        // Charge using paystack
-                        $this->chargeWithPaystack($request, $order, $cart);
+                        // Charge using Instamojo
+                        $this->chargeWithInstamojo($request, $order, $cart);
                         break;
 
                     case 'authorize-net':
                         // Charge using authorize.net
                         $this->chargeWithAuthorizeNet($request, $order);
+                        break;
+
+                    case 'paystack':
+                        DB::commit();           // Everything is fine. Now commit the transaction Don't change it
+                        // Charge using paystack
+                        $this->chargeWithPaystack($request, $order, $cart);
                         break;
                 }
 
@@ -193,6 +200,82 @@ class OrderController extends Controller
         ], ["stripe_account" => $vendorStripeAccountId]);
     }
 
+    private function chargeWithInstamojo($request, Order $order, Cart $cart)
+    {
+        // Get the vendor configs
+        $vendorInstamojoConfig = $order->shop->instamojo;
+        // If the stripe is not cofigured
+        if( ! $vendorInstamojoConfig )
+            return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
+
+        $instamojoApi = new Instamojo(
+                                    $vendorInstamojoConfig->api_key,
+                                    $vendorInstamojoConfig->auth_token,
+                                    $vendorInstamojoConfig->sandbox == 1 ? 'https://test.instamojo.com/api/1.1/' : Null
+                                );
+
+        try {
+            $response = $instamojoApi->paymentRequestCreate([
+                                        "purpose" => trans('theme.order_id') . ': ' . $order->order_number,
+                                        "amount" => number_format($order->grand_total, 2),
+                                        "send_email" => true,
+                                        "email" => $request->email,
+                                        "redirect_url" => route('instamojo.redirect', ['order' => $order, 'cart' => $cart])
+                                    ]);
+
+            // $response = $instamojoApi->paymentRequestStatus($response['id']);
+            // print_r($response);
+        }
+        catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        // echo "<pre>"; print_r($response['longurl']); echo "</pre>"; exit();
+
+        // redirect to page so User can pay
+        header('Location: ' . $response['longurl']);
+        exit();
+    }
+
+    /**
+     * [instamojoRedirect description]
+     *
+     * @param  Request $request [description]
+     * @param  [type]  $order   [description]
+     * @param  [type]  $cart    [description]
+     *
+     * @return [type]           [description]
+     */
+    public function instamojoSuccess(Request $request, $order, $cart)
+    {
+        if ( $request->payment_status != 'Credit' || ! $request->has('payment_request_id') ||  ! $request->has('payment_id') )
+            return redirect()->route("payment.failed", $order);
+
+        if( !$order instanceOf Order )
+            $order = Order::find($order);
+
+        // Delete the cart
+        Cart::find($cart)->forceDelete();   // Delete the cart
+
+        // Order has been paided
+        $this->markOrderAsPaid($order);
+
+        // Decrease the stock of the order items from the listing
+        $this->syncInventory($order);
+
+        event(new OrderCreated($order));   // Trigger the Event
+
+        return redirect()->route('order.success', $order)->with('success', trans('theme.notify.order_placed'));
+    }
+
+    /**
+     * [chargeWithAuthorizeNet description]
+     *
+     * @param  [type] $request [description]
+     * @param  Order  $order   [description]
+     *
+     * @return [type]          [description]
+     */
     private function chargeWithAuthorizeNet($request, Order $order)
     {
         // Get the vendor configs
@@ -255,6 +338,15 @@ class OrderController extends Controller
         return FALSE;
     }
 
+    /**
+     * [chargeWithPaystack description]
+     *
+     * @param  [type] $request [description]
+     * @param  Order  $order   [description]
+     * @param  Cart   $cart    [description]
+     *
+     * @return [type]          [description]
+     */
     private function chargeWithPaystack($request, Order $order, Cart $cart)
     {
         // Get the vendor configs
@@ -299,6 +391,15 @@ class OrderController extends Controller
         exit();
     }
 
+    /**
+     * [paystackPaymentSuccess description]
+     *
+     * @param  Request $request [description]
+     * @param  [type]  $order   [description]
+     * @param  [type]  $cart    [description]
+     *
+     * @return [type]           [description]
+     */
     public function paystackPaymentSuccess(Request $request, $order, $cart)
     {
         if ( ! $request->has('trxref') ||  ! $request->has('reference') )
@@ -455,9 +556,6 @@ class OrderController extends Controller
      */
     public function paymentFailed(Request $request, $order)
     {
-        if ( ! $request->has('token') )
-            return redirect()->route('cart.index');
-
         $cart = $this->revertOrder($order);
 
         return redirect()->route('cart.checkout', $cart)->with('error', trans('theme.notify.payment_failed'))->withInput();
