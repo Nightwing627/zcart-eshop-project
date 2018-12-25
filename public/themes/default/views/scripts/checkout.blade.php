@@ -36,11 +36,17 @@
 			$("#payment-instructions.text-danger").removeClass('text-danger').addClass('text-info small');
 			$('#payment-instructions').children('span').html($(this).data('info'));
 
-	    	// Alter checkout button text
+	    	// Alter checkout button text Stripe
 			if ('stripe' == code)
 				showCardForm();
 	    	else
 	    		hideCardForm();
+
+	    	// Alter checkout button text Authorize Net
+			if ('authorize-net' == code)
+				showAuthorizeNetCardForm();
+	    	else
+	    		hideAuthorizeNetCardForm();
 
 	    	// Alter checkout button
 			if ('paypal-express' == code){
@@ -78,8 +84,12 @@
 
 		// Show cart form if the card option is selected
 		var paymentOptionSelected = $('input[name="payment_method"]:checked');
-		if ( paymentOptionSelected.length > 0 && paymentOptionSelected.data('code') == 'stripe' )
-			showCardForm();
+		if ( paymentOptionSelected.length > 0) {
+			if( paymentOptionSelected.data('code') == 'stripe' )
+				showCardForm();
+			if( paymentOptionSelected.data('code') == 'authorize-net' )
+				showAuthorizeNetCardForm();
+		}
 
 	    // Stripe code, create a token
 	    Stripe.setPublishableKey("{{ config('services.stripe.key') }}");
@@ -161,6 +171,7 @@
         $('#create-account').show().find('input[type=email],input[type=password]').attr('required', 'required');
     }
 
+    // Stripe
     function showCardForm()
     {
 		$('#cc-form').show().find('input, select').attr('required', 'required');
@@ -170,6 +181,18 @@
     function hideCardForm()
     {
 		$('#cc-form').hide().find('input, select').removeAttr('required');
+		$('#pay-now-btn-txt').text('{{trans('theme.button.checkout')}}');
+    }
+
+    // Authorize Net
+    function showAuthorizeNetCardForm()
+    {
+		$('#authorize-net-cc-form').show().find('input, select').attr('required', 'required');
+		$('#pay-now-btn-txt').html('{!!trans('theme.button.pay_now') . ' <small>(' . get_formated_currency($cart->grand_total(), 2) . ')</small>'!!}');
+    }
+    function hideAuthorizeNetCardForm()
+    {
+		$('#authorize-net-cc-form').hide().find('input, select').removeAttr('required');
 		$('#pay-now-btn-txt').text('{{trans('theme.button.checkout')}}');
     }
 

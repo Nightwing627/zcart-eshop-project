@@ -45,6 +45,10 @@ class PaymentMethodController extends Controller
                 return redirect()->route('admin.setting.stripe.connect');
                 break;
 
+            case 'authorize-net':
+                return redirect()->route('admin.setting.authorizeNet.activate');
+                break;
+
             case 'paypal-express':
                 return redirect()->route('admin.setting.paypalExpress.activate');
                 break;

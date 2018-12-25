@@ -68,6 +68,14 @@
 											    				@endif
 														        @break
 
+														    @case('authorize-net')
+														    	@if($config->authorizeNet)
+														    		@php
+														    			$has_config = TRUE;
+														    		@endphp
+											    				@endif
+														        @break
+
 														    @case('paypal-express')
 														    	@if($config->paypalExpress)
 														    		@php

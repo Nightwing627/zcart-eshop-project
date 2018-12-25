@@ -288,6 +288,14 @@ class Shop extends Model
     }
 
     /**
+     * Get the authorizeNet for the shop.
+     */
+    public function authorizeNet()
+    {
+        return $this->hasOne(ConfigAuthorizeNet::class, 'shop_id')->withDefault();
+    }
+
+    /**
      * Get the paypalExpress for the shop.
      */
     public function paypalExpress()

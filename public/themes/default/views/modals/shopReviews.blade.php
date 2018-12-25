@@ -68,7 +68,7 @@
                     <div class="tab-pane" id="reviews_tab">
                         @forelse($shop->feedbacks->sortByDesc('created_at') as $feedback)
                             <p>
-                                <b>{{ $feedback->customer->nice_name or $feedback->customer->name  }}</b>
+                                <b>{{ $feedback->customer->nice_name ?? $feedback->customer->name  }}</b>
 
                                 <span class="pull-right small">
                                     <b class="text-success">@lang('theme.verified_purchase')</b>

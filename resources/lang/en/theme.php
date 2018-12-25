@@ -419,6 +419,7 @@ return [
 	    'fill_required_info' => 'Please fill all required information!',
 		'info_updated' => 'Updated successfully!',
 		'info_deleted' => 'Deleted successfully!',
+		'invalid_request' => 'Invalid request!',
 		'item_added_to_cart' => 'Item added to cart',
 		'item_added_already_in_cart' => 'Item already in your cart',
 		'item_added_to_wishlist' => 'Item added to wishlist',

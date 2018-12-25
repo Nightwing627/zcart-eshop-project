@@ -14,6 +14,11 @@
 	Route::get('stripe/redirect', 'ConfigStripeController@redirect')->name('stripe.redirect');
 	Route::get('stripe/disconnect', 'ConfigStripeController@disconnect')->name('stripe.disconnect');
 
+	// AuthorizeNet
+	Route::get('authorizeNet/activate', 'ConfigAuthorizeNetController@activate')->name('authorizeNet.activate');
+	Route::put('authorizeNet/{authorizeNet}/update', 'ConfigAuthorizeNetController@update')->name('authorizeNet.update');
+	Route::get('authorizeNet/deactivate', 'ConfigAuthorizeNetController@deactivate')->name('authorizeNet.deactivate');
+
 	// PayPal
 	Route::get('paypalExpress/activate', 'ConfigPaypalExpressController@activate')->name('paypalExpress.activate');
 	Route::put('paypalExpress/{paypalExpress}/update', 'ConfigPaypalExpressController@update')->name('paypalExpress.update');

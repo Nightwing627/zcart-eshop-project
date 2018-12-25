@@ -419,6 +419,7 @@ return [
 	    'fill_required_info' => '¡Por favor llene toda la informacion requerido!',
 		'info_updated' => '¡Actualizado con éxito!',
 		'info_deleted' => '¡Borrado exitosamente!',
+		'invalid_request' => 'Solicitud no válida!',
 		'item_added_to_cart' => 'Artículo agregado al carrito',
 		'item_added_already_in_cart' => 'Artículo ya en tu carrito.',
 		'item_added_to_wishlist' => 'Artículo añadido a la lista de deseos',

@@ -499,6 +499,12 @@ return [
 
     'default_packaging_ids_for_inventory' => 'Default packagings will be preselected when add new inventory. This will help you to add inventory faster',
 
+    'config_payment_environment' => 'Is the credentials are for live mode or test more?',
+
+    'config_authorize_net_transaction_key' => 'The transaction key from Authorize.net. If you\'re not sure, contact Authorize.net to get help.',
+
+    'config_authorize_net_api_login_id' => 'The API login ID from Authorize.net. If you\'re not sure, contact Authorize.net to get help.',
+
     'config_enable_payment_method' => 'The system offers various types of payment gateways. You can enable/disable any payment gateway to control payment options vendor can use to accept payment from customers.',
 
     'config_additional_details' => 'Displayed on the Payment method page, while the customer is choosing how to pay.',

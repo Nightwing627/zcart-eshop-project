@@ -499,6 +499,12 @@ return [
 
     'default_packaging_ids_for_inventory' => 'Los embalajes predeterminados se preseleccionaran cuando se agregue un nuevo inventario. Esto te ayudara a agregar inventario mas rapido',
 
+    'config_payment_environment' => '¿Las credenciales son para el modo en vivo o prueba más?',
+
+    'config_authorize_net_transaction_key' => 'La transaction key desde Authorize.net. Si no está seguro, póngase en contacto con Authorize.net para obtener ayuda.',
+
+    'config_authorize_net_api_login_id' => 'La API login ID desde Authorize.net. Si no está seguro, póngase en contacto con Authorize.net para obtener ayuda.',
+
     'config_enable_payment_method' => 'El sistema ofrece varios tipos de pasarelas de pago. Puede habilitar cualquier pasarale de pago para controlar las opciones de pago que el proveedor puede usar para aceptar el pago de los clientes.',
 
     'config_additional_details' => 'Aparece en la pagina Metodo de pago, mientras el cliente elije como pagar.',

@@ -12,10 +12,14 @@ use Illuminate\Http\Request;
 use App\Events\Order\OrderPaid;
 use App\Events\Order\OrderCreated;
 use App\Http\Controllers\Controller;
+use App\Exceptions\AuthorizeNetException;
 use App\Http\Requests\Validations\OrderDetailRequest;
 use App\Http\Requests\Validations\CheckoutCartRequest;
 use App\Http\Requests\Validations\ConfirmGoodsReceivedRequest;
 use App\Notifications\Auth\SendVerificationEmail as EmailVerificationNotification;
+
+use net\authorize\api\contract\v1 as AuthorizeNetAPI;
+use net\authorize\api\controller as AuthorizeNetController;
 
 class OrderController extends Controller
 {
@@ -74,10 +78,17 @@ class OrderController extends Controller
             DB::rollback();         // rollback the transaction and log the error
 
             // Set error messages:
-            if ($e instanceOf \Stripe\Error\Base || $e instanceOf \Yabacon\Paystack\Exception\ApiException)
-                $error = trans('theme.notify.payment_failed');
-            else
+            if (
+                $e instanceOf \Stripe\Error\Base ||
+                $e instanceOf \Yabacon\Paystack\Exception\ApiException ||
+                $e instanceOf AuthorizeNetException
+            ) {
+                \Log::error('Payment failed:: ' . $e->getMessage());
+                $error = trans('theme.notify.invalid_request');
+            }
+            else {
                 $error = trans('theme.notify.order_creation_failed');
+            }
 
             return redirect()->back()->with('error', $error)->withInput();
         }
@@ -184,7 +195,64 @@ class OrderController extends Controller
 
     private function chargeWithAuthorizeNet($request, Order $order)
     {
-        echo "<pre>"; print_r($request); echo "</pre>"; exit();
+        // Get the vendor configs
+        $vendorAuthorizeNetConfig = $order->shop->authorizeNet;
+        // If the stripe is not cofigured
+        if( ! $vendorAuthorizeNetConfig )
+            return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
+
+        // Common setup for API credentials
+        $merchantAuthentication = new AuthorizeNetAPI\MerchantAuthenticationType();
+        $merchantAuthentication->setName($vendorAuthorizeNetConfig->api_login_id);
+        $merchantAuthentication->setTransactionKey($vendorAuthorizeNetConfig->transaction_key);
+        $refId = 'ref'.time();
+
+        // Create the payment data for a credit card
+        $creditCard = new AuthorizeNetAPI\CreditCardType();
+        $creditCard->setCardNumber($request->cnumber);
+        // $creditCard->setExpirationDate( "2038-12");
+        $expiry = $request->card_expiry_year . '-' . $request->card_expiry_month;
+        $creditCard->setExpirationDate($expiry);
+        $paymentOne = new AuthorizeNetAPI\PaymentType();
+        $paymentOne->setCreditCard($creditCard);
+
+        // Create a transaction
+        $transactionRequestType = new AuthorizeNetAPI\TransactionRequestType();
+        $transactionRequestType->setTransactionType("authCaptureTransaction");
+        $transactionRequestType->setAmount(get_formated_decimal($order->grand_total));
+        $transactionRequestType->setPayment($paymentOne);
+        $ApiRequest = new AuthorizeNetAPI\CreateTransactionRequest();
+        $ApiRequest->setMerchantAuthentication($merchantAuthentication);
+        $ApiRequest->setRefId($refId);
+        $ApiRequest->setTransactionRequest($transactionRequestType);
+        $controller = new AuthorizeNetController\CreateTransactionController($ApiRequest);
+        $response = $controller->executeWithApiResponse(
+            $vendorAuthorizeNetConfig->sandbox == 1 ?
+            \net\authorize\api\constants\ANetEnvironment::SANDBOX :
+            \net\authorize\api\constants\ANetEnvironment::PRODUCTION
+        );
+
+        if ($response != null) {
+            $tresponse = $response->getTransactionResponse();
+            if (($tresponse != null) && ($tresponse->getResponseCode() == "1")) { // Approved
+                \Log::info("Charge Credit Card AUTH CODE : " . $tresponse->getAuthCode() . "\n");
+                \Log::info("Charge Credit Card TRANS ID  : " . $tresponse->getTransId() . "\n");
+
+                return TRUE;
+            }
+            else {
+                $errMsg = $tresponse == null ? trans('theme.notify.invalid_request') : $tresponse->getErrors()[0]->getErrorText();
+                throw new AuthorizeNetException($errMsg);
+
+                return FALSE;
+            }
+        }
+
+        \Log::error("AuthorizeNetException:: Charge Credit Card Null response returned");
+
+        throw new AuthorizeNetException(trans('theme.notify.payment_failed'));
+
+        return FALSE;
     }
 
     private function chargeWithPaystack($request, Order $order, Cart $cart)
@@ -271,7 +339,7 @@ class OrderController extends Controller
             return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
 
         // Set vendor's paypal config
-        config()->set('paypal_payment.mode', $vendorPaypalConfig->sandbox ? 'sandbox' : 'live');
+        config()->set('paypal_payment.mode', $vendorPaypalConfig->sandbox == 1 ? 'sandbox' : 'live');
         config()->set('paypal_payment.account.client_id', $vendorPaypalConfig->client_id);
         config()->set('paypal_payment.account.client_secret', $vendorPaypalConfig->secret);
 

@@ -192,6 +192,11 @@
                       $info = trans('theme.notify.we_dont_save_card_info');
                       break;
 
+                    case 'authorize-net':
+                      $has_config = $shop->authorizeNet ? TRUE : FALSE;
+                      $info = trans('theme.notify.we_dont_save_card_info');
+                      break;
+
                     case 'paypal-express':
                       $has_config = $shop->paypalExpress ? TRUE : FALSE;
                       $info = trans('theme.notify.you_will_be_redirected_to_paypal');
@@ -234,6 +239,49 @@
               @endforeach
             </div>
 
+            {{-- authorize-net --}}
+            <div id="authorize-net-cc-form" class="authorize-net-cc-form" style="display: none;">
+              <hr class="style4 muted">
+              <div class="stripe-errors alert alert-danger flat small hide">{{ trans('messages.trouble_validating_card') }}</div>
+              <div class="form-group form-group-cc-name">
+                {!! Form::text('cardholder_name', Null, ['class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.cardholder_name'), 'data-error' => trans('theme.help.enter_cardholder_name')]) !!}
+                <div class="help-block with-errors"></div>
+              </div>
+              <div class="form-group form-group-cc-number">
+                {!! Form::text('cnumber', Null, ['id' => 'cnumber', 'class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.card_number')]) !!}
+                {{-- <input name="cnumber" id="cnumber" type="text" class='form-control flat' placeholder="@lang('theme.placeholder.card_number')"/> --}}
+                <div class="help-block with-errors"></div>
+              </div>
+              <div class="form-group form-group-cc-cvc">
+                {!! Form::text('ccode', Null, ['id' => 'ccode', 'class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.card_cvc')]) !!}
+                {{-- <input name="ccode" id="ccode" type="text" class='form-control flat' placeholder="@lang('theme.placeholder.card_cvc')"/> --}}
+                <div class="help-block with-errors"></div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 nopadding-right">
+                  <div class="form-group has-feedback">
+                    {{ Form::selectMonth('card_expiry_month', Null, ['id' =>'card_expiry_month', 'class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.card_exp_month'), 'data-error' => trans('theme.help.card_exp_month')], '%m') }}
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 nopadding-left">
+                  <div class="form-group has-feedback">
+                    {{ Form::selectYear('card_expiry_year', date('Y'), date('Y') + 10, Null, ['id' =>'card_expiry_year', 'class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.card_exp_year'), 'data-error' => trans('theme.help.card_exp_year')]) }}
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  {!! Form::checkbox('remember_the_card', null, null, ['id' => 'remember-the-card', 'class' => 'i-check']) !!} {!! trans('theme.remember_card_for_future_use') !!}
+                </label>
+              </div>
+            </div> <!-- /#authorize-net-cc-form -->
+
+            {{-- Stripe --}}
             <div id="cc-form" class="cc-form" style="display: none;">
               <hr class="style4 muted">
               <div class="stripe-errors alert alert-danger flat small hide">{{ trans('messages.trouble_validating_card') }}</div>
