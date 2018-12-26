@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Validations;
 
+use Auth;
 use App\Http\Requests\Request;
 
 class CheckoutCartRequest extends Request
@@ -23,10 +24,11 @@ class CheckoutCartRequest extends Request
      */
     public function rules()
     {
-        $rules = [
-            'email' =>  'required|email|max:255|unique:customers',
-            'password' =>  'nullable|required_with:create-account|confirmed|min:6',
-        ];
+        $rules = [];
+        if ( ! Auth::guard('customer')->check() ) {
+            $rules['email'] =  'required|email|max:255|unique:customers';
+            $rules['password'] =  'nullable|required_with:create-account|confirmed|min:6';
+        }
 
         if( 'saved_card' != $this->payment_method )
             $rules['payment_method'] = ['required', 'exists:payment_methods,id,enabled,1'];

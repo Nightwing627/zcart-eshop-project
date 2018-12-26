@@ -346,8 +346,8 @@ if ( ! function_exists('crosscheckAndUpdateOldCartInfo') )
                 $cart->coupon_id = $request->discount_id;
             }
         }
-        // Validate the old coupon
         else if($cart->coupon_id){
+            // Validate the old coupon
             if($cart->coupon->isValidForTheCart($total, $request->zone_id)){
                 $discount = ('percent' == $cart->coupon->type) ? ($cart->coupon->value * ($total/100)) : $cart->coupon->value;
             }

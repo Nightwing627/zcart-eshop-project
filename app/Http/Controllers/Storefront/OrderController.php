@@ -33,6 +33,7 @@ class OrderController extends Controller
      */
     public function create(CheckoutCartRequest $request, Cart $cart)
     {
+        // echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
         if ($request->email && $request->password) {
             $customer = $this->createNewCustomer($request);
             $request->merge(['customer_id' => $customer->id]); //Set customer_id
@@ -200,6 +201,15 @@ class OrderController extends Controller
         ], ["stripe_account" => $vendorStripeAccountId]);
     }
 
+    /**
+     * [chargeWithInstamojo description]
+     *
+     * @param  [type] $request [description]
+     * @param  Order  $order   [description]
+     * @param  Cart   $cart    [description]
+     *
+     * @return [type]          [description]
+     */
     private function chargeWithInstamojo($request, Order $order, Cart $cart)
     {
         // Get the vendor configs
@@ -216,12 +226,16 @@ class OrderController extends Controller
 
         try {
             $response = $instamojoApi->paymentRequestCreate([
-                                        "purpose" => trans('theme.order_id') . ': ' . $order->order_number,
-                                        "amount" => number_format($order->grand_total, 2),
-                                        "send_email" => true,
-                                        "email" => $request->email,
-                                        "redirect_url" => route('instamojo.redirect', ['order' => $order, 'cart' => $cart])
-                                    ]);
+                            "purpose" => trans('theme.order_id') . ': ' . $order->order_number,
+                            "amount" => number_format($order->grand_total, 2),
+                            "buyer_name" => Auth::guard('customer')->check() ?
+                                            Auth::guard('customer')->user()->getName() : $request->address_title,
+                            "send_email" => true,
+                            "email" =>  Auth::guard('customer')->check() ?
+                                        Auth::guard('customer')->user()->email : $request->email,
+                            "phone" => Auth::guard('customer')->check() ? '' : $request->phone,
+                            "redirect_url" => route('instamojo.redirect', ['order' => $order, 'cart' => $cart])
+                        ]);
 
             // $response = $instamojoApi->paymentRequestStatus($response['id']);
             // print_r($response);
@@ -229,8 +243,6 @@ class OrderController extends Controller
         catch (Exception $e) {
             return $e->getMessage();
         }
-
-        // echo "<pre>"; print_r($response['longurl']); echo "</pre>"; exit();
 
         // redirect to page so User can pay
         header('Location: ' . $response['longurl']);
