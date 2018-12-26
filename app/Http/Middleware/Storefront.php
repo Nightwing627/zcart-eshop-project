@@ -28,6 +28,7 @@ class Storefront
         $paths = [
             theme_views_path(),
             theme_views_path('default'),
+            config('view.paths')[0]
         ];
 
         // Reset views path to load theme views

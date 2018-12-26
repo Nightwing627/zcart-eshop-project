@@ -66,7 +66,7 @@
       <div class="modal-body">
         {!! Form::open(['route' => 'customer.register', 'id' => 'registerForm', 'data-toggle' => 'validator', 'novalidate']) !!}
           <div class="form-group">
-            <input name="full_name" class="form-control input-lg flat" placeholder="{{ trans('theme.placeholder.full_name') }}" type="text" required/>
+            <input name="name" class="form-control input-lg flat" placeholder="{{ trans('theme.placeholder.full_name') }}" type="text" required/>
             <div class="help-block with-errors"></div>
           </div>
           <div class="form-group">
@@ -78,7 +78,7 @@
             <div class="help-block with-errors"></div>
           </div>
           <div class="form-group">
-            <input name="confirm_password" class="form-control input-lg flat" placeholder="{{ trans('theme.placeholder.confirm_password') }}" type="password" required/>
+            <input name="password_confirmation" class="form-control input-lg flat" placeholder="{{ trans('theme.placeholder.confirm_password') }}" type="password" required/>
             <div class="help-block with-errors"></div>
           </div>
           <div class="form-group">
