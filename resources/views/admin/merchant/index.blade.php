@@ -76,7 +76,7 @@
 							@endcan
 
 							@can('delete', $merchant)
-					            {!! Form::open(['route' => ['admin.vendor.merchant.trash', $merchant->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+					            {!! Form::open(['route' => ['admin.vendor.shop.trash', $merchant->owns->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 					                {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 								{!! Form::close() !!}
 							@endcan
@@ -122,19 +122,15 @@
 					        <td>
 					          	@if($trash->owns)
 									<img src="{{ get_storage_file_url(optional($trash->owns->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
-									<p class="indent10">
-							            <a href="{{ route('admin.vendor.shop.show', $trash->owns->id) }}" class="ajax-modal-btn">
-											{{ $trash->owns->name }}
-								         </a>
-									</p>
+									<p class="indent10">{{ $trash->owns->name }}</p>
 					          	@endif
 				          	</td>
 				          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 				          <td class="row-options">
 							@can('delete', $trash)
-			                    <a href="{{ route('admin.vendor.merchant.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+			                    <a href="{{ route('admin.vendor.shop.restore', $trash->owns->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
 
-			                    {!! Form::open(['route' => ['admin.vendor.merchant.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+			                    {!! Form::open(['route' => ['admin.vendor.shop.destroy', $trash->owns->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 			                        {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 								{!! Form::close() !!}
 							@endcan

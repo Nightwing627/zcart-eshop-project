@@ -102,6 +102,7 @@
 					<tr>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.email') }}</th>
+						<th>{{ trans('app.owner') }}</th>
 						<th>{{ trans('app.deleted_at') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -116,6 +117,14 @@
 							</p>
 						</td>
 						<td>{{ $trash->email }}</td>
+						<td>
+				            @if($trash->owner->image)
+								<img src="{{ get_storage_file_url(optional($trash->owner->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @else
+			            		<img src="{{ get_gravatar_url($trash->owner->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            @endif
+							<p class="indent10">{{ $trash->owner->getName() }}</p>
+						</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('delete', $trash)

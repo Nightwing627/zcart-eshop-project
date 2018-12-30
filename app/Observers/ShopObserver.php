@@ -31,6 +31,17 @@ class ShopObserver
      */
     public function deleting(Shop $shop)
     {
-        //
+        $shop->owner()->delete();
+    }
+
+    /**
+     * Listen to the Shop restored event.
+     *
+     * @param  \App\Shop  $shop
+     * @return void
+     */
+    public function restored(Shop $shop)
+    {
+        $shop->owner()->restore();
     }
 }
