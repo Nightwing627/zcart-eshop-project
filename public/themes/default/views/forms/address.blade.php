@@ -9,7 +9,7 @@
 <div class="row">
   <div class="col-md-8 nopadding-right">
     <div class="form-group">
-      {!! Form::select('country_id', $countries , isset($address) ? Null : isset($cart) ? $cart->ship_to : config('system_settings.address_default_country'), ['class' => 'form-control flat', 'required']) !!}
+      {!! Form::select('country_id', $countries , isset($address) ? Null : ( isset($cart) ? $cart->ship_to : config('system_settings.address_default_country') ), ['class' => 'form-control flat', 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>

@@ -39,6 +39,7 @@
         "teamtnt/laravel-scout-tntsearch-driver": "^6.1",
         "torann/geoip": "^1.0",
         "tucker-eric/eloquentfilter": "^1.3",
+        "yab/laravel-scout-mysql-driver": "^2.1",
         "yabacon/paystack-php": "^2.1",
         "yajra/laravel-datatables-oracle": "^8.13"
     },

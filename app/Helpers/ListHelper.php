@@ -681,7 +681,7 @@ class ListHelper
      */
     public static function popular_items($days = 7, $count = 15)
     {
-        return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
+        return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end','stuff_pick')
         ->available()->withCount(['orders' => function($q){
             $q->withArchived();
         }])->orderBy('orders_count', 'desc')

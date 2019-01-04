@@ -55,6 +55,16 @@ trait Imageable {
     }
 
 	/**
+	 * Return the bannerbg related to the banner bg img
+	 *
+	 * @return Illuminate\Database\Eloquent\Collection
+	 */
+	public function bannerbg()
+    {
+        return $this->morphOne(\App\Image::class, 'imageable')->where('featured','!=',1);
+    }
+
+	/**
 	 * Return the featured Image related to the imageable
 	 *
 	 * @return Illuminate\Database\Eloquent\Collection

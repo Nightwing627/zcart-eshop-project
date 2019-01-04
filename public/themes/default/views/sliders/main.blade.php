@@ -3,7 +3,7 @@
         @foreach($sliders as $slider)
             <li>
                 <a href="{{ $slider['link'] }}">
-                    <img src="{{ get_storage_file_url($slider['featured_image']['path'], 'main_slider') }}" alt="{{ $slider['title'] or 'Slider Image ' . $loop->count }}">
+                    <img src="{{ get_storage_file_url($slider['featured_image']['path'], 'main_slider') }}" alt="{{ $slider['title'] ?? 'Slider Image ' . $loop->count }}">
                 </a>
                 <div class="ei-title">
                     <h2>{{ $slider['title'] }}</h2>

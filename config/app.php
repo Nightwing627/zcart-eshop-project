@@ -181,6 +181,9 @@ return [
         App\Providers\HelperServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class,
+        TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
+        Yab\MySQLScout\Providers\MySQLScoutServiceProvider::class,
     ],
 
     /*
