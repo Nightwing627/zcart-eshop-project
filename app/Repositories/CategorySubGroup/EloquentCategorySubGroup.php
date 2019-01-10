@@ -17,7 +17,11 @@ class EloquentCategorySubGroup extends EloquentRepository implements BaseReposit
 
     public function all()
     {
-        return $this->model->with('group')->withCount('categories')->get();
+        return $this->model->with('group:id,name,deleted_at')->withCount('categories')->get();
     }
 
+    public function trashOnly()
+    {
+        return $this->model->with('group:id,name,deleted_at')->onlyTrashed()->get();
+    }
 }

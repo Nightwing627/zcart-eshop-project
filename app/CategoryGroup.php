@@ -3,12 +3,13 @@
 namespace App;
 
 use App\Common\Imageable;
+use App\Common\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CategoryGroup extends Model
 {
-    use SoftDeletes, Imageable;
+    use SoftDeletes, CascadeSoftDeletes, Imageable;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +24,13 @@ class CategoryGroup extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * Cascade Soft Deletes Relationships
+     *
+     * @var array
+     */
+    protected $cascadeDeletes = ['subGroups'];
 
     /**
      * Get the subGroups associated with the CategoryGroup.

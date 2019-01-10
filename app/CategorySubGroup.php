@@ -2,12 +2,13 @@
 
 namespace App;
 
+use App\Common\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CategorySubGroup extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, CascadeSoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -24,11 +25,18 @@ class CategorySubGroup extends Model
     protected $dates = ['deleted_at'];
 
     /**
+     * Cascade Soft Deletes Relationships
+     *
+     * @var array
+     */
+    protected $cascadeDeletes = ['categories'];
+
+    /**
      * Get the categoryGroup that owns the SubGroup.
      */
     public function group()
     {
-        return $this->belongsTo(CategoryGroup::class, 'category_group_id');
+        return $this->belongsTo(CategoryGroup::class, 'category_group_id')->withTrashed();
     }
 
     /**

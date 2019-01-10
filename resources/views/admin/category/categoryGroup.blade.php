@@ -65,7 +65,7 @@
 
 	<div class="box collapsed-box">
 	    <div class="box-header with-border">
-	      <h3 class="box-title"><i class="fa fa-trash-o"></i>{{ trans('app.trash') }}</h3>
+	      <h3 class="box-title"><i class="fa fa-trash-o"></i> {{ trans('app.trash') }}</h3>
 	      <div class="box-tools pull-right">
 	        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 	        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -77,7 +77,6 @@
 	        <thead>
 	        <tr>
 	          <th>{{ trans('app.category_group') }}</th>
-	          <th>{{ trans('app.sub_group') }}</th>
 	          <th>{{ trans('app.deleted_at') }}</th>
 	          <th>{{ trans('app.option') }}</th>
 	        </tr>
@@ -85,8 +84,14 @@
 	        <tbody>
 		        @foreach($trashes as $trash )
 			        <tr>
-			          <td>{{ $trash->name }}</td>
-			          <td>{{ $trash->sub_groups_count }}</td>
+			          <td>
+			          	<h5>
+			          		<i class="fa {{$trash->icon}}"></i> {{ $trash->name }}
+			          	</h5>
+			          	@if($trash->description)
+				          	<span class="excerpt-td small">{!! str_limit($trash->description, 220) !!}</span>
+			          	@endif
+			          </td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 			          <td class="row-options">
 						@can('delete', $trash)

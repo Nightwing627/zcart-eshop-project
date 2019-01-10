@@ -44,7 +44,7 @@ class Category extends Model
      */
     public function subGroup()
     {
-        return $this->belongsTo(CategorySubGroup::class, 'category_sub_group_id');
+        return $this->belongsTo(CategorySubGroup::class, 'category_sub_group_id')->withTrashed();
     }
     // public function subGroups()
     // {

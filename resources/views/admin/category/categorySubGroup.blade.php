@@ -28,7 +28,12 @@
 								<span class="label label-default indent5 small">{{ trans('app.inactive') }}</span>
 							@endunless
 			          </td>
-			          <td><span class="label label-outline">{{ $categorySubGrp->group->name }}</span></td>
+			          <td>
+			          	@if($categorySubGrp->group->deleted_at)
+				          	<i class="fa fa-trash-o small"></i>
+			          	@endif
+			          	{{ $categorySubGrp->group->name }}
+			          </td>
 			          <td><span class="label label-default">{{ $categorySubGrp->categories_count }}</span></td>
 			          <td class="row-options">
 						@can('update', $categorySubGrp)
@@ -50,7 +55,7 @@
 
 	<div class="box collapsed-box">
 	    <div class="box-header with-border">
-	      <h3 class="box-title"><i class="fa fa-trash-o"></i>{{ ' TRASH' }}</h3>
+	      <h3 class="box-title"><i class="fa fa-trash-o"></i> {{ trans('app.trash') }}</h3>
 	      <div class="box-tools pull-right">
 	        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 	        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -61,6 +66,7 @@
 	        <thead>
 	        <tr>
 	          <th>{{ trans('app.category_sub_group') }}</th>
+	          <th>{{ trans('app.parent') }}</th>
 	          <th>{{ trans('app.deleted_at') }}</th>
 	          <th>{{ trans('app.option') }}</th>
 	        </tr>
@@ -69,6 +75,12 @@
 		        @foreach($trashes as $trash )
 			        <tr>
 			          <td>{{ $trash->name }}</td>
+			          <td>
+			          	@if($trash->group->deleted_at)
+				          	<i class="fa fa-trash-o small"></i>
+			          	@endif
+			          	{{ $trash->group->name }}
+			          </td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 			          <td class="row-options">
 						@can('delete', $trash)

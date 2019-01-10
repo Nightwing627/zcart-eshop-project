@@ -105,7 +105,7 @@ class Shop extends Model
      */
     public function staffs()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class)->withTrashed();
     }
 
     /**

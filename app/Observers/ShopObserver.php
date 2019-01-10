@@ -32,6 +32,7 @@ class ShopObserver
     public function deleting(Shop $shop)
     {
         $shop->owner()->delete();
+        $shop->staffs()->delete();
     }
 
     /**
@@ -43,5 +44,6 @@ class ShopObserver
     public function restored(Shop $shop)
     {
         $shop->owner()->restore();
+        $shop->staffs()->restore();
     }
 }

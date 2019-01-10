@@ -45,7 +45,12 @@
 				          		</span>
 				          	@endif
 			          	</td>
-				        <td><span class="label label-outline">{{ $category->subGroup->name }}</span></td>
+				        <td>
+				          	@if($category->subGroup->deleted_at)
+					          	<i class="fa fa-trash-o small"></i>
+				          	@endif
+				        	{{ $category->subGroup->name }}
+				        </td>
 			          	<td><span class="label label-default">{{ $category->products_count }}</span></td>
 			          	<td><span class="label label-warning">{{ $category->listings_count }}</span></td>
 				        <td class="row-options">
@@ -69,7 +74,7 @@
 
 	<div class="box collapsed-box">
 	    <div class="box-header with-border">
-	      <h3 class="box-title"><i class="fa fa-trash-o"></i>{{ trans('app.trash') }}</h3>
+	      <h3 class="box-title"><i class="fa fa-trash-o"></i> {{ trans('app.trash') }}</h3>
 	      <div class="box-tools pull-right">
 	        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 	        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -81,6 +86,7 @@
 	        <thead>
 	        <tr>
 	          <th>{{ trans('app.category_name') }}</th>
+	          <th>{{ trans('app.parent') }}</th>
 	          <th>{{ trans('app.deleted_at') }}</th>
 	          <th>{{ trans('app.option') }}</th>
 	        </tr>
@@ -94,6 +100,12 @@
 				          	<span class="excerpt-td small">{!! str_limit($trash->description, 150) !!}</span>
 			          	@endif
 			          </td>
+				      <td>
+				          	@if($trash->subGroup->deleted_at)
+					          	<i class="fa fa-trash-o small"></i>
+				          	@endif
+					      	{{ $trash->subGroup->name }}
+				      </td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 			          <td class="row-options">
 						@can('delete', $trash)
