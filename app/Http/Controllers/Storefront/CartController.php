@@ -56,12 +56,16 @@ class CartController extends Controller
 
         $customer_id = Auth::guard('customer')->check() ? Auth::guard('customer')->user()->id : Null;
 
-        $old_cart = Cart::where('shop_id', $item->shop_id)->whereNull('customer_id')->where('ip_address', request()->ip());
-
-        if($customer_id)
-            $old_cart = $old_cart->orWhere('customer_id', $customer_id);
-
-        $old_cart = $old_cart->first();
+        if($customer_id){
+            $old_cart = Cart::where('shop_id', $item->shop_id)->where(function($query) use ($customer_id){
+                $query->where('customer_id', $customer_id)->orWhere(function($q){
+                    $q->whereNull('customer_id')->where('ip_address', request()->ip());
+                });
+            })->first();
+        }
+        else{
+            $old_cart = Cart::where('shop_id', $item->shop_id)->whereNull('customer_id')->where('ip_address', $request->ip())->first();
+        }
 
         // Check if the item is alrealy in the cart
         if($old_cart){

@@ -386,7 +386,7 @@ return [
 		'second_step' => 'Second Step',
 		'subscribe_to_newsletter' => 'Subscribe now to get updates on promotions and coupons.',
 		'third_step' => 'Third Step',
-		'upload_photo' => 'You can only upload 1 files not morethan 2MB in size and supports JPG, JPEG or PNG',
+		'upload_photo' => 'You can upload only 1 file not more than 2MB in size and supports JPG, JPEG or PNG',
 		'when_marketplace_steps_in' => 'If you and the seller can\'t come to an agreement, we will step in and help.',
 	],
 
