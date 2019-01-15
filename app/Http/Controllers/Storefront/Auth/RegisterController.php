@@ -87,6 +87,9 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
+        if(Auth::guard('web')->check())
+            return redirect()->back()->with('error', trans('messages.loogedin_as_admin'));
+
         $this->validator($request->all())->validate();
 
         $customer = $this->create($request->all());

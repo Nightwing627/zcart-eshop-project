@@ -34,7 +34,7 @@
 
 				            		@if($shop->config->maintenance_mode)
 							          	<span class="label label-default indent10">{{ trans('app.maintenance_mode') }}</span>
-				            		@elseif($shop->active)
+				            		@elseif(!$shop->active)
 					            		<span class="label label-default indent10">{{ trans('app.inactive') }}</span>
 									@endif
 								</p>

@@ -25,7 +25,7 @@ return [
         'php' => [
             'openssl',
             'MySQLi',
-            'SQLite',
+            'PDO_sqlite',
             'PDO',
             'mbstring',
             'tokenizer',

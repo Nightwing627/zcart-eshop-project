@@ -57,13 +57,44 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
+            'key' => env('AWS_KEY'),
+            'secret' => env('AWS_SECRET'),
+            'region' => env('AWS_REGION'),
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
+
+            'cache' => [
+                'store' => 'memcached',
+                'expire' => 600,
+                'prefix' => 'cache-prefix',
+            ],
         ],
 
+        'rackspace' => [
+            'driver'    => 'rackspace',
+            'username'  => env('RACKSPACE_USER'),
+            'key'       => env('RACKSPACE_KEY'),
+            'container' => env('RACKSPACE_CONTAINER'),
+            'endpoint'  => 'https://identity.api.rackspacecloud.com/v2.0/',
+            'region'    => env('RACKSPACE_REGION', 'IAD'),
+            'url_type'  => 'publicURL',
+        ],
+    ],
+
+    'sftp' => [
+        'driver' => 'sftp',
+        'host' => env('SFTP_HOST'),
+        'username' => env('SFTP_USER'),
+        'password' => env('SFTP_PASSWORD'),
+        'port' => env('SFTP_PORT', 22),
+
+        // Settings for SSH key based authentication...
+        // 'privateKey' => '/path/to/privateKey',
+        // 'password' => 'encryption-password',
+
+        // Optional SFTP Settings...
+        // 'root' => '',
+        // 'timeout' => 30,
     ],
 
 ];

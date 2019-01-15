@@ -48,7 +48,7 @@ class InitSettings
             config()->set('permissions', $permissions);
 
             // For the authorization purpouse the Super Admin will need auth slugs to hide the merchant module on the dashboard
-            if(Auth::user()->isSuperAdmin()){
+            if(Auth::guard('web')->user()->isSuperAdmin()){
                 $slugs = ListHelper::slugsWithModulAccess();
                 config()->set('authSlugs', $slugs);
             }

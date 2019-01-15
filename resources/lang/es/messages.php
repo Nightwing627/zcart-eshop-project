@@ -162,6 +162,7 @@ return [
     'stock_out_percents' => ':percent% of total :total items',
     'todays_sale_percents' => ':percent% :state from yesterday',
     'no_sale' => 'No sale :date',
+    'loogedin_as_admin' => 'Ya has iniciado sesión como usuario administrador.',
 
     'permission'        => [
             'denied'        => 'Permission denied!',

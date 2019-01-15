@@ -299,7 +299,7 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {
-        return $this->isSuperAdmin() || $this->role_id === Role::ADMIN;
+        return $this->isSuperAdmin() || $this->role_id == Role::ADMIN;
     }
 
     /**
@@ -329,7 +329,7 @@ class User extends Authenticatable
      */
     public function isMerchant()
     {
-        return $this->role_id === Role::MERCHANT;
+        return $this->role_id == Role::MERCHANT;
     }
 
     /**
