@@ -183,6 +183,7 @@ return [
         Spatie\Backup\BackupServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
         TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
+        App\Providers\MysqlScoutServiceProvider::class,
         Yab\MySQLScout\Providers\MySQLScoutServiceProvider::class,
     ],
 

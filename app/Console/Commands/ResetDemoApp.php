@@ -39,7 +39,7 @@ class ResetDemoApp extends Command
     {
         \Log::info('DEMO APP RESET COMMAND CALLED!');
 
-        ini_set('max_execution_time', 180); //180 seconds = 2 minutes
+        ini_set('max_execution_time', 90); //90 seconds = 1.5 minutes
 
         $this->call('down'); // Maintenance mode on
 
