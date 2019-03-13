@@ -96,7 +96,7 @@ return [
     |
     */
     'filter' => [
-        'new_arraival' => 7, //Days
+        'new_arrival' => 7, //Days
     ],
 
     /*

@@ -60,12 +60,13 @@ class CreateInventoryTable extends Migration
 
         Schema::create('attribute_inventory', function (Blueprint $table) {
             $table->integer('attribute_id')->unsigned()->index();
-            $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
             $table->bigInteger('inventory_id')->unsigned()->index();
-            $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
             $table->integer('attribute_value_id')->unsigned()->index();
-            $table->foreign('attribute_value_id')->references('id')->on('attribute_values')->onDelete('cascade');
             $table->timestamps();
+
+            $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
+            $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
+            $table->foreign('attribute_value_id')->references('id')->on('attribute_values')->onDelete('cascade');
         });
 
         // Schema::create('attribute_value_inventory', function (Blueprint $table) {

@@ -19,7 +19,7 @@
             <div class="col-xs-7">
               <div class="form-group">
                 <label>
-                  <input name="remeber" id="remeber" class="i-check-blue" type="checkbox"/> {{ trans('theme.remeber_me') }}
+                  <input name="remeber" id="remeber" class="i-check-blue" type="checkbox"/> {{ trans('theme.remember_me') }}
                 </label>
               </div>
             </div>

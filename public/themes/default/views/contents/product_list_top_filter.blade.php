@@ -26,8 +26,8 @@
             </div>
             <div class="checkbox">
                 <label>
-                    <input name="new_arraivals" class="i-check filter_opt_checkbox" type="checkbox" {{ Request::has('new_arraivals') ? 'checked' : '' }}/>
-                    @lang('theme.new_arraivals')
+                    <input name="new_arrivals" class="i-check filter_opt_checkbox" type="checkbox" {{ Request::has('new_arrivals') ? 'checked' : '' }}/>
+                    @lang('theme.new_arrivals')
                     <span class="small">
                         ({{ $products->where('created_at', '>', \Carbon\Carbon::now()->subDays(config('system.filter.new_arraival', 7)))->count() }})
                     </span>

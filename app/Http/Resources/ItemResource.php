@@ -31,6 +31,7 @@ class ItemResource extends JsonResource
             'offer_price' => $this->offer_price,
             'offer_start' => (string) $this->offer_start,
             'offer_end' => (string) $this->offer_end,
+            'has_offer' => $this->hasOffer(),
             'free_shipping' => $this->free_shipping,
             'shipping_weight' => $this->shipping_weight,
             'min_order_quantity' => $this->min_order_quantity,

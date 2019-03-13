@@ -137,7 +137,7 @@ return [
 		'ending' => 'Be Part <br/>of Our <br/>Story!',
 	],
 
-	'intro_lead' => 'Everything you need to start sell online!',
+	'intro_lead' => 'Everything you need to start selling online!',
 	'intro_heading' => 'It\'s made for you',
 	'selling_price_taglind' => 'Starting :price a month + additional fees',
 
@@ -249,7 +249,7 @@ return [
     // 'my_orders' => 'My orders',
     // 'my_inbox' => 'Inbox',
     'name' => 'Name',
-    'new_arraivals' => 'New Arraivals',
+    'new_arrivals' => 'New Arrivals',
 	'new_password' => 'New Password',
 	'new_messages' => 'New Messages',
     'new' => 'New',
@@ -298,7 +298,7 @@ return [
 	'refund_amount' => 'Refund Amount',
 	'refurbished' => 'Refurbished',
     'register_here' => 'Register here',
-    'remeber_me' => 'Remeber Me',
+    'remember_me' => 'Remember Me',
 	'remember_card_for_future_use' => 'Remeber the card for future use',
     'remove_item' => 'Remove Item',
     'return_goods' => 'Return Goods',

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class PaymentMethodResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,11 @@ class CategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'category_sub_group_id' => $this->category_sub_group_id,
+            'order' => $this->order,
+            'type' => $this->typeName($this->type),
+            'code' => $this->code,
             'name' => $this->name,
-            'slug' => $this->slug,
-            'description' => $this->description,
-            'featured' => $this->featured,
-            'banner_image' => get_cover_img_src($this, 'category'),
+            // 'pattern_img' => (new ImageResource($this->image))->size('tiny'),
         ];
     }
 }

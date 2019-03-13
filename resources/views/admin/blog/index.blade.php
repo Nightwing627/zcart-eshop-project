@@ -40,7 +40,7 @@
 					          	<br/><span class="label label-default">{{ strtoupper(trans('app.draft')) }}</span>
 					        @endif
 			          </td>
-			          <td>{{ $blog->author->getName() }}</td>
+			          <td>{{ $blog->author ? $blog->author->getName() : '' }}</td>
 			          <td>{{ $blog->comments_count }}</td>
 			          <td class="small">
 			          	@if($blog->status)

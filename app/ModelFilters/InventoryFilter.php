@@ -33,9 +33,9 @@ class InventoryFilter extends ModelFilter
         return $this->where('free_shipping', 1);
     }
 
-    public function newArraivals($new_arraivals)
+    public function newArraivals($new_arrivals)
     {
-        return $this->where('inventories.created_at', '>', Carbon::now()->subDays(config('system.filter.new_arraival', 7)));
+        return $this->where('inventories.created_at', '>', Carbon::now()->subDays(config('system.filter.new_arrival', 7)));
     }
 
     public function hasOffers($has_offers)

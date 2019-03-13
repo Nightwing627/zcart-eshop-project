@@ -66,8 +66,38 @@ class PaymentMethod extends Model
         return $query->where('enabled', 1);
     }
 
+    /**
+     * Return payment method type with details
+     *
+     * @return array
+     */
     public function type()
     {
         return get_payment_method_type($this->type);
     }
+
+    /**
+     * Payment method type string
+     *
+     * @param  int $type
+     *
+     * @return str
+     */
+    public function typeName($type)
+    {
+        switch ($type) {
+            case \App\PaymentMethod::TYPE_PAYPAL:
+                return trans('app.payment_method_type.paypal.name');
+
+            case \App\PaymentMethod::TYPE_CREDIT_CARD:
+                return trans('app.payment_method_type.credit_card.name');
+
+            case \App\PaymentMethod::TYPE_MANUAL:
+                return trans('app.payment_method_type.manual.name');
+
+            default:
+                return '';
+        }
+    }
+
 }

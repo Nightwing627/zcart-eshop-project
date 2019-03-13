@@ -525,7 +525,7 @@
         			<table class="table table-default">
         				<thead>
         					<tr>
-        						<td><span class="info-box-text">{{ trans('app.brackdown') }}:</span></td>
+        						<td><span class="info-box-text">{{ trans('app.breakdown') }}:</span></td>
         						<td>&nbsp;</td>
         					</tr>
         				</thead>

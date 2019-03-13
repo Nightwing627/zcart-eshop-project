@@ -48,8 +48,8 @@ class SearchController extends Controller
         if($request->has('free_shipping')) {
             $products = $products->where('free_shipping', 1);
         }
-        if($request->has('new_arraivals')) {
-            $products = $products->where('created_at', '>', Carbon::now()->subDays(config('system.filter.new_arraival', 7)));
+        if($request->has('new_arrivals')) {
+            $products = $products->where('created_at', '>', Carbon::now()->subDays(config('system.filter.new_arrival', 7)));
         }
         if($request->has('has_offers')) {
             $products = $products->where('offer_price', '>', 0)

@@ -267,6 +267,14 @@ class Shop extends Model
     }
 
     /**
+     * Get the activePackagings for the product.
+     */
+    public function activePackagings()
+    {
+        return $this->hasMany(Packaging::class)->where('active',1);
+    }
+
+    /**
      * Get the defaultPackaging for the product.
      */
     public function defaultPackaging()

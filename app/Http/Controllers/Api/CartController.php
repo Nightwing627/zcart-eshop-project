@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Storefront;
+namespace App\Http\Controllers\Api;
 
 use Auth;
 use App\Shop;
@@ -13,6 +13,7 @@ use App\ShippingRate;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CartResource;
 use App\Http\Requests\Validations\DirectCheckoutRequest;
 
 class CartController extends Controller
@@ -37,11 +38,7 @@ class CartController extends Controller
             }])->active();
         }, 'inventories.image', 'shippingPackage']);
 
-        $countries = ListHelper::countries(); // Country list for shop_to dropdown
-
-        $platformDefaultPackaging = getPlatformDefaultPackaging(); // Get platform's default packaging
-
-        return view('cart', compact('carts','countries','platformDefaultPackaging','expressId'));
+        return CartResource::collection($carts);
     }
 
     /**
@@ -94,7 +91,7 @@ class CartController extends Controller
 
         $cart->handling = $old_cart ? $old_cart->handling : getShopConfig($item->shop_id, 'order_handling_cost');
         $cart->total = $old_cart ? ($old_cart->total + ($qtt * $unit_price)) : $unit_price;
-        // $cart->packaging_id = $old_cart ? $old_cart->packaging_id : 1;
+        $cart->packaging_id = $old_cart ? $old_cart->packaging_id : \App\Packaging::FREE_PACKAGING_ID;
 
         // All items need to have shipping_weight to calculate shipping
         // If any one the item missing shipping_weight set null to cart shipping_weight
@@ -123,69 +120,23 @@ class CartController extends Controller
         return response()->json($cart->toArray(), 200);
     }
 
-    /**
-     * Update the cart and redirected to checkout page.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cart    $cart
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Cart $cart)
-    {
-        if( !crosscheckCartOwnership($request, $cart) )
-            return redirect()->route('cart.index')->with('warning', trans('theme.notify.please_login_to_checkout'));
+    // /**
+    //  * Update the cart and redirected to checkout page.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @param  \App\Cart    $cart
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function update(Request $request, Cart $cart)
+    // {
+    //     if( !crosscheckCartOwnership($request, $cart) )
+    //             return redirect()->route('cart.index')->with('warning', trans('theme.notify.please_login_to_checkout'));
 
-        $cart = crosscheckAndUpdateOldCartInfo($request, $cart);
+    //     $cart = crosscheckAndUpdateOldCartInfo($request, $cart);
 
-        return redirect()->route('cart.checkout', $cart);
-    }
-
-    /**
-     * Checkout the specified cart.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function checkout(Request $request, Cart $cart)
-    {
-        if( !crosscheckCartOwnership($request, $cart) )
-            return redirect()->route('cart.index')->with('warning', trans('theme.notify.please_login_to_checkout'));
-
-        $cart = crosscheckAndUpdateOldCartInfo($request, $cart);
-
-        $shop = Shop::where('id', $cart->shop_id)->active()->with(['paymentMethods' => function($q){
-            $q->active();
-        }, 'config'])->first();
-
-        // Abort if the shop is not exist or inactive
-        abort_unless( $shop, 406, trans('theme.notify.seller_has_no_payment_method') );
-
-        $customer = Auth::guard('customer')->check() ? Auth::guard('customer')->user() : Null;
-        $countries = ListHelper::countries(); // Country list for shop_to dropdown
-
-        return view('checkout', compact('cart', 'customer', 'shop', 'countries'));
-    }
-
-    /**
-     * Direct checkout with the item/cart
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  str $slug
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function directCheckout(DirectCheckoutRequest $request, $slug)
-    {
-        $cart = $this->addToCart($request, $slug);
-
-        if (200 == $cart->status())
-            return redirect()->route('cart.index', $cart->getdata()->id);
-        else if (444 == $cart->status())
-            return redirect()->route('cart.index', $cart->getdata()->cart_id);
-
-        return redirect()->back()->with('warning', trans('theme.notify.failed'));
-    }
+    //     return redirect()->route('cart.checkout', $cart);
+    // }
 
     /**
      * validate coupon.
@@ -203,13 +154,49 @@ class CartController extends Controller
         ])->delete();
 
         if($result){
-            if( ! $cart->inventories()->count() )
+            if( ! $cart->inventories()->count() ){
                 $cart->forceDelete();
+            }
+            else {
+                crosscheckAndUpdateOldCartInfo($request, $cart);
+            }
 
-            return response('Item removed', 200);
+            return response()->json('Item removed', 200);
         }
 
-        return response('Item remove failed!', 404);
+        return response()->json('Item remove failed!', 404);
+    }
+
+    /**
+     * Update shipping zone.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function shipTo(Request $request, Cart $cart)
+    {
+        $zone = get_shipping_zone_of($cart->shop_id, $request->country_id, $request->state_id);
+
+        if( ! $zone )
+            return response()->json(['message' => trans('theme.notify.seller_doesnt_ship')], 404);
+
+        // Get shipping address
+        if(is_numeric($request->ship_to))
+            $address = \App\Address::find($request->ship_to)->toString(True);
+        else
+            $address = get_address_str_from_request_data($request);
+
+        // Update the cart with shipping zone value
+        $taxrate = $zone->tax_id ? getTaxRate($zone->tax_id) : Null;
+        $cart->taxrate = $taxrate;
+        $cart->taxes = ($cart->total * $taxrate)/100;
+        $cart->shipping_zone_id = $zone->id;
+        $cart->save();
+
+        return response()->json([
+            'address' => $address,
+            'options' => filterShippingOptions($zone->id, $cart->total, $cart->shipping_weight),
+        ], 200);
     }
 
     /**
@@ -218,22 +205,36 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function validateCoupon(Request $request)
+    public function validateCoupon(Request $request, Cart $cart)
     {
-        // $request->all();
         $coupon = Coupon::active()->where([
             ['code', $request->coupon],
-            ['shop_id', $request->shop],
+            ['shop_id', $cart->shop_id],
         ])->withCount(['orders','customerOrders'])->first();
 
-        if( ! $coupon ) return response('Coupon not found', 404);
+        if( ! $coupon )
+            return response()->json(['message' => trans('theme.notify.coupon_not_exist')], 404);
 
-        if( ! $coupon->isLive() || ! $coupon->isValidCustomer() ) return response('Coupon not valid', 403);
+        if( ! $coupon->isLive() || ! $coupon->isValidCustomer() )
+            return response()->json(['message' => trans('theme.notify.coupon_not_valid')], 403);
 
-        if( ! $coupon->isValidZone($request->zone) ) return response('Coupon not valid for shipping area', 443);
+        if( $coupon->min_order_amount && $cart->total < $coupon->min_order_amount )
+            return response()->json(['message' => trans('theme.notify.coupon_min_order_value')], 403);
 
-        if( ! $coupon->hasQtt() ) return response('Coupon qtt limit exit', 444);
+        if( ! $coupon->isValidZone($request->zone) )
+            return response()->json(['message' => trans('theme.notify.coupon_not_valid_for_zone')], 403);
 
-        return response()->json($coupon->toArray());
+        if( ! $coupon->hasQtt() )
+            return response()->json(['message' => trans('theme.notify.coupon_limit_expired')], 403);
+
+        // The coupon is valid
+        $disc_amnt = 'percent' == $coupon->type ? ( $coupon->value * ($cart->total/100) ) : $coupon->value;
+
+        // Update the cart with coupon value
+        $cart->discount = $disc_amnt < $cart->total ? $disc_amnt : $cart->total; // Discount the amount or the cart total
+        $cart->coupon_id = $coupon->id;
+        $cart->save();
+
+        return response()->json($coupon->toArray(), 200);
     }
 }

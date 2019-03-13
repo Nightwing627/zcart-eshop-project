@@ -53,7 +53,7 @@ class Warehouse extends Model
      */
     public function manager()
     {
-        return $this->belongsTo(User::class, 'incharge');
+        return $this->belongsTo(User::class, 'incharge')->withDefault();
     }
 
     /**

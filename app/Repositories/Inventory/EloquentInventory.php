@@ -215,7 +215,7 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
      */
     public function setAttributes($inventory, $attributes)
     {
-        $attributes = array_filter($attributes);        // remove empty elements
+        $attributes = array_filter($attributes ?? []);        // remove empty elements
 
         $temp = [];
         foreach ($attributes as $attribute_id => $attribute_value_id){

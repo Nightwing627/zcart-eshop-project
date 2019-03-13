@@ -58,8 +58,8 @@
 		    </div>
 
 			<div class="form-group">
-			  {!! Form::label('description', trans('app.form.description')) !!}
-			  {!! Form::textarea('description', Null, ['class' => 'form-control summernote-without-toolbar', 'rows' => '2', 'placeholder' => trans('app.placeholder.description')]) !!}
+			  {!! Form::label('description', trans('app.form.biography')) !!}
+			  {!! Form::textarea('description', Null, ['class' => 'form-control summernote-without-toolbar', 'rows' => '2', 'placeholder' => trans('app.placeholder.biography')]) !!}
 			</div>
 
             {!! Form::submit(trans('app.update'), ['class' => 'btn btn-flat btn-new']) !!}

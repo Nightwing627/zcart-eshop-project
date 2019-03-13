@@ -1,5 +1,5 @@
 <div class="product-info">
-	@if($item->product->manufacturer)
+	@if($item->product->manufacturer->slug)
   	<a href="{{ route('show.brand', $item->product->manufacturer->slug) }}" class="product-info-seller-name">{{ $item->product->manufacturer->name }}</a>
 	@else
     <a href="{{ route('show.store', $item->shop->slug) }}" class="product-info-seller-name">{{ $item->shop->name }}</a>

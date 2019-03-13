@@ -73,8 +73,8 @@
 </div>
 
 <div class="form-group">
-  {!! Form::label('description', trans('app.form.description')) !!}
-  {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'rows' => '2', 'placeholder' => trans('app.placeholder.description')]) !!}
+  {!! Form::label('description', trans('app.form.biography')) !!}
+  {!! Form::textarea('description', null, ['class' => 'form-control summernote', 'rows' => '2', 'placeholder' => trans('app.placeholder.biography')]) !!}
 </div>
 
 @unless(isset($user))

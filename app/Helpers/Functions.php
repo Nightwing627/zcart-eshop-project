@@ -1106,7 +1106,10 @@ if ( ! function_exists('filterShippingOptions') )
                         ->where('maximum', '>=', $weight);
                 });
             }
-        });
+        // });
+        })
+        ->select('shipping_rates.*', 'carriers.name as carrier_name') // Newly added
+        ->leftJoin('carriers', 'shipping_rates.carrier_id', '=', 'carriers.id'); // Newly added
 
         return $results->get();
     }
@@ -1116,10 +1119,8 @@ if ( ! function_exists('getPlatformDefaultPackaging') )
 {
     /**
      * Return default packaging ID for given shop
-     *
-     * @param $int shop
      */
-    function getPlatformDefaultPackaging($shop = null)
+    function getPlatformDefaultPackaging()
     {
         return \DB::table('packagings')->select('id', 'name', 'cost')
         ->whereNull('shop_id')->where('id', \App\Packaging::FREE_PACKAGING_ID)->first();
@@ -1148,7 +1149,7 @@ if ( ! function_exists('getDefaultPackaging') )
 if ( ! function_exists('getPackagings') )
 {
     /**
-     * Return Shipping options for perticulater shop
+     * Return Packaging options for perticulater shop
      *
      * @param $int shop
      */
@@ -1167,9 +1168,27 @@ if ( ! function_exists('getPackagingCost') )
      *
      * @param $int packaging
      */
-    function getPackagingCost($packaging)
+    function getPackagingCost($packaging = Null)
     {
+        if(!$packaging) return Null;
+
         return \DB::table('packagings')->select('cost')->where('id', $packaging)->first()->cost;
+    }
+}
+
+
+if ( ! function_exists('getShippingingCost') )
+{
+    /**
+     * Return shipping Cost for the given id
+     *
+     * @param $int shipping
+     */
+    function getShippingingCost($shipping = Null)
+    {
+        if(!$shipping) return Null;
+
+        return \DB::table('shipping_rates')->select('rate')->where('id', $shipping)->first()->rate;
     }
 }
 

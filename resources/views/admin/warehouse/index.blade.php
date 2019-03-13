@@ -31,7 +31,7 @@
 							</p>
 						</td>
 						<td>{{ $warehouse->email }}</td>
-						<td>{{ $warehouse->manager->name or '' }}</td>
+						<td>{{ $warehouse->manager ? $warehouse->manager->getName() : '' }}</td>
 						<td>{{ ($warehouse->active) ? trans('app.active') : trans('app.inactive') }}</td>
 						<td class="row-options">
 							@can('view', $warehouse)
@@ -90,7 +90,7 @@
 							</p>
 						</td>
 						<td>{{ $trash->email }}</td>
-						<td>{{ $trash->manager->name or '' }}</td>
+						<td>{{ $trash->manager ? $trash->manager->getName() : '' }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('delete', $trash)

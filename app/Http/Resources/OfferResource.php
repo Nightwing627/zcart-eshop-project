@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class OfferResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,15 @@ class CategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'category_sub_group_id' => $this->category_sub_group_id,
             'name' => $this->name,
             'slug' => $this->slug,
+            'gtin_type' => $this->gtin_type,
+            'gtin' => $this->gtin,
             'description' => $this->description,
-            'featured' => $this->featured,
-            'banner_image' => get_cover_img_src($this, 'category'),
+            'brand' => $this->manufacturer->name,
+            'brand_slug' => $this->manufacturer->slug,
+            'image' => (new ImageResource($this->featuredImage))->size('small'),
+            'listings' => ListingResource::collection($this->inventories),
         ];
     }
 }

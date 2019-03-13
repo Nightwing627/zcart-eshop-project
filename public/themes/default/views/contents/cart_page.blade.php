@@ -57,7 +57,7 @@
             <div class="col-md-9 nopadding">
                 <div class="shopping-cart-header-section">
                   <span>@lang('theme.store'):</span>
-                  @if($cart->shop)
+                  @if($cart->shop->slug)
                     <a href="{{ route('show.store', $cart->shop->slug) }}"> {{ $cart->shop->name }}</a>
                   @else
                     @lang('theme.store_not_available')

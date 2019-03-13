@@ -48,7 +48,7 @@
             <div class="form-group">
               {!! Form::label('active', trans('app.form.status').'*', ['class' => 'with-help']) !!}
               <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_inventory_status') }}"></i>
-              {!! Form::select('active', ['1' => trans('app.on_sale'), '0' => trans('app.inactive')], isset($inventory) ? null : 1, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+              {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], isset($inventory) ? null : 1, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
               <div class="help-block with-errors"></div>
             </div>
           </div>
