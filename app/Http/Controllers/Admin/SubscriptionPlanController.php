@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Shop;
 use App\SubscriptionPlan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -96,7 +97,21 @@ class SubscriptionPlanController extends Controller
         if( env('APP_DEMO') == true && in_array($subscriptionPlan->plan_id, config('system.demo.plans', ['business', 'individual', 'professional'])) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
-        $subscriptionPlan->update($request->all());
+        try{
+            \DB::beginTransaction();
+
+            // If the plan_id changed. Update all shops that under this plan
+            if($subscriptionPlan->plan_id !== $request->plan_id){
+                Shop::where('current_billing_plan', $subscriptionPlan->plan_id)
+                ->update(['current_billing_plan' => $request->plan_id]);
+            }
+
+            $subscriptionPlan->update($request->all());
+
+            \DB::commit();
+        }catch(\Exception $e){
+            DB::rollback();
+        }
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }

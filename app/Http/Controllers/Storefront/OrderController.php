@@ -41,11 +41,21 @@ class OrderController extends Controller
 
         crosscheckAndUpdateOldCartInfo($request, $cart);
 
+        // Get shipping address
+        if(is_numeric($request->ship_to))
+            $address = \App\Address::find($request->ship_to)->toString(True);
+        else
+            $address = get_address_str_from_request_data($request);
+
+        // Push shipping address into the request
+        $request->merge(['shipping_address' => $address]);
+
         // Start transaction!
         DB::beginTransaction();
         try {
             // Create the order
-            $order = $this->saveOrderFromCart($request, $cart);
+            // $order = $this->saveOrderFromCart($request, $cart);
+            $order = saveOrderFromCart($request, $cart);
 
             // Process payment with credit card
             if (
@@ -117,7 +127,7 @@ class OrderController extends Controller
         }
 
         // Decrease the stock of the order items from the listing
-        $this->syncInventory($order);
+        // $this->syncInventory($order);
 
         event(new OrderCreated($order));   // Trigger the Event
 
@@ -273,7 +283,7 @@ class OrderController extends Controller
         $this->markOrderAsPaid($order);
 
         // Decrease the stock of the order items from the listing
-        $this->syncInventory($order);
+        // $this->syncInventory($order);
 
         event(new OrderCreated($order));   // Trigger the Event
 
@@ -427,7 +437,7 @@ class OrderController extends Controller
         $this->markOrderAsPaid($order);
 
         // Decrease the stock of the order items from the listing
-        $this->syncInventory($order);
+        // $this->syncInventory($order);
 
         event(new OrderCreated($order));   // Trigger the Event
 
@@ -551,7 +561,7 @@ class OrderController extends Controller
         $this->markOrderAsPaid($order);
 
         // Decrease the stock of the order items from the listing
-        $this->syncInventory($order);
+        // $this->syncInventory($order);
 
         event(new OrderCreated($order));   // Trigger the Event
 
@@ -559,7 +569,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Payment faile. revert the order
+     * Payment failed. revert the order
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  Order  $order
@@ -568,7 +578,8 @@ class OrderController extends Controller
      */
     public function paymentFailed(Request $request, $order)
     {
-        $cart = $this->revertOrder($order);
+        // $cart = $this->revertOrder($order);
+        $cart = revertOrderAndMoveToCart($order);
 
         return redirect()->route('cart.checkout', $cart)->with('error', trans('theme.notify.payment_failed'))->withInput();
     }
@@ -667,91 +678,91 @@ class OrderController extends Controller
      *
      * @return App\Order
      */
-    private function saveOrderFromCart($request, $cart)
-    {
-        // Get shipping address
-        if(is_numeric($request->ship_to))
-            $address = \App\Address::find($request->ship_to)->toString(True);
-        else
-            $address = get_address_str_from_request_data($request);
+    // private function saveOrderFromCart($request, $cart)
+    // {
+    //     // Get shipping address
+    //     if(is_numeric($request->ship_to))
+    //         $address = \App\Address::find($request->ship_to)->toString(True);
+    //     else
+    //         $address = get_address_str_from_request_data($request);
 
-        // Set shipping_rate_id and handling cost to NULL if its free shipping
-        if($cart->is_free_shipping()) {
-            $cart->shipping_rate_id = Null;
-            $cart->handling = Null;
-        }
+    //     // Set shipping_rate_id and handling cost to NULL if its free shipping
+    //     if($cart->is_free_shipping()) {
+    //         $cart->shipping_rate_id = Null;
+    //         $cart->handling = Null;
+    //     }
 
-        // Save the order
-        $order = new Order;
-        $order->fill(
-            array_merge($cart->toArray(), [
-                'grand_total' => $cart->grand_total(),
-                'order_number' => get_formated_order_number($cart->shop_id),
-                'carrier_id' => $cart->carrier() ? $cart->carrier->id : NULL,
-                'shipping_address' => $address,
-                'billing_address' => $address,
-                'email' => $request->email,
-                'buyer_note' => $request->buyer_note
-            ])
-        );
-        $order->save();
+    //     // Save the order
+    //     $order = new Order;
+    //     $order->fill(
+    //         array_merge($cart->toArray(), [
+    //             'grand_total' => $cart->grand_total(),
+    //             'order_number' => get_formated_order_number($cart->shop_id),
+    //             'carrier_id' => $cart->carrier() ? $cart->carrier->id : NULL,
+    //             'shipping_address' => $address,
+    //             'billing_address' => $address,
+    //             'email' => $request->email,
+    //             'buyer_note' => $request->buyer_note
+    //         ])
+    //     );
+    //     $order->save();
 
-        // Add order item into pivot table
-        $cart_items = $cart->inventories->pluck('pivot');
-        $order_items = [];
-        foreach ($cart_items as $item) {
-            $order_items[] = [
-                'order_id'          => $order->id,
-                'inventory_id'      => $item->inventory_id,
-                'item_description'  => $item->item_description,
-                'quantity'          => $item->quantity,
-                'unit_price'        => $item->unit_price,
-                'created_at'        => $item->created_at,
-                'updated_at'        => $item->updated_at,
-            ];
-        }
-        \DB::table('order_items')->insert($order_items);
+    //     // Add order item into pivot table
+    //     $cart_items = $cart->inventories->pluck('pivot');
+    //     $order_items = [];
+    //     foreach ($cart_items as $item) {
+    //         $order_items[] = [
+    //             'order_id'          => $order->id,
+    //             'inventory_id'      => $item->inventory_id,
+    //             'item_description'  => $item->item_description,
+    //             'quantity'          => $item->quantity,
+    //             'unit_price'        => $item->unit_price,
+    //             'created_at'        => $item->created_at,
+    //             'updated_at'        => $item->updated_at,
+    //         ];
+    //     }
+    //     \DB::table('order_items')->insert($order_items);
 
-        return $order;
-    }
+    //     return $order;
+    // }
 
-    /**
-     * Revert order to cart
-     *
-     * @param  App\Order $Order
-     *
-     * @return App\Cart
-     */
-    private function revertOrder($order)
-    {
-        if( !$order instanceOf Order )
-            $order = Order::find($order);
+    // /**
+    //  * Revert order to cart
+    //  *
+    //  * @param  App\Order $Order
+    //  *
+    //  * @return App\Cart
+    //  */
+    // private function revertOrder($order)
+    // {
+    //     if( !$order instanceOf Order )
+    //         $order = Order::find($order);
 
-        if (!$order) return;
+    //     if (!$order) return;
 
-        // Save the cart
-        $cart = Cart::create(array_merge($order->toArray(), ['ip_address' => request()->ip()]));
+    //     // Save the cart
+    //     $cart = Cart::create(array_merge($order->toArray(), ['ip_address' => request()->ip()]));
 
-        // Add order item into pivot table
-        $order_items = $order->inventories->pluck('pivot');
-        $cart_items = [];
-        foreach ($order_items as $item) {
-            $cart_items[] = [
-                'cart_id'           => $cart->id,
-                'inventory_id'      => $item->inventory_id,
-                'item_description'  => $item->item_description,
-                'quantity'          => $item->quantity,
-                'unit_price'        => $item->unit_price,
-                'created_at'        => $item->created_at,
-                'updated_at'        => $item->updated_at,
-            ];
-        }
-        \DB::table('cart_items')->insert($cart_items);
+    //     // Add order item into pivot table
+    //     $order_items = $order->inventories->pluck('pivot');
+    //     $cart_items = [];
+    //     foreach ($order_items as $item) {
+    //         $cart_items[] = [
+    //             'cart_id'           => $cart->id,
+    //             'inventory_id'      => $item->inventory_id,
+    //             'item_description'  => $item->item_description,
+    //             'quantity'          => $item->quantity,
+    //             'unit_price'        => $item->unit_price,
+    //             'created_at'        => $item->created_at,
+    //             'updated_at'        => $item->updated_at,
+    //         ];
+    //     }
+    //     \DB::table('cart_items')->insert($cart_items);
 
-        $order->forceDelete();   // Delete the order
+    //     $order->forceDelete();   // Delete the order
 
-        return $cart;
-    }
+    //     return $cart;
+    // }
 
     /**
      * MarkOrderAsPaid
@@ -770,20 +781,20 @@ class OrderController extends Controller
         return $order;
     }
 
-    /**
-     * Sync up the inventory
-     * @param  Order $order
-     *
-     * @return void
-     */
-    private function syncInventory(Order $order)
-    {
-        foreach ($order->inventories as $item) {
-            $item->decrement('stock_quantity', $item->pivot->quantity);
-        }
+    // /**
+    //  * Sync up the inventory
+    //  * @param  Order $order
+    //  *
+    //  * @return void
+    //  */
+    // private function syncInventory(Order $order)
+    // {
+    //     foreach ($order->inventories as $item) {
+    //         $item->decrement('stock_quantity', $item->pivot->quantity);
+    //     }
 
-        return;
-    }
+    //     return;
+    // }
 
     private function logErrors($error, $feedback)
     {

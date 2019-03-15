@@ -56,11 +56,14 @@ Route::group(['namespace' => 'Api'], function(){
 
 	// Route::get('cart/{expressId?}', 'CartController@index')->name('cart.index');
 	// Route::get('checkout/{slug}', 'CheckoutController@directCheckout');
+
+	Route::post('register', 'AuthController@register');
+	Route::post('login', 'AuthController@login');
+	Route::post('logout', 'AuthController@logout');
+
 });
 
-Route::post('login', 'Storefront\Auth\LoginController@login');
-Route::post('logout', 'Storefront\Auth\LoginController@logout');
-Route::post('register', 'Storefront\Auth\RegisterController@register');
+
 // Route::group(['middleware' => 'auth:api'], function() {
 //     Route::get('articles', 'ArticleController@index');
 //     Route::get('articles/{article}', 'ArticleController@show');

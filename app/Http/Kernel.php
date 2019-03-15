@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
 
         //The Application Middlewares
         \App\Http\Middleware\CheckForInstallation::class,
+        \Spatie\Cors\Cors::class
 
         // SEO
     ];

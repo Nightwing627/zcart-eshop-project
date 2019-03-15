@@ -4,8 +4,8 @@
 {{ trans('notifications.email_verification.message') }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.email_verification.action.color')])
-{{ trans('notifications.email_verification.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'green'])
+{{ trans('notifications.email_verification.button_text') }}
 @endcomponent
 
 {{ trans('messages.thanks') }},<br>

@@ -51,7 +51,9 @@
 			  			<tbody>
 					  		@foreach($plans as $plan)
 					  			<tr>
-					  				<td class="lead">{{ $plan->name }}</td>
+					  				<td class="lead">
+					  					{{ $plan->name }}
+					  				</td>
 					  				<td>
 			                            <a href="{{ route('admin.account.subscription.features', $plan->plan_id) }}" class="ajax-modal-btn btn btn-default">
 			                                <i class="fa fa-star-o"></i> {{ trans('app.features') }}

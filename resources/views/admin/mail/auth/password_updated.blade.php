@@ -4,8 +4,8 @@
 {{ trans('notifications.password_updated.message') }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.password_updated.action.color')])
-{{ trans('notifications.password_updated.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'blue'])
+{{ trans('notifications.password_updated.button_text') }}
 @endcomponent
 
 {{ trans('messages.thanks') }},<br>

@@ -14,11 +14,16 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
-        return $this;
         return [
             'id' => $this->id,
+            'order_number' => $this->order_number,
             'customer_id' => $this->customer_id,
             'ip_address' => $this->ip_address,
+            'email' => $this->email,
+            'payment_status' => $this->paymentStatusName(True),
+            'payment_method' => new PaymentMethodResource($this->paymentMethod),
+            'message_to_customer' => $this->message_to_customer,
+            'buyer_note' => $this->buyer_note,
             'ship_to' => $this->ship_to,
             'shipping_zone_id' => $this->shipping_zone_id,
             'shipping_rate_id' => $this->shipping_rate_id,
@@ -31,15 +36,13 @@ class OrderResource extends JsonResource
             'shipping' => $this->shipping,
             'packaging' => $this->packaging,
             'handling' => $this->handling,
-            'taxrate' => $this->taxrate,
             'taxes' => $this->taxes,
             'discount' => $this->discount,
             'grand_total' => $this->grand_total,
+            'taxrate' => $this->taxrate,
             'shop' => new ShopResource($this->shop),
             'items' => $this->inventories,
             // 'items' => ItemResource::collection($this->inventories),
-            // 'hot_item' => $this->orders_count >= config('system.popular.hot_item.sell_count', 3) ? true : false,
-            // 'feedbacks' => FeedbackResource::collection($this->feedbacks),
         ];
     }
 }

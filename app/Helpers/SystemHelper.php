@@ -224,6 +224,105 @@ if ( ! function_exists('setAdditionalCartInfo') )
     }
 }
 
+if ( ! function_exists('saveOrderFromCart') )
+{
+    /**
+     * Create a new order from the cart
+     *
+     * @param  Request $request
+     * @param  App\Cart $cart
+     *
+     * @return App\Order
+     */
+    function saveOrderFromCart($request, $cart)
+    {
+        // Set shipping_rate_id and handling cost to NULL if its free shipping
+        if($cart->is_free_shipping()) {
+            $cart->shipping_rate_id = Null;
+            $cart->handling = Null;
+        }
+
+        // Save the order
+        $order = new Order;
+        $order->fill(
+            array_merge($cart->toArray(), [
+                'grand_total' => $cart->grand_total(),
+                'order_number' => get_formated_order_number($cart->shop_id),
+                'carrier_id' => $cart->carrier() ? $cart->carrier->id : NULL,
+                'shipping_address' => $request->shipping_address,
+                'billing_address' => $request->shipping_address,
+                'email' => $request->email,
+                'buyer_note' => $request->buyer_note
+            ])
+        );
+        $order->save();
+
+        // Add order item into pivot table
+        $cart_items = $cart->inventories->pluck('pivot');
+        $order_items = [];
+        foreach ($cart_items as $item) {
+            $order_items[] = [
+                'order_id'          => $order->id,
+                'inventory_id'      => $item->inventory_id,
+                'item_description'  => $item->item_description,
+                'quantity'          => $item->quantity,
+                'unit_price'        => $item->unit_price,
+                'created_at'        => $item->created_at,
+                'updated_at'        => $item->updated_at,
+            ];
+        }
+        \DB::table('order_items')->insert($order_items);
+
+         // Sync up the inventory. Decrease the stock of the order items from the listing
+        foreach ($order->inventories as $item) {
+            $item->decrement('stock_quantity', $item->pivot->quantity);
+        }
+
+        return $order;
+    }
+}
+
+if ( ! function_exists('revertOrderAndMoveToCart') )
+{
+    /**
+     * Revert order to cart
+     *
+     * @param  App\Order $Order
+     *
+     * @return App\Cart
+     */
+    function revertOrderAndMoveToCart($order)
+    {
+        if( !$order instanceOf Order )
+            $order = Order::find($order);
+
+        if (!$order) return;
+
+        // Save the cart
+        $cart = Cart::create(array_merge($order->toArray(), ['ip_address' => request()->ip()]));
+
+        // Add order item into pivot table
+        $order_items = $order->inventories->pluck('pivot');
+        $cart_items = [];
+        foreach ($order_items as $item) {
+            $cart_items[] = [
+                'cart_id'           => $cart->id,
+                'inventory_id'      => $item->inventory_id,
+                'item_description'  => $item->item_description,
+                'quantity'          => $item->quantity,
+                'unit_price'        => $item->unit_price,
+                'created_at'        => $item->created_at,
+                'updated_at'        => $item->updated_at,
+            ];
+        }
+        \DB::table('cart_items')->insert($cart_items);
+
+        $order->forceDelete();   // Delete the order
+
+        return $cart;
+    }
+}
+
 if ( ! function_exists('prepareFilteredListings') )
 {
     /**

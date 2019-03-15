@@ -19,10 +19,7 @@ return [
         'subject' => 'Your :marketplace password has bee updated successfully!',
         'greeting' => 'Hello :user!',
         'message' => 'Your account login password has been changed successfully! If you didn\'t make it, please contact us asap! Click the button below to login into your profile page.',
-        'action' => [
-            'text' => 'Visit your profile',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Visit Your Profile',
     ],
 
     // Billing Notifications
@@ -413,10 +410,7 @@ return [
         'subject' => 'Verify your :marketplace account!',
         'greeting' => 'Congratulation :user!',
         'message' => 'Your account has been created successfully! Click the button below to verify your email address.',
-        'action' => [
-            'text' => 'Verify me',
-            'color' => 'green',
-        ],
+        'button_text' => 'Verify My Email',
     ],
 
 ];

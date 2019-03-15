@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use DB;
 use Auth;
 use App\Shop;
 use App\Cart;
@@ -12,6 +13,7 @@ use App\Packaging;
 use App\ShippingRate;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
+use App\Events\Order\OrderCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Http\Requests\Validations\DirectCheckoutRequest;
@@ -44,37 +46,27 @@ class CheckoutController extends Controller
 
         $cart = crosscheckAndUpdateOldCartInfo($request, $cart);
 
-        // Set shipping_rate_id and handling cost to NULL if its free shipping
-        if($cart->is_free_shipping()) {
-            $cart->shipping_rate_id = Null;
-            $cart->handling = Null;
+        // Start transaction!
+        DB::beginTransaction();
+        try {
+            // Create the order from the cart
+            $order = saveOrderFromCart($request, $cart);
+
+        } catch(\Exception $e){
+            \Log::error($e);        // Log the error
+
+            // rollback the transaction and log the error
+            DB::rollback();
+
+            return response()->json(trans('theme.notify.order_creation_failed'), 500);
         }
 
-        // Save the order
-        $order = new Order;
-        $order->fill(
-            array_merge($cart->toArray(), [
-                'grand_total' => $cart->grand_total(),
-                'order_number' => get_formated_order_number($cart->shop_id),
-                'carrier_id' => $cart->carrier() ? $cart->carrier->id : NULL,
-                'shipping_address' => $request->shipping_address,
-                'billing_address' => $request->shipping_address,
-                'email' => $request->email,
-                'buyer_note' => $request->buyer_note
-            ])
-        );
-        $order->save();
+        // Everything is fine. Now commit the transaction
+        DB::commit();
 
-        // $shop = Shop::where('id', $cart->shop_id)->active()->with(['paymentMethods' => function($q){
-        //     $q->active();
-        // }, 'config'])->first();
+        $cart->forceDelete();   // Delete the cart
 
-        // // Abort if the shop is not exist or inactive
-        // if (!$shop)
-        //     return response()->json(['message' => trans('theme.notify.seller_has_no_payment_method')], 404);
-
-        // $customer = Auth::guard('customer')->check() ? Auth::guard('customer')->user() : Null;
-        // $countries = ListHelper::countries(); // Country list for shop_to dropdown
+        event(new OrderCreated($order));   // Trigger the Event
 
         return new OrderResource($order);
     }

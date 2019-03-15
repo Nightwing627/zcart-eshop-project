@@ -401,21 +401,26 @@ class Order extends Model
         return $this->update(['feedback_id' => $feedback_id]);
     }
 
-    public function paymentStatusName()
+    public function paymentStatusName($plain = False)
     {
         switch ($this->payment_status) {
             case static::PAYMENT_STATUS_UNPAID:
-                return '<span class="label label-danger">' . strtoupper(trans('app.statuses.unpaid')) . '</span>';
+                return $plain ? strtoupper(trans('app.statuses.unpaid')) : '<span class="label label-danger">' . strtoupper(trans('app.statuses.unpaid')) . '</span>';
+
             case static::PAYMENT_STATUS_PENDING:
-                return '<span class="label label-info">' . strtoupper(trans('app.statuses.pending')) . '</span>';
+                return $plain ? strtoupper(trans('app.statuses.pending')) : '<span class="label label-info">' . strtoupper(trans('app.statuses.pending')) . '</span>';
+
             case static::PAYMENT_STATUS_PAID:
-                return '<span class="label label-outline">' . strtoupper(trans('app.statuses.paid')) . '</span>';
+                return $plain ? strtoupper(trans('app.statuses.paid')) : '<span class="label label-outline">' . strtoupper(trans('app.statuses.paid')) . '</span>';
+
             case static::PAYMENT_STATUS_INITIATED_REFUND:
-                return '<span class="label label-info">' . strtoupper(trans('app.statuses.refund_initiated')) . '</span>';
+                return $plain ? strtoupper(trans('app.statuses.refund_initiated')) : '<span class="label label-info">' . strtoupper(trans('app.statuses.refund_initiated')) . '</span>';
+
             case static::PAYMENT_STATUS_PARTIALLY_REFUNDED:
-                return '<span class="label label-info">' . strtoupper(trans('app.statuses.partially_refunded')) . '</span>';
+                return $plain ? strtoupper(trans('app.statuses.partially_refunded')) : '<span class="label label-info">' . strtoupper(trans('app.statuses.partially_refunded')) . '</span>';
+
             case static::PAYMENT_STATUS_REFUNDED:
-                return '<span class="label label-danger">' . strtoupper(trans('app.statuses.refunded')) . '</span>';
+                return $plain ? strtoupper(trans('app.statuses.refunded')) : '<span class="label label-danger">' . strtoupper(trans('app.statuses.refunded')) . '</span>';
         }
     }
 }
