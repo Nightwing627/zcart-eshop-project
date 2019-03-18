@@ -88,7 +88,6 @@ return [
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
 
-
     // Custom app validations
     // 'full_name_required'            => 'Your name is required',
     'composite_unique'              => 'The :attribute :value already exists.',
@@ -132,6 +131,7 @@ return [
     'import_data_required' => 'The dataset is not valid to import. Please check your data and try again.',
     'do_action_required'    => 'You didn\'t provide the input.',
     'do_action_invalid'    => 'The given input is not valid.',
+    'recaptcha'=>'Please ensure that you are a human!',
 
     /*
     |--------------------------------------------------------------------------

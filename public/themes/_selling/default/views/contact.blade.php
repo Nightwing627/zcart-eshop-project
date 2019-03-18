@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12 text-center">
-            <h2 class="section-heading">{{ trans('app.contact_us') }}</h2>
+            <h2 class="section-heading">{{ trans('theme.contact_us') }}</h2>
             <h3 class="section-subheading" style="color: #fed136;">{{ trans('messages.we_will_get_back_to_you_soon') }}</h3>
         </div>
     </div>
@@ -36,12 +36,27 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="col-lg-12 text-center">
-                        <div id="success"></div>
-                        <button type="submit" class="btn btn-xl">{{ trans('app.send_message') }}</button>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @if(env('GOOGLE_RECAPTCHA_KEY'))
+                              <div class="g-recaptcha"
+                                  data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}">
+                              </div>
+                            @endif
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <div class="form-group">
+                            <div id="success"></div>
+                            <button type="submit" class="btn btn-xl">{{ trans('theme.button.send_message') }}</button>
+                        </div>
                     </div>
                 </div>
             {!! Form::close() !!}
         </div>
     </div>
 </div>
+
+<script src='https://www.google.com/recaptcha/api.js'></script>

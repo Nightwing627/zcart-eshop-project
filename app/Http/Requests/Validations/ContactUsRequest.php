@@ -29,6 +29,7 @@ class ContactUsRequest extends Request
          'email' => 'required|email',
          'subject' => 'required|max:200',
          'message' => 'required|max:500',
+         'g-recaptcha-response' => 'required|recaptcha'
       ];
     }
 }

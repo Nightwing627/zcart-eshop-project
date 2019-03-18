@@ -278,6 +278,12 @@ if ( ! function_exists('saveOrderFromCart') )
             $item->decrement('stock_quantity', $item->pivot->quantity);
         }
 
+
+        // Reduce the coupone in use
+        if ($order->coupon_id)
+            Coupon::find($order->coupon_id)->decrement('quantity');
+            // \DB::table('coupons')->where('id', $order->coupon_id)->decrement('quantity');
+
         return $order;
     }
 }
@@ -316,6 +322,10 @@ if ( ! function_exists('revertOrderAndMoveToCart') )
             ];
         }
         \DB::table('cart_items')->insert($cart_items);
+
+        // Increment the coupone in use
+        if ($order->coupon_id)
+            Coupon::find($order->coupon_id)->increment('quantity');
 
         $order->forceDelete();   // Delete the order
 

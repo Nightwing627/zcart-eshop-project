@@ -48,9 +48,7 @@ return [
         'subject' => 'Reset Password Notification',
         'greeting' => 'Hello!',
         'message' => 'You are receiving this email because we received a password reset request for your account. If you did not request a password reset, Just ignore this notification and no further action is required.',
-        'action' => [
-            'text' => 'Reset Password',
-        ],
+        'button_text' => 'Reset Password',
     ],
 
     // Dispute Notifications

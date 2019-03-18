@@ -431,6 +431,20 @@ if ( ! function_exists('get_product_img_src') )
     }
 }
 
+if ( ! function_exists('get_inventory_img_src') )
+{
+    function get_inventory_img_src($item, $size = 'medium')
+    {
+        if ($item->image)
+            return get_storage_file_url($item->image->path, $size);
+
+        if ($item->product->image)
+            return get_storage_file_url($item->product->image->path, $size);
+
+        return asset('images/placeholders/no_img.png');
+    }
+}
+
 if ( ! function_exists('get_cover_img_src') )
 {
     function get_cover_img_src($model, $type = 'category')

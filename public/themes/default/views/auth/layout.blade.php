@@ -41,7 +41,7 @@
     <div class="login-box">
       @if (count($errors) > 0)
           <div class="alert alert-danger">
-              <strong>{{ trans('app.error') }}!</strong> {{ trans('messages.input_error') }}<br><br>
+              <strong>{{ trans('theme.error') }}!</strong> {{ trans('messages.input_error') }}<br><br>
               <ul class="list-group">
                   @foreach ($errors->all() as $error)
                       <li class="list-group-item list-group-item-danger">{{ $error }}</li>
@@ -71,11 +71,11 @@
           minimumResultsForSearch: -1,
         });
         $("#exp-year").select2({
-          placeholder: "{{ trans('app.placeholder.exp_year') }}",
+          placeholder: "{{ trans('theme.placeholder.exp_year') }}",
           minimumResultsForSearch: -1,
         });
         $("#exp-month").select2({
-          placeholder: "{{ trans('app.placeholder.exp_month') }}",
+          placeholder: "{{ trans('theme.placeholder.exp_month') }}",
           minimumResultsForSearch: -1,
         });
 

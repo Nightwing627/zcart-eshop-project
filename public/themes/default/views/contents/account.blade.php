@@ -80,7 +80,7 @@
                 @endif
 
                 {!! Form::label('avatar', trans('theme.avatar')) !!}
-                <img src="{{ get_storage_file_url(optional($account->image)->path, 'medium') }}" class="thumbnail center-block" alt="{{ trans('app.avatar') }}"/>
+                <img src="{{ get_storage_file_url(optional($account->image)->path, 'medium') }}" class="thumbnail center-block" alt="{{ trans('theme.avatar') }}"/>
               </div>
 
               {!! Form::open(['route' => 'my.avatar.save', 'files' => true, 'data-toggle' => 'validator']) !!}

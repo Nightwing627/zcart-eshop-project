@@ -113,7 +113,7 @@
 				        <div class="seller-info space30">
 				            <div class="text-muted small">@lang('theme.sold_by')</div>
 
-							<img src="{{ get_storage_file_url(optional($item->shop->image)->path, 'tiny') }}" class="seller-info-logo img-sm img-circle" alt="{{ trans('app.logo') }}">
+							<img src="{{ get_storage_file_url(optional($item->shop->image)->path, 'tiny') }}" class="seller-info-logo img-sm img-circle" alt="{{ trans('theme.logo') }}">
 
 				            <a href="{{ route('show.store', $item->shop->slug) }}" class="seller-info-name">
 				            	{{ $item->shop->name }}
@@ -165,7 +165,8 @@
 					        <li class="sc-product-item">
 					            <div class="product-widget">
 					                <div class="product-img-wrap">
-					                    <img class="product-img" src="{{ get_storage_file_url(optional($linkedItem->image)->path, 'small') }}" alt="{{ $linkedItem->title }}" title="{{ $linkedItem->title }}" />
+					                    <!-- <img class="product-img" src="{{ get_storage_file_url(optional($linkedItem->image)->path, 'small') }}" alt="{{ $linkedItem->title }}" title="{{ $linkedItem->title }}" /> -->
+					                    <img class="product-img" src="{{ get_inventory_img_src($linkedItem, 'small') }}" alt="{{ $linkedItem->title }}" title="{{ $linkedItem->title }}" />
 					                </div>
 					                <div class="product-info space10">
 					                    @include('layouts.ratings', ['ratings' => $linkedItem->feedbacks->avg('rating')])
@@ -221,7 +222,7 @@
                       		<div class="reviews-tab">
 	                      		@forelse($item->feedbacks->sortByDesc('created_at') as $feedback)
 									<p>
-										<b>{{ $feedback->customer->nice_name or $feedback->customer->name  }}</b>
+										<b>{{ $feedback->customer->getName() }}</b>
 
 										<span class="pull-right small">
 											<b class="text-success">@lang('theme.verified_purchase')</b>

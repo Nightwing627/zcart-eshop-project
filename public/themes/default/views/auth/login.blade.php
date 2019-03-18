@@ -8,12 +8,12 @@
         <div class="box-body">
             {!! Form::open(['route' => 'customer.login.submit', 'id' => 'form', 'data-toggle' => 'validator']) !!}
                 <div class="form-group has-feedback">
-                    {!! Form::email('email', null, ['class' => 'form-control input-lg', 'placeholder' => trans('app.form.email_address'), 'required']) !!}
+                    {!! Form::email('email', null, ['class' => 'form-control input-lg', 'placeholder' => trans('theme.placeholder.email'), 'required']) !!}
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     <div class="help-block with-errors"></div>
                 </div>
                 <div class="form-group has-feedback">
-                    {!! Form::password('password', ['class' => 'form-control input-lg', 'id' => 'password', 'placeholder' => trans('app.form.password'), 'data-minlength' => '6', 'required']) !!}
+                    {!! Form::password('password', ['class' => 'form-control input-lg', 'id' => 'password', 'placeholder' => trans('theme.placeholder.password'), 'data-minlength' => '6', 'required']) !!}
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     <div class="help-block with-errors"></div>
                 </div>
@@ -21,24 +21,24 @@
                     <div class="col-xs-7">
                         <div class="form-group">
                             <label>
-                                {!! Form::checkbox('remember', null, null, ['class' => 'icheck']) !!} {{ trans('app.form.remember_me') }}
+                                {!! Form::checkbox('remember', null, null, ['class' => 'icheck']) !!} {{ trans('theme.remember_me') }}
                             </label>
                         </div>
                     </div>
                     <div class="col-xs-5">
-                        {!! Form::submit(trans('app.form.login'), ['class' => 'btn btn-block btn-lg btn-flat btn-primary']) !!}
+                        {!! Form::submit(trans('theme.button.login'), ['class' => 'btn btn-block btn-lg btn-flat btn-primary']) !!}
                     </div>
                 </div>
             {!! Form::close() !!}
 
             <div class="social-auth-links text-center">
-                <a href="{{ route('customer.login.social', 'facebook') }}" class="btn btn-block btn-social btn-facebook btn-lg btn-flat"><i class="fa fa-facebook"></i> {{ trans('app.sing_in_with_fb') }}</a>
-                <a href="{{ route('customer.login.social', 'google') }}" class="btn btn-block btn-social btn-google btn-lg btn-flat"><i class="fa fa-google"></i> {{ trans('app.sing_in_with_google') }}</a>
+                <a href="{{ route('customer.login.social', 'facebook') }}" class="btn btn-block btn-social btn-facebook btn-lg btn-flat"><i class="fa fa-facebook"></i> {{ trans('theme.button.login_with_fb') }}</a>
+                <a href="{{ route('customer.login.social', 'google') }}" class="btn btn-block btn-social btn-google btn-lg btn-flat"><i class="fa fa-google"></i> {{ trans('theme.button.login_with_g') }}</a>
             </div>
             <!-- /.social-auth-links -->
 
-            <a class="btn btn-link" href="{{ route('customer.password.request') }}">{{ trans('app.form.forgot_password') }}</a>
-            <a class="btn btn-link" href="{{ route('customer.register') }}" class="text-center">{{ trans('app.form.register_as_customer') }}</a>
+            <a class="btn btn-link" href="{{ route('customer.password.request') }}">{{ trans('theme.forgot_password') }}</a>
+            <a class="btn btn-link" href="{{ route('customer.register') }}" class="text-center">{{ trans('theme.register_here') }}</a>
         </div>
     </div>
 

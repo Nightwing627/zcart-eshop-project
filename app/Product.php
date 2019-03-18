@@ -100,6 +100,19 @@ class Product extends Model
     }
 
     /**
+     * Overwrited the image method in the imageable
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function image()
+    {
+        return $this->morphOne(\App\Image::class, 'imageable')
+        ->where(function($q){
+            $q->whereNull('featured')->orWhere('featured', 0);
+        })->orderBy('order', 'asc');
+    }
+
+    /**
      * Get the origin associated with the product.
      */
     public function origin()

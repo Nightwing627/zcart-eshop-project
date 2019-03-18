@@ -146,7 +146,7 @@
                                     </svg>
 
                                     <div class='pricing-price'><span class='pricing-currency'>
-                                        {{ config('system_settings.currency.symbol') }}</span>{{ get_formated_decimal($plan->cost) }}<span class='pricing-period'>{{ __('app.per_month') }}</span>
+                                        {{ config('system_settings.currency.symbol') }}</span>{{ get_formated_decimal($plan->cost) }}<span class='pricing-period'>{{ __('theme.per_month') }}</span>
                                     </div>
                                     <h3 class='pricing-title'>{{ $plan->name }}</h3>
                                   </div>

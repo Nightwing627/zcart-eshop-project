@@ -45,8 +45,10 @@ class CustomerResetPasswordNotification extends Notification implements ShouldQu
         return (new MailMessage)
         ->from(get_sender_email(), get_sender_name())
         ->subject(trans('notifications.customer_password_reset.subject'))
-        ->line(trans('notifications.customer_password_reset.message'))
-        ->action(trans('notifications.customer_password_reset.action.text'), url(config('app.url').route('customer.password.reset', $this->token, false)));
+        ->markdown('admin.mail.auth.customer_password_reset', ['url' => url(config('app.url').route('customer.password.reset', $this->token, false))]);
+
+        // ->line(trans('notifications.customer_password_reset.message'))
+        // ->action(trans('notifications.customer_password_reset.action.text'), url(config('app.url').route('customer.password.reset', $this->token, false)));
     }
 
     /**

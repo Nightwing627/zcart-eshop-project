@@ -8,6 +8,12 @@
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
             }
         });
+
+        // Make recaptcha field required if exist
+        var $recaptcha = document.querySelector('#g-recaptcha-response');
+        if($recaptcha) {
+            $recaptcha.setAttribute("required", "required");
+        }
     });
 
     // Activate the tab if the url has any #hash

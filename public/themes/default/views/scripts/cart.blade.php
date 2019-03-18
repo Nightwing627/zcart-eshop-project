@@ -192,7 +192,7 @@
 	        switch(nodeId){
 	          	case 'shipping-options-popover':
 		            var shipping = node.find('input[name=shipping_option]:checked');
-		            var name = shipping.attr('id') == 'custom_shipping' ? '{{ trans('app.custom_shipping') }}' : shipping.attr('id');
+		            var name = shipping.attr('id') == 'custom_shipping' ? '{{ trans('theme.custom_shipping') }}' : shipping.attr('id');
 		            var id = shipping.parent('label').attr('id');
 		            setShippingCost(cart, name, shipping.val(), id);
 		            break;

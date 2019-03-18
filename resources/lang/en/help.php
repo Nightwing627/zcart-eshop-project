@@ -251,9 +251,9 @@ return [
 
     'meta_description' => 'Meta descriptions are HTML attributes that provide concise explanations of the contents of web pages. Meta descriptions are commonly used on search engine result pages (SERPs) to display preview snippets for a given page',
 
-    'catalog_min_price' => 'Set a minimun price for the product. Vendors can add inventory within this price limits.',
+    'catalog_min_price' => 'Set a minimum price for the product. Vendors can add inventory within this price limits.',
 
-    'catalog_max_price' => 'Set a maximun price for the product. Vendors can add inventory within this price limits.',
+    'catalog_max_price' => 'Set a maximum price for the product. Vendors can add inventory within this price limits.',
 
     'has_variant' => 'This item has variants like different colors, shapes, sizes etc.',
 
@@ -401,7 +401,7 @@ return [
 
     'rest_of_the_world' => 'This zone includes any countries and regions not already defined in your other shipping zones.',
 
-    'shipping_max_width' => 'Maximun package width handle by the carrier. Leave empty to disable.',
+    'shipping_max_width' => 'Maximum package width handle by the carrier. Leave empty to disable.',
 
     'shipping_tracking_url' => ' \'@\' will be replaced by the dynamic tracking number',
 

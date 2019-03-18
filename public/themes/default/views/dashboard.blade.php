@@ -8,9 +8,9 @@
         @if(! Auth::guard('customer')->user()->isVerified())
             <div class="alert alert-info alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <strong><i class="icon fa fa-info-circle"></i> {{ trans('app.notice') }}</strong>
+                <strong><i class="icon fa fa-info-circle"></i> {{ trans('theme.notice') }}</strong>
                 {{ trans('messages.email_verification_notice') }}
-                <a href="{{ route('customer.verify') }}"> {{ trans('app.resend_varification_link') }}</a>
+                <a href="{{ route('customer.verify') }}"> {{ trans('auth.resend_varification_link') }}</a>
             </div>
         @endif
     </div>

@@ -18,7 +18,7 @@
           <div class="seller-info">
             <div class="text-muted small">@lang('theme.sold_by')</div>
 
-            <img src="{{ get_storage_file_url(optional($shop->image)->path, 'tiny') }}" class="seller-info-logo img-sm img-circle" alt="{{ trans('app.logo') }}">
+            <img src="{{ get_storage_file_url(optional($shop->image)->path, 'tiny') }}" class="seller-info-logo img-sm img-circle" alt="{{ trans('theme.logo') }}">
 
             <a href="{{ route('show.store', $shop->slug) }}" class="seller-info-name">
               {{ $shop->name }}
@@ -139,13 +139,13 @@
                 <div class="row">
                   <div class="col-md-6 nopadding-right">
                     <div class="form-group">
-                      {!! Form::password('password', ['class' => 'form-control flat', 'id' => 'acc-password', 'placeholder' => trans('app.placeholder.password'), 'data-minlength' => '6']) !!}
+                      {!! Form::password('password', ['class' => 'form-control flat', 'id' => 'acc-password', 'placeholder' => trans('theme.placeholder.password'), 'data-minlength' => '6']) !!}
                       <div class="help-block with-errors"></div>
                     </div>
                   </div>
                   <div class="col-md-6 nopadding-left">
                     <div class="form-group">
-                      {!! Form::password('password_confirmation', ['class' => 'form-control flat', 'placeholder' => trans('app.placeholder.confirm_password'), 'data-match' => '#acc-password']) !!}
+                      {!! Form::password('password_confirmation', ['class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.confirm_password'), 'data-match' => '#acc-password']) !!}
                       <div class="help-block with-errors"></div>
                     </div>
                   </div>
@@ -154,7 +154,7 @@
                 @if(config('system_settings.ask_customer_for_email_subscription'))
                   <div class="checkbox">
                     <label>
-                      {!! Form::checkbox('subscribe', null, null, ['class' => 'i-check']) !!} {!! trans('app.form.subscribe_to_the_newsletter') !!}
+                      {!! Form::checkbox('subscribe', null, null, ['class' => 'i-check']) !!} {!! trans('theme.input_label.subscribe_to_the_newsletter') !!}
                     </label>
                   </div>
                 @endif

@@ -179,6 +179,12 @@
             $('#return_goods_help_txt').removeClass('show').addClass('hidden');
         });
         //END DISPUTE FORM
+
+        // Make recaptcha field required if exist
+        var $recaptcha = document.querySelector('#g-recaptcha-response');
+        if($recaptcha) {
+            $recaptcha.setAttribute("required", "required");
+        }
     });
 
     //App plugins

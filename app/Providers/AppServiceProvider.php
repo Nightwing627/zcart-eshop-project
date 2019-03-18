@@ -12,6 +12,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -39,6 +40,9 @@ class AppServiceProvider extends ServiceProvider
         Shop::observe(ShopObserver::class);
         Order::observe(OrderObserver::class);
         Refund::observe(RefundObserver::class);
+
+        // Add Google recaptcha validation rule
+        Validator::extend('recaptcha', 'App\\Helpers\\ReCaptcha@validate');
 
         // Add pagination on collections
         if (!Collection::hasMacro('paginate')) {

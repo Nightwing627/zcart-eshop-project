@@ -11,6 +11,6 @@
 @include('admin.mail.ticket._ticket_detail_panel', ['ticket_detail' => $ticket])
 
 {{ trans('messages.thanks') }},<br>
-{{ $ticket->assignedTo->getName() }}<br>
+{{ $ticket->assignedTo ? $ticket->assignedTo->getName() : '' }}<br>
 {{ get_platform_title() }}
 @endcomponent
