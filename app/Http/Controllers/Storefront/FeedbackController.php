@@ -60,7 +60,7 @@ class FeedbackController extends Controller
             $feedback_data = $inputs[$inventory->id];
             $feedback_data['customer_id'] = $customer_id;
 
-            $feedback = $inventory->product->feedbacks()->create($feedback_data);
+            $feedback = $inventory->feedbacks()->create($feedback_data);
 
             // Update feedback_id in order_items table
             \DB::table('order_items')->where('order_id', $inventory->pivot->order_id)

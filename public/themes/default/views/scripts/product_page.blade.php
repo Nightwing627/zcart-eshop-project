@@ -6,8 +6,8 @@
     var handlingCost = getFromPHPHelper('getShopConfig', [shop_id, 'order_handling_cost']);
     var unitPrice = {{ $item->currnt_sale_price() }};
     var variants = '{!! $variants !!}';
-    // console.log(handlingCost);
     // var variants = JSON.parse('{!! $variants !!}');
+    // console.log('{!! $variants !!}');
     var itemWrapper = $("#single-product-wrapper");
 
     var buyNowBaseUrl = $("#buy-now-btn").attr('href');

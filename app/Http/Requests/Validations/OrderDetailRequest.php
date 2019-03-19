@@ -14,12 +14,11 @@ class OrderDetailRequest extends Request
      */
     public function authorize()
     {
-        if ($this->user() instanceof Customer) {
+        if ($this->user() instanceof Customer)
             return $this->route('order')->customer_id == $this->user()->id;
-        }
-        else{
+        else
             return $this->route('order')->shop_id == $this->user()->merchantId();
-        }
+
         return false;
     }
 

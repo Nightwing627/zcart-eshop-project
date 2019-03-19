@@ -36,11 +36,9 @@
                   <tr class="order-body">
                     <td>
                       <div class="post-review-box">
-                        @if($order->feedback)
+                        @if($order->feedback->comment)
                           @include('layouts.ratings', ['ratings' => $order->feedback->rating])
-                          <p>
-                            {{ $order->feedback->comment }}
-                          </p>
+                          <p>{{ $order->feedback->comment }}</p>
                         @else
                           {!! Form::open(['route' => ['shop.feedback', $order], 'files' => true, 'data-toggle' => 'validator']) !!}
                             <div class="product-info-rating feedback-stars">
@@ -94,12 +92,13 @@
                         <tr class="order-body">
                           <td>
                             <div class="product-img-wrap">
-                              <img src="{{ get_storage_file_url(optional($item->image)->path, 'small') }}" alt="{{ $item->product->slug }}" title="{{ $item->product->slug }}" />
+                              <img src="{{ get_inventory_img_src($item, 'small') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
+                              <!-- <img src="{{ get_storage_file_url(optional($item->image)->path, 'small') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" /> -->
                             </div>
                             <div class="product-info">
-                              <a href="{{ route('show.product', $item->product->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>
-                              @if($item->product->feedbacks->count())
-                                @include('layouts.ratings', ['ratings' => $item->product->averageFeedback(), 'count' => $item->product->feedbacks->count()])
+                              <a href="{{ route('show.product', $item->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>
+                              @if($item->feedbacks->count())
+                                @include('layouts.ratings', ['ratings' => $item->averageFeedback(), 'count' => $item->feedbacks->count()])
                               @else
                                 <span class="text-muted small">@lang('theme.no_reviews')</span>
                               @endif
