@@ -8,5 +8,11 @@
 	@include('contents.dispute_page')
 
     <!-- MODALS -->
-    @include('modals.dispute')
+	@includeWhen( ! $order->dispute, 'modals.dispute')
+
+    @if($order->dispute->isClosed())
+	    @include('modals.dispute_appeal')
+    @else
+	    @include('modals.dispute_response')
+    @endif
 @endsection

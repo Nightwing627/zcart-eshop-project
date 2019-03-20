@@ -32,6 +32,7 @@ class CreateDisputesTable extends Migration
             $table->integer('status')->unsigned()->default(1);
             $table->timestamps();
 
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->foreign('dispute_type_id')->references('id')->on('dispute_types')->onDelete('set null');
         });

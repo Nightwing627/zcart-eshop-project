@@ -59,6 +59,9 @@
 			    </div> <!-- /.box-header -->
 			    <div class="box-body">
 					{!! $dispute->statusName() !!}
+					<span class="label label-outline">
+						{{ trans('app.order_number') . ': ' }}{{ $dispute->order->order_number }}
+					</span>
 					<p class="lead">{{ $dispute->dispute_type->detail }}</p>
 
 					@if(count($dispute->attachments))
@@ -136,7 +139,6 @@
 						{{ trans('app.latest_days', ['days' => 30]) }}:
 						<span class="label label-info"><strong>{{ \App\Helpers\Statistics::disputes_by_customer_count($dispute->customer_id, 30) }}</strong></span>
 					</p>
-
 					<hr/>
 					<div class="form-group text-muted">
 						<p>

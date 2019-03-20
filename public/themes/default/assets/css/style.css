@@ -639,12 +639,13 @@ div.datepicker > div {
  * Component: Label
  */
 .label{
+  color: #fff !important;
   font-weight: 400;
   letter-spacing: 0.35px;
 }
 .label-outline {
-  color: #444;
-  background-color: transparent;
+  color: #444 !important;
+  background-color: transparent !important;
   border: 1px solid #d2d6de;
 }
 .label-default {
@@ -1520,7 +1521,7 @@ div.datepicker > div {
 }
 #buyer-order-table tbody .order-info-head h5 span,
 #buyer-order-table .order-info-properties > li > span {
-    color: #009686;
+  color: #009686;
 }
 #buyer-order-table .order-body .order-actions{
   vertical-align: middle;

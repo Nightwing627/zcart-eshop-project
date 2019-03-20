@@ -45,4 +45,13 @@ class Reply extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the customer associated with the model.
+    */
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
 }

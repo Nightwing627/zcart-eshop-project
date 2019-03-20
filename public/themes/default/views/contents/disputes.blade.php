@@ -56,7 +56,9 @@
                 </td>
                 @if($loop->first)
                   <td rowspan="{{ $loop->count }}" class="order-actions text-center">
-                    {!! $dispute->order->dispute->statusName() !!}
+                    <p>{!! $dispute->order->dispute->statusName() !!}</p>
+
+                    <a href="{{ route('dispute.open', $dispute->order) }}" class="btn btn-link btn-xs btn-block">{!! trans('theme.button.details') !!}</a>
                   </td>
                 @endif
               </tr> <!-- /.order-body -->

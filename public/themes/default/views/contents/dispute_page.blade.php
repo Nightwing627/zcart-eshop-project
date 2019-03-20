@@ -94,10 +94,6 @@
               <tbody>
                   <tr class="order-info-head">
                       <td width="50%">
-                        <h5><span>{!! trans('theme.order_id') !!}: </span>{{ $order->order_number }}</h5>
-                        <h5><span>{!! trans('theme.order_time_date') !!}: </span>{{ $order->created_at->toDayDateTimeString() }}</h5>
-                      </td>
-                      <td width="25%" class="store-info">
                         <h5>
                           <span>{!! trans('theme.store') !!}:</span>
                           @if($order->shop)
@@ -108,65 +104,111 @@
                         </h5>
                         <h5>
                             <span>{!! trans('theme.status') !!}</span>
-                            {{ optional($order->status)->name }}
+                            {!! $order->dispute->statusName() !!}
                         </h5>
                       </td>
                       <td width="25%" class="order-amount">
-                        <h5><span>{!! trans('theme.order_amount') !!}: </span>{{ get_formated_currency($order->grand_total) }}</h5>
-                        <div class="btn-group" role="group">
-                          <a class="btn btn-xs btn-default flat" href="{{ route('order.detail', $order) }}">{!! trans('theme.button.order_detail') !!}</a>
-                          <a class="btn btn-xs btn-default flat" href="{{ route('order.detail', $order) . '#message-section' }}">{!! trans('theme.button.contact_seller') !!}</a>
-                        </div>
+                        <h5>
+                          <span>{!! trans('theme.refund_amount') !!}: </span>
+                          {{ get_formated_currency($order->dispute->refund_amount) }}
+                        </h5>
+                        <h5>
+                          <span>{!! trans('theme.return_goods') !!}:</span>
+                          {{ $order->dispute->return_goods == 1 ? trans('theme.yes') : trans('theme.no') }}
+                        </h5>
+                      </td>
+                      <td width="25%" class="store-info">
+                        <h5>
+                          <span>{!! trans('theme.order_id') !!}: </span>
+                          <a href="{{ route('order.detail', $order) }}">{{ $order->order_number }}</a>
+                        </h5>
+                        <h5>
+                          <span>{!! trans('theme.order_received') !!}:</span>
+                          {{ $order->dispute->order_received == 1 ? trans('theme.yes') : trans('theme.no') }}
+                        </h5>
                       </td>
                   </tr> <!-- /.order-info-head -->
-                  @foreach($order->inventories as $item)
-                    <tr class="order-body">
-                      <td colspan="2">
-                          <div class="product-img-wrap">
-                            <img src="{{ get_storage_file_url(optional($item->image)->path, 'small') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
-                          </div>
-                          <div class="product-info">
-                              {{-- <a href="{{ route('show.product', $item->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a> --}}
-                              <div class="order-info-amount">
-                                  <span>{{ get_formated_currency($item->pivot->unit_price) }} x {{ $item->pivot->quantity }}</span>
-                              </div>
-                              {{--
-                              <ul class="order-info-properties">
-                                  <li>Size: <span>L</span></li>
-                                  <li>Color: <span>RED</span></li>
-                              </ul> --}}
-                              @if($order->dispute->product_id == $item->product_id)
-                                <span class="label label-danger">{!! trans('theme.disputed') !!}</span>
-                              @endif
-                          </div>
-                      </td>
-                      @if($loop->first)
-                        <td rowspan="{{ $loop->count }}" class="order-actions text-center">
-                          {!! $order->dispute->statusName() !!}
-                        </td>
+                  <tr class="order-body">
+                    <td colspan="3">
+                      <p class="lead">
+                        <span>{!! trans('theme.reason') !!}:
+                        </span>{{ $order->dispute->dispute_type->detail }}
+                      </p>
+
+                      @if($order->dispute->description)
+                        <div>
+                          {!! $order->dispute->description !!}
+                          @if(count($order->dispute->attachments))
+                            <small class="pull-right">
+                              {{ trans('app.attachments') . ': ' }}
+                              @foreach($order->dispute->attachments as $attachment)
+                                <a href="{{ route('attachment.download', $attachment->path) }}"><i class="fa fa-file"></i></a>
+                              @endforeach
+                            </small>
+                          @endif
+                        </div>
                       @endif
-                    </tr> <!-- /.order-body -->
-                  @endforeach
 
-                  @if($order->message_to_customer)
-                    <tr class="message_from_seller">
-                      <td colspan="3">
-                        <p>
-                          <strong>{!! trans('theme.message_from_seller') !!}: </strong> {{ $order->message_to_customer }}
-                        </p>
-                      </td>
-                    </tr>
-                  @endif
+                      <div class="space50"></div>
 
-                  @if($order->buyer_note)
-                    <tr class="order-info-footer">
-                      <td colspan="3">
-                        <p class="order-detail-buyer-note">
-                          <span>{!! trans('theme.note') !!}: </span> {{ $order->buyer_note }}
-                        </p>
-                      </td>
-                    </tr>
-                  @endif
+                      @if($order->dispute->replies->count() > 0)
+                        @foreach($order->dispute->replies as $reply)
+                          <div class="row">
+                            <div class="col-md-2 nopadding-right no-print">
+                              @if($reply->user_id)
+                                @if($reply->user->image)
+                                  <img src="{{ get_storage_file_url(optional($reply->user->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+                                @else
+                                  <img src="{{ get_gravatar_url($reply->user->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+                                @endif
+
+                                {{ $reply->user->getName() }}
+                              @endif
+                            </div>
+
+                            <div class="col-md-8 nopadding">
+                              <blockquote style="font-size: 1em;" class="{{ $reply->customer_id ? 'blockquote-reverse' : ''}}">
+                                {!! $reply->reply !!}
+
+                                @if(count($reply->attachments))
+                                  <small class="no-print">
+                                    {{ trans('app.attachments') . ': ' }}
+                                    @foreach($reply->attachments as $attachment)
+                                      <a href="{{ route('attachment.download', $attachment) }}"><i class="fa fa-file"></i></a>
+                                    @endforeach
+                                  </small>
+                                @endif
+
+                                <footer>{{ $reply->updated_at->diffForHumans() }}</footer>
+                              </blockquote>
+                            </div>
+
+                            <div class="col-md-2 nopadding-left no-print">
+                              @if($reply->customer_id)
+                                @if($reply->customer->image)
+                                  <img src="{{ get_storage_file_url(optional($reply->customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+                                @else
+                                  <img src="{{ get_gravatar_url($reply->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+                                @endif
+
+                                {{ $reply->customer->getName() }}
+                              @endif
+                            </div>
+                          </div>
+                        @endforeach
+                      @endif
+
+                      <div class="space20"></div>
+
+                      <div class="text-center space20">
+                        @if($order->dispute->isClosed())
+                          <a class="btn btn-danger flat" href="#" data-toggle="modal" data-target="#disputeAppealModal">{!! trans('theme.button.appeal') !!}</a>
+                        @else
+                          <a class="btn btn-info flat" href="#" data-toggle="modal" data-target="#disputeResponseModal">{!! trans('theme.button.response') !!}</a>
+                        @endif
+                      </div>
+                    </td>
+                  </tr> <!-- /.order-body -->
               </tbody>
           </table>
         @else

@@ -26,8 +26,13 @@ class CheckoutCartRequest extends Request
     {
         $rules = [];
         if ( ! Auth::guard('customer')->check() ) {
-            $rules['email'] =  'required|email|max:255|unique:customers';
-            $rules['password'] =  'nullable|required_with:create-account|confirmed|min:6';
+            if( $this->has('create-account') ){
+                $rules['email'] =  'required|email|max:255|unique:customers';
+                $rules['password'] =  'nullable|required_with:create-account|confirmed|min:6';
+            }
+            else {
+                $rules['email'] =  'required|email|max:255';
+            }
         }
 
         if( 'saved_card' != $this->payment_method )

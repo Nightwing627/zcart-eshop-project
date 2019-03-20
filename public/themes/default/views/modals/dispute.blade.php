@@ -59,7 +59,7 @@
                 <label for="refund_amount">@lang('theme.refund_amount'):*</label>
                 <div class="input-group">
                     <span class="input-group-addon flat">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
-                    {!! Form::number('refund_amount' , null, ['id' => 'refund_amount', 'class' => 'form-control flat', 'step' => 'any', 'max' => $order->grand_total, 'placeholder' => trans('theme.placeholder.refund_amount'), 'required']) !!}
+                    {!! Form::number('refund_amount' , 0, ['id' => 'refund_amount', 'class' => 'form-control flat', 'step' => 'any', 'max' => $order->grand_total, 'placeholder' => trans('theme.placeholder.refund_amount'), 'required']) !!}
                 </div>
                 <div class="help-block with-errors">
                     @php

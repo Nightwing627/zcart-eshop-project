@@ -23,6 +23,8 @@
 		// Disputes
 		Route::get('order/dispute/{order}', 'DisputeController@show_dispute_form')->name('dispute.open');
 		Route::post('order/dispute/{order}', 'DisputeController@open_dispute')->name('dispute.save');
+		Route::post('dispute/{dispute}', 'DisputeController@response')->name('dispute.response');
+		Route::post('dispute/{dispute}/appeal', 'DisputeController@appeal')->name('dispute.appeal');
 
 		// Refunds
 		// Route::post('order/refund/{order}', 'DisputeController@refund_request')->name('refund.request');

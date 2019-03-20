@@ -61,7 +61,7 @@ class EloquentDispute extends EloquentRepository implements BaseRepository, Disp
         $response = $dispute->replies()->create($request->all());
 
         if ($request->hasFile('attachments'))
-            $dispute->saveAttachments($request->file('attachments'));
+            $response->saveAttachments($request->file('attachments'));
 
         return $response;
     }

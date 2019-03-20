@@ -100,7 +100,7 @@ class ListHelper
             Dispute::STATUS_CLOSED   => trans("app.statuses.closed"),
         ];
 
-        if(auth()->user()->isFromPlatform())
+        if( ! Auth::user() instanceOf Customer && auth()->user()->isFromPlatform())
             $statuses[Dispute::STATUS_APPEALED] = trans("app.statuses.appealed");
 
         return $statuses;

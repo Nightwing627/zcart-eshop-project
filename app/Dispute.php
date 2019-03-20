@@ -159,6 +159,14 @@ class Dispute extends Model
         return $query->where('status', $status);
     }
 
+    /**
+     * Return true if the disput is closed
+     */
+    public function isClosed()
+    {
+        return $this->status >= static::STATUS_SOLVED;
+    }
+
 	public function statusName()
     {
         switch ($this->status) {

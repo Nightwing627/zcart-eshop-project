@@ -24,7 +24,6 @@ use net\authorize\api\controller as AuthorizeNetController;
 
 class OrderController extends Controller
 {
-
     /**
      * Checkout the specified cart.
      *
@@ -33,8 +32,7 @@ class OrderController extends Controller
      */
     public function create(CheckoutCartRequest $request, Cart $cart)
     {
-        // echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
-        if ($request->email && $request->password) {
+        if ($request->email && $request->has('create-account') && $request->password) {
             $customer = $this->createNewCustomer($request);
             $request->merge(['customer_id' => $customer->id]); //Set customer_id
         }
@@ -665,7 +663,10 @@ class OrderController extends Controller
 
         $customer->addresses()->create($request->all()); //Save address
 
-        \Auth::guard('customer')->login($customer); //Login the customer
+        if ( Auth::guard('web')->check() )
+            Auth::logout();
+
+        Auth::guard('customer')->login($customer); //Login the customer
 
         return $customer;
     }
