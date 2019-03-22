@@ -7,7 +7,7 @@
         <div class="offered-product-widget-content">
             <h2>{{ $product->name }}</h2>
             <span class="offered-product-widget-text text-muted space20">
-                @if($product->manufacturer)
+                @if($product->manufacturer->slug)
                     {{ trans('theme.by') . ' ' }}
                     <a href="{{ route('show.brand', $product->manufacturer->slug) }}" class="product-info-seller-name">{{ $product->manufacturer->name }}</a>
                 @endif

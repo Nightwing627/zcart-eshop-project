@@ -175,8 +175,56 @@ class HomeController extends Controller
         $geoip = geoip(request()->ip()); // Set the location of the user
         $countries = ListHelper::countries(); // Country list for shop_to dropdown
 
+        // echo "<pre>"; print_r($variants); echo "</pre>"; exit();
         return view('product', compact('item', 'variants', 'attributes', 'item_attrs', 'related', 'linked_items', 'geoip', 'countries'));
     }
+
+    // public function product($slug)
+    // {
+    //     $item = Inventory::where('slug', $slug)->available()->withCount('feedbacks')->firstOrFail();
+
+    //     $item->load(['product' => function($q){
+    //             $q->select('id', 'slug', 'description', 'manufacturer_id')
+    //             ->withCount(['inventories' => function($query){
+    //                 $query->available();
+    //             }]);
+    //         }, 'attributeValues' => function($q){
+    //             $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')->with('attribute:id,name,attribute_type_id,order');
+    //         },
+    //         'feedbacks.customer:id,nice_name,name',
+    //         'images:path,imageable_id,imageable_type',
+    //     ]);
+
+    //     $this->update_recently_viewed_items($item); //update_recently_viewed_items
+
+    //     $variants = ListHelper::variants_of_product($item, $item->shop_id);
+
+    //     $attr_pivots = \DB::table('attribute_inventory')->select('attribute_id','inventory_id','attribute_value_id')
+    //     ->whereIn('inventory_id', $variants->pluck('id'))->get();
+
+    //     $item_attrs = $attr_pivots->where('inventory_id', $item->id)->pluck('attribute_value_id')->toArray();
+
+    //     $attributes = \App\Attribute::select('id','name','attribute_type_id','order')
+    //     ->whereIn('id', $attr_pivots->pluck('attribute_id'))
+    //     ->with(['attributeValues' => function($query) use ($attr_pivots) {
+    //         $query->whereIn('id', $attr_pivots->pluck('attribute_value_id'))->orderBy('order');
+    //     }])->orderBy('order')->get();
+
+    //     $variants = $variants->toJson(JSON_HEX_QUOT);
+
+    //     // TEST
+    //     $related = ListHelper::related_products($item);
+    //     $linked_items = ListHelper::linked_items($item);
+
+    //     if( ! $linked_items->count() )
+    //         $linked_items = $related->random($related->count() >= 3 ? 3 : $related->count());
+
+    //     $geoip = geoip(request()->ip()); // Set the location of the user
+    //     $countries = ListHelper::countries(); // Country list for shop_to dropdown
+
+    //     // echo "<pre>"; print_r($attributes->toArray()); echo "</pre>"; exit();
+    //     return view('product', compact('item', 'variants', 'attributes', 'item_attrs', 'related', 'linked_items', 'geoip', 'countries'));
+    // }
 
     /**
      * Open product quick review modal

@@ -7,7 +7,7 @@ require_once __DIR__.'/../vendor/helper_functions.php';
 
 
 //Random salt used for encryption. It should contain random symbols (16 or more recommended) and be different for each application you want to protect. Cannot be modified after installing script.
-define("APL_SALT", "9KLGCBzs2qUUtiST");
+define("APL_SALT", "404f45cb5e4fa258");
 
 //The URL (without / at the end) where Auto PHP Licenser from /WEB directory is installed on your server. No matter how many applications you want to protect, a single installation is enough.
 define("APL_ROOT_URL", "https://www.licenser.incevio.com");
@@ -16,7 +16,7 @@ define("APL_ROOT_URL", "https://www.licenser.incevio.com");
 define("APL_PRODUCT_ID", 1);
 
 //Time period (in days) between automatic license verifications. The lower the number, the more often license will be verified, but if many end users use your script, it can cause extra load on your server. Available values are between 1 and 365. Usually 7 or 14 days are the best choice.
-define("APL_DAYS", 3);
+define("APL_DAYS", 13);
 
 //Place to store license signature and other details. "DATABASE" means data will be stored in MySQL database (recommended), "FILE" means data will be stored in local file. Only use "FILE" if your application doesn't support MySQL. Otherwise, "DATABASE" should always be used. Cannot be modified after installing script.
 define("APL_STORAGE", "DATABASE");

@@ -43,37 +43,14 @@ function aplCustomDecrypt($string, $key)
     }
 
 
-//validate numbers (or ranges like 1-10) and check if they match min and max values
-function aplValidateNumberOrRange($number, $min_value, $max_value=INF)
+//validate integer and check if it's between min and max values
+function aplValidateIntegerValue($number, $min_value=0, $max_value=INF)
     {
     $result=false;
 
-    if (filter_var($number, FILTER_VALIDATE_INT)===0 || !filter_var($number, FILTER_VALIDATE_INT)===false) //number provided
+    if (!is_float($number) && filter_var($number, FILTER_VALIDATE_INT, array("options"=>array("min_range"=>$min_value, "max_range"=>$max_value)))!==false) //don't allow numbers like 1.0 to bypass validation
         {
-        if ($number>=$min_value && $number<=$max_value)
-            {
-            $result=true;
-            }
-        else
-            {
-            $result=false;
-            }
-        }
-
-    if (stristr($number, "-")) //range provided
-        {
-        $numbers_array=explode("-", $number);
-        if (filter_var($numbers_array[0], FILTER_VALIDATE_INT)===0 || !filter_var($numbers_array[0], FILTER_VALIDATE_INT)===false && filter_var($numbers_array[1], FILTER_VALIDATE_INT)===0 || !filter_var($numbers_array[1], FILTER_VALIDATE_INT)===false)
-            {
-            if ($numbers_array[0]>=$min_value && $numbers_array[1]<=$max_value && $numbers_array[0]<=$numbers_array[1])
-                {
-                $result=true;
-                }
-            else
-                {
-                $result=false;
-                }
-            }
+        $result=true;
         }
 
     return $result;
@@ -101,31 +78,42 @@ function aplValidateRawDomain($url)
     }
 
 
-//get current page url (also remove specific strings and last slash if needed)
-function aplGetCurrentUrl($remove_last_slash=null, $string_to_remove_array=null)
+//get current page url and remove last slash if needed
+function aplGetCurrentUrl($remove_last_slash=null)
     {
+    $protocol="http";
+    $host=null;
+    $script=null;
+    $params=null;
     $current_url=null;
 
-    $protocol=!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']!=="off" ? 'https' : 'http';
-    if (isset($_SERVER['HTTP_HOST'])) {$host=$_SERVER['HTTP_HOST'];}
-    if (isset($_SERVER['SCRIPT_NAME'])) {$script=$_SERVER['SCRIPT_NAME'];}
-    if (isset($_SERVER['QUERY_STRING'])) {$params=$_SERVER['QUERY_STRING'];}
+    if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!=="off") || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO']=="https"))
+        {
+        $protocol="https";
+        }
 
-    if (!empty($protocol) && !empty($host) && !empty($script)) //return URL only when script is executed via browser (because no URL should exist when executed from command line)
+    if (isset($_SERVER['HTTP_HOST']))
+        {
+        $host=$_SERVER['HTTP_HOST'];
+        }
+
+    if (isset($_SERVER['SCRIPT_NAME']))
+        {
+        $script=$_SERVER['SCRIPT_NAME'];
+        }
+
+    if (isset($_SERVER['QUERY_STRING']))
+        {
+        $params=$_SERVER['QUERY_STRING'];
+        }
+
+    if (!empty($protocol) && !empty($host) && !empty($script)) //basic checks ok
         {
         $current_url=$protocol.'://'.$host.$script;
 
         if (!empty($params))
             {
             $current_url.='?'.$params;
-            }
-
-        if (!empty($string_to_remove_array) && is_array($string_to_remove_array)) //remove specific strings from URL
-            {
-            foreach ($string_to_remove_array as $key=>$value)
-                {
-                $current_url=str_ireplace($value, "", $current_url);
-                }
             }
 
         if ($remove_last_slash==1) //remove / from the end of URL if it exists
@@ -170,7 +158,7 @@ function aplGetRawDomain($url)
 //return root url from long url (http://www.domain.com/path/file.php?aa=xx becomes http://www.domain.com/path/), remove scheme, www. and last slash if needed
 function aplGetRootUrl($url, $remove_scheme, $remove_www, $remove_path, $remove_last_slash)
     {
-    if (filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED | FILTER_FLAG_HOST_REQUIRED))
+    if (filter_var($url, FILTER_VALIDATE_URL))
         {
         $url_array=parse_url($url); //parse URL into arrays like $url_array['scheme'], $url_array['host'], etc
 
@@ -216,72 +204,81 @@ function aplGetRootUrl($url, $remove_scheme, $remove_www, $remove_path, $remove_
     }
 
 
-//make post requests with cookies, referrers, etc, and also return server headers
-function aplCustomPostGetHeaders($url, $refer=null, $post_info=null)
+//make post requests with cookies and referrers, return array with server headers, errors, and body content
+function aplCustomPost($url, $post_info=null, $refer=null)
     {
-    $user_agent="Mozilla/5.0 (Windows NT 6.3; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0";
+    $user_agent="phpmillion cURL";
     $connect_timeout=10;
-
     $server_response_array=array();
     $formatted_headers_array=array();
 
-    if (empty($refer) || !filter_var($refer, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED | FILTER_FLAG_HOST_REQUIRED)) {$refer=$url;} //use original url as refer when no valid URL provided
-
-    $ch=curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $connect_timeout);
-    curl_setopt($ch, CURLOPT_TIMEOUT, $connect_timeout);
-    curl_setopt($ch, CURLOPT_REFERER, $refer);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_info);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
-
-    //this function is called by curl for each header received - https://stackoverflow.com/questions/9183178/can-php-curl-retrieve-response-headers-and-body-in-a-single-request
-    curl_setopt($ch, CURLOPT_HEADERFUNCTION,
-        function($curl, $header) use (&$formatted_headers_array)
+    if (filter_var($url, FILTER_VALIDATE_URL) && !empty($post_info))
+        {
+        if (empty($refer) || !filter_var($refer, FILTER_VALIDATE_URL)) //use original URL as refer when no valid refer URL provided
             {
-            $len=strlen($header);
-            $header=explode(":", $header, 2);
-            if (count($header)<2) //ignore invalid headers
-            return $len;
-
-            $name=strtolower(trim($header[0]));
-            $formatted_headers_array[$name]=trim($header[1]);
-
-            return $len;
+            $refer=$url;
             }
-        );
 
-    $result=curl_exec($ch);
-    curl_close($ch);
+        $ch=curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $connect_timeout);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $connect_timeout);
+        curl_setopt($ch, CURLOPT_REFERER, $refer);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_info);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
 
-    $server_response_array['headers']=$formatted_headers_array;
-    $server_response_array['body']=$result;
+        //this function is called by curl for each header received - https://stackoverflow.com/questions/9183178/can-php-curl-retrieve-response-headers-and-body-in-a-single-request
+        curl_setopt($ch, CURLOPT_HEADERFUNCTION,
+            function($curl, $header) use (&$formatted_headers_array)
+                {
+                $len=strlen($header);
+                $header=explode(":", $header, 2);
+                if (count($header)<2) //ignore invalid headers
+                return $len;
+
+                $name=strtolower(trim($header[0]));
+                $formatted_headers_array[$name]=trim($header[1]);
+
+                return $len;
+                }
+            );
+
+        $result=curl_exec($ch);
+        $curl_error=curl_error($ch); //returns a human readable error (if any)
+        curl_close($ch);
+
+        $server_response_array['headers']=$formatted_headers_array;
+        $server_response_array['error']=$curl_error;
+        $server_response_array['body']=$result;
+        }
 
     return $server_response_array;
     }
 
 
-//verify date according to provided format (such as Y-m-d)
-function aplVerifyDate($date, $date_format)
+//verify date and/or time according to provided format (such as Y-m-d, Y-m-d H:i, H:i, and so on)
+function aplVerifyDateTime($datetime, $format)
     {
-    $datetime=DateTime::createFromFormat($date_format, $date);
-    $errors=DateTime::getLastErrors();
-    if (!$datetime || !empty($errors['warning_count'])) //date was invalid
+    $result=false;
+
+    if (!empty($datetime) && !empty($format))
         {
-        $date_check_ok=false;
-        }
-    else //everything OK
-        {
-        $date_check_ok=true;
+        $datetime=DateTime::createFromFormat($format, $datetime);
+        $errors=DateTime::getLastErrors();
+
+        if ($datetime && empty($errors['warning_count'])) //datetime OK
+            {
+            $result=true;
+            }
         }
 
-    return $date_check_ok;
+    return $result;
     }
 
 
@@ -290,7 +287,7 @@ function aplGetDaysBetweenDates($date_from, $date_to)
     {
     $number_of_days=0;
 
-    if (aplVerifyDate($date_from, "Y-m-d") && aplVerifyDate($date_to, "Y-m-d"))
+    if (aplVerifyDateTime($date_from, "Y-m-d") && aplVerifyDateTime($date_to, "Y-m-d"))
         {
         $date_to=new DateTime($date_to);
         $date_from=new DateTime($date_from);
@@ -395,7 +392,7 @@ function aplCheckSettings()
         $notifications_array[]=APL_CORE_NOTIFICATION_INVALID_SALT;
         }
 
-    if (!filter_var(APL_ROOT_URL, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED | FILTER_FLAG_HOST_REQUIRED) || !ctype_alnum(substr(APL_ROOT_URL, -1))) //invalid Auto PHP Licenser server URL
+    if (!filter_var(APL_ROOT_URL, FILTER_VALIDATE_URL) || !ctype_alnum(substr(APL_ROOT_URL, -1))) //invalid Auto PHP Licenser server URL
         {
         $notifications_array[]=APL_CORE_NOTIFICATION_INVALID_ROOT_URL;
         }
@@ -405,7 +402,7 @@ function aplCheckSettings()
         $notifications_array[]=APL_CORE_NOTIFICATION_INVALID_PRODUCT_ID;
         }
 
-    if (!aplValidateNumberOrRange(APL_DAYS, 1, 365)) //invalid verification period
+    if (!aplValidateIntegerValue(APL_DAYS, 1, 365)) //invalid verification period
         {
         $notifications_array[]=APL_CORE_NOTIFICATION_INVALID_VERIFICATION_PERIOD;
         }
@@ -420,7 +417,7 @@ function aplCheckSettings()
         $notifications_array[]=APL_CORE_NOTIFICATION_INVALID_TABLE;
         }
 
-    if (APL_STORAGE=="FILE" && !@is_writable(APL_DIRECTORY."/".APL_LICENSE_FILE_LOCATION)) //invalid license file
+    if (APL_STORAGE=="FILE" && !@is_writable(APL_DIRECTORY."/".APL_LICENSE_FILE_LOCATION)) //invalid license file or permissions
         {
         $notifications_array[]=APL_CORE_NOTIFICATION_INVALID_LICENSE_FILE;
         }
@@ -523,7 +520,7 @@ function aplCheckConnection()
     {
     $notifications_array=array();
 
-    $content_array=aplCustomPostGetHeaders(APL_ROOT_URL."/apl_callbacks/connection_test.php", APL_ROOT_URL, "product_id=".rawurlencode(APL_PRODUCT_ID)."&connection_hash=".rawurlencode(hash("sha256", "connection_test")));
+    $content_array=aplCustomPost(APL_ROOT_URL."/apl_callbacks/connection_test.php", "product_id=".rawurlencode(APL_PRODUCT_ID)."&connection_hash=".rawurlencode(hash("sha256", "connection_test")));
     if (!empty($content_array)) //response received
         {
         if ($content_array['body']!="<connection_test>OK</connection_test>") //response invalid
@@ -556,12 +553,12 @@ function aplCheckData($MYSQLI_LINK=null)
         $LCD=aplCustomDecrypt($LCD, APL_SALT.$INSTALLATION_KEY); //decrypt $LCD value for easier data check
         $LRD=aplCustomDecrypt($LRD, APL_SALT.$INSTALLATION_KEY); //decrypt $LRD value for easier data check
 
-        if (!filter_var($ROOT_URL, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED | FILTER_FLAG_HOST_REQUIRED) || !ctype_alnum(substr($ROOT_URL, -1))) //invalid script url
+        if (!filter_var($ROOT_URL, FILTER_VALIDATE_URL) || !ctype_alnum(substr($ROOT_URL, -1))) //invalid script url
             {
             $error_detected=1;
             }
 
-        if (filter_var(aplGetCurrentUrl(), FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED | FILTER_FLAG_HOST_REQUIRED) && stristr(aplGetRootUrl(aplGetCurrentUrl(), 1, 1, 0, 1), aplGetRootUrl("$ROOT_URL/", 1, 1, 0, 1))===false) //script is opened via browser (current_url set), but current_url is different from value in database
+        if (filter_var(aplGetCurrentUrl(), FILTER_VALIDATE_URL) && stristr(aplGetRootUrl(aplGetCurrentUrl(), 1, 1, 0, 1), aplGetRootUrl("$ROOT_URL/", 1, 1, 0, 1))===false) //script is opened via browser (current_url set), but current_url is different from value in database
             {
             $error_detected=1;
             }
@@ -576,30 +573,30 @@ function aplCheckData($MYSQLI_LINK=null)
             $error_detected=1;
             }
 
-        if (!aplVerifyDate($LCD, "Y-m-d")) //last check date is invalid
+        if (!aplVerifyDateTime($LCD, "Y-m-d")) //last check date is invalid
             {
             $error_detected=1;
             }
 
-        if (!aplVerifyDate($LRD, "Y-m-d")) //last run date is invalid
+        if (!aplVerifyDateTime($LRD, "Y-m-d")) //last run date is invalid
             {
             $error_detected=1;
             }
 
         //check for possible cracking attempts - starts
-        if (aplVerifyDate($LCD, "Y-m-d") && $LCD>date("Y-m-d", strtotime("+1 day"))) //last check date is VALID, but higher than current date (someone manually decrypted and overwrote it or changed system time back). Allow 1 day difference in case user changed his timezone and current date went 1 day back
+        if (aplVerifyDateTime($LCD, "Y-m-d") && $LCD>date("Y-m-d", strtotime("+1 day"))) //last check date is VALID, but higher than current date (someone manually decrypted and overwrote it or changed system time back). Allow 1 day difference in case user changed his timezone and current date went 1 day back
             {
             $error_detected=1;
             $cracking_detected=1;
             }
 
-        if (aplVerifyDate($LRD, "Y-m-d") && $LRD>date("Y-m-d", strtotime("+1 day"))) //last run date is VALID, but higher than current date (someone manually decrypted and overwrote it or changed system time back). Allow 1 day difference in case user changed his timezone and current date went 1 day back
+        if (aplVerifyDateTime($LRD, "Y-m-d") && $LRD>date("Y-m-d", strtotime("+1 day"))) //last run date is VALID, but higher than current date (someone manually decrypted and overwrote it or changed system time back). Allow 1 day difference in case user changed his timezone and current date went 1 day back
             {
             $error_detected=1;
             $cracking_detected=1;
             }
 
-        if (aplVerifyDate($LCD, "Y-m-d") && aplVerifyDate($LRD, "Y-m-d") && $LCD>$LRD) //last check date and last run date is VALID, but LCD is higher than LRD (someone manually decrypted and overwrote it or changed system time back)
+        if (aplVerifyDateTime($LCD, "Y-m-d") && aplVerifyDateTime($LRD, "Y-m-d") && $LCD>$LRD) //last check date and last run date is VALID, but LCD is higher than LRD (someone manually decrypted and overwrote it or changed system time back)
             {
             $error_detected=1;
             $cracking_detected=1;
@@ -626,7 +623,7 @@ function aplVerifyEnvatoPurchase($LICENSE_CODE=null)
     {
     $notifications_array=array();
 
-    $content_array=aplCustomPostGetHeaders(APL_ROOT_URL."/apl_callbacks/verify_envato_purchase.php", APL_ROOT_URL, "product_id=".rawurlencode(APL_PRODUCT_ID)."&license_code=".rawurlencode($LICENSE_CODE)."&connection_hash=".rawurlencode(hash("sha256", "verify_envato_purchase")));
+    $content_array=aplCustomPost(APL_ROOT_URL."/apl_callbacks/verify_envato_purchase.php", "product_id=".rawurlencode(APL_PRODUCT_ID)."&license_code=".rawurlencode($LICENSE_CODE)."&connection_hash=".rawurlencode(hash("sha256", "verify_envato_purchase")));
     if (!empty($content_array)) //response received
         {
         if ($content_array['body']!="<verify_envato_purchase>OK</verify_envato_purchase>") //response invalid
@@ -663,7 +660,7 @@ function incevioVerify($ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE, $MYSQLI_LINK=nul
             $INSTALLATION_HASH=hash("sha256", $ROOT_URL.$CLIENT_EMAIL.$LICENSE_CODE); //generate hash
             $post_info="product_id=".rawurlencode(APL_PRODUCT_ID)."&client_email=".rawurlencode($CLIENT_EMAIL)."&license_code=".rawurlencode($LICENSE_CODE)."&root_url=".rawurlencode($ROOT_URL)."&installation_hash=".rawurlencode($INSTALLATION_HASH)."&license_signature=".rawurlencode(aplGenerateScriptSignature($ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE));
 
-            $content_array=aplCustomPostGetHeaders(APL_ROOT_URL."/apl_callbacks/license_install.php", $ROOT_URL, $post_info);
+            $content_array=aplCustomPost(APL_ROOT_URL."/apl_callbacks/license_install.php", $post_info, $ROOT_URL);
             $notifications_array=aplParseServerNotifications($content_array, $ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE); //process response from Auto PHP Licenser server
             if ($notifications_array['notification_case']=="notification_license_ok") //everything OK
                 {
@@ -673,7 +670,7 @@ function incevioVerify($ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE, $MYSQLI_LINK=nul
 
                 if (APL_STORAGE=="DATABASE") //license stored in database
                     {
-                    $content_array=aplCustomPostGetHeaders(APL_ROOT_URL."/apl_callbacks/license_scheme.php", $ROOT_URL, $post_info); //get license scheme (use the same $post_info from license installation)
+                    $content_array=aplCustomPost(APL_ROOT_URL."/apl_callbacks/license_scheme.php", $post_info, $ROOT_URL); //get license scheme (use the same $post_info from license installation)
                     $notifications_array=aplParseServerNotifications($content_array, $ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE); //process response from Auto PHP Licenser server
                     if (!empty($notifications_array['notification_data']) && !empty($notifications_array['notification_data']['scheme_query'])) //valid scheme received
                         {
@@ -724,7 +721,7 @@ function incevioAutoloadHelpers($MYSQLI_LINK=null, $FORCE_VERIFICATION=0)
             {
             extract(aplGetLicenseData($MYSQLI_LINK)); //get license data
 
-            if (aplGetDaysBetweenDates(aplCustomDecrypt($LCD, APL_SALT.$INSTALLATION_KEY), date("Y-m-d"))<APL_DAYS && aplCustomDecrypt($LCD, APL_SALT.$INSTALLATION_KEY)<=date("Y-m-d") && aplCustomDecrypt($LRD, APL_SALT.$INSTALLATION_KEY)<=date("Y-m-d") && $FORCE_VERIFICATION==0) //the only case when no verification is needed, return notification_license_ok case, so script can continue working
+            if (aplGetDaysBetweenDates(aplCustomDecrypt($LCD, APL_SALT.$INSTALLATION_KEY), date("Y-m-d"))<APL_DAYS && aplCustomDecrypt($LCD, APL_SALT.$INSTALLATION_KEY)<=date("Y-m-d") && aplCustomDecrypt($LRD, APL_SALT.$INSTALLATION_KEY)<=date("Y-m-d") && $FORCE_VERIFICATION===0) //the only case when no verification is needed, return notification_license_ok case, so script can continue working
                 {
                 $notifications_array['notification_case']="notification_license_ok";
                 $notifications_array['notification_text']=APL_NOTIFICATION_BYPASS_VERIFICATION;
@@ -733,7 +730,7 @@ function incevioAutoloadHelpers($MYSQLI_LINK=null, $FORCE_VERIFICATION=0)
                 {
                 $post_info="product_id=".rawurlencode(APL_PRODUCT_ID)."&client_email=".rawurlencode($CLIENT_EMAIL)."&license_code=".rawurlencode($LICENSE_CODE)."&root_url=".rawurlencode($ROOT_URL)."&installation_hash=".rawurlencode($INSTALLATION_HASH)."&license_signature=".rawurlencode(aplGenerateScriptSignature($ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE));
 
-                $content_array=aplCustomPostGetHeaders(APL_ROOT_URL."/apl_callbacks/license_verify.php", $ROOT_URL, $post_info);
+                $content_array=aplCustomPost(APL_ROOT_URL."/apl_callbacks/license_verify.php", $post_info, $ROOT_URL);
                 $notifications_array=aplParseServerNotifications($content_array, $ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE); //process response from Auto PHP Licenser server
                 if ($notifications_array['notification_case']=="notification_license_ok") //everything OK
                     {
@@ -827,7 +824,7 @@ function aplVerifySupport($MYSQLI_LINK=null)
 
             $post_info="product_id=".rawurlencode(APL_PRODUCT_ID)."&client_email=".rawurlencode($CLIENT_EMAIL)."&license_code=".rawurlencode($LICENSE_CODE)."&root_url=".rawurlencode($ROOT_URL)."&installation_hash=".rawurlencode($INSTALLATION_HASH)."&license_signature=".rawurlencode(aplGenerateScriptSignature($ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE));
 
-            $content_array=aplCustomPostGetHeaders(APL_ROOT_URL."/apl_callbacks/license_support.php", $ROOT_URL, $post_info);
+            $content_array=aplCustomPost(APL_ROOT_URL."/apl_callbacks/license_support.php", $post_info, $ROOT_URL);
             $notifications_array=aplParseServerNotifications($content_array, $ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE); //process response from Auto PHP Licenser server
             }
         else //license is not installed yet or corrupted
@@ -860,7 +857,40 @@ function aplVerifyUpdates($MYSQLI_LINK=null)
 
             $post_info="product_id=".rawurlencode(APL_PRODUCT_ID)."&client_email=".rawurlencode($CLIENT_EMAIL)."&license_code=".rawurlencode($LICENSE_CODE)."&root_url=".rawurlencode($ROOT_URL)."&installation_hash=".rawurlencode($INSTALLATION_HASH)."&license_signature=".rawurlencode(aplGenerateScriptSignature($ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE));
 
-            $content_array=aplCustomPostGetHeaders(APL_ROOT_URL."/apl_callbacks/license_updates.php", $ROOT_URL, $post_info);
+            $content_array=aplCustomPost(APL_ROOT_URL."/apl_callbacks/license_updates.php", $post_info, $ROOT_URL);
+            $notifications_array=aplParseServerNotifications($content_array, $ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE); //process response from Auto PHP Licenser server
+            }
+        else //license is not installed yet or corrupted
+            {
+            $notifications_array['notification_case']="notification_license_corrupted";
+            $notifications_array['notification_text']=APL_NOTIFICATION_LICENSE_CORRUPTED;
+            }
+        }
+    else //script is not properly configured
+        {
+        $notifications_array['notification_case']="notification_script_corrupted";
+        $notifications_array['notification_text']=implode("; ", $apl_core_notifications);
+        }
+
+    return $notifications_array;
+    }
+
+
+//update license
+function aplUpdateLicense($MYSQLI_LINK=null)
+    {
+    $notifications_array=array();
+    $apl_core_notifications=aplCheckSettings(); //check core settings
+
+    if (empty($apl_core_notifications)) //only continue if script is properly configured
+        {
+        if (aplCheckData($MYSQLI_LINK)) //only continue if license is installed and properly configured
+            {
+            extract(aplGetLicenseData($MYSQLI_LINK)); //get license data
+
+            $post_info="product_id=".rawurlencode(APL_PRODUCT_ID)."&client_email=".rawurlencode($CLIENT_EMAIL)."&license_code=".rawurlencode($LICENSE_CODE)."&root_url=".rawurlencode($ROOT_URL)."&installation_hash=".rawurlencode($INSTALLATION_HASH)."&license_signature=".rawurlencode(aplGenerateScriptSignature($ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE));
+
+            $content_array=aplCustomPost(APL_ROOT_URL."/apl_callbacks/license_update.php", $post_info, $ROOT_URL);
             $notifications_array=aplParseServerNotifications($content_array, $ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE); //process response from Auto PHP Licenser server
             }
         else //license is not installed yet or corrupted
@@ -893,7 +923,7 @@ function aplUninstallLicense($MYSQLI_LINK=null)
 
             $post_info="product_id=".rawurlencode(APL_PRODUCT_ID)."&client_email=".rawurlencode($CLIENT_EMAIL)."&license_code=".rawurlencode($LICENSE_CODE)."&root_url=".rawurlencode($ROOT_URL)."&installation_hash=".rawurlencode($INSTALLATION_HASH)."&license_signature=".rawurlencode(aplGenerateScriptSignature($ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE));
 
-            $content_array=aplCustomPostGetHeaders(APL_ROOT_URL."/apl_callbacks/license_uninstall.php", $ROOT_URL, $post_info);
+            $content_array=aplCustomPost(APL_ROOT_URL."/apl_callbacks/license_uninstall.php", $post_info, $ROOT_URL);
             $notifications_array=aplParseServerNotifications($content_array, $ROOT_URL, $CLIENT_EMAIL, $LICENSE_CODE); //process response from Auto PHP Licenser server
             if ($notifications_array['notification_case']=="notification_license_ok") //everything OK
                 {

@@ -7,7 +7,7 @@
     var unitPrice = {{ $item->currnt_sale_price() }};
     var variants = '{!! $variants !!}';
     // var variants = JSON.parse('{!! $variants !!}');
-    // console.log('{!! $variants !!}');
+    // console.log(variants);
     var itemWrapper = $("#single-product-wrapper");
 
     var buyNowBaseUrl = $("#buy-now-btn").attr('href');
@@ -134,16 +134,17 @@
         }
     });
 
-    // Vatiation updates
+    // Variation updates
     $('.product-attribute-selector').on('change', function(){
-        var attr = [];
+        var attrs = [];
         $('.product-attribute-selector').each(function(){
             var val = $(this).val();
             if(val)
-                attr.push(Number(val));
+                attrs.push(Number(val));
         });
-
-        var filtered = filterItems(attr);
+        // console.log(attrs);
+        var filtered = filterItems(attrs);
+        // console.log(filtered);
 
         if(filtered == undefined) {
             setOutOfStock();            // Set set out of stock
@@ -156,6 +157,8 @@
         updateUrls(filtered);           // Set route urls
 
         setStockQuantity(filtered);     // Set availble stock quantity
+
+        // setKeyFeatures(filtered);       // Set key features
 
         setShippingOptions();           // Set shipping options
     });
@@ -189,6 +192,20 @@
     //////////////////////////
     /// Attribute Changes ///
     //////////////////////////
+    function filterItems(options)
+    {
+        // if (!options || $.isEmptyObject(variants))   return NaN;
+        options = JSON.stringify(options.sort());
+
+        return jQuery.parseJSON(variants).find(function (item) {
+            // Get the attr sets of the item
+            var attrs = item.attribute_values.map(a => a.id);
+
+            // Return the exact match of options with items attr sets
+            return JSON.stringify(attrs.sort()) === options;
+        });
+    }
+
     function updateUrls(item)
     {
         $("#buy-now-btn").attr('href', buyNowBaseUrl + item.slug);
@@ -202,17 +219,25 @@
             (item.offer_price > 0) && (item.offer_price < item.sale_price) &&
             (Date.parse(item.offer_start) < Date.now()) && (Date.parse(item.offer_end) > Date.now())
         ) {
-            unitPrice = item.offer_price;       // Update the unit price for calculation
-            var off = ( (item.sale_price - item.offer_price) * 100 ) / item.sale_price;
-            itemWrapper.find('.old-price').show().html(getFormatedPrice(item.sale_price).replace(/\.?0+$/, ''));
-            itemWrapper.find('.product-info-price-new').html(getFormatedPrice(item.offer_price).replace(/\.?0+$/, ''));
+            unitPrice = Number(item.offer_price);       // Update the unit price for calculation
+            var off = ( (Number(item.sale_price) - Number(item.offer_price)) * 100 ) / Number(item.sale_price);
+            itemWrapper.find('.old-price').show().html(getFormatedPrice(item.sale_price));
+            // itemWrapper.find('.old-price').show().html(getFormatedPrice(item.sale_price).replace(/\.?0+$/, ''));
+            itemWrapper.find('.product-info-price-new').html(getFormatedPrice(item.offer_price));
+            // itemWrapper.find('.product-info-price-new').html(getFormatedPrice(item.offer_price).replace(/\.?0+$/, ''));
             itemWrapper.find('.percent-off').show().html(getFormatedValue(off,0) + '{{trans('theme.percnt_off')}}');
         }
         else {
-            unitPrice = item.sale_price;       // Update the unit price for calculation
+            unitPrice = Number(item.sale_price);       // Update the unit price for calculation
             itemWrapper.find('.old-price, .percent-off').hide().text('');
-            itemWrapper.find('.product-info-price-new').html(getFormatedPrice(item.sale_price).replace(/\.?0+$/, ''));
+            itemWrapper.find('.product-info-price-new').html(getFormatedPrice(item.sale_price));
+            // itemWrapper.find('.product-info-price-new').html(getFormatedPrice(item.sale_price).replace(/\.?0+$/, ''));
         }
+    }
+
+    function setKeyFeatures(item)
+    {
+        itemWrapper.find('.key_feature_list').html(item.key_features);
     }
 
     // In stock
@@ -231,20 +256,6 @@
         itemWrapper.find('.product-info-price-new').text('{{trans('theme.out_of_stock')}}');
         itemWrapper.find('.old-price, .available-qty-count').text('');
         canNotDeliver();
-    }
-
-    function filterItems(options)
-    {
-        // if (!options || $.isEmptyObject(variants))   return NaN;
-        options = JSON.stringify(options.sort());
-
-        return variants.find(function (item) {
-            // Get the attr sets of the item
-            var attrs = item.attribute_values.map(a => a.id);
-
-            // Return the exact match of options with items attr sets
-            return JSON.stringify(attrs.sort()) === options;
-        });
     }
     //////////////////////////
     /// END Attribute Changes
