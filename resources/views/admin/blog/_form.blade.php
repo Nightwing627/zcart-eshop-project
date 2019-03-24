@@ -53,10 +53,11 @@
     </div>
     <div class="col-md-3 nopadding-left">
       <div class="fileUpload btn btn-primary btn-block btn-flat">
-          <span>{{ trans('app.form.upload') }}</span>
-          <input type="file" name="image" id="uploadBtn" class="upload" />
+        <span>{{ trans('app.form.upload') }}</span>
+        <input type="file" name="image" id="uploadBtn" class="upload" />
       </div>
     </div>
   </div>
+  <div class="help-block with-errors">{{ trans('help.blog_feature_img_hint') }}</div>
 </div>
 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>

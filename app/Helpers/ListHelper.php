@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\User;
 use App\Role;
 use App\Page;
+use App\Blog;
 use App\Shop;
 use App\Order;
 use App\Module;
@@ -378,6 +379,26 @@ class ListHelper
     public static function slugsWithModulAccess()
     {
         return Permission::with('module')->get()->pluck('module.access', 'slug')->toArray();
+    }
+
+    /**
+     * Get Popular_blogs list.
+     *
+     * @return array
+     */
+    public static function popularBlogs()
+    {
+        return Blog::select(['id','title','slug','excerpt','published_at'])->popular()->take(5)->get();
+    }
+
+    /**
+     * Get latest_blogs list.
+     *
+     * @return array
+     */
+    public static function recentBlogs()
+    {
+        return Blog::select(['id','title','slug','excerpt','published_at'])->recent()->take(5)->get();
     }
 
     /**

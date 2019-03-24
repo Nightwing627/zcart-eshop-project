@@ -89,6 +89,8 @@ return [
 
     // 'help_doc_link' => 'Help document link',
 
+    'blog_feature_img_hint' => 'The image size should be 960x480px',
+
     'code' => 'Code',
 
     'brand' => 'The brand of the product. Not required but recommended',

@@ -26,7 +26,7 @@
 		        @foreach($blogs as $blog )
 			        <tr>
 			          <td>
-						<img src="{{ get_storage_file_url(optional($blog->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.logo') }}">
+						<img src="{{ get_storage_file_url(optional($blog->image)->path, 'tiny') }}" class="img-sm" alt="{!! $blog->title !!}">
 			          </td>
 			          <td width="60%">
 							@can('update', $blog)

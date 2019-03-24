@@ -22,7 +22,7 @@ class BlogComment extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -35,7 +35,15 @@ class BlogComment extends Model
      */
     public function post()
     {
-        return $this->belongsTo('App\Post');
+        return $this->belongsTo(Post::class);
+    }
+
+    /**
+     * Get the author associated with the blog post.
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id')->withDefault();
     }
 
     /**
@@ -45,6 +53,16 @@ class BlogComment extends Model
      */
     public function scopePublished($query)
     {
-        return $query->where('status', 1)->where('approved', 1);
+        return $query->where('approved', 1);
+    }
+
+    /**
+     * Scope a query to only include published comments.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUnPublished($query)
+    {
+        return $query->where('approved', '!=', 1);
     }
 }

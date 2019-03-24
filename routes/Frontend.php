@@ -28,6 +28,11 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 	Route::get('brand/{slug}', 'HomeController@brand')->name('show.brand');
 	Route::get('locale/{locale?}', 'HomeController@changeLanguage')->name('locale.change');
 	Route::get('search', 'SearchController@search')->name('inCategoriesSearch');
+	Route::get('blog', 'BlogController@index')->name('blog');
+	Route::any('blog/search', 'BlogController@search')->name('blog.search');
+	Route::get('blog/{slug}', 'BlogController@show')->name('blog.show');
+	Route::get('blog/author/{author}', 'BlogController@author')->name('blog.author');
+	Route::get('blog/tag/{tag}', 'BlogController@tag')->name('blog.tag');
 });
 
 // Route for merchant landing theme

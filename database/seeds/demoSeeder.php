@@ -245,9 +245,37 @@ class demoSeeder extends Seeder
 
         factory(App\Blog::class, $this->tinycount)->create();
 
+        if (env('APP_DEMO') == true && File::isDirectory(public_path('images/demo'))) {
+            $path = storage_path('app/public/'.image_storage_dir());
+            if(!File::isDirectory($path)) File::makeDirectory($path);
+
+            $blogs = \DB::table('blogs')->pluck('id')->toArray();
+
+            foreach ($blogs as $blog) {
+                $img = public_path("images/demo/blogs/{$blog}.png");
+
+                if( ! file_exists($img) ) continue;
+
+                File::copy($img,  "{$path}/blog_{$blog}.png");
+
+                DB::table('images')->insert([
+                    [
+                        'name' => "blog_{$blog}.png",
+                        'path' => image_storage_dir()."/blog_{$blog}.png",
+                        'extension' => 'png',
+                        'featured' => 1,
+                        'imageable_id' => $blog,
+                        'imageable_type' => 'App\Blog',
+                        'created_at' => Carbon::Now(),
+                        'updated_at' => Carbon::Now(),
+                    ]
+                ]);
+            }
+        }
+
         factory(App\BlogComment::class, $this->longCount)->create();
 
-        factory(App\Tag::class, $this->count)->create();
+        factory(App\Tag::class, $this->longCount)->create();
 
         // factory(App\GiftCard::class, $this->count)->create();
 
@@ -260,7 +288,6 @@ class demoSeeder extends Seeder
         factory(App\Reply::class, $this->longCount)->create();
 
         //PIVOT TABLE SEEDERS
-
         $customers  = \DB::table('customers')->pluck('id')->toArray();
         $users      = \DB::table('users')->pluck('id')->toArray();
         $products   = \DB::table('products')->pluck('id')->toArray();
@@ -349,6 +376,21 @@ class demoSeeder extends Seeder
             }
         }
 
+        // Blog tags
+        $blogs  = \DB::table('blogs')->pluck('id')->toArray();
+        $tags   = \DB::table('tags')->pluck('id')->toArray();
+        foreach ($blogs as $blog) {
+            $z = rand(1,7);
+            for ($i = 1; $i <= $z; $i++) {
+                DB::table('taggables')->insert(
+                    [
+                        'tag_id' => $tags[array_rand($tags)],
+                        'taggable_id' => $blog,
+                        'taggable_type' => 'App\Blog',
+                    ]
+                );
+            }
+        }
         // category_category_sub_group
         // foreach ((range(1, $this->longLongCount)) as $index) {
         //     DB::table('category_category_sub_group')->insert(

@@ -3221,6 +3221,128 @@ ul.footer-social-list{
 }
 
 /*
+ * Blog styles
+ */
+h1.blog-post-title {
+  margin: 15px 0;
+  font-size: 36px;
+  line-height: 1.1;
+}
+h1.blog-post-title a {
+  color: #333e48;
+  text-decoration: none;
+}
+.blog-post-excerpt {
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 300;
+  color: #727272;
+}
+.blog-post-body {
+  font-size: 17px;
+  line-height: 1.4em;
+}
+.blog-post-body p {
+  margin-bottom: 30px;
+}
+.blog-post iframe,
+.blog-post p img,
+.blog-post img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  margin: 20px 0;
+}
+.blog-post-meta {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 14px;
+  color: #7a7a7a;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+.blog-post-meta > li {
+    float: left;
+    margin-right: 5px;
+    padding-right: 10px;
+    position: relative;
+}
+.blog-sidebar-section {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e6e6e6;
+}
+.widget-title-sm {
+    font-size: 21px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 9px;
+}
+.blog-sidebar-posts > li h5 {
+    font-size: 18px;
+    font-weight: 100;
+    line-height: 1.1;
+    margin-bottom: 0px;
+    letter-spacing: 1;
+}
+.blog-sidebar-posts > li h5 a {
+  text-decoration: none;
+    color: #474747;
+}
+.blog-sidebar-tags {
+    list-style: none;
+    padding: 0;
+    overflow: hidden;
+}
+.blog-sidebar-tags > li {
+    float: left;
+    margin-right: 7px;
+    margin-bottom: 7px;
+}
+.blog-sidebar-tags > li > a {
+  text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    padding: 3px 10px;
+    background: #fff;
+    color: #595959;
+    border: 1px solid #727272;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+}
+.comments-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.comment {
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+.comment .comment-author {
+    float: left;
+    margin-right: 10px;
+}
+.comment .comment-author img {
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+.comment .comment-author-name {
+    font-size: 13px;
+    color: #727272;
+    margin: 0;
+}
+.comment .comment-inner {
+    display: table;
+}
+.comment .comment-content {
+    margin: 3px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #e6e6e6;
+}
+
+/*
  * Shop Profile modal widget
  */
 .box-widget {

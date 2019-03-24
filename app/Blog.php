@@ -46,7 +46,7 @@ class Blog extends Model
      */
     public function author()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withDefault();
     }
 
 	/**
@@ -64,7 +64,33 @@ class Blog extends Model
      */
     public function scopePublished($query)
     {
-        return $query->where('status', 1)->where('approved', 1)->whereNotNull('published_at');
+        return $query->whereNotNull('published_at')
+        ->where([
+            ['status', '=', 1],
+            ['approved', '=', 1],
+            ['published_at', '<=', Carbon::now()]
+        ]);
+    }
+
+    /**
+     * Scope a query to most polular blogs.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePopular($query)
+    {
+        return $query->orderBy('likes', 'DESC');
+    }
+
+
+    /**
+     * Scope a query to most polular blogs.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeRecent($query)
+    {
+        return $query->orderBy('published_at', 'DESC');
     }
 
     /**
@@ -74,8 +100,8 @@ class Blog extends Model
      */
     public function setPublishedAtAttribute($value)
     {
-        $this->attributes['published_at'] = $value ? date("Y-m-d H:i:s", strtotime($value)) : null;
-        // $this->attributes['published_at'] = $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value) : null;
+        if($value) $this->attributes['published_at'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+        // $this->attributes['published_at'] = $value ? date("Y-m-d H:i:s", strtotime($value)) : null;
     }
 
 }

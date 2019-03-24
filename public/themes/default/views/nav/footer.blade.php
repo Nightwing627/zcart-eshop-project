@@ -35,7 +35,7 @@
         @foreach($pages->where('position', 'footer_1st_column') as $page)
           <li><a href="{{ get_page_url($page->slug) }}" rel="nofollow" target="_blank">{{ $page->title }}</a></li>
         @endforeach
-        {{-- <li><a href="{{ url('/blog') }}" target="_blank">@lang('theme.nav.blog')</a></li> --}}
+        <li><a href="{{ route('blog') }}" target="_blank">@lang('theme.nav.blog')</a></li>
       </ul>
     </div>
 

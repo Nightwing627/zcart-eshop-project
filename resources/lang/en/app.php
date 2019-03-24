@@ -282,6 +282,7 @@ return [
     'category_name' => 'Category name',
     'map_location' => 'Map shows approximate location.',
     'blog_title' => 'Blog title',
+    'blog_page_header' => ':platform blog',
     'draft' => 'Draft',
     'published' => 'Published',
     'unpublished' => 'Unpublished',
