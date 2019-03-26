@@ -63,13 +63,13 @@ class SystemController extends Controller
 
         $system->update($request->except('image', 'delete_image'));
 
-        event(new SystemInfoUpdated($system));
-
         if ($request->hasFile('icon'))
             $request->file('icon')->storeAs('','icon.png');
 
         if ($request->hasFile('logo'))
             $request->file('logo')->storeAs('','logo.png');
+
+        event(new SystemInfoUpdated($system));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }

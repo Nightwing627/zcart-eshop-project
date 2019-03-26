@@ -3,11 +3,15 @@
 namespace App\Notifications\System;
 
 use App\ContactUs;
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NewContactUsMessage extends Notification
+class NewContactUsMessage extends Notification implements ShouldQueue
 {
+    use Queueable;
+
     public $message;
 
     /**
