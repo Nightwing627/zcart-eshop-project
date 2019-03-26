@@ -35,6 +35,8 @@ class FinalInstallManager
             if (config('installer.final.key')){
                 Artisan::call('key:generate', ["--force"=> true], $outputLog);
             }
+
+            // Artisan::call('passport:install'); // Install Passport for API auth
         }
         catch(Exception $e){
             return static::response($e->getMessage(), $outputLog);

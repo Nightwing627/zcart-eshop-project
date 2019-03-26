@@ -35,8 +35,6 @@ class DatabaseManager
     {
         try{
             Artisan::call('migrate', ["--force"=> true], $outputLog);
-
-            Artisan::call('passport:install'); // Install Passport for API auth
         }
         catch(Exception $e){
             return $this->response($e->getMessage(), 'error', $outputLog);
