@@ -7,6 +7,8 @@ use Hash;
 use App\System;
 // use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Symfony\Component\Console\Output\BufferedOutput;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Jobs\ResetDbAndImportDemoData;
@@ -201,6 +203,35 @@ class SystemController extends Controller
         }
 
         return response('error', 405);
+    }
+
+    /**
+     * Take a database backup snapshot.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function backup(UpdateSystemRequest $request)
+    {
+        $output = '';
+        try{
+            $outputLog = new BufferedOutput;
+
+            \Log::info("Backup cleanup called! ");
+            Artisan::queue('backup:clean', [], $outputLog); // Remove all backups older than specified number of days in config.
+            \Log::info(Artisan::output());
+
+            \Log::info("Backup command called!");
+            Artisan::queue('backup:run', ["--only-db" => true], $outputLog);
+            \Log::info(Artisan::output());
+        }
+        catch(Exception $e){
+            \Log::error("Backup failed! ". $outputLog);
+
+            return back()->withErrors("Backup failed: " . $output);
+        }
+
+        return back()->with('success', trans('messages.backup_done'));
     }
 
     /**

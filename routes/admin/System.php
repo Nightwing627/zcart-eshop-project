@@ -12,6 +12,8 @@
 
 	Route::get('system/importDemoContents', 'SystemController@importDemoContents')->name('system.importDemoContents')->middleware('ajax');
 
+	Route::get('system/backup', 'SystemController@backup')->name('system.backup');
+
 	Route::post('system/importDemoContents', 'SystemController@resetDatabase')->name('system.reset');
 
 	Route::get('system/uninstallAppLicense', 'SystemController@uninstallAppLicense')->name('license.uninstall')->middleware('ajax');

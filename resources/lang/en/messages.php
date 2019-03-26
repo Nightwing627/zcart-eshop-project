@@ -79,6 +79,8 @@ return [
     'cant_charge_application_fee' => 'You can\'t charge <b>marketplace commission</b> and per <b>transection fee</b> with this payment method. This is a good option if you only charge subscription fee.',
     'license_uninstalled' => 'License uninstalled.',
     'license_updated' => 'License updated.',
+    'take_a_backup' => 'You can take a database backup snapshot. Make sure you have configured the backup preferences before take this action. Make sure the <code>mysqldump</code> is installed on your server. Check the documentation for help.',
+    'backup_done' => 'Backup done successfully!',
 
     // 'you_have_disputes_solve' => 'There are :disputes active disputes! Please review and solve disputes.',
     // 'you_have_refund_request' => 'You have :requests refund request. Please review and take action.',

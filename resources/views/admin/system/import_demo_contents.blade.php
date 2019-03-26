@@ -25,9 +25,9 @@
             @endif
         </div>
         <div class="modal-footer">
-            {{-- @unless( env('APP_DEMO') == true ) --}}
+            @unless( env('APP_DEMO') == true )
                 {!! Form::submit(trans('app.form.import'), ['class' => 'btn btn-flat btn-new confirm']) !!}
-            {{-- @endunless --}}
+            @endunless
         </div>
         {!! Form::close() !!}
     </div> <!-- / .modal-content -->

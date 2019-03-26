@@ -180,6 +180,7 @@ return [
         App\Providers\ViewComposerServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\GoogleDriveServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
         TeamTNT\Scout\TNTSearchScoutServiceProvider::class,

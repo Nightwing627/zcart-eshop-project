@@ -401,6 +401,19 @@ class Order extends Model
         return $this->update(['feedback_id' => $feedback_id]);
     }
 
+    /**
+     * Return Tracking Url for the order
+     *
+     * @return str/Null
+     */
+    public function getTrackingUrl()
+    {
+        if($this->carrier_id && $this->tracking_id && $this->carrier->tracking_url)
+            return str_replace('@', $this->tracking_id, $this->carrier->tracking_url);
+
+        return Null;
+    }
+
     public function paymentStatusName($plain = False)
     {
         switch ($this->payment_status) {

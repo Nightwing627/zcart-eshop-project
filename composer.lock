@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a4ffbbdefef388b0578be55b7f2e8f95",
+    "content-hash": "54db6f490ec13ec3c5dd302252e37333",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -3632,6 +3632,96 @@
                 "jsonpath"
             ],
             "time": "2016-12-03T22:08:25+00:00"
+        },
+        {
+            "name": "nao-pon/flysystem-cached-extra",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nao-pon/flysystem-cached-extra.git",
+                "reference": "189abdafa0a86d92781e148ee8740ef80f4c5859"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nao-pon/flysystem-cached-extra/zipball/189abdafa0a86d92781e148ee8740ef80f4c5859",
+                "reference": "189abdafa0a86d92781e148ee8740ef80f4c5859",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem-cached-adapter": "~1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hypweb\\Flysystem\\Cached\\Extra\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Naoki Sawada",
+                    "email": "hypweb@gmail.com"
+                }
+            ],
+            "description": "Extra traits for Flysystem cached adapter",
+            "time": "2018-02-16T01:44:38+00:00"
+        },
+        {
+            "name": "nao-pon/flysystem-google-drive",
+            "version": "1.1.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nao-pon/flysystem-google-drive.git",
+                "reference": "e5f9ee67280fd7ef0f00e5ee8c98263148c99c25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nao-pon/flysystem-google-drive/zipball/e5f9ee67280fd7ef0f00e5ee8c98263148c99c25",
+                "reference": "e5f9ee67280fd7ef0f00e5ee8c98263148c99c25",
+                "shasum": ""
+            },
+            "require": {
+                "google/apiclient": "^2.0",
+                "league/flysystem": "~1.0",
+                "nao-pon/flysystem-cached-extra": "~1.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-api_v2": "1.0.x-dev",
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hypweb\\Flysystem\\GoogleDrive\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Naoki Sawada",
+                    "email": "hypweb@gmail.com"
+                }
+            ],
+            "description": "Flysystem adapter for Google Drive",
+            "time": "2019-02-09T14:49:14+00:00"
         },
         {
             "name": "nesbot/carbon",

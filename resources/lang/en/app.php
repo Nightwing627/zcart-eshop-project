@@ -808,6 +808,7 @@ return [
     'sing_in_with_twitter' => 'Sign in using twitter',
     'update_app_license' => 'Update license',
     'uninstall_app_license' => 'Uninstall license',
+    'take_a_backup' => 'Take a backup',
 
     'payment_method_type' => [
         'paypal' => [

@@ -8,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => config('app.name'),
+        'name' => env('BACKUP_DISK') == 'google' ? env('GOOGLE_DRIVE_FOLDER_ID', '') : config('app.name') . 'Backups',
 
         'source' => [
 
@@ -27,7 +27,7 @@ return [
                  * Directories used by the backup process will automatically be excluded.
                  */
                 'exclude' => [
-                    base_path('vendor'),
+                    // base_path('vendor'),
                     base_path('node_modules'),
                 ],
 
@@ -79,13 +79,13 @@ return [
             /*
              * The filename prefix used for the backup zip file.
              */
-            'filename_prefix' => 'a2z_',
+            'filename_prefix' => env('BACKUP_PREFIX', 'backup_'),
 
             /*
              * The disk names on which the backups will be stored.
              */
             'disks' => [
-                'local',
+                env('BACKUP_DISK', 'local'),
             ],
         ],
 
@@ -120,7 +120,7 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => 'your@example.com',
+            'to' => env('BACKUP_EMAIL', 'your@example.com'),
         ],
 
         'slack' => [
@@ -178,7 +178,7 @@ return [
             /*
              * The number of days for which backups must be kept.
              */
-            'keepAllBackupsForDays' => 7,
+            'keepAllBackupsForDays' => env('BACKUP_KEEP_DAYS', 7),
 
             /*
              * The number of days for which daily backups must be kept.
