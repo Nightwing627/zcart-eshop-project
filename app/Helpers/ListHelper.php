@@ -1055,7 +1055,7 @@ class ListHelper
      */
     public static function featured_categories()
     {
-        return \DB::table('categories')->whereNull('deleted_at')->whereNotNull('featured')->pluck('name', 'id');
+        return \DB::table('categories')->whereNull('deleted_at')->where('featured', true)->pluck('name', 'id');
     }
 
     /**

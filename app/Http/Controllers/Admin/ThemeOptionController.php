@@ -45,7 +45,8 @@ class ThemeOptionController extends Controller
      */
     public function updateFeaturedCategories(UpdateFeaturedCategories $request)
     {
-        Category::whereIn('id', $request->input('featured_categories'))->update(['featured' => true]);
+        Category::where('featured', true)->update(['featured' => Null]); // Reset all featured categories
+        Category::whereIn('id', $request->input('featured_categories'))->update(['featured' => true]); //Set new
 
         return redirect()->route('admin.appearance.theme.option', '#settings-tab')
         ->with('success', trans('messages.updated_featured_categories'));
