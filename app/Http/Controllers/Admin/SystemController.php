@@ -202,4 +202,75 @@ class SystemController extends Controller
 
         return response('error', 405);
     }
+
+    /**
+     * Uninstall the application license so that it can be reinstall on new location.
+     * Script stops working immediately.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function uninstallAppLicense(UpdateSystemRequest $request)
+    {
+        if($request->isMethod('get'))
+            return view('admin.system.uninstall');
+
+        if($request->do_action != 'UNINSTALL')
+            return back()->withErrors(trans('validation.do_action_invalid'));
+
+        if(Hash::check($request->password, $request->user()->password)) {
+            // Start transaction!
+            DB::beginTransaction();
+
+            try {
+
+                $license_notifications_array = incevioUninstallLicense(getMysqliConnection());
+
+            } catch(\Exception $e){
+
+                // rollback the transaction and log the error
+                DB::rollback();
+                \Log::error("License uninstallation failed: ".$license_notifications_array['notification_text']);
+
+                // add your error messages:
+                $error = new \Illuminate\Support\MessageBag();
+                $error->add('errors', trans('responses.failed'));
+
+                return back()->withErrors($error);
+            }
+
+            if ($license_notifications_array['notification_case']=="notification_license_ok") {
+                // Everything is fine. Now commit the transaction
+                DB::commit();
+
+                return back()->with('success', trans('messages.license_uninstalled'));
+            }
+
+            // rollback the transaction and log the error
+            DB::rollback();
+            \Log::error("License uninstallation failed: ".$license_notifications_array['notification_text']);
+
+            return back()->withErrors("License uninstallation failed: ".$license_notifications_array['notification_text']);
+        }
+
+        abort(403, 'Unauthorized action.');
+    }
+
+    /**
+     * Update the application license if the IP has been changed.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateAppLicense(UpdateSystemRequest $request)
+    {
+        $license_notifications_array = incevioUpdateLicense(getMysqliConnection());
+
+        if ($license_notifications_array['notification_case'] == "notification_license_ok")
+            return back()->with('success', trans('messages.license_updated'));
+
+        \Log::error("License update failed: ".$license_notifications_array['notification_text']);
+
+        return back()->withErrors("License update failed: ".$license_notifications_array['notification_text']);
+    }
 }

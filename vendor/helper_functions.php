@@ -877,7 +877,7 @@ function aplVerifyUpdates($MYSQLI_LINK=null)
 
 
 //update license
-function aplUpdateLicense($MYSQLI_LINK=null)
+function incevioUpdateLicense($MYSQLI_LINK=null)
     {
     $notifications_array=array();
     $apl_core_notifications=aplCheckSettings(); //check core settings
@@ -910,7 +910,7 @@ function aplUpdateLicense($MYSQLI_LINK=null)
 
 
 //uninstall license
-function aplUninstallLicense($MYSQLI_LINK=null)
+function incevioUninstallLicense($MYSQLI_LINK=null)
     {
     $notifications_array=array();
     $apl_core_notifications=aplCheckSettings(); //check core settings

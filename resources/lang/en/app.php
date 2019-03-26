@@ -760,7 +760,6 @@ return [
     'footer_3rd_column' => 'Footer 3rd column',
     'copyright_area'    => 'Copyright area',
 
-
     'message' => 'Message',
     'attachments' => 'Attachments',
     'refresh' => 'Refresh',
@@ -807,6 +806,8 @@ return [
     'sing_in_with_fb' => 'Sign in using Facebook',
     'sing_in_with_google' => 'Sign in using Google',
     'sing_in_with_twitter' => 'Sign in using twitter',
+    'update_app_license' => 'Update license',
+    'uninstall_app_license' => 'Uninstall license',
 
     'payment_method_type' => [
         'paypal' => [
@@ -1142,6 +1143,7 @@ return [
         'paypal_express_account' => 'Account',
         'paypal_express_client_id' => 'Client ID',
         'paypal_express_secret' => 'Secret Key',
+        'type_uninstall' => 'Type the word uninstall',
 
         'cost_per_month' => 'Cost/month',
         'featured' => 'Featured',
@@ -1154,6 +1156,7 @@ return [
         'faq_answer' => 'Answer',
         'topic' => 'Topic',
         'view_area' => 'View position',
+        'uninstall' => 'Uninstall',
 
         // Filter
         'by_customer' => 'By customer',

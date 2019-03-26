@@ -43,6 +43,8 @@ return [
 
     'type_environment' => 'Type the exact word "ENVIRONMENT" in the box to confirm your wish.',
 
+    'type_uninstall' => 'Type the exact word "UNINSTALL" in the box to confirm your wish.',
+
     'module' => [
         'name' => 'All users under this role will be able to do specified actions to manage :module.',
 

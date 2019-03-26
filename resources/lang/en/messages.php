@@ -77,6 +77,8 @@ return [
     'message_send_failed' => 'Sorry, the message cannot be sent now! Please try again later.',
     'resource_uses_out_of' => ':used of :limit',
     'cant_charge_application_fee' => 'You can\'t charge <b>marketplace commission</b> and per <b>transection fee</b> with this payment method. This is a good option if you only charge subscription fee.',
+    'license_uninstalled' => 'License uninstalled.',
+    'license_updated' => 'License updated.',
 
     // 'you_have_disputes_solve' => 'There are :disputes active disputes! Please review and solve disputes.',
     // 'you_have_refund_request' => 'You have :requests refund request. Please review and take action.',
@@ -158,6 +160,8 @@ return [
     'modify_environment_file' => 'Be careful when working with .env file. This the the main configuration file and the system will break down if you do anything wrong here. Take a backup every time you want to make any modification. <br/><b>You cann\'t revert this action.</b>',
 
     'unfulfilled_percents' => ':percent% of today\'s total orders',
+    'update_app_license' => 'Updates the license if IP address of your server was changed, so script continues to work on new IP.',
+    'uninstall_app_license' => 'Uninstalling the license will allow you to re-install the script and the current installation will stop working immediately. Please remove the old installation files to avoid unexpected issues with new installation.<br/><b>You cann\'t revert this action.</b>',
     'last_30_days_percents' => ':percent% :state in 30 days',
     'stock_out_percents' => ':percent% of total :total items',
     'todays_sale_percents' => ':percent% :state from yesterday',

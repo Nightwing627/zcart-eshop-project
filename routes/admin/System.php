@@ -13,3 +13,9 @@
 	Route::get('system/importDemoContents', 'SystemController@importDemoContents')->name('system.importDemoContents')->middleware('ajax');
 
 	Route::post('system/importDemoContents', 'SystemController@resetDatabase')->name('system.reset');
+
+	Route::get('system/uninstallAppLicense', 'SystemController@uninstallAppLicense')->name('license.uninstall')->middleware('ajax');
+
+	Route::post('system/uninstallAppLicense', 'SystemController@uninstallAppLicense')->name('license.reset');
+
+	Route::get('system/updateAppLicense', 'SystemController@updateAppLicense')->name('license.update');
