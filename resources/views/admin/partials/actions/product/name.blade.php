@@ -5,7 +5,7 @@
 @endif
 <p class="indent10">
 	@can('view', $product)
-		<a href="{{ route('admin.catalog.product.show', $product->id) }}" class="ajax-modal-btn">
+		<a href="#" data-link="{{ route('admin.catalog.product.show', $product->id) }}" class="ajax-modal-btn">
 			{{ $product->name }}
 		</a>
 	@else

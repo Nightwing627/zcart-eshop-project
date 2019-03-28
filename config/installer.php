@@ -15,7 +15,7 @@ return [
     |
     */
     'core' => [
-        'minPhpVersion' => '7.1.30'
+        'minPhpVersion' => '7.1.3'
     ],
     'final' => [
         'key' => true,
@@ -25,6 +25,7 @@ return [
         'php' => [
             'openssl',
             'MySQLi',
+            'sqlite3',
             'PDO_sqlite',
             'PDO',
             'mbstring',

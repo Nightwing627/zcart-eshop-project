@@ -8,7 +8,7 @@
 	        @endif
 
 			@if(Gate::allows('view', $reply->user))
-	            <a href="{{ route('admin.admin.user.show', $reply->user_id) }}" class="ajax-modal-btn small">{{ $reply->user->getName() }}</a>
+	            <a href="#" data-link="{{ route('admin.admin.user.show', $reply->user_id) }}" class="ajax-modal-btn small">{{ $reply->user->getName() }}</a>
 			@else
 				<span class="small">{{ $reply->user->getName() }}</span>
 			@endif
@@ -41,7 +41,7 @@
 	        @endif
 
 			@if(Gate::allows('view', $reply->user))
-	            <a href="{{ route('admin.admin.customer.show', $reply->customer_id) }}" class="ajax-modal-btn small">{{ $reply->customer->getName() }}</a>
+	            <a href="#" data-link="{{ route('admin.admin.customer.show', $reply->customer_id) }}" class="ajax-modal-btn small">{{ $reply->customer->getName() }}</a>
 			@else
 				<span class="small">{{ $reply->customer->getName() }}</span>
 			@endif

@@ -2,7 +2,7 @@
 
 @section('buttons')
     @if(Gate::allows('create', App\Order::class) || Gate::allows('create', App\Cart::class))
-		<a href="{{ route('admin.order.order.searchCutomer') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_order') }}</a>
+		<a href="#" data-link="{{ route('admin.order.order.searchCutomer') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_order') }}</a>
 	@endif
 @endsection
 

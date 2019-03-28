@@ -21,8 +21,9 @@
         });
 
 		$(document).ready(function(){
-
-		    $(".ajax-modal-btn").show(); // show the ajax functional button when the page loaded completely
+			// show the ajax functional button when the page loaded completely and
+			// Remove the href from the modal buttons
+			$('.ajax-modal-btn').removeAttr('href').css('cursor', 'pointer').show();
 
 		    // Initialise all plugins
 		    initDatatables();
@@ -33,9 +34,12 @@
 		    $('body').on('click', '.ajax-modal-btn', function(e) {
 				e.preventDefault();
 
+				// if(e.which !== 1) return false;
+
 				apply_busy_filter();
 
-				var url = $(this).attr('href');
+				var url = $(this).data('link');
+				// var url = $(this).attr('href');
 				if (url.indexOf('#') == 0) {
 					$(url).modal('open');
 				}

@@ -162,9 +162,9 @@
 
 										{!! $system->primaryAddress->toHtml() !!}
 
-										<a href="{{ route('address.edit', $system->primaryAddress->id) }}"  class="btn btn-default ajax-modal-btn"><i class="fa fa-map-marker"></i> {{ trans('app.update_address') }}</a>
+										<a href="#" data-link="{{ route('address.edit', $system->primaryAddress->id) }}"  class="btn btn-default ajax-modal-btn"><i class="fa fa-map-marker"></i> {{ trans('app.update_address') }}</a>
 									@else
-										<a href="{{ route('address.create', ['system', $system->id]) }}"  class="btn btn-default ajax-modal-btn"><i class="fa fa-plus-square-o"></i> {{ trans('app.add_address') }}</a>
+										<a href="#" data-link="{{ route('address.create', ['system', $system->id]) }}"  class="btn btn-default ajax-modal-btn"><i class="fa fa-plus-square-o"></i> {{ trans('app.add_address') }}</a>
 									@endif
 
 							        <div class="spacer30"></div>
@@ -193,13 +193,13 @@
 		            @if(Auth::guard('web')->user()->isSuperAdmin())
 				    	<div class="row">
 					    	<div class="col-sm-4 text-center">
-					    		<a href="{{ route('admin.setting.system.modifyEnvFile') }}" class="ajax-modal-btn btn btn-default btn-lg ">{{ trans('app.modify_environment_file') }}</a>
+					    		<a href="#" data-link="{{ route('admin.setting.system.modifyEnvFile') }}" class="ajax-modal-btn btn btn-default btn-lg ">{{ trans('app.modify_environment_file') }}</a>
 					    		<div class="spacer10"></div>
 					    		<p class="text-danger"><i class="fa fa-exclamation-triangle"></i> {!! trans('messages.modify_environment_file') !!}</p>
 					    	</div><!-- /.col-sm-4 -->
 
 					    	<div class="col-sm-4 text-center">
-					    		<a href="{{ route('admin.setting.system.importDemoContents') }}" class="ajax-modal-btn btn btn-default btn-lg ">{{ trans('app.import_demo_contents') }}</a>
+					    		<a href="#" data-link="{{ route('admin.setting.system.importDemoContents') }}" class="ajax-modal-btn btn btn-default btn-lg ">{{ trans('app.import_demo_contents') }}</a>
 					    		<div class="spacer10"></div>
 					    		<p class="text-danger"><i class="fa fa-exclamation-triangle"></i> {!! trans('messages.import_demo_contents') !!}</p>
 					    	</div><!-- /.col-sm-4 -->
@@ -223,7 +223,7 @@
 
 					    	<div class="row">
 						    	<div class="col-sm-5 text-justify col-sm-offset-1">
-						    		<a href="{{ route('admin.setting.license.uninstall') }}" class="ajax-modal-btn btn btn-danger btn-lg ">{{ trans('app.uninstall_app_license') }}</a>
+						    		<a href="#" data-link="{{ route('admin.setting.license.uninstall') }}" class="ajax-modal-btn btn btn-danger btn-lg ">{{ trans('app.uninstall_app_license') }}</a>
 						    		<div class="spacer10"></div>
 						    		<p class="text-danger"><i class="fa fa-exclamation-triangle"></i> {!! trans('messages.uninstall_app_license') !!}</p>
 						    	</div><!-- /.col-sm-9 -->

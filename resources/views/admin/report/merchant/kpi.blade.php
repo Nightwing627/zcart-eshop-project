@@ -178,7 +178,7 @@
                         <h5 class="nopadding">
                           <small>{{ trans('app.sku') . ': ' }}</small>
                             @can('view', $inventory)
-                                <a href="{{ route('admin.stock.inventory.show', $inventory->id) }}" class="ajax-modal-btn modal-btn">{{ $inventory->sku }}</a>
+                                <a href="#" data-link="{{ route('admin.stock.inventory.show', $inventory->id) }}" class="ajax-modal-btn modal-btn">{{ $inventory->sku }}</a>
                             @else
                               {{ $inventory->sku }}
                             @endcan
@@ -243,7 +243,7 @@
                         </td>
                         <td>
                             @can('view', $customer)
-                                <a href="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn modal-btn">{{ $customer->getName() }}</a>
+                                <a href="#" data-link="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn modal-btn">{{ $customer->getName() }}</a>
                             @else
                               {{ $customer->getName() }}
                             @endcan
@@ -296,7 +296,7 @@
                         </td>
                         <td>
                             @can('view', $customer)
-                                <a href="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn modal-btn">{{ $customer->getName() }}</a>
+                                <a href="#" data-link="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn modal-btn">{{ $customer->getName() }}</a>
                             @else
                               {{ $customer->getName() }}
                             @endcan

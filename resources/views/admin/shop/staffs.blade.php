@@ -42,7 +42,7 @@
 				          </td>
 				          <td>
 				          		@can('view', $user)
-					        	    <a href="{{ route('admin.admin.user.show', $user->id) }}"  class="ajax-modal-btn">{{ $user->name }}</a>
+					        	    <a href="#" data-link="{{ route('admin.admin.user.show', $user->id) }}"  class="ajax-modal-btn">{{ $user->name }}</a>
 								@else
 									{{ $user->name }}
 								@endcan
@@ -55,7 +55,7 @@
 				          <td class="row-options">
 				          	@if( Auth::user()->isSuperAdmin() || ($user->id != $shop->owner_id))
 								@can('view', $user)
-					        	    <a href="{{ route('admin.admin.user.show', $user->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
+					        	    <a href="#" data-link="{{ route('admin.admin.user.show', $user->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
 								@endcan
 
 								@can('secretLogin', $user)
@@ -63,12 +63,12 @@
 								@endcan
 
 								@can('update', $user)
-					            	<a href="{{ route('admin.admin.user.edit', $user->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+					            	<a href="#" data-link="{{ route('admin.admin.user.edit', $user->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 
 									@if($user->primaryAddress)
-										<a href="{{ route('address.edit', $user->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
+										<a href="#" data-link="{{ route('address.edit', $user->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
 									@else
-										<a href="{{ route('address.create', ['user', $user->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
+										<a href="#" data-link="{{ route('address.create', ['user', $user->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
 									@endif
 								@endcan
 

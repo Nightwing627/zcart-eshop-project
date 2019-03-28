@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.order_statuses') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\OrderStatus::class)
-					<a href="{{ route('admin.utility.orderStatus.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_status') }}</a>
+					<a href="#" data-link="{{ route('admin.utility.orderStatus.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_status') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
@@ -36,7 +36,7 @@
 						</td>
 						<td class="row-options">
 							@can('update', $status)
-								<a href="{{ route('admin.utility.orderStatus.edit', $status->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="#" data-link="{{ route('admin.utility.orderStatus.edit', $status->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $status)

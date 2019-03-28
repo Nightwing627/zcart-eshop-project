@@ -79,7 +79,7 @@ class Blog extends Model
      */
     public function scopePopular($query)
     {
-        return $query->orderBy('likes', 'DESC');
+        return $query->published()->orderBy('likes', 'DESC');
     }
 
 
@@ -90,7 +90,7 @@ class Blog extends Model
      */
     public function scopeRecent($query)
     {
-        return $query->orderBy('published_at', 'DESC');
+        return $query->published()->orderBy('published_at', 'DESC');
     }
 
     /**

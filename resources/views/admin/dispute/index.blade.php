@@ -46,7 +46,7 @@
 				          	<td>{{ $dispute->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
 								@can('response', $dispute)
-									<a href="{{ route('admin.support.dispute.response', $dispute) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-reply"></i></a>&nbsp;
+									<a href="#" data-link="{{ route('admin.support.dispute.response', $dispute) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-reply"></i></a>&nbsp;
 								@endcan
 							</td>
 						</tr>
@@ -101,7 +101,7 @@
 				          	<td>{{ $dispute->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
 								@can('response', $dispute)
-									<a href="{{ route('admin.support.dispute.response', $dispute) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-reply"></i></a>&nbsp;
+									<a href="#" data-link="{{ route('admin.support.dispute.response', $dispute) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-reply"></i></a>&nbsp;
 								@endcan
 							</td>
 						</tr>

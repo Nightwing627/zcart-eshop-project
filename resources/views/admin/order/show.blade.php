@@ -191,7 +191,7 @@
 
               @can('initiate', App\Refund::class)
                 @if($order->isPaid())
-                  <a href="{{ route('admin.support.refund.form', $order) }}" class='ajax-modal-btn btn btn-flat btn-lg btn-default' >
+                  <a href="#" data-link="{{ route('admin.support.refund.form', $order) }}" class='ajax-modal-btn btn btn-flat btn-lg btn-default' >
                     {{ trans('app.initiate_refund') }}
                   </a>
                 @endif
@@ -199,7 +199,7 @@
 
               <div class="pull-right">
                 @if(!$order->status->fulfilled)
-                  <a href="{{ route('admin.order.order.fulfillment', $order) }}" class='ajax-modal-btn btn btn-flat btn-lg btn-primary' >
+                  <a href="#" data-link="{{ route('admin.order.order.fulfillment', $order) }}" class='ajax-modal-btn btn btn-flat btn-lg btn-primary' >
                     {{ trans('app.fulfill_order') }}
                   </a>
                 @else
@@ -209,7 +209,7 @@
                     {!! Form::close() !!}
                   @endcan
 
-                  <a href="{{ route('admin.order.order.edit', $order) }}" class='ajax-modal-btn btn btn-flat btn-lg btn-default' >
+                  <a href="#" data-link="{{ route('admin.order.order.edit', $order) }}" class='ajax-modal-btn btn btn-flat btn-lg btn-default' >
                     {{ trans('app.update') }}
                   </a>
                 @endif
@@ -240,7 +240,7 @@
 
             <span class="admin-user-widget-title indent5">
               @if(config('system_settings.vendor_can_view_customer_info'))
-                <a href="{{ route('admin.admin.customer.show', $order->customer->id) }}" class="ajax-modal-btn">
+                <a href="#" data-link="{{ route('admin.admin.customer.show', $order->customer->id) }}" class="ajax-modal-btn">
                   {{ $order->customer->getName() }}
                 </a>
               @else
@@ -296,7 +296,7 @@
                     <td>{!! $refund->statusName() !!}</td>
                     <td>
                       @can('approve', $refund)
-                        <a href="{{ route('admin.support.refund.response', $refund) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-random"></i></a>&nbsp;
+                        <a href="#" data-link="{{ route('admin.support.refund.response', $refund) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-random"></i></a>&nbsp;
                       @endcan
                     </td>
                   </tr>

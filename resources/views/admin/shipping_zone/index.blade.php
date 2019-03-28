@@ -6,7 +6,7 @@
 			<h3 class="box-title"><i class="fa fa-truck"></i> {{ trans('app.shipping_zones') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\ShippingZone::class)
-					<a href="{{ route('admin.shipping.shippingZone.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_shipping_zone') }}</a>
+					<a href="#" data-link="{{ route('admin.shipping.shippingZone.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_shipping_zone') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
@@ -35,25 +35,25 @@
 								    {{ trans('app.add_shipping_rate') }} <span class="caret"></span>
 								  </button>
 									  <ul class="dropdown-menu">
-									    <li><a href="{{ route('admin.shipping.shippingRate.create', [$shipping_zone->id,'price']) }}" class="ajax-modal-btn"><i class="fa fa-money"></i> {{ trans('app.add_price_based_rate') }}</a></li>
+									    <li><a href="#" data-link="{{ route('admin.shipping.shippingRate.create', [$shipping_zone->id,'price']) }}" class="ajax-modal-btn"><i class="fa fa-money"></i> {{ trans('app.add_price_based_rate') }}</a></li>
 
 										<li role="separator" class="divider"></li>
 
-									    <li><a href="{{ route('admin.shipping.shippingRate.create', [$shipping_zone->id, 'weight']) }}" class="ajax-modal-btn"><i class="fa fa-balance-scale"></i> {{ trans('app.add_weight_based_rate') }}</a></li>
+									    <li><a href="#" data-link="{{ route('admin.shipping.shippingRate.create', [$shipping_zone->id, 'weight']) }}" class="ajax-modal-btn"><i class="fa fa-balance-scale"></i> {{ trans('app.add_weight_based_rate') }}</a></li>
 									  </ul>
 								</div>
 							@endcan
 
 						  	@unless($shipping_zone->rest_of_the_world)
 								@can('create', App\ShippingZone::class)
-									<a href="{{ route('admin.shipping.shippingZone.edit', $shipping_zone->id) }}"  class="ajax-modal-btn btn btn-default btn-flat">
+									<a href="#" data-link="{{ route('admin.shipping.shippingZone.edit', $shipping_zone->id) }}"  class="ajax-modal-btn btn btn-default btn-flat">
 										<i class="fa fa-plus-square-o"></i> {{ trans('app.add_shipping_country') }}
 								  	</a>
 								@endcan
 						  	@endunless
 
 							@can('update', $shipping_zone)
-								<a href="{{ route('admin.shipping.shippingZone.edit', $shipping_zone->id) }}"  class="ajax-modal-btn btn btn-default btn-flat"><i class="fa fa-edit"></i> {{ trans('app.edit') }}</a>
+								<a href="#" data-link="{{ route('admin.shipping.shippingZone.edit', $shipping_zone->id) }}"  class="ajax-modal-btn btn btn-default btn-flat"><i class="fa fa-edit"></i> {{ trans('app.edit') }}</a>
 							@endcan
 
 							@can('delete', $shipping_zone)
@@ -99,7 +99,7 @@
 															</span>
 
 															<small class="pull-right">
-																<a href="{{ route('admin.shipping.shippingZone.editStates', [$shipping_zone->id, $id]) }}"  class="ajax-modal-btn"><i  class="fa fa-edit"></i> {{ trans('app.edit') }}</a>
+																<a href="#" data-link="{{ route('admin.shipping.shippingZone.editStates', [$shipping_zone->id, $id]) }}"  class="ajax-modal-btn"><i  class="fa fa-edit"></i> {{ trans('app.edit') }}</a>
 															</small>
 														</p>
 													@endif
@@ -145,7 +145,7 @@
 										  	</span>
 											@can('update', $shipping)
 												<small class="pull-right">
-													<a href="{{ route('admin.shipping.shippingRate.edit', $shipping->id) }}"  class="ajax-modal-btn"><i  class="fa fa-edit"></i> {{ trans('app.edit') }}</a>
+													<a href="#" data-link="{{ route('admin.shipping.shippingRate.edit', $shipping->id) }}"  class="ajax-modal-btn"><i  class="fa fa-edit"></i> {{ trans('app.edit') }}</a>
 												</small>
 											@endcan
 									    </p>

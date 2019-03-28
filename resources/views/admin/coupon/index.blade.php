@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.coupons') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\Coupon::class)
-					<a href="{{ route('admin.promotion.coupon.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_coupon') }}</a>
+					<a href="#" data-link="{{ route('admin.promotion.coupon.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_coupon') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
@@ -49,11 +49,11 @@
 						</td>
 						<td class="row-options">
 							@can('view', $coupon)
-								<a href="{{ route('admin.promotion.coupon.show', $coupon->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="#" data-link="{{ route('admin.promotion.coupon.show', $coupon->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 
 							@can('update', $coupon)
-								<a href="{{ route('admin.promotion.coupon.edit', $coupon->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="#" data-link="{{ route('admin.promotion.coupon.edit', $coupon->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $coupon)

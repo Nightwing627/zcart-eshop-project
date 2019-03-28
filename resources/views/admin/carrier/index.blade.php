@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.carriers') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\Carrier::class)
-					<a href="{{ route('admin.shipping.carrier.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_carrier') }}</a>
+					<a href="#" data-link="{{ route('admin.shipping.carrier.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_carrier') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
@@ -39,10 +39,10 @@
 						</td>
 						<td class="row-options">
 							@can('view', $carrier)
-								<a href="{{ route('admin.shipping.carrier.show', $carrier->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="#" data-link="{{ route('admin.shipping.carrier.show', $carrier->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 							@can('update', $carrier)
-								<a href="{{ route('admin.shipping.carrier.edit', $carrier->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="#" data-link="{{ route('admin.shipping.carrier.edit', $carrier->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 							@can('delete', $carrier)
 								{!! Form::open(['route' => ['admin.shipping.carrier.trash', $carrier->id], 'method' => 'delete', 'class' => 'data-form']) !!}

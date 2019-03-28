@@ -6,7 +6,7 @@
 	      <h3 class="box-title">{{ trans('app.blogs') }}</h3>
 	      <div class="box-tools pull-right">
 			@can('create', App\Blog::class)
-				<a href="{{ route('admin.utility.blog.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_blog') }}</a>
+				<a href="#" data-link="{{ route('admin.utility.blog.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_blog') }}</a>
 			@endcan
 	      </div>
 	    </div> <!-- /.box-header -->
@@ -30,7 +30,7 @@
 			          </td>
 			          <td width="60%">
 							@can('update', $blog)
-			                    <a href="{{ route('admin.utility.blog.edit', $blog->id) }}"  class="ajax-modal-btn"><strong>{!! $blog->title !!}</strong></a>
+			                    <a href="#" data-link="{{ route('admin.utility.blog.edit', $blog->id) }}"  class="ajax-modal-btn"><strong>{!! $blog->title !!}</strong></a>
 							@else
 					          	<strong>{!! $blog->title !!}</strong>
 							@endcan
@@ -53,7 +53,7 @@
 				      </td>
 			          <td class="row-options text-muted small">
 							@can('update', $blog)
-			                    <a href="{{ route('admin.utility.blog.edit', $blog->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+			                    <a href="#" data-link="{{ route('admin.utility.blog.edit', $blog->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 						@can('delete', $blog)
 		                    {!! Form::open(['route' => ['admin.utility.blog.trash', $blog->id], 'method' => 'delete', 'class' => 'data-form']) !!}

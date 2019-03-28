@@ -175,7 +175,7 @@
                               <td>
                                 <img src="{{ get_storage_file_url(optional($product->featuredImage)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.featured_image') }}">
                                 <p class="indent5">
-                                  <a href="{{ route('admin.catalog.product.show', $product->id) }}"  class="ajax-modal-btn">
+                                  <a href="#" data-link="{{ route('admin.catalog.product.show', $product->id) }}"  class="ajax-modal-btn">
                                     {{ $product->name }}
                                   </a>
                                   @unless($product->active)
@@ -335,7 +335,7 @@
                               @endif
                               <p class="indent5">
                                 @can('view', $customer)
-                                    <a href="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn modal-btn">{{ $customer->getName() }}</a>
+                                    <a href="#" data-link="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn modal-btn">{{ $customer->getName() }}</a>
                                 @else
                                   {{ $customer->getName() }}
                                 @endcan
@@ -378,7 +378,7 @@
                               <img src="{{ get_storage_file_url(optional($vendor->image)->path, 'tiny') }}" class="img-circle" alt="{{ trans('app.logo') }}">
                               <p class="indent5">
                                 @can('view', $vendor)
-                                    <a href="{{ route('admin.vendor.shop.show', $vendor->id) }}" class="ajax-modal-btn modal-btn">{{ $vendor->name }}</a>
+                                    <a href="#" data-link="{{ route('admin.vendor.shop.show', $vendor->id) }}" class="ajax-modal-btn modal-btn">{{ $vendor->name }}</a>
                                 @else
                                   {{ $vendor->name }}
                                 @endcan

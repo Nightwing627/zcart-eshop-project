@@ -6,7 +6,7 @@
 	      <h3 class="box-title">{{ trans('app.category_sub_groups') }}</h3>
 	      <div class="box-tools pull-right">
 			@can('create', App\CategorySubGroup::class)
-				<a href="{{ route('admin.catalog.categorySubGroup.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_category_sub_group') }} </a>
+				<a href="#" data-link="{{ route('admin.catalog.categorySubGroup.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_category_sub_group') }} </a>
 			@endcan
 	      </div>
 	    </div> <!-- /.box-header -->
@@ -37,7 +37,7 @@
 			          <td><span class="label label-default">{{ $categorySubGrp->categories_count }}</span></td>
 			          <td class="row-options">
 						@can('update', $categorySubGrp)
-	                	    <a href="{{ route('admin.catalog.categorySubGroup.edit', $categorySubGrp->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="Edit" class="fa fa-edit"></i></a>&nbsp;
+	                	    <a href="#" data-link="{{ route('admin.catalog.categorySubGroup.edit', $categorySubGrp->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="Edit" class="fa fa-edit"></i></a>&nbsp;
 						@endcan
 
 						@can('delete', $categorySubGrp)

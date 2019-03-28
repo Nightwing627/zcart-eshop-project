@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.preview') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\Customer::class)
-					<a href="{{ route('admin.admin.customer.bulk') }}" class="ajax-modal-btn btn btn-default btn-flat">{{ trans('app.bulk_import') }}</a>
+					<a href="#" data-link="{{ route('admin.admin.customer.bulk') }}" class="ajax-modal-btn btn btn-default btn-flat">{{ trans('app.bulk_import') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->

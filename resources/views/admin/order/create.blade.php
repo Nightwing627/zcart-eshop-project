@@ -2,7 +2,7 @@
 
 @section('buttons')
   @can('create', App\Order::class)
-    <a href="{{ route('admin.order.order.searchCutomer') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
+    <a href="#" data-link="{{ route('admin.order.order.searchCutomer') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.search_again') }}</a>
   @endcan
 
   @can('index', App\Order::class)
@@ -204,7 +204,7 @@
                 {{ trans('app.email') . ': ' . $customer->email }}
             </span>
             @can('view', $customer)
-              <a href="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn btn btn-default btn-xs">{{ trans('app.view_detail') }}</a>
+              <a href="#" data-link="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn btn btn-default btn-xs">{{ trans('app.view_detail') }}</a>
             @endcan
           </div>
         </div>
@@ -219,10 +219,10 @@
               {{ $cart->shipping_address }}
             @else
               @if($shipping_address)
-                <a href="{{ route('address.edit', $shipping_address->id) }}" class="ajax-modal-btn pull-right indent10 small"><i class="fa fa-edit"></i> {{ trans('app.edit') }} </a>
+                <a href="#" data-link="{{ route('address.edit', $shipping_address->id) }}" class="ajax-modal-btn pull-right indent10 small"><i class="fa fa-edit"></i> {{ trans('app.edit') }} </a>
                 {!! $shipping_address->toHtml('<br/>', false) !!}
               @else
-                <a href="{{ route('address.create', ['customer', $customer->id]) }}" class="ajax-modal-btn btn btn-new"><i class="fa fa-plus-square-o"></i> {{ trans('app.add_address') }} </a>
+                <a href="#" data-link="{{ route('address.create', ['customer', $customer->id]) }}" class="ajax-modal-btn btn btn-new"><i class="fa fa-plus-square-o"></i> {{ trans('app.add_address') }} </a>
               @endif
             @endif
 
@@ -239,7 +239,7 @@
                 {{ $cart->billing_address }}
               @else
                 @if($billing_address)
-                  <a href="{{ route('address.edit', $billing_address->id) }}" class="ajax-modal-btn pull-right indent10 small"><i class="fa fa-edit"></i> {{ trans('app.edit') }} </a>
+                  <a href="#" data-link="{{ route('address.edit', $billing_address->id) }}" class="ajax-modal-btn pull-right indent10 small"><i class="fa fa-edit"></i> {{ trans('app.edit') }} </a>
                   {!! $billing_address->toHtml('<br/>', false) !!}
                 @endif
               @endif
@@ -304,7 +304,7 @@
 
       var billing_address = <?=$billing_address;?>;
       if(billing_address.length == 0){
-        $("#global-alert-msg").html('{!! trans('messages.notice.no_billing_address') . ' ' . '<a class="ajax-modal-btn btn btn-new" href="' . route('address.create', ['customer', $customer->id]) . '"><i class="fa fa-plus-square-o"></i>' . trans('app.add_address') . '</a>' !!}');
+        $("#global-alert-msg").html('{!! trans('messages.notice.no_billing_address') . ' ' . '<a class="ajax-modal-btn btn btn-new" href="#" data-link="' . route('address.create', ['customer', $customer->id]) . '"><i class="fa fa-plus-square-o"></i>' . trans('app.add_address') . '</a>' !!}');
         $("#global-alert-box").removeClass('hidden');
       }
 

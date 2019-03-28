@@ -114,7 +114,11 @@
 												  			<div class="alert alert-danger">@lang('app.payment_method_configuration_issue')</div>
 														@endunless
 
-														<a href="{{ route('admin.setting.paymentMethod.activate', $payment_provider->id) }}" class="btn {{ $payment_provider->code != 'stripe' ? 'ajax-modal-btn' : '' }} btn-info">{{ trans('app.update') }}</a>
+														@if($payment_provider->code == 'stripe')
+															<a href="{{ route('admin.setting.paymentMethod.activate', $payment_provider->id) }}" class="btn btn-info">{{ trans('app.update') }}</a>
+														@else
+															<a href="#" data-link="{{ route('admin.setting.paymentMethod.activate', $payment_provider->id) }}" class="btn ajax-modal-btn btn-info">{{ trans('app.update') }}</a>
+														@endif
 
 														<a href="{{ route('admin.setting.paymentMethod.deactivate', $payment_provider->id) }}" class="btn btn-default ajax-silent confirm"> {{ trans('app.deactivate') }}</a>
 													@else
@@ -122,7 +126,11 @@
 													@endif
 										    	@else
 											  		@if($can_update)
-														<a href="{{ route('admin.setting.paymentMethod.activate', $payment_provider->id) }}" class="btn {{ $payment_provider->code != 'stripe' ? 'ajax-modal-btn' : '' }} btn-primary">{{ $has_config ? trans('app.reactivate') : trans('app.activate') }}</a>
+														@if($payment_provider->code == 'stripe')
+															<a href="{{ route('admin.setting.paymentMethod.activate', $payment_provider->id) }}" class="btn btn-primary">{{ $has_config ? trans('app.reactivate') : trans('app.activate') }}</a>
+														@else
+															<a href="#" data-link="{{ route('admin.setting.paymentMethod.activate', $payment_provider->id) }}" class="btn ajax-modal-btn btn-primary">{{ $has_config ? trans('app.reactivate') : trans('app.activate') }}</a>
+														@endif
 													@else
 														<span class="label label-default">{{ trans('app.inactive') }}</span>
 													@endif

@@ -6,10 +6,10 @@
 	      <h3 class="box-title">{{ trans('app.attributes') }}</h3>
 	      <div class="box-tools pull-right">
 			@can('create', App\AttributeValue::class)
-				<a href="{{ route('admin.catalog.attributeValue.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_attribute_value') }} </a>
+				<a href="#" data-link="{{ route('admin.catalog.attributeValue.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_attribute_value') }} </a>
 			@endcan
 			@can('create', App\Attribute::class)
-				<a href="{{ route('admin.catalog.attribute.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_attribute') }} </a>
+				<a href="#" data-link="{{ route('admin.catalog.attribute.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_attribute') }} </a>
 			@endcan
 	      </div>
 	    </div> <!-- /.box-header -->
@@ -48,7 +48,7 @@
 								<a href="{{ route('admin.catalog.attribute.entities', $attribute->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.entities') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 							@can('update', $attribute)
-								<a href="{{ route('admin.catalog.attribute.edit', $attribute->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="#" data-link="{{ route('admin.catalog.attribute.edit', $attribute->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 							@can('delete', $attribute)
 								{!! Form::open(['route' => ['admin.catalog.attribute.trash', $attribute->id], 'method' => 'delete', 'class' => 'data-form']) !!}
