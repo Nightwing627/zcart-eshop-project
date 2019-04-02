@@ -145,7 +145,7 @@ return [
 
     'transaction_fee' => 'If you want to charge a flat fee for every single transaction',
 
-    'subscription_best_for' => 'Terget customer for this package. This\'ll be visible to customer.',
+    'subscription_best_for' => 'Target customer for this package. This\'ll be visible to customer.',
 
     'config_return_refund' => 'Return & refund policy for you shop. Please read the marketplace\'s policy before you specify yours.',
 

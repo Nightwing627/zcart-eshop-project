@@ -1237,7 +1237,7 @@ return [
         'inventory_limit' => 'Stock limit',
         'marketplace_commission' => 'Marketplace commission',
         'transaction_fee' => 'Per transaction fee',
-        'subscription_best_for' => 'Terget customer for this package',
+        'subscription_best_for' => 'Target customer for this package',
         'faq_question' => 'Set the Question',
         'faq_answer' => 'Prodice the answer',
         'topic' => 'FAQ topic',
