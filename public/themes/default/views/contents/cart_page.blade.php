@@ -95,7 +95,8 @@
                             <input type="hidden" class="freeShipping{{$cart->id}}" value="{{$item->free_shipping}}">
                             <input type="hidden" id="unitWeight{{$item->id}}" value="{{$item->shipping_weight}}">
                             {{ Form::hidden('shipping_weight['.$item->id.']', ($item->shipping_weight * $item->pivot->quantity), ['id' => 'itemWeight'.$item->id, 'class' => 'itemWeight'.$cart->id]) }}
-                            <img src="{{ get_storage_file_url(optional($item->image)->path, 'mini') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
+                            <img src="{{ get_product_img_src($item, 'mini') }}" class="img-mini" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
+                            {{-- <img src="{{ get_storage_file_url(optional($item->image)->path, 'mini') }}" class="img-mini" alt="{{ $item->slug }}" title="{{ $item->slug }}" /> --}}
                           </td>
                           <td>
                             <div class="shopping-cart-item-title">

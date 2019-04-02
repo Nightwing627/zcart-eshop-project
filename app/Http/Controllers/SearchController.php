@@ -26,13 +26,16 @@ class SearchController extends Controller
         //             ->orWhere('name', 'LIKE', '%'. $term .'%')
         //             ->get();
 
-        $not_fond = '<p class="lead"><span class="indent50">' . trans('responses.no_product_found_for_inventory') . '</span></p>';
+        // $products->load('image');
+
         $results = '';
 
         foreach ($products as $product){
             $view = View::make('admin.inventory._product_list', ['product' => $product])->render();
             $results .= $view;
         }
+
+        $not_fond = '<p class="lead"><span class="indent50">' . trans('responses.no_product_found_for_inventory') . '</span></p>';
 
         return (bool) $results ? $results : $not_fond;
     }

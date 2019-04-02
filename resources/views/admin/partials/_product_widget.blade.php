@@ -1,6 +1,6 @@
 <div class="admin-user-widget">
     <span class="admin-user-widget-img">
-        <img src="{{ get_storage_file_url(optional($product->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.image') }}">
+        <img src="{{ get_catalog_featured_img_src($product, 'small') }}" class="thumbnail" alt="{{ trans('app.image') }}">
     </span>
 
     <div class="admin-user-widget-content">

@@ -1,4 +1,7 @@
 <?php
+// Switch between the included languages
+Route::get('lang/{lang}', [LanguageController::class, 'swap']);
+
 // To view img no need to login
 Route::get('image/{path}', 'ImageController@show')->where('path', '.*')->name('image.show');
 

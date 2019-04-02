@@ -7,7 +7,7 @@
                       @include('headers.lists.home')
                       @include('headers.lists.categories')
                       @include('headers.lists.category_grp', ['category' => $category->group])
-                      <li class="active">{{ $category->name }}</li>
+                      <li class="active">{!! $category->name !!}</li>
                     </ol>
                 </div>
             </div>

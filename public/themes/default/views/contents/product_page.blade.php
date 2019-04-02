@@ -138,7 +138,7 @@
 					        </div>
 							<ul class="key_feature_list">
 								@foreach(unserialize($item->key_features) as $key_feature)
-									<li>{{ $key_feature }}</li>
+									<li>{!! $key_feature !!}</li>
 								@endforeach
 							</ul>
 						</div>

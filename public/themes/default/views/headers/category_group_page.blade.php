@@ -6,7 +6,7 @@
                     <ol class="breadcrumb nav-breadcrumb">
                       @include('headers.lists.home')
                       @include('headers.lists.categories')
-                      <li class="active">{{ $category->name }}</li>
+                      <li class="active">{!! $category->name !!}</li>
                     </ol>
                 </div>
             </div>

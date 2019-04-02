@@ -590,6 +590,24 @@ div.datepicker > div {
 .iradio_minimal-blue.checked.disabled {
     background-position: -180px 0;
 }
+
+img.img-tiny {
+  max-width: 30px;
+  max-height: 30px;
+}
+img.img-mini {
+  max-width: 60px;
+  max-height: 60px;
+}
+img.img-small {
+  max-width: 100px;
+  max-height: 100px;
+}
+img.img-medium {
+  max-width: 250px;
+  max-height: 250px;
+}
+
 /* HiDPI support */
 @media (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi), (min-resolution: 1.25dppx) {
     .icheckbox_minimal-blue, .iradio_minimal-blue {

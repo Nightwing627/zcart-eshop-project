@@ -10,7 +10,7 @@
             @include('headers.lists.category_grp', ['category' => $t_category->subGroup->group])
             @include('headers.lists.category_subgrp', ['category' => $t_category->subGroup])
             @include('headers.lists.category', ['category' => $t_category])
-            <li class="active">{{ $item->title }}</li>
+            <li class="active">{!! $item->title !!}</li>
           </ol>
         </div>
       </div>

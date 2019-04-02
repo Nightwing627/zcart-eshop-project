@@ -24,7 +24,6 @@
             </div>
           </p>
           <div class="clearfix space50"></div>
-
         @endif
       </div><!-- /.row -->
   </div><!-- /.container -->

@@ -52,10 +52,10 @@
 
                     @include('layouts.pricing', ['item' => $item])
 
-                    <div class="product-info-desc"> {{ $item->description }} </div>
+                    <div class="product-info-desc"> {!! $item->description !!} </div>
                     {{-- <div class="product-info-desc"> {{ $item->description }} </div> --}}
                     <ul class="product-info-feature-list">
-                        <li>{{ $item->condition }}</li>
+                        <li>{!! $item->condition !!}</li>
                         {{-- <li>{{ $item->manufacturer->name }}</li> --}}
                     </ul>
                 </div><!-- /.product-info -->

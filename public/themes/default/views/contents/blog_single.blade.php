@@ -7,7 +7,7 @@
                 <article class="blog-post">
                     @if($blog->image)
                         <a href="{{ route('blog.show', $blog->slug) }}">
-				            <img class="full-width" src="{{ get_storage_file_url(optional($blog->image)->path, 'full') }}" alt="{{ $blog->title }}" title="{{ $blog->title }}" />
+				            <img class="full-width" src="{{ get_storage_file_url(optional($blog->image)->path, 'full') }}" alt="{{ $blog->title }}" title="{!! $blog->title !!}" />
                         </a>
                     @endif
 

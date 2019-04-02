@@ -445,6 +445,23 @@ if ( ! function_exists('get_inventory_img_src') )
     }
 }
 
+if ( ! function_exists('get_catalog_featured_img_src') )
+{
+    function get_catalog_featured_img_src($product, $size = 'small')
+    {
+        if (is_int($product) && !($product instanceof \App\Product))
+            $product = \App\Product::findorFail($product);
+
+        if ($product->featuredImage)
+            return get_storage_file_url($product->featuredImage->path, $size);
+
+        if ($product->image)
+            return get_storage_file_url($product->image->path, $size);
+
+        return asset('images/placeholders/no_img.png');
+    }
+}
+
 if ( ! function_exists('get_cover_img_src') )
 {
     function get_cover_img_src($model, $type = 'category')

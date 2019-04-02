@@ -1,13 +1,13 @@
 <div class="admin-user-widget">
     <span class="admin-user-widget-img">
-        <img src="{{ get_storage_file_url(optional($product->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.image') }}">
+        <img src="{{ get_catalog_featured_img_src($product->id, 'small') }}" class="thumbnail" alt="{{ trans('app.image') }}">
     </span>
     <div class="admin-user-widget-content">
         <span class="admin-user-widget-title">
             {{ $product->name }}
         </span>
         <span class="admin-user-widget-text text-muted">
-            {{ $product->gtin_type.': '.$product->gtin }}
+            {{ $product->gtin_type ?? 'GTIN: ' }} {{ ': '.$product->gtin }}
         </span>
         <span class="admin-user-widget-text text-muted">
             {{ trans('app.model_number').': '.$product->model_number }}
