@@ -25,8 +25,8 @@ class SearchController extends Controller
         $term = $request->input('search');
 
         $products = Inventory::search($term)->where('active', 1)->get();
-        // echo "<pre>"; print_r($products); echo "</pre>"; exit();
-        $products->load(['shop:id,current_billing_plan,active']);
+
+        $products->load(['shop:id,current_billing_plan,active','product:id,name,gtin,model_number']);
 
         // Keep results only from active shops
         $products = $products->filter(function ($product) {

@@ -103,6 +103,8 @@ class Inventory extends Model
         $array['title'] = $this->title;
         $array['key_features'] = $this->key_features;
         $array['active'] = $this->active;
+        $array['shop'] = $this->shop;
+        $array['product'] = $this->product;
 
         return $array;
     }
