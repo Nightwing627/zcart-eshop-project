@@ -27,7 +27,7 @@
 		        @foreach($categories as $category )
 			        <tr>
 			          	<td>
-							<img src="{{ get_storage_file_url(optional($category->featuredImage)->path, 'mini') }}" class="img-sm" alt="{{ trans('app.image') }}">
+							<img src="{{ get_storage_file_url(optional($category->featuredImage)->path, 'mini') }}" class="img-sm" alt="{{ trans('app.cover_image') }}">
 			          	</td>
 			          	<td>
 			          		<h5>

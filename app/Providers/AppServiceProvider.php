@@ -8,6 +8,7 @@ use App\Order;
 use App\Refund;
 use App\Observers\ShopObserver;
 use App\Observers\RefundObserver;
+use App\Observers\OrderObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;

@@ -31,7 +31,10 @@ class EloquentCategoryGroup extends EloquentRepository implements BaseRepository
         $catGrp = parent::store($request);
 
         if ($request->hasFile('image'))
-            $catGrp->saveImage($request->file('image'));
+            $catGrp->saveImage($request->file('image'), true);
+
+        if ($request->hasFile('bg_image'))
+            $catGrp->saveImage($request->file('bg_image'));
 
         return $catGrp;
     }
@@ -40,11 +43,21 @@ class EloquentCategoryGroup extends EloquentRepository implements BaseRepository
     {
         $catGrp = parent::update($request, $id);
 
-        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
-            $catGrp->deleteImage();
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1)){
+            if($catGrp->featuredImage)
+                $catGrp->deleteImage($catGrp->featuredImage);
+        }
 
         if ($request->hasFile('image'))
-            $catGrp->saveImage($request->file('image'));
+            $catGrp->saveImage($request->file('image'), true);
+
+        if ($request->hasFile('bg_image') || ($request->input('delete_bg_image') == 1)){
+            if($catGrp->images->first())
+                $catGrp->deleteImage($catGrp->images->first());
+        }
+
+        if ($request->hasFile('bg_image'))
+            $catGrp->saveImage($request->file('bg_image'));
 
         return $catGrp;
     }

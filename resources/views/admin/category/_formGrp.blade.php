@@ -50,11 +50,35 @@
 </div>
 
 <div class="form-group">
-  {!! Form::label('exampleInputFile', trans('app.featured_image'), ['class' => 'with-help']) !!}
+  {!! Form::label('exampleInputFile', trans('app.background_image'), ['class' => 'with-help']) !!}
   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.cat_grp_img') }}"></i>
-  @if(isset($categoryGroup) && Storage::exists(optional($categoryGroup->image)->path))
+  @if(isset($categoryGroup) && Storage::exists(optional($categoryGroup->images->first())->path))
     <label>
-      <img src="{{ get_storage_file_url(optional($categoryGroup->image)->path, 'small') }}" width="" alt="{{ trans('app.featured_image') }}">
+      <img src="{{ get_storage_file_url(optional($categoryGroup->images->first())->path, 'small') }}" width="" alt="{{ trans('app.background_image') }}">
+      <span style="margin-left: 10px;">
+        {!! Form::checkbox('delete_bg_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
+      </span>
+    </label>
+  @endif
+  <div class="row">
+    <div class="col-md-9 nopadding-right">
+      <input id="uploadFile" placeholder="{{ trans('app.background_image') }}" class="form-control" disabled="disabled" style="height: 28px;" />
+    </div>
+    <div class="col-md-3 nopadding-left">
+      <div class="fileUpload btn btn-primary btn-block btn-flat">
+          <span>{{ trans('app.form.upload') }}</span>
+          <input type="file" name="bg_image" id="uploadBtn" class="upload" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  {!! Form::label('uploadFile1', trans('app.cover_image'), ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.cover_img',['page' => trans('app.categories')]) }}"></i>
+  @if(isset($categoryGroup) && Storage::exists(optional($categoryGroup->featuredImage)->path))
+    <label>
+      <img src="{{ get_storage_file_url(optional($categoryGroup->featuredImage)->path, 'small') }}" width="" alt="{{ trans('app.cover_image') }}">
       <span style="margin-left: 10px;">
         {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
       </span>
@@ -62,14 +86,16 @@
   @endif
   <div class="row">
     <div class="col-md-9 nopadding-right">
-      <input id="uploadFile" placeholder="{{ trans('app.featured_image') }}" class="form-control" disabled="disabled" style="height: 28px;" />
+      <input id="uploadFile1" placeholder="{{ trans('app.cover_image') }}" class="form-control" disabled="disabled" style="height: 28px;" />
+      <div class="help-block with-errors">{{ trans('help.cover_img_size') }}</div>
     </div>
     <div class="col-md-3 nopadding-left">
       <div class="fileUpload btn btn-primary btn-block btn-flat">
           <span>{{ trans('app.form.upload') }}</span>
-          <input type="file" name="image" id="uploadBtn" class="upload" />
+          <input type="file" name="image" id="uploadBtn1" class="upload" />
       </div>
     </div>
   </div>
 </div>
+
 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>

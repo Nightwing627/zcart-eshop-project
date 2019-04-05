@@ -66,6 +66,7 @@ return [
     'welcome' => 'Welcome',
     'body' => 'Body',
     'banner_image' => 'Banner image',
+    'background_image' => 'Background image',
     'worldwide' => 'Worldwide',
     'alert' => 'Alert!',
     'error' => 'Error!',

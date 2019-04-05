@@ -10,16 +10,16 @@ class ShopDeleted
 {
     use Dispatchable, SerializesModels;
 
-    public $merchant_id;
+    public $shop_id;
 
     /**
      * Create a new job instance.
      *
-     * @param  str  $merchant_id
+     * @param  str  $shop_id
      * @return void
      */
-    public function __construct($merchant_id)
+    public function __construct($shop_id)
     {
-        $this->merchant_id = $merchant_id;
+        $this->shop_id = $shop_id;
     }
 }

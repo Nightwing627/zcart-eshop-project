@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- CATEGORY COVER IMAGE -->
-    {{-- @include('banners.category_cover', ['category' => $category]) --}}
+    @include('banners.category_cover', ['category' => $categoryGroup])
 
     <!-- HEADER SECTION -->
     @include('headers.category_group_page', ['category' => $categoryGroup])

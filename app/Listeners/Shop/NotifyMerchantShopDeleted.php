@@ -3,6 +3,7 @@
 namespace App\Listeners\Shop;
 
 use App\User;
+use App\Shop;
 use App\Events\Shop\ShopDeleted;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,7 +37,8 @@ class NotifyMerchantShopDeleted implements ShouldQueue
      */
     public function handle(ShopDeleted $event)
     {
-        $merchant = User::withTrashed()->find($event->merchant_id);
+        $shop = Shop::withTrashed()->find($event->shop_id);
+        $merchant = User::withTrashed()->find($shop->owner_id);
 
         $merchant->notify(new ShopDeletedNotification());
     }

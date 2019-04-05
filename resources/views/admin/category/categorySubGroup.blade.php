@@ -14,6 +14,7 @@
 	      <table class="table table-hover table-option">
 	        <thead>
 	        <tr>
+	          <th>{{ trans('app.cover_image') }}</th>
 	          <th>{{ trans('app.category_sub_group') }}</th>
 	          <th>{{ trans('app.parent') }}</th>
 	          <th>{{ trans('app.categories') }}</th>
@@ -23,6 +24,9 @@
 	        <tbody>
 		        @foreach($categorySubGrps as $categorySubGrp )
 			        <tr>
+			          	<td>
+							<img src="{{ get_storage_file_url(optional($categorySubGrp->featuredImage)->path, 'mini') }}" class="img-sm" alt="{{ trans('app.cover_image') }}">
+			          	</td>
 			          <td>	{{ $categorySubGrp->name }}
 							@unless($categorySubGrp->active)
 								<span class="label label-default indent5 small">{{ trans('app.inactive') }}</span>

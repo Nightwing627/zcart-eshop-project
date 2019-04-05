@@ -100,8 +100,8 @@
                           @endforeach
                         </div><!-- /.row -->
                       </div><!-- /.category-section-content -->
-                      @if($catGroup->image && Storage::exists($catGroup->image->path))
-                        <img class="nav-category-section-bg-img" src="{{ asset('storage/' . optional($catGroup->image)->path) }}" alt="{{ $catGroup->name }}" title="{{ $catGroup->name }}"/>
+                      @if($catGroup->images->first() && Storage::exists($catGroup->images->first()->path))
+                        <img class="nav-category-section-bg-img" src="{{ asset('storage/' . optional($catGroup->images->first())->path) }}" alt="{{ $catGroup->name }}" title="{{ $catGroup->name }}"/>
                       @endif
                     </div><!-- /.category-section-inner -->
                   </div><!-- /.category-section -->

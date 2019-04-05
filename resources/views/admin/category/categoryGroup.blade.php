@@ -15,7 +15,8 @@
 	      <table class="table table-hover table-no-sort">
 	        <thead>
 	        <tr>
-	        	<th>{{ trans('app.featured_image') }}</th>
+	        	<th>{{ trans('app.background_image') }}</th>
+	        	<th>{{ trans('app.cover_image') }}</th>
 				<th>{{ trans('app.category_group') }}</th>
 				<th>{{ trans('app.sub_groups') }}</th>
 				<th>{{ trans('app.order') }}</th>
@@ -26,7 +27,14 @@
 		        @foreach($categoryGrps as $categoryGrp )
 			        <tr>
 			          <td>
-						<img src="{{ get_storage_file_url(optional($categoryGrp->image)->path, 'small') }}" class="" alt="{{ trans('app.featured_image') }}">
+			          	@if(Storage::exists(optional($categoryGrp->images->first())->path))
+							<img src="{{ get_storage_file_url(optional($categoryGrp->images->first())->path, 'small') }}" class="" alt="{{ trans('app.background_image') }}">
+  						@endif
+			          </td>
+			          <td>
+			          	@if(Storage::exists(optional($categoryGrp->featuredImage)->path))
+							<img src="{{ get_storage_file_url(optional($categoryGrp->featuredImage)->path, 'small') }}" class="img-sm" alt="{{ trans('app.cover_image') }}">
+  						@endif
 			          </td>
 			          <td>
 			          	<h5>

@@ -2,13 +2,14 @@
 
 namespace App;
 
+use App\Common\Imageable;
 use App\Common\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CategorySubGroup extends Model
 {
-    use SoftDeletes, CascadeSoftDeletes;
+    use SoftDeletes, CascadeSoftDeletes, Imageable;
 
     /**
      * The attributes that are mass assignable.

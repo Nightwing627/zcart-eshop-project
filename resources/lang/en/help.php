@@ -67,7 +67,7 @@ return [
 
     'currency_thousands_separator' => 'Example: 1,000, 1.000, 1 000',
 
-    'cover_img_size' => 'Image size should be 1280x300px',
+    'cover_img_size' => 'Cover image size should be 1280x300px',
 
     'slug' => 'Slug are usually a search engine friendly URL',
 

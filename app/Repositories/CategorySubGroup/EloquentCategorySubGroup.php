@@ -3,6 +3,7 @@
 namespace App\Repositories\CategorySubGroup;
 
 use App\CategorySubGroup;
+use Illuminate\Http\Request;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -23,5 +24,37 @@ class EloquentCategorySubGroup extends EloquentRepository implements BaseReposit
     public function trashOnly()
     {
         return $this->model->with('group:id,name,deleted_at')->onlyTrashed()->get();
+    }
+
+    public function store(Request $request)
+    {
+        $category = parent::store($request);
+
+        if ($request->hasFile('image'))
+            $category->saveImage($request->file('image'), true);
+
+        return $category;
+    }
+
+    public function update(Request $request, $id)
+    {
+        $category = parent::update($request, $id);
+
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+            $category->deleteFeaturedImage();
+
+        if ($request->hasFile('image'))
+            $category->saveImage($request->file('image'), true);
+
+        return $category;
+    }
+
+    public function destroy($id)
+    {
+        $category = parent::findTrash($id);
+
+        $category->flushImages();
+
+        return $category->forceDelete();
     }
 }
