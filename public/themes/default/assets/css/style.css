@@ -129,6 +129,19 @@ ul, li {
     list-style: none;
     padding: 0;
 }
+
+@media (max-width:992px) {
+  .navbar-top {
+    padding-top: 0px !important;
+  }
+  .navbar-main {
+    padding-bottom: 0px !important;
+  }
+  .navbar-brand {
+      margin-left:40%;
+  }
+}
+
 #global-announcement {
   font-family: helvetica;
   padding: 11px;
@@ -1043,7 +1056,7 @@ img.img-medium {
   box-shadow: none;
   -webkit-box-shadow: none;
 }
-@media (max-width:992px) {
+@media (max-width:830px) {
   .navbar-search {
     width: 100%;
     border: none;
@@ -1051,7 +1064,7 @@ img.img-medium {
     padding: 0;
   }
   .navbar-search .form-control {
-    padding-left: 71px;
+    padding-left: 133px;
   }
 }
 
@@ -1104,9 +1117,9 @@ img.img-medium {
   background: #fff;
   padding: 6px 0;
 }
-@media (max-width:992px) {
+@media (max-width:830px) {
   .search-category-select {
-    width: 60px;
+    width: 120px;
   }
 }
 .navbar-search-submit {
@@ -1187,7 +1200,7 @@ img.img-medium {
     width: 100%;
     max-width: 1920px;
     height: 300px;
-    /*margin: 5px auto 0 auto;*/
+    margin: 0 auto;
 }
 .ei-slider-loading{
     width: 100%;
@@ -1218,7 +1231,8 @@ img.img-medium {
     width: 100%;
 }
 .ei-slider-large li img{
-    width: 100%;
+    width: 100% !important;
+    margin-left: 0 !important;
 }
 .ei-title{
   position: absolute;
@@ -1307,6 +1321,36 @@ img.img-medium {
     opacity: 1;
     bottom: 3px;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+}
+
+@media screen and (max-width: 830px) {
+  .ei-slider{
+    width: 100%;
+    height: 200px;
+    margin: 0 auto;
+  }
+  .ei-title{
+    position: absolute;
+    right: 0px;
+    margin-right: 0px;
+    width: 100%;
+    text-align: center;
+    top: auto;
+    bottom: 10px;
+    /*background: rgba(255,255,255,0.9);*/
+    padding: 5px 0;
+  }
+  .ei-title h2, .ei-title h3{
+    text-align: center;
+  }
+  .ei-title h2{
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .ei-title h3{
+    font-size: 30px;
+    line-height: 40px;
+  }
 }
 /****** End of Main Slider ******/
 
@@ -1842,7 +1886,7 @@ img.img-medium {
 .product-list-view .product-info-rating {
   font-size: 12px;
 }
-@media (max-width:992px) {
+@media screen and (max-width:992px) {
   .product-list-view .product-img-wrap {
     float: none;
     width: 100%;
@@ -1854,6 +1898,9 @@ img.img-medium {
   }
   .product-list-view .product-actions {
     display: none;
+  }
+  .seller-info {
+    margin-top: 20px;
   }
 }
 .product-list-view .product-actions {
@@ -2549,12 +2596,16 @@ table .product-info-price .percent-off {
     padding-right: 7.5px;
     margin-bottom: 15px;
 }
-.row.featured > [class^="col-"]first-child {
-    padding-left: 0px;
+
+@media (min-width:992px) {
+  .row.featured > [class^="col-"]:first-child {
+      padding-left: 0px;
+  }
+  .row.featured > [class^="col-"]:last-child {
+      padding-right: 0px;
+  }
 }
-.row.featured > [class^="col-"]:last-child {
-    padding-right: 0px;
-}
+
 .container.full-width > .row > [class^="col-"]:first-child {
     padding-left: 15px;
 }

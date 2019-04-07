@@ -78,9 +78,17 @@
         // Item Quick View Modal
         $(".itemQuickView").on("click", function(e) {
             e.preventDefault();
+            var url = $(this).attr('href');
+
+            // Disable the modal on small screen
+            var width = $(window).width();
+            if(width < 830){
+                window.location.href = url.replace("/quickView", "");
+                return false;
+            }
+
             apply_busy_filter('body');
 
-            var url = $(this).attr('href');
             $.get(url, function(data) {
                 remove_busy_filter('body');
 

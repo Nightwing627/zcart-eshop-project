@@ -16,9 +16,9 @@ return [
 
     // Auth Notifications
     'password_updated' => [
-        'subject' => 'Your :marketplace password has bee updated successfully!',
+        'subject' => 'Your :marketplace password has been updated successfully!',
         'greeting' => 'Hello :user!',
-        'message' => 'Your account login password has been changed successfully! If you didn\'t make it, please contact us asap! Click the button below to login into your profile page.',
+        'message' => 'Your account login password has been changed successfully! If you did not make this change, please contact us asap! Click the button below to login into your profile page.',
         'button_text' => 'Visit Your Profile',
     ],
 

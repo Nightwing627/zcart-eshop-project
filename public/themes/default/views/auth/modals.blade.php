@@ -36,10 +36,10 @@
 
         <div class="social-auth-links text-center">
           <div class="row">
-            <div class="col-md-6 nopadding-right">
+            <div class="col-xs-6 nopadding-right">
               <a href="{{ route('customer.login.social', 'facebook') }}" class="btn btn-block btn-social btn-facebook btn-lg flat"><i class="fa fa-facebook"></i> {{ trans('theme.button.login_with_fb') }}</a>
             </div>
-            <div class="col-md-6 nopadding-left">
+            <div class="col-xs-6 nopadding-left">
               <a href="{{ route('customer.login.social', 'google') }}" class="btn btn-block btn-social btn-google btn-lg flat"><i class="fa fa-google"></i> {{ trans('theme.button.login_with_g') }}</a>
             </div>
           </div>
@@ -107,10 +107,10 @@
 
         <div class="social-auth-links text-center">
           <div class="row">
-            <div class="col-md-6 nopadding-right">
+            <div class="col-xs-6 nopadding-right">
               <a href="{{ route('customer.login.social', 'facebook') }}" class="btn btn-block btn-social btn-facebook btn-lg flat"><i class="fa fa-facebook"></i> {{ trans('theme.button.login_with_fb') }}</a>
             </div>
-            <div class="col-md-6 nopadding-left">
+            <div class="col-xs-6 nopadding-left">
               <a href="{{ route('customer.login.social', 'google') }}" class="btn btn-block btn-social btn-google btn-lg flat"><i class="fa fa-google"></i> {{ trans('theme.button.login_with_g') }}</a>
             </div>
           </div>
