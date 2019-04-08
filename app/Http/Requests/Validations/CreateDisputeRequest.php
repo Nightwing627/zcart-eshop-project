@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Validations;
 
-// use Auth;
 use App\Customer;
 use App\Http\Requests\Request;
+use Illuminate\Validation\Rule;
 
 class CreateDisputeRequest extends Request
 {
@@ -43,7 +43,7 @@ class CreateDisputeRequest extends Request
            'dispute_type_id' => 'required',
            'order_received' => 'required',
            'description' => 'required',
-           'product_id' => 'required_with:order_received',
+           'product_id' => Rule::requiredIf($this->order_received == 1),
            'refund_amount' => 'required|numeric|max:' . $order->grand_total,
         ];
     }

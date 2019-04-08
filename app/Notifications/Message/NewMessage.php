@@ -13,6 +13,7 @@ class NewMessage extends Notification implements ShouldQueue
     use Queueable;
 
     public $message;
+
     public $receiver;
 
     /**

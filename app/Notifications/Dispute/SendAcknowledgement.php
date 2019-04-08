@@ -12,6 +12,8 @@ class SendAcknowledgement extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    public $dispute;
+
     /**
      * Create a new notification instance.
      *

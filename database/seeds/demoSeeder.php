@@ -241,7 +241,7 @@ class demoSeeder extends Seeder
 
         factory(App\Order::class, $this->tinycount)->create();
 
-        factory(App\Dispute::class, $this->tinycount)->create();
+        factory(App\Dispute::class, 2)->create();
 
         factory(App\Blog::class, $this->tinycount)->create();
 
