@@ -164,5 +164,4 @@ class ConfigController extends Controller
 
         return response('error', 405);
     }
-
 }

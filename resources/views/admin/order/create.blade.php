@@ -216,7 +216,8 @@
           <div class="box-body">
             <fieldset><legend>{{ strtoupper(trans('app.shipping_address')) }}</legend></fieldset>
             @if(isset($cart->shipping_address))
-              {{ $cart->shipping_address }}
+              <a href="#" data-link="{{ route('address.edit', $cart->shipping_address) }}" class="ajax-modal-btn pull-right indent10 small"><i class="fa fa-edit"></i> {{ trans('app.edit') }} </a>
+              {!! $cart->shippingAddress->toHtml('<br/>', false) !!}
             @else
               @if($shipping_address)
                 <a href="#" data-link="{{ route('address.edit', $shipping_address->id) }}" class="ajax-modal-btn pull-right indent10 small"><i class="fa fa-edit"></i> {{ trans('app.edit') }} </a>
@@ -236,7 +237,8 @@
 
             <div id="billing-address-block">
               @if(isset($cart->billing_address))
-                {{ $cart->billing_address }}
+                <a href="#" data-link="{{ route('address.edit', $cart->billing_address) }}" class="ajax-modal-btn pull-right indent10 small"><i class="fa fa-edit"></i> {{ trans('app.edit') }} </a>
+                {!! $cart->billingAddress->toHtml('<br/>', false) !!}
               @else
                 @if($billing_address)
                   <a href="#" data-link="{{ route('address.edit', $billing_address->id) }}" class="ajax-modal-btn pull-right indent10 small"><i class="fa fa-edit"></i> {{ trans('app.edit') }} </a>
@@ -459,15 +461,12 @@
               //Pick the string after the : to get the item description
               itemDescription = itemDescription.substring(itemDescription.indexOf(":") + 2);
 
-              if (productObj[ID].image)
-                var imgSrc = getFromPHPHelper('get_storage_file_url', productObj[ID].image);
-              else
-                var imgSrc = getFromPHPHelper('get_placeholder_img', 'tiny');
+              var imgSrc = getFromPHPHelper('get_product_img_src', productObj[ID].id, 'tiny');
 
               var numOfRows = $("tbody#items tr").length;
 
               var node = '<tr id="'+ ID +'">' +
-                  '<td><img src="' + imgSrc + '" class="img-circle img-sm" alt="{{ trans('app.image') }}"></td>' +
+                  '<td><img src="' + imgSrc + '" class="img-circle img-md" alt="{{ trans('app.image') }}"></td>' +
                   '<td class="nopadding-right" width="55%">' + itemDescription +
                     '<input type="hidden" name="cart['+ numOfRows +'][inventory_id]" value="'+ ID +'"></input>' +
                     '<input type="hidden" name="cart['+ numOfRows +'][item_description]" value="'+ itemDescription +'"></input>' +

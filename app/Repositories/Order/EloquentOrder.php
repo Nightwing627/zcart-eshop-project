@@ -76,6 +76,11 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
         return $order;
     }
 
+    public function find($order)
+    {
+        return $this->model->withTrashed()->find($order);
+    }
+
     public function fulfill(Request $request, $order)
     {
         if(! $order instanceof Order)

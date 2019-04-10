@@ -183,7 +183,7 @@ class Order extends Model
      */
     public function refunds()
     {
-        return $this->hasMany(Refund::class)->orderBy('created_at', 'dec');
+        return $this->hasMany(Refund::class)->orderBy('created_at', 'desc');
     }
 
     /**
@@ -383,6 +383,17 @@ class Order extends Model
     {
         return $this->status->fulfilled;
     }
+
+    /**
+     * Check if the order has been archived
+     *
+     * @return boolean
+     */
+    public function isArchived()
+    {
+        return $this->deleted_at !== Null;
+    }
+
 
     public function refundedSum()
     {

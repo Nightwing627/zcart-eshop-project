@@ -99,7 +99,7 @@
 								@foreach($attributes as $k => $attribute )
 									<tr>
 										<th class="text-right">{{ $attribute['name'] }}:</th>
-										<td style="width: 75%;">{{ $attributeValues[$k]['value'] or trans('help.not_available') }}</td>
+										<td style="width: 75%;">{{ $attributeValues[$k]['value'] ?? trans('help.not_available') }}</td>
 									</tr>
 								@endforeach
 							@endif

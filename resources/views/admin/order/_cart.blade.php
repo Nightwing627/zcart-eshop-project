@@ -15,13 +15,7 @@
 
             <tr id="{{ $id }}">
               <td>
-                @if($item->image)
-                  <img src="{{ get_storage_file_url($item->image->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
-                @elseif($item->product->featuredImage)
-                  <img src="{{ get_storage_file_url($item->product->featuredImage->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
-                @else
-                  <img src="{{ get_storage_file_url(optional($item->product->image)->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
-                @endif
+                <img src="{{ get_product_img_src($item, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
               </td>
               <td class="nopadding-right" width="55%">
                 {{ $item->pivot->item_description }}

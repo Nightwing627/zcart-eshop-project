@@ -379,7 +379,7 @@ return [
 
     'depth' => 'The depth of the packaging',
 
-    'packaging_cost' => 'The cost of packaging. You can chooose if you want to charge the cost to customers or not',
+    'packaging_cost' => 'The cost of packaging. You can choose if you want to charge the cost to customers or not',
 
     'set_as_default_packaging' => 'If checked: this packaging will be used as default shipping package',
 

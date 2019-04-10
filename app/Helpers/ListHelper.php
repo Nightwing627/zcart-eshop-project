@@ -672,7 +672,7 @@ class ListHelper
         )
         ->join('products', 'inventories.product_id', 'products.id')
         ->join('order_items', 'inventories.id', 'order_items.inventory_id')
-        ->groupBy('inventory_id')->orderBy('sold_qtt', 'decs')->limit($count)->get();
+        ->groupBy('inventory_id')->orderBy('sold_qtt', 'desc')->limit($count)->get();
     }
 
     /**
@@ -683,7 +683,7 @@ class ListHelper
     {
         return Category::select('id','slug','name','active')->whereHas('listings', function($query){
             $query->mine();
-        })->withCount('listings')->orderBy('listings_count', 'decs')->limit($count)->get();
+        })->withCount('listings')->orderBy('listings_count', 'desc')->limit($count)->get();
     }
 
     /**
@@ -693,7 +693,7 @@ class ListHelper
     public static function top_suppliers($count = 5)
     {
         return Supplier::select('id','shop_id','name','active')->mine()->with('image:path,imageable_id,imageable_type')->withCount('inventories')
-        ->orderBy('inventories_count', 'decs')->limit($count)->get();
+        ->orderBy('inventories_count', 'desc')->limit($count)->get();
     }
 
     /**

@@ -67,10 +67,10 @@
 								<td>{{ $product->requires_shipping ? trans('app.yes') : trans('app.no') }}</td>
 							</tr>
 
-							<tr>
+							{{-- <tr>
 								<th>{{ trans('app.downloadable') }}:</th>
 								<td>{{ $product->downloadable ? trans('app.yes') : trans('app.no') }}</td>
-							</tr>
+							</tr> --}}
 
 							<tr>
 								<th>{{ trans('app.has_variant') }}:</th>

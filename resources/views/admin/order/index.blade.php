@@ -212,7 +212,7 @@
 					<tr>
 						<td>
 							@can('view', $archive)
-								<a href="#" data-link="{{ route('admin.order.order.show', $archive->id) }}"  class="ajax-modal-btn">
+								<a href="{{ route('admin.order.order.show', $archive->id) }}">
 									{{ $archive->order_number }}
 								</a>
 							@else
@@ -220,7 +220,7 @@
 							@endcan
 						</td>
 				        <td>{{ $archive->created_at->toDayDateTimeString() }}</td>
-						<td>{{ $archive->amount_total }}</td>
+						<td>{{ get_formated_currency($archive->grand_total) }}</td>
 						<td>{!! $archive->paymentStatusName() !!}</td>
 						<td>
 							<span class="label label-outline" style="background-color: {{ optional($archive->status)->label_color }}">

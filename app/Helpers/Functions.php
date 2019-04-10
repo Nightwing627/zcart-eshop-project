@@ -405,7 +405,7 @@ if ( ! function_exists('get_product_img_src') )
 {
     function get_product_img_src($item = null, $size = 'medium', $type = 'primary')
     {
-        if (is_int($item) && !($item instanceof \App\Inventory))
+        if (is_numeric($item) && !($item instanceof \App\Inventory))
             $item = \App\Inventory::findorFail($item);
 
         $images_count = $item->images->count();

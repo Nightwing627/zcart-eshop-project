@@ -37,13 +37,7 @@
                     @foreach($order->inventories as $item )
                       <tr>
                         <td>
-                          @if($item->image)
-                            <img src="{{ get_storage_file_url($item->image->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
-                          @elseif(optional($item->product)->featuredImage)
-                            <img src="{{ get_storage_file_url($item->product->featuredImage->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
-                          @else
-                            <img src="{{ get_storage_file_url(optional(optional($item->product)->image)->path, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
-                          @endif
+                          <img src="{{ get_product_img_src($item, 'tiny') }}" class="img-circle img-md" alt="{{ trans('app.image') }}">
                         </td>
                         <td class="nopadding-right" width="55%">
                           {{ $item->pivot->item_description }}
@@ -203,11 +197,13 @@
                     {{ trans('app.fulfill_order') }}
                   </a>
                 @else
-                  @can('archive', $order)
-                    {!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'inline']) !!}
-                      <button type="submit" class="confirm ajax-silent btn btn-lg btn-default"><i class="fa fa-archive text-muted"></i> {{ trans('app.order_archive') }}</button>
-                    {!! Form::close() !!}
-                  @endcan
+                  @unless($order->isArchived())
+                    @can('archive', $order)
+                      {!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'inline']) !!}
+                        <button type="submit" class="confirm ajax-silent btn btn-lg btn-default"><i class="fa fa-archive text-muted"></i> {{ trans('app.order_archive') }}</button>
+                      {!! Form::close() !!}
+                    @endcan
+                  @endunless
 
                   <a href="#" data-link="{{ route('admin.order.order.edit', $order) }}" class='ajax-modal-btn btn btn-flat btn-lg btn-default' >
                     {{ trans('app.update') }}

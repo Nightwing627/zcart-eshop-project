@@ -40,7 +40,7 @@
           <div class="col-md-4 nopadding">
             <div class="form-group">
               {!! Form::label('gtin', trans('app.form.gtin'), ['class' => 'with-help']) !!}
-              <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.mpn') }}"></i>
+              <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.gtin') }}"></i>
               {!! Form::text('gtin', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.gtin')]) !!}
             </div>
           </div>

@@ -436,8 +436,7 @@
 											<span>{{ $config->notify_new_order == 1 ? trans('app.on') : trans('app.off') }}</span>
 										@endif
 									</div>
-							  	</div>
-							    <!-- /.row -->
+							  	</div> <!-- /.row -->
 
 						    	<div class="row">
 							    	<div class="col-sm-8 text-right">
@@ -457,8 +456,7 @@
 											<span>{{ $config->notify_abandoned_checkout == 1 ? trans('app.on') : trans('app.off') }}</span>
 										@endif
 									</div>
-							  	</div>
-							    <!-- /.row -->
+							  	</div> <!-- /.row -->
 
 						    	<div class="row">
 							    	<div class="col-sm-8 text-right">
@@ -478,8 +476,7 @@
 											<span>{{ $config->notify_new_disput == 1 ? trans('app.on') : trans('app.off') }}</span>
 										@endif
 									</div>
-							  	</div>
-							    <!-- /.row -->
+							  	</div> <!-- /.row -->
 							</fieldset>
 					  	</div>
 					    <!-- /.col-sm-6 -->

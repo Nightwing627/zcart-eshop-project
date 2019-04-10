@@ -65,7 +65,6 @@ class MerchantController extends Controller
      */
     public function store(CreateMerchantRequest $request)
     {
-        // echo "<pre>"; print_r($request->all()); echo "</pre>"; exit();
         // Start transaction!
         DB::beginTransaction();
 
