@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    @if(env('APP_DEMO') == TRUE)
+    @if(config('app.demo') == TRUE)
         <div class="box login-box-body">
             <div class="box-header with-border">
               <h3 class="box-title">Demo Login::</h3>

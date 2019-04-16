@@ -35,7 +35,7 @@ class SubscriptionController extends Controller
      */
     public function subscribe(Request $request, $plan, $merchant = Null)
     {
-        if( env('APP_DEMO') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) )
             return redirect()->route('admin.account.billing')->with('warning', trans('messages.demo_restriction'));
 
 		$merchant = $merchant ? User::findOrFail($merchant) : Auth::user();
@@ -81,7 +81,7 @@ class SubscriptionController extends Controller
      */
     public function updateCardinfo(Request $request)
     {
-        if( env('APP_DEMO') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) )
             return redirect()->route('admin.account.billing')->with('warning', trans('messages.demo_restriction'));
 
         try {
@@ -112,7 +112,7 @@ class SubscriptionController extends Controller
      */
     public function resumeSubscription(Request $request)
     {
-        if( env('APP_DEMO') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) )
             return redirect()->route('admin.account.billing')->with('warning', trans('messages.demo_restriction'));
 
         try {
@@ -134,7 +134,7 @@ class SubscriptionController extends Controller
      */
     public function cancelSubscription(Request $request)
     {
-        if( env('APP_DEMO') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) )
             return redirect()->route('admin.account.billing')->with('warning', trans('messages.demo_restriction'));
 
         try {

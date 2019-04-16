@@ -167,7 +167,7 @@ class AccountController extends Controller
      */
     public function update(UpdateProfileRequest $request)
     {
-        if( env('APP_DEMO') == true && Auth::user()->id <= config('system.demo.users', 3) )
+        if( config('app.demo') == true && Auth::user()->id <= config('system.demo.users', 3) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $profile = $this->profile->updateProfile($request);
@@ -185,7 +185,7 @@ class AccountController extends Controller
      */
     public function updatePassword(UpdatePasswordRequest $request)
     {
-        if( env('APP_DEMO') == true && Auth::user()->id <= config('system.demo.users', 3) )
+        if( config('app.demo') == true && Auth::user()->id <= config('system.demo.users', 3) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $profile = $this->profile->updatePassword($request);

@@ -15,7 +15,9 @@
               </div>
             </section>
             @foreach($categoryGroup->subGroups as $subGroup)
-              <h5 class="nav-category-inner-title">{{ $subGroup->name }}</h5>
+              <h5 class="nav-category-inner-title">
+                <a href="{{ route('categories.browse', $subGroup->slug) }}">{{ $subGroup->name }}</a>
+              </h5>
               <ul class="nav-category-inner-list">
                 @foreach($subGroup->categories as $cat)
                   <li><a href="{{ route('category.browse', $cat->slug) }}">{{ $cat->name }}</a>

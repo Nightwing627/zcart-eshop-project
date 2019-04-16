@@ -32,7 +32,7 @@
 
         <div class="form-group">
             <label for="root_url"> {{ trans('installer_messages.verify.form.root_url_label') }} </label>
-            <input type="text" name="root_url" id="root_url" value="{{ rtrim(env('APP_URL'), '/') }}" placeholder="{{ trans('installer_messages.verify.form.root_url_placeholder') }}" required />
+            <input type="text" name="root_url" id="root_url" value="{{ rtrim(config('app.url'), '/') }}" placeholder="{{ trans('installer_messages.verify.form.root_url_placeholder') }}" required />
         </div>
 
         <div class="buttons">

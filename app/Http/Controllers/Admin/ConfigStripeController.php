@@ -77,7 +77,7 @@ class ConfigStripeController extends Controller
      */
     public function disconnect()
     {
-        if( env('APP_DEMO') == true )
+        if( config('app.demo') == true )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $config = Config::findOrFail(Auth::user()->merchantId());

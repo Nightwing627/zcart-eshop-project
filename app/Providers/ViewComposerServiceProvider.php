@@ -637,7 +637,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 $view->with('payment_statuses', ListHelper::payment_statuses());
                 $view->with('payment_methods', optional($config->paymentMethods)->pluck('name', 'id'));
 
-                $inventories = Inventory::mine()->active()->with('product', 'attributeValues')->get();
+                $inventories = Inventory::mine()->available()->with('product', 'attributeValues')->get();
 
                 foreach ($inventories as $inventory){
                     $str = ' - ';

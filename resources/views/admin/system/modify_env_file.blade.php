@@ -6,7 +6,7 @@
         	{{ trans('app.form.form') }}
         </div>
         <div class="modal-body">
-            @if( env('APP_DEMO') == true )
+            @if( config('app.demo') == true )
                 <div class="alert alert-warning">
                     {{ trans('messages.demo_restriction') }}
                 </div>
@@ -38,7 +38,7 @@
             @endif
         </div>
         <div class="modal-footer">
-            @unless( env('APP_DEMO') == true )
+            @unless( config('app.demo') == true )
                 {!! Form::submit(trans('app.form.save'), ['class' => 'btn btn-flat btn-new confirm']) !!}
             @endunless
         </div>

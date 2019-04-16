@@ -205,7 +205,7 @@
 					    	</div><!-- /.col-sm-4 -->
 
 					    	<div class="col-sm-4 text-center">
-					            @if( env('APP_DEMO') !== true )
+					            @if( config('app.demo') !== true )
 						    		<a href="{{ route('admin.setting.system.backup') }}" class="btn btn-default btn-lg confirm">{{ trans('app.take_a_backup') }}</a>
 					            @else
 					            	<button class="btn btn-default btn-lg disabled">{{ trans('app.take_a_backup') }}</button>
@@ -217,7 +217,7 @@
 					    	</div><!-- /.col-sm-4 -->
 				    	</div><!-- /.row -->
 
-			            @unless( env('APP_DEMO') == true )
+			            @unless( config('app.demo') == true )
 					    	<hr class="style3" />
 				    		<div class="spacer30"></div>
 

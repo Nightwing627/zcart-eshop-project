@@ -134,7 +134,7 @@ class MerchantController extends Controller
      */
     public function update(UpdateMerchantRequest $request, $id)
     {
-        if( env('APP_DEMO') == true && $id <= config('system.demo.users', 3) )
+        if( config('app.demo') == true && $id <= config('system.demo.users', 3) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $this->merchant->update($request, $id);
@@ -151,7 +151,7 @@ class MerchantController extends Controller
      */
     public function trash(Request $request, $id)
     {
-        if( env('APP_DEMO') == true && $id <= config('system.demo.users', 3) )
+        if( config('app.demo') == true && $id <= config('system.demo.users', 3) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $this->merchant->trash($id);

@@ -54,7 +54,7 @@
 				  	{{ trans('app.addresses') }}
 				  </a></li>
 				  @if(Auth::user()->isFromPlatform())
-					  <li><a href="#orders_tab" data-toggle="tab">
+					  <li><a href="#latest_orders_tab" data-toggle="tab">
 					  	{{ trans('app.latest_orders') }}
 					  </a></li>
 				  @endif
@@ -116,7 +116,7 @@
 				    </div> <!-- /.tab-pane -->
 
 					@if(Auth::user()->isFromPlatform())
-				    <div class="tab-pane" id="orders_tab">
+				    <div class="tab-pane" id="latest_orders_tab">
 				    	@if($customer->latest_orders->count())
 							<table class="table table-hover table-2nd-short">
 								<thead>

@@ -103,7 +103,7 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, $id)
     {
-        if( env('APP_DEMO') == true && $id <= config('system.demo.roles', 3) )
+        if( config('app.demo') == true && $id <= config('system.demo.roles', 3) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $this->role->update($request, $id);
@@ -120,7 +120,7 @@ class RoleController extends Controller
      */
     public function trash(Request $request, $id)
     {
-        if( env('APP_DEMO') == true && $id <= config('system.demo.roles', 3) )
+        if( config('app.demo') == true && $id <= config('system.demo.roles', 3) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $this->role->trash($id);

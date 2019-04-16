@@ -28,7 +28,7 @@ class ConfigInstamojoController extends Controller
      */
     public function activate()
     {
-        if( env('APP_DEMO') == true )
+        if( config('app.demo') == true )
             return view('demo_modal');
 
         $instamojo = ConfigInstamojo::firstOrCreate(['shop_id' => Auth::user()->merchantId()]);

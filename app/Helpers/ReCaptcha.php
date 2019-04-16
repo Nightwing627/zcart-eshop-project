@@ -13,7 +13,7 @@ class ReCaptcha
             [
                 'form_params' =>
                     [
-                        'secret' => env('GOOGLE_RECAPTCHA_SECRET'),
+                        'secret' => config('services.recaptcha.secret'),
                         'response' => $value
                     ]
             ]

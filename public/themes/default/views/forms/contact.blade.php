@@ -36,9 +36,9 @@
     </div>
     <div class="col-md-6 nopadding-left">
       <div class="form-group">
-        @if(env('GOOGLE_RECAPTCHA_KEY'))
+        @if(config('services.recaptcha.key'))
           <div class="g-recaptcha"
-              data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}">
+              data-sitekey="{{ config('services.recaptcha.key') }}">
           </div>
         @endif
         <div class="help-block with-errors"></div>

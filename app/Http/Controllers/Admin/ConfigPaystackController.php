@@ -29,7 +29,7 @@ class ConfigPaystackController extends Controller
      */
     public function activate()
     {
-        if( env('APP_DEMO') == true )
+        if( config('app.demo') == true )
             return view('demo_modal');
 
         $paystack = ConfigPaystack::firstOrCreate(['shop_id' => Auth::user()->merchantId()]);

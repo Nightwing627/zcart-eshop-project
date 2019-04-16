@@ -96,7 +96,7 @@ class ShopController extends Controller
      */
     public function update(UpdateShopRequest $request, $id)
     {
-        if( env('APP_DEMO') == true && $id <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $id <= config('system.demo.shops', 1) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $shop = $this->shop->update($request, $id);
@@ -115,7 +115,7 @@ class ShopController extends Controller
      */
     public function trash(Request $request, $id)
     {
-        if( env('APP_DEMO') == true && $id <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $id <= config('system.demo.shops', 1) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $this->shop->trash($id);

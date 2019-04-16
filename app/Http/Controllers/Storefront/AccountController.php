@@ -44,7 +44,7 @@ class AccountController extends Controller
      */
     public function update(Request $request)
     {
-        if( env('APP_DEMO') == true && Auth::guard('customer')->user()->id <= config('system.demo.customers', 1) )
+        if( config('app.demo') == true && Auth::guard('customer')->user()->id <= config('system.demo.customers', 1) )
             return redirect()->route('account', 'account#account-info-tab')->with('warning', trans('messages.demo_restriction'));
 
         Auth::guard('customer')->user()->update($request->all());
@@ -60,7 +60,7 @@ class AccountController extends Controller
      */
     public function password_update(SelfPasswordUpdateRequest $request)
     {
-        if( env('APP_DEMO') == true && Auth::guard('customer')->user()->id <= config('system.demo.customers', 1) )
+        if( config('app.demo') == true && Auth::guard('customer')->user()->id <= config('system.demo.customers', 1) )
             return redirect()->route('account', 'account#password-tab')->with('warning', trans('messages.demo_restriction'));
 
         Auth::guard('customer')->user()->update($request->all());

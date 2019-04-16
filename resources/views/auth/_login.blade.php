@@ -32,7 +32,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            @if(env('APP_DEMO') == TRUE)
+            @if(config('app.demo') == TRUE)
                 <h4>Demo Login::</h4>
                 <p><strong>ADMIN::</strong> Username: <strong>superadmin@demo.com</strong> | Password: <strong>123456</strong> </p>
                 <p><strong>MERCHANT::</strong> Username: <strong>merchant@demo.com</strong> | Password: <strong>123456</strong> </p>

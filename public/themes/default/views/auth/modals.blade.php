@@ -47,7 +47,7 @@
       </div><!-- /.modal-body -->
 
       <div class="modal-footer">
-        @if(env('APP_DEMO') == TRUE)
+        @if(config('app.demo') == TRUE)
             <h4>Demo Login::</h4>
             <p>Username: <strong>customer@demo.com</strong> | Password: <strong>123456</strong> </p>
         @endif

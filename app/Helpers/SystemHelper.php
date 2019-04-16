@@ -182,7 +182,8 @@ if ( ! function_exists('getMysqliConnection') )
      */
     function getMysqliConnection()
     {
-        return mysqli_connect(env('DB_HOST', '127.0.0.1'), env('DB_USERNAME', 'root'), env('DB_PASSWORD', 'root'), env('DB_DATABASE'), env('DB_PORT', '3306'));
+        return mysqli_connect(config('database.mysql.host', '127.0.0.1'), config('database.mysql.username', 'root'), config('database.mysql.password'), config('database.mysql.database'), config('database.mysql.port', '3306'));
+        // return mysqli_connect(env('DB_HOST', '127.0.0.1'), env('DB_USERNAME', 'root'), env('DB_PASSWORD', 'root'), env('DB_DATABASE'), env('DB_PORT', '3306'));
     }
 }
 

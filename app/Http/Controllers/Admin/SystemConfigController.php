@@ -40,7 +40,7 @@ class SystemConfigController extends Controller
 
     public function update(UpdateSystemConfigRequest $request)
     {
-        if( env('APP_DEMO') == true )
+        if( config('app.demo') == true )
             return response('error', 444);
 
         $system = SystemConfig::orderBy('id', 'asc')->first();
@@ -65,7 +65,7 @@ class SystemConfigController extends Controller
      */
     public function togglePaymentMethod(UpdateSystemConfigRequest $request, $id)
     {
-        if( env('APP_DEMO') == true )
+        if( config('app.demo') == true )
             return response('error', 444);
 
         $system = SystemConfig::orderBy('id', 'asc')->first();
@@ -94,7 +94,7 @@ class SystemConfigController extends Controller
      */
     public function toggleNotification(UpdateSystemConfigRequest $request, $node)
     {
-        if( env('APP_DEMO') == true )
+        if( config('app.demo') == true )
             return response('error', 444);
 
         $system = SystemConfig::orderBy('id', 'asc')->first();

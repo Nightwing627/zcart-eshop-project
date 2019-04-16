@@ -152,7 +152,7 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, $id)
     {
-        if( env('APP_DEMO') == true && $id <= config('system.demo.customers', 1) )
+        if( config('app.demo') == true && $id <= config('system.demo.customers', 1) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $this->customer->update($request, $id);
@@ -169,7 +169,7 @@ class CustomerController extends Controller
      */
     public function trash(Request $request, $id)
     {
-        if( env('APP_DEMO') == true && $id <= config('system.demo.customers', 1) )
+        if( config('app.demo') == true && $id <= config('system.demo.customers', 1) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $this->customer->trash($id);
