@@ -429,4 +429,18 @@ class Inventory extends Model
     {
         return $query->where('shop_id', Auth::user()->merchantId());
     }
+
+    /**
+     * Returns translated name of condition
+     *
+     * @return str condition
+     */
+    public function getCondition()
+    {
+        switch ($this->condition) {
+            case 'New': return trans('app.new');
+            case 'Used': return trans('app.used');
+            case 'Refurbished': return trans('app.refurbished');
+        }
+    }
 }

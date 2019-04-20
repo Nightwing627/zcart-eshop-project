@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
 
 class ClearStorage extends Command
@@ -40,10 +41,14 @@ class ClearStorage extends Command
     {
         $this->call('incevio:clear-cache');
 
-        Storage::deleteDirectory(image_storage_dir());
+        $filesystem = new Filesystem;
+
+        $filesystem->cleanDirectory(image_storage_dir());
+        // Storage::cleanDirectory(image_storage_dir());
         $this->info('Removing images files: <info>✔</info>');
 
-        Storage::deleteDirectory(attachment_storage_dir());
+        $filesystem->cleanDirectory(attachment_storage_dir());
+        // Storage::cleanDirectory(attachment_storage_dir());
         $this->info('Removing attachment files: <info>✔</info>');
     }
 }

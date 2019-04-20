@@ -55,7 +55,7 @@
                     <div class="product-info-desc"> {!! $item->description !!} </div>
                     {{-- <div class="product-info-desc"> {{ $item->description }} </div> --}}
                     <ul class="product-info-feature-list">
-                        <li>{!! $item->condition !!}</li>
+                        <li>{!! $item->getCondition() !!}</li>
                         {{-- <li>{{ $item->manufacturer->name }}</li> --}}
                     </ul>
                 </div><!-- /.product-info -->

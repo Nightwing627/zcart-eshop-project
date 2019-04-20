@@ -255,7 +255,7 @@ return [
         // 'Flash' => 'Laracasts\Flash\Flash',
         // 'Curl' => Ixudra\Curl\Facades\Curl::class,
         // 'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        // 'Paypalpayment'   => Anouar\Paypalpayment\Facades\PaypalPayment::class,
+        'Paypalpayment'   => Anouar\Paypalpayment\Facades\PaypalPayment::class,
     ],
 
 ];

@@ -242,9 +242,11 @@ class ListHelper
                 ->withCount('categories')->orderBy('categories_count', 'desc');
         },
         'subGroups.categories' => function($query){
-            $query->select('id','category_sub_group_id','name','slug','description')->active();
+            $query->select('id','category_sub_group_id','name','slug','description')
+            ->has('products.inventories')->active();
         }])
-        ->has('subGroups.categories')->active()->orderBy('order', 'asc')->get();
+        ->has('subGroups.categories.products.inventories')
+        ->active()->orderBy('order', 'asc')->get();
     }
 
     /**

@@ -101,7 +101,5 @@ class Blog extends Model
     public function setPublishedAtAttribute($value)
     {
         if($value) $this->attributes['published_at'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
-        // $this->attributes['published_at'] = $value ? date("Y-m-d H:i:s", strtotime($value)) : null;
     }
-
 }

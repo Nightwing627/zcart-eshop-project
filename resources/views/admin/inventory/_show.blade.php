@@ -104,12 +104,10 @@
 								@endforeach
 							@endif
 
-				            @if($inventory->condition)
-								<tr>
-									<th class="text-right">{{ trans('app.condition') }}:</th>
-									<td style="width: 75%;">{{ $inventory->condition }}</td>
-								</tr>
-							@endif
+							<tr>
+								<th class="text-right">{{ trans('app.condition') }}:</th>
+								<td style="width: 75%;">{!! $inventory->getCondition() !!}</td>
+							</tr>
 
 				            @if($inventory->condition_note)
 								<tr>

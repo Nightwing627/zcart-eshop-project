@@ -3,7 +3,7 @@
 		<div class="banner-caption">
 			<img src="{{ get_storage_file_url(optional($brand->logo)->path, 'mini') }}" class="img-rounded">
 			<h5 class="banner-title">{{ $brand->name }}</h5>
-			<p class="banner-desc">{{ $brand->description }}</p>
+			<p class="banner-desc">{!! $brand->description !!}</p>
 		</div>
 	</div>
 </section>

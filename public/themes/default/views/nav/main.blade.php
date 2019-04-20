@@ -88,7 +88,7 @@
                                 @foreach($subGroup->categories as $cat)
                                   <li><a href="{{ route('category.browse', $cat->slug) }}">{{ $cat->name }}</a>
                                     @if($cat->description)
-                                      <p>{{ $cat->description }}</p>
+                                      <p>{!! $cat->description !!}</p>
                                     @endif
                                   </li>
                                 @endforeach
