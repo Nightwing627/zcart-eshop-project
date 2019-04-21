@@ -40,7 +40,7 @@
 							</td>
 							<td>{{ $manufacturer->phone }}</td>
 							<td>{{ $manufacturer->email }}</td>
-							<td>{{ $manufacturer->country->name or '' }}</td>
+							<td>{{ optional($manufacturer->country)->name }}</td>
 							<td>
 								<span class="label label-default">{{ $manufacturer->products_count }}</span>
 							</td>

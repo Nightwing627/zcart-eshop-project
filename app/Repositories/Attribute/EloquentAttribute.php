@@ -59,7 +59,7 @@ class EloquentAttribute extends EloquentRepository implements BaseRepository, At
     public function destroy($attribute)
     {
         if(! $attribute instanceof Attribute)
-            $attribute = $this->model->findTrash($attribute);
+            $attribute = parent::findTrash($attribute);
 
         $attributeValues = $attribute->attributeValues()->get();
 
