@@ -111,9 +111,8 @@ class OrderController extends Controller
 
         DB::commit();           // Everything is fine. Now commit the transaction
 
-        // $cart->forceDelete();   // Delete the cart
+        $cart->forceDelete();   // Delete the cart
 
-// echo "<pre>"; print_r(optional($order->paymentMethod)->code); echo "</pre>"; exit();
         // Process payment with PayPal
         if ('paypal-express' == optional($order->paymentMethod)->code) {
             try {
@@ -121,7 +120,6 @@ class OrderController extends Controller
             } catch (\Exception $e) {
                 \Log::info('PayPal ERROR:');
                 \Log::error($e);
-                echo "<pre>"; print_r($e->getMessage()); echo "</pre>"; exit();
                 return redirect()->route("payment.failed", $order->id)->withInput();
             }
 

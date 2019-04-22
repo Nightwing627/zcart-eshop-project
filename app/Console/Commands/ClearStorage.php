@@ -41,14 +41,12 @@ class ClearStorage extends Command
     {
         $this->call('incevio:clear-cache');
 
-        $filesystem = new Filesystem;
-
-        $filesystem->cleanDirectory(image_storage_dir());
-        // Storage::cleanDirectory(image_storage_dir());
+        // Storage::deleteDirectory(image_storage_dir());
+        Storage::delete(Storage::files(image_storage_dir()));
         $this->info('Removing images files: <info>✔</info>');
 
-        $filesystem->cleanDirectory(attachment_storage_dir());
-        // Storage::cleanDirectory(attachment_storage_dir());
+        // Storage::deleteDirectory(attachment_storage_dir());
+        Storage::delete(Storage::files(attachment_storage_dir()));
         $this->info('Removing attachment files: <info>✔</info>');
     }
 }
