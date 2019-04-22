@@ -274,6 +274,13 @@ class SystemController extends Controller
                 // Everything is fine. Now commit the transaction
                 DB::commit();
 
+                // Delete the installed file
+                unlink(storage_path('installed'));
+
+                // $MYSQLI_LINK = getMysqliConnection();
+                // mysqli_query($MYSQLI_LINK, "SET FOREIGN_KEY_CHECKS = 0");
+                // mysqli_query($MYSQLI_LINK, "DROP TABLE ".APL_DATABASE_TABLE);
+
                 return back()->with('success', trans('messages.license_uninstalled'));
             }
 

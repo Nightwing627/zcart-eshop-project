@@ -111,13 +111,17 @@ class OrderController extends Controller
 
         DB::commit();           // Everything is fine. Now commit the transaction
 
-        $cart->forceDelete();   // Delete the cart
+        // $cart->forceDelete();   // Delete the cart
 
+// echo "<pre>"; print_r(optional($order->paymentMethod)->code); echo "</pre>"; exit();
         // Process payment with PayPal
         if ('paypal-express' == optional($order->paymentMethod)->code) {
             try {
                 $payment = $this->chargeWithPayPal($request, $order);
             } catch (\Exception $e) {
+                \Log::info('PayPal ERROR:');
+                \Log::error($e);
+                echo "<pre>"; print_r($e->getMessage()); echo "</pre>"; exit();
                 return redirect()->route("payment.failed", $order->id)->withInput();
             }
 
@@ -455,9 +459,9 @@ class OrderController extends Controller
         // Get the vendor configs
         $vendorPaypalConfig = $order->shop->paypalExpress;
 
-        // If the stripe is not cofigured
+        // If the paypal is not cofigured
         if( ! $vendorPaypalConfig )
-            return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
+            return redirect()->back()->with('error', trans('theme.notify.payment_method_config_error'))->withInput();
 
         // Set vendor's paypal config
         config()->set('paypal_payment.mode', $vendorPaypalConfig->sandbox == 1 ? 'sandbox' : 'live');
@@ -578,6 +582,7 @@ class OrderController extends Controller
     {
         // $cart = $this->revertOrder($order);
         $cart = revertOrderAndMoveToCart($order);
+        // echo "<pre>"; print_r($cart); echo "</pre>"; exit();
 
         return redirect()->route('cart.checkout', $cart)->with('error', trans('theme.notify.payment_failed'))->withInput();
     }
