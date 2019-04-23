@@ -1,7 +1,7 @@
 <?php
-
 namespace App\Listeners\Refund;
 
+use Notification;
 use App\Events\Refund\RefundApproved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -37,6 +37,14 @@ class NotifyCustomerRefundApproved implements ShouldQueue
         if(!config('system_settings'))
             setSystemConfig($event->refund->shop_id);
 
-        $event->refund->customer->notify(new RefundApprovedNotification($event->refund));
+        if( $event->refund->customer_id )
+            $notifiable = $event->refund->customer;
+        else if($event->refund->order->email)  // Customer is a guest
+            $notifiable = Notification::route('mail', $event->refund->order->email);
+        else
+            $notifiable = Null;
+
+        if($notifiable)
+            $notifiable->notify(new RefundApprovedNotification($event->refund));
     }
 }

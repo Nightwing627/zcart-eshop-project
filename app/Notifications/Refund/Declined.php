@@ -32,7 +32,10 @@ class Declined extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        if($this->refund->order->customer_id)
+            return ['mail', 'database'];
+
+        return ['mail'];
     }
 
     /**
