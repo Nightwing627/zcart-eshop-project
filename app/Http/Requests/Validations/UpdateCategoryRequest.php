@@ -27,7 +27,7 @@ class UpdateCategoryRequest extends Request
 
         return [
             'category_sub_group_id' => 'required',
-            'name' =>  'required|composite_unique:categories, '.$id,
+            'name' =>  'required',
             'slug' =>  'required|composite_unique:categories, '.$id,
             'image' => 'mimes:jpg,jpeg,png',
             'active' => 'required'

@@ -760,12 +760,10 @@
 		    	result = JSON.parse(check);
 
 			    if(result.original == 'false'){
-			    	console.log('false');
 				    node.closest( ".form-group" ).addClass('has-error');
 			    	msg = "{{ trans('messages.this_slug_taken') }}";
 			    }
 			    else if(result.original == 'true'){
-			    	console.log('true');
 				    node.closest( ".form-group" ).removeClass('has-error');
 			    	msg = "{{ str_finish(config('app.url'), '/') }}" + url + slug;
 			    }

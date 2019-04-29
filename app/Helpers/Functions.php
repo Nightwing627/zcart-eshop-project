@@ -477,7 +477,6 @@ if ( ! function_exists('verifyUniqueSlug') )
 {
     function verifyUniqueSlug($slug, $table, $field = 'slug')
     {
-        \Log::info($table);
         if(\DB::table($table)->select($field)->where($field, $slug)->first())
             return response()->json('false');
 
