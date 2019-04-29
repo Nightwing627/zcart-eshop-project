@@ -6,11 +6,11 @@
   	<tbody>
 			@foreach($disputes as $dispute)
           <tr class="order-info-head">
-            	<td width="50%">
+            	<td width="40%">
                   <h5><span>@lang('theme.order_id'): </span>{{ $dispute->order->order_number }}</h5>
                   <h5><span>@lang('theme.order_time_date'): </span>{{ $dispute->order->created_at->toDayDateTimeString() }}</h5>
             	</td>
-            	<td width="25%" class="store-info">
+            	<td width="35%" class="store-info">
                   <h5>
                     <span>@lang('theme.store'):</span>
                     @if($dispute->shop)
@@ -21,7 +21,7 @@
                   </h5>
                   <h5>
                       <span>@lang('theme.status')</span>
-                      {{ optional($dispute->order->status)->name }}
+                      {!! $dispute->order->dispute->statusName() !!}
                   </h5>
             	</td>
             	<td width="25%" class="order-amount">
@@ -56,9 +56,11 @@
                 </td>
                 @if($loop->first)
                   <td rowspan="{{ $loop->count }}" class="order-actions text-center">
-                    <p>{!! $dispute->order->dispute->statusName() !!}</p>
+                    @if($dispute->order->refunds->count())
+                      <a href="{{ route('order.detail', $dispute->order) . '#refund-detail-section' }}" class="btn btn-primary btn-sm btn-block flat">@lang('theme.refund_details')</a>
+                    @endif
 
-                    <a href="{{ route('dispute.open', $dispute->order) }}" class="btn btn-link btn-xs btn-block">{!! trans('theme.button.details') !!}</a>
+                    <a href="{{ route('dispute.open', $dispute->order) }}" class="btn btn-default btn-sm btn-block flat">{!! trans('theme.dispute_details') !!}</a>
                   </td>
                 @endif
               </tr> <!-- /.order-body -->

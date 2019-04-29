@@ -776,8 +776,10 @@ class OrderController extends Controller
         if( !$order instanceOf Order )
             $order = Order::find($order);
 
-        $order->payment_status = Order::PAYMENT_STATUS_PAID;
+        if($order->order_status_id < Order::STATUS_CONFIRMED)
+            $order->order_status_id = Order::STATUS_CONFIRMED;
 
+        $order->payment_status = Order::PAYMENT_STATUS_PAID;
         $order->save();
 
         event(new OrderPaid($order));

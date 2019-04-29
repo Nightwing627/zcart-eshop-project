@@ -28,7 +28,6 @@ $factory->define(App\Order::class, function (Faker $faker) {
         'shipping_address' => $billing_address,
         'tracking_id' => 'RR123456789CN',
         'payment_method_id' => $faker->randomElement(\DB::table('payment_methods')->pluck('id')->toArray()),
-        'payment_status' => rand(1, 3),
         'admin_note' => $faker->sentence,
         'buyer_note' => $faker->sentence,
         'created_at' => Carbon::Now()->subDays(rand(0, 15)),

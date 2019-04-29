@@ -8,11 +8,16 @@
       <tbody>
         @foreach($orders as $order)
           <tr class="order-info-head">
-              <td width="55%">
-                <h5><span>@lang('theme.order_id'): </span>{{ $order->order_number }}</h5>
+              <td width="40%">
+                <h5>
+                  <span>@lang('theme.order_id'): </span> {{ $order->order_number }}
+                  @if($order->dispute)
+                    <span class="label label-danger indent10">@lang('theme.disputed')</span>
+                  @endif
+                </h5>
                 <h5><span>@lang('theme.order_time_date'): </span>{{ $order->created_at->toDayDateTimeString() }}</h5>
               </td>
-              <td width="25%" class="store-info">
+              <td width="40%" class="store-info">
                 <h5>
                   <span>@lang('theme.store'):</span>
                   @if($order->shop->name)
@@ -23,7 +28,7 @@
                 </h5>
                 <h5>
                     <span>@lang('theme.status')</span>
-                    {{ optional($order->status)->name }}
+                    {!! optional($order->status)->name . ' &nbsp; ' . $order->paymentStatusName() !!}
                 </h5>
               </td>
               <td width="20%" class="order-amount">
@@ -63,7 +68,12 @@
                       {!! Form::button(trans('theme.button.confirm_goods_received'), ['type' => 'submit', 'class' => 'confirm btn btn-primary btn-block flat', 'data-confirm' => trans('theme.confirm_action.goods_received')]) !!}
                     {!! Form::close() !!}
                   @endif
-                  <a href="{{ route('order.detail', $order) . '#buyer-order-table' }}" class="btn btn-link btn-block">@lang('theme.button.open_dispute')</a>
+
+                  @if($order->dispute)
+                    <a href="{{ route('dispute.open', $order) }}" class="btn btn-link btn-block" data-confirm="@lang('theme.confirm_action.open_a_dispute')">@lang('theme.dispute_detail')</a>
+                  @else
+                    <a href="{{ route('order.detail', $order) . '#buyer-order-table' }}" class="btn btn-link btn-block">@lang('theme.button.open_dispute')</a>
+                  @endif
                 </td>
               @endif
             </tr> <!-- /.order-body -->

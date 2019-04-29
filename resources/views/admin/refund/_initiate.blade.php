@@ -94,7 +94,7 @@
                   <div class="input-group">
                     {{ Form::hidden('order_fulfilled', 0) }}
                     @if(isset($order))
-                      {!! Form::checkbox('order_fulfilled', null, $order->isFulfilled() ? 1 : Null, ['class' => 'icheckbox_line', 'disabled']) !!}
+                      {!! Form::checkbox('order_fulfilled', null, $order->isFulfilled() ? 1 : Null, ['class' => 'icheckbox_line']) !!}
                     @else
                       {!! Form::checkbox('order_fulfilled', null, Null, ['class' => 'icheckbox_line']) !!}
                     @endif

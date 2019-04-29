@@ -12,9 +12,17 @@ class Order extends Model
 {
     use SoftDeletes, Loggable;
 
-    const PAYMENT_STATUS_UNPAID             = 1;       //Default
+    const STATUS_WAITING_FOR_PAYMENT    = 1;    // Default
+    const STATUS_PAYMENT_ERROR          = 2;
+    const STATUS_CONFIRMED              = 3;
+    const STATUS_FULFILLED              = 4;   // All status before paid value consider as unfulfilled and bottoms are fulfilled
+    const STATUS_AWAITING_DELIVERY      = 5;
+    const STATUS_DELIVERED              = 6;
+    const STATUS_RETURNED               = 7;
+
+    const PAYMENT_STATUS_UNPAID             = 1;       // Default
     const PAYMENT_STATUS_PENDING            = 2;
-    const PAYMENT_STATUS_PAID               = 3;      //All status before paid value consider as unpaid
+    const PAYMENT_STATUS_PAID               = 3;      // All status before paid value consider as unpaid
     const PAYMENT_STATUS_INITIATED_REFUND   = 4;
     const PAYMENT_STATUS_PARTIALLY_REFUNDED = 5;
     const PAYMENT_STATUS_REFUNDED           = 6;
@@ -381,7 +389,7 @@ class Order extends Model
      */
     public function isFulfilled()
     {
-        return $this->status->fulfilled;
+        return $this->order_status_id >= static::STATUS_FULFILLED;
     }
 
     /**

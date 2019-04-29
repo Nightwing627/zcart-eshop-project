@@ -29,7 +29,7 @@ return [
 	    'open_dispute' 	=> 'Open Dispute',
 	    'privacy_policy'=> 'Privacy Policy',
 	    'return_and_refund_policy' 	=> 'Return and Refund Policy',
-	    'refunds_disputes' 			=> 'Refunds & Disputes',
+	    'refunds_disputes' 			=> 'Disputes',
 	    'sell_on' 		=> 'Sell On :platform',
 	    'support' 		=> 'Support',
 	    'term_and_conditions' => 'Terms and Conditions',
@@ -557,4 +557,12 @@ return [
 		'weekly_popular' => 'Weekly <span class="text-primary">Popular</span>',
 		'you_may_also_like' => 'You may also like',
 	],
+
+	// Version 1.2.4
+	'created_at' => 'Created at',
+	'dispute_details' => 'Dispute Details',
+	'refunds' => 'Refunds',
+	'refund_details' => 'Refund Details',
+	'updated_at' => 'Updated at',
+
 ];

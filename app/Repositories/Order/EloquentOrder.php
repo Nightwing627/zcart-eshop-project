@@ -104,7 +104,18 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
         if(! $order instanceof Order)
             $order = $this->model->find($order);
 
-        $order->payment_status = ($order->payment_status == Order::PAYMENT_STATUS_PAID) ? Order::PAYMENT_STATUS_UNPAID : Order::PAYMENT_STATUS_PAID;
+        if ($order->payment_status == Order::PAYMENT_STATUS_PAID) {
+            $order->payment_status = Order::PAYMENT_STATUS_UNPAID;
+
+            if($order->order_status_id == Order::STATUS_CONFIRMED)
+                $order->order_status_id = Order::STATUS_WAITING_FOR_PAYMENT;
+        }
+        else {
+            $order->payment_status = Order::PAYMENT_STATUS_PAID;
+
+            if($order->order_status_id < Order::STATUS_CONFIRMED)
+                $order->order_status_id = Order::STATUS_CONFIRMED;
+        }
 
         $order->save();
 

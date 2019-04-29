@@ -52,7 +52,7 @@ return [
     'payment_method_disconnect_failed' => 'This application is not connected to the stripe account, or the account does not exist.',
     'invoice_sent_to_customer' => 'The invoice has been sent to the customer.',
     'freezed_model' => 'This record is frozen by the system config. The application needs this value to run properly.',
-    'email_verification_notice' => 'Your email address is not verified. Please verify to get full access! If you haven\'t received the verification email, you can resend again from your frofile page.',
+    'email_verification_notice' => 'Your email address is not verified, please verify to get full access.',
     'theme_activated' => 'Theme :theme has been activated successfully!',
     'the_ip_banned' => 'The IP address has been banned from the application.',
     'the_ip_unbanned' => 'The IP address has been removed from blocklist.',

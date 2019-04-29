@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Hash;
@@ -213,6 +212,11 @@ class Customer extends Authenticatable
     public function disputes()
     {
         return $this->hasMany(Dispute::class);
+    }
+
+    public function refunds()
+    {
+        return $this->hasManyThrough(Refund::class, Order::class);
     }
 
     /**

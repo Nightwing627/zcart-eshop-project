@@ -1,5 +1,5 @@
 <!-- CONTENT SECTION -->
-<section>
+<section id="payment-detail-section" name="payment-detail-section" class="space20">
   	<div class="container">
       	<div class="row">
         	<div class="col-md-12 nopadding">
@@ -25,7 +25,9 @@
 							<td>{{ get_formated_currency($order->discount) }}</td>
 							<td>{{ get_formated_currency($order->grand_total) }}</td>
 						</tr>
+
 						<tr><td colspan="6"></td></tr>
+
 						<tr class="buyer-payment-info-head">
 							<td colspan="2">@lang('theme.amount')</td>
 							<td colspan="2">@lang('theme.payment_method')</td>
@@ -39,9 +41,50 @@
 						</tr>
 					</tbody>
 				</table>
+            </div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</section>
 
-				<div class="clearfix space20"></div>
+@if($order->refunds->count())
+	<section id="refund-detail-section" name="refund-detail-section" class="space20">
+	  	<div class="container">
+	      	<div class="row">
+	        	<div class="col-md-12 nopadding">
+					<table class="table" id="buyer-payment-detail-table">
+						<thead>
+				          	<tr><th colspan="6">@lang('theme.refunds')</th></tr>
+						</thead>
+						<tbody>
+							<tr class="buyer-payment-info-head">
+								<td>{{ trans('theme.return_goods') }}</td>
+								<td>{{ trans('theme.amount') }}</td>
+								<td>{{ trans('theme.status') }}</td>
+								<td>{{ trans('theme.created_at') }}</td>
+								<td>{{ trans('theme.updated_at') }}</td>
+							</tr>
 
+			                @foreach($order->refunds as $refund )
+								<tr class="buyer-payment-info-body">
+									<td>{!! get_yes_or_no($refund->return_goods) !!}</td>
+									<td>{{ get_formated_currency($refund->amount) }}</td>
+									<td>{!! $refund->statusName() !!}</td>
+						          	<td>{{ $refund->created_at->diffForHumans() }}</td>
+						          	<td>{{ $refund->updated_at->diffForHumans() }}</td>
+								</tr>
+            			    @endforeach
+						</tbody>
+					</table>
+	            </div><!-- /.col-md-12 -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</section>
+@endif
+
+<section id="order-detail-section" name="order-detail-section">
+  	<div class="container">
+      	<div class="row">
+        	<div class="col-md-12 nopadding">
 				<table class="table" id="buyer-order-table" name="buyer-order-table">
 			      	<thead>
 			          	<tr>
@@ -58,11 +101,11 @@
 			            	<td colspan="2">{!! $order->billing_address !!}</td>
 			            </tr>
 			            <tr class="order-info-head">
-			                <td width="55%">
+			                <td width="40%">
 			                  	<h5><span>@lang('theme.order_id'): </span>{{ $order->order_number }}</h5>
 			                  	<h5><span>@lang('theme.order_time_date'): </span>{{ $order->created_at->toDayDateTimeString() }}</h5>
 			                </td>
-			                <td width="25%" class="store-info">
+			                <td width="40%" class="store-info">
 			                  	<h5>
 			                    	<span>@lang('theme.store'):</span>
 			                    	@if($order->shop)
@@ -73,7 +116,7 @@
 			                  	</h5>
 			                  	<h5>
 				                    <span>@lang('theme.status')</span>
-				                    {{ optional($order->status)->name }}
+				                    {!! optional($order->status)->name . ' &nbsp; ' . $order->paymentStatusName() !!}
 			                  	</h5>
 			                </td>
 			                <td width="20%" class="order-amount">
@@ -109,7 +152,12 @@
 						                        {!! Form::button(trans('theme.button.confirm_goods_received'), ['type' => 'submit', 'class' => 'confirm btn btn-primary btn-block flat', 'data-confirm' => trans('theme.confirm_action.goods_received')]) !!}
 									        {!! Form::close() !!}
 						                @endif
-					                    <a href="{{ route('dispute.open', $order) }}" class="confirm btn btn-link btn-block" data-confirm="@lang('theme.confirm_action.open_a_dispute')">@lang('theme.button.open_dispute')</a>
+
+								        @if($order->dispute)
+						                    <a href="{{ route('dispute.open', $order) }}" class="btn btn-link btn-block" data-confirm="@lang('theme.confirm_action.open_a_dispute')">@lang('theme.dispute_detail')</a>
+						                @else
+						                    <a href="{{ route('dispute.open', $order) }}" class="confirm btn btn-link btn-block" data-confirm="@lang('theme.confirm_action.open_a_dispute')">@lang('theme.button.open_dispute')</a>
+						                @endif
 				                    </td>
 		                      	@endif
 			                </tr> <!-- /.order-body -->
