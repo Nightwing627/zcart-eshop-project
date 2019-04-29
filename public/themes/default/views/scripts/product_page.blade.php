@@ -1,3 +1,17 @@
+<?php
+// Remove the morphic values from the collection to look clean
+foreach ($variants as &$value) {
+    foreach ($value->images as &$image)
+        unset($image->imageable_id, $image->imageable_type);
+
+  //  $value->key_features = unserialize($value->key_features);
+}
+//echo "<pre>"; print_r($variants->toArray()); echo "</pre>"; exit();
+//$escaped_varitants_data = $variants->toJson(JSON_HEX_QUOT|JSON_HEX_APOS|JSON_HEX_AMP);
+//$escaped_varitants_data = str_replace("\u0022", "\\\"", $escaped_varitants_data );
+//$escaped_varitants_data = str_replace("\u0027", "\\'",  $escaped_varitants_data );
+//echo "<pre>"; print_r($escaped_varitants_data); echo "</pre>"; exit();
+?>
 <script type="text/javascript">
 "use strict";
 ;(function($, window, document) {
@@ -5,11 +19,8 @@
     var shop_id = '{{ $item->shop_id }}';
     var handlingCost = getFromPHPHelper('getShopConfig', [shop_id, 'order_handling_cost']);
     var unitPrice = {{ $item->currnt_sale_price() }};
-    var variants = '{!! $variants !!}';
-    // var variants = JSON.parse('{!! $variants !!}');
-    // console.log(variants);
+    var variants = '<?=$variants;?>';
     var itemWrapper = $("#single-product-wrapper");
-
     var buyNowBaseUrl = $("#buy-now-btn").attr('href');
     buyNowBaseUrl = buyNowBaseUrl.substr(0, buyNowBaseUrl.lastIndexOf('/') + 1);
 
@@ -136,21 +147,27 @@
 
     // Variation updates
     $('.product-attribute-selector').on('change', function(){
+        apply_busy_filter('body');
+        $('#loading').show();
+
         var attrs = [];
         $('.product-attribute-selector').each(function(){
             var val = $(this).val();
             if(val)
                 attrs.push(Number(val));
         });
-        // console.log(attrs);
+
         var filtered = filterItems(attrs);
-        // console.log(filtered);
 
         if(filtered == undefined) {
             setOutOfStock();            // Set set out of stock
             itemWrapper.find('.sc-add-to-cart').attr("disabled", "disabled");
+            remove_busy_filter('body');
+            $('#loading').hide();
             return;
         }
+
+        // console.log(filtered);
 
         setSalePrice(filtered);         // Set sale price
 
@@ -158,9 +175,14 @@
 
         setStockQuantity(filtered);     // Set availble stock quantity
 
+        setImg(filtered);               // Set image price
+
         // setKeyFeatures(filtered);       // Set key features
 
         setShippingOptions();           // Set shipping options
+
+        remove_busy_filter('body');
+        $('#loading').hide();
     });
 
     // Ship to box synamic width
@@ -197,9 +219,10 @@
         // if (!options || $.isEmptyObject(variants))   return NaN;
         options = JSON.stringify(options.sort());
 
-        return jQuery.parseJSON(variants).find(function (item) {
+        // return jQuery.parseJSON(variants).find(function (item) {
+        return $.parseJSON(variants).find(function (variant) {
             // Get the attr sets of the item
-            var attrs = item.attribute_values.map(a => a.id);
+            var attrs = variant.attribute_values.map(a => a.id);
 
             // Return the exact match of options with items attr sets
             return JSON.stringify(attrs.sort()) === options;
@@ -237,7 +260,46 @@
 
     function setKeyFeatures(item)
     {
-        itemWrapper.find('.key_feature_list').html(item.key_features);
+        $('.key_feature_list').html(item.key_features);
+    }
+
+    function setImg(item)
+    {
+        if(item.images.length > 0){
+            $('#jqzoom').removeData('jqzoom'); //Reset the jqzoom
+
+            var path = getFromPHPHelper('get_storage_file_url', [item.images[0].path, 'full']);
+            $('#jqzoom .product-img').attr('src', path);
+            $('#jqzoom').attr('href', path);
+
+            path = path.replace(/\?.*/,''); // Remove the size attr from the path url
+
+            $('ul.jqzoom-thumbs').find( 'img' ).each(function() {
+                var src = $(this).attr("src").replace(/\?.*/,'');
+                var node = $(this).parent('a');
+
+                if(path == src)
+                    node.addClass('zoomThumbActive');
+                else
+                    node.removeClass('zoomThumbActive');
+            });
+
+            //binding
+            $("#jqzoom").jqzoom();
+
+            // jqzoom
+            // $('#jqzoom').jqzoom({
+            //     zoomType: 'standard',
+            //     lens: true,
+            //     preloadImages: false,
+            //     alwaysOn: false,
+            //     zoomWidth: 530,
+            //     zoomHeight: 530,
+            //     xOffset:0,
+            //     yOffset: 0,
+            //     position: 'left'
+            // });
+        }
     }
 
     // In stock

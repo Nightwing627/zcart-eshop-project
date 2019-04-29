@@ -156,7 +156,7 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
                 $this->setAttributes($inventory, $variants[$key]);
 
             // Save Images
-            if ($images[$key])
+            if (isset($images[$key]))
                 $inventory->saveImage($images[$key]);
         }
 

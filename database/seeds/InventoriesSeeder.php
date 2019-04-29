@@ -28,7 +28,7 @@ class InventoriesSeeder extends Seeder
             $directories = glob(public_path('images/demo/products/*') , GLOB_ONLYDIR);
 
             foreach ($inventories as $item) {
-                $images = glob($directories[array_rand($directories)] . '/*.png');
+                $images = glob($directories[array_rand($directories)] . '/*.jpg');
 
                 foreach ($images as $key => $img) {
                     $img_name = str_random(10) . '.png';

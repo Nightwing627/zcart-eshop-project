@@ -187,6 +187,16 @@ class Product extends Model
     }
 
     /**
+     * Get the other vendors listings count for the product.
+     *
+     * @return array
+     */
+    public function getOffersAttribute()
+    {
+        return $this->inventories()->distinct('shop_id')->count('shop_id');
+    }
+
+    /**
      * Set the Minimum price zero if the value is Null.
      */
     public function setMinPriceAttribute($value)

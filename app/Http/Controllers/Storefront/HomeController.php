@@ -136,10 +136,10 @@ class HomeController extends Controller
     {
         $item = Inventory::where('slug', $slug)->available()->withCount('feedbacks')->firstOrFail();
 
-        $item->load(['product' => function($q){
+        $item->load(['product' => function($q) use ($item){
                 $q->select('id', 'slug', 'description', 'manufacturer_id')
-                ->withCount(['inventories' => function($query){
-                    $query->available();
+                ->withCount(['inventories' => function($query) use($item){
+                    $query->where('shop_id', '!=', $item->shop_id)->available();
                 }]);
             }, 'attributeValues' => function($q){
                 $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')->with('attribute:id,name,attribute_type_id,order');
@@ -163,8 +163,6 @@ class HomeController extends Controller
             $query->whereIn('id', $attr_pivots->pluck('attribute_value_id'))->orderBy('order');
         }])->orderBy('order')->get();
 
-        $variants = $variants->toJson(JSON_HEX_QUOT);
-
         // TEST
         $related = ListHelper::related_products($item);
         $linked_items = ListHelper::linked_items($item);
@@ -175,7 +173,6 @@ class HomeController extends Controller
         $geoip = geoip(request()->ip()); // Set the location of the user
         $countries = ListHelper::countries(); // Country list for shop_to dropdown
 
-        // echo "<pre>"; print_r($variants); echo "</pre>"; exit();
         return view('product', compact('item', 'variants', 'attributes', 'item_attrs', 'related', 'linked_items', 'geoip', 'countries'));
     }
 
@@ -293,13 +290,15 @@ class HomeController extends Controller
         if(getShopConfig($shop->id, 'maintenance_mode'))
             return response()->view('errors.503', [], 503);
 
-        $products = Inventory::where('shop_id', $shop->id)->filter(request()->all())
+        $products = Inventory::where('shop_id', $shop->id)
+        ->groupBy('product_id')
+        ->filter(request()->all())
         ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])
         ->withCount(['orders' => function($q){
             $q->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
         }])
         ->available()->paginate(20);
-
+        // echo "<pre>"; print_r($products->toArray()); echo "</pre>"; exit();
         return view('shop', compact('shop', 'products'));
     }
 

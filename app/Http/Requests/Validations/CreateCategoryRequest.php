@@ -25,7 +25,7 @@ class CreateCategoryRequest extends Request
     {
         return [
            'category_sub_group_id' => 'required',
-           'name' => 'required|unique:categories',
+           'name' => 'required',
            'slug' => 'required|unique:categories',
            'image' => 'mimes:jpg,jpeg,png',
            'active' => 'required'

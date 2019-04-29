@@ -114,11 +114,13 @@
 							@foreach($inventories->where('active', 0) as $inventory )
 								<tr class="{{ $inventory->isLowQtt() ? 'danger' : '' }}">
 									<td>
-									  	@if($inventory->image)
+										<img src="{{ get_product_img_src($inventory, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
+
+									  	{{-- @if($inventory->image)
 											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 										@else
 											<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
-										@endif
+										@endif --}}
 									</td>
 									<td>{{ $inventory->sku }}</td>
 									<td>{{ $inventory->title }}</td>
@@ -178,11 +180,12 @@
 							@foreach($inventories->where('stock_quantity', '<=', 0) as $inventory )
 								<tr>
 									<td>
-									  	@if($inventory->image)
+										<img src="{{ get_product_img_src($inventory, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
+									  	{{-- @if($inventory->image)
 											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 										@else
 											<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
-										@endif
+										@endif --}}
 									</td>
 									<td>{{ $inventory->sku }}</td>
 									<td>{{ $inventory->title }}</td>

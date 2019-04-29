@@ -10,7 +10,7 @@
 	<div class="container">
 		<div class="row sc-product-item" id="single-product-wrapper">
 		  	<div class="col-md-5 col-sm-6">
-		  		@include('layouts.jqzoom', ['item' => $item])
+		  		@include('layouts.jqzoom', ['item' => $item, 'variants' => $variants])
 		  	</div><!-- /.col-md-5 col-sm-6 -->
 
 		  	<div class="col-md-7 col-sm-6">
@@ -129,6 +129,12 @@
 					        	@lang('theme.view_more_offers', ['count' => $item->product->inventories_count])
 					        </a>
 						@endif
+
+			          	{{-- @if($item->product->offers > 1)
+					        <a href="{{ route('show.offers', $item->product->slug) }}" class="btn btn-block btn-link btn-sm">
+					        	@lang('theme.view_more_offers', ['count' => $item->product->offers])
+					        </a>
+						@endif --}}
 
 						<div class="clearfix space20"></div>
 

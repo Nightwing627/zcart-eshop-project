@@ -25,7 +25,7 @@ class CreateCategorySubGroupRequest extends Request
     {
         return [
             'category_group_id' => 'required|integer',
-            'name' => 'required|unique:category_sub_groups',
+            'name' => 'required',
             'slug' => 'required|unique:category_sub_groups',
             'active' => 'required'
         ];
