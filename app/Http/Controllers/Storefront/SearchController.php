@@ -26,11 +26,19 @@ class SearchController extends Controller
 
         $products = Inventory::search($term)->where('active', 1)->get();
 
-        $products->load(['shop:id,current_billing_plan,active','product:id,name,gtin,model_number']);
+        $products->load([
+                        'shop:id,current_billing_plan,trial_ends_at,active',
+                        'shop.config:shop_id,maintenance_mode',
+                        'product:id,name,gtin,model_number'
+                    ]);
 
         // Keep results only from active shops
         $products = $products->filter(function ($product) {
-            return ($product->shop->current_billing_plan !== Null) && ($product->shop->active == 1);
+            return ($product->shop->current_billing_plan !== Null) &&
+                    ($product->shop->active == 1) &&
+                    $product->shop->hasPaymentMethods() &&
+                    ($product->shop->trial_ends_at == Null || $product->shop->trial_ends_at > Carbon::now()) &&
+                    ($product->shop->config->maintenance_mode == 0 || $product->shop->config->maintenance_mode == Null);
         });
 
         if($category != 'all_categories') {

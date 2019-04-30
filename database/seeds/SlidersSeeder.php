@@ -30,6 +30,13 @@ class SlidersSeeder extends Seeder
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [
+                'title' => NULL,
+                'sub_title' => NULL,
+                'link' => '/category/' . $slugs[array_rand($slugs)],
+                'order' => 3,
+                'created_at' => Carbon::Now(),
+                'updated_at' => Carbon::Now(),
+            ], [
                 'title' => 'Demo Slider',
                 'sub_title' => 'You can change this',
                 'link' => '/category/' . $slugs[array_rand($slugs)],
@@ -48,6 +55,7 @@ class SlidersSeeder extends Seeder
             File::copy(public_path('images/demo/sliders/1.jpg'), $path . '/slider_1.jpg');
             File::copy(public_path('images/demo/sliders/2.jpg'), $path . '/slider_2.jpg');
             File::copy(public_path('images/demo/sliders/3.jpg'), $path . '/slider_3.jpg');
+            File::copy(public_path('images/demo/sliders/4.jpg'), $path . '/slider_4.jpg');
 
             DB::table('images')->insert([
                 [
@@ -77,6 +85,16 @@ class SlidersSeeder extends Seeder
                     'order' => 3,
                     'featured' => 1,
                     'imageable_id' => 3,
+                    'imageable_type' => 'App\Slider',
+                    'created_at' => Carbon::Now(),
+                    'updated_at' => Carbon::Now(),
+                ], [
+                    'name' => 'slider_4.jpg',
+                    'path' => image_storage_dir().'/slider_4.jpg',
+                    'extension' => 'jpg',
+                    'order' => 4,
+                    'featured' => 1,
+                    'imageable_id' => 4,
                     'imageable_type' => 'App\Slider',
                     'created_at' => Carbon::Now(),
                     'updated_at' => Carbon::Now(),

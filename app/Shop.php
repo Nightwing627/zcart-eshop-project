@@ -465,6 +465,16 @@ class Shop extends Model
     }
 
     /**
+     * Check if shop has active payment method.
+     *
+     * @return bool
+     */
+    public function hasPaymentMethods()
+    {
+        return $this->paymentMethods()->count();
+    }
+
+    /**
      * Check if the system is down or live.
      *
      * @return bool
