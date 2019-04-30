@@ -79,53 +79,42 @@
 
           <!-- Main content -->
           <section class="content">
+              {{-- If the user is impersonated --}}
+              @if(Request::session()->has('impersonated'))
+                <div class="callout callout-info">
+                  <p>
+                    <strong><i class="icon ion-md-nuclear"></i> {{ trans('app.alert') }}</strong>
+                    {{ trans('messages.you_are_impersonated') }}
+                    <a href="{{ route('admin.secretLogout') }}" class="nav-link pull-right"><i class="fa fa-sign-out" data-toggle="tooltip" data-placement="top" title="{{ trans('app.log_out') }}"></i></a>
+                  </p>
+                </div>
+              @endif
 
-          {{-- If the user is impersonated --}}
-          @if(Request::session()->has('impersonated'))
-            <div class="callout callout-info">
-              <p>
-                <strong><i class="icon ion-md-nuclear"></i> {{ trans('app.alert') }}</strong>
-                {{ trans('messages.you_are_impersonated') }}
-                <a href="{{ route('admin.secretLogout') }}" class="nav-link pull-right"><i class="fa fa-sign-out" data-toggle="tooltip" data-placement="top" title="{{ trans('app.log_out') }}"></i></a>
-              </p>
-            </div>
-          @endif
+              <!-- VALIDATION ERRORS -->
+              @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                  <strong>{{ trans('app.error') }}!</strong> {{ trans('messages.input_error') }}<br><br>
+                  <ul class="list-group">
+                      @foreach ($errors->all() as $error)
+                        <li class="list-group-item list-group-item-danger">{{ $error }}</li>
+                      @endforeach
+                  </ul>
+                </div>
+              @endif
 
-          <!-- VALIDATION ERRORS -->
-          @if (count($errors) > 0)
-            <div class="alert alert-danger">
-              <strong>{{ trans('app.error') }}!</strong> {{ trans('messages.input_error') }}<br><br>
-              <ul class="list-group">
-                  @foreach ($errors->all() as $error)
-                    <li class="list-group-item list-group-item-danger">{{ $error }}</li>
-                  @endforeach
-              </ul>
-            </div>
-          @endif
+              {{-- Listings Notice --}}
+              @if(Auth::user()->isFromMerchant())
+                @include('admin.partials._listings_notice')
+              @endif
 
-          {{-- Global Notice --}}
-          <div id="global-alert-box" class="alert alert-warning alert-dismissible {{ Session::has('global_msg') ? '' : 'hidden'}}">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4><i class="icon fa fa-warning"></i> {{ trans('app.alert') }}</h4>
-            <p id="global-alert-msg">{{ Session::get('global_msg') }}</p>
-          </div>
+              {{-- Global Notice --}}
+              @include('admin.partials._global_notice')
 
-          <div id="global-notice-box" class="alert alert-info alert-dismissible {{ Session::has('global_notice') ? '' : 'hidden'}}">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4><i class="icon fa fa-info-circle"></i> {{ trans('app.notice') }}</h4>
-            <p id="global-notice">{{ Session::get('global_notice') }}</p>
-          </div>
+              {{-- Main content --}}
+              @yield("content")
 
-          <div id="global-error-box" class="alert alert-danger alert-dismissible {{ Session::has('global_error') ? '' : 'hidden'}}">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4><i class="icon fa fa-stop-circle-o"></i> {{ trans('app.error') }}</h4>
-            <p id="global-error">{{ Session::get('global_error') }}</p>
-          </div> <!-- /#global-alert-box -->
-
-          @yield("content")
-
-        </section>
-        <!-- /.content -->
+          </section>
+          <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
 

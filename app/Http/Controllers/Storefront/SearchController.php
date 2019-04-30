@@ -41,6 +41,11 @@ class SearchController extends Controller
                     ($product->shop->config->maintenance_mode == 0 || $product->shop->config->maintenance_mode == Null);
         });
 
+        // Filter variants from same vendor
+        $products = $products->unique(function ($item) {
+            return $item['product_id'].$item['shop_id'];
+        });
+
         if($category != 'all_categories') {
             $category = Category::where('slug', $category)->active()->firstOrFail();
             $listings = $category->listings()->available()->get();

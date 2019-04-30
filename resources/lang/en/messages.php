@@ -173,4 +173,9 @@ return [
     'permission'        => [
             'denied'        => 'Permission denied!',
     ],
+
+    // Version 1.2.4
+    'listings_not_visible' => 'Your listings are not visible on the front end. Because: :reason',
+    'no_active_payment_method' => 'Your store has no active payment method.',
+    'no_active_shipping_zone' => 'Your store has no active shipping zone. Please create shipping zones to accept order.',
 ];

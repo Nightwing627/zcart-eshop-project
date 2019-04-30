@@ -298,7 +298,7 @@ class HomeController extends Controller
             $q->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
         }])
         ->available()->paginate(20);
-        // echo "<pre>"; print_r($products->toArray()); echo "</pre>"; exit();
+
         return view('shop', compact('shop', 'products'));
     }
 
@@ -322,7 +322,7 @@ class HomeController extends Controller
         ->withCount(['orders' => function($q){
             $q->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
         }])
-        ->active()->paginate(20);
+        ->active()->groupBy('product_id')->groupBy('shop_id')->paginate(20);
 
         return view('brand', compact('brand', 'products'));
     }

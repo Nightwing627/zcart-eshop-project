@@ -471,7 +471,17 @@ class Shop extends Model
      */
     public function hasPaymentMethods()
     {
-        return $this->paymentMethods()->count();
+        return (bool) $this->paymentMethods()->count();
+    }
+
+    /**
+     * Check if shop has Shipping Zones.
+     *
+     * @return bool
+     */
+    public function hasShippingZones()
+    {
+        return (bool) $this->shippingZones()->active()->count();
     }
 
     /**
