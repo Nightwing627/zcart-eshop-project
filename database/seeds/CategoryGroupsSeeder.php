@@ -89,7 +89,7 @@ class CategoryGroupsSeeder extends Seeder
             ]
         ]);
 
-        if (env('APP_DEMO') == true && File::isDirectory(public_path('images/demo'))) {
+        if (config('app.demo') == true && File::isDirectory(public_path('images/demo'))) {
             $path = storage_path('app/public/'.image_storage_dir());
             if(!File::isDirectory($path)) File::makeDirectory($path);
 

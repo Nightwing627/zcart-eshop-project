@@ -39,6 +39,8 @@ class Fresh extends Command
     {
         // if ($this->confirm('Are you sure? This action is not revertible!')) {
 
+            $this->call('config:clear');
+
             $this->call('incevio:clear-storage');
 
             $this->call('migrate:refresh', ["--force"=> true]);
