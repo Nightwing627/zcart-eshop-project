@@ -10,7 +10,7 @@ $factory->define(App\Product::class, function (Faker $faker) {
         'brand' => $faker->word,
         'name' => $faker->sentence,
         'model_number' => $faker->word .' '.$faker->bothify('??###'),
-        'mpn' => $faker->randomNumber(),
+        'mpn' => $faker->randomNumber(NULL, false),
         'gtin' => $faker->ean13,
         'gtin_type' => $faker->randomElement(\DB::table('gtin_types')->pluck('name')->toArray()),
         'description' => $faker->text(1500),

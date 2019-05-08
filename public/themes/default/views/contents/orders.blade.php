@@ -10,7 +10,8 @@
           <tr class="order-info-head">
               <td width="40%">
                 <h5>
-                  <span>@lang('theme.order_id'): </span> {{ $order->order_number }}
+                  <span>@lang('theme.order_id'): </span>
+                  <a class="btn-link" href="{{ route('order.detail', $order) }}">{{ $order->order_number }}</a>
                   @if($order->dispute)
                     <span class="label label-danger indent10">@lang('theme.disputed')</span>
                   @endif
@@ -33,9 +34,15 @@
               </td>
               <td width="20%" class="order-amount">
                 <h5><span>@lang('theme.order_amount'): </span>{{ get_formated_currency($order->grand_total) }}</h5>
-                <div class="btn-group" role="group">
-                  <a class="btn btn-xs btn-default flat" href="{{ route('order.detail', $order) }}">@lang('theme.button.order_detail')</a>
-                  <a class="btn btn-xs btn-default flat" href="{{ route('order.detail', $order) . '#message-section' }}">@lang('theme.button.contact_seller')</a>
+                <div class="text-center">
+                  <div class="btn-group" role="group">
+                    <a class="btn btn-xs btn-default flat" href="{{ route('order.detail', $order) }}">@lang('theme.button.order_detail')</a>
+                    @if($order->dispute)
+                      <a href="{{ route('dispute.open', $order) }}" class="btn btn-xs btn-default flat" data-confirm="@lang('theme.confirm_action.open_a_dispute')">@lang('theme.dispute_detail')</a>
+                    @else
+                      <a href="{{ route('dispute.open', $order) }}" class="confirm btn btn-xs btn-default flat" data-confirm="@lang('theme.confirm_action.open_a_dispute')">@lang('theme.button.open_dispute')</a>
+                    @endif
+                  </div>
                 </div>
               </td>
           </tr> <!-- /.order-info-head -->
@@ -69,11 +76,9 @@
                     {!! Form::close() !!}
                   @endif
 
-                  @if($order->dispute)
-                    <a href="{{ route('dispute.open', $order) }}" class="btn btn-link btn-block" data-confirm="@lang('theme.confirm_action.open_a_dispute')">@lang('theme.dispute_detail')</a>
-                  @else
-                    <a href="{{ route('order.detail', $order) . '#buyer-order-table' }}" class="btn btn-link btn-block">@lang('theme.button.open_dispute')</a>
-                  @endif
+                  <a href="{{ route('order.detail', $order) . '#message-section' }}" class="btn btn-link btn-block">
+                    <i class="fa fa-envelope-o"></i> @lang('theme.button.contact_seller')
+                  </a>
                 </td>
               @endif
             </tr> <!-- /.order-body -->

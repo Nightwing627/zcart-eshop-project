@@ -239,11 +239,12 @@ class ListHelper
         ->with(['image:path,imageable_id,imageable_type', 'subGroups' => function($query){
             $query->select('id','slug','category_group_id','name')
                 ->active()->has('categories.products.inventories')
-                ->withCount('categories')->orderBy('categories_count', 'desc');
+                ->orderBy('categories_count', 'desc')
+                ->withCount('categories');
         },
-        'subGroups.categories' => function($query){
-            $query->select('id','category_sub_group_id','name','slug','description')
-            ->has('products.inventories')->active();
+        'subGroups.categories' => function($q){
+            $q->select('id','category_sub_group_id','name','slug','description')
+            ->active()->has('products.inventories');
         }])
         ->has('subGroups.categories.products.inventories')
         ->active()->orderBy('order', 'asc')->get();

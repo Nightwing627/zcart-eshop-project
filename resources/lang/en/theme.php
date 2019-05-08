@@ -559,10 +559,20 @@ return [
 	],
 
 	// Version 1.2.4
+    'first_listed_on' => 'Date first listed on :platform',
+    // 'average_customer_review' => 'Average Customer Review',
 	'created_at' => 'Created at',
 	'dispute_details' => 'Dispute Details',
+    'manufacturer' => 'Manufacturer',
+    'min_order_quantity' => 'Minimum order quantity',
+    'model_number' => 'Model number',
+    'mpn' => 'Part Number',
+    'origin' => 'Origin',
 	'refunds' => 'Refunds',
 	'refund_details' => 'Refund Details',
+    'shipping_weight' => 'Shipping weight',
+    'sku' => 'Seller SKU',
+    'technical_details' => 'Technical Details',
 	'updated_at' => 'Updated at',
 
 ];

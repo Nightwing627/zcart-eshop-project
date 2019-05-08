@@ -15,12 +15,13 @@
 	      <table class="table table-hover table-2nd-short">
 	        <thead>
 	        <tr>
-			  <th>{{ trans('app.cover_image') }}</th>
-	          <th>{{ trans('app.category_name') }}</th>
-	          <th>{{ trans('app.parent') }}</th>
-	          <th>{{ trans('app.products') }}</th>
-	          <th>{{ trans('app.listings') }}</th>
-	          <th>{{ trans('app.option') }}</th>
+				<th>{{ trans('app.cover_image') }}</th>
+				<th>{{ trans('app.category_name') }}</th>
+				<th>{{ trans('app.parent') }}</th>
+				<th>{{ trans('app.products') }}</th>
+				<th>{{ trans('app.listings') }}</th>
+				<th>{{ trans('app.order') }}</th>
+				<th>&nbsp;</th>
 	        </tr>
 	        </thead>
 	        <tbody>
@@ -46,13 +47,19 @@
 				          	@endif
 			          	</td>
 				        <td>
+				          	@if($category->subGroup->group->deleted_at)
+					          	<i class="fa fa-trash-o small"></i>
+				          	@endif
+				        	{!! $category->subGroup->group->name !!}
+				        	&nbsp;<i class="fa fa-angle-double-right small"></i>&nbsp;
 				          	@if($category->subGroup->deleted_at)
 					          	<i class="fa fa-trash-o small"></i>
 				          	@endif
-				        	{{ $category->subGroup->name }}
+				        	{!! $category->subGroup->name !!}
 				        </td>
 			          	<td><span class="label label-default">{{ $category->products_count }}</span></td>
 			          	<td><span class="label label-warning">{{ $category->listings_count }}</span></td>
+				        <td>{{ $category->order }}</td>
 				        <td class="row-options">
 							@can('update', $category)
 		                	    <a href="#" data-link="{{ route('admin.catalog.category.edit', $category->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
@@ -101,10 +108,15 @@
 			          	@endif
 			          </td>
 				      <td>
+				          	@if($trash->subGroup->group->deleted_at)
+					          	<i class="fa fa-trash-o small"></i>
+				          	@endif
+				        	{!! $trash->subGroup->group->name !!}
+				        	&nbsp;<i class="fa fa-angle-double-right small"></i>&nbsp;
 				          	@if($trash->subGroup->deleted_at)
 					          	<i class="fa fa-trash-o small"></i>
 				          	@endif
-					      	{{ $trash->subGroup->name }}
+				        	{!! $trash->subGroup->name !!}
 				      </td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 			          <td class="row-options">

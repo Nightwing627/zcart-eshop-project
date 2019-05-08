@@ -37,6 +37,8 @@ class ImportDemoData extends Command
      */
     public function handle()
     {
+        $this->call('config:clear');
+
         $this->call('db:seed', ['--force' => true, '--class' => 'demoSeeder']);
 
         // if ( app()->runningInConsole() && (config('scout.driver') == 'mysql') )

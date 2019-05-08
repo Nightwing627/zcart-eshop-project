@@ -137,7 +137,7 @@ class HomeController extends Controller
         $item = Inventory::where('slug', $slug)->available()->withCount('feedbacks')->firstOrFail();
 
         $item->load(['product' => function($q) use ($item){
-                $q->select('id', 'slug', 'description', 'manufacturer_id')
+                $q->select('id', 'brand', 'model_number', 'mpn', 'gtin', 'gtin_type', 'origin_country', 'slug', 'description', 'manufacturer_id', 'sale_count', 'created_at')
                 ->withCount(['inventories' => function($query) use($item){
                     $query->where('shop_id', '!=', $item->shop_id)->available();
                 }]);

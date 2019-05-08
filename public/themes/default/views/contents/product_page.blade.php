@@ -171,7 +171,6 @@
 					        <li class="sc-product-item">
 					            <div class="product-widget">
 					                <div class="product-img-wrap">
-					                    <!-- <img class="product-img" src="{{ get_storage_file_url(optional($linkedItem->image)->path, 'small') }}" alt="{{ $linkedItem->title }}" title="{{ $linkedItem->title }}" /> -->
 					                    <img class="product-img" src="{{ get_inventory_img_src($linkedItem, 'small') }}" alt="{{ $linkedItem->title }}" title="{{ $linkedItem->title }}" />
 					                </div>
 					                <div class="product-info space10">
@@ -213,8 +212,88 @@
 
               		<div class="tab-content">
                   		<div role="tabpanel" class="tab-pane fade active in" id="desc_tab">
+
 							{!! $item->product->description !!}
+
+							<div class="clearfix space30"></div>
+
+                		  	<hr class="style4 muted"/>
+
+                		  	<h4>{{ trans('theme.technical_details') }}: </h4>
+
+							<table class="table table-striped noborder">
+								<tbody>
+						            @if($item->product->brand)
+						                <tr class="noborder">
+						                	<th class="text-right noborder">{{ trans('theme.brand') }}: </th>
+						                	<td class="noborder" style="width: 75%;">{{ $item->product->brand }}</td>
+						                </tr>
+						            @endif
+
+						            @if($item->product->model_number)
+										<tr class="noborder">
+											<th class="text-right noborder">{{ trans('theme.model_number') }}:</th>
+											<td class="noborder" style="width: 75%;">{{ $item->product->model_number }}</td>
+										</tr>
+									@endif
+
+						            @if($item->product->gtin_type && $item->product->gtin )
+						                <tr class="noborder">
+						                	<th class="text-right noborder">{{ $item->product->gtin_type }}: </th>
+						                	<td class="noborder" style="width: 75%;">{{ $item->product->gtin }}</td>
+						                </tr>
+						            @endif
+
+						            @if($item->product->mpn)
+						                <tr class="noborder">
+						                	<th class="text-right noborder">{{ trans('theme.mpn') }}: </th>
+						                	<td class="noborder" style="width: 75%;">{{ $item->product->mpn }}</td>
+						                </tr>
+						            @endif
+
+						            @if($item->sku)
+						                <tr class="noborder">
+						                	<th class="text-right noborder">{{ trans('theme.sku') }}: </th>
+						                	<td class="noborder" style="width: 75%;">{{ $item->sku }}</td>
+						                </tr>
+						            @endif
+
+						            @if($item->product->manufacturer)
+						                <tr class="noborder">
+						                	<th class="text-right noborder">{{ trans('theme.manufacturer') }}: </th>
+						                	<td class="noborder" style="width: 75%;">{{ $item->product->manufacturer->name }}</td>
+						                </tr>
+						            @endif
+
+						            @if($item->product->origin)
+						                <tr class="noborder">
+						                	<th class="text-right noborder">{{ trans('theme.origin') }}: </th>
+						                	<td class="noborder" style="width: 75%;">{{ $item->product->origin->name }}</td>
+						                </tr>
+						            @endif
+
+						            @if($item->min_order_quantity)
+						                <tr class="noborder">
+						                	<th class="text-right noborder">{{ trans('theme.min_order_quantity') }}: </th>
+						                	<td class="noborder" style="width: 75%;">{{ $item->min_order_quantity }}</td>
+						                </tr>
+						            @endif
+
+						            @if($item->shipping_weight)
+						                <tr class="noborder">
+						                	<th class="text-right noborder">{{ trans('theme.shipping_weight') }}: </th>
+						                	<td class="noborder" style="width: 75%;">{{ $item->shipping_weight . ' ' . config('system_settings.weight_unit') }}</td>
+						                </tr>
+						            @endif
+
+									<tr class="noborder">
+										<th class="text-right noborder">{{ trans('theme.first_listed_on', ['platform' => get_platform_title()]) }}:</th>
+										<td class="noborder" style="width: 75%;">{{ $item->product->created_at->toFormattedDateString() }}</td>
+									</tr>
+								</tbody>
+							</table>
 		                </div>
+
          		        <div role="tabpanel" class="tab-pane fade" id="seller_desc_tab">
 
                 		  	{!! $item->description !!}
@@ -224,6 +303,7 @@
                 		  	<h4>{{ trans('theme.return_and_refund_policy') }}: </h4>
                 		  	{!! $item->shop->config->return_refund !!}
 	                  	</div>
+
 		              	<div role="tabpanel" class="tab-pane fade" id="reviews_tab">
                       		<div class="reviews-tab">
 	                      		@forelse($item->feedbacks->sortByDesc('created_at') as $feedback)

@@ -34,30 +34,35 @@ class ImageController extends Controller
 			$dir = image_storage_dir();
 			$files = $request->file('images');
 
-        	foreach ($files as $order => $file) {
-		        $path = Storage::put($dir, $file);
+			try {
 
-				$data[] = [
-		            'path' => $path,
-		            'name' => $file->getClientOriginalName(),
-		            // 'name' => str_slug($file->getClientOriginalName(), '-'),
-		            'extension' => $file->getClientOriginalExtension(),
-		            'size' => $file->getClientSize(),
-		            'order' => $order
-		        ];
-			}
+	        	foreach ($files as $order => $file) {
+			        $path = Storage::put($dir, $file);
 
-        	$model = get_qualified_model($request->input('model_name'));
-        	$attachable = (new $model)->find($request->input('model_id'));
+					$data[] = [
+			            'path' => $path,
+			            'name' => $file->getClientOriginalName(),
+			            // 'name' => str_slug($file->getClientOriginalName(), '-'),
+			            'extension' => $file->getClientOriginalExtension(),
+			            'size' => $file->getClientSize(),
+			            'order' => $order
+			        ];
+				}
 
-			if($attachable->images()->createMany($data)){
-				return Response::json(['success' => trans('response.success')]);
-			}
-			else{
+	        	$model = get_qualified_model($request->input('model_name'));
+	        	$attachable = (new $model)->find($request->input('model_id'));
+
+				if($attachable->images()->createMany($data))
+					return Response::json(['success' => trans('response.success')]);
+
+			} catch (Exception $e) {
+				\Log::info(trans('messages.img_upload_failed'));
+				\Log::error($e);
+
 	            $request->session()->flash('global_msg', trans('messages.img_upload_failed'));
-			}
 
-			return Response::json(['error' => trans('responses.error')]);
+				return Response::json(['error' => trans('responses.error')]);
+			}
         }
 
         return Response::json([]);

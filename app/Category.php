@@ -22,7 +22,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'category_sub_group_id', 'slug', 'description', 'active', 'featured'];
+    protected $fillable = ['name', 'category_sub_group_id', 'slug', 'description', 'active', 'order', 'featured'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -46,10 +46,6 @@ class Category extends Model
     {
         return $this->belongsTo(CategorySubGroup::class, 'category_sub_group_id')->withTrashed();
     }
-    // public function subGroups()
-    // {
-    //     return $this->belongsToMany(CategorySubGroup::class);
-    // }
 
     /**
      * Get the products for the category.
@@ -101,4 +97,13 @@ class Category extends Model
     {
         return $query->where('active', 1);
     }
+
+    /**
+     * Setters
+     */
+    public function setOrderAttribute($value)
+    {
+        $this->attributes['order'] = $value ?: 100;
+    }
+
 }

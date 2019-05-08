@@ -16,7 +16,7 @@ class CategorySubGroup extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'category_group_id', 'slug', 'description', 'active'];
+    protected $fillable = ['name', 'category_group_id', 'slug', 'description', 'active', 'order'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -45,8 +45,7 @@ class CategorySubGroup extends Model
      */
     public function categories()
     {
-        return $this->hasMany(Category::class, 'category_sub_group_id')->orderBy('name', 'asc');
-        // return $this->belongsToMany(Category::class)->orderBy('name', 'asc')->withTimestamps();
+        return $this->hasMany(Category::class, 'category_sub_group_id')->orderBy('order', 'asc');
     }
 
     // /**
@@ -61,6 +60,14 @@ class CategorySubGroup extends Model
 
     //     // return $this->belongsToMany(Inventory::class, 'category_product', null, 'product_id', null, 'product_id');
     // }
+
+    /**
+     * Setters
+     */
+    public function setOrderAttribute($value)
+    {
+        $this->attributes['order'] = $value ?: 100;
+    }
 
     /**
      * Scope a query to only include active categorySubGroups.

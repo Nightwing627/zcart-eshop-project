@@ -32,7 +32,7 @@
 										{{ $shop->name }}
 									@endcan
 
-				            		@if($shop->config->maintenance_mode)
+				            		@if($shop->isDown())
 							          	<span class="label label-default indent10">{{ trans('app.maintenance_mode') }}</span>
 				            		@elseif(!$shop->active)
 					            		<span class="label label-default indent10">{{ trans('app.inactive') }}</span>
@@ -52,6 +52,10 @@
 									@else
 										{{ $shop->owner->getName() }}
 									@endcan
+
+				            		@unless($shop->owner->active)
+					            		<span class="label label-default indent10">{{ trans('app.inactive') }}</span>
+									@endunless
 								</p>
 							</td>
 							<td class="row-options">

@@ -37,7 +37,7 @@ class CategoryGroup extends Model
     */
     public function subGroups()
     {
-        return $this->hasMany(CategorySubGroup::class, 'category_group_id');
+        return $this->hasMany(CategorySubGroup::class, 'category_group_id')->orderBy('order', 'asc');
     }
 
     /**

@@ -53,6 +53,13 @@
 										{{ $merchant->owns->name }}
 							         </a>
 								</p>
+
+			            		@if($merchant->owns->isDown())
+						          	<span class="label label-default indent10">{{ trans('app.maintenance_mode') }}</span>
+			            		@elseif(!$merchant->owns->active)
+				            		<span class="label label-default indent10">{{ trans('app.inactive') }}</span>
+								@endif
+
 				          	@endif
 				          </td>
 				          <td>{{ $merchant->owns->current_billing_plan }}</td>

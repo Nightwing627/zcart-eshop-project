@@ -18,12 +18,14 @@ class EloquentCategory extends EloquentRepository implements BaseRepository, Cat
 
     public function all()
     {
-        return $this->model->with('subGroup:id,name,deleted_at', 'featuredImage')->withCount('products','listings')->get();
+        return $this->model->with('subGroup:id,name,category_group_id,deleted_at', 'subGroup.group:id,name,deleted_at', 'featuredImage')
+                ->withCount('products','listings')->get();
     }
 
     public function trashOnly()
     {
-        return $this->model->with('subGroup:id,name,deleted_at')->onlyTrashed()->get();
+        return $this->model->with('subGroup:id,name,category_group_id,deleted_at', 'subGroup.group:id,name,deleted_at')
+                ->onlyTrashed()->get();
     }
 
     public function store(Request $request)
