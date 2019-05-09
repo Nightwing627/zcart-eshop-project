@@ -6,8 +6,8 @@
                     <img src="{{ get_storage_file_url($slider['featured_image']['path'], 'main_slider') }}" alt="{{ $slider['title'] ?? 'Slider Image ' . $loop->count }}">
                 </a>
                 <div class="ei-title">
-                    <h2>{{ $slider['title'] }}</h2>
-                    <h3>{{ $slider['sub_title'] }}</h3>
+                    <h2 style="color: {{ $slider['title_color'] }}">{{ $slider['title'] }}</h2>
+                    <h3 style="color: {{ $slider['sub_title_color'] }}">{{ $slider['sub_title'] }}</h3>
                 </div>
             </li>
         @endforeach
