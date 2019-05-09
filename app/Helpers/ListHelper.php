@@ -298,7 +298,11 @@ class ListHelper
      */
     public static function search_categories()
     {
-        return CategorySubGroup::orderBy('name', 'asc')->pluck('name', 'slug');
+        return CategoryGroup::select('id','name','slug')->with(['subGroups' => function($q){
+            $q->select('name','slug','category_group_id')->active();
+        }])->whereHas('subGroups', function($q){
+            $q->active();
+        })->orderBy('order', 'desc')->active()->get();
     }
 
     /**

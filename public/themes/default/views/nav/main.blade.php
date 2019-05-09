@@ -12,12 +12,16 @@
     {!! Form::open(['route' => 'inCategoriesSearch', 'method' => 'GET', 'id' => 'search-categories-form', 'class' => 'navbar-left navbar-form navbar-search', 'role' => 'search']) !!}
       <select name="insubgrp" class="search-category-select ">
         <option value="all">{{ trans('theme.all_categories') }}</option>
-        @foreach($search_category_list as $slug => $category)
-          <option value="{{ $slug }}"
-            @if(Request::has('insubgrp'))
-             {{ Request::get('insubgrp') == $slug ? ' selected' : '' }}
-            @endif
-          >{{ $category }}</option>
+        @foreach($search_category_list as $search_category_grp)
+          <optgroup label="{{ $search_category_grp->name }}">
+            @foreach($search_category_grp->subGroups as $search_category)
+              <option value="{{ $search_category->slug }}"
+                @if(Request::has('insubgrp'))
+                 {{ Request::get('insubgrp') == $search_category->slug ? ' selected' : '' }}
+                @endif
+              >{{ $search_category->name }}</option>
+            @endforeach
+          </optgroup>
         @endforeach
       </select>
       <div class="form-group">
