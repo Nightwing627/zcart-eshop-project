@@ -384,8 +384,21 @@
 
     $('.link-filter-opt').on('click', function(e){
         e.preventDefault();
+        var href = window.location.href;
         var opt = $(this).data('name');
-        var href = removeQueryStringParameter(window.location.href, opt); //Remove currect filter
+
+        // Removing all category, category grp and category sub-grp
+        var cat = ["in", "insubgrp", "ingrp"];
+        var a = cat.indexOf(opt);
+        if(a !== -1){
+            cat.forEach(function(s) {
+                href = removeQueryStringParameter(href, s); //Remove currect filter
+            });
+        }
+        else{
+            href = removeQueryStringParameter(window.location.href, opt); //Remove currect filter
+        }
+
         window.location.href = getFormatedUrlStr(href, opt+'='+ $(this).data('value'));
     });
 

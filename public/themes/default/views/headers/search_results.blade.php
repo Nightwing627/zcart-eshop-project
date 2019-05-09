@@ -5,13 +5,39 @@
         <div class="col-md-12">
           <ol class="breadcrumb nav-breadcrumb">
             @include('headers.lists.home')
-            @if($category != 'all_categories')
-              @include('headers.lists.category', ['category' => $category])
-            @else
-              @include('headers.lists.categories')
+
+            @include('headers.lists.categories')
+
+            @if(Request::has('ingrp'))
+
+              <li class="active">{{ $category->name }}</li>
+
+            @elseif(Request::has('insubgrp') && Request::get('insubgrp') != 'all')
+
+              <li>
+                <a class="link-filter-opt" data-name="ingrp" data-value="{{ $category->group->slug }}">
+                  {{ $category->group->name }}
+                </a>
+              </li>
+              <li class="active">{{ $category->name }}</li>
+
+            @elseif(Request::has('in'))
+
+              <li>
+                <a class="link-filter-opt" data-name="ingrp" data-value="{{ $category->subGroup->group->slug }}">
+                  {{ $category->subGroup->group->name }}
+                </a>
+              </li>
+              <li>
+                <a class="link-filter-opt" data-name="insubgrp" data-value="{{ $category->subGroup->slug }}">
+                  {{ $category->subGroup->name }}
+                </a>
+              </li>
+              <li class="active">{{ $category->name }}</li>
+
             @endif
-            <li class="active">@lang('theme.search_results')</li>
-            <li class="active">"<strong class="text-primary">{{ Request::get('search') }}</strong>"</li>
+
+            <li class="active">"<strong class="text-primary">{{ Request::get('q') }}</strong>"</li>
           </ol>
         </div>
       </div>

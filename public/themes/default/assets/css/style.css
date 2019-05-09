@@ -118,6 +118,7 @@ a {
     color: #0066c0;
     transition: .4s;
     text-decoration: none;
+    cursor: pointer;
 }
 a:focus {
   outline: none;
@@ -982,21 +983,25 @@ img.img-medium {
   position: absolute;
   top: 0;
   left: 232px;
-  width: 601px;
-  height: auto;
+  min-width: 601px;
   min-height: 491px;
   display: none;
   background: #fff;
 }
+.category-section.expanded {
+  width: 800px;
+}
 .category-section-inner {
   position: absolute;
-  height: 100%;
+  /*height: 100%;*/
   width: 100%;
+  background: #fff;
 }
 .category-section-content {
   position: relative;
   z-index: 999;
   padding: 20px;
+  height: auto;
 }
 .nav-category-section-bg-img {
   position: absolute;
@@ -1412,12 +1417,23 @@ img.img-medium {
 /* ==========================================================================
     Category page
    ========================================================================== */
-.category-filters h3{
+.category-filters h3,
+.category-filters h4,
+.category-filters h3 a,
+.category-filters h4 a{
     color: #444;
-    font-size: 14px;
     font-weight: 400;
     letter-spacing: 1px;
     text-transform: uppercase;
+}
+.category-filters h3{
+  font-size: 13px;
+}
+.category-filters h4,
+.category-filters h4 a{
+  margin-bottom: 5px;
+  font-size: 11px;
+  font-style: italic;
 }
 .category-filters-section {
   border-bottom: 1px solid #e3e3e3;
@@ -1447,7 +1463,11 @@ img.img-medium {
 .cateogry-filters-list > li {
   margin-bottom: 5px;
 }
-.cateogry-filters-list > li > a {
+.cateogry-filters-list > li > ul > li{
+  padding-left: 10px;
+}
+.cateogry-filters-list > li > a,
+.cateogry-filters-list > li > ul > li > a {
   color: #595959;
 }
 .cateogry-filters-list > li > a:hover {

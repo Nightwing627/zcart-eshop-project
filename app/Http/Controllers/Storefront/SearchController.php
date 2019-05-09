@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Storefront;
 use Carbon\Carbon;
 use App\Category;
 use App\Inventory;
+use App\CategoryGroup;
+use App\CategorySubGroup;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,11 +23,9 @@ class SearchController extends Controller
      */
     public function search(Request $request)
     {
-        $category = $request->input('in');
-        $term = $request->input('search');
+        $term = $request->input('q');
 
         $products = Inventory::search($term)->where('active', 1)->get();
-
         $products->load([
                         'shop:id,current_billing_plan,trial_ends_at,active',
                         'shop.config:shop_id,maintenance_mode',
@@ -46,9 +46,19 @@ class SearchController extends Controller
             return $item['product_id'].$item['shop_id'];
         });
 
-        if($category != 'all_categories') {
-            $category = Category::where('slug', $category)->active()->firstOrFail();
+        if( $request->has('in')) {
+            $category = Category::where('slug', $request->input('in'))->active()->firstOrFail();
             $listings = $category->listings()->available()->get();
+            $products = $products->intersect($listings);
+        }
+        else if($request->has('insubgrp') && ($request->input('insubgrp') != 'all')){
+            $category = CategorySubGroup::where('slug', $request->input('insubgrp'))->active()->firstOrFail();
+            $listings = prepareFilteredListings($request, $category);
+            $products = $products->intersect($listings);
+        }
+        else if($request->has('ingrp')){
+            $category = CategoryGroup::where('slug', $request->input('ingrp'))->active()->firstOrFail();
+            $listings = prepareFilteredListings($request, $category);
             $products = $products->intersect($listings);
         }
 
@@ -110,11 +120,13 @@ class SearchController extends Controller
         $products = $products->paginate(config('system.view_listing_per_page', 16));
 
         $products->load(['product' => function($q) {
-            $q->select('id')->with('categories:id,name,slug');
+            $q->select('id')->with([
+                'categories:id,name,slug,category_sub_group_id',
+                'categories.subGroup:id,name,slug,category_group_id',
+                'categories.subGroup.group:id,name,slug'
+            ]);
         }, 'feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type']);
 
-        $categories = $products->pluck('product.categories')->flatten()->unique();
-
-        return view('search_results', compact('products', 'category', 'categories', 'brands', 'priceRange'));
+        return view('search_results', compact('products', 'category', 'brands', 'priceRange'));
     }
 }

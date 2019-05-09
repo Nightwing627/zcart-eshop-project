@@ -85,8 +85,6 @@ class HomeController extends Controller
             $q->select(['id','slug','category_sub_group_id','name'])->whereHas('listings')->active();
         }])->active()->firstOrFail();
 
-        $categories = $categorySubGroup->categories;
-
         $all_products = prepareFilteredListings($request, $categorySubGroup);
 
         // Get brands ans price ranges
@@ -96,7 +94,7 @@ class HomeController extends Controller
         // Paginate the results
         $products = $all_products->paginate(config('system.view_listing_per_page', 16))->appends($request->except('page'));
 
-        return view('category_sub_group', compact('categorySubGroup', 'categories', 'products', 'brands', 'priceRange'));
+        return view('category_sub_group', compact('categorySubGroup', 'products', 'brands', 'priceRange'));
     }
 
     /**
@@ -107,12 +105,12 @@ class HomeController extends Controller
      */
     public function browseCategoryGroup(Request $request, $slug, $sortby = Null)
     {
-        $categoryGroup = CategoryGroup::where('slug', $slug)->with(['categories' => function($q){
+        $categoryGroup = CategoryGroup::where('slug', $slug)->with(['subGroups' => function($query){
+            $query->has('categories')->active();
+        }, 'subGroups.categories' => function($q){
             $q->select(['categories.id','categories.slug','categories.category_sub_group_id','categories.name'])
             ->where('categories.active', 1)->whereHas('listings')->withCount('listings');
         }])->active()->firstOrFail();
-
-        $categories = $categoryGroup->categories;
 
         $all_products = prepareFilteredListings($request, $categoryGroup);
 
@@ -123,7 +121,7 @@ class HomeController extends Controller
         // Paginate the results
         $products = $all_products->paginate(config('system.view_listing_per_page', 16))->appends($request->except('page'));
 
-        return view('category_group', compact('categoryGroup', 'categories', 'products', 'brands', 'priceRange'));
+        return view('category_group', compact('categoryGroup', 'products', 'brands', 'priceRange'));
     }
 
     /**

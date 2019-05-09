@@ -10,18 +10,18 @@
       </a>
     </div>
     {!! Form::open(['route' => 'inCategoriesSearch', 'method' => 'GET', 'id' => 'search-categories-form', 'class' => 'navbar-left navbar-form navbar-search', 'role' => 'search']) !!}
-      <select name="in" class="search-category-select ">
-        <option value="all_categories">{{ trans('theme.all_categories') }}</option>
+      <select name="insubgrp" class="search-category-select ">
+        <option value="all">{{ trans('theme.all_categories') }}</option>
         @foreach($search_category_list as $slug => $category)
           <option value="{{ $slug }}"
-            @if(Request::has('in'))
-             {{ Request::get('in') == $slug ? ' selected' : '' }}
+            @if(Request::has('insubgrp'))
+             {{ Request::get('insubgrp') == $slug ? ' selected' : '' }}
             @endif
           >{{ $category }}</option>
         @endforeach
       </select>
       <div class="form-group">
-        {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => trans('theme.main_searchbox_placeholder')]) !!}
+        {!! Form::text('q', Request::get('q'), ['class' => 'form-control', 'placeholder' => trans('theme.main_searchbox_placeholder')]) !!}
       </div>
       <a class="fa fa-search navbar-search-submit" onclick="document.getElementById('search-categories-form').submit()"></a>
     {!! Form::close() !!}
@@ -74,13 +74,28 @@
           <ul class="dropdown-menu menu-category-dropdown" aria-labelledby="dLabel">
             @foreach($all_categories as $catGroup)
               @if($catGroup->subGroups->count())
+                @php
+                  $categories_count = $catGroup->subGroups->sum('categories_count');
+                  $cat_counter = 0;
+                @endphp
+
                 <li><a href="{{ route('categoryGrp.browse', $catGroup->slug) }}"><i class="fa {{ $catGroup->icon ?? 'fa-cube' }} fa-fw category-icon"></i>{{ $catGroup->name }}</a>
-                  <div class="category-section">
+                  <div class="category-section {{$categories_count > 15 ? 'expanded' : ''}}">
                     <div class="category-section-inner">
                       <div class="category-section-content">
-                        <div class="row">
-                          @foreach($catGroup->subGroups as $subGroup)
-                            <div class="col-md-6">
+                        <div class="row category-grid">
+                          <div class="col-md-{{$categories_count > 15 ? '4' : '6'}}">
+                            @foreach($catGroup->subGroups as $subGroup)
+
+                              @if($cat_counter >= 7)
+                                {{-- If the end categories are more than 7 then breack the line --}}
+                                </div> <!-- /.col-md-6 -->
+                                <div class="col-md-{{$categories_count > 15 ? '4' : '6'}}">
+                                @php
+                                  $cat_counter = 0; //Reset the counter
+                                @endphp
+                              @endif
+
                               <h5 class="nav-category-inner-title">
                                 <a href="{{ route('categories.browse', $subGroup->slug) }}">{{ $subGroup->name }}</a>
                               </h5>
@@ -91,13 +106,13 @@
                                       <p>{!! $cat->description !!}</p>
                                     @endif
                                   </li>
+                                  @php
+                                    $cat_counter++;  //Increase the counter value by 1
+                                  @endphp
                                 @endforeach
                               </ul>
-                            </div><!-- /.col-md-6 -->
-                            @if($loop->iteration % 2 == 0)
-                              <div class="clearfix"></div>
-                            @endif
-                          @endforeach
+                            @endforeach
+                          </div> <!-- /.col-md-6 -->
                         </div><!-- /.row -->
                       </div><!-- /.category-section-content -->
                       @if($catGroup->images->first() && Storage::exists($catGroup->images->first()->path))

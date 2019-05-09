@@ -298,7 +298,7 @@ class ListHelper
      */
     public static function search_categories()
     {
-        return Category::orderBy('name', 'asc')->pluck('name', 'slug');
+        return CategorySubGroup::orderBy('name', 'asc')->pluck('name', 'slug');
     }
 
     /**

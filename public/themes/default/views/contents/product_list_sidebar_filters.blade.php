@@ -1,22 +1,6 @@
 <aside class="category-filters">
-    @unless(Request::is('category/*'))
-        <div class="category-filters-section">
-            <h3>@lang('theme.category')</h3>
-            <ul class="cateogry-filters-list">
-                @foreach($categories as $slug => $category)
-                    @if(Request::is('search'))
-                        <li>
-                            <a href="#" class="link-filter-opt" data-name="in" data-value="{{ $category->slug }}">{{ $category->name }}
-                                {{-- <span class="small">({{ $category->listings_count }})</span> --}}
-                            </a>
-                        </li>
-                    @else
-                        <li><a href="{{ route('category.browse', $category->slug) }}">{{ $category->name }}</a></li>
-                    @endif
-                @endforeach
-            </ul>
-        </div>
-    @endunless
+
+    @include('partials._categories_filter')
 
     {{-- condition --}}
     <div class="category-filters-section">

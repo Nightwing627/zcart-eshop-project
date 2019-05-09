@@ -5,7 +5,7 @@
     @include('banners.category_cover', ['category' => $categorySubGroup])
 
     <!-- HEADER SECTION -->
-    @include('headers.category_sub_group_page', ['category' => $categorySubGroup])
+    @include('headers.category_sub_group_page')
 
     <!-- CONTENT SECTION -->
     @include('contents.category_page')
