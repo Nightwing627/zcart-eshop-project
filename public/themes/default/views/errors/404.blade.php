@@ -53,8 +53,16 @@
     </style>
 </head>
 <body>
+    <a href="{{ url('/') }}">
+        @if( Storage::exists('logo.png') )
+          <img src="{{ Storage::url('logo.png') }}" alt="LOGO" title="LOGO" />
+        @else
+          <img src="https://placehold.it/140x60/eee?text={{ get_platform_title() }}" alt="LOGO" title="LOGO" />
+        @endif
+    </a>
     <h1>Page Not Found</h1>
     <p>Sorry, but the page you were trying to view does not exist.</p>
+    <a href="{{ url()->previous() }}">@lang('theme.button.go_back')</a>
 </body>
 </html>
 <!-- IE needs 512+ bytes: https://blogs.msdn.microsoft.com/ieinternals/2010/08/18/friendly-http-error-pages/ -->

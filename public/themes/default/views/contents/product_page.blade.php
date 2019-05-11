@@ -138,16 +138,18 @@
 
 						<div class="clearfix space20"></div>
 
-						<div>
-					        <div class="section-title">
-					          <h4>{!! trans('theme.section_headings.key_features') !!}</h4>
-					        </div>
-							<ul class="key_feature_list">
-								@foreach(unserialize($item->key_features) as $key_feature)
-									<li>{!! $key_feature !!}</li>
-								@endforeach
-							</ul>
-						</div>
+						@if($item->key_features)
+							<div>
+						        <div class="section-title">
+						          <h4>{!! trans('theme.section_headings.key_features') !!}</h4>
+						        </div>
+								<ul class="key_feature_list">
+									@foreach(unserialize($item->key_features) as $key_feature)
+										<li>{!! $key_feature !!}</li>
+									@endforeach
+								</ul>
+							</div>
+						@endif
 			  		</div>
 		  		</div><!-- /.row -->
 		      	<div class="space20"></div>
@@ -298,10 +300,12 @@
 
                 		  	{!! $item->description !!}
 
-                		  	<br/><br/><hr class="style4 muted"/><br/>
+                		  	@if($item->shop->config->return_refund)
+	                		  	<br/><br/><hr class="style4 muted"/><br/>
 
-                		  	<h4>{{ trans('theme.return_and_refund_policy') }}: </h4>
-                		  	{!! $item->shop->config->return_refund !!}
+	                		  	<h4>{{ trans('theme.return_and_refund_policy') }}: </h4>
+	                		  	{!! $item->shop->config->return_refund !!}
+                		  	@endif
 	                  	</div>
 
 		              	<div role="tabpanel" class="tab-pane fade" id="reviews_tab">

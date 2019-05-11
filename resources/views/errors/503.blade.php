@@ -45,7 +45,11 @@
     <body>
         <div class="container">
             <div class="content">
-                <img src="{{ Storage::url('logo.png') }}" class="brand-logo" alt="LOGO" title="LOGO"/>
+                @if( Storage::exists('logo.png') )
+                  <img src="{{ Storage::url('logo.png') }}" alt="LOGO" title="LOGO" />
+                @else
+                  <img src="https://placehold.it/140x60/eee?text={{ get_platform_title() }}" alt="LOGO" title="LOGO" />
+                @endif
                 <div class="title">@lang('app.marketplace_down')</div>
             </div>
         </div>

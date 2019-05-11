@@ -8,15 +8,6 @@
 
 	@include('admin.partials._subscription_notice')
 
-    @if(! Auth::user()->isVerified())
-		<div class="alert alert-info alert-dismissible">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-			<strong><i class="icon fa fa-info-circle"></i>{{ trans('app.notice') }}</strong>
-			{{ trans('messages.email_verification_notice') }}
-	    	<a href="{{ route('verify') }}">{{ trans('app.resend_varification_link') }}</a>
-		</div>
-    @endif
-
     <!-- Info boxes -->
     <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12 nopadding-right">

@@ -655,7 +655,7 @@ class ListHelper
             $shop = Auth::user()->merchantId();
 
         return \DB::table('inventories')->where('shop_id', $shop)->where('deleted_at', Null)
-        ->orderBy('title', 'asc')->pluck('title', 'id');
+        ->groupBy('product_id', 'shop_id')->orderBy('title', 'asc')->pluck('title', 'id');
     }
 
     /**
@@ -709,7 +709,6 @@ class ListHelper
      */
     public static function popular_items($days = 7, $count = 15)
     {
-        // return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end','stuff_pick')
         return Inventory::available()->withCount(['orders' => function($q){
             $q->withArchived();
         }])->orderBy('orders_count', 'desc')
@@ -719,6 +718,7 @@ class ListHelper
             'product:id,slug',
             'product.image:path,imageable_id,imageable_type'
         ])
+        ->groupBy('product_id', 'shop_id')
         ->limit($count)->get();
     }
 
@@ -738,14 +738,13 @@ class ListHelper
      */
     public static function latest_available_items($limit = 10)
     {
-        // return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
         return Inventory::with([
             'feedbacks:rating,feedbackable_id,feedbackable_type',
             'image:path,imageable_id,imageable_type',
             'product:id,slug',
             'product.image:path,imageable_id,imageable_type'
         ])
-        ->available()->latest()->limit($limit)->get();
+        ->available()->groupBy('product_id', 'shop_id')->latest()->limit($limit)->get();
     }
 
     /**
@@ -778,7 +777,6 @@ class ListHelper
 
         if(empty($productIDs)) return collect([]);
 
-        // return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
         return Inventory::whereIn('product_id', $productIDs)->available()->inRandomOrder()
         ->with([
             'feedbacks:rating,feedbackable_id,feedbackable_type',
@@ -786,6 +784,7 @@ class ListHelper
             'product:id,slug',
             'product.image:path,imageable_id,imageable_type'
         ])
+        ->groupBy('product_id', 'shop_id')
         ->limit($limit)->get();
     }
 
@@ -799,13 +798,13 @@ class ListHelper
 
         if(empty($linked_items)) return collect([]);
 
-        // return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
         return Inventory::with([
             'feedbacks:rating,feedbackable_id,feedbackable_type',
             'image:path,imageable_id,imageable_type',
             'product:id,slug',
             'product.image:path,imageable_id,imageable_type'
         ])
+        ->groupBy('product_id', 'shop_id')
         ->whereIn('id', $linked_items)->available()->get();
     }
 
@@ -815,13 +814,13 @@ class ListHelper
      */
     public static function random_items($limit = 10)
     {
-        // return Inventory::select('id','slug','title','condition','sale_price','offer_price','offer_start','offer_end')
         return Inventory::with([
             'feedbacks:rating,feedbackable_id,feedbackable_type',
             'image:path,imageable_id,imageable_type',
             'product:id,slug',
             'product.image:path,imageable_id,imageable_type'
         ])
+        ->groupBy('product_id', 'shop_id')
         ->available()->inRandomOrder()->limit($limit)->get();
     }
 
@@ -831,13 +830,12 @@ class ListHelper
 
         if(!$products) return [];
 
-        // return Inventory::select('id', 'slug', 'title')->whereIn('id', $products)
         return Inventory::whereIn('id', $products)
         ->available()->with([
             'image:path,imageable_id,imageable_type',
             'product:id,slug',
             'product.image:path,imageable_id,imageable_type'])
-        ->get();
+        ->groupBy('product_id', 'shop_id')->get();
     }
 
     /**

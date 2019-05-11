@@ -102,13 +102,24 @@
                 </div>
               @endif
 
-              {{-- Listings Notice --}}
-              @if(Auth::user()->isFromMerchant())
-                @include('admin.partials._listings_notice')
-              @endif
-
               {{-- Global Notice --}}
               @include('admin.partials._global_notice')
+
+              {{-- Listings Notice --}}
+              @if(Auth::user()->isFromMerchant())
+
+                  @if(! Auth::user()->isVerified())
+                      <div class="alert alert-info alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <strong><i class="icon fa fa-info-circle"></i>{{ trans('app.notice') }}</strong>
+                        {{ trans('messages.email_verification_notice') }}
+                          <a href="{{ route('verify') }}">{{ trans('app.resend_varification_link') }}</a>
+                      </div>
+                  @else
+                      @include('admin.partials._listings_notice')
+                  @endif
+
+              @endif
 
               {{-- Main content --}}
               @yield("content")
