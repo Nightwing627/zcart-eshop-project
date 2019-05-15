@@ -15,7 +15,7 @@
 			{{ trans('messages.resume_subscription', ['ends' => \Carbon\Carbon::now()->diffInDays($subscription->ends_at)]) }}
 
 			@if(Auth::user()->isMerchant())
-				<span class="indent15">
+				<span class="pull-right">
 		    		<a href="{{ route('admin.account.subscription.resume') }}" class="confirm btn bg-navy"><i class="fa fa-rocket"></i>  {{ trans('app.resume_subscription') }}</a>
 				</span>
 			@endif
@@ -28,7 +28,7 @@
 			<strong><i class="icon fa fa-info-circle"></i>{{ trans('app.notice') }}</strong>
 			{{ trans('messages.generic_trial_ends_at', ['ends' => \Carbon\Carbon::now()->diffInDays(Auth::user()->shop->trial_ends_at)]) }}
 			@unless(Request::is('admin/account/billing'))
-				<span class="indent15">
+				<span class="pull-right">
 		    		<a href="{{ route('admin.account.billing') }}" class="btn bg-navy"><i class="fa fa-rocket"></i>  {{ trans('app.choose_plan') }}</a>
 				</span>
 			@endunless
@@ -39,7 +39,7 @@
 		<strong><i class="icon fa fa-info-circle"></i>{{ trans('app.notice') }}</strong>
 		{{ trans('messages.trial_expired') }}
 		@unless(Request::is('admin/account/billing'))
-			<span class="indent15">
+			<span class="pull-right">
 	    		<a href="{{ route('admin.account.billing') }}" class="btn bg-navy"><i class="fa fa-rocket"></i>  {{ trans('app.choose_plan') }}</a>
 			</span>
 		@endunless

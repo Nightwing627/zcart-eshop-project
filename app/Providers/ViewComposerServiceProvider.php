@@ -106,7 +106,7 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeRefundInitiationForm();
 
-        if(config('system_settings.google_analytic_report') && SystemConfig::isGgoogleAnalyticConfigured()) {
+        if(SystemConfig::isGgoogleAnalyticConfigured()) {
             $this->composeReportAboutVisitors();
         }
 
@@ -949,6 +949,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                         'chartVisitorTypes' => $chartVisitorTypes,
                         'chartDevices' => $chartDevices,
                     ]);
+
                 });
     }
 

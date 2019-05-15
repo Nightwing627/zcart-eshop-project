@@ -18,6 +18,6 @@ return [
     'verification_link_sent' => 'The verification link sent! Please check your email and varify your account.',
     'verification_failed' => 'This link is not valid or expired.',
     'verification_successful' => 'Your account has been verified successfully!',
-    'resend_varification_link' => 'Resend varification link',
+    'resend_verification_link' => 'Resend verification link',
 
 ];

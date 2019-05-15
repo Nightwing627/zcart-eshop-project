@@ -10,7 +10,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <strong><i class="icon fa fa-info-circle"></i> {{ trans('theme.notice') }}</strong>
                 {{ trans('messages.email_verification_notice') }}
-                <a href="{{ route('customer.verify') }}"> {{ trans('auth.resend_varification_link') }}</a>
+                <a href="{{ route('customer.verify') }}"> {{ trans('auth.resend_verification_link') }}</a>
             </div>
         @endif
     </div>

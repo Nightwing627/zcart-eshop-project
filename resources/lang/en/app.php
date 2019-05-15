@@ -696,7 +696,7 @@ return [
     'subunit' => 'Subunit',
     'decimal_mark' => 'Decimal mark',
     'print'     => 'Print',
-    'resend_varification_link' => 'Resend varification link',
+    'resend_verification_link' => 'Resend verification link',
     'looks_good' => 'Looks Good',
     'mark_as_unread' => 'Mark as unread',
     'mark_as_spam' => 'Mark as spam',

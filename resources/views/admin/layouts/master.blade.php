@@ -113,7 +113,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <strong><i class="icon fa fa-info-circle"></i>{{ trans('app.notice') }}</strong>
                         {{ trans('messages.email_verification_notice') }}
-                          <a href="{{ route('verify') }}">{{ trans('app.resend_varification_link') }}</a>
+                          <a href="{{ route('verify') }}">{{ trans('app.resend_verification_link') }}</a>
                       </div>
                   @else
                       @include('admin.partials._listings_notice')

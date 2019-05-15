@@ -178,4 +178,8 @@ return [
     'listings_not_visible' => 'Your listings are not visible on the front end. Because: :reason',
     'no_active_payment_method' => 'Your store has no active payment method.',
     'no_active_shipping_zone' => 'Your store has no active shipping zone. Please create shipping zones to accept order.',
+
+    // Version 1.2.5
+    'your_shop_in_hold' => 'You are in hold, need activation from admin!',
+    'youe_shop_in_maintenance_mode' => 'The shop in maintenance mode.',
 ];
