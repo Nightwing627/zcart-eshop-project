@@ -78,8 +78,6 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
 
         $commonInfo['supplier_id'] = $request->input('supplier_id');
 
-        $commonInfo['packaging_id'] = $request->input('packaging_id');
-
         $commonInfo['shipping_width'] = $request->input('shipping_width');
 
         $commonInfo['shipping_height'] = $request->input('shipping_height');
@@ -104,6 +102,10 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
 
         $commonInfo['linked_items'] = $request->input('linked_items');
 
+        $commonInfo['meta_title'] = $request->input('meta_title');
+
+        $commonInfo['meta_description'] = $request->input('meta_description');
+
         // Arrays
         $skus = $request->input('sku');
 
@@ -120,7 +122,9 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
         $images = $request->file('image');
 
         // Relations
-        $carrier_lists = $request->input('carrier_list');
+        $packaging_lists = $request->input('packaging_list');
+
+        $tag_lists = $request->input('tag_list');
 
         $variants = $request->input('variants');
 
@@ -144,7 +148,7 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
 
             $dynamicInfo['offer_end'] = ($offer_prices[$key]) ? $request->input('offer_end') : NULL ;
 
-            $dynamicInfo['slug'] = str_slug($product->name . ' ' . $conditions[$key] . ' ' . $sku, '-');
+            $dynamicInfo['slug'] = str_slug($request->input('slug') . ' ' . $sku, '-');
 
             // Merge the common info and dynamic info to data array
             $data = array_merge($dynamicInfo, $commonInfo);
@@ -155,6 +159,14 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
             // Sync Attributes
             if ($variants[$key])
                 $this->setAttributes($inventory, $variants[$key]);
+
+            // Sync packaging
+            if ($packaging_lists)
+                $inventory->packagings()->sync($packaging_lists);
+
+            // Sync tags
+            if ($tag_lists)
+                $inventory->syncTags($inventory, $tag_lists);
 
             // Save Images
             if (isset($images[$key]))

@@ -641,4 +641,6 @@ return [
 
     'slider_thumb_hint' => 'It can be 150x59px',
 
+    'variant_image' => 'The image of the variant',
+
 ];

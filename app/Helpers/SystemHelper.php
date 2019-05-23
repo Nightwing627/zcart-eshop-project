@@ -556,12 +556,12 @@ if ( ! function_exists('get_activity_str') )
                 break;
 
             case 'current_billing_plan':
-                $plan = \App\SubscriptionPlan::find([$old, $new])->pluck('name', 'plan_id');
+                // $plan = \App\SubscriptionPlan::find([$old, $new])->pluck('name', 'plan_id');
 
                 if(is_null($old))
-                    return trans('app.activities.subscribed', ['plan' => $plan[$new]]);
+                    return trans('app.activities.subscribed', ['plan' => $new]);
 
-                return trans('app.activities.subscription_changed', ['from' => $plan[$old], 'to' => $plan[$new]]);
+                return trans('app.activities.subscription_changed', ['from' => $old, 'to' => $new]);
                 break;
 
             case 'card_last_four':

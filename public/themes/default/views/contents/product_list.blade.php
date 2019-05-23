@@ -61,6 +61,10 @@
                 </div><!-- /.product-info -->
             </div><!-- /.product -->
         </div><!-- /.col-md-* -->
+
+        @if($loop->iteration % 4 == 0)
+            <div class="clearfix"></div>
+        @endif
     @endforeach
 </div><!-- /.row .product-list -->
 

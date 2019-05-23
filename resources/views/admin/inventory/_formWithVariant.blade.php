@@ -16,7 +16,7 @@
   <div class="col-md-12">
     <div class="form-group">
       {!! Form::label('title', trans('app.form.title').'*') !!}
-      {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.title'), 'required']) !!}
+      {!! Form::text('title', null, ['class' => 'form-control makeSlug', 'placeholder' => trans('app.placeholder.title'), 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -110,7 +110,7 @@
           <small class="text-muted" data-toggle="tooltip" data-placement="top" title="{{ trans('help.variants') }}"><sup><i class="fa fa-question"></i></sup></small>
         </th>
         <th>{{ trans('app.form.image') }}
-          <small class="text-muted" data-toggle="tooltip" data-placement="top" title="{{ trans('help.image') }}"><sup><i class="fa fa-question"></i></sup></small>
+          <small class="text-muted" data-toggle="tooltip" data-placement="top" title="{{ trans('help.variant_image') }}"><sup><i class="fa fa-question"></i></sup></small>
         </th>
         <th>{{ trans('app.form.sku') }}
           <small class="text-muted" data-toggle="tooltip" data-placement="top" title="{{ trans('help.sku') }}"><sup><i class="fa fa-question"></i></sup></small>
@@ -237,4 +237,32 @@
   {!! Form::select('linked_items[]', $inventories , Null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
   <div class="help-block with-errors"></div>
 </div>
+
+<fieldset>
+  <legend>{{ trans('app.seo') }}</legend>
+  <div class="form-group">
+    {!! Form::label('slug', trans('app.form.slug').'*', ['class' => 'with-help']) !!}
+    <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.slug') }}"></i>
+    {!! Form::text('slug', null, ['class' => 'form-control slug', 'placeholder' => 'SEO Friendly URL', 'required']) !!}
+    <div class="help-block with-errors"></div>
+  </div>
+
+  <div class="form-group">
+    {!! Form::label('tag_list[]', trans('app.form.tags'), ['class' => 'with-help']) !!}
+    {!! Form::select('tag_list[]', $tags, null, ['class' => 'form-control select2-tag', 'multiple' => 'multiple']) !!}
+  </div>
+
+  <div class="form-group">
+    {!! Form::label('meta_title', trans('app.form.meta_title'), ['class' => 'with-help']) !!}
+    <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.meta_title') }}"></i>
+    {!! Form::text('meta_title', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.meta_title')]) !!}
+  </div>
+
+  <div class="form-group">
+    {!! Form::label('meta_description', trans('app.form.meta_description'), ['class' => 'with-help']) !!}
+    <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.meta_description') }}"></i>
+    {!! Form::text('meta_description', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.meta_description')]) !!}
+  </div>
+</fieldset>
+
 <p class="help-block">* {{ trans('app.form.required_fields') }}</p>
