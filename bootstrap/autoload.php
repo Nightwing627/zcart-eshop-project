@@ -7,7 +7,7 @@ require_once __DIR__.'/../vendor/helper_functions.php';
 
 
 //Random salt used for encryption. It should contain random symbols (16 or more recommended) and be different for each application you want to protect. Cannot be modified after installing script.
-define("APL_SALT", "404f45cb5e4fa258");
+define("APL_SALT", "98bc2712cc204c45");
 
 //The URL (without / at the end) where Auto PHP Licenser from /WEB directory is installed on your server. No matter how many applications you want to protect, a single installation is enough.
 define("APL_ROOT_URL", "https://www.licenser.incevio.com");
@@ -53,7 +53,7 @@ define("APL_NOTIFICATION_BYPASS_VERIFICATION", "No need to verify");
 
 
 //Secret key used to verify if configuration file included in your script is genuine (not replaced with 3rd party files). It can contain any number of random symbols and should be different for each application you want to protect. You should also change its name from "APL_INCLUDE_KEY_CONFIG" to something else, let's say "MY_CUSTOM_SECRET_KEY"
-define("INCEVIO_MIX_KEY", "b3d316a6861887f8c61ccc7dde976de1");
+define("ZCART_MIX_KEY", "017bf8bc885fb37b");
 
 //IP address of your Auto PHP Licenser installation. If IP address is set, script will always check if "APL_ROOT_URL" resolves to this IP address (very useful against users who may try blocking or nullrouting your domain on their servers). However, use it with caution because if IP address of your server is changed in future, old installations of protected script will stop working (you will need to update this file with new IP and send updated file to end user). If you want to verify licensing server, but don't want to lock it to specific IP address, you can use APL_ROOT_NAMESERVERS option (because nameservers change is unlikely).
 define("APL_ROOT_IP", "");

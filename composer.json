@@ -11,6 +11,7 @@
         "php": "^7.1.3",
         "ahkmunna/paypalpayment": "dev-master",
         "algolia/algoliasearch-client-php": "^1.27",
+        "artesaos/seotools": "^0.14.0",
         "authorizenet/authorizenet": "^1.9",
         "aws/aws-sdk-php": "^3.80",
         "consoletvs/charts": "6.*",
