@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default navbar-main navbar-light navbar-top">
   <div class="container">
-    <div class="navbar-header">
+    <div class="navbar-header brand-centered">
       <a class="navbar-brand" href="{{ url('/') }}">
         @if( Storage::exists('logo.png') )
           <img src="{{ Storage::url('logo.png') }}" alt="LOGO" title="LOGO" />
@@ -60,7 +60,11 @@
       @endauth
 
       <div class="navbar-header">
-          <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-nav-collapse" area_expanded="false"><span class="sr-only">{{ trans('theme.nav.menu') }}</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+          <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-nav-collapse" area_expanded="false">
+            <span class="sr-only">{{ trans('theme.nav.menu') }}</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </button>
       </div>
     </ul>

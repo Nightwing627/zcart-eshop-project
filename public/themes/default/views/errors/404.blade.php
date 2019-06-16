@@ -37,6 +37,11 @@
             width: 280px;
         }
 
+        .brand-logo {
+          max-width: 120px;
+          max-height: 40px;
+        }
+
         @media only screen and (max-width: 280px) {
 
             body, p {
@@ -55,7 +60,7 @@
 <body>
     <a href="{{ url('/') }}">
         @if( Storage::exists('logo.png') )
-          <img src="{{ Storage::url('logo.png') }}" alt="LOGO" title="LOGO" />
+          <img src="{{ Storage::url('logo.png') }}" class="brand-logo" alt="LOGO" title="LOGO" />
         @else
           <img src="https://placehold.it/140x60/eee?text={{ get_platform_title() }}" alt="LOGO" title="LOGO" />
         @endif
