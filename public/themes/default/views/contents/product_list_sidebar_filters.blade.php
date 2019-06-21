@@ -1,3 +1,9 @@
+{{-- <button id="filterBtn" class="btn btn-sm btn-default">Filters</button> --}}
+<button type="button" id="filterBtn">
+    <span class="sr-only">Filters</span>
+    <i class="fa fa-filter"></i>
+</button>
+
 <aside class="category-filters">
 
     @include('partials._categories_filter')

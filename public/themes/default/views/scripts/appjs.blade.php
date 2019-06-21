@@ -407,6 +407,11 @@
         window.location.href = removeQueryStringParameter(window.location.href, $(this).data('name')); //Remove the filter
     });
 
+    $("#filterBtn").click(function(e){
+        e.preventDefault();
+        $(".category-filters").slideToggle();
+    });
+
     // Helper functions
     function getFormatedUrlStr(sourceURL, opt) {
         var url = removeQueryStringParameter(sourceURL, 'page'); //Reset the pagination;

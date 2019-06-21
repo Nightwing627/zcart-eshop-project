@@ -3,16 +3,16 @@
       <div class="row">
         @if($products->count())
 
-          <div class="col-md-2 bg-light">
+          <div class="col-sm-2 bg-light">
 
             @include('contents.product_list_sidebar_filters')
 
-          </div><!-- /.col-md-2 -->
-          <div class="col-md-10" style="padding-left: 15px;">
+          </div><!-- /.col-sm-2 -->
+          <div class="col-sm-10" style="padding-left: 15px;">
 
             @include('contents.product_list')
 
-          </div><!-- /.col-md-10 -->
+          </div><!-- /.col-sm-10 -->
 
         @else
 

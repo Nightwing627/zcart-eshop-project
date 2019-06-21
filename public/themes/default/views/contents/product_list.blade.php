@@ -2,7 +2,7 @@
 
 <div class="row product-list">
     @foreach($products as $item)
-        <div class="col-md-3">
+        <div class="col-sm-4 col-md-3">
             <div class="product product-grid-view sc-product-item">
                 <ul class="product-info-labels">
                     @if($item->orders_count >= config('system.popular.hot_item.sell_count', 3))
