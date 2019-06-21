@@ -1025,6 +1025,8 @@ img.img-medium {
 }
 .nav-category-section-bg-img {
   position: absolute;
+  max-height: 100%;
+  max-width: 100%;
   bottom: 0;
   right: 0;
   z-index: 998;

@@ -29,10 +29,10 @@ class DropUniqueNameFromCategoriesTable extends Migration
     public function down()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->unique('name');
+            // $table->unique('name');
         });
         Schema::table('category_sub_groups', function (Blueprint $table) {
-            $table->unique('name');
+            // $table->unique('name');
         });
     }
 }

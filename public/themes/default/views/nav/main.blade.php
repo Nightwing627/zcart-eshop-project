@@ -123,10 +123,11 @@
                           </div> <!-- /.col-md-6 -->
                         </div><!-- /.row -->
                       </div><!-- /.category-section-content -->
-                      @if($catGroup->images->first() && Storage::exists($catGroup->images->first()->path))
-                        <img class="nav-category-section-bg-img" src="{{ asset('storage/' . optional($catGroup->images->first())->path) }}" alt="{{ $catGroup->name }}" title="{{ $catGroup->name }}"/>
-                      @endif
                     </div><!-- /.category-section-inner -->
+
+                    @if($catGroup->images->first() && Storage::exists($catGroup->images->first()->path))
+                      <img class="nav-category-section-bg-img" src="{{ asset('storage/' . optional($catGroup->images->first())->path) }}" alt="{{ $catGroup->name }}" title="{{ $catGroup->name }}"/>
+                    @endif
                   </div><!-- /.category-section -->
                 </li>
               @endif
