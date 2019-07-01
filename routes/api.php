@@ -44,11 +44,6 @@ Route::group(['namespace' => 'Api'], function(){
 		Route::post('cart/removeItem', 'CartController@remove');
 	});
 
-	// Route::group(['middleware' => 'auth:customer'], function(){
-		Route::post('cart/{cart}/applyCoupon', 'CartController@validateCoupon');
-		// Route::post('cart/{cart}/applyCoupon', 'CartController@validateCoupon')->middleware(['ajax']);
-	// });
-
 	Route::get('carts', 'CartController@index');
 	// Route::put('cart/{cart}', 'CartController@update');
 	Route::post('cart/{cart}/shipTo', 'CartController@shipTo');
@@ -61,13 +56,36 @@ Route::group(['namespace' => 'Api'], function(){
 	Route::post('login', 'AuthController@login');
 	Route::post('logout', 'AuthController@logout');
 
+	Route::group(['middleware' => 'auth:api'], function(){
+		Route::get('dashboard', 'AccountController@index');
+		Route::get('account/update', 'AccountController@edit');
+		Route::put('account/update', 'AccountController@update');
+		Route::put('password/update', 'AccountController@password_update');
+		Route::get('addresses', 'AddressController@index');
+		Route::get('address/create', 'AddressController@create');
+		Route::post('address/store', 'AddressController@store');
+		Route::get('address/{address}', 'AddressController@edit');
+		Route::put('address/{address}', 'AddressController@update');
+		Route::delete('address/{address}', 'AddressController@delete');
+		Route::get('coupons', 'AccountController@coupons');
+		Route::post('cart/{cart}/applyCoupon', 'CartController@validateCoupon')->middleware(['ajax']);
+		Route::get('wishlist', 'WishlistController@index');
+		Route::get('orders', 'OrderController@index');
+		Route::get('order/{order}', 'OrderController@show');
+		Route::post('order/{order}/conversation', 'ConversationController@store');
+		Route::get('order/{order}/conversation', 'ConversationController@show');
+		// Route::get('order/{order}/track', 'OrderController@track');
+		Route::post('shop/{order}/feedback', 'FeedbackController@save_shop_feedbacks');
+		Route::post('order/{order}/feedback', 'FeedbackController@save_product_feedbacks');
+		Route::post('order/{order}/goodsReceived', 'OrderController@goods_received');
+
+		Route::get('disputes', 'DisputeController@index');
+		Route::get('order/{order}/dispute', 'DisputeController@create');
+		Route::post('order/{order}/dispute', 'DisputeController@store');
+		Route::get('dispute/{dispute}', 'DisputeController@show');
+		Route::get('dispute/{dispute}/response', 'DisputeController@response_form');
+		Route::post('dispute/{dispute}/response', 'DisputeController@response');
+		Route::post('dispute/{dispute}/appeal', 'DisputeController@appeal');
+		// Route::get('orders', 'OrderController@index');
+	});
 });
-
-
-// Route::group(['middleware' => 'auth:api'], function() {
-//     Route::get('articles', 'ArticleController@index');
-//     Route::get('articles/{article}', 'ArticleController@show');
-//     Route::post('articles', 'ArticleController@store');
-//     Route::put('articles/{article}', 'ArticleController@update');
-//     Route::delete('articles/{article}', 'ArticleController@delete');
-// });

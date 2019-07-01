@@ -16,7 +16,7 @@ class SelfPasswordUpdateRequest extends Request
      */
     public function authorize()
     {
-        return Auth::guard('customer')->check();
+        return Auth::guard('customer')->check() || Auth::guard('api')->check();
     }
 
     /**
@@ -26,15 +26,20 @@ class SelfPasswordUpdateRequest extends Request
      */
     public function rules()
     {
-        Validator::extend('check_current_password', function($attribute, $value, $parameters){
-            return Hash::check($value, Auth::guard('customer')->user()->password);
+        if(Auth::guard('customer')->check())
+            $password = Auth::guard('customer')->user()->password;
+        else if(Auth::guard('api')->check())
+            $password = Auth::guard('api')->user()->password;
+
+        Validator::extend('check_current_password', function($attribute, $value, $parameters) use ($password){
+            return Hash::check($value, $password);
         });
 
         $rules = [];
 
         // Current password is required if it set
-        if(Auth::guard('customer')->user()->password)
-            $rules['current_password'] =  'required|check_current_password';
+        // if(Auth::guard('customer')->user()->password)
+        $rules['current_password'] =  'required|check_current_password';
 
         $rules['password'] =  'required|confirmed|min:6';
         $rules['password_confirmation'] = 'required';

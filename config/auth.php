@@ -47,16 +47,15 @@ return [
         ],
 
         'api' => [
-            'driver' => 'passport',
+            'driver' => 'token',
             'provider' => 'customers',
-            // 'driver' => 'token',
-            // 'provider' => 'users',
+            'hash' => true,
         ],
 
-        'admin_api' => [
-            'driver' => 'passport',
-            'provider' => 'users',
-        ],
+        // 'admin_api' => [
+        //     'driver' => 'passport',
+        //     'provider' => 'users',
+        // ],
 
     ],
 

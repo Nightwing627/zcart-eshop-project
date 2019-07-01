@@ -90,5 +90,4 @@ class CheckoutController extends Controller
 
     //     return redirect()->back()->with('warning', trans('theme.notify.failed'));
     // }
-
 }

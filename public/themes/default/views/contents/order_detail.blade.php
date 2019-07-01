@@ -116,7 +116,7 @@
 			                  	</h5>
 			                  	<h5>
 				                    <span>@lang('theme.status')</span>
-				                    {!! optional($order->status)->name . ' &nbsp; ' . $order->paymentStatusName() !!}
+				                    {!! $order->orderStatus(true) . ' &nbsp; ' . $order->paymentStatusName() !!}
 			                  	</h5>
 			                </td>
 			                <td width="20%" class="order-amount">
@@ -210,7 +210,7 @@
 						{!! Form::file('photo') !!}
 		              	<span class="help-block small">@lang('theme.help.upload_photo')</span>
 		            </div>
-		          	@unless($order->order_status_id == 6)
+		          	@unless($order->order_status_id == \App\Order::STATUS_DELIVERED)
 			            <div class="checkbox">
 			              	<label>
 						      	{!! Form::checkbox('goods_received', 1, null, ['class' => 'i-check-blue']) !!} {{ trans('theme.goods_received') }}

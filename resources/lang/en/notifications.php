@@ -44,6 +44,16 @@ return [
         ],
     ],
 
+    'customer_updated' => [
+        'subject' => 'Account information updated successfully!',
+        'greeting' => 'Hello :customer!',
+        'message' => 'This is a notification to let you know that your account has been updated successfully!',
+        'action' => [
+            'text' => 'Visit your profile',
+            'color' => 'blue',
+        ],
+    ],
+
     'customer_password_reset' => [
         'subject' => 'Reset Password Notification',
         'greeting' => 'Hello!',

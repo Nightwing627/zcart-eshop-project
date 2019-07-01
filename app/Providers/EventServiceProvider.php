@@ -34,7 +34,7 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Customer\CustomerCreated' => [
             'App\Listeners\Customer\SendLoginInfo',
         ],
-        'App\Events\Customer\CustomerUpdated' => [
+        'App\Events\Customer\CustomerProfileUpdated' => [
             'App\Listeners\Customer\SendProfileUpdateNotification',
         ],
         'App\Events\Customer\PasswordUpdated' => [

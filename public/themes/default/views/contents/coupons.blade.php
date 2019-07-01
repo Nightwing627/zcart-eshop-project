@@ -32,21 +32,7 @@
 						<small><i class="fa fa-external-link text-muted"></i></small>
 					</td>
 					<td class="text-center vertical-center">{{ $coupon->code }}</td>
-					<td class="vertical-center">
-						@if($coupon->ending_time < \Carbon\Carbon::now())
-							<span class="text-muted small">{{ trans('theme.expired_at') }}: {{ $coupon->ending_time->format('M j, g:i a') }}</span>
-						@elseif($coupon->starting_time < \Carbon\Carbon::now())
-							<span class="text-muted small">{{ trans('theme.use_before') }}:</span>
-							{{ $coupon->ending_time->format('M j, g:i a') }}
-						@elseif($coupon->starting_time > \Carbon\Carbon::now())
-							<span class="text-muted small">{{ trans('theme.use_between') }}:</span>
-							{{ $coupon->starting_time->format('M j, g:i a') }}<br/>
-							<span class="text-muted small"> @lang('theme.and') </span>
-							{{ $coupon->ending_time->format('M j, g:i a') }}
-						@else
-							<span class="text-muted small">{{ trans('theme.invalid') }}</span>
-						@endif
-					</td>
+					<td class="vertical-center"> {!! $coupon->validityText() !!}</td>
 				</tr>
 			@endforeach
 		</tbody>

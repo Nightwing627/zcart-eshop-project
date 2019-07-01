@@ -20,6 +20,8 @@ class OrderResource extends JsonResource
             'customer_id' => $this->customer_id,
             'ip_address' => $this->ip_address,
             'email' => $this->email,
+            'disputed' => $this->disputed,
+            'order_status' => $this->orderStatus(True),
             'payment_status' => $this->paymentStatusName(True),
             'payment_method' => new PaymentMethodResource($this->paymentMethod),
             'message_to_customer' => $this->message_to_customer,
@@ -40,8 +42,9 @@ class OrderResource extends JsonResource
             'discount' => $this->discount,
             'grand_total' => $this->grand_total,
             'taxrate' => $this->taxrate,
-            'shop' => new ShopResource($this->shop),
+            'shop' => $this->shop,
             'items' => $this->inventories,
+            // 'shop' => new ShopResource($this->shop),
             // 'items' => ItemResource::collection($this->inventories),
         ];
     }

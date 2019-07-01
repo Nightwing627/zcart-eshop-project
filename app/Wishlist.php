@@ -61,7 +61,6 @@ class Wishlist extends Model
         return $query->where('product_id', $product_id);
     }
 
-
     /**
      * Scope a query to only include records from the users shop.
      *
@@ -69,6 +68,9 @@ class Wishlist extends Model
      */
     public function scopeMine($query)
     {
+        if (request()->wantsJson())
+            return $query->where('customer_id', \Auth::guard('api')->user()->id);
+
         return $query->where('customer_id', \Auth::guard('customer')->user()->id);
     }
 }

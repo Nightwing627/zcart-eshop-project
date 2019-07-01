@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\User;
 use App\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Notifications\Auth\SendVerificationEmail as EmailVerificationNotification;
 
@@ -19,9 +20,10 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:customers',
-            'password' => 'required|min:6',
+            'name' => 'required|min:3|max:255',
+            'email' => 'required|email|max:255|unique:customers',
+            'password' => 'required|string|min:6|confirmed',
+            'agree' => 'required',
         ]);
 
         $customer = Customer::create([
@@ -30,17 +32,15 @@ class AuthController extends Controller
             'password' => $request->password,
             'accepts_marketing' => $request->subscribe,
             'verification_token' => str_random(40),
-            'active' => 1,
+            'active' => 0,
         ]);
 
         // Sent email address verification notich to customer
         $customer->notify(new EmailVerificationNotification($customer));
 
-        $customer->addresses()->create($request->all()); //Save address
+        $customer->generateToken();
 
-        $token = $customer->createToken('TutsForWeb')->accessToken;
-
-        return response()->json(['token' => $token], 200);
+        return response()->json(['data' => $customer->toArray()], 201);
     }
 
     /**
@@ -56,22 +56,28 @@ class AuthController extends Controller
             'password' => $request->password
         ];
 
-        if (auth()->guard('customer')->attempt($credentials)) {
-            $token = auth()->guard('customer')->user()->createToken('TutsForWeb')->accessToken;
+        if (Auth::guard('customer')->attempt($credentials)) {
 
-            return response()->json(['token' => $token], 200);
+            $customer = Auth::guard('customer')->user();
+            $customer->generateToken();
+
+            return response()->json([
+                'data' => $customer->toArray(),
+            ]);
         } else {
-            return response()->json(['error' => 'UnAuthorised'], 401);
+            return response()->json(['error' => 'Unauthorized, check your credentials.'], 401);
         }
     }
 
-    /**
-     * Returns Authenticated User Details
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function details()
+    public function logout(Request $request)
     {
-        return response()->json(['user' => auth()->user()], 200);
+        $customer = Auth::guard('api')->user();
+
+        if ($customer) {
+            $customer->api_token = null;
+            $customer->save();
+        }
+
+        return response()->json(['data' => 'Customer logged out.'], 200);
     }
 }

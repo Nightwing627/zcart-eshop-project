@@ -39,12 +39,11 @@ class ItemResource extends JsonResource
             'stuff_pick' => $this->stuff_pick,
             'feedbacks_count' => $this->feedbacks_count,
             'rating' => $this->feedbacks->avg('rating'),
-            'feedbacks' => $this->feedbacks,
+            'feedbacks' => FeedbackResource::collection($this->feedbacks),
             'product' => $this->product,
             'attribute_values' => $this->attributeValues,
             'images' => ImageResource::collection($this->images),
             // 'variants' => ListHelper::variants_of_product($this, $this->shop_id),
-
         ];
     }
 }

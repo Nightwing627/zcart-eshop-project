@@ -275,4 +275,32 @@ class Coupon extends Model
     {
         return $query->where('shop_id', Auth::user()->merchantId());
     }
+
+    public function validityText($plain = False)
+    {
+        if($this->ending_time < \Carbon\Carbon::now()){
+            $text = $plain ?  :
+                '<span class="text-muted small">'. trans('theme.expired_at') .': '
+                    . $this->ending_time->format('M j, g:i a') .'</span>';
+        }
+        elseif($this->starting_time < \Carbon\Carbon::now()){
+            $text = $plain ? trans('theme.use_before') .': ' . $this->ending_time->format('M j, g:i a') :
+                '<span class="text-muted small">'. trans('theme.use_before') .':'. '</span> '
+                    . $this->ending_time->format('M j, g:i a');
+        }
+        elseif($this->starting_time > \Carbon\Carbon::now()){
+            $text = $plain ?
+                trans('theme.use_between') .': '. $this->starting_time->format('M j, g:i a') . ' ' . trans('theme.and') . ' ' . $this->ending_time->format('M j, g:i a') :
+                '<span class="text-muted small">'
+                    . trans('theme.use_between') .':'. '</span> '
+                    . $this->starting_time->format('M j, g:i a') . '<br/>'
+                    . '<span class="text-muted small">'. trans('theme.and') .'</span> '
+                    . $this->ending_time->format('M j, g:i a');
+        }
+        else {
+            $text = $plain ? trans('theme.invalid') : '<span class="text-muted small">'. trans('theme.invalid') . '</span>';
+        }
+
+        return $text;
+    }
 }

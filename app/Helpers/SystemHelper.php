@@ -376,6 +376,9 @@ if ( ! function_exists('crosscheckCartOwnership') )
         if(Auth::guard('customer')->check())
             return  $return || ($cart->customer_id == Auth::guard('customer')->user()->id);
 
+        if(Auth::guard('api')->check())
+            return  $return || ($cart->customer_id == Auth::guard('api')->user()->id);
+
         return $return;
     }
 }
@@ -485,6 +488,8 @@ if ( ! function_exists('crosscheckAndUpdateOldCartInfo') )
         // Set customer_id if not set yet
         if( ! $cart->customer_id && Auth::guard('customer')->check() )
             $cart->customer_id = Auth::guard('customer')->user()->id;
+        else if ( Auth::guard('api')->check() )
+            $cart->customer_id = Auth::guard('api')->user()->id;
 
         $cart->ship_to = $request->ship_to ?? $request->country_id ?? $cart->ship_to;
         $cart->shipping_weight = $shipping_weight;

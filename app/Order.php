@@ -433,6 +433,32 @@ class Order extends Model
         return Null;
     }
 
+    public function orderStatus($plain = False)
+    {
+        switch ($this->order_status_id) {
+            case static::STATUS_WAITING_FOR_PAYMENT:
+                return $plain ? strtoupper(trans('app.statuses.waiting_for_payment')) : '<span class="label label-danger">' . strtoupper(trans('app.statuses.waiting_for_payment')) . '</span>';
+
+            case static::STATUS_PAYMENT_ERROR:
+                return $plain ? strtoupper(trans('app.statuses.payment_error')) : '<span class="label label-danger">' . strtoupper(trans('app.statuses.payment_error')) . '</span>';
+
+            case static::STATUS_CONFIRMED:
+                return $plain ? strtoupper(trans('app.statuses.confirmed')) : '<span class="label label-outline">' . strtoupper(trans('app.statuses.confirmed')) . '</span>';
+
+            case static::STATUS_FULFILLED:
+                return $plain ? strtoupper(trans('app.statuses.fulfilled')) : '<span class="label label-info">' . strtoupper(trans('app.statuses.fulfilled')) . '</span>';
+
+            case static::STATUS_AWAITING_DELIVERY:
+                return $plain ? strtoupper(trans('app.statuses.awaiting_delivery')) : '<span class="label label-outline">' . strtoupper(trans('app.statuses.awaiting_delivery')) . '</span>';
+
+            case static::STATUS_DELIVERED:
+                return $plain ? strtoupper(trans('app.statuses.delivered')) : '<span class="label label-primary">' . strtoupper(trans('app.statuses.delivered')) . '</span>';
+
+            case static::STATUS_RETURNED:
+                return $plain ? strtoupper(trans('app.statuses.refunded')) : '<span class="label label-danger">' . strtoupper(trans('app.statuses.refunded')) . '</span>';
+        }
+    }
+
     public function paymentStatusName($plain = False)
     {
         switch ($this->payment_status) {

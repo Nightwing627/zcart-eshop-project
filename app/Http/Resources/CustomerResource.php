@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ShopResource extends JsonResource
+class CustomerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,12 +17,15 @@ class ShopResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'slug' => $this->slug,
+            'nice_name' => $this->nice_name,
+            'dob' => $this->dob,
+            'sex' => $this->sex,
             'description' => $this->description,
-            'banner_image' => get_cover_img_src($this, 'shop'),
-            'image' => (new ImageResource($this->image))->size('small'),
-            'rating' => $this->feedbacks->avg('rating'),
-            'feedbacks' => FeedbackResource::collection($this->feedbacks),
+            'active' => $this->active,
+            'accepts_marketing' => $this->accepts_marketing,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'avatar' => (new ImageResource($this->image))->size('small'),
         ];
     }
 }

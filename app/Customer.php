@@ -6,8 +6,9 @@ use App\Common\Billable;
 use App\Common\Taggable;
 use App\Common\Imageable;
 use App\Common\Addressable;
+use App\Common\ApiAuthTokens;
 use Laravel\Scout\Searchable;
-use Laravel\Passport\HasApiTokens;
+// use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -19,7 +20,7 @@ use App\Notifications\Auth\CustomerResetPasswordNotification;
 class Customer extends Authenticatable
 {
 
-    use SoftDeletes, HasApiTokens, Billable, Notifiable, Addressable, Taggable, Imageable, Searchable;
+    use SoftDeletes, Billable, Notifiable, Addressable, Taggable, Imageable, Searchable, ApiAuthTokens;
 
    /**
      * The guard used by the model.
@@ -43,7 +44,8 @@ class Customer extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'verification_token'
+        'verification_token',
+        'api_token',
     ];
 
     /**

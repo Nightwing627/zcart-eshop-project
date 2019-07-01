@@ -29,7 +29,7 @@
                 </h5>
                 <h5>
                     <span>@lang('theme.status')</span>
-                    {!! optional($order->status)->name . ' &nbsp; ' . $order->paymentStatusName() !!}
+                    {!! $order->orderStatus(True) . ' &nbsp; ' . $order->paymentStatusName() !!}
                 </h5>
               </td>
               <td width="20%" class="order-amount">

@@ -13,7 +13,7 @@ class SelfAvatarUpdateRequest extends Request
      */
     public function authorize()
     {
-        return \Auth::guard('customer')->check();
+        return \Auth::guard('customer')->check() || \Auth::guard('api')->check();
     }
 
     /**
