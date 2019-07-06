@@ -154,7 +154,7 @@ class ListingController extends Controller
         ->withCount(['feedbacks', 'orders' => function($q){
             $q->withArchived();
         }])
-        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
+        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type,updated_at', 'image:path,imageable_id,imageable_type'])
         ->paginate(config('system.view_listing_per_page', 16))->appends(request()->except('page'));
 
         return ListingResource::collection($listings);
@@ -176,7 +176,7 @@ class ListingController extends Controller
             return response()->json(['message' => trans('app.marketplace_down')], 404);
 
         $listings = Inventory::where('shop_id', $shop->id)->filter(request()->all())
-        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
+        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type,updated_at', 'image:path,imageable_id,imageable_type'])
         ->withCount(['orders' => function($q){
             $q->withArchived();
         }])
@@ -201,7 +201,7 @@ class ListingController extends Controller
         ->whereHas('shop', function($q) {
             $q->select(['id', 'current_billing_plan', 'active'])->active();
         })
-        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'image:path,imageable_id,imageable_type'])
+        ->with(['feedbacks:rating,feedbackable_id,feedbackable_type,updated_at', 'image:path,imageable_id,imageable_type'])
         ->withCount(['orders' => function($q){
             $q->withArchived();
         }])
@@ -209,5 +209,4 @@ class ListingController extends Controller
 
         return ListingResource::collection($listings);
     }
-
 }
