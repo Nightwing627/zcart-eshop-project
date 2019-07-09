@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 
 Route::group(['namespace' => 'Api'], function(){
 	Route::get('sliders', 'HomeController@sliders');

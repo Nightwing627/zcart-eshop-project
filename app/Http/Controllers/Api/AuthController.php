@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\User;
 use App\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Validations\RegisterCustomerRequest;
 use App\Notifications\Auth\SendVerificationEmail as EmailVerificationNotification;
 
 class AuthController extends Controller
@@ -17,15 +17,8 @@ class AuthController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function register(RegisterCustomerRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|min:3|max:255',
-            'email' => 'required|email|max:255|unique:customers',
-            'password' => 'required|string|min:6|confirmed',
-            'agree' => 'required',
-        ]);
-
         $customer = Customer::create([
             'name' => $request->name,
             'email' => $request->email,
