@@ -19,6 +19,7 @@ use App\Product;
 use App\Dispute;
 use App\Customer;
 use App\FaqTopic;
+use App\Language;
 use App\Category;
 use App\Supplier;
 use App\Inventory;
@@ -227,6 +228,15 @@ class ListHelper
 
         return $roles->orderBy('name', 'asc')->pluck('name', 'id');
     }
+
+    /**
+     * Get list of all available languages formated for dropdown list
+     */
+    public static function availableLocales() {
+
+        return Language::orderBy('order', 'asc')->active()->get();
+    }
+
 
     /**
      * Get list of all available categories formated for theme
@@ -597,6 +607,12 @@ class ListHelper
     public static function timezones()
     {
         return \DB::table('timezones')->pluck('text', 'id');
+    }
+
+    public static function languages()
+    {
+        return \DB::table('languages')->where('deleted_at', Null)
+        ->where('active', 1)->orderBy('order', 'asc')->pluck('language', 'code');
     }
 
     /**

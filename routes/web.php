@@ -8,6 +8,9 @@ include('Frontend.php');
 // Backoffice routes
 include('Backoffice.php');
 
+// Language change
+Route::get('locale/{locale?}', 'LocaleController@change')->name('locale.change');
+
 // Contact Us
 Route::post('/contact_us', 'ContactUsController@send')->name('contact_us');
 

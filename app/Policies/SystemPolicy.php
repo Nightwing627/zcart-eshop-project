@@ -33,5 +33,4 @@ class SystemPolicy
     {
         return (new Authorize($user, 'edit_system', $system))->check();
     }
-
 }

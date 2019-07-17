@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
         $this->call('SubscriptionPlansSeeder');
         $this->call('PagesSeeder');
         $this->call('FaqsSeeder');
+        $this->call('LanguagesSeeder');
         // $this->call('demoSeeder');
         $this->command->info('Seeding complete!');
 

@@ -1137,6 +1137,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 {
                     $view->with('timezones', ListHelper::timezones());
                     $view->with('currencies', ListHelper::currencies());
+                    $view->with('languages', ListHelper::languages());
                 });
     }
 

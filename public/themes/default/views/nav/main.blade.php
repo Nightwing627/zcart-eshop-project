@@ -153,16 +153,26 @@
         </li>
         <li><a href="{{ get_page_url(\App\Page::PAGE_CONTACT_US) }}" class="navbar-item-mergin-top" target="_blank">{{ trans('theme.nav.support') }}</a>
         </li>
-        {{--
-        <li class="dropdown">
-          <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
-            <span>{{ trans('theme.nav.lang') }}</span><i class="fa fa-globe"></i> {{ strtoupper( \App::getLocale() ) }}
-          </a>
-          <ul class="dropdown-menu">
-            <li><a href="{{ route('locale.change', 'en') }}">English</a></li>
-            <li><a href="{{ route('locale.change', 'es') }}">Español</a></li>
-          </ul>
-        </li> --}}
+
+        @if(count(config('active_locales')) > 1)
+          <li class="dropdown lang-dropdown">
+            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+              <span>{{ trans('theme.nav.lang') }}</span>
+              <i class="fa fa-globe"></i>
+              {{ config('active_locales')->firstWhere('code', App::getLocale())->language }}
+            </a>
+            <ul class="dropdown-menu">
+              @foreach(config('active_locales') as $lang)
+                <li class="{{$lang->code == \App::getLocale() ? 'selected' : ''}}">
+                  <a href="{{route('locale.change', $lang->code)}}">
+                    <img src="{{asset(sys_image_path('flags') . array_slice(explode('_', $lang->php_locale_code), -1)[0] . '.png')}}" class="lang-flag">
+                    {{ $lang->language }}
+                  </a>
+                </li>
+              @endforeach
+            </ul>
+          </li>
+        @endif
       </ul>
     </div>
   </div>

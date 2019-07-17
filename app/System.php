@@ -62,6 +62,7 @@ class System extends Model
             'email',
             'timezone_id',
             'currency_id',
+            'default_language',
         ];
 
     /**

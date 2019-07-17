@@ -24,6 +24,7 @@ return [
     'freeze' => [
         'pages' => [1, 2, 3, 4, 5, 6],
         'order_statuses' => [1, 2, 3, 4, 5, 6, 7],
+        'languages' => [1],
     ],
 
     /*

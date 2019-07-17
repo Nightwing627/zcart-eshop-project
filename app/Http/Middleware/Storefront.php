@@ -43,6 +43,9 @@ class Storefront
             View::share('featured_categories', ListHelper::hot_categories());
             View::share('pages', ListHelper::pages(\App\Page::VISIBILITY_PUBLIC));
             session(['global_announcement' => ListHelper::activeAnnouncement()]);
+
+        // $languages = \App\Language::orderBy('order', 'asc')->active()->get();
+
         }
 
         return $next($request);

@@ -478,6 +478,14 @@
                 </a>
               </li>
             @endif
+
+            @if(Auth::user()->isAdmin())
+              <li class=" {{ Request::is('admin/setting/language*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/language') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('app.languages') }}
+                </a>
+              </li>
+            @endif
           </ul>
         </li>
 

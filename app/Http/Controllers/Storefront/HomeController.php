@@ -302,20 +302,6 @@ class HomeController extends Controller
     }
 
     /**
-     * Change Language
-     *
-     * @param  string $locale
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function changeLanguage($locale = 'en')
-    {
-        Session::put('locale', $locale);
-
-        return redirect()->back();
-    }
-
-    /**
      * Push product ID to session for the recently viewed items section
      *
      * @param  [type] $item [description]

@@ -897,11 +897,6 @@ if ( ! function_exists('get_countries_name_with_states') )
 
 if ( ! function_exists('get_formated_country_name') )
 {
-    /**
-     * Return taxe rate for the given tax id
-     *
-     * @param $country
-     */
     function get_formated_country_name($country, $code = null) {
         if (is_numeric($country)) {
             $country_data = \DB::table('countries')->select('iso_3166_2', 'name')->find($country);

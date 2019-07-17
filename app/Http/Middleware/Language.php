@@ -2,13 +2,15 @@
 
 namespace App\Http\Middleware;
 
+use App;
+use Session;
 use Closure;
 use Carbon\Carbon;
 
 /**
  * Class LocaleMiddleware.
  */
-class LocaleMiddleware
+class Language
 {
     /**
      * Handle an incoming request.
@@ -23,31 +25,34 @@ class LocaleMiddleware
         /*
          * Locale is enabled and allowed to be changed
          */
-        if (config('locale.status') && session()->has('locale') && array_key_exists(session()->get('locale'), config('locale.languages'))) {
+        if (Session::has('locale')) {
             /*
-                 * Set the Laravel locale
-                 */
-            app()->setLocale(session()->get('locale'));
+             * Set the Laravel locale
+             */
+            App::setLocale(Session::get('locale'));
+
+            $locale = config('active_locales')->firstWhere('code', Session::get('locale'));
 
             /*
              * setLocale for php. Enables ->formatLocalized() with localized values for dates
              */
-            setlocale(LC_TIME, config('locale.languages')[session()->get('locale')][1]);
+            setlocale(LC_TIME, $locale->php_locale_code);
 
             /*
              * setLocale to use Carbon source locales. Enables diffForHumans() localized
              */
-            Carbon::setLocale(config('locale.languages')[session()->get('locale')][0]);
+            Carbon::setLocale($locale->code);
+            // Carbon::setLocale(config('locale.languages')[Session::get('locale')][0]);
 
             /*
              * Set the session variable for whether or not the app is using RTL support
              * for the current language being selected
              * For use in the blade directive in BladeServiceProvider
              */
-            if (config('locale.languages')[session()->get('locale')][2]) {
+            if ($locale->rtl) {
                 session(['lang-rtl' => true]);
             } else {
-                session()->forget('lang-rtl');
+                Session::forget('lang-rtl');
             }
         }
 

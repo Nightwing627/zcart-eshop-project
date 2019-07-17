@@ -47,7 +47,7 @@ class ResetDemoApp extends Command
 
         $this->call('incevio:demo');
 
-        if( config('app.demo') == true )
+        if( config('app.demo') != true )
             $this->call('incevio:boost');
 
         $this->call('up'); // Maintenance mode off

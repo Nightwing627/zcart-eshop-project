@@ -2,7 +2,7 @@ $(document).ready(function(){
     $.notify({
         // oprions
         icon: 'fa fa-{{$icon ?? 'paw'}}',
-        title: "<strong>{{ $type == 'danger' ? 'Error' : $type }}:</strong> ",
+        title: "<strong>{{ trans('theme.'.$type) }}:</strong> ",
         message: '{{ $message ?? '' }}'
     },{
     	// settings

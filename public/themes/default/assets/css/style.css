@@ -108,6 +108,8 @@ body {
   font-size: 15px;
   color: #111;
 }
+body.rtl { direction: rtl; }
+button { direction: ltr !important; }
 iframe{
     display: block;
     border: none;
@@ -806,6 +808,20 @@ img.img-medium {
   color: #fff !important;
 }
 
+.lang-dropdown img.lang-flag {
+  width: 17px;
+  margin-right: 8px;
+}
+.lang-dropdown .selected a {
+  font-weight: bold;
+
+}
+
+.lang-dropdown .selected a::after{
+  content:" •";
+  color: #66c;
+}
+
 @media (max-width:992px) {
   .navbar-main .navbar-nav > li.open .dropdown-menu > li > a {
     color: #595959;
@@ -1130,6 +1146,62 @@ img.img-medium {
 .search-category-select option {
   background: #fff;
   padding: 6px 0;
+}
+
+/* Styling fixes for the RTL languages */
+body.rtl .search-category-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 15px;
+  text-overflow: '';
+}
+body.rtl .navbar-search .form-control{
+  padding-right: 40px;
+}
+body.rtl .banner-caption {
+  left: unset;
+  right: 5%;
+}
+body.rtl .banner-img {
+  right: unset;
+  left: 0;
+}
+body.rtl .product-info-price,
+body.rtl .product-info-price-new{
+  float: left;
+}
+body.rtl .product-single ul.product-info-feature-labels li:first-child{
+  margin-left: unset;
+}
+body.rtl .product-single ul.product-info-feature-labels li:last-child{
+  margin-left: 10px;
+}
+body.rtl .product-info-price > span.old-price{
+  float: left;
+}
+body.rtl #single-product-wrapper .col-md-7.nopadding {
+ padding: unset !important;
+ padding-right: 10px !important;
+}
+body.rtl #single-product-wrapper #calculation-section .product-qty-wrapper,
+body.rtl #single-product-wrapper #calculation-section .col-sm-3.col-xs-4{
+  float: right !important;
+}
+body.rtl .text-right{
+  text-align: left;
+}
+body.rtl .radio input[type="radio"]::after {
+  /*margin-right: 50px !important;*/
+}
+
+body.rtl .owl-carousel,
+body.rtl .bx-wrapper { direction: ltr; }
+body.rtl .owl-carousel .owl-item { direction: rtl; }
+
+@media (min-width: 992px){
+  body.rtl .nopadding-right {
+    padding-left: 2px !important;
+  }
 }
 @media (max-width:830px) {
   .search-category-select {

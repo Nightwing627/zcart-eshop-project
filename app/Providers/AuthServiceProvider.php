@@ -33,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\Faq::class                 => \App\Policies\FaqPolicy::class,
         \App\GiftCard::class            => \App\Policies\GiftCardPolicy::class,
         \App\Inventory::class           => \App\Policies\InventoryPolicy::class,
+        \App\Language::class            => \App\Policies\LanguagePolicy::class,
         \App\Manufacturer::class        => \App\Policies\ManufacturerPolicy::class,
         \App\Merchant::class            => \App\Policies\MerchantPolicy::class,
         \App\Message::class             => \App\Policies\MessagePolicy::class,

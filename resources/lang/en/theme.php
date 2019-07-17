@@ -95,63 +95,6 @@ return [
 		'visit_store' 		=> 'Visit Store',
 	],
 
-	'benefit' => [
-		'one' => [
-			'title' => 'Start Selling in Minutes',
-			'icon' => 'rocket',
-			'detail' => 'Get straight to growing your business. We handle everything to sell online. So you can focus on your business rather managing the infrastructure.',
-		],
-		'two' => [
-			'title' => 'Comprehensive Dashboard',
-			'icon' => 'tablet',
-			'detail' => 'Get a holistic and detailed view of your business to better understand sales, orders, and customers to better tailor your products.',
-		],
-		'three' => [
-			'title' => 'Get Paid Directly and Securely',
-			'icon' => 'credit-card',
-			'detail' => 'We don\'t keep your money! The payment goes to you directly as soon as a buyer pays.',
-		],
-	],
-
-	'plan' => [
-        'inventory_limit' => ':limit Products',
-        'marketplace_commission' => ':commission% Marketplace Commission',
-        'no_transaction_fee' => 'No Transaction Fees',
-        'no_marketplace_commission' => 'No Marketplace Commission',
-        'team_size' => ':size Staff Users',
-        'transaction_and_commission' => ':commission% + :fee Per Transaction',
-        'transaction_fee' => ':fee Per Transaction',
-	],
-
-	'how_it_work_steps' => [
-		'step_1' => [
-			'title' => 'Register as Merchant',
-			'detail' => 'Creating an account is very simple, Your merchant dashboard will be ready as soon as you\'re registered. You can manage everything that belongs to your store and running the business.',
-		],
-		'step_2' => [
-			'title' => 'List Your Items',
-			'detail' => 'Listing your products is really simple through our easy to use self-serve portal. Upload including high-quality product images and add details.',
-		],
-		'step_3' => [
-			'title' => 'Sell & Fulfill Orders',
-			'detail' => 'After you list your offers, customers can visit them on the Marketplace. We\'ll notify you when customers place an order. Fulfill the order on promised time is very important.',
-		],
-		'step_4' => [
-			'title' => 'Get Paid Instantly',
-			'detail' => 'We dont hold your money, the payment will be sent to your connected account directly.',
-		],
-		'ending' => 'Be Part <br/>of Our <br/>Story!',
-	],
-
-	'intro_lead' => 'Everything you need to start selling online!',
-	'intro_heading' => 'It\'s made for you',
-	'selling_price_taglind' => 'Starting :price a month + additional fees',
-
-	'benefits' => 'Benefits',
-	'faq' => 'FAQ',
-	'how_it_works' => 'How It Works',
-	'pricing' => 'Pricing',
-
     //Store Front
     'account' => 'Account',
 	'account_login' => 'Account Login',
@@ -200,7 +143,7 @@ return [
 	'customer_reviews' => 'Customer Reviews',
 	'current_password' => 'Current Password',
 	'dashboard'	=> 'Dashboard',
-	'dascription' => 'Dascription',
+	'dascription' => 'Description',
 	'date' => 'Date',
 	'days' => ':count Day|:count Days',
 	'description' => 'Description',
@@ -228,7 +171,7 @@ return [
     'grid_view' => 'Grid View',
     'has_offers' => 'Has offers',
     'hate_it' => 'Hate it',
-	'have_account' => 'Already Memeber? Login Here',
+	'have_account' => 'Already Member? Login Here',
     'have_an_account' => 'I already have an account',
 	'hello' => 'Hello',
 	'home' => 'Home',
@@ -321,7 +264,7 @@ return [
     'register' => 'Register',
     'register_here' => 'Register here',
     'remember_me' => 'Remember Me',
-	'remember_card_for_future_use' => 'Remeber the card for future use',
+	'remember_card_for_future_use' => 'Remember the card for future use',
     'remove_item' => 'Remove Item',
     'reply' => 'Reply',
     'return_goods' => 'Return Goods',
@@ -347,7 +290,7 @@ return [
     'shipping_address' => 'Shipping Address',
     'shipping_cost' => 'Shipping Cost',
     'shop_by' => 'Shop by',
-    'shoping_cart' => 'Shoping cart',
+    'shoping_cart' => 'Shopping Cart',
 	'sing_in' => 'Hello, Sign in',
     'sold_by' => 'Sold by',
 	'sort_by' => 'Sort by',
@@ -356,7 +299,7 @@ return [
 	'shop_down' => 'This store is unavailable right now',
 	'store_not_available' => 'Store not available',
 	// 'store_profile' => 'Store Profile',
-	'stuff_pick' => 'Stuff Pick',
+	'stuff_pick' => 'Staff Pick',
     'status' => 'Status',
     'stay_connected' => 'Stay Connected',
 	'subtotal' => 'Subtotal',
@@ -391,10 +334,10 @@ return [
 	'up' => 'Up',
 
 	'help' => [
-	    'be_honest_when_leave_feedbacks' => 'Your feedback will help other shoppers to make their decision. So, be wise, sincere and honest to leave your feedbacks.',
+	    'be_honest_when_leave_feedbacks' => 'Your feedback will help other shoppers to make their decision. So, be wise, sincere and honest to leave your feedback.',
 		'card_exp_month' => 'Select expiration month',
 		'card_exp_year' => 'Select expiration year',
-	    'create_account_on_checkout' => 'By creating the account you agree our <a href=":link" target="_blank">terms and conditions</a>. Enter a secure password to login your account.',
+	    'create_account_on_checkout' => 'By creating the account you agree to our <a href=":link" target="_blank">terms and conditions</a>. Enter a secure password to login your account.',
 	    'customer_paid' => 'You paid <strong><em> :amount </em></strong>, inclusive all taxes, shipping charges and others.',
 		'enter_cardholder_name' => 'Please enter cardholder name',
 		'first_step' => 'First Step',
@@ -425,7 +368,7 @@ return [
 		'already_subscribed' => 'Cool! You have already subscribed!',
 		'are_you_sure' => 'Are you sure you want to do this?',
 		'authentication_failed' => 'Ooops! Authentication failed. :msg',
-		'authentication_successful' => 'Cool! Authentication successful. Create you account.',
+		'authentication_successful' => 'Cool! Authentication successful. Create your account.',
 		'calculating' => 'Calculating',
 	    'canceled'  => 'Canceled!',
 	    'cant_deliver' => 'Can not deliver',
@@ -434,7 +377,7 @@ return [
 		'cart_empty'  => 'Cart is empty!',
 		'coupon_applied' => 'Coupon applied successfully!',
 		'coupon_limit_expired' => 'This coupon has been used!',
-		'coupon_min_order_value' => 'Invalid coupon! The coupon is not valid for this amount of order. Shop more to get discount!',
+		'coupon_min_order_value' => 'Invalid coupon! The coupon is not valid for this amount of order. Shop more to get discounts!',
 		'coupon_not_valid_for_zone' => 'This coupon is not valid for your area!',
 		'coupon_not_valid' => 'Invalid coupon!',
 		'coupon_not_exist' => 'Coupon doesn\'t exist!',
@@ -442,7 +385,7 @@ return [
 		'dispute_created' => 'Dispute created successfully!',
 		'dispute_updated' => 'Dispute updated successfully!',
 	    'failed' => 'Action failed! Something went wrong!!',
-	    'fill_required_info' => 'Please fill all required information!',
+	    'fill_required_info' => 'Please fill all the required information!',
 		'info_updated' => 'Updated successfully!',
 		'info_deleted' => 'Deleted successfully!',
 		'invalid_request' => 'Invalid request!',
@@ -470,7 +413,7 @@ return [
 		'shipping_cost_may_change' => 'Shipping cost may change for the new destination.',
 		'seller_doesnt_ship' => 'This seller does not deliver to your selected Country/Region. Change the shipping address or find other sellers who ship to your area.',
 		'seller_has_no_payment_method' => 'This seller has no active payment method to accept payment. You may find similar items from other sellers.',
-		'store_not_available' => 'This seller is inactive or not exist on the marketplace. You may find similar items from other sellers.',
+		'store_not_available' => 'This seller is inactive or not exist in the marketplace. You may find similar items from other sellers.',
 		'subscribed' => 'Cool! You have subscribed successfully!',
 		'we_dont_save_card_info' => 'We do not store your card information.',
 		'you_will_be_redirected_to_paypal' => 'You will be redirected to PayPal to securely complete your payment.',
@@ -481,7 +424,7 @@ return [
 
 	'input_label' => [
 		'agree' => 'I agree',
-        'i_agree_with_terms' => 'I agree to the <u><a href=":url" target="_blank"> terms</a></u>',
+        'i_agree_with_terms' => 'I agree with the <u><a href=":url" target="_blank"> terms</a></u>',
 		'subscribe' => 'Subscribe to the Newsletter',
         'subscribe_to_the_newsletter' => 'I want to get offers and updates via email',
 	],
@@ -515,7 +458,7 @@ return [
 		'password' => 'Password',
 		'phone_number' => 'Contact Number',
 		'search' => 'Search',
-		'select_payment_option' => 'Choose payment option',
+		'select_payment_option' => 'Choose the payment option',
 	    'state' => 'State/Province/Region',
 		'your_email' => 'Your Email',
 		'refund_amount' => 'Refund Amount',
@@ -526,7 +469,7 @@ return [
 
 	'validation' => [
 		'dispute_type_id_required' => 'Select dispute type',
-		'dispute_product_id_required_with' => 'Select the products that have issue.',
+		'dispute_product_id_required_with' => 'Select the products that have an issue.',
 		'feedback_rating_issue' => 'Feedback ratings must be in 1 to 5',
 		'feedback_comment_between' => 'Comments must be between :min to :max characters.',
 	    'incorrect_current_password' => 'Your current password is not correct!',
@@ -536,27 +479,85 @@ return [
 		'cant_undo' => 'Are you sure? <br/>You can\'t undo this action',
 		'delete' => 'Are you sure want to delete this resource? <br/>You can\'t undo this action!',
 		'goods_received' => 'Are you sure? <br/>You can\'t undo this action',
-		'open_a_dispute' => 'Before opening a dispute, we recommend to send a message to seller!',
+		'open_a_dispute' => 'Before opening a dispute, please try to solve the issue with the seller.',
 	],
 
 	'section_headings' => [
-		'additional_items' => 'Additional items to <span class="text-primary">explore</span>',
+		'additional_items' => 'Additional items <span class="text-primary">to explore</span>',
 		'contact_seller' => 'Leave a message for the seller',
 		'contact_form' => 'Contact form',
 		'bought_together' => 'Frequently bought together',
 		'give_feedbacks_to_products' => 'Give Feedbacks to Products',
-		'give_feedbacks_to_seller' => 'Give Feedbacks to Seller',
+		'give_feedbacks_to_seller' => 'Give Feedback to Seller',
 		'how_to_give_feedbacks' => 'How to Give Feedbacks',
 		'how_to_open_a_dispute' => 'How to Open a Dispute',
 		'key_features' => 'Key <span class="text-primary">Features</span>',
 		'recently_added' => 'Recently <span class="text-primary">Added</span>',
-		'recently_viewed' => 'You Veiwed <span class="text-primary">Recently</span>',
+		'recently_viewed' => 'You Viewed <span class="text-primary">Recently</span>',
 		'related_items'	=> 'Related <span class="text-primary">Items</span>',
 		'select_from_categories' => 'Select From <span class="text-primary">Categories</span>',
 		'trending_now' => 'Trending <span class="text-primary">Now</span>',
 		'weekly_popular' => 'Weekly <span class="text-primary">Popular</span>',
 		'you_may_also_like' => 'You may also like',
 	],
+
+	'benefit' => [
+		'one' => [
+			'title' => 'Start Selling in Minutes',
+			'icon' => 'rocket', // Don't translate this line
+			'detail' => 'Get straight to growing your business. We handle everything to sell online. So you can focus on your business rather managing the infrastructure.',
+		],
+		'two' => [
+			'title' => 'Comprehensive Dashboard',
+			'icon' => 'tablet', // Don't translate this line
+			'detail' => 'Get a holistic and detailed view of your business to better understand sales, orders, and customers to better tailor your products.',
+		],
+		'three' => [
+			'title' => 'Get Paid Directly and Securely',
+			'icon' => 'credit-card', // Don't translate this line
+			'detail' => 'We don\'t keep your money! The payment goes to you directly as soon as a buyer pays.',
+		],
+	],
+
+	'plan' => [
+        'inventory_limit' => ':limit Products',
+        'marketplace_commission' => ':commission% Marketplace Commission',
+        'no_transaction_fee' => 'No Transaction Fees',
+        'no_marketplace_commission' => 'No Marketplace Commission',
+        'team_size' => ':size Staff Users',
+        'transaction_and_commission' => ':commission% + :fee Per Transaction',
+        'transaction_fee' => ':fee Per Transaction',
+	],
+
+	'how_it_work_steps' => [
+		'step_1' => [
+			'title' => 'Register as Merchant',
+			'detail' => 'Creating an account is very simple, Your merchant dashboard will be ready as soon as you\'re registered. You can manage everything that belongs to your store and running the business.',
+		],
+		'step_2' => [
+			'title' => 'List Your Items',
+			'detail' => 'Listing your products is really simple through our easy to use the self-serve portal. Upload including high-quality product images and additional details.',
+		],
+		'step_3' => [
+			'title' => 'Sell & Fulfill Orders',
+			'detail' => 'After you list your offers, customers can visit them on the Marketplace. We\'ll notify you when customers place an order. Fulfill the order on promised time is very important.',
+		],
+		'step_4' => [
+			'title' => 'Get Paid Instantly',
+			'detail' => 'We don\'t hold your money, the payment will be sent to your connected account directly.',
+		],
+		'ending' => 'Be Part <br/>of Our <br/>Story!',
+	],
+
+	'intro_lead' => 'Everything you need to start selling online!',
+	'intro_heading' => 'It\'s made for you',
+	'selling_price_taglind' => 'Starting :price a month + additional fees',
+
+	'benefits' => 'Benefits',
+	'faq' => 'FAQ',
+	'how_it_works' => 'How It Works',
+	'pricing' => 'Pricing',
+
 
 	// Version 1.2.4
     'first_listed_on' => 'Date first listed on :platform',
@@ -574,5 +575,9 @@ return [
     'sku' => 'Seller SKU',
     'technical_details' => 'Technical Details',
 	'updated_at' => 'Updated at',
-
+	'success' => 'Success',
+	'info' => 'Info',
+	'error' => 'Error',
+	'danger' => 'Error',
+	'warning' => 'Warning',
 ];

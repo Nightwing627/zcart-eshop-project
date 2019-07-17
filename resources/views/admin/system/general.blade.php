@@ -87,6 +87,19 @@
 								</div>
 
 								<div class="form-group">
+							        {!! Form::label('default_language', '*' . trans('app.default_language'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.system_default_language') }}"></i>
+								  	<div class="col-sm-8 nopadding-left">
+								  		@if($can_update)
+									        {!! Form::select('default_language', $languages , $system->default_language, ['class' => 'form-control select2-normal', 'required']) !!}
+									  		<div class="help-block with-errors"></div>
+										@else
+											<span>{{ $system->default_language }}</span>
+										@endif
+								  	</div>
+								</div>
+
+								<div class="form-group">
 							        {!! Form::label('currency_id', '*' . trans('app.form.system_currency'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
 								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.system_currency') }}"></i>
 								  	<div class="col-sm-8 nopadding-left">

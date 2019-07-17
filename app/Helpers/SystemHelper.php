@@ -95,12 +95,29 @@ if ( ! function_exists('setSystemConfig') )
 
             config()->set('system_settings', $system_settings);
 
+            setSystemLocale();
+
             setSystemCurrency();
         }
 
         if($shop && !config('shop_settings')){
             setShopConfig($shop);
         }
+    }
+}
+if ( ! function_exists('setSystemLocale') )
+{
+    /**
+     * Set system locale into the config
+     */
+    function setSystemLocale()
+    {
+        // Set the default_language
+        app()->setLocale( config('system_settings.default_language') );
+
+        $active_locales = ListHelper::availableLocales();
+
+        config()->set('active_locales', $active_locales);
     }
 }
 
