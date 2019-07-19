@@ -77,6 +77,30 @@ class EloquentCustomer extends EloquentRepository implements BaseRepository, Cus
         return $customer->forceDelete();
     }
 
+    public function massDestroy($ids)
+    {
+        $customers = Customer::onlyTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($customers as $customer) {
+            $customer->flushAddresses();
+            $customer->flushImages();
+        }
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $customers = Customer::onlyTrashed()->get();
+
+        foreach ($customers as $customer) {
+            $customer->flushAddresses();
+            $customer->flushImages();
+        }
+
+        return parent::emptyTrash();
+    }
+
     public function saveAdrress(array $address, $customer)
     {
         $customer->addresses()->create($address);

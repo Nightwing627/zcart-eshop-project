@@ -53,6 +53,9 @@ trait Authorizable
         'archive'           => 'archive',
         'destroy'           => 'delete',
         'massDestroy'       => 'delete',
+        'massTrash'         => 'delete',
+        'massRestore'       => 'add',
+        'emptyTrash'        => 'delete',
         'secretLogin'       => 'login'
     ];
 

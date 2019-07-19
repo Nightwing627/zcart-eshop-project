@@ -67,6 +67,7 @@
 			<table class="table table-hover" id="all-visitors-table">
 				<thead>
 					<tr>
+						<th>{{ trans('app.flag') }}</th>
 						<th>{{ trans('app.ip') }}</th>
 						<th>{{ trans('app.hits') }}</th>
 						<th>{{ trans('app.page_views') }}</th>
@@ -102,6 +103,7 @@
 	        "serverSide": true,
 	        "ajax": "{{ route('admin.report.visitors.getMore') }}",
 			"columns": [
+	            { 'data': 'flag', 'name': 'flag', 'searchable': false },
 	            { 'data': 'ip', 'name': 'ip' },
 	            { 'data': 'hits', 'name': 'hits', 'searchable': false },
 	            { 'data': 'page_views', 'name': 'page_views', 'searchable': false },

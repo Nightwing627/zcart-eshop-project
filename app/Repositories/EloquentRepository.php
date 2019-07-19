@@ -64,4 +64,24 @@ abstract class EloquentRepository
 	{
 		return $this->model->onlyTrashed()->findOrFail($id)->forceDelete();
 	}
+
+	public function massTrash($ids)
+	{
+		return $this->model->whereIn('id', $ids)->delete();
+	}
+
+	public function massRestore($ids)
+	{
+		return $this->model->onlyTrashed()->whereIn('id', $ids)->restore();
+	}
+
+	public function massDestroy($ids)
+	{
+		return $this->model->withTrashed()->whereIn('id', $ids)->forceDelete();
+	}
+
+	public function emptyTrash()
+	{
+		return $this->model->onlyTrashed()->forceDelete();
+	}
 }

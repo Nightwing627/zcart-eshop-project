@@ -8,9 +8,11 @@ use App\Events\User\UserCreated;
 use App\Events\User\UserUpdated;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Events\Profile\PasswordUpdated;
 use App\Repositories\User\UserRepository;
 use App\Http\Requests\Validations\CreateUserRequest;
 use App\Http\Requests\Validations\UpdateUserRequest;
+use App\Http\Requests\Validations\AdminUserUpdatePasswordRequest as UpdatePasswordRequest;
 
 class UserController extends Controller
 {
@@ -116,6 +118,38 @@ class UserController extends Controller
         event(new UserUpdated($user));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showChangePasswordForm(Request $request, $id)
+    {
+        $user = $this->user->find($id);
+
+        return view('admin.user._change_password', compact('user'));
+    }
+
+    /**
+     * Update login password only.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword(UpdatePasswordRequest $request, $id)
+    {
+        if( config('app.demo') == true && $id <= config('system.demo.users', 3) )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
+        $user = $this->user->update($request, $id);
+
+        event(new PasswordUpdated($user));
+
+        return back()->with('success', trans('messages.password_updated'));
     }
 
     /**

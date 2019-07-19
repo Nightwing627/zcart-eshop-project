@@ -48,6 +48,9 @@ class ProductController extends Controller
         $products = $this->product->all();
 
         return Datatables::of($products)
+            ->editColumn('checkbox', function($product){
+                return view( 'admin.partials.actions.product.checkbox', compact('product'));
+            })
             ->addColumn('option', function ($product) {
                 return view( 'admin.partials.actions.product.options', compact('product'));
             })
@@ -63,7 +66,10 @@ class ProductController extends Controller
             ->editColumn('inventories_count', function($product){
                 return view( 'admin.partials.actions.product.inventories_count', compact('product'));
             })
-            ->rawColumns([ 'name', 'gtin', 'category', 'inventories_count', 'status', 'option' ])
+            ->editColumn('added_by', function($product){
+                return view( 'admin.partials.actions.product.added_by', compact('product'));
+            })
+            ->rawColumns([ 'name', 'gtin', 'category', 'inventories_count', 'added_by', 'status', 'checkbox', 'option' ])
             ->make(true);
     }
 
@@ -184,6 +190,71 @@ class ProductController extends Controller
         $this->product->destroy($id);
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massTrash(Request $request)
+    {
+        $this->product->massTrash($request->ids);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.trashed', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massRestore(Request $request)
+    {
+        $this->product->massRestore($request->ids);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.restored', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy(Request $request)
+    {
+        $this->product->massDestroy($request->ids);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
+    }
+
+
+    /**
+     * Empty the Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function emptyTrash(Request $request)
+    {
+        $this->product->emptyTrash($request);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
 
     /**

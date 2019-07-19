@@ -47,13 +47,16 @@ class VisitorController extends Controller
         $visitors = Visitor::orderBy('hits', 'desc')->withTrashed()->get();
 
         return Datatables::of($visitors)
+            ->addColumn('flag', function ($visitor) {
+                return view( 'admin.partials.actions.visitor.flag', compact('visitor'));
+            })
             ->addColumn('option', function ($visitor) {
                 return view( 'admin.partials.actions.visitor.options', compact('visitor'));
             })
             ->editColumn('last_visits', function($visitor){
                 return view( 'admin.partials.actions.visitor.last_visits', compact('visitor'));
             })
-            ->rawColumns([ 'last_visits', 'option' ])
+            ->rawColumns([ 'flag', 'last_visits', 'option' ])
             ->make(true);
     }
 

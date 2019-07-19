@@ -20,7 +20,7 @@ class EloquentProduct extends EloquentRepository implements BaseRepository, Prod
 	public function all()
 	{
         if (Auth::user()->isFromPlatform())
-    		return $this->model->with('categories', 'featuredImage', 'image')->withCount('inventories')->get();
+    		return $this->model->with('categories', 'shop.logo', 'featuredImage', 'image')->withCount('inventories')->get();
 
         return $this->model->mine()->with('categories', 'featuredImage', 'image')->withCount('inventories')->get();
 	}
@@ -82,4 +82,36 @@ class EloquentProduct extends EloquentRepository implements BaseRepository, Prod
 
         return $product->forceDelete();
 	}
+
+    public function massDestroy($ids)
+    {
+        $products = Product::onlyTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($products as $product) {
+            $product->detachTags($product->id, 'product');
+
+            $product->flushImages();
+
+            if($product->hasFeedbacks())
+                $product->flushFeedbacks();
+        }
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $products = Product::onlyTrashed()->get();
+
+        foreach ($products as $product) {
+            $product->detachTags($product->id, 'product');
+
+            $product->flushImages();
+
+            if($product->hasFeedbacks())
+                $product->flushFeedbacks();
+        }
+
+        return parent::emptyTrash();
+    }
 }

@@ -7,6 +7,11 @@
 	Route::post('customer/downloadFailedRows', 'CustomerUploadController@downloadFailedRows')->name('customer.downloadFailedRows');
 
 	// Customer Routes
+	Route::get('changePasswordForm/{customer}', 'CustomerController@ShowChangePasswordForm')->name('customer.changePassword');
+	Route::put('updatePassword/{customer}', 'CustomerController@updatePassword')->name('customer.updatePassword');
+	Route::post('customer/massTrash', 'CustomerController@massTrash')->name('customer.massTrash');
+	Route::post('customer/massDestroy', 'CustomerController@massDestroy')->name('customer.massDestroy');
+	Route::delete('customer/emptyTrash', 'CustomerController@emptyTrash')->name('customer.emptyTrash');
 	Route::get('customer/{customer}/profile', 'CustomerController@profile')->name('customer.profile');
 	Route::get('customer/{customer}/addresses', 'CustomerController@addresses')->name('customer.addresses');
 	Route::delete('customer/{customer}/trash', 'CustomerController@trash')->name('customer.trash');

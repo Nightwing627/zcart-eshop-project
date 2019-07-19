@@ -807,14 +807,15 @@ img.img-medium {
   background: #2b415b !important;
   color: #fff !important;
 }
-
+img.lang-flag {
+  width: 20px;
+}
 .lang-dropdown img.lang-flag {
   width: 17px;
   margin-right: 8px;
 }
 .lang-dropdown .selected a {
   font-weight: bold;
-
 }
 
 .lang-dropdown .selected a::after{

@@ -8,6 +8,9 @@
 	Route::post('product/downloadFailedRows', 'ProductUploadController@downloadFailedRows')->name('product.downloadFailedRows');
 
 	// Product model routes
+	Route::post('product/massTrash', 'ProductController@massTrash')->name('product.massTrash');
+	Route::post('product/massDestroy', 'ProductController@massDestroy')->name('product.massDestroy');
+	Route::delete('product/emptyTrash', 'ProductController@emptyTrash')->name('product.emptyTrash');
 	Route::delete('product/{product}/trash', 'ProductController@trash')->name('product.trash'); // product move to trash
 	Route::get('product/{product}/restore', 'ProductController@restore')->name('product.restore');
 	Route::post('product/store', 'ProductController@store')->name('product.store')->middleware('ajax');

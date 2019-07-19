@@ -68,4 +68,16 @@ class ProductPolicy
     {
         return (new Authorize($user, 'delete_product', $product))->check();
     }
+
+    /**
+     * Determine whether the user can delete the Product.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function massDelete(User $user)
+    {
+        // return false;
+        return (new Authorize($user, 'delete_product'))->check();
+    }
 }

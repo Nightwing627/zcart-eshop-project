@@ -150,8 +150,6 @@ class AccountController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function showChangePasswordForm()

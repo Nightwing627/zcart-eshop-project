@@ -1400,8 +1400,11 @@ return [
     ],
 
     // Version 1.2.6
+    'added_by' => 'Added by',
     'add_language' => 'Add language',
     'default_language' => 'Default language',
+    'empty_trash' => 'Empty trash',
+    'flag' => 'Flag',
     'languages' => 'Languages',
     'language' => 'Language',
     'rtl' => 'RTL',

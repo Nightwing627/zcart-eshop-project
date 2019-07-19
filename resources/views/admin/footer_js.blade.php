@@ -146,11 +146,12 @@
 	        "serverSide": true,
 	        "ajax": "{{ route('admin.catalog.product.getMore') }}",
 			"columns": [
+	            { 'data': 'checkbox', 'name': 'checkbox', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false },
 	            { 'data': 'name', 'name': 'name' },
 	            { 'data': 'gtin', 'name': 'gtin' },
-	            { 'data': 'model_number', 'name': 'model_number' },
 	            { 'data': 'category', 'name': 'category', 'orderable': false, 'searchable': false },
 	            { 'data': 'inventories_count', 'name': 'inventories_count', 'searchable': false },
+	            { 'data': 'added_by', 'name': 'added_by', 'orderable': false },
 	            { 'data': 'option', 'name': 'option', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false }
 	        ],
 		    "oLanguage": {
@@ -184,6 +185,7 @@
 	        "serverSide": true,
 	        "ajax": "{{ route('admin.admin.customer.getMore') }}",
 			"columns": [
+	            { 'data': 'checkbox', 'name': 'checkbox', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false },
 	            { 'data': 'nice_name', 'name': 'nice_name' },
 	            { 'data': 'name', 'name': 'name' },
 	            { 'data': 'email', 'name': 'email' },

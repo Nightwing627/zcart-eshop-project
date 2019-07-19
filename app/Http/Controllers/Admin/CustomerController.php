@@ -6,15 +6,17 @@ use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use Yajra\Datatables\Datatables;
 use App\Http\Controllers\Controller;
+use App\Events\Customer\PasswordUpdated;
 use App\Repositories\Customer\CustomerRepository;
 use App\Http\Requests\Validations\CreateCustomerRequest;
 use App\Http\Requests\Validations\UpdateCustomerRequest;
+use App\Http\Requests\Validations\AdminCustomerUpdatePasswordRequest as UpdatePasswordRequest;
 
 class CustomerController extends Controller
 {
     use Authorizable;
 
-    private $model_name;
+    private $model;
 
     private $customer;
 
@@ -25,7 +27,7 @@ class CustomerController extends Controller
     {
         parent::__construct();
 
-        $this->model_name = trans('app.model.customer');
+        $this->model = trans('app.model.customer');
 
         $this->customer = $customer;
     }
@@ -50,6 +52,9 @@ class CustomerController extends Controller
         $customers = $this->customer->all();
 
         return Datatables::of($customers)
+            ->editColumn('checkbox', function($customer){
+                return view( 'admin.partials.actions.customer.checkbox', compact('customer'));
+            })
             ->addColumn('option', function ($customer) {
                 return view( 'admin.partials.actions.customer.options', compact('customer'));
             })
@@ -62,7 +67,7 @@ class CustomerController extends Controller
             ->editColumn('orders_count', function($customer){
                 return view( 'admin.partials.actions.customer.orders_count', compact('customer'));
             })
-            ->rawColumns([ 'nice_name', 'name', 'orders_count', 'option' ])
+            ->rawColumns([ 'nice_name', 'name', 'orders_count', 'checkbox', 'option' ])
             ->make(true);
     }
 
@@ -86,7 +91,7 @@ class CustomerController extends Controller
     {
         $this->customer->store($request);
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
 
     /**
@@ -157,7 +162,40 @@ class CustomerController extends Controller
 
         $this->customer->update($request, $id);
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showChangePasswordForm(Request $request, $id)
+    {
+        $customer = $this->customer->find($id);
+
+        return view('admin.customer._change_password', compact('customer'));
+    }
+
+    /**
+     * Update login password only.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword(UpdatePasswordRequest $request, $id)
+    {
+        // if( config('app.demo') == true && $id <= config('system.demo.users', 3) )
+        if( config('app.demo') == true && $id <= config('system.demo.customers', 1) )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
+        $customer = $this->customer->update($request, $id);
+
+        event(new PasswordUpdated($customer));
+
+        return back()->with('success', trans('messages.password_updated'));
     }
 
     /**
@@ -174,7 +212,7 @@ class CustomerController extends Controller
 
         $this->customer->trash($id);
 
-        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
     }
 
     /**
@@ -188,7 +226,7 @@ class CustomerController extends Controller
     {
         $this->customer->restore($id);
 
-        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
     }
 
     /**
@@ -202,6 +240,71 @@ class CustomerController extends Controller
     {
         $this->customer->destroy($id);
 
-        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massTrash(Request $request)
+    {
+        $this->customer->massTrash($request->ids);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.trashed', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massRestore(Request $request)
+    {
+        $this->customer->massRestore($request->ids);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.restored', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy(Request $request)
+    {
+        $this->customer->massDestroy($request->ids);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
+    }
+
+
+    /**
+     * Empty the Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function emptyTrash(Request $request)
+    {
+        $this->customer->emptyTrash($request);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
 }

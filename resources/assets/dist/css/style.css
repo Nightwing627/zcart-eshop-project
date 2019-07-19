@@ -5821,11 +5821,34 @@ a.btn{
  */
 
 .progress {
-    position: relative;
+  position: relative;
 }
 
 .progress span {
-    position: absolute;
-    display: block;
-    width: 100%;
- }
+  position: absolute;
+  display: block;
+  width: 100%;
+}
+img.lang-flag {
+  width: 20px;
+}
+
+table thead th.massActionWrapper {
+  width: 45px !important;
+  padding-right: 0px !important;
+}
+table thead th.massActionWrapper .dropdown-toggle{
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+}
+
+.box-header .box-title .btn {
+  color: unset !important;
+  font-size: inherit !important;
+  font-weight: unset !important;
+  letter-spacing: unset !important;
+  word-spacing: unset !important;
+  font-family: unset !important;
+  line-height: 1 !important;
+  margin-bottom: 4px !important;
+}

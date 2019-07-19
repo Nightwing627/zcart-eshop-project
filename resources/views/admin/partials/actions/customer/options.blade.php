@@ -4,6 +4,8 @@
 
 @can('update', $customer)
     <a href="#" data-link="{{ route('admin.admin.customer.edit', $customer->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+
+    <a href="#" data-link="{{ route('admin.admin.customer.changePassword', $customer->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.change_password') }}" class="fa fa-lock"></i></a>&nbsp;
 @endcan
 
 @can('view', $customer)

@@ -15,15 +15,35 @@
 		    <table class="table table-hover" id="all-product-table">
 		        <thead>
 					<tr>
+						@can('massDelete', App\Product::class)
+							<th class="massActionWrapper">
+				                <!-- Check all button -->
+								<div class="btn-group ">
+									<button type="button" class="btn btn-xs btn-default checkbox-toggle">
+										<i class="fa fa-square-o" data-toggle="tooltip" data-placement="top" title="{{ trans('app.select_all') }}"></i>
+									</button>
+									<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">{{ trans('app.toggle_dropdown') }}</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="{{ route('admin.catalog.product.massTrash') }}" class="massAction " data-doafter="remove"><i class="fa fa-trash"></i> {{ trans('app.trash') }}</a></li>
+										<li><a href="{{ route('admin.catalog.product.massDestroy') }}" class="massAction " data-doafter="remove"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
+									</ul>
+								</div>
+							</th>
+						@else
+							<th></th>
+						@endcan
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.gtin') }}</th>
-						<th>{{ trans('app.model_number') }}</th>
 						<th width="20%">{{ trans('app.category') }}</th>
 						<th>{{ trans('app.listing') }}</th>
+						<th width="15%">{{ trans('app.added_by') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 		        </thead>
-		        <tbody>
+		        <tbody id="massSelectArea">
 		        </tbody>
 		    </table>
 		</div> <!-- /.box-body -->
@@ -32,7 +52,16 @@
 	@if(Auth::user()->isFromPlatform())
 		<div class="box collapsed-box">
 			<div class="box-header with-border">
-				<h3 class="box-title"><i class="fa fa-trash-o"></i> {{ trans('app.trash') }}</h3>
+				<h3 class="box-title">
+					@can('massDelete', App\Product::class)
+						{!! Form::open(['route' => ['admin.catalog.product.emptyTrash'], 'method' => 'delete', 'class' => 'data-form']) !!}
+							{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm btn btn-default btn-flat ajax-silent', 'title' => trans('help.empty_trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'right']) !!}
+						{!! Form::close() !!}
+					@else
+						<i class="fa fa-trash-o"></i>
+					@endcan
+					{{ trans('app.trash') }}
+				</h3>
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>

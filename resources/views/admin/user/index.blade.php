@@ -55,6 +55,8 @@
 							@can('update', $user)
 					            <a href="#" data-link="{{ route('admin.admin.user.edit', $user->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 
+							    <a href="#" data-link="{{ route('admin.admin.user.changePassword', $user->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.change_password') }}" class="fa fa-lock"></i></a>&nbsp;
+
 								@if($user->primaryAddress)
 									<a href="#" data-link="{{ route('address.edit', $user->primaryAddress->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
 								@else
