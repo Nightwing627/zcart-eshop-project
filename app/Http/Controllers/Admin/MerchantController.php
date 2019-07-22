@@ -9,9 +9,11 @@ use App\Events\Shop\ShopCreated;
 use App\Events\User\UserCreated;
 use App\Jobs\CreateShopForMerchant;
 use App\Http\Controllers\Controller;
+use App\Events\Profile\PasswordUpdated;
 use App\Repositories\Merchant\MerchantRepository;
 use App\Http\Requests\Validations\CreateMerchantRequest;
 use App\Http\Requests\Validations\UpdateMerchantRequest;
+use App\Http\Requests\Validations\AdminUpdateMerchantPasswordRequest as UpdatePasswordRequest;
 
 class MerchantController extends Controller
 {
@@ -140,6 +142,38 @@ class MerchantController extends Controller
         $this->merchant->update($request, $id);
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showChangePasswordForm(Request $request, $id)
+    {
+        $merchant = $this->merchant->find($id);
+
+        return view('admin.merchant._change_password', compact('merchant'));
+    }
+
+    /**
+     * Update login password only.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword(UpdatePasswordRequest $request, $id)
+    {
+        if( config('app.demo') == true && $id <= config('system.demo.users', 3) )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
+        $merchant = $this->merchant->update($request, $id);
+
+        event(new PasswordUpdated($merchant));
+
+        return back()->with('success', trans('messages.password_updated'));
     }
 
     /**

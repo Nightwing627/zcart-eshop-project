@@ -48,6 +48,7 @@ trait Authorizable
         'editStates'        => 'edit',
         'updateStates'      => 'edit',
         'updateQtt'         => 'edit',
+        'updatePassword'    => 'edit',
         'delete'            => 'delete',
         'trash'             => 'delete',
         'archive'           => 'archive',

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Validations;
 
 use App\Http\Requests\Request;
 
-class AdminUserUpdatePasswordRequest extends Request
+class UpdateTrialPeriodRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,11 +13,7 @@ class AdminUserUpdatePasswordRequest extends Request
      */
     public function authorize()
     {
-        $user = \App\User::find($this->route('user'));
-
-        if(! $user) return false;
-
-        return $this->user()->can('update', $user);
+        return Request::user()->isAdmin();
     }
 
     /**
@@ -28,7 +24,7 @@ class AdminUserUpdatePasswordRequest extends Request
     public function rules()
     {
         return [
-           'password' =>  'required|confirmed|min:6',
+            'trial_ends_at' => 'required|date|after_or_equal:now',
         ];
     }
 }

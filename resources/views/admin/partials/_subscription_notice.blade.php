@@ -20,9 +20,7 @@
 				</span>
 			@endif
 		</div>
-	@endif
-
-	@if(Auth::user()->isOnGenericTrial())
+	@elseif(Auth::user()->isOnGenericTrial())
 		<div class="alert alert-warning alert-dismissible">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 			<strong><i class="icon fa fa-info-circle"></i>{{ trans('app.notice') }}</strong>

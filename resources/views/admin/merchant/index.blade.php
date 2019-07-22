@@ -62,7 +62,13 @@
 
 				          	@endif
 				          </td>
-				          <td>{{ $merchant->owns->current_billing_plan }}</td>
+				          <td>
+				          	{{ $merchant->owns->current_billing_plan }}
+
+		            		@if($merchant->owns->onTrial())
+					          	<span class="label label-info indent10">{{ trans('app.trialing') }}</span>
+							@endif
+				          </td>
 				          <td class="row-options">
 							@can('view', $merchant)
 					            <a href="#" data-link="{{ route('admin.vendor.merchant.show', $merchant->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.profile') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
@@ -74,6 +80,8 @@
 
 							@can('update', $merchant)
 					            <a href="#" data-link="{{ route('admin.vendor.merchant.edit', $merchant->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+
+							    <a href="#" data-link="{{ route('admin.vendor.merchant.changePassword', $merchant->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.change_password') }}" class="fa fa-lock"></i></a>&nbsp;
 
 								@if($merchant->primaryAddress)
 									<a href="#" data-link="{{ route('address.edit', $merchant->primaryAddress->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;

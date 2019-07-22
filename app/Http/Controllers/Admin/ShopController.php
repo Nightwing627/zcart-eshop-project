@@ -152,5 +152,4 @@ class ShopController extends Controller
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
     }
-
 }

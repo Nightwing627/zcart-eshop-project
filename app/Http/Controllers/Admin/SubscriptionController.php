@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use Auth;
 use App\User;
+use App\Shop;
+use Carbon\Carbon;
 use App\SubscriptionPlan;
 use App\Helpers\Statistics;
 use Illuminate\Http\Request;
 use App\Jobs\SubscribeShopToNewPlan;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Validations\UpdateTrialPeriodRequest;
 
 class SubscriptionController extends Controller
 {
-
     /**
      * Display the subscription features.
      *
@@ -49,7 +51,7 @@ class SubscriptionController extends Controller
 
             // If the merchant already has any subscription then just swap to new plan
             if ($currentPlan = $merchant->getCurrentPlan()) {
-                if(! $this->validateSubscriptionSwap($subscription)){
+                if(! $this->validateSubscriptionSwap($subscription)) {
                     return redirect()->route('admin.account.billing')
                     ->with('error', trans('messages.using_more_resource', ['plan' => $subscription->name]));
                 }
@@ -98,6 +100,7 @@ class SubscriptionController extends Controller
         }
         catch(\Stripe\Error\Card $e){
             $response = $e->getJsonBody();
+
             return redirect()->route('admin.account.billing')->with(['error' => $response['error']['message']]);
         }
 
@@ -146,6 +149,52 @@ class SubscriptionController extends Controller
         }
 
         return redirect()->route('admin.account.billing')->with('success', trans('messages.subscription_cancelled'));
+    }
+
+    /**
+     * Update subscription trial priod
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Shop    $shop
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editTrial(Request $request, Shop $shop)
+    {
+        return view('admin.shop._edit_trial', compact('shop'));
+    }
+
+    /**
+     * Update subscription trial priod
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Shop    $shop
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateTrial(UpdateTrialPeriodRequest $request, Shop $shop)
+    {
+        try {
+            $new_end_time = Carbon::createFromFormat('Y-m-d h:i a', $request->get('trial_ends_at'))->timestamp;
+
+            if($shop->hasBillingToken()){
+                $currentPlan = $shop->owner->getCurrentPlan();
+
+                $currentPlan->swap($shop->current_billing_plan)->update([ 'trial_ends_at' => $new_end_time ]);
+            }
+
+            if($shop->onGenericTrial()){
+                $shop->forceFill([
+                    'trial_ends_at' => $new_end_time
+                ])->save();
+            }
+        } catch (\Exception $e) {
+            \Log::error('Subscription Trial Period Update Failed: ' . $e->getMessage());
+
+            return back()->with('error', trans('messages.subscription_update_failed'));
+        }
+
+        return back()->with('success', trans('messages.subscription_updated'));
     }
 
     /**

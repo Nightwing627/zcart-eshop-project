@@ -1407,7 +1407,10 @@ return [
     'flag' => 'Flag',
     'languages' => 'Languages',
     'language' => 'Language',
+    'next_billing_date' => 'Next billing date',
     'rtl' => 'RTL',
+    'on_generic_trial' => 'On generic trial',
     'php_locale_code' => 'PHP locale code',
+    'trial_ends_at' => 'Trial ends at',
 
 ];

@@ -663,4 +663,6 @@ return [
 
     'system_default_language' => 'System default language',
 
+    'update_trial_period' => 'Update trial period',
+
 ];

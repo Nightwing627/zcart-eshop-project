@@ -455,6 +455,36 @@ class Shop extends Model
     }
 
     /**
+     * [Return the Subscription Renew Date /Next billing date
+     *
+     * @return str
+     */
+    public function getNextBillingDate()
+    {
+        if($this->onGenericTrial())
+            return trans('app.on_generic_trial');
+
+        $sub = $this->subscription($this->current_billing_plan)->asStripeSubscription();
+
+        return Carbon::createFromTimeStamp($sub->current_period_end)->toFormattedDateString();
+    }
+
+    public function updateTrialDate($newDate)
+    {
+        // $cu = Stripe_Customer::retrieve($user->stripe_id);
+        // $subscription = $cu->subscriptions->retrieve($user->stripe_subscription);
+        // $subscription->trial_end = Carbon::now()->lastOfMonth()->timestamp;
+        // $subscription->save();
+
+        // $user->trial_ends_at = Carbon::now()->lastOfMonth();
+        // $user->save();
+
+        // $stripe_gateway = new StripeGateway($this);
+
+        // retrun $stripe_gateway->subscription()->noProrate()->trialFor($newDate);
+    }
+
+    /**
      * Activities for the loggable model
      *
      * @return [type] [description]
@@ -482,6 +512,16 @@ class Shop extends Model
     public function hasShippingZones()
     {
         return (bool) $this->shippingZones()->active()->count();
+    }
+
+    /**
+     * Check if the shop is has billing token
+     *
+     * @return bool
+     */
+    public function hasBillingToken()
+    {
+        return $this->hasStripeId();
     }
 
     /**

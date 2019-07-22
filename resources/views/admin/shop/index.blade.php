@@ -39,7 +39,17 @@
 									@endif
 								</p>
 							</td>
-				          	<td>{{ $shop->current_billing_plan }}</td>
+				          	<td>
+				          		{{ $shop->current_billing_plan }}
+
+			            		@if($shop->onTrial())
+						          	<span class="label label-info indent10">{{ trans('app.trialing') }}</span>
+
+									@if(Auth::user()->isAdmin())
+										<a href="#" data-link="{{ route('admin.vendor.subscription.editTrial', $shop) }}"  class="ajax-modal-btn pull-right"><i data-toggle="tooltip" data-placement="top" title="{{ trans('help.update_trial_period') }}" class="fa fa-calendar"></i> </a>
+									@endif
+								@endif
+				          	</td>
 							<td>
 					            @if($shop->owner->image)
 									<img src="{{ get_storage_file_url(optional($shop->owner->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">

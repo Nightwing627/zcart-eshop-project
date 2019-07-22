@@ -46,11 +46,9 @@ class SubscribeShopToNewPlan
 
         $trialDays = (bool) config('system_settings.trial_days') ? config('system_settings.trial_days') : Null;
 
-        // If the merchant has generic trial
-        if($shop->trial_ends_at){
-            // Subtract the used trial days with the new subscription
+        // Subtract the used trial days with the new subscription
+        if($shop->onGenericTrial())
             $trialDays = Carbon::now()->lt($shop->trial_ends_at) ? Carbon::now()->diffInDays($shop->trial_ends_at) : Null;
-        }
 
         // Set trial days
         if($trialDays)
@@ -66,7 +64,7 @@ class SubscribeShopToNewPlan
 
             $this->adjustGenericTrial($shop);
         }
-        else if ( ! config('system_settings.required_card_upfront') && (bool) config('system_settings.trial_days') )
+        else if ( ! config('system_settings.required_card_upfront') && $trialDays )
         {
             $trial_ends_at = $shop->trial_ends_at ?: Carbon::now()->addDays($trialDays);
 

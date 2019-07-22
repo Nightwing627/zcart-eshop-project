@@ -1,7 +1,4 @@
 <?php
-    // $router->post('/settings/subscription', 'Settings\Subscription\PlanController@store');
-    // $router->put('/settings/subscription', 'Settings\Subscription\PlanController@update');
-    // $router->delete('/settings/subscription', 'Settings\Subscription\PlanController@destroy');
     // Invoices...
     // $router->get('/settings/invoices', 'Settings\Billing\InvoiceController@all');
     // $router->get('/settings/invoice/{id}', 'Settings\Billing\InvoiceController@download');

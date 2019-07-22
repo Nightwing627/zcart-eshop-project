@@ -1,5 +1,9 @@
 <?php
 	// Shops
+    Route::get('subscription/{shop}/editTrial', 'SubscriptionController@editTrial')->name('subscription.editTrial');
+
+    Route::put('subscription/{shop}/updateTrial', 'SubscriptionController@updateTrial')->name('subscription.updateTrial');
+
 	Route::get('shop/{shop}/staffs', 'ShopController@staffs')->name('shop.staffs');
 
 	Route::delete('shop/{shop}/trash', 'ShopController@trash')->name('shop.trash'); // shop move to trash

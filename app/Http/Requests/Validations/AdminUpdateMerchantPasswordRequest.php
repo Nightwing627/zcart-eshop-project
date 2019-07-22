@@ -4,7 +4,7 @@ namespace App\Http\Requests\Validations;
 
 use App\Http\Requests\Request;
 
-class AdminUserUpdatePasswordRequest extends Request
+class AdminUpdateMerchantPasswordRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,11 +13,11 @@ class AdminUserUpdatePasswordRequest extends Request
      */
     public function authorize()
     {
-        $user = \App\User::find($this->route('user'));
+        $merchant = \App\Merchant::find($this->route('merchant'));
 
-        if(! $user) return false;
+        if(! $merchant) return false;
 
-        return $this->user()->can('update', $user);
+        return $this->user()->can('update', $merchant);
     }
 
     /**

@@ -10,7 +10,12 @@
 				<table class="table no-border">
 					<tr>
 						<th class="text-right">{{ trans('app.name') }}:</th>
-						<td style="width: 75%;">{{ $shop->name }}</td>
+						<td style="width: 75%;">
+							{{ $shop->name }}
+		            		@if($shop->onTrial())
+					          	<span class="label label-info indent10">{{ trans('app.trialing') }}</span>
+							@endif
+						</td>
 					</tr>
 					<tr>
 						<th class="text-right">{{ trans('app.owner') }}:</th>
@@ -27,7 +32,7 @@
 		            	</td>
 		            </tr>
 					<tr>
-						<th class="text-right">{{ trans('app.available_from') }}:</th>
+						<th class="text-right">{{ trans('app.member_since') }}:</th>
 						<td style="width: 75%;">{{ $shop->created_at->toFormattedDateString() }}</td>
 					</tr>
 					<tr>
@@ -58,6 +63,28 @@
 				    <div class="tab-pane active" id="basic">
 					  	<div class="box-body">
 				        	<table class="table">
+								<tr>
+									<th class="text-right">{{ trans('app.current_billing_plan') }}:</th>
+									<td style="width: 75%;">
+										{{ $shop->current_billing_plan }}
+					            		{{-- @if($shop->onGenericTrial()) --}}
+								          	{{-- <span class="label label-info indent10">{{ trans('app.on_generic_trial') }}</span> --}}
+										{{-- @elseif($shop->onTrial()) --}}
+										@if($shop->onTrial())
+								          	<span class="label label-info indent10">{{ trans('app.trialing') }}</span>
+										@endif
+									</td>
+								</tr>
+			            		@if($shop->onTrial())
+									<tr>
+										<th class="text-right">{{ trans('app.trial_ends_at') }}:</th>
+										<td style="width: 75%;">{{ $shop->trial_ends_at->toDayDateTimeString() }}</td>
+									</tr>
+								@endif
+								<tr>
+									<th class="text-right">{{ trans('app.next_billing_date') }}:</th>
+									<td style="width: 75%;">{{ $shop->getNextBillingDate() }}</td>
+								</tr>
 								<tr>
 									<th class="text-right">{{ trans('app.legal_name') }}:</th>
 									<td style="width: 75%;">{{ $shop->legal_name }}</td>
