@@ -40,6 +40,7 @@ class Shop extends Model
      */
     protected $casts = [
         'active' => 'boolean',
+        'hide_trial_notice' => 'boolean',
     ];
 
     /**
@@ -66,6 +67,7 @@ class Shop extends Model
                             'card_brand',
                             'card_holder_name',
                             'trial_ends_at',
+                            'hide_trial_notice',
                             'updated_at'
                         ];
 
@@ -89,6 +91,7 @@ class Shop extends Model
                     'card_brand',
                     'card_last_four',
                     'trial_ends_at',
+                    'hide_trial_notice',
                     'active',
                 ];
 
@@ -434,6 +437,11 @@ class Shop extends Model
 
     //     return false;
     // }
+
+    public function setHideTrialNoticeAttribute($value)
+    {
+        $this->attributes['hide_trial_notice'] = (bool) $value;
+    }
 
     /**
      * Scope a query to only include active shops.

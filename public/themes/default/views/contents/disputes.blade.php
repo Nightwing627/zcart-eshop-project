@@ -13,7 +13,7 @@
             	<td width="35%" class="store-info">
                   <h5>
                     <span>@lang('theme.store'):</span>
-                    @if($dispute->shop)
+                    @if($dispute->shop->slug)
                       <a href="{{ route('show.store', $dispute->shop->slug) }}"> {{ $dispute->shop->name }}</a>
                     @else
                       @lang('theme.seller')

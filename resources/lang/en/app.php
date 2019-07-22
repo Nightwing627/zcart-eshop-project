@@ -1405,6 +1405,7 @@ return [
     'default_language' => 'Default language',
     'empty_trash' => 'Empty trash',
     'flag' => 'Flag',
+    'hide_trial_notice' => 'Hide trial notice',
     'languages' => 'Languages',
     'language' => 'Language',
     'next_billing_date' => 'Next billing date',

@@ -1,4 +1,4 @@
-@if(Auth::user()->isSubscribed())
+@if(Auth::user()->isSubscribed() && ! Auth::user()->shop->hide_trial_notice)
 	@php
 		$subscription = Auth::user()->getCurrentPlan();
 	@endphp

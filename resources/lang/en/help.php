@@ -665,4 +665,6 @@ return [
 
     'update_trial_period' => 'Update trial period',
 
+    // Version 1.2.6
+    'hide_trial_notice_on_vendor_panel' => 'Hide trial notice on vendor panel',
 ];

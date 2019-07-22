@@ -185,7 +185,8 @@ class SubscriptionController extends Controller
 
             if($shop->onGenericTrial()){
                 $shop->forceFill([
-                    'trial_ends_at' => $new_end_time
+                    'trial_ends_at' => $new_end_time,
+                    'hide_trial_notice' => $request->get('hide_trial_notice'),
                 ])->save();
             }
         } catch (\Exception $e) {
