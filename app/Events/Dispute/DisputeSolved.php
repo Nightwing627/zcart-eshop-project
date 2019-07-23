@@ -7,7 +7,7 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 
-class DisputeCreated
+class DisputeSolved
 {
     use Dispatchable, SerializesModels;
 

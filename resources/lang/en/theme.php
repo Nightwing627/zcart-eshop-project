@@ -580,4 +580,7 @@ return [
 	'error' => 'Error',
 	'danger' => 'Error',
 	'warning' => 'Warning',
+
+	// Version 1.2.6
+	'mark_as_solved' => 'Mark as solved',
 ];

@@ -646,6 +646,8 @@ return [
     // Version 1.2.6
     'empty_trash' => 'Empty the trash. All items on the trash will be deleted permanently.',
 
+    'hide_trial_notice_on_vendor_panel' => 'Hide trial notice on vendor panel',
+
     'language_order' => 'The position you want to show this language on the language option. The smallest number will display first.',
 
     'locale_active' => 'Do you want to show this language on the language option?',
@@ -665,6 +667,4 @@ return [
 
     'update_trial_period' => 'Update trial period',
 
-    // Version 1.2.6
-    'hide_trial_notice_on_vendor_panel' => 'Hide trial notice on vendor panel',
 ];

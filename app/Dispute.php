@@ -160,6 +160,14 @@ class Dispute extends Model
     }
 
     /**
+     * Return true if the disput is Open
+     */
+    public function isOpen()
+    {
+        return $this->status < static::STATUS_SOLVED;
+    }
+
+    /**
      * Return true if the disput is closed
      */
     public function isClosed()

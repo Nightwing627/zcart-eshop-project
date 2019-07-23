@@ -96,7 +96,7 @@
                       <td width="50%">
                         <h5>
                           <span>{!! trans('theme.store') !!}:</span>
-                          @if($order->shop)
+                          @if($order->shop->slug)
                             <a href="{{ route('show.store', $order->shop->slug) }}"> {{ $order->shop->name }}</a>
                           @else
                             {!! trans('theme.seller') !!}
@@ -205,6 +205,10 @@
                           <a class="btn btn-danger flat" href="#" data-toggle="modal" data-target="#disputeAppealModal">{!! trans('theme.button.appeal') !!}</a>
                         @else
                           <a class="btn btn-info flat" href="#" data-toggle="modal" data-target="#disputeResponseModal">{!! trans('theme.button.response') !!}</a>
+
+                          {!! Form::open(['route' => ['dispute.markAsSolved', $order->dispute], 'class' => 'form-btn']) !!}
+                              {!! Form::button(trans('theme.mark_as_solved'), ['type' => 'submit', 'class' => 'confirm btn btn-primary flat']) !!}
+                          {!! Form::close() !!}
                         @endif
                       </div>
                     </td>

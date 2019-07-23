@@ -61,6 +61,13 @@
                     @endif
 
                     <a href="{{ route('dispute.open', $dispute->order) }}" class="btn btn-default btn-sm btn-block flat">{!! trans('theme.dispute_details') !!}</a>
+
+                    @if($dispute->isOpen())
+                        {!! Form::open(['route' => ['dispute.markAsSolved', $dispute]]) !!}
+                            {!! Form::button(trans('theme.mark_as_solved'), ['type' => 'submit', 'class' => 'confirm btn btn-primary btn-block btn-sm flat']) !!}
+                        {!! Form::close() !!}
+                    @endif
+
                   </td>
                 @endif
               </tr> <!-- /.order-body -->

@@ -8902,7 +8902,6 @@ a.btn{
   display: block;
   width: 100%;
 }
-
 img.lang-flag {
   width: 20px;
 }
@@ -8915,7 +8914,9 @@ table thead th.massActionWrapper .dropdown-toggle{
   padding-left: 3px !important;
   padding-right: 3px !important;
 }
-
+.form-btn{
+  display: inline-block !important;
+}
 .box-header .box-title .btn {
   color: unset !important;
   font-size: inherit !important;

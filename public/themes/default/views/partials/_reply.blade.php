@@ -5,7 +5,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('attachment', trans('theme.attachment').'*') !!}
+    {!! Form::label('attachment', trans('theme.attachment')) !!}
     <input type="file" name="attachments[]" id="uploadBtn" class="upload" multiple />
     <div class="help-block with-errors"></div>
 </div>

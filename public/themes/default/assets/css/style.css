@@ -1167,9 +1167,20 @@ body.rtl .banner-img {
   right: unset;
   left: 0;
 }
-body.rtl .product-info-price,
-body.rtl .product-info-price-new{
+body.rtl .product-single .product-info-price,
+body.rtl .product-single .product-info-price-new {
   float: left;
+}
+body.rtl .product-info-labels {
+  left: unset;
+  right: -1px;
+}
+body.rtl .product-info-labels > li {
+  border-radius: 15px 0 0 15px;
+}
+body.rtl .product-info-feature-list {
+  right: unset;
+  left: 0;
 }
 body.rtl .product-single ul.product-info-feature-labels li:first-child{
   margin-left: unset;
@@ -1199,9 +1210,29 @@ body.rtl .owl-carousel,
 body.rtl .bx-wrapper { direction: ltr; }
 body.rtl .owl-carousel .owl-item { direction: rtl; }
 
+body.rtl .input-group-addon:first-child{
+  border-right: 1px solid #ccc;
+  border-left: 0;
+}
+body.rtl .input-group-btn:last-child>.btn,
+body.rtl .input-group-btn:last-child>.btn-group{
+  margin-left: unset;
+  margin-right: -1px;
+}
+body.rtl .shopping-cart-item-table > thead > tr > th:first-child,
+body.rtl .shopping-cart-item-table > tbody > tr > td:first-child{
+  border-right: 1px solid #ddd;
+}
+body.rtl .shopping-cart-item-table > thead > tr > th:last-child,
+body.rtl .shopping-cart-item-table > tbody > tr > td:last-child{
+  border-right: unset;
+}
+body.rtl .filter-wrapper .pull-right{
+  float: left!important;
+}
 @media (min-width: 992px){
   body.rtl .nopadding-right {
-    padding-left: 2px !important;
+    /*padding-left: 2px !important;*/
   }
 }
 @media (max-width:830px) {
@@ -3860,4 +3891,8 @@ h1.blog-post-title a {
     h2, h3 {
         page-break-after: avoid;
     }
+}
+
+.form-btn{
+  display: inline-block !important;
 }

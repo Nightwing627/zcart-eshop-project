@@ -10,6 +10,7 @@ use App\Dispute;
 use App\DisputeType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Events\Dispute\DisputeSolved;
 use App\Events\Dispute\DisputeCreated;
 use App\Events\Dispute\DisputeUpdated;
 use App\Http\Requests\Validations\RefundRequest;
@@ -80,17 +81,20 @@ class DisputeController extends Controller
     public function response(ReplyDisputeRequest $request, Dispute $dispute)
     {
         // Update status
-        if($dispute->status != $request->status){
-            $dispute->status = $request->status;
-            $dispute->save();
-        }
+        // if($dispute->status != $request->status){
+        //     $dispute->status = $request->status;
+        //     $dispute->save();
+        // }
 
         $response = $dispute->replies()->create($request->all());
 
         if ($request->hasFile('attachments'))
             $response->saveAttachments($request->file('attachments'));
 
-        event(new DisputeUpdated($response));
+        if($request->get('solved'))
+            $this->markAsSolved($request, $dispute);
+        else
+            event(new DisputeUpdated($response));
 
         return back()->with('success', trans('theme.notify.dispute_updated'));
     }
@@ -120,6 +124,17 @@ class DisputeController extends Controller
         }
 
         event(new DisputeUpdated($response));
+
+        return back()->with('success', trans('theme.notify.dispute_updated'));
+    }
+
+    public function markAsSolved(Request $request, Dispute $dispute)
+    {
+        $dispute->status = Dispute::STATUS_SOLVED;
+
+        $dispute->save();
+
+        event(new DisputeSolved($dispute));
 
         return back()->with('success', trans('theme.notify.dispute_updated'));
     }

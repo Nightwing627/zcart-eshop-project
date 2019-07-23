@@ -49,6 +49,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Dispute\DisputeUpdated' => [
             'App\Listeners\Dispute\NotifyCustomerDisputeUpdated',
         ],
+        'App\Events\Dispute\DisputeSolved' => [
+            'App\Listeners\Dispute\NotifyCustomerDisputeSolved',
+        ],
 
         // Inventory Events
         // Neet to complete

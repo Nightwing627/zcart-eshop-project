@@ -221,13 +221,13 @@
 				var preChecked = String(current) == String('{{ trans('theme.basic_packaging') }}') ? 'checked' : '';
 
 				var options = '<table class="table table-striped">' +
-				'<tr><td><div class="radio"><label id="1"><input type="radio" name="packaging_option" id="{{ trans('theme.basic_packaging') }}" value="'+ getFormatedValue(0) +'" '+ preChecked +'>{{ trans('theme.basic_packaging') }}</label></div></td>' +
+				'<tr><td><div class="radio"><label id="1"><input type="radio" name="packaging_option" id="{{ trans('theme.basic_packaging') }}" value="'+ getFormatedValue(0) +'" '+ preChecked +'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ trans('theme.basic_packaging') }}</label></div></td>' +
 				'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(0) +'</span></td></tr>';
 
 				$(this).data('options').forEach( function (item){
 				  	preChecked = String(current) == String(item.name) ? 'checked' : '';
 
-				  	options += '<tr><td><div class="radio"><label id="'+ item.id +'"><input type="radio" name="packaging_option" id="'+ item.name +'" value="'+ getFormatedValue(item.cost) +'" '+ preChecked +'>'+ item.name +'</label></div></td>' +
+				  	options += '<tr><td><div class="radio"><label id="'+ item.id +'"><input type="radio" name="packaging_option" id="'+ item.name +'" value="'+ getFormatedValue(item.cost) +'" '+ preChecked +'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.name +'</label></div></td>' +
 				  	'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(item.cost) +'</span></td></tr>';
 				});
 				options += '</table>';
@@ -270,7 +270,7 @@
 					var options = '<table class="table table-striped" id="checkout-options-table">';
 
 					if(free_shipping){
-						options += '<tr><td><div class="radio"><label id="0"><input type="radio" name="shipping_option" id="{{ trans('theme.free_shipping') }}" value="'+ getFormatedValue(0) +'" '+ preChecked +'>{{ trans('theme.free_shipping') }}</label></div></td>' +
+						options += '<tr><td><div class="radio"><label id="0"><input type="radio" name="shipping_option" id="{{ trans('theme.free_shipping') }}" value="'+ getFormatedValue(0) +'" '+ preChecked +'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ trans('theme.free_shipping') }}</label></div></td>' +
 						'<td>&nbsp;</td><td>&nbsp;</td>' +
 						'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(0) +'</span></td></tr>';
 					}
@@ -279,7 +279,7 @@
 				  		preChecked = String(current) == String(item.name) ? 'checked' : '';
 				  		var shippingRate = Number(item.rate) + Number(handlingCost);
 
-				  		options += '<tr><td><div class="radio"><label id="'+ item.id +'"><input type="radio" name="shipping_option" id="'+ item.name +'" value="'+ getFormatedValue(item.rate) +'" '+ preChecked +'>'+ item.name +'</label></div></td>' +
+				  		options += '<tr><td><div class="radio"><label id="'+ item.id +'"><input type="radio" name="shipping_option" id="'+ item.name +'" value="'+ getFormatedValue(item.rate) +'" '+ preChecked +'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.name +'</label></div></td>' +
 				  		'<td>' + item.carrier.name + '</td>' +
 				  		'<td><small class"text-muted">'+ item.delivery_takes +'</small></td>' +
 				  		'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(shippingRate) +'</span></td></tr>';

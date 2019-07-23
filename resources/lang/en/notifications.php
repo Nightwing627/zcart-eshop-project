@@ -421,4 +421,14 @@ return [
         'button_text' => 'Verify My Email',
     ],
 
+    // Version 1.2.6
+    'dispute_solved' => [
+        'subject' => 'Dispute [Order ID: :order_id] has been marked as solved!',
+        'greeting' => 'Hello :customer!',
+        'message' => 'The dispute for Order ID: :order_id has been marked as solved. Thank you for being with us.',
+        'action' => [
+            'text' => 'View the dispute',
+            'color' => 'green',
+        ],
+    ],
 ];

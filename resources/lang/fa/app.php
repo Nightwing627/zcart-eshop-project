@@ -1405,9 +1405,13 @@ return [
     'default_language' => 'Default language',
     'empty_trash' => 'Empty trash',
     'flag' => 'Flag',
+    'hide_trial_notice' => 'Hide trial notice',
     'languages' => 'Languages',
     'language' => 'Language',
+    'next_billing_date' => 'Next billing date',
     'rtl' => 'RTL',
+    'on_generic_trial' => 'On generic trial',
     'php_locale_code' => 'PHP locale code',
+    'trial_ends_at' => 'Trial ends at',
 
 ];

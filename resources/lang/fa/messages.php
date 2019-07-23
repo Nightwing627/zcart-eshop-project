@@ -171,7 +171,7 @@ return [
     'loogedin_as_admin' => 'You\'re already logged in as an admin user.',
 
     'permission'        => [
-            'denied'        => 'Permission denied!',
+        'denied'        => 'Permission denied!',
     ],
 
     // Version 1.2.4
@@ -182,4 +182,8 @@ return [
     // Version 1.2.5
     'your_shop_in_hold' => 'You are in hold, need activation from admin!',
     'youe_shop_in_maintenance_mode' => 'The shop in maintenance mode.',
+
+    // Version 1.2.6
+    'subscription_updated' => 'Subscription has been updated successfully!',
+    'subscription_update_failed' => 'Subscription update has been failed! Please see the log file for details.',
 ];

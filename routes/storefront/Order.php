@@ -25,6 +25,7 @@
 		Route::post('order/dispute/{order}', 'DisputeController@open_dispute')->name('dispute.save');
 		Route::post('dispute/{dispute}', 'DisputeController@response')->name('dispute.response');
 		Route::post('dispute/{dispute}/appeal', 'DisputeController@appeal')->name('dispute.appeal');
+		Route::post('dispute/{dispute}/markAsSolved', 'DisputeController@markAsSolved')->name('dispute.markAsSolved');
 
 		// Refunds
 		// Route::post('order/refund/{order}', 'DisputeController@refund_request')->name('refund.request');
