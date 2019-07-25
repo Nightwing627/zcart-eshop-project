@@ -472,6 +472,9 @@ class Shop extends Model
         if($this->onGenericTrial())
             return trans('app.on_generic_trial');
 
+        if ( ! $this->subscribed($this->current_billing_plan) )
+            return trans('app.on_generic_trial');
+
         $sub = $this->subscription($this->current_billing_plan)->asStripeSubscription();
 
         return Carbon::createFromTimeStamp($sub->current_period_end)->toFormattedDateString();

@@ -81,10 +81,12 @@
 										<td style="width: 75%;">{{ $shop->trial_ends_at->toDayDateTimeString() }}</td>
 									</tr>
 								@endif
-								<tr>
-									<th class="text-right">{{ trans('app.next_billing_date') }}:</th>
-									<td style="width: 75%;">{{ $shop->getNextBillingDate() }}</td>
-								</tr>
+			            		@if($shop->subscribed($shop->current_billing_plan))
+									<tr>
+										<th class="text-right">{{ trans('app.next_billing_date') }}:</th>
+										<td style="width: 75%;">{{ $shop->getNextBillingDate() }}</td>
+									</tr>
+								@endif
 								<tr>
 									<th class="text-right">{{ trans('app.legal_name') }}:</th>
 									<td style="width: 75%;">{{ $shop->legal_name }}</td>
