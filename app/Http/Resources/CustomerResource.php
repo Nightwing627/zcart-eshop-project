@@ -18,14 +18,15 @@ class CustomerResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'nice_name' => $this->nice_name,
-            'dob' => $this->dob,
-            'sex' => $this->sex,
+            'dob' => date('F j, Y', strtotime($this->dob)),
+            'sex' => trans($this->sex),
             'description' => $this->description,
             'active' => $this->active,
             'accepts_marketing' => $this->accepts_marketing,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'member_since' => $this->created_at->diffForHumans(),
             'avatar' => (new ImageResource($this->image))->size('small'),
+            'api_token' => $this->when(isset($this->api_token), $this->api_token),
+            // 'updated_at' => $this->updated_at,
         ];
     }
 }

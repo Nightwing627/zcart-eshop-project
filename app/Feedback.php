@@ -17,6 +17,16 @@ class Feedback extends Model
     protected $table = 'feedbacks';
 
     /**
+     * The attributes that should be casted to boolean types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'approved' => 'boolean',
+        'spam' => 'boolean',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

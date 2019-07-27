@@ -10,11 +10,7 @@
 	              	</h5>
 	            </div>
 	            <div class="widget-user-image">
-		            @if($customer->image)
-						<img src="{{ get_storage_file_url(optional($customer->image)->path, 'small') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-		            @else
-	            		<img src="{{ get_gravatar_url($customer->email, 'small') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-		            @endif
+            		<img src="{{ get_avatar_src($customer, 'small') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
 	            </div>
 	            <div class="spacer10"></div>
               	<div class="row">

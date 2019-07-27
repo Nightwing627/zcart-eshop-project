@@ -41,7 +41,8 @@ class HomeController extends Controller
      */
     public function banners()
     {
-        $banners = Banner::all();
+        $banners = Banner::with(['bannerbg', 'featuredImage'])->get();
+
         return BannerResource::collection($banners);
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\System;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 if ( ! function_exists('check_internet_connection') )
@@ -156,6 +157,21 @@ if ( ! function_exists('remove_url_parameter') )
     function remove_url_parameter($url, $key = false)
     {
         return preg_replace( '/'. ($key ? '(\&|)' . $key . '(\=(.*?)((?=&(?!amp\;))|$)|(.*?)\b)' : '(\?.*)').'/i' , '', $url);
+    }
+}
+
+if ( ! function_exists('get_avatar_src') )
+{
+    function get_avatar_src($model, $size = 'small')
+    {
+        if ( $model instanceof \App\User || $model instanceof \App\Customer ){
+            if ($model->image)
+                return get_storage_file_url($model->image->path, $size);
+
+            return get_gravatar_url($model->email, $size);
+        }
+
+        return get_gravatar_url('help.zcart@gmail.com', $size);
     }
 }
 

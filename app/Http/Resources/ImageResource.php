@@ -11,6 +11,7 @@ class ImageResource extends JsonResource
     public function size($size = 'full')
     {
         $this->size = $size;
+
         return $this;
     }
 

@@ -262,6 +262,19 @@ class Inventory extends Model
     }
 
     /**
+     * Return the discount percentage
+     *
+     * @return number
+     */
+    public function discount_percentage()
+    {
+        if($this->hasOffer())
+            return get_percentage_of($this->sale_price, $this->offer_price);
+
+        return 0 . '%';
+    }
+
+    /**
      * Setters
      */
     public function setMinOrderQuantityAttribute($value)

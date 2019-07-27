@@ -83,7 +83,6 @@ class ListingController extends Controller
         }
         $products = $products->paginate(config('system.view_listing_per_page', 16));
 
-        // return json_encode($products);
         return ListingResource::collection($products);
     }
 
@@ -99,15 +98,17 @@ class ListingController extends Controller
         $item = Inventory::where('slug', $slug)->available()->withCount('feedbacks')->firstOrFail();
 
         $item->load(['product' => function($q){
-                $q->select('id', 'slug', 'manufacturer_id')
+                $q->select('id', 'name', 'slug', 'model_number', 'brand', 'mpn', 'gtin', 'gtin_type', 'description', 'origin_country', 'manufacturer_id', 'created_at')
                 ->withCount(['inventories' => function($query){
                     $query->available();
                 }]);
-            }, 'attributeValues' => function($q){
+            },
+            'attributeValues' => function($q){
                 $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')
                 ->with('attribute:id,name,attribute_type_id,order');
             },
             'feedbacks.customer:id,nice_name,name',
+            'feedbacks.customer.image:path,imageable_id,imageable_type',
             'images:path,imageable_id,imageable_type',
         ]);
 

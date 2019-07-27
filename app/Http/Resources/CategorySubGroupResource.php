@@ -20,6 +20,7 @@ class CategorySubGroupResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'description' => $this->description,
+            'cover_image' => get_cover_img_src($this, 'category'),
         ];
      }
 }

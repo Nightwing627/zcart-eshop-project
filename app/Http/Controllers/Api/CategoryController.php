@@ -21,7 +21,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::active()->get();
+        $categories = Category::with(['featuredImage'])->active()->get();
+
         return CategoryResource::collection($categories);
     }
 
@@ -32,7 +33,8 @@ class CategoryController extends Controller
      */
     public function categoryGroup()
     {
-        $categories = CategoryGroup::active()->get();
+        $categories = CategoryGroup::with(['featuredImage'])->active()->get();
+
         return CategoryGroupResource::collection($categories);
     }
 
@@ -44,7 +46,8 @@ class CategoryController extends Controller
      */
     public function categorySubGroup()
     {
-        $categories = CategorySubGroup::active()->get();
+        $categories = CategorySubGroup::with(['featuredImage'])->active()->get();
+
         return CategorySubGroupResource::collection($categories);
     }
 }

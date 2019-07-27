@@ -15,10 +15,17 @@ class FeedbackResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'customer_id' => $this->customer_id,
+            'id' => $this->id,
             'rating' => $this->rating,
             'comment' => $this->comment,
+            'approved' => $this->approved,
+            'spam' => $this->spam,
             'updated_at' => $this->updated_at->diffForHumans(),
+            'customer' => [
+                'id' => $this->customer->id,
+                'name' => $this->customer->getName(),
+                'avatar' => get_avatar_src($this->customer, 'tiny'),
+            ],
         ];
     }
 }

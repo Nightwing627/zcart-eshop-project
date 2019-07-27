@@ -6,6 +6,7 @@ use App\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CustomerResource;
 use App\Http\Requests\Validations\RegisterCustomerRequest;
 use App\Notifications\Auth\SendVerificationEmail as EmailVerificationNotification;
 
@@ -33,7 +34,7 @@ class AuthController extends Controller
 
         $customer->generateToken();
 
-        return response()->json(['data' => $customer->toArray()], 201);
+        return new CustomerResource($customer);
     }
 
     /**
@@ -54,10 +55,9 @@ class AuthController extends Controller
             $customer = Auth::guard('customer')->user();
             $customer->generateToken();
 
-            return response()->json([
-                'data' => $customer->toArray(),
-            ]);
+            return new CustomerResource($customer);
         } else {
+
             return response()->json(['error' => 'Unauthorized, check your credentials.'], 401);
         }
     }

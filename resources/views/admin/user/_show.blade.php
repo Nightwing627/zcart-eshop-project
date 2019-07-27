@@ -7,11 +7,7 @@
 					<img src="{{ get_storage_file_url(optional($user->image)->path, 'small') }}" class="card-bkimg img-circle" alt="{{ trans('app.avatar') }}">
 			    </div>
 			    <div class="useravatar">
-		            @if($user->image)
-						<img src="{{ get_storage_file_url(optional($user->image)->path, 'small') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-		            @else
-	            		<img src="{{ get_gravatar_url($user->email, 'small') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-		            @endif
+            		<img src="{{ get_avatar_src($user, 'small') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
 			    </div>
 			    <div class="card-info">
 			        <span class="card-title">{{ $user->getName() }}</span>

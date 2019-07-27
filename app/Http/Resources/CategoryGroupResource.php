@@ -21,6 +21,7 @@ class CategoryGroupResource extends JsonResource
             'description' => $this->description,
             'icon' => $this->icon,
             'order' => $this->order,
+            'cover_image' => get_cover_img_src($this, 'category'),
         ];
     }
 }

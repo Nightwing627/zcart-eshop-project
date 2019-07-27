@@ -18,7 +18,11 @@ class WishlistController extends Controller
     {
         $wishlists = Wishlist::mine()->whereHas('inventory', function($q) {
             $q->available();
-        })->with(['inventory', 'inventory.feedbacks:rating,feedbackable_id,feedbackable_type,updated_at,customer_id,comment', 'inventory.images:path,imageable_id,imageable_type'])->paginate(10);
+        })->with([
+                    'inventory',
+                    'inventory.feedbacks:rating,feedbackable_id,feedbackable_type,updated_at,customer_id,comment',
+                    'inventory.images:path,imageable_id,imageable_type'
+                ])->paginate(10);
 
         return WishlistResource::collection($wishlists);
     }

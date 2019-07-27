@@ -21,7 +21,7 @@ class CategoryResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'featured' => $this->featured,
-            'banner_image' => get_cover_img_src($this, 'category'),
+            'cover_image' => get_cover_img_src($this, 'category'),
         ];
     }
 }

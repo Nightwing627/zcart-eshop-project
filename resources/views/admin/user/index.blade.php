@@ -26,11 +26,7 @@
 				    @foreach($users as $user )
 				        <tr>
 							<td>
-					            @if($user->image)
-									<img src="{{ get_storage_file_url(optional($user->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					            @else
-				            		<img src="{{ get_gravatar_url($user->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					            @endif
+			            		<img src="{{ get_avatar_src($user, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 								<p class="indent10">
 									<a href="#" data-link="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn">
 										{{ $user->nice_name }}

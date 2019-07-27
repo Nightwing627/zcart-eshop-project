@@ -23,7 +23,8 @@ class OfferResource extends JsonResource
             'description' => $this->description,
             'brand' => $this->manufacturer->name,
             'brand_slug' => $this->manufacturer->slug,
-            'image' => (new ImageResource($this->featuredImage))->size('small'),
+            'image' => get_catalog_featured_img_src($this, 'small'),
+            // 'image' => (new ImageResource($this->featuredImage))->size('small'),
             'listings' => ListingResource::collection($this->inventories),
         ];
     }
