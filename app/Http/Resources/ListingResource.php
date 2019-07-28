@@ -32,7 +32,7 @@ class ListingResource extends JsonResource
             // 'image' => (new ImageResource($this->image))->size('medium'),
             'image' => get_inventory_img_src($this, 'medium'),
             'rating' => $this->feedbacks->avg('rating'),
-            'feedbacks' => FeedbackResource::collection($this->feedbacks),
+            // 'feedbacks' => FeedbackResource::collection($this->feedbacks),
         ];
     }
 }
