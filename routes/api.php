@@ -24,10 +24,10 @@ Route::group(['namespace' => 'Api'], function(){
 	Route::get('brand/{slug}', 'ListingController@brand');
 
 	// CART
-	Route::group(['middleware' => 'ajax'], function(){
+	// Route::group(['middleware' => 'ajax'], function(){
 		Route::post('addToCart/{slug}', 'CartController@addToCart');
-		Route::post('cart/removeItem', 'CartController@remove');
-	});
+		Route::delete('cart/removeItem', 'CartController@remove');
+	// });
 
 	Route::get('carts', 'CartController@index');
 	// Route::put('cart/{cart}', 'CartController@update');
@@ -37,9 +37,14 @@ Route::group(['namespace' => 'Api'], function(){
 	// Route::get('cart/{expressId?}', 'CartController@index')->name('cart.index');
 	// Route::get('checkout/{slug}', 'CheckoutController@directCheckout');
 
-	Route::post('register', 'AuthController@register');
-	Route::post('login', 'AuthController@login');
-	Route::post('logout', 'AuthController@logout');
+	Route::group(['prefix' => 'auth'], function(){
+		Route::post('register', 'AuthController@register');
+		Route::post('login', 'AuthController@login');
+		Route::post('logout', 'AuthController@logout')->middleware(['auth:api']);
+		Route::post('forgot', 'AuthController@forgot');
+    	Route::get('reset/{token}', 'AuthController@find');
+		Route::post('reset', 'AuthController@reset');
+	});
 
 	Route::group(['middleware' => 'auth:api'], function(){
 		Route::get('dashboard', 'AccountController@index');
@@ -55,6 +60,8 @@ Route::group(['namespace' => 'Api'], function(){
 		Route::get('coupons', 'AccountController@coupons');
 		Route::post('cart/{cart}/applyCoupon', 'CartController@validateCoupon')->middleware(['ajax']);
 		Route::get('wishlist', 'WishlistController@index');
+		Route::get('wishlist/{slug}/add', 'WishlistController@add');
+		Route::delete('wishlist/{wishlist}/remove', 'WishlistController@remove');
 		Route::get('orders', 'OrderController@index');
 		Route::get('order/{order}', 'OrderController@show');
 		Route::post('order/{order}/conversation', 'ConversationController@store');

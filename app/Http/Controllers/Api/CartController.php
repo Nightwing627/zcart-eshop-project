@@ -42,7 +42,7 @@ class CartController extends Controller
     }
 
     /**
-     * Validate coupon.
+     * Add item to the cart.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -50,6 +50,9 @@ class CartController extends Controller
     public function addToCart(Request $request, $slug)
     {
         $item = Inventory::where('slug', $slug)->first();
+
+        if( ! $item )
+            return response()->json(['message' => trans('api.404')], 404);
 
         $customer_id = Auth::guard('customer')->check() ? Auth::guard('customer')->user()->id : Null;
 
@@ -117,7 +120,7 @@ class CartController extends Controller
         if (!empty($cart_item_pivot_data))
             $cart->inventories()->syncWithoutDetaching($cart_item_pivot_data);
 
-        return response()->json($cart->toArray(), 200);
+        return response()->json(['message' => trans('api.item_added_to_cart')], 200);
     }
 
     // /**
@@ -153,18 +156,17 @@ class CartController extends Controller
             ['inventory_id', $request->item],
         ])->delete();
 
-        if($result){
-            if( ! $cart->inventories()->count() ){
-                $cart->forceDelete();
-            }
-            else {
-                crosscheckAndUpdateOldCartInfo($request, $cart);
-            }
+        if( ! $result )
+            return response()->json(['message' => trans('api.404')], 404);
 
-            return response()->json('Item removed', 200);
+        if( ! $cart->inventories()->count() ){
+            $cart->forceDelete();
+        }
+        else {
+            crosscheckAndUpdateOldCartInfo($request, $cart);
         }
 
-        return response()->json('Item remove failed!', 404);
+        return response()->json(['message' => trans('api.item_removed_from_cart')], 200);
     }
 
     /**

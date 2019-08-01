@@ -12,15 +12,17 @@ class CustomerResetPasswordNotification extends Notification implements ShouldQu
     use Queueable;
 
     public $token;
+    public $url;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($token, $url = Null)
     {
         $this->token = $token;
+        $this->url = $url;
     }
 
     /**
@@ -42,13 +44,12 @@ class CustomerResetPasswordNotification extends Notification implements ShouldQu
      */
     public function toMail($notifiable)
     {
+        $url = $this->url ?? url( config('app.url').route('customer.password.reset', $this->token, false) );
+
         return (new MailMessage)
         ->from(get_sender_email(), get_sender_name())
         ->subject(trans('notifications.customer_password_reset.subject'))
-        ->markdown('admin.mail.auth.customer_password_reset', ['url' => url(config('app.url').route('customer.password.reset', $this->token, false))]);
-
-        // ->line(trans('notifications.customer_password_reset.message'))
-        // ->action(trans('notifications.customer_password_reset.action.text'), url(config('app.url').route('customer.password.reset', $this->token, false)));
+        ->markdown('admin.mail.auth.customer_password_reset', ['url' => $url]);
     }
 
     /**

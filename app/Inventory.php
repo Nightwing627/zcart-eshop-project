@@ -271,7 +271,8 @@ class Inventory extends Model
         if($this->hasOffer())
             return get_percentage_of($this->sale_price, $this->offer_price);
 
-        return 0 . '%';
+        return 0;
+        // return 0 . '%';
     }
 
     /**

@@ -21,5 +21,4 @@ class LocaleController extends Controller
 
         return redirect()->back();
     }
-
 }

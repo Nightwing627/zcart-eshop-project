@@ -3,7 +3,7 @@
 <br/>
 
 @component('mail::button', ['url' => $url, 'color' => 'blue'])
-{{ trans('notifications.customer_password_reset.action.text') }}
+{{ trans('notifications.customer_password_reset.button_text') }}
 @endcomponent
 
 {{ trans('messages.thanks') }},<br>
