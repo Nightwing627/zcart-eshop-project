@@ -221,7 +221,7 @@ class SystemController extends Controller
             Artisan::queue('backup:clean', [], $outputLog); // Remove all backups older than specified number of days in config.
             \Log::info(Artisan::output());
 
-            \Log::info("Backup command called!");
+            \Log::info("Database Backup command called!");
             Artisan::queue('backup:run', ["--only-db" => true], $outputLog);
             \Log::info(Artisan::output());
         }

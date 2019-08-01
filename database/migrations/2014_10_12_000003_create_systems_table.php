@@ -61,7 +61,7 @@ class CreateSystemsTable extends Migration
             // $table->enum('time_separator', ['.', ':'])->default(':');
 
             // Currency
-            $table->enum('decimals', [2, 3, 4, 5, 6])->default(2);
+            $table->enum('decimals', [0, 2, 3, 4, 5, 6])->default(2);
             $table->boolean('show_currency_symbol')->default(1);
             $table->boolean('show_space_after_symbol')->default(1);
 

@@ -397,7 +397,7 @@
 									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_decimals') }}"></i>
 									  	<div class="col-sm-4 nopadding-left">
 									  		@if($can_update)
-											    {!! Form::select('decimals', ['2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6'], $system->decimals, ['class' => 'form-control select2-normal', 'required']) !!}
+											    {!! Form::select('decimals', ['0' => '0', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6'], $system->decimals, ['class' => 'form-control select2-normal', 'required']) !!}
 										      	<div class="help-block with-errors"></div>
 											@else
 												<span>{{ $system->decimals }}</span>

@@ -18,7 +18,8 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->getName(),
             'email' => $this->email,
-            'image' => (new ImageResource($this->image))->size('small'),
+            'avatar' => get_avatar_src($this, 'small'),
+            // 'image' => (new ImageResource($this->image))->size('small'),
         ];
     }
 }

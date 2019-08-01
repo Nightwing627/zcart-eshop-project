@@ -27,7 +27,7 @@ return [
                  * Directories used by the backup process will automatically be excluded.
                  */
                 'exclude' => [
-                    // base_path('vendor'),
+                    base_path('vendor'),
                     base_path('node_modules'),
                 ],
 
@@ -124,16 +124,16 @@ return [
         ],
 
         'slack' => [
-            'webhook_url' => '',
+            'webhook_url' => env('SLACK_WEBHOOK_URL', ''),
 
             /*
              * If this is set to null the default channel of the webhook will be used.
              */
-            'channel' => null,
+            'channel' => env('SLACK_CHANNEL', null),
 
-            'username' => null,
+            'username' => env('SLACK_USERNAME', null),
 
-            'icon' => null,
+            'icon' => env('SLACK_ICON', null),
 
         ],
     ],

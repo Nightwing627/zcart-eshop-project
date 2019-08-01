@@ -43,13 +43,14 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
             //The Application Middlewares
-            \App\Http\Middleware\InitSettings::class, //This need to be here
+            \App\Http\Middleware\InitSettings::class, //This need to be exactly here, dont move
             \App\Http\Middleware\Language::class,
         ],
 
         'api' => [
             'throttle:60,1',
             'bindings',
+            \App\Http\Middleware\ApiInit::class, //This need to be exactly here, dont move
         ],
     ];
 

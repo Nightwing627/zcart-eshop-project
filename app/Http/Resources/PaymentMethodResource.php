@@ -20,7 +20,7 @@ class PaymentMethodResource extends JsonResource
             'type' => $this->typeName($this->type),
             'code' => $this->code,
             'name' => $this->name,
-            // 'pattern_img' => (new ImageResource($this->image))->size('tiny'),
+            'image' => (new ImageResource($this->image))->size('tiny'),
         ];
     }
 }

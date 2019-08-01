@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Auth;
 use App\Order;
 use App\Reply;
 use App\Message;

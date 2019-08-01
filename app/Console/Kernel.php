@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('incevio:kpi')->dailyAt('23:58');
         // $schedule->command('backup:clean')->daily()->at('01:00');
         // $schedule->command('backup:run')->daily()->at('02:00');
+       // $schedule->command('backup:monitor')->daily()->at('03:00');
 
         if( config('app.demo') == true )
             $schedule->command('incevio:reset-demo')->twiceDaily(1, 13); //Reset the demo applcoation

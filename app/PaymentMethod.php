@@ -99,5 +99,4 @@ class PaymentMethod extends Model
                 return '';
         }
     }
-
 }

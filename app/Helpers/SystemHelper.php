@@ -90,7 +90,7 @@ if ( ! function_exists('setSystemConfig') )
      */
     function setSystemConfig($shop = Null)
     {
-        if(!config('system_settings')){
+        if( ! config('system_settings') ){
             $system_settings = ListHelper::system_settings();
 
             config()->set('system_settings', $system_settings);
@@ -100,7 +100,7 @@ if ( ! function_exists('setSystemConfig') )
             setSystemCurrency();
         }
 
-        if($shop && !config('shop_settings')){
+        if( $shop && !config('shop_settings') ){
             setShopConfig($shop);
         }
     }

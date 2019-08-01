@@ -18,8 +18,9 @@ class DashboardResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'nice_name' => $this->nice_name,
-            'dob' => $this->dob,
-            'sex' => $this->sex,
+            // 'dob' => $this->dob,
+            'dob' => date('F j, Y', strtotime($this->dob)),
+            'sex' => trans($this->sex),
             'description' => $this->description,
             'active' => $this->active,
             'accepts_marketing' => $this->accepts_marketing,
@@ -27,9 +28,10 @@ class DashboardResource extends JsonResource
             'wishlists_count' => $this->wishlists_count,
             'disputes_count' => $this->disputes_count,
             'coupons_count' => $this->coupons_count,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'avatar' => (new ImageResource($this->image))->size('small'),
+            'member_since' => $this->created_at->diffForHumans(),
+            'updated_at' => $this->updated_at->diffForHumans(),
+            'avatar' => get_avatar_src($this, 'small'),
+            // 'avatar' => (new ImageResource($this->image))->size('small'),
         ];
     }
 }
