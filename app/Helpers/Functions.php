@@ -692,9 +692,8 @@ if ( ! function_exists('format_to_number') )
      */
     function format_to_number($value, $decimals = 2)
     {
-        if (trim($value) != null) {
+        if (trim($value) != null)
             return number_format($value, $decimals, '.', '');
-        }
 
         return null;
     }
@@ -702,22 +701,10 @@ if ( ! function_exists('format_to_number') )
 
 if ( ! function_exists('get_formated_decimal') )
 {
-    /**
-     * Get the formated decimal value.
-     *
-     * @param  decimal $value
-     * @param  boolean $trim  remove un wanted zeros after decimal point
-     *
-     * @return decimal
-     */
     function get_formated_decimal($value = 0, $trim = true, $decimal = 0)
     {
-        if (!$decimal) {
-            if ($decimal === 0)
-                $decimal = 0;
-            else
-                $decimal = config('system_settings.decimals', 2);
-        }
+        // if ( ! $decimal )
+        //     $decimal = $decimal == 0 ? 0 : config('system_settings.decimals', 2);
 
         $decimal_mark = config('system_settings.currency.decimal_mark', '.');
 
@@ -737,16 +724,13 @@ if ( ! function_exists('get_formated_decimal') )
 
 if ( ! function_exists('get_formated_price') )
 {
-    /**
-     * Get the formated currency tring.
-     *
-     * @param  integer $value amount
-     *
-     * @return str        currency tring
-     */
     function get_formated_price($value = 0, $decimal = null)
     {
+
         $price = get_formated_currency($value, $decimal);
+
+        if( $decimal == 0 )
+            return $price;
 
         $arr = explode( config('system_settings.currency.decimal_mark', '.'), $price );
 
@@ -759,13 +743,6 @@ if ( ! function_exists('get_formated_price') )
 
 if ( ! function_exists('get_formated_currency') )
 {
-    /**
-     * Get the formated currency tring.
-     *
-     * @param  integer $value amount
-     *
-     * @return str        currency tring
-     */
     function get_formated_currency($value = 0, $decimal = null)
     {
         $value =  get_formated_decimal($value, $decimal ? false : true, $decimal);
