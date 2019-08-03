@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Shop;
 use App\Order;
 use App\Feedback;
+use App\Inventory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\FeedbackResource;
 use App\Http\Resources\ConversationResource;
 use App\Http\Requests\Validations\OrderDetailRequest;
 use App\Http\Requests\Validations\ShopFeedbackCreateRequest;
@@ -13,6 +16,35 @@ use App\Http\Requests\Validations\ProductFeedbackCreateRequest;
 
 class FeedbackController extends Controller
 {
+    /**
+     * [show_shop_feedbacks description]
+     *
+     * @param  Request $request [description]
+     * @param  [type]  $slug    [description]
+     *
+     * @return [type]           [description]
+     */
+    public function show_shop_feedbacks(Request $request, $slug)
+    {
+        $shop = Shop::where('slug', $slug)->first();
+
+        return FeedbackResource::collection($shop->feedbacks);
+    }
+
+    /**
+     * [show_item_feedbacks description]
+     *
+     * @param  Request $request [description]
+     * @param  [type]  $slug    [description]
+     *
+     * @return [type]           [description]
+     */
+    public function show_item_feedbacks(Request $request, $slug)
+    {
+        $item = Inventory::where('slug', $slug)->first();
+
+        return FeedbackResource::collection($item->feedbacks);
+    }
 
     /**
      * Store a newly created resource in storage.

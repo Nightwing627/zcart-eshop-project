@@ -18,6 +18,7 @@ class FeedbackResource extends JsonResource
             'id' => $this->id,
             'rating' => $this->rating,
             'comment' => $this->comment,
+            'verified_purchase' => true,
             'approved' => $this->approved,
             'spam' => $this->spam,
             'updated_at' => $this->updated_at->diffForHumans(),

@@ -32,7 +32,7 @@
     function doTrack() {
         var num = document.getElementById("YQNum").value;
         if(num===""){
-            alert("Enter your number.");
+            alert({{ trans('theme.enter_tracking_number') }});
             return;
         }
         YQV5.trackSingle({

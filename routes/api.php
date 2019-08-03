@@ -22,6 +22,8 @@ Route::group(['namespace' => 'Api'], function(){
 	Route::get('shop/{slug}/listings', 'ListingController@shop');
 	Route::get('category/{slug}', 'ListingController@category');
 	Route::get('brand/{slug}', 'ListingController@brand');
+	Route::get('listing/{slug}/feedbacks', 'FeedbackController@show_item_feedbacks');
+	Route::get('shop/{slug}/feedbacks', 'FeedbackController@show_shop_feedbacks');
 
 	// CART
 	// Route::group(['middleware' => 'ajax'], function(){
@@ -66,7 +68,7 @@ Route::group(['namespace' => 'Api'], function(){
 		Route::get('order/{order}', 'OrderController@show');
 		Route::post('order/{order}/conversation', 'ConversationController@store');
 		Route::get('order/{order}/conversation', 'ConversationController@show');
-		// Route::get('order/{order}/track', 'OrderController@track');
+		Route::get('order/{order}/track', 'OrderController@track');
 		Route::post('shop/{order}/feedback', 'FeedbackController@save_shop_feedbacks');
 		Route::post('order/{order}/feedback', 'FeedbackController@save_product_feedbacks');
 		Route::post('order/{order}/goodsReceived', 'OrderController@goods_received');

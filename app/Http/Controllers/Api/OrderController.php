@@ -55,4 +55,22 @@ class OrderController extends Controller
         return new OrderResource($order);
         // return redirect()->route('order.feedback', $order)->with('success', trans('theme.notify.order_updated'));
     }
+
+    /**
+     * Track order shippping.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Order   $order
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function track(Request $request, Order $order)
+    {
+        $url = $order->getTrackingUrl();
+
+        // if ( ! $url )
+        //     $url = ;
+
+        return response()->json(['tracking_url' => $url], 200);
+    }
 }

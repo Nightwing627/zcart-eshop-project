@@ -29,7 +29,7 @@
   	</div>
 	</div>
 
-	<a href="{{ route('wishlist.add', $item->product) }}" class="btn btn-link">
+	<a href="{{ route('wishlist.add', $item) }}" class="btn btn-link">
 		<i class="fa fa-heart-o"></i> @lang('theme.button.add_to_wishlist')
 	</a>
 </div><!-- /.product-info -->

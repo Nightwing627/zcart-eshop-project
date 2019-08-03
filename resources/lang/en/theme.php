@@ -583,4 +583,5 @@ return [
 
 	// Version 1.2.6
 	'mark_as_solved' => 'Mark as solved',
+	'enter_tracking_number' => 'Enter your order tracking number.',
 ];
