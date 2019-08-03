@@ -24,7 +24,7 @@ foreach ($variants as &$value) {
     var buyNowBaseUrl = $("#buy-now-btn").attr('href');
     buyNowBaseUrl = buyNowBaseUrl.substr(0, buyNowBaseUrl.lastIndexOf('/') + 1);
 
-    var addToCartBaseUrl = itemWrapper.find('.sc-add-to-cart').attr('href');
+    var addToCartBaseUrl = itemWrapper.find('.sc-add-to-cart').data('link');
     addToCartBaseUrl = addToCartBaseUrl.substr(0, addToCartBaseUrl.lastIndexOf('/') + 1);
 
     $(document).ready(function(){
@@ -232,7 +232,8 @@ foreach ($variants as &$value) {
     function updateUrls(item)
     {
         $("#buy-now-btn").attr('href', buyNowBaseUrl + item.slug);
-        itemWrapper.find('.sc-add-to-cart').attr('href', addToCartBaseUrl + item.slug);
+        itemWrapper.find('.sc-add-to-cart').data('link', addToCartBaseUrl + item.slug);
+        // itemWrapper.find('.sc-add-to-cart').attr('href', addToCartBaseUrl + item.slug);
         history.pushState(item, item.title, item.slug);         // HTML5 History pushState method to update browser URI
     }
 

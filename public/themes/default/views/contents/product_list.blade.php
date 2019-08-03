@@ -36,7 +36,7 @@
                         <i class="fa fa-external-link" data-toggle="tooltip" title="@lang('theme.button.quick_view')"></i> <span>@lang('theme.button.quick_view')</span>
                     </a>
 
-                    <a class="btn btn-primary flat sc-add-to-cart" href="{{ route('cart.addItem', $item->slug) }}">
+                    <a class="btn btn-primary flat sc-add-to-cart" data-link="{{ route('cart.addItem', $item->slug) }}">
                         <i class="fa fa-shopping-cart"></i> @lang('theme.button.add_to_cart')
                     </a>
                 </div>

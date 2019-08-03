@@ -12,7 +12,14 @@ if(file_exists($link))
         exit("Manually delete '" . __DIR__ . "/storage' and try again.\n");
 }
 
-if(symlink($target, $link))
-    echo "symlink has been created successfully!";
-else
-    echo "FAILED! Please enable symlink function and try again.";
+if (! windows_os()) {
+	if(symlink($target, $link))
+	    echo "symlink has been created successfully!";
+	else
+    	echo "FAILED! Please enable symlink function and try again.";
+}
+else {
+	$mode = $this->isDirectory($target) ? 'J' : 'H';
+
+	exec("mklink /{$mode} \"{$link}\" \"{$target}\"");
+}

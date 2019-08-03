@@ -203,6 +203,8 @@
             disable: false,
         });
 
+        // $('.sc-add-to-cart').removeAttr('href').css('cursor', 'pointer').show();
+
         // Add-to-cart
         $(".sc-add-to-cart").on("click", function(e) {
             e.preventDefault();
@@ -212,7 +214,7 @@
             var shippingZoneId = item.find('input#shipping-zone-id').val();
             var shippingRateId = item.find('input#shipping-rate-id').val();
             $.ajax({
-                url: $(this).attr('href'),
+                url: $(this).data('link'),
                 type: 'POST',
                 data: {
                     'shipTo' : shipTo,

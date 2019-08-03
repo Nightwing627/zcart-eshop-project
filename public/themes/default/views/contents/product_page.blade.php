@@ -120,7 +120,7 @@
 				            </a>
 				        </div><!-- /.seller-info -->
 
-			          	<a href="{{ route('cart.addItem', $item->slug) }}" class="btn btn-primary btn-lg btn-block flat space10 sc-add-to-cart">
+			          	<a data-link="{{ route('cart.addItem', $item->slug) }}" class="btn btn-primary btn-lg btn-block flat space10 sc-add-to-cart">
 			          		<i class="fa fa-shopping-bag"></i> @lang('theme.button.add_to_cart')
 			          	</a>
 
@@ -187,7 +187,7 @@
 				                            <i class="fa fa-external-link" data-toggle="tooltip" title="@lang('theme.button.quick_view')"></i> <span>@lang('theme.button.quick_view')</span>
 				                        </a>
 
-							          	<a href="{{ route('cart.addItem', $linkedItem->slug) }}" class="btn btn-primary btn-xs flat sc-add-to-cart pull-right">
+							          	<a data-link="{{ route('cart.addItem', $linkedItem->slug) }}" class="btn btn-primary btn-xs flat sc-add-to-cart pull-right">
 							          		<i class="fa fa-shopping-bag"></i> @lang('theme.button.add_to_cart')
 							          	</a>
 					                </div>
