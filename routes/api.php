@@ -46,6 +46,8 @@ Route::group(['namespace' => 'Api'], function(){
 		Route::post('forgot', 'AuthController@forgot');
     	Route::get('reset/{token}', 'AuthController@find');
 		Route::post('reset', 'AuthController@reset');
+    	Route::get('social/{provider}', 'AuthController@socialLogin');
+    	Route::get('social/{provider}/callback', 'AuthController@handleSocialProviderCallback');
 	});
 
 	Route::group(['middleware' => 'auth:api'], function(){

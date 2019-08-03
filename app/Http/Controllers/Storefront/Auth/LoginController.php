@@ -89,20 +89,17 @@ class LoginController extends Controller
         }
 
         $customer = Customer::where('email', $user->email)->first();
-        if ($customer){
-            Auth::guard('customer')->login($customer);
 
-            return redirect()->intended('/')->with('success', trans('theme.notify.logged_in_successfully'));
+        if ( ! $customer ){
+            $customer = new Customer;
+            $customer->name = $user->getName();
+            $customer->nice_name = $user->getNickname();
+            $customer->email = $user->getEmail();
+            $customer->active = 1;
+            $customer->save();
+
+            $customer->saveImageFromUrl($user->avatar_original ?? $user->getAvatar());
         }
-
-        $customer = new Customer;
-        $customer->name = $user->getName();
-        $customer->nice_name = $user->getNickname();
-        $customer->email = $user->getEmail();
-        $customer->active = 1;
-        $customer->save();
-
-        $customer->saveImageFromUrl($user->avatar_original ?? $user->getAvatar());
 
         Auth::guard('customer')->login($customer);
 

@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api;
 
 // use App\Events\Customer\PasswordUpdated;
 
-use Carbon\Carbon;
+use Socialite;
 use App\Customer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -56,6 +57,52 @@ class AuthController extends Controller
 
             return response()->json(['message' => trans('api.auth_failed')], 401);
         }
+    }
+
+    /**
+     * Redirect the user to the facebook authentication page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function socialLogin($provider)
+    {
+        return Socialite::driver($provider)->stateless()->redirect();
+        // return Socialite::driver($provider)->redirect();
+    }
+
+    /**
+     * Obtain the user information from facebook.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleSocialProviderCallback(Request $request, $provider)
+    {
+        try {
+            $user = Socialite::driver($provider)->stateless()->user();
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = json_decode($e->getResponse()->getBody()->getContents(), true);
+
+            return response()->json(['message' => trans('api.auth_failed') . ' ' . $response['error']['message']], 401);
+
+            // return redirect()->route('customer.login')->withErrors(trans('theme.notify.authentication_failed', ['msg' => $response['error']['message']]));
+        }
+
+        $customer = Customer::where('email', $user->email)->first();
+
+        if ( ! $customer ){
+            $customer = new Customer;
+            $customer->name = $user->getName();
+            $customer->nice_name = $user->getNickname();
+            $customer->email = $user->getEmail();
+            $customer->active = 1;
+            $customer->save();
+
+            $customer->saveImageFromUrl($user->avatar_original ?? $user->getAvatar());
+        }
+
+        $customer->generateToken();
+
+        return new CustomerResource($customer);
     }
 
     public function logout(Request $request)
