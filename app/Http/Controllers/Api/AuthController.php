@@ -64,7 +64,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function socialLogin($provider)
+    public function socialLogin(Request $request, $provider)
     {
         return Socialite::driver($provider)->stateless()->redirect();
         // return Socialite::driver($provider)->redirect();
@@ -80,11 +80,13 @@ class AuthController extends Controller
         try {
             $user = Socialite::driver($provider)->stateless()->user();
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-            $response = json_decode($e->getResponse()->getBody()->getContents(), true);
+            // $response = json_decode($e->getResponse()->getBody()->getContents(), true);
+            // return response()->json(['message' => trans('api.auth_failed') . ' ' . $response['error']['message']], 401);
 
-            return response()->json(['message' => trans('api.auth_failed') . ' ' . $response['error']['message']], 401);
-
-            // return redirect()->route('customer.login')->withErrors(trans('theme.notify.authentication_failed', ['msg' => $response['error']['message']]));
+            return response()->json([
+                'message'   => trans('api.auth_failed'),
+                'errors'    => json_decode($e->getResponse()->getBody()->getContents(), true)
+            ], 401);
         }
 
         $customer = Customer::where('email', $user->email)->first();

@@ -5,6 +5,7 @@ return [
 	'item_added_to_wishlist' => 'Item added to wishlist',
 	'item_removed_from_wishlist' => 'Item has been removed',
 	'item_added_to_cart' => 'Item added to cart',
+	'item_alrealy_in_cart' => 'Item alrealy in your cart',
 	'item_removed_from_cart' => 'Item hs been removed',
 	'email_account_not_found' => 'We can\'t find a user with that e-mail address.',
     'password_reset_link_sent' => 'The password reset link sent! Please check your email.',

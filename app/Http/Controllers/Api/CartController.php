@@ -70,7 +70,9 @@ class CartController extends Controller
         // Check if the item is alrealy in the cart
         if($old_cart){
             $item_in_cart = \DB::table('cart_items')->where('cart_id', $old_cart->id)->where('inventory_id', $item->id)->first();
-            if($item_in_cart) return response()->json(['cart_id' => $item_in_cart->cart_id], 444);  // Item alrealy in cart
+
+            if($item_in_cart)
+                return response()->json(['message' => trans('api.item_alrealy_in_cart')], 409); // Item alrealy in cart
         }
 
         $qtt = $request->quantity ?? $item->min_order_quantity;
