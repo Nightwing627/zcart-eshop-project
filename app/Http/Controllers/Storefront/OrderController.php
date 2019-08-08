@@ -527,14 +527,14 @@ class OrderController extends Controller
         ->setCancelUrl(route("payment.failed", $order->id));
 
         $payment = Paypalpayment::payment();
-
         $payment->setIntent("sale")->setPayer($payer)->setRedirectUrls($redirectUrls)->setTransactions([$transaction]);
 
         try {
-            // ### Create Payment
             // Create a payment by posting to the APIService using a valid ApiContext The return object contains the status;
             $payment->create(Paypalpayment::apiContext());
         } catch (\PPConnectionException $ex) {
+            \Log::error('PayPal Payment failed: ' . $ex->getMessage());
+
             return response()->json(["error" => $ex->getMessage()], 400);
         }
 
@@ -549,7 +549,7 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function paymentSuccess(Request $request, $order)
+    public function paypalPaymentSuccess(Request $request, $order)
     {
         if ( ! $request->has('token') ||  ! $request->has('paymentId') || ! $request->has('PayerID') )
             return redirect()->route("payment.failed", $order);
@@ -557,15 +557,50 @@ class OrderController extends Controller
         if( !$order instanceOf Order )
             $order = Order::find($order);
 
-        // Order has been paided
-        $this->markOrderAsPaid($order);
+// ///////////////////////////////////
+        // Get the vendor configs
+        $vendorPaypalConfig = $order->shop->paypalExpress;
 
-        // Decrease the stock of the order items from the listing
-        // $this->syncInventory($order);
+        // // If the paypal is not cofigured
+        // if( ! $vendorPaypalConfig )
+        //     return redirect()->back()->with('error', trans('theme.notify.payment_method_config_error'))->withInput();
 
-        event(new OrderCreated($order));   // Trigger the Event
+        // Set vendor's paypal config
+        config()->set('paypal_payment.mode', $vendorPaypalConfig->sandbox == 1 ? 'sandbox' : 'live');
+        config()->set('paypal_payment.account.client_id', $vendorPaypalConfig->client_id);
+        config()->set('paypal_payment.account.client_secret', $vendorPaypalConfig->secret);
 
-        return redirect()->route('order.success', $order)->with('success', trans('theme.notify.order_placed'));
+       $payment = Paypalpayment::getById($request->get('paymentId'), Paypalpayment::apiContext());
+
+        try {
+
+            // Execute the payment;
+            $paymentExecution = Paypalpayment::paymentExecution();
+            $paymentExecution->setPayerId($request->get('PayerID'));
+            $payment->execute($paymentExecution, Paypalpayment::apiContext());
+
+        } catch (\PPConnectionException $ex) {
+            \Log::error('PayPal Payment failed: ' . $ex->getMessage());
+
+            return response()->json(["error" => $ex->getMessage()], 400);
+        }
+
+        if($payment->getState() == 'approved'){
+            // Order has been paided
+            $this->markOrderAsPaid($order);
+
+            // Decrease the stock of the order items from the listing
+            // $this->syncInventory($order);
+
+            event(new OrderCreated($order));   // Trigger the Event
+
+            return redirect()->route('order.success', $order)->with('success', trans('theme.notify.order_placed'));
+        }
+
+        // return response()->json([$payment->toArray()], 200);
+        // ///////////////////////////////////
+
+        return redirect()->route("payment.failed", $order);
     }
 
     /**
@@ -580,7 +615,6 @@ class OrderController extends Controller
     {
         // $cart = $this->revertOrder($order);
         $cart = revertOrderAndMoveToCart($order);
-        // echo "<pre>"; print_r($cart); echo "</pre>"; exit();
 
         return redirect()->route('cart.checkout', $cart)->with('error', trans('theme.notify.payment_failed'))->withInput();
     }

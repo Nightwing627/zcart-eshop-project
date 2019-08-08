@@ -239,7 +239,7 @@
 			          	</div>
 				        <div class="col-xs-8">
 				            <div class="message-content-wrapper">
-				                <div class="message-content">{{ $msg->reply }}</div>
+				                <div class="message-content">{!! $msg->reply !!}</div>
 				            	@if($attachment = optional($msg->attachments)->first())
 							        <a href="{{ get_storage_file_url($attachment->path, 'original') }}" class="pull-right message-attachment" target="_blank">
 							        	<img src="{{ get_storage_file_url($attachment->path, 'tiny') }}" class="img-sm thumbnail">

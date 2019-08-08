@@ -16,9 +16,9 @@
                     </ul>
 
                     <div class="product-img-wrap">
-                        <img class="product-img-primary" src="{{ get_product_img_src($wish->inventory, 'medium') }}" alt="{{ $wish->inventory->title }}" title="{{ $wish->inventory->title }}" />
+                        <img class="product-img-primary" src="{{ get_product_img_src($wish->inventory, 'medium') }}" alt="{!! $wish->inventory->title !!}" title="{!! $wish->inventory->title !!}" />
 
-                        <img class="product-img-alt" src="{{ get_product_img_src($wish->inventory, 'medium', 'alt') }}" alt="{{ $wish->inventory->title }}" title="{{ $wish->inventory->title }}" />
+                        <img class="product-img-alt" src="{{ get_product_img_src($wish->inventory, 'medium', 'alt') }}" alt="{!! $wish->inventory->title !!}" title="{!! $wish->inventory->title !!}" />
 
                         <a class="product-link" href="{{ route('show.product', $wish->inventory->slug) }}"></a>
                     </div>
@@ -45,7 +45,7 @@
                         @include('layouts.ratings', ['ratings' => $wish->inventory->feedbacks->avg('rating')])
 
                         <a href="{{ route('show.product', $wish->inventory->slug) }}" class="product-info-title">
-                            {{ $wish->inventory->title }}
+                            {!! $wish->inventory->title !!}
                         </a>
 
                         <div class="product-info-availability">

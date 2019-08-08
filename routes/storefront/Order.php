@@ -3,7 +3,7 @@
 	Route::get('paymentFailed/{order}', 'OrderController@paymentFailed')->name('payment.failed');
 
 	// PayPal
-	Route::get('paymentSuccess/{order}', 'OrderController@paymentSuccess')->name('payment.success');
+	Route::get('paymentSuccess/{order}', 'OrderController@paypalPaymentSuccess')->name('payment.success');
 	Route::get('order/{order}/success', 'OrderController@orderPlaced')->name('order.success');
 
 	// Paystack
