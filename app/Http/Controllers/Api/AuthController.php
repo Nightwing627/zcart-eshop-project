@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CustomerResource;
+use App\Http\Requests\Validations\ApiSpcialLoginRequest;
 use App\Http\Requests\Validations\RegisterCustomerRequest;
 use App\Notifications\Auth\SendVerificationEmail as EmailVerificationNotification;
 // use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
@@ -64,24 +65,12 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function socialLogin(Request $request, $provider)
-    {
-        return Socialite::driver($provider)->stateless()->redirect();
-        // return Socialite::driver($provider)->redirect();
-    }
-
-    /**
-     * Obtain the user information from facebook.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function handleSocialProviderCallback(Request $request, $provider)
+    public function socialLogin(ApiSpcialLoginRequest $request, $provider)
     {
         try {
-            $user = Socialite::driver($provider)->stateless()->user();
+            $user = Socialite::driver($provider)->userFromToken($request->get('access_token'));
+            // return response()->json([$user, $user->avatar_original]);
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-            // $response = json_decode($e->getResponse()->getBody()->getContents(), true);
-            // return response()->json(['message' => trans('api.auth_failed') . ' ' . $response['error']['message']], 401);
 
             return response()->json([
                 'message'   => trans('api.auth_failed'),
@@ -106,6 +95,44 @@ class AuthController extends Controller
 
         return new CustomerResource($customer);
     }
+
+    /**
+     * Obtain the user information from facebook.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    // public function handleSocialProviderCallback(Request $request, $provider)
+    // {
+    //     try {
+    //         $user = Socialite::driver($provider)->stateless()->user();
+    //         // $user = Socialite::driver($provider)->stateless()->user();
+    //     } catch (\GuzzleHttp\Exception\ClientException $e) {
+    //         // $response = json_decode($e->getResponse()->getBody()->getContents(), true);
+    //         // return response()->json(['message' => trans('api.auth_failed') . ' ' . $response['error']['message']], 401);
+
+    //         return response()->json([
+    //             'message'   => trans('api.auth_failed'),
+    //             'errors'    => json_decode($e->getResponse()->getBody()->getContents(), true)
+    //         ], 401);
+    //     }
+
+    //     $customer = Customer::where('email', $user->email)->first();
+
+    //     if ( ! $customer ){
+    //         $customer = new Customer;
+    //         $customer->name = $user->getName();
+    //         $customer->nice_name = $user->getNickname();
+    //         $customer->email = $user->getEmail();
+    //         $customer->active = 1;
+    //         $customer->save();
+
+    //         $customer->saveImageFromUrl($user->avatar_original ?? $user->getAvatar());
+    //     }
+
+    //     $customer->generateToken();
+
+    //     return new CustomerResource($customer);
+    // }
 
     public function logout(Request $request)
     {

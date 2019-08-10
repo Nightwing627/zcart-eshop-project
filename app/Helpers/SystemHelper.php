@@ -118,6 +118,13 @@ if ( ! function_exists('setSystemLocale') )
         $active_locales = ListHelper::availableLocales();
 
         config()->set('active_locales', $active_locales);
+
+        // Set timezone
+        Config::set('app.timezone', env('APP_TIMEZONE'));
+        // echo "<pre>"; print_r(config('system_settings')); echo "</pre>"; exit();
+        // $carbonDate = new Carbon($dateFromDBInUTC);
+        // $carbonDate->timezone = 'America/New_York';
+
     }
 }
 

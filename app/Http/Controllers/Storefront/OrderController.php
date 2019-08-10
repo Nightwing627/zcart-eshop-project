@@ -557,7 +557,7 @@ class OrderController extends Controller
         if( !$order instanceOf Order )
             $order = Order::find($order);
 
-// ///////////////////////////////////
+        // ///////////////////////////////////
         // Get the vendor configs
         $vendorPaypalConfig = $order->shop->paypalExpress;
 

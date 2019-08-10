@@ -1,5 +1,6 @@
 <?php
 return [
+	'access_token_required' => 'A valid access token is required.',
     'auth_failed' => 'These credentials do not match our records.',
 	'auth_out' => 'Logged out successfully!',
 	'item_added_to_wishlist' => 'Item added to wishlist',

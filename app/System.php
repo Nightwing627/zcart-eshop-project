@@ -103,6 +103,14 @@ class System extends Model
     }
 
     /**
+     * Get the timezone associated with the blog post.
+     */
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
+    }
+
+    /**
      * Check if the system is down or live.
      *
      * @return bool

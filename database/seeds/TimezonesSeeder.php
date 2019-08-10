@@ -22,7 +22,8 @@ class TimezonesSeeder extends Seeder
                 'offset' => ((isset($timezone['offset'])) ? $timezone['offset'] : null),
                 'isdst' => ((isset($timezone['isdst'])) ? $timezone['isdst'] : null),
                 'text' => ((isset($timezone['text'])) ? $timezone['text'] : null),
-                'utc' => ((isset($timezone['utc'])) ? json_encode($timezone['utc']) : null),
+                'utc' => ((isset($timezone['utc'])) ? $timezone['utc'] : null),
+                // 'utc' => ((isset($timezone['utc'])) ? json_encode($timezone['utc']) : null),
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ]);
