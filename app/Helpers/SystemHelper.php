@@ -133,20 +133,8 @@ if ( ! function_exists('setSystemTimezone') )
     {
         $system_timezone = ListHelper::system_timezone();
 
-        // echo "<pre>"; print_r($system_timezone); echo "</pre>"; exit();
-
-        // if($system_timezone){
-        // }
-        // else{
-            // echo "<pre>"; print_r(config('system_settings')); echo "</pre>"; exit();
-            // $carbonDate = new Carbon($dateFromDBInUTC);
-            // $carbonDate->timezone = 'America/New_York';
-        // }
-
-        // Config::set('app.timezone', 'Asia/Dhaka');
-        // date_default_timezone_set('Asia/Dhaka');
         Config::set('app.timezone', $system_timezone->utc);
-        // date_default_timezone_set($system_timezone->utc);
+        date_default_timezone_set($system_timezone->utc);
     }
 }
 
