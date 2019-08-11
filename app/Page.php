@@ -4,10 +4,9 @@ namespace App;
 
 use Carbon\Carbon;
 use App\Common\Imageable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Page extends Model
+class Page extends BaseModel
 {
     use SoftDeletes, Imageable;
 

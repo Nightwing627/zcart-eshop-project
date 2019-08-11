@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class FaqTopic extends Model
+class FaqTopic extends BaseModel
 {
     /**
      * The database table used by the model.

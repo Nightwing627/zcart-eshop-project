@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 use Hash;
@@ -10,7 +11,6 @@ use App\Common\ApiAuthTokens;
 use Laravel\Scout\Searchable;
 // use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 // use Spatie\Activitylog\Traits\HasActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;

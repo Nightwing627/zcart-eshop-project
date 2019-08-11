@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class AttributeType extends Model
+class AttributeType extends BaseModel
 {
     /**
      * The database table used by the model.

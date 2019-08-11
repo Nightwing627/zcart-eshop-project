@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class LocalInvoice extends Model
+class LocalInvoice extends BaseModel
 {
 
     /**

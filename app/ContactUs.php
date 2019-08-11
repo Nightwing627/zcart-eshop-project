@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ContactUs extends Model
+class ContactUs extends BaseModel
 {
     /**
      * The database table used by the model.

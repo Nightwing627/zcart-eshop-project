@@ -3,10 +3,9 @@
 namespace App;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class OrderStatus extends Model
+class OrderStatus extends BaseModel
 {
     use SoftDeletes;
 
@@ -66,13 +65,4 @@ class OrderStatus extends Model
         $this->attributes['fulfilled'] = (bool) $value;
     }
 
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId());
-    }
 }

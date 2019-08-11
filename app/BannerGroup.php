@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class BannerGroup extends Model
+class BannerGroup extends BaseModel
 {
     protected $table = 'banner_groups';
 

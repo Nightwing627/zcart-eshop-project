@@ -4,10 +4,9 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Coupon extends Model
+class Coupon extends BaseModel
 {
     use SoftDeletes;
 
@@ -36,7 +35,11 @@ class Coupon extends Model
      *
      * @var array
      */
-    protected $dates = ['starting_time', 'ending_time', 'deleted_at'];
+    protected $dates = [
+                            'starting_time',
+                            'ending_time',
+                            'deleted_at'
+                        ];
 
     /**
      * The attributes that are mass assignable.

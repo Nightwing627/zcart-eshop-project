@@ -3,9 +3,8 @@
 namespace App;
 
 use Auth;
-use Illuminate\Database\Eloquent\Model;
 
-class Refund extends Model
+class Refund extends BaseModel
 {
     const STATUS_NEW       = 1;         //Default
     const STATUS_APPROVED  = 2;
@@ -108,16 +107,6 @@ class Refund extends Model
     public function scopeStatusOf($query, $status)
     {
         return $query->where('status', $status);
-    }
-
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId());
     }
 
     public function statusName()

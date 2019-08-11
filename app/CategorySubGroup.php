@@ -4,10 +4,9 @@ namespace App;
 
 use App\Common\Imageable;
 use App\Common\CascadeSoftDeletes;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CategorySubGroup extends Model
+class CategorySubGroup extends BaseModel
 {
     use SoftDeletes, CascadeSoftDeletes, Imageable;
 
@@ -69,13 +68,4 @@ class CategorySubGroup extends Model
         $this->attributes['order'] = $value ?: 100;
     }
 
-    /**
-     * Scope a query to only include active categorySubGroups.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', 1);
-    }
 }

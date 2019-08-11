@@ -4,10 +4,9 @@ namespace App;
 
 use App\Common\Imageable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Manufacturer extends Model
+class Manufacturer extends BaseModel
 {
     use SoftDeletes, Imageable;
 
@@ -74,23 +73,4 @@ class Manufacturer extends Model
     //     $this->attributes['slug'] = str_slug($value);
     // }
 
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId());
-    }
-
-    /**
-     * Scope a query to only include active products.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', 1);
-    }
 }

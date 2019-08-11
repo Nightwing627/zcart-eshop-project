@@ -3,11 +3,10 @@
 namespace App;
 
 use Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Module extends Model
+class Module extends BaseModel
 {
     /**
      * The database table used by the model.
@@ -40,16 +39,6 @@ class Module extends Model
         return $this->hasMany('App\Permission');
     }
 
-    /**
-     * Scope a query to only include active modules.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', 1);
-    }
-
     // /**
     //  * Get all of the users for the module.
     //  */
@@ -57,6 +46,5 @@ class Module extends Model
     // {
     //     return $this->hasManyThrough('App\User', 'App\Role');
     // }
-
 
 }

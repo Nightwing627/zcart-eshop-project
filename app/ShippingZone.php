@@ -3,9 +3,8 @@
 namespace App;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 
-class ShippingZone extends Model
+class ShippingZone extends BaseModel
 {
     /**
      * The database table used by the model.
@@ -90,23 +89,4 @@ class ShippingZone extends Model
         return unserialize($value);
     }
 
-    /**
-     * Scope a query to only include active records.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', 1);
-    }
-
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId());
-    }
 }

@@ -5,10 +5,9 @@ namespace App;
 use Auth;
 use App\Common\Repliable;
 use App\Common\Attachable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Ticket extends Model
+class Ticket extends BaseModel
 {
     use SoftDeletes, Repliable, Attachable;
 
@@ -86,16 +85,6 @@ class Ticket extends Model
     public function assignedTo()
     {
         return $this->belongsTo(User::class, 'assigned_to');
-    }
-
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId());
     }
 
     /**

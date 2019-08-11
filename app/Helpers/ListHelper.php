@@ -13,6 +13,7 @@ use App\Order;
 use App\Module;
 use App\Ticket;
 use App\Refund;
+use App\System;
 use App\Visitor;
 use App\Message;
 use App\Product;
@@ -147,13 +148,27 @@ class ListHelper
     }
 
     /**
-     * Get system ettings.
+     * Get system settings.
      *
      * @return array
      */
     public static function system_settings()
     {
-        return (array) \DB::table('systems')->orderBy('id', 'asc')->first();
+        return System::orderBy('id', 'asc')->first()->toArray();
+        // return (array) \DB::table('systems')->orderBy('id', 'asc')->first();
+    }
+
+    /**
+     * Get system timezone.
+     *
+     * @return array
+     */
+    public static function system_timezone()
+    {
+        if (config('system_settings.timezone_id'))
+            return \DB::table('timezones')->where('id', config('system_settings.timezone_id'))->first();
+
+        return Null;
     }
 
     /**

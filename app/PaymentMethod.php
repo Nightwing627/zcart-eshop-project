@@ -3,9 +3,8 @@
 namespace App;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 
-class PaymentMethod extends Model
+class PaymentMethod extends BaseModel
 {
     const TYPE_PAYPAL       = 1;
     const TYPE_CREDIT_CARD  = 2;

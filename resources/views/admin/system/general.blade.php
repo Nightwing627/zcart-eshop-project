@@ -6,18 +6,17 @@
 
 @section('content')
 
-{{--     	PHP Time: {{ now() . " | " . date_default_timezone_get() }}
+    	PHP Time: {{ now() . " | " . date_default_timezone_get() }}
     	<br/>
     	Carbon Time: {{ \Carbon\Carbon::now() . " | " . \Carbon\Carbon::now()->timezone->getName() }}
     	<br/>
     	DB Updated Time: {{ $system->updated_at . " | " . $system->updated_at->diffForHumans() }}
     	<br/>
-    	App Timezone: {{ config('app.timezone') }}
+    	Mutated Updated Time: {{ convertFromUTC($system->updated_at) . " | " . $system->updated_at->diffForHumans() }}
     	<br/>
-    	ENV Timezone: {{ env('APP_TIMEZONE') }}
+    	App Timezone: {!! config('app.timezone') !!}
     	<br/>
-    	Timezone ID: {!! $system->timezone_id . " | " . $system->timezone->utc !!}
- --}}
+
 
 	<div class="box">
 		<div class="nav-tabs-custom">

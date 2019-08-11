@@ -9,11 +9,10 @@ use App\Common\Feedbackable;
 use Laravel\Scout\Searchable;
 use EloquentFilter\Filterable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Inventory extends Model
+class Inventory extends BaseModel
 {
     use SoftDeletes, Taggable, Imageable, Searchable, Filterable, Feedbackable;
 
@@ -393,16 +392,6 @@ class Inventory extends Model
     }
 
     /**
-     * Scope a query to only include active records.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', 1);
-    }
-
-    /**
      * Scope a query to only include new Arraival Items.
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -432,16 +421,6 @@ class Inventory extends Model
     public function scopeStockOut($query)
     {
         return $query->where('stock_quantity', '<=', 0);
-    }
-
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId());
     }
 
     /**

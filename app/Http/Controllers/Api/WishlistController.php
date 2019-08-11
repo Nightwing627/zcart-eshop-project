@@ -37,7 +37,7 @@ class WishlistController extends Controller
      */
     public function add(Request $request, $slug)
     {
-        $item = Inventory::where('slug', $slug)->first();
+        $item = Inventory::where('slug', $slug)->firstOrFail();
 
         $wishlist = new Wishlist;
         $wishlist->updateOrCreate([

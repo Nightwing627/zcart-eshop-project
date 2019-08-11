@@ -3,9 +3,8 @@
 namespace App;
 
 use App\State;
-use Illuminate\Database\Eloquent\Model;
 
-class Address extends Model
+class Address extends BaseModel
 {
 	/**
      * The database table used by the model.

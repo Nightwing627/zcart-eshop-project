@@ -11,11 +11,10 @@ use App\Common\Addressable;
 use App\Common\Feedbackable;
 use App\Events\ShopCreated;
 use App\Helpers\Statistics;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Shop extends Model
+class Shop extends BaseModel
 {
     use SoftDeletes, Loggable, Notifiable, Addressable, Imageable, Feedbackable, Billable;
 

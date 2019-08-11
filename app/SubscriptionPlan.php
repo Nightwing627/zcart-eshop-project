@@ -3,10 +3,9 @@
 namespace App;
 
 use App\Events\Subscription\Saving;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SubscriptionPlan extends Model
+class SubscriptionPlan extends BaseModel
 {
     use SoftDeletes;
 

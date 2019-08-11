@@ -5,10 +5,9 @@ namespace App;
 use Carbon\Carbon;
 use App\Common\Loggable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Order extends Model
+class Order extends BaseModel
 {
     use SoftDeletes, Loggable;
 

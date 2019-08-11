@@ -6,9 +6,8 @@ use Auth;
 use App\Common\Loggable;
 use App\Common\Repliable;
 use App\Common\Attachable;
-use Illuminate\Database\Eloquent\Model;
 
-class Dispute extends Model
+class Dispute extends BaseModel
 {
     use Repliable, Attachable, Loggable;
 
@@ -117,16 +116,6 @@ class Dispute extends Model
     public function scopeAppealed($query)
     {
         return $query->where('status', static::STATUS_APPEALED);
-    }
-
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId());
     }
 
     /**

@@ -3,9 +3,8 @@
 namespace App;
 
 use App\Common\Imageable;
-use Illuminate\Database\Eloquent\Model;
 
-class Banner extends Model
+class Banner extends BaseModel
 {
     use Imageable;
 

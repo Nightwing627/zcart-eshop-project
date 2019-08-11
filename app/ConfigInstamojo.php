@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ConfigInstamojo extends Model
+class ConfigInstamojo extends BaseModel
 {
     /**
      * The database table used by the model.

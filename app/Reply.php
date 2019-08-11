@@ -3,9 +3,8 @@
 namespace App;
 
 use App\Common\Attachable;
-use Illuminate\Database\Eloquent\Model;
 
-class Reply extends Model
+class Reply extends BaseModel
 {
     use Attachable;
 

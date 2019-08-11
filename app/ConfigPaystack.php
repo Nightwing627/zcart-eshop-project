@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ConfigPaystack extends Model
+class ConfigPaystack extends BaseModel
 {
     /**
      * The database table used by the model.

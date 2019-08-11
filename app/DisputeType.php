@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class DisputeType extends Model
+class DisputeType extends BaseModel
 {
     /**
      * The database table used by the model.

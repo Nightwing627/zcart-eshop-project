@@ -3,9 +3,8 @@
 namespace App;
 
 use Parsedown;
-use Illuminate\Database\Eloquent\Model;
 
-class Announcement extends Model
+class Announcement extends BaseModel
 {
     /**
      * The database table used by the model.

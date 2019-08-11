@@ -3,10 +3,9 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Visitor extends Model
+class Visitor extends BaseModel
 {
     use SoftDeletes;
 

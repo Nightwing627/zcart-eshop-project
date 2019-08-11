@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ShippingRate extends Model
+class ShippingRate extends BaseModel
 {
     /**
      * The database table used by the model.

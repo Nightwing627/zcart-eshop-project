@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class TicketCategory extends Model
+class TicketCategory extends BaseModel
 {
     /**
      * The database table used by the model.

@@ -7,10 +7,9 @@ use App\Common\Taggable;
 use App\Common\Imageable;
 use App\Common\Feedbackable;
 use Laravel\Scout\Searchable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends Model
+class Product extends BaseModel
 {
     use SoftDeletes, Taggable, Imageable, Searchable, Feedbackable;
 
@@ -225,25 +224,5 @@ class Product extends Model
     // {
     //      return $attribute ? get_formated_decimal($attribute) : $attribute;
     // }
-
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId());
-    }
-
-    /**
-     * Scope a query to only include active products.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', 1);
-    }
 
 }

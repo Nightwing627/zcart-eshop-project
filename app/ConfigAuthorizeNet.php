@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ConfigAuthorizeNet extends Model
+class ConfigAuthorizeNet extends BaseModel
 {
     /**
      * The database table used by the model.

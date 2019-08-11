@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Country extends Model
+class Country extends BaseModel
 {
    /**
      * The database table used by the model.
@@ -62,16 +60,6 @@ class Country extends Model
     {
         // return $this->belongsTo(Address', 'country_name' , 'name');
         return $this->hasMany(Address::class);
-    }
-
-    /**
-     * Scope a query to only include active countries.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', 1);
     }
 
 }

@@ -1,9 +1,7 @@
 <?php
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Config extends Model
+class Config extends BaseModel
 {
     /**
      * The database table used by the model.

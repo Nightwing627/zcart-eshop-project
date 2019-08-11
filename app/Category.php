@@ -3,10 +3,9 @@
 namespace App;
 
 use App\Common\Imageable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Category extends BaseModel
 {
     use SoftDeletes, Imageable;
 
@@ -87,16 +86,6 @@ class Category extends Model
     public function scopeFeatured($query)
     {
         return $query->where('featured', 1);
-    }
-
-    /**
-     * Scope a query to only include active categories.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', 1);
     }
 
     /**

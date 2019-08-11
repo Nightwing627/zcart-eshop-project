@@ -5,10 +5,9 @@ namespace App;
 use Carbon\Carbon;
 use App\Common\Taggable;
 use App\Common\Imageable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Blog extends Model
+class Blog extends BaseModel
 {
     use SoftDeletes, Imageable, Taggable;
 

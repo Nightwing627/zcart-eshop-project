@@ -7,7 +7,6 @@ use App\Common\Imageable;
 use App\Common\Addressable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 // use Spatie\Activitylog\Traits\HasActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;

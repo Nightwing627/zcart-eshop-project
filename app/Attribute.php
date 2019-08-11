@@ -3,10 +3,9 @@
 namespace App;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Attribute extends Model
+class Attribute extends BaseModel
 {
     use SoftDeletes;
 

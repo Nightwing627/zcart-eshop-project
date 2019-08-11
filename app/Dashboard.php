@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Dashboard extends Model
+class Dashboard extends BaseModel
 {
 	/**
      * The database table used by the model.

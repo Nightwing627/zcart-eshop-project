@@ -3,9 +3,8 @@
 namespace App;
 
 use App\Common\Imageable;
-use Illuminate\Database\Eloquent\Model;
 
-class Slider extends Model
+class Slider extends BaseModel
 {
     use Imageable;
 

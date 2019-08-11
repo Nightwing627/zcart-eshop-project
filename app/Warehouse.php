@@ -5,10 +5,9 @@ namespace App;
 use App\Common\Imageable;
 use App\Common\Addressable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Warehouse extends Model
+class Warehouse extends BaseModel
 {
     use SoftDeletes, Addressable, Imageable;
 
@@ -98,22 +97,4 @@ class Warehouse extends Model
         return $this->hasManyThrough(Product::class, Inventory::class);
     }
 
-    /**
-     * Scope a query to only include active records.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', 1);
-    }
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId());
-    }
 }

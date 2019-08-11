@@ -4,10 +4,9 @@ namespace App;
 
 use Auth;
 use App\Scopes\RoleScope;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Role extends Model
+class Role extends BaseModel
 {
     use SoftDeletes;
 
@@ -142,13 +141,4 @@ class Role extends Model
         return $query->where('public', '!=', 1);
     }
 
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::guard('web')->user()->merchantId());
-    }
 }

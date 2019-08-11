@@ -69,7 +69,7 @@ if ( ! function_exists('updateVisitorTable') )
         }
 
         // Increase the hits value if this visit is the first visit for today
-        if($visitor->updated_at->lt(\Carbon\Carbon::today())){
+        if($visitor->updated_at->lt(Carbon::today())){
             $visitor->hits++;
             $visitor->info = $request->header('User-Agent');
             // $visitor->mac = $request->mac();
@@ -98,6 +98,8 @@ if ( ! function_exists('setSystemConfig') )
             setSystemLocale();
 
             setSystemCurrency();
+
+            setSystemTimezone($shop);
         }
 
         if( $shop && !config('shop_settings') ){
@@ -105,6 +107,7 @@ if ( ! function_exists('setSystemConfig') )
         }
     }
 }
+
 if ( ! function_exists('setSystemLocale') )
 {
     /**
@@ -118,13 +121,46 @@ if ( ! function_exists('setSystemLocale') )
         $active_locales = ListHelper::availableLocales();
 
         config()->set('active_locales', $active_locales);
+    }
+}
 
-        // Set timezone
-        Config::set('app.timezone', env('APP_TIMEZONE'));
-        // echo "<pre>"; print_r(config('system_settings')); echo "</pre>"; exit();
-        // $carbonDate = new Carbon($dateFromDBInUTC);
-        // $carbonDate->timezone = 'America/New_York';
+if ( ! function_exists('setSystemTimezone') )
+{
+    /**
+     * Set system timezone into the config
+     */
+    function setSystemTimezone($shop = Null)
+    {
+        $system_timezone = ListHelper::system_timezone();
 
+        // echo "<pre>"; print_r($system_timezone); echo "</pre>"; exit();
+
+        // if($system_timezone){
+        // }
+        // else{
+            // echo "<pre>"; print_r(config('system_settings')); echo "</pre>"; exit();
+            // $carbonDate = new Carbon($dateFromDBInUTC);
+            // $carbonDate->timezone = 'America/New_York';
+        // }
+
+        // Config::set('app.timezone', 'Asia/Dhaka');
+        // date_default_timezone_set('Asia/Dhaka');
+        Config::set('app.timezone', $system_timezone->utc);
+        // date_default_timezone_set($system_timezone->utc);
+    }
+}
+
+if ( ! function_exists('convertFromUTC') )
+{
+    /**
+     * @param integer $timestamp
+     * @param string $timezone
+     *
+     * @return Carbon
+     */
+    function convertFromUTC($timestamp, $timezone = Null)
+    {
+        return Carbon::parse($timestamp)->timezone(config('app.timezone', 'UTC'));
     }
 }
 

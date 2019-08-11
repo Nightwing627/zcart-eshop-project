@@ -5,11 +5,10 @@ namespace App;
 use App\Common\Imageable;
 use App\Common\Addressable;
 use App\Common\SystemUsers;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class System extends Model
+class System extends BaseModel
 {
     use SystemUsers, Notifiable, Addressable, Imageable, LogsActivity;
 

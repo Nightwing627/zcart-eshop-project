@@ -3,10 +3,9 @@
 namespace App;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cart extends Model
+class Cart extends BaseModel
 {
     use SoftDeletes;
 
@@ -216,13 +215,4 @@ class Cart extends Model
         $this->attributes['billing_address'] = is_numeric($value) ? $value : Null;
     }
 
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId());
-    }
 }

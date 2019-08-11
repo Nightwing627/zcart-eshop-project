@@ -3,9 +3,8 @@
 namespace App;
 
 use App\Common\SystemUsers;
-use Illuminate\Database\Eloquent\Model;
 
-class SystemConfig extends Model
+class SystemConfig extends BaseModel
 {
     use SystemUsers;
 

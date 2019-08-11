@@ -6,9 +6,8 @@ use Auth;
 use App\Scopes\MineScope;
 use App\Common\Repliable;
 use App\Common\Attachable;
-use Illuminate\Database\Eloquent\Model;
 
-class Message extends Model
+class Message extends BaseModel
 {
     use Repliable, Attachable;
 
@@ -129,16 +128,6 @@ class Message extends Model
     public function scopeSpam($query)
     {
         return $query->where('status', self::STATUS_SPAM);
-    }
-
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId());
     }
 
     public function about()

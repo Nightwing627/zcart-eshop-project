@@ -4,10 +4,9 @@ namespace App;
 
 use App\Common\Imageable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AttributeValue extends Model
+class AttributeValue extends BaseModel
 {
     use SoftDeletes, Imageable;
 
