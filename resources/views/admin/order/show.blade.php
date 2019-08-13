@@ -228,11 +228,7 @@
         </div> <!-- /.box-header -->
         <div class="box-body">
           <p>
-            @if($order->customer->image)
-              <img src="{{ get_storage_file_url(optional($order->customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-            @else
-              <img src="{{ get_gravatar_url($order->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-            @endif
+            <img src="{{ get_avatar_src($order->customer, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 
             <span class="admin-user-widget-title indent5">
               @if(config('system_settings.vendor_can_view_customer_info'))
@@ -253,6 +249,14 @@
             <span class="admin-user-widget-text text-muted">
               {{ trans('app.email') . ': ' . $order->customer->email }}
             </span>
+          @endif
+
+          @if($order->conversation)
+            <a href="{{ route('admin.support.message.show', $order->conversation) }}" class="btn btn-sm btn-info btn-flat">{{ trans('app.view_conversations') }}</a>
+          @endif
+
+          @if($order->dispute)
+            <a href="{{ route('admin.support.dispute.show', $order->dispute) }}" class="btn btn-sm btn-danger btn-flat">{{ trans('app.view_dispute') }}</a>
           @endif
 
           <fieldset><legend>{{ strtoupper(trans('app.shipping_address')) }}</legend></fieldset>

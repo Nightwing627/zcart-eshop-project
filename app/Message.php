@@ -69,7 +69,9 @@ class Message extends BaseModel
     */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault([
+            'name' => trans('app.user')
+        ]);
     }
 
     /**
@@ -77,7 +79,19 @@ class Message extends BaseModel
     */
     public function customer()
     {
-        return $this->belongsTo(Customer::class)->withoutGlobalScope('MineScope');
+        return $this->belongsTo(Customer::class)
+        ->withDefault([
+            'name' => trans('app.guest_customer')
+        ])
+        ->withoutGlobalScope('MineScope');
+    }
+
+    /**
+     * Get the order associated with the model.
+    */
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 
     /**

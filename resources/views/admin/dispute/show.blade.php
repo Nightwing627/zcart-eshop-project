@@ -29,11 +29,7 @@
 						<div class="form-group">
 						  	<label>{{ trans('app.owner') }}</label>
 							<p>
-					            @if($dispute->shop->owner->image)
-									<img src="{{ get_storage_file_url(optional($dispute->shop->owner->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					            @else
-				            		<img src="{{ get_gravatar_url($dispute->shop->owner->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					            @endif
+					            <img src="{{ get_avatar_src($dispute->shop->owner, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 								&nbsp;
 								@if(Gate::allows('view', $dispute->shop->owner))
 						            <a href="javascript:void(0)" data-link="{{ route('admin.admin.user.show', $dispute->shop->owner_id) }}" class="ajax-modal-btn small"><span class="lead">{{ $dispute->shop->owner->getName() }}</span></a>
@@ -103,6 +99,7 @@
 						<div class="form-group">
 						  	<label>{{ trans('app.product') }}</label>
 							<img src="{{ get_storage_file_url(optional($dispute->product->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.image') }}">
+
 							@if(Gate::allows('view', $dispute->product))
 					            <a href="javascript:void(0)" data-link="{{ route('admin.catalog.product.show', $dispute->product_id) }}" class="ajax-modal-btn"><span class="lead indent10">{{ $dispute->product->name }}</span></a>
 							@else
@@ -121,11 +118,8 @@
 		          </div>
 		        </div> <!-- /.box-header -->
 		        <div class="box-body">
-		            @if($dispute->customer->image)
-						<img src="{{ get_storage_file_url(optional($dispute->customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-		            @else
-	            		<img src="{{ get_gravatar_url($dispute->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-		            @endif
+		            <img src="{{ get_avatar_src($dispute->customer, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+
 					@if(Gate::allows('view', $dispute->customer))
 			            <a href="javascript:void(0)" data-link="{{ route('admin.admin.customer.show', $dispute->customer_id) }}" class="ajax-modal-btn small"><span class="lead indent10">{{ $dispute->customer->getName() }}</span></a>
 					@else

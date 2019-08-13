@@ -180,7 +180,6 @@ class Order extends BaseModel
     public function conversation()
     {
         return $this->hasOne(Message::class, 'order_id');
-        //->where('customer_id', $this->customer_id);
     }
 
     /**

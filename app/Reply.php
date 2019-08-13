@@ -42,7 +42,9 @@ class Reply extends BaseModel
     */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault([
+            'name' => trans('app.user')
+        ]);;
     }
 
     /**
@@ -50,7 +52,10 @@ class Reply extends BaseModel
     */
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class)
+        ->withDefault([
+            'name' => trans('app.guest_customer')
+        ]);
     }
 
 }

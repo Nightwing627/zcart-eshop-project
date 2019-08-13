@@ -1399,7 +1399,7 @@ return [
         'filter_by_status' => 'Filter by payment status',
     ],
 
-    // Version 1.2.6
+    // Version 1.3.0
     'added_by' => 'Added by',
     'add_language' => 'Add language',
     'default_language' => 'Default language',
@@ -1413,5 +1413,6 @@ return [
     'on_generic_trial' => 'On generic trial',
     'php_locale_code' => 'PHP locale code',
     'trial_ends_at' => 'Trial ends at',
+    'view_conversations' => 'View Conversations',
 
 ];

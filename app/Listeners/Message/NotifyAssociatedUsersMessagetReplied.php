@@ -38,10 +38,16 @@ class NotifyAssociatedUsersMessagetReplied implements ShouldQueue
             setSystemConfig(optional($event->reply->user)->shop_id);
 
         if ($event->reply->user_id) {
-           $event->reply->repliable->customer->notify(new MessageRepliedNotification($event->reply, $event->reply->repliable->customer->getName()));
+            if($event->reply->repliable->customer->email)
+                $event->reply->repliable->customer->notify(
+                    new MessageRepliedNotification($event->reply, $event->reply->repliable->customer->getName())
+                );
         }
         else {
-            $event->reply->repliable->user->notify(new MessageRepliedNotification($event->reply, $event->reply->repliable->user->getName()));
+            if($event->reply->repliable->user->email)
+                $event->reply->repliable->user->notify(
+                    new MessageRepliedNotification($event->reply, $event->reply->repliable->user->getName())
+                );
         }
     }
 }

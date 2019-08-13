@@ -87,7 +87,7 @@
 				                    <td><input id="{{ $message->id }}" type="checkbox" class="massCheck"></td>
 				                    <td class="mailbox-name">
 				                    	<a href="{{ route('admin.support.message.show', $message) }}">
-											{!! highlightWords($message->customer->name, $search_q) !!}
+											{!! highlightWords($message->customer->getName(), $search_q) !!}
 				                    	</a>
 				                	</td>
 				                    <td class="mailbox-subject">

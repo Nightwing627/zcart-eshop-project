@@ -28,11 +28,7 @@
 				    @foreach($staffs as $user )
 				        <tr>
 				          <td>
-				            @if($user->image)
-								<img src="{{ get_storage_file_url(optional($user->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-				            @else
-			            		<img src="{{ get_gravatar_url($user->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-				            @endif
+					          <img src="{{ get_avatar_src($user, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 					          <p class="indent10">
 					          	{{ $user->nice_name }}
 					          	@if($user->id == $shop->owner_id)
@@ -110,8 +106,8 @@
 			        @foreach($trashes as $trash )
 				        <tr>
 				          <td>
-							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					          <p class="indent10">{{ $trash->nice_name }}</p>
+				            <img src="{{ get_avatar_src($trash, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				          	<p class="indent10">{{ $trash->nice_name }}</p>
 						  </td>
 				          <td>{{ $trash->name }}</td>
 				          <td>{{ $trash->email }}</td>

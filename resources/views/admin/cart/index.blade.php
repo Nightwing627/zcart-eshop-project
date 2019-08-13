@@ -36,7 +36,7 @@
 					@foreach($trashes as $trash )
 					<tr>
                         <td>{{ $trash->created_at->diffForHumans() }}</td>
-                        <td>{{ $trash->customer->name }}</td>
+                        <td>{{ $trash->customer->getName() }}</td>
                         <td>{{ $trash->item_count }}</td>
                         <td>{{ $trash->quantity }}</td>
                         <td>{{ get_formated_currency($trash->grand_total) }}</td>

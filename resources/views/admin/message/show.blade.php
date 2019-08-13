@@ -23,11 +23,7 @@
 	              	<div class="mailbox-read-info">
 	              		<div class="row">
 		              		<div class="col-md-1">
-					            @if($message->customer->image)
-									<img src="{{ get_storage_file_url(optional($message->customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					            @else
-				            		<img src="{{ get_gravatar_url($message->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					            @endif
+			            		<img src="{{ get_avatar_src($message->customer, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 
 								@can('view', $message->customer)
 					            	<a href="javascript:void(0)" data-link="{{ route('admin.admin.customer.show', $message->customer) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
@@ -37,10 +33,27 @@
 				                <h3>{!! $message->subject !!}</h3>
 				                <h5>
 				                	{{ trans('app.from') }}: <strong>{{ $message->customer->getName() }} </strong>
-				                	{{ '<' . $message->customer->email . '>' }}
+
+				                	@if($message->order)
+					                	{{ '<' . get_customer_email_from_order($message->order)  . '>' }}
+									@endif
+
 				                  	<span class="mailbox-read-time pull-right">
 				                  		{{ $message->updated_at->toDayDateTimeString() }}
 				                  	</span>
+				              	</h5>
+
+				                <h5>
+				                	{{ trans('app.order') }}:
+				                	<strong>
+										@can('view', $message->order)
+											<a href="{{ route('admin.order.order.show', $message->order->id) }}">
+												{{ $message->order->order_number }}
+											</a>
+										@else
+											{{ $message->order->order_number }}
+										@endcan
+				                	</strong>
 				              	</h5>
 			              	</div>
 		              	</div>

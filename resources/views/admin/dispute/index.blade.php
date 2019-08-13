@@ -24,13 +24,9 @@
 					@foreach($disputes as $dispute )
 						<tr>
 							<td>
-					            @if($dispute->customer->image)
-									<img src="{{ get_storage_file_url(optional($dispute->customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					            @else
-				            		<img src="{{ get_gravatar_url($dispute->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					            @endif
+					            <img src="{{ get_avatar_src($dispute->customer, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 					            <p class="indent10">
-									<strong>{{ $dispute->customer->name }}</strong>
+									<strong>{{ $dispute->customer->getName() }}</strong>
 		    						@if (Auth::user()->isFromPlatform() && $dispute->shop)
 										<br/><span>{{ trans('app.vendor') . ': ' . optional($dispute->shop)->name }}</span>
 									@endif
@@ -79,13 +75,9 @@
 					@foreach($closed as $dispute )
 						<tr>
 							<td>
-					            @if($dispute->customer->image)
-									<img src="{{ get_storage_file_url(optional($dispute->customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					            @else
-				            		<img src="{{ get_gravatar_url($dispute->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					            @endif
+					            <img src="{{ get_avatar_src($dispute->customer, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 					            <p class="indent10">
-									<strong>{{ $dispute->customer->name }}</strong>
+									<strong>{{ $dispute->customer->getName() }}</strong>
 		    						@if (Auth::user()->isFromPlatform() && $dispute->shop)
 										<br/><span>{{ trans('app.vendor') . ': ' . optional($dispute->shop)->name }}</span>
 									@endif

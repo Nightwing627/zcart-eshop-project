@@ -51,11 +51,7 @@
 								@endif
 				          	</td>
 							<td>
-					            @if($shop->owner->image)
-									<img src="{{ get_storage_file_url(optional($shop->owner->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					            @else
-				            		<img src="{{ get_gravatar_url($shop->owner->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-					            @endif
+					            <img src="{{ get_avatar_src($shop->owner, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 								<p class="indent10">
 									@can('view', $shop->owner)
 							            <a href="javascript:void(0)" data-link="{{ route('admin.vendor.merchant.show', $shop->owner_id) }}" class="ajax-modal-btn">{{ $shop->owner->getName() }}</a>
@@ -132,11 +128,7 @@
 						</td>
 						<td>{{ $trash->email }}</td>
 						<td>
-				            @if($trash->owner->image)
-								<img src="{{ get_storage_file_url(optional($trash->owner->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-				            @else
-			            		<img src="{{ get_gravatar_url($trash->owner->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-				            @endif
+				            <img src="{{ get_avatar_src($trash->owner, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 							<p class="indent10">{{ $trash->owner->getName() }}</p>
 						</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>

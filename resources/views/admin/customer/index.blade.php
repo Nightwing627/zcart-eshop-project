@@ -81,7 +81,7 @@
 		        @foreach($trashes as $trash )
 			        <tr>
 			          <td>
-						<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+			            <img src="{{ get_avatar_src($trash, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 						<p class="indent10">
 							{{ $trash->nice_name }}
 						</p>

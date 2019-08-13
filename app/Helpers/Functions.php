@@ -1,6 +1,17 @@
 <?php
 
+use App\Tax;
+use App\User;
+use App\Order;
 use App\System;
+use App\Dispute;
+use App\Packaging;
+use App\Product;
+use App\Message;
+use App\Customer;
+use App\Inventory;
+use App\ShippingRate;
+use App\PaymentMethod;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -164,7 +175,7 @@ if ( ! function_exists('get_avatar_src') )
 {
     function get_avatar_src($model, $size = 'small')
     {
-        if ( $model instanceof \App\User || $model instanceof \App\Customer ){
+        if ( $model instanceof User || $model instanceof Customer ){
             if ($model->image)
                 return get_storage_file_url($model->image->path, $size);
 
@@ -327,9 +338,9 @@ if ( ! function_exists('getNumberOfInventoryImgs') )
 
 if ( ! function_exists('highlightWords') )
 {
-    function highlightWords($content, $words = null)
+    function highlightWords($content = Null, $words = Null)
      {
-        if($words == null) return $content;
+        if($content == Null || $words == Null) return $content;
 
         if(is_array($words)) {
             foreach ( $words as $word )
@@ -421,8 +432,8 @@ if ( ! function_exists('get_product_img_src') )
 {
     function get_product_img_src($item = null, $size = 'medium', $type = 'primary')
     {
-        if (is_numeric($item) && !($item instanceof \App\Inventory))
-            $item = \App\Inventory::findorFail($item);
+        if (is_numeric($item) && !($item instanceof Inventory))
+            $item = Inventory::findorFail($item);
 
         $images_count = $item->images->count();
 
@@ -465,8 +476,8 @@ if ( ! function_exists('get_catalog_featured_img_src') )
 {
     function get_catalog_featured_img_src($product, $size = 'small')
     {
-        if (is_int($product) && !($product instanceof \App\Product))
-            $product = \App\Product::findorFail($product);
+        if (is_int($product) && !($product instanceof Product))
+            $product = Product::findorFail($product);
 
         if ($product->featuredImage)
             return get_storage_file_url($product->featuredImage->path, $size);
@@ -618,6 +629,20 @@ if ( ! function_exists('get_formated_file_size') )
         $bytes /= pow(1024, $pow);
 
         return round($bytes, $precision) . ' ' . $units[$pow];
+    }
+}
+
+if ( ! function_exists('get_customer_email_from_order') )
+{
+    function get_customer_email_from_order($order)
+    {
+        if (! $order instanceof Order )
+            $order = Order::find($order);
+
+        if ($order->customer->email)
+            return $order->customer->email;
+
+        return $order->email;
     }
 }
 
@@ -1056,7 +1081,7 @@ if ( ! function_exists('getTaxRate') )
      */
     function getTaxRate($tax = Null)
     {
-        $tax = $tax ?? \App\Tax::DEFAULT_TAX_ID;
+        $tax = $tax ?? Tax::DEFAULT_TAX_ID;
 
         $rate = \DB::table('taxes')->select('taxrate')->where('id', $tax)->first();
 
@@ -1072,7 +1097,7 @@ if ( ! function_exists('getShippingRates') )
     function getShippingRates($zone = Null)
     {
         if($zone) {
-            return \App\ShippingRate::where('shipping_zone_id', $zone)
+            return ShippingRate::where('shipping_zone_id', $zone)
             ->with('carrier:id,name')->orderBy('rate', 'asc')->get();
         }
 
@@ -1153,7 +1178,7 @@ if ( ! function_exists('getPlatformDefaultPackaging') )
     function getPlatformDefaultPackaging()
     {
         return \DB::table('packagings')->select('id', 'name', 'cost')
-        ->whereNull('shop_id')->where('id', \App\Packaging::FREE_PACKAGING_ID)->first();
+        ->whereNull('shop_id')->where('id', Packaging::FREE_PACKAGING_ID)->first();
     }
 }
 
@@ -1259,8 +1284,8 @@ if ( ! function_exists('userLevelCompare') )
         if ($user->isSuperAdmin())
             return true;
 
-        if (! $compare instanceof \App\User )
-            $compare = \App\User::findorFail($compare);
+        if (! $compare instanceof User )
+            $compare = User::findorFail($compare);
 
         // If the comparable user is from a shop and the request user is the owner of the shop
         if (
@@ -1344,11 +1369,11 @@ if ( ! function_exists('get_msg_folder_name_from_label') )
     function get_msg_folder_name_from_label($label = 1)
     {
         switch ($label) {
-            case \App\Message::LABEL_INBOX: return trans("app.message_labels.inbox");
-            case \App\Message::LABEL_SENT: return trans("app.message_labels.sent");
-            case \App\Message::LABEL_DRAFT: return trans("app.message_labels.draft");
-            case \App\Message::LABEL_SPAM: return trans("app.message_labels.spam");
-            case \App\Message::LABEL_TRASH: return trans("app.message_labels.trash");
+            case Message::LABEL_INBOX: return trans("app.message_labels.inbox");
+            case Message::LABEL_SENT: return trans("app.message_labels.sent");
+            case Message::LABEL_DRAFT: return trans("app.message_labels.draft");
+            case Message::LABEL_SPAM: return trans("app.message_labels.spam");
+            case Message::LABEL_TRASH: return trans("app.message_labels.trash");
             default: return trans("app.message_labels.inbox");
         }
     }
@@ -1359,21 +1384,21 @@ if ( ! function_exists('get_payment_method_type') )
     function get_payment_method_type($id)
     {
         switch ($id) {
-            case \App\PaymentMethod::TYPE_PAYPAL:
+            case PaymentMethod::TYPE_PAYPAL:
                 return [
                         'name' => trans('app.payment_method_type.paypal.name'),
                         'description' => trans('app.payment_method_type.paypal.description'),
                         'admin_description' => trans('app.payment_method_type.paypal.admin_description'),
                     ];
 
-            case \App\PaymentMethod::TYPE_CREDIT_CARD:
+            case PaymentMethod::TYPE_CREDIT_CARD:
                 return [
                         'name' => trans('app.payment_method_type.credit_card.name'),
                         'description' => trans('app.payment_method_type.credit_card.description'),
                         'admin_description' => trans('app.payment_method_type.credit_card.admin_description'),
                     ];
 
-            case \App\PaymentMethod::TYPE_MANUAL:
+            case PaymentMethod::TYPE_MANUAL:
                 return [
                         'name' => trans('app.payment_method_type.manual.name'),
                         'description' => trans('app.payment_method_type.manual.description'),
@@ -1395,12 +1420,12 @@ if ( ! function_exists('get_payment_status_name') )
     function get_payment_status_name($status = 1)
     {
         switch ($status) {
-            case \App\Order::PAYMENT_STATUS_UNPAID: return trans("app.statuses.unpaid");
-            case \App\Order::PAYMENT_STATUS_PENDING: return trans("app.statuses.pending");
-            case \App\Order::PAYMENT_STATUS_PAID: return trans("app.statuses.paid");
-            case \App\Order::PAYMENT_STATUS_INITIATED_REFUND: return trans("app.statuses.refund_initiated");
-            case \App\Order::PAYMENT_STATUS_PARTIALLY_REFUNDED: return trans("app.statuses.partially_refunded");
-            case \App\Order::PAYMENT_STATUS_REFUNDED: return trans("app.statuses.refunded");
+            case Order::PAYMENT_STATUS_UNPAID: return trans("app.statuses.unpaid");
+            case Order::PAYMENT_STATUS_PENDING: return trans("app.statuses.pending");
+            case Order::PAYMENT_STATUS_PAID: return trans("app.statuses.paid");
+            case Order::PAYMENT_STATUS_INITIATED_REFUND: return trans("app.statuses.refund_initiated");
+            case Order::PAYMENT_STATUS_PARTIALLY_REFUNDED: return trans("app.statuses.partially_refunded");
+            case Order::PAYMENT_STATUS_REFUNDED: return trans("app.statuses.refunded");
             default: return trans("app.statuses.unpaid");
         }
     }
@@ -1419,12 +1444,12 @@ if ( ! function_exists('get_disput_status_name') )
     function get_disput_status_name($status = 1)
     {
         switch ($status) {
-            case \App\Dispute::STATUS_NEW: return trans('app.statuses.new');
-            case \App\Dispute::STATUS_OPEN: return trans('app.statuses.open');
-            case \App\Dispute::STATUS_WAITING: return trans('app.statuses.waiting');
-            case \App\Dispute::STATUS_APPEALED: return trans('app.statuses.appealed');
-            case \App\Dispute::STATUS_SOLVED: return trans('app.statuses.solved');
-            case \App\Dispute::STATUS_CLOSED: return trans('app.statuses.closed');
+            case Dispute::STATUS_NEW: return trans('app.statuses.new');
+            case Dispute::STATUS_OPEN: return trans('app.statuses.open');
+            case Dispute::STATUS_WAITING: return trans('app.statuses.waiting');
+            case Dispute::STATUS_APPEALED: return trans('app.statuses.appealed');
+            case Dispute::STATUS_SOLVED: return trans('app.statuses.solved');
+            case Dispute::STATUS_CLOSED: return trans('app.statuses.closed');
         }
     }
 }

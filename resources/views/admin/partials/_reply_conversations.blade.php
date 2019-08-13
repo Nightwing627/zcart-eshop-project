@@ -1,11 +1,7 @@
 <div class="row">
     <div class="col-md-2 nopadding-right no-print">
 		@if($reply->user_id)
-	        @if($reply->user->image)
-				<img src="{{ get_storage_file_url(optional($reply->user->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-	        @else
-	    		<img src="{{ get_gravatar_url($reply->user->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-	        @endif
+    		<img src="{{ get_avatar_src($reply->user, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 
 			@if(Gate::allows('view', $reply->user))
 	            <a href="javascript:void(0)" data-link="{{ route('admin.admin.user.show', $reply->user_id) }}" class="ajax-modal-btn small">{{ $reply->user->getName() }}</a>
@@ -34,11 +30,7 @@
 
     <div class="col-md-2 nopadding-left no-print">
 		@if($reply->customer_id)
-	        @if($reply->customer->image)
-				<img src="{{ get_storage_file_url(optional($reply->customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-	        @else
-	    		<img src="{{ get_gravatar_url($reply->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-	        @endif
+    		<img src="{{ get_avatar_src($reply->customer, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 
 			@if(Gate::allows('view', $reply->user))
 	            <a href="javascript:void(0)" data-link="{{ route('admin.admin.customer.show', $reply->customer_id) }}" class="ajax-modal-btn small">{{ $reply->customer->getName() }}</a>
