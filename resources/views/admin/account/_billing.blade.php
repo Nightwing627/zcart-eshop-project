@@ -55,7 +55,7 @@
 					  					{{ $plan->name }}
 					  				</td>
 					  				<td>
-			                            <a href="#" data-link="{{ route('admin.account.subscription.features', $plan->plan_id) }}" class="ajax-modal-btn btn btn-default">
+			                            <a href="javascript:void(0)" data-link="{{ route('admin.account.subscription.features', $plan->plan_id) }}" class="ajax-modal-btn btn btn-default">
 			                                <i class="fa fa-star-o"></i> {{ trans('app.features') }}
 			                            </a>
 					  				</td>

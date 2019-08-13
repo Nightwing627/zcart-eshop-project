@@ -30,7 +30,7 @@
 					            @endif
 
 								@can('view', $message->customer)
-					            	<a href="#" data-link="{{ route('admin.admin.customer.show', $message->customer) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
+					            	<a href="javascript:void(0)" data-link="{{ route('admin.admin.customer.show', $message->customer) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 								@endcan
 							</div>
 		              		<div class="col-md-11 nopadding-left">
@@ -50,11 +50,11 @@
 		                <div class="btn-group">
 							@if($message->label < \App\Message::LABEL_DRAFT)
 								@can('reply', $message)
-									<a href="#" data-link="{{ route('admin.support.message.reply', $message) }}" class="ajax-modal-btn btn btn-default btn-sm">
+									<a href="javascript:void(0)" data-link="{{ route('admin.support.message.reply', $message) }}" class="ajax-modal-btn btn btn-default btn-sm">
 										<i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i> {{ trans('app.reply') }}
 									</a>
 
-									<a href="#" data-link="{{ route('admin.support.message.reply', [$message, true]) }}" class="ajax-modal-btn btn btn-default btn-sm">
+									<a href="javascript:void(0)" data-link="{{ route('admin.support.message.reply', [$message, true]) }}" class="ajax-modal-btn btn btn-default btn-sm">
 					                	<i class="fa fa-reply"></i> {{ trans('app.reply_with_template') }}
 					                </a>
 			                  	@endcan
@@ -77,7 +77,7 @@
 
 							@else
 								@if($message->label == \App\Message::LABEL_DRAFT)
-									<a href="#" data-link="{{ route('admin.support.message.edit', $message) }}" class="ajax-modal-btn btn btn-default btn-sm">
+									<a href="javascript:void(0)" data-link="{{ route('admin.support.message.edit', $message) }}" class="ajax-modal-btn btn btn-default btn-sm">
 										<i class="fa fa-send"></i> {{ trans('app.open') }}
 									</a>
 			                  	@endif
@@ -138,11 +138,11 @@
 					@if($message->label < \App\Message::LABEL_DRAFT)
 		              	<div class="pull-right">
 							@can('reply', $message)
-								<a href="#" data-link="{{ route('admin.support.message.reply', $message) }}" class="ajax-modal-btn btn btn-default btn-sm">
+								<a href="javascript:void(0)" data-link="{{ route('admin.support.message.reply', $message) }}" class="ajax-modal-btn btn btn-default btn-sm">
 				                	<i class="fa fa-reply"></i> {{ trans('app.reply') }}
 				                </a>
 
-								<a href="#" data-link="{{ route('admin.support.message.reply', [$message, true]) }}" class="ajax-modal-btn btn btn-default btn-sm">
+								<a href="javascript:void(0)" data-link="{{ route('admin.support.message.reply', [$message, true]) }}" class="ajax-modal-btn btn btn-default btn-sm">
 				                	<i class="fa fa-reply"></i> {{ trans('app.reply_with_template') }}
 				                </a>
 							@endcan

@@ -6,7 +6,7 @@
 	      <h3 class="box-title">{{ trans('app.pages') }}</h3>
 	      <div class="box-tools pull-right">
 			@can('create', App\Page::class)
-				<a href="#" data-link="{{ route('admin.utility.page.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_page') }}</a>
+				<a href="javascript:void(0)" data-link="{{ route('admin.utility.page.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_page') }}</a>
 			@endcan
 	      </div>
 	    </div> <!-- /.box-header -->
@@ -31,7 +31,7 @@
 			          </td>
 			          <td width="45%">
 							@can('update', $page)
-			                    <a href="#" data-link="{{ route('admin.utility.page.edit', $page) }}"  class="ajax-modal-btn"><strong>{!! $page->title !!}</strong></a>
+			                    <a href="javascript:void(0)" data-link="{{ route('admin.utility.page.edit', $page) }}"  class="ajax-modal-btn"><strong>{!! $page->title !!}</strong></a>
 							@else
 					          	<strong>{!! $page->title !!}</strong>
 							@endcan
@@ -58,7 +58,7 @@
 				      </td>
 			          <td class="row-options text-muted small">
 							@can('update', $page)
-			                    <a href="#" data-link="{{ route('admin.utility.page.edit', $page) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+			                    <a href="javascript:void(0)" data-link="{{ route('admin.utility.page.edit', $page) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 						@can('delete', $page)
 							@if(in_array($page->id, config('system.freeze.pages')))

@@ -169,9 +169,9 @@
 
 								{!! $shop->primaryAddress->toHtml() !!}
 
-								<a href="#" data-link="{{ route('address.edit', $shop->primaryAddress->id) }}"  class="btn btn-default ajax-modal-btn"><i class="fa fa-map-marker"></i> {{ trans('app.update_address') }}</a>
+								<a href="javascript:void(0)" data-link="{{ route('address.edit', $shop->primaryAddress->id) }}"  class="btn btn-default ajax-modal-btn"><i class="fa fa-map-marker"></i> {{ trans('app.update_address') }}</a>
 							@else
-								<a href="#" data-link="{{ route('address.create', ['shop', $shop->id]) }}"  class="btn btn-default ajax-modal-btn"><i class="fa fa-plus-square-o"></i> {{ trans('app.add_address') }}</a>
+								<a href="javascript:void(0)" data-link="{{ route('address.create', ['shop', $shop->id]) }}"  class="btn btn-default ajax-modal-btn"><i class="fa fa-plus-square-o"></i> {{ trans('app.add_address') }}</a>
 							@endif
 
 					        <div class="spacer30"></div>

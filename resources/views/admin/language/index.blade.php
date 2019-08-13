@@ -6,7 +6,7 @@
 	      <h3 class="box-title">{{ trans('app.languages') }}</h3>
 	      <div class="box-tools pull-right">
 			@can('create', App\Language::class)
-				<a href="#" data-link="{{ route('admin.setting.language.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_language') }}</a>
+				<a href="javascript:void(0)" data-link="{{ route('admin.setting.language.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_language') }}</a>
 			@endcan
 	      </div>
 	    </div> <!-- /.box-header -->
@@ -37,7 +37,7 @@
 			          <td>{!! $language->php_locale_code !!}</td>
 			          <td class="row-options text-muted small">
 							@can('update', $language)
-			                    <a href="#" data-link="{{ route('admin.setting.language.edit', $language) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+			                    <a href="javascript:void(0)" data-link="{{ route('admin.setting.language.edit', $language) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 						@can('delete', $language)
 							@if(in_array($language->id, config('system.freeze.languages')))

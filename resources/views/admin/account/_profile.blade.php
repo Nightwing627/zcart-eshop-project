@@ -73,14 +73,14 @@
 
     			{!! $profile->primaryAddress->toHtml() !!}
 
-				<a class="ajax-modal-btn btn btn-default" href="#" data-link="{{ route('address.edit', $profile->primaryAddress->id) }}"><i class="fa fa-map-marker"></i> {{ trans('app.update_address') }}</a>
+				<a class="ajax-modal-btn btn btn-default" href="javascript:void(0)" data-link="{{ route('address.edit', $profile->primaryAddress->id) }}"><i class="fa fa-map-marker"></i> {{ trans('app.update_address') }}</a>
 			@else
-				<a class="ajax-modal-btn btn btn-default" href="#" data-link="{{ route('address.create', ['user', $profile->id]) }}"><i class="fa fa-plus-square-o"></i> {{ trans('app.add_address') }}</a>
+				<a class="ajax-modal-btn btn btn-default" href="javascript:void(0)" data-link="{{ route('address.create', ['user', $profile->id]) }}"><i class="fa fa-plus-square-o"></i> {{ trans('app.add_address') }}</a>
 			@endif
 	  	</div>
 
 		<div class="form-group">
-			<a class="ajax-modal-btn btn btn-default" href="#" data-link="{{ route('admin.account.showChangePasswordForm') }}"><i class="fa fa-lock"></i> {{ trans('app.change_password') }}</a>
+			<a class="ajax-modal-btn btn btn-default" href="javascript:void(0)" data-link="{{ route('admin.account.showChangePasswordForm') }}"><i class="fa fa-lock"></i> {{ trans('app.change_password') }}</a>
 		</div>
 
 	    @if($profile->merchantId())

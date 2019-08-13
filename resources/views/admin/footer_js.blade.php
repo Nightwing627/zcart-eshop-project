@@ -34,12 +34,10 @@
 		    $('body').on('click', '.ajax-modal-btn', function(e) {
 				e.preventDefault();
 
-				// if(e.which !== 1) return false;
-
 				apply_busy_filter();
 
 				var url = $(this).data('link');
-				// var url = $(this).attr('href');
+
 				if (url.indexOf('#') == 0) {
 					$(url).modal('open');
 				}
@@ -145,6 +143,14 @@
 	        "processing": true,
 	        "serverSide": true,
 	        "ajax": "{{ route('admin.catalog.product.getMore') }}",
+	        "initComplete":function( settings, json){
+            	// console.log(json);
+        	},
+    	    "drawCallback": function( settings ) {
+			  	$(".massAction, .checkbox-toggle").unbind();
+			    $(".fa", '.checkbox-toggle').removeClass("fa-check-square-o").addClass('fa-square-o');
+    	    	initMassActions();
+			},
 			"columns": [
 	            { 'data': 'checkbox', 'name': 'checkbox', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false },
 	            { 'data': 'name', 'name': 'name' },
@@ -184,6 +190,11 @@
 	        "processing": true,
 	        "serverSide": true,
 	        "ajax": "{{ route('admin.admin.customer.getMore') }}",
+    	    "drawCallback": function( settings ) {
+			  	$(".massAction, .checkbox-toggle").unbind();
+			    $(".fa", '.checkbox-toggle').removeClass("fa-check-square-o").addClass('fa-square-o');
+    	    	initMassActions();
+			},
 			"columns": [
 	            { 'data': 'checkbox', 'name': 'checkbox', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false },
 	            { 'data': 'nice_name', 'name': 'nice_name' },
@@ -1044,8 +1055,9 @@
 	 	});
 
 	  	//Enable check and uncheck all functionality
-	  	$(".checkbox-toggle").click(function () {
+	  	$(".checkbox-toggle").on('click', function (e) {
 		    var clicks = $(this).data('clicks');
+
 		    if (clicks) {
 		      $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
 		      unCheckAll(); //Uncheck all checkboxes
@@ -1060,6 +1072,9 @@
 	  	$('.massAction').on('click', function(e) {
 		    e.preventDefault();
 
+		    // if (!confirm('Are you sure?')) return false;
+
+		    var node = $(this);
 		    var doAfter = $(this).data('doafter');
 
 		    var allVals = [];
@@ -1070,38 +1085,63 @@
 		    if(allVals.length <= 0){
 		        notie.alert(3, "{{ trans('responses.select_some_item') }}", 2);
 		    } else {
-		        $.ajax({
-		            url: $(this).attr('href'),
-		            type: 'POST',
-		            data: {
-		                "_token": "{{ csrf_token() }}",
-		                "ids": allVals,
-		            },
-		            success: function (data) {
-		                if (data['success']) {
-		                    notie.alert(1, data['success'], 2);
-		                    switch(doAfter){
-		                      case 'reload':
-		                          window.location.reload();
-		                          break;
-		                      case 'remove':
-		                          $(".massCheck:checked").each(function() {
-		                            $(this).parents("tr").remove();
-		                          });
-		                          break;
-		                      default:
-		                        unCheckAll(); //Uncheck all checkboxes
-		                    }
-		                } else if (data['error']) {
-		                    notie.alert(3, data['error'], 2);
-		                } else {
-		                    notie.alert(3, "{{ trans('responses.failed') }}", 2);
-		                }
-		            },
-		            error: function (data) {
-		              notie.alert(3, "{{ trans('responses.error') }}", 2);
-		            }
-		        });
+	      		return new Promise(function(resolve, reject) {
+		            $.confirm({
+		                title: "{{ trans('app.confirmation') }}",
+		                content: "{{ trans('app.are_you_sure') }}",
+		                type: 'red',
+		                buttons: {
+				            'confirm': {
+				                text: '{{ trans('app.proceed') }}',
+				                keys: ['enter'],
+				                btnClass: 'btn-red',
+				                action: function () {
+				                	notie.alert(4, "{{ trans('messages.confirmed') }}", 2);
+
+							        $.ajax({
+							            url: node.data('link'),
+							            type: 'POST',
+							            data: {
+							                "_token": "{{ csrf_token() }}",
+							                "ids": allVals,
+							            },
+							            success: function (data) {
+							                if (data['success']) {
+							                    notie.alert(1, data['success'], 2);
+							                    switch(doAfter){
+							                      case 'reload':
+							                          window.location.reload();
+							                          break;
+							                      case 'remove':
+							                          $(".massCheck:checked").each(function() {
+							                            $(this).parents("tr").remove();
+							                          });
+							                          break;
+							                      default:
+							                        unCheckAll(); //Uncheck all checkboxes
+							                    }
+							                } else if (data['error']) {
+							                    notie.alert(3, data['error'], 2);
+							                } else {
+							                    notie.alert(3, "{{ trans('responses.failed') }}", 2);
+							                }
+							            },
+							            error: function (data) {
+							              notie.alert(3, "{{ trans('responses.error') }}", 2);
+							            }
+							        });
+			                	}
+			            	},
+			            	'cancel': {
+			                	text: '{{ trans('app.cancel') }}',
+			                	action: function () {
+					            	// node.toggleClass('active');
+		                    		notie.alert(2, "{{ trans('messages.canceled') }}", 2);
+			                	}
+			            	},
+	                	}
+	            	});
+	        	});
 		    }
 	  	});
 	}

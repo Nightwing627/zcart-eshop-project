@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.refunds') }}</h3>
 			<div class="box-tools pull-right">
 				@can('initiate', App\Refund::class)
-					<a href="#" data-link="{{ route('admin.support.refund.form') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.initiate_refund') }}</a>
+					<a href="javascript:void(0)" data-link="{{ route('admin.support.refund.form') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.initiate_refund') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
@@ -44,11 +44,11 @@
 				          	<td>{{ $refund->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
 					            @can('index', App\Customer::class)
-									<a href="#" data-link="{{ route('admin.admin.customer.show', $refund->order->customer_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.customer') }}" class="fa fa-user"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('admin.admin.customer.show', $refund->order->customer_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.customer') }}" class="fa fa-user"></i></a>&nbsp;
 								@endcan
 
 								@can('approve', $refund)
-									<a href="#" data-link="{{ route('admin.support.refund.response', $refund) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-random"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('admin.support.refund.response', $refund) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.response') }}" class="fa fa-random"></i></a>&nbsp;
 								@endcan
 							</td>
 						</tr>
@@ -100,7 +100,7 @@
 				          	<td>{{ $refund->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
 					            {{-- @can('index', App\Customer::class) --}}
-									<a href="#" data-link="{{ route('admin.admin.customer.show', $refund->order->customer_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.customer') }}" class="fa fa-user"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('admin.admin.customer.show', $refund->order->customer_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.customer') }}" class="fa fa-user"></i></a>&nbsp;
 								{{-- @endcan --}}
 							</td>
 						</tr>

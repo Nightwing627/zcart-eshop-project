@@ -9,7 +9,7 @@
 				<a href="{{ route('admin.support.ticket.index') }}" class="btn btn-default btn-flat">{{ trans('app.back') }}</a>
 			@endcan
 			@can('reply', $ticket)
-				<a href="#" data-link="{{ route('admin.support.ticket.reply', $ticket) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.reply') }}</a>
+				<a href="javascript:void(0)" data-link="{{ route('admin.support.ticket.reply', $ticket) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.reply') }}</a>
 			@endcan
 	      </div>
 	    </div> <!-- /.box-header -->
@@ -21,7 +21,7 @@
 						<p>
 							<span class="lead">
 								@can('view', $ticket->shop)
-					            	<a href="#" data-link="{{ route('admin.vendor.shop.show', $ticket->shop_id) }}" class="ajax-modal-btn small">{{ $ticket->shop->name }}</a>
+					            	<a href="javascript:void(0)" data-link="{{ route('admin.vendor.shop.show', $ticket->shop_id) }}" class="ajax-modal-btn small">{{ $ticket->shop->name }}</a>
 								@else
 									{{ $ticket->shop->name }}
 								@endcan
@@ -39,7 +39,7 @@
 				            @endif
 							<span class="lead indent5">
 								@can('view', $ticket->user)
-						            <a href="#" data-link="{{ route('admin.admin.user.show', $ticket->user_id) }}" class="ajax-modal-btn small">{{ $ticket->user->getName() }}</a>
+						            <a href="javascript:void(0)" data-link="{{ route('admin.admin.user.show', $ticket->user_id) }}" class="ajax-modal-btn small">{{ $ticket->user->getName() }}</a>
 								@else
 									{{ $ticket->user->getName() }}
 								@endcan
@@ -89,7 +89,7 @@
 
 			        <hr/>
 					<span class="pull-right">
-						<a href="#" data-link="{{ route('admin.support.ticket.reply', $ticket) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.reply') }}</a>
+						<a href="javascript:void(0)" data-link="{{ route('admin.support.ticket.reply', $ticket) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.reply') }}</a>
 						{!! Form::open(['route' => ['admin.support.ticket.archive', $ticket], 'method' => 'delete', 'class' => 'inline']) !!}
 							<button class="confirm btn btn-danger" type="submit"><i class="fa fa-archive"></i> {{ trans('app.archive') }}</button>
 						{!! Form::close() !!}
@@ -111,13 +111,13 @@
 								<span class="lead indent5">{{ $ticket->assignedTo->getName() }}</span>
 								<br/>
 								@can('view', $ticket->assignedTo)
-					            	<a href="#" data-link="{{ route('admin.admin.user.show', $ticket->assigned_to) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
+					            	<a href="javascript:void(0)" data-link="{{ route('admin.admin.user.show', $ticket->assigned_to) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 								@endcan
 							</p>
 						@endif
 
 						@can('assign', $ticket)
-							<a class="btn btn-default ajax-modal-btn" href="#" data-link="{{ route('admin.support.ticket.showAssignForm', $ticket) }}"><i class="fa fa-hashtag"></i> {{ trans('app.assign') }}</a>
+							<a class="btn btn-default ajax-modal-btn" href="javascript:void(0)" data-link="{{ route('admin.support.ticket.showAssignForm', $ticket) }}"><i class="fa fa-hashtag"></i> {{ trans('app.assign') }}</a>
 						@endcan
 				  	</div>
 

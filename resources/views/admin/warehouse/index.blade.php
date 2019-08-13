@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.warehouses') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\Warehouse::class)
-					<a href="#" data-link="{{ route('admin.stock.warehouse.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_warehouse') }}</a>
+					<a href="javascript:void(0)" data-link="{{ route('admin.stock.warehouse.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_warehouse') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
@@ -35,16 +35,16 @@
 						<td>{{ ($warehouse->active) ? trans('app.active') : trans('app.inactive') }}</td>
 						<td class="row-options">
 							@can('view', $warehouse)
-								<a href="#" data-link="{{ route('admin.stock.warehouse.show', $warehouse->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="javascript:void(0)" data-link="{{ route('admin.stock.warehouse.show', $warehouse->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 							@endcan
 
 							@can('update', $warehouse)
-								<a href="#" data-link="{{ route('admin.stock.warehouse.edit', $warehouse->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="javascript:void(0)" data-link="{{ route('admin.stock.warehouse.edit', $warehouse->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 
 								@if($warehouse->primaryAddress)
-									<a href="#" data-link="{{ route('address.edit', $warehouse->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('address.edit', $warehouse->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
 								@else
-									<a href="#" data-link="{{ route('address.create', ['warehouse', $warehouse->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('address.create', ['warehouse', $warehouse->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
 								@endif
 							@endcan
 

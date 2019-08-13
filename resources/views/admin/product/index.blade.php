@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.products') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\Product::class)
-					<a href="#" data-link="{{ route('admin.catalog.product.bulk') }}" class="ajax-modal-btn btn btn-default btn-flat">{{ trans('app.bulk_import') }}</a>
+					<a href="javascript:void(0)" data-link="{{ route('admin.catalog.product.bulk') }}" class="ajax-modal-btn btn btn-default btn-flat">{{ trans('app.bulk_import') }}</a>
 					<a href="{{ route('admin.catalog.product.create') }}" class=" btn btn-new btn-flat">{{ trans('app.add_product') }}</a>
 				@endcan
 			</div>
@@ -27,8 +27,8 @@
 										<span class="sr-only">{{ trans('app.toggle_dropdown') }}</span>
 									</button>
 									<ul class="dropdown-menu" role="menu">
-										<li><a href="{{ route('admin.catalog.product.massTrash') }}" class="massAction " data-doafter="remove"><i class="fa fa-trash"></i> {{ trans('app.trash') }}</a></li>
-										<li><a href="{{ route('admin.catalog.product.massDestroy') }}" class="massAction " data-doafter="remove"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
+										<li><a href="javascript:void(0)" data-link="{{ route('admin.catalog.product.massTrash') }}" class="massAction" data-doafter="reload"><i class="fa fa-trash"></i> {{ trans('app.trash') }}</a></li>
+										<li><a href="javascript:void(0)" data-link="{{ route('admin.catalog.product.massDestroy') }}" class="massAction" data-doafter="reload"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
 									</ul>
 								</div>
 							</th>

@@ -1,5 +1,5 @@
 @can('view', $product)
-	<a href="#" data-link="{{ route('admin.catalog.product.show', $product->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+	<a href="javascript:void(0)" data-link="{{ route('admin.catalog.product.show', $product->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 @endcan
 
 @unless($product->inventories_count > 0 && ! Auth::user()->isFromPlatform())

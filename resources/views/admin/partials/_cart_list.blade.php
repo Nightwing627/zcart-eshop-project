@@ -38,7 +38,7 @@
                                     {!! Form::close() !!}
                                 @endif
                                 @can('view', $cart_list)
-                                    <a href="#" data-link="{{ Route('admin.order.cart.show', $cart_list->id) }}" class="ajax-modal-btn btn btn-sm btn-default">
+                                    <a href="javascript:void(0)" data-link="{{ Route('admin.order.cart.show', $cart_list->id) }}" class="ajax-modal-btn btn btn-sm btn-default">
                                         <i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i>
                                     </a>
                                 @endcan

@@ -23,7 +23,7 @@
 	    					@endforeach
 	    				</td>
 	    				<td>
-	    					<a href="#" data-link="{{ route('admin.appearance.featuredCategories') }}" class="ajax-modal-btn btn btn-sm btn-default flat"><i class="fa fa-edit"></i> @lang('app.edit')</a>
+	    					<a href="javascript:void(0)" data-link="{{ route('admin.appearance.featuredCategories') }}" class="ajax-modal-btn btn btn-sm btn-default flat"><i class="fa fa-edit"></i> @lang('app.edit')</a>
 	    				</td>
 	    			</tr>
 	    		</tbody>

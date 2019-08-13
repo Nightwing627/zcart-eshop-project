@@ -21,7 +21,7 @@
 		            {{ trans('app.zip_code') . ': ' . $addressable->primaryAddress->zip_code }}
 		        </span>
 	        @endif
-	        <a href="#" data-link="{{ route('admin.admin.' . $addressable_type . '.show', $addressable->id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
+	        <a href="javascript:void(0)" data-link="{{ route('admin.admin.' . $addressable_type . '.show', $addressable->id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 
 	        <span class="pull-right" style="margin-top: -60px;margin-right: 30px;font-size: 40px; color: rgba(0, 0, 0, 0.2);">
 	            <i class="fa fa-check-square-o"></i>
@@ -33,7 +33,7 @@
 	    <div class="box-header with-border">
 	      <h3 class="box-title">{{ trans('app.addresses') }}</h3>
 	      <div class="box-tools pull-right">
-			<a href="#" data-link="{{ route('address.create', [$addressable_type, $addressable->id]) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_address') }}</a>
+			<a href="javascript:void(0)" data-link="{{ route('address.create', [$addressable_type, $addressable->id]) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_address') }}</a>
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
@@ -42,7 +42,7 @@
 			        <div class="col-md-6">
 				        {!! $address->toHtml() !!}
 				        <div class="pull-right">
-				    		<a href="#" data-link="{{ route('address.edit', $address->id) }}" class="ajax-modal-btn">
+				    		<a href="javascript:void(0)" data-link="{{ route('address.edit', $address->id) }}" class="ajax-modal-btn">
 				    			<i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i>
 				    		</a>&nbsp;
 				    		@unless($address->address_type == 'Primary')

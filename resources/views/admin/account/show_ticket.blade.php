@@ -5,7 +5,7 @@
 	    <div class="box-header with-border">
 	      	<h3 class="box-title">{{ trans('app.ticket') }}</h3>
 	      	<div class="box-tools pull-right">
-				<a href="#" data-link="{{ route('admin.account.ticket.reply', $ticket) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.reply') }}</a>
+				<a href="javascript:void(0)" data-link="{{ route('admin.account.ticket.reply', $ticket) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.reply') }}</a>
 				<a href="{{ route('admin.account.ticket') }}" class="btn btn-default btn-flat">{{ trans('app.back') }}</a>
 	      	</div>
 	    </div> <!-- /.box-header -->
@@ -55,7 +55,7 @@
 
 			        <hr/>
 					<span class="pull-right">
-						<a href="#" data-link="{{ route('admin.account.ticket.reply', $ticket) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.reply') }}</a>
+						<a href="javascript:void(0)" data-link="{{ route('admin.account.ticket.reply', $ticket) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.reply') }}</a>
 						{!! Form::open(['route' => ['admin.account.ticket.archive', $ticket], 'method' => 'delete', 'class' => 'inline']) !!}
 							<button class="confirm btn btn-danger" type="submit"><i class="fa fa-trash"></i> {{ trans('app.delete') }}</button>
 						{!! Form::close() !!}
@@ -77,7 +77,7 @@
 								<span class="lead indent5">{{ $ticket->assignedTo->getName() }}</span>
 								<br/>
 								@can('view', $ticket->assignedTo)
-					            	<a href="#" data-link="{{ route('admin.admin.user.show', $ticket->assigned_to) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
+					            	<a href="javascript:void(0)" data-link="{{ route('admin.admin.user.show', $ticket->assigned_to) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
 								@endcan
 							</p>
 							<hr/>

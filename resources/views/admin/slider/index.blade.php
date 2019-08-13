@@ -6,7 +6,7 @@
 	      <h3 class="box-title">{{ trans('app.sliders') }}</h3>
 	      <div class="box-tools pull-right">
 			@can('create', App\Slider::class)
-				<a href="#" data-link="{{ route('admin.appearance.slider.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_slider') }}</a>
+				<a href="javascript:void(0)" data-link="{{ route('admin.appearance.slider.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_slider') }}</a>
 			@endcan
 	      </div>
 	    </div> <!-- /.box-header -->
@@ -49,7 +49,7 @@
 				          	</td>
 				          	<td class="row-options text-muted small">
 								@can('update', $slider)
-				                    <a href="#" data-link="{{ route('admin.appearance.slider.edit', $slider->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+				                    <a href="javascript:void(0)" data-link="{{ route('admin.appearance.slider.edit', $slider->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 								@endcan
 								@can('delete', $slider)
 				                    {!! Form::open(['route' => ['admin.appearance.slider.destroy', $slider->id], 'method' => 'delete', 'class' => 'data-form']) !!}

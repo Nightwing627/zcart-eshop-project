@@ -1,6 +1,6 @@
-<a href="#" data-link="{{ route('admin.support.message.create') }}"  class="ajax-modal-btn btn btn-new btn-lg btn-block">{{ trans('app.compose') }}</a>
+<a href="javascript:void(0)" data-link="{{ route('admin.support.message.create') }}"  class="ajax-modal-btn btn btn-new btn-lg btn-block">{{ trans('app.compose') }}</a>
 
-<a href="#" data-link="{{ route('admin.support.message.create', true) }}"  class="ajax-modal-btn btn btn-info btn-lg btn-block margin-bottom">{{ trans('app.new_message_with_template') }}</a>
+<a href="javascript:void(0)" data-link="{{ route('admin.support.message.create', true) }}"  class="ajax-modal-btn btn btn-info btn-lg btn-block margin-bottom">{{ trans('app.new_message_with_template') }}</a>
 
 <div class="box box-solid">
 	<div class="box-header">

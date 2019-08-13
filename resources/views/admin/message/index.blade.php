@@ -45,22 +45,22 @@
 							<span class="sr-only">{{ trans('app.toggle_dropdown') }}</span>
 						</button>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="{{ route('admin.support.message.massUpdate', [ App\Message::STATUS_NEW, 'status' ]) }}" class="massAction" data-doafter="reload">
+							<li><a href="javascript:void(0)" data-link="{{ route('admin.support.message.massUpdate', [ App\Message::STATUS_NEW, 'status' ]) }}" class="massAction" data-doafter="reload">
 								<i class="fa fa-envelope-o"></i> {{ trans('app.new') }}</a></li>
-							<li><a href="{{ route('admin.support.message.massUpdate', [ App\Message::STATUS_READ, 'status' ]) }}" class="massAction" data-doafter="reload"><i class="fa fa-envelope-open"></i> {{ trans('app.read') }}</a></li>
-							<li><a href="{{ route('admin.support.message.massUpdate', [ App\Message::STATUS_UNREAD, 'status' ]) }}" class="massAction" data-doafter="reload"><i class="fa fa-envelope"></i> {{ trans('app.unread') }}</a></li>
+							<li><a href="javascript:void(0)" data-link="{{ route('admin.support.message.massUpdate', [ App\Message::STATUS_READ, 'status' ]) }}" class="massAction" data-doafter="reload"><i class="fa fa-envelope-open"></i> {{ trans('app.read') }}</a></li>
+							<li><a href="javascript:void(0)" data-link="{{ route('admin.support.message.massUpdate', [ App\Message::STATUS_UNREAD, 'status' ]) }}" class="massAction" data-doafter="reload"><i class="fa fa-envelope"></i> {{ trans('app.unread') }}</a></li>
 							<li class="divider"></li>
 
 							@if($requestLabel <= \App\Message::LABEL_DRAFT)
-								<li><a href="{{ route('admin.support.message.massUpdate', [ App\Message::LABEL_SPAM, 'label' ]) }}" class="massAction" data-doafter="remove"><i class="fa fa-filter"></i> {{ trans('app.spam') }}</a></li>
+								<li><a href="javascript:void(0)" data-link="{{ route('admin.support.message.massUpdate', [ App\Message::LABEL_SPAM, 'label' ]) }}" class="massAction" data-doafter="remove"><i class="fa fa-filter"></i> {{ trans('app.spam') }}</a></li>
 
-								<li><a href="{{ route('admin.support.message.massUpdate', [ App\Message::LABEL_TRASH, 'label' ]) }}" class="massAction" data-doafter="remove"><i class="fa fa-trash"></i> {{ trans('app.trash') }}</a></li>
+								<li><a href="javascript:void(0)" data-link="{{ route('admin.support.message.massUpdate', [ App\Message::LABEL_TRASH, 'label' ]) }}" class="massAction" data-doafter="remove"><i class="fa fa-trash"></i> {{ trans('app.trash') }}</a></li>
 							@else
-								<li><a href="{{ route('admin.support.message.massUpdate', [ App\Message::LABEL_INBOX, 'label' ]) }}" class="massAction" data-doafter="remove"><i class="fa fa-inbox"></i> {{ trans('app.move_to_inbox') }}</a></li>
+								<li><a href="javascript:void(0)" data-link="{{ route('admin.support.message.massUpdate', [ App\Message::LABEL_INBOX, 'label' ]) }}" class="massAction" data-doafter="remove"><i class="fa fa-inbox"></i> {{ trans('app.move_to_inbox') }}</a></li>
 							@endif
 
 							@if($requestLabel > \App\Message::LABEL_DRAFT)
-								<li><a href="{{ route('admin.support.message.massDestroy') }}" class="massAction" data-doafter="remove"><i class="glyphicon glyphicon-trash"></i> {{ trans('app.delete_permanently') }}</a></li>
+								<li><a href="javascript:void(0)" data-link="{{ route('admin.support.message.massDestroy') }}" class="massAction" data-doafter="remove"><i class="glyphicon glyphicon-trash"></i> {{ trans('app.delete_permanently') }}</a></li>
 							@endif
 						</ul>
 	                </div>

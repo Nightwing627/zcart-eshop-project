@@ -20,7 +20,7 @@
         @endif
 
         @can('view', $customer)
-            <a href="#" data-link="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
+            <a href="javascript:void(0)" data-link="{{ route('admin.admin.customer.show', $customer->id) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
         @endcan
 
         <i class="fa fa-check-square-o pull-right" style="position: absolute; right: 30px; top: 90px; font-size: 40px; color: rgba(0, 0, 0, 0.2);"></i>

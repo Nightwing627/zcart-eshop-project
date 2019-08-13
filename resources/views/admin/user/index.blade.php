@@ -6,7 +6,7 @@
 	      <h3 class="box-title">{{ trans('app.users') }}</h3>
 	      <div class="box-tools pull-right">
 			@can('create', App\User::class)
-				<a href="#" data-link="{{ route('admin.admin.user.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_user') }}</a>
+				<a href="javascript:void(0)" data-link="{{ route('admin.admin.user.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_user') }}</a>
 			@endcan
 	      </div>
 	    </div> <!-- /.box-header -->
@@ -28,13 +28,13 @@
 							<td>
 			            		<img src="{{ get_avatar_src($user, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 								<p class="indent10">
-									<a href="#" data-link="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn">
+									<a href="javascript:void(0)" data-link="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn">
 										{{ $user->nice_name }}
 									</a>
 								</p>
 							</td>
 							<td>
-								<a href="#" data-link="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn">
+								<a href="javascript:void(0)" data-link="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn">
 									{{ $user->name }}
 								</a>
 							</td>
@@ -49,14 +49,14 @@
 							@endcan
 
 							@can('update', $user)
-					            <a href="#" data-link="{{ route('admin.admin.user.edit', $user->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+					            <a href="javascript:void(0)" data-link="{{ route('admin.admin.user.edit', $user->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 
-							    <a href="#" data-link="{{ route('admin.admin.user.changePassword', $user->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.change_password') }}" class="fa fa-lock"></i></a>&nbsp;
+							    <a href="javascript:void(0)" data-link="{{ route('admin.admin.user.changePassword', $user->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.change_password') }}" class="fa fa-lock"></i></a>&nbsp;
 
 								@if($user->primaryAddress)
-									<a href="#" data-link="{{ route('address.edit', $user->primaryAddress->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('address.edit', $user->primaryAddress->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
 								@else
-									<a href="#" data-link="{{ route('address.create', ['user', $user->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('address.create', ['user', $user->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
 								@endif
 							@endcan
 

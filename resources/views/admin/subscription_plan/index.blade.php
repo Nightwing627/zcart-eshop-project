@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.subscription_plans') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\SubscriptionPlan::class)
-					<a href="#" data-link="{{ route('admin.setting.subscriptionPlan.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_subscription_plan') }}</a>
+					<a href="javascript:void(0)" data-link="{{ route('admin.setting.subscriptionPlan.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_subscription_plan') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
@@ -39,11 +39,11 @@
 							<td>{{ $subscriptionPlan->inventory_limit }}</td>
 							<td class="row-options">
 								@can('view', $subscriptionPlan)
-									<a href="#" data-link="{{ route('admin.setting.subscriptionPlan.show', $subscriptionPlan->plan_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('admin.setting.subscriptionPlan.show', $subscriptionPlan->plan_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 								@endcan
 
 								@can('update', $subscriptionPlan)
-									<a href="#" data-link="{{ route('admin.setting.subscriptionPlan.edit', $subscriptionPlan->plan_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('admin.setting.subscriptionPlan.edit', $subscriptionPlan->plan_id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 								@endcan
 
 								@can('delete', $subscriptionPlan)

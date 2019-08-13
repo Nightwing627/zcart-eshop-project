@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.email_templates') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\EmailTemplate::class)
-					<a href="#" data-link="{{ route('admin.setting.emailTemplate.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_template') }}</a>
+					<a href="javascript:void(0)" data-link="{{ route('admin.setting.emailTemplate.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_template') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
@@ -32,10 +32,10 @@
 						<td>{{ $template->template_for }}</td>
 						<td class="row-options">
 							@can('view', $template)
-								<a href="#" data-link="{{ route('admin.setting.emailTemplate.show', $template->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.preview') }}" class="fa fa-eye"></i></a>&nbsp;
+								<a href="javascript:void(0)" data-link="{{ route('admin.setting.emailTemplate.show', $template->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.preview') }}" class="fa fa-eye"></i></a>&nbsp;
 							@endcan
 							@can('update', $template)
-								<a href="#" data-link="{{ route('admin.setting.emailTemplate.edit', $template->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="javascript:void(0)" data-link="{{ route('admin.setting.emailTemplate.edit', $template->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $template)

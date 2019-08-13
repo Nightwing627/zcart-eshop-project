@@ -284,7 +284,7 @@
 				            <!-- /.box-body -->
 				            <div class="box-footer clearfix">
 								@can('create', App\Order::class)
-									<a href="#" data-link="{{ route('admin.order.order.searchCutomer') }}" class="ajax-modal-btn btn btn-new btn-flat pull-left">
+									<a href="javascript:void(0)" data-link="{{ route('admin.order.order.searchCutomer') }}" class="ajax-modal-btn btn btn-new btn-flat pull-left">
 										<i class="icon ion-md-cart"></i> {{ trans('app.add_order') }}
 									</a>
 								@endcan
@@ -387,7 +387,7 @@
 													<td>{{ ($inventory->active) ? trans('app.active') : trans('app.inactive') }}</td>
 													<td class="row-options">
 														@can('update', $inventory)
-															<a href="#" data-link="{{ route('admin.stock.inventory.editQtt', $inventory->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="icon ion-md-add-circle"></i></a>
+															<a href="javascript:void(0)" data-link="{{ route('admin.stock.inventory.editQtt', $inventory->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="icon ion-md-add-circle"></i></a>
 														@endcan
 													</td>
 												</tr>
@@ -569,7 +569,7 @@
 				                            <h5 class="nopadding">
 				                            	<small>{{ trans('app.sku') . ': ' }}</small>
 				                                @can('view', $inventory)
-				                                    <a href="#" data-link="{{ route('admin.stock.inventory.show', $inventory->id) }}" class="ajax-modal-btn modal-btn">{{ $inventory->sku }}</a>
+				                                    <a href="javascript:void(0)" data-link="{{ route('admin.stock.inventory.show', $inventory->id) }}" class="ajax-modal-btn modal-btn">{{ $inventory->sku }}</a>
 				                                @else
 				                                  {{ $inventory->sku }}
 				                                @endcan

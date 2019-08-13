@@ -9,7 +9,7 @@
 			    </div> <!-- /.box-header -->
 			    <div class="box-body">
 					@if(Gate::allows('view', $dispute->shop))
-		            	<a href="#" data-link="{{ route('admin.vendor.shop.show', $dispute->shop_id) }}" class="ajax-modal-btn small"><span class="lead"> {{ $dispute->shop->name }} </span></a>
+		            	<a href="javascript:void(0)" data-link="{{ route('admin.vendor.shop.show', $dispute->shop_id) }}" class="ajax-modal-btn small"><span class="lead"> {{ $dispute->shop->name }} </span></a>
 					@else
 						<span class="lead">{{ $dispute->shop->name }}</span>
 					@endif
@@ -36,7 +36,7 @@
 					            @endif
 								&nbsp;
 								@if(Gate::allows('view', $dispute->shop->owner))
-						            <a href="#" data-link="{{ route('admin.admin.user.show', $dispute->shop->owner_id) }}" class="ajax-modal-btn small"><span class="lead">{{ $dispute->shop->owner->getName() }}</span></a>
+						            <a href="javascript:void(0)" data-link="{{ route('admin.admin.user.show', $dispute->shop->owner_id) }}" class="ajax-modal-btn small"><span class="lead">{{ $dispute->shop->owner->getName() }}</span></a>
 								@else
 									<span class="small">{{ $dispute->shop->owner->getName() }}</span>
 								@endif
@@ -53,7 +53,7 @@
 			      <h3 class="box-title">{{ trans('app.dispute') }}</h3>
 			      <div class="box-tools pull-right">
 					@can('response', $dispute)
-						<a href="#" data-link="{{ route('admin.support.dispute.response', $dispute) }}" class="ajax-modal-btn btn btn-default btn-flat">{{ trans('app.response') }}</a>
+						<a href="javascript:void(0)" data-link="{{ route('admin.support.dispute.response', $dispute) }}" class="ajax-modal-btn btn btn-default btn-flat">{{ trans('app.response') }}</a>
 					@endcan
 			      </div>
 			    </div> <!-- /.box-header -->
@@ -104,7 +104,7 @@
 						  	<label>{{ trans('app.product') }}</label>
 							<img src="{{ get_storage_file_url(optional($dispute->product->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.image') }}">
 							@if(Gate::allows('view', $dispute->product))
-					            <a href="#" data-link="{{ route('admin.catalog.product.show', $dispute->product_id) }}" class="ajax-modal-btn"><span class="lead indent10">{{ $dispute->product->name }}</span></a>
+					            <a href="javascript:void(0)" data-link="{{ route('admin.catalog.product.show', $dispute->product_id) }}" class="ajax-modal-btn"><span class="lead indent10">{{ $dispute->product->name }}</span></a>
 							@else
 								<span class="lead indent10">{{ $dispute->product->name }}</span>
 							@endif
@@ -127,7 +127,7 @@
 	            		<img src="{{ get_gravatar_url($dispute->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 		            @endif
 					@if(Gate::allows('view', $dispute->customer))
-			            <a href="#" data-link="{{ route('admin.admin.customer.show', $dispute->customer_id) }}" class="ajax-modal-btn small"><span class="lead indent10">{{ $dispute->customer->getName() }}</span></a>
+			            <a href="javascript:void(0)" data-link="{{ route('admin.admin.customer.show', $dispute->customer_id) }}" class="ajax-modal-btn small"><span class="lead indent10">{{ $dispute->customer->getName() }}</span></a>
 					@else
 						<span class="lead indent10">{{ $dispute->customer->getName() }}</span>
 					@endif

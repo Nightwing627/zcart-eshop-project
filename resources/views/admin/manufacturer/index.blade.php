@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.manufacturers') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\Manufacturer::class)
-					<a href="#" data-link="{{ route('admin.catalog.manufacturer.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_manufacturer') }}</a>
+					<a href="javascript:void(0)" data-link="{{ route('admin.catalog.manufacturer.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_manufacturer') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
@@ -29,7 +29,7 @@
 								<img src="{{ get_storage_file_url(optional($manufacturer->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
 								<p class="indent10">
 									@can('view', $manufacturer)
-										<a href="#" data-link="{{ route('admin.catalog.manufacturer.show', $manufacturer->id) }}" class="ajax-modal-btn">{{ $manufacturer->name }}</a>
+										<a href="javascript:void(0)" data-link="{{ route('admin.catalog.manufacturer.show', $manufacturer->id) }}" class="ajax-modal-btn">{{ $manufacturer->name }}</a>
 									@else
 										{{ $manufacturer->name }}
 									@endcan
@@ -46,11 +46,11 @@
 							</td>
 							<td class="row-options">
 								@can('view', $manufacturer)
-									<a href="#" data-link="{{ route('admin.catalog.manufacturer.show', $manufacturer->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('admin.catalog.manufacturer.show', $manufacturer->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 								@endcan
 
 								@can('update', $manufacturer)
-									<a href="#" data-link="{{ route('admin.catalog.manufacturer.edit', $manufacturer->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('admin.catalog.manufacturer.edit', $manufacturer->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 								@endcan
 
 								@can('delete', $manufacturer)

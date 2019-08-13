@@ -47,15 +47,15 @@
 				          	<td>{{ $ticket->updated_at->diffForHumans() }}</td>
 							<td class="row-options">
 								@can('reply', $ticket)
-									<a href="#" data-link="{{ route('admin.support.ticket.reply', $ticket) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('admin.support.ticket.reply', $ticket) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
 								@endcan
 
 								@can('update', $ticket)
-									<a href="#" data-link="{{ route('admin.support.ticket.edit', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('admin.support.ticket.edit', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
 								@endcan
 
 								@can('assign', $ticket)
-									<a href="#" data-link="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
 								@endcan
 							</td>
 						</tr>
@@ -111,15 +111,15 @@
 			          	<td>{{ $ticket->updated_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('reply', $ticket)
-								<a href="#" data-link="{{ route('admin.support.ticket.reply', $ticket) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
+								<a href="javascript:void(0)" data-link="{{ route('admin.support.ticket.reply', $ticket) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.reply') }}" class="fa fa-reply"></i></a>&nbsp;
 							@endcan
 
 							@can('update', $ticket)
-								<a href="#" data-link="{{ route('admin.support.ticket.edit', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="javascript:void(0)" data-link="{{ route('admin.support.ticket.edit', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('assign', $ticket)
-								<a href="#" data-link="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
+								<a href="javascript:void(0)" data-link="{{ route('admin.support.ticket.showAssignForm', $ticket->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.assign') }}" class="fa fa-hashtag"></i></a>&nbsp;
 							@endcan
 						</td>
 					</tr>

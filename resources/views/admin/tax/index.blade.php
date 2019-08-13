@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.taxes') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\Tax::class)
-					<a href="#" data-link="{{ route('admin.setting.tax.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_tax') }}</a>
+					<a href="javascript:void(0)" data-link="{{ route('admin.setting.tax.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_tax') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
@@ -35,7 +35,7 @@
 						<td>{{ ($tax->active) ? trans('app.active') : trans('app.inactive') }}</td>
 						<td class="row-options">
 							@can('update', $tax)
-								<a href="#" data-link="{{ route('admin.setting.tax.edit', $tax->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="javascript:void(0)" data-link="{{ route('admin.setting.tax.edit', $tax->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $tax)

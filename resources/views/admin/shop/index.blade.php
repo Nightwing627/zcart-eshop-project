@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.shops') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\Merchant::class)
-					<a href="#" data-link="{{ route('admin.vendor.merchant.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_merchant') }}</a>
+					<a href="javascript:void(0)" data-link="{{ route('admin.vendor.merchant.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_merchant') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
@@ -27,7 +27,7 @@
 								<img src="{{ get_storage_file_url(optional($shop->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
 								<p class="indent10">
 									@can('view', $shop)
-										<a href="#" data-link="{{ route('admin.vendor.shop.show', $shop->id) }}"  class="ajax-modal-btn">{{ $shop->name }}</a>
+										<a href="javascript:void(0)" data-link="{{ route('admin.vendor.shop.show', $shop->id) }}"  class="ajax-modal-btn">{{ $shop->name }}</a>
 									@else
 										{{ $shop->name }}
 									@endcan
@@ -46,7 +46,7 @@
 						          	<span class="label label-info indent10">{{ trans('app.trialing') }}</span>
 
 									@if(Auth::user()->isAdmin())
-										<a href="#" data-link="{{ route('admin.vendor.subscription.editTrial', $shop) }}"  class="ajax-modal-btn pull-right"><i data-toggle="tooltip" data-placement="top" title="{{ trans('help.update_trial_period') }}" class="fa fa-calendar"></i> </a>
+										<a href="javascript:void(0)" data-link="{{ route('admin.vendor.subscription.editTrial', $shop) }}"  class="ajax-modal-btn pull-right"><i data-toggle="tooltip" data-placement="top" title="{{ trans('help.update_trial_period') }}" class="fa fa-calendar"></i> </a>
 									@endif
 								@endif
 				          	</td>
@@ -58,7 +58,7 @@
 					            @endif
 								<p class="indent10">
 									@can('view', $shop->owner)
-							            <a href="#" data-link="{{ route('admin.vendor.merchant.show', $shop->owner_id) }}" class="ajax-modal-btn">{{ $shop->owner->getName() }}</a>
+							            <a href="javascript:void(0)" data-link="{{ route('admin.vendor.merchant.show', $shop->owner_id) }}" class="ajax-modal-btn">{{ $shop->owner->getName() }}</a>
 									@else
 										{{ $shop->owner->getName() }}
 									@endcan
@@ -70,7 +70,7 @@
 							</td>
 							<td class="row-options">
 								@can('view', $shop)
-									<a href="#" data-link="{{ route('admin.vendor.shop.show', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('admin.vendor.shop.show', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.detail') }}" class="fa fa-expand"></i></a>&nbsp;
 
 									<a href="{{ route('admin.vendor.shop.staffs', $shop->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.staffs') }}" class="fa fa-users"></i></a>&nbsp;
 								@endcan
@@ -80,12 +80,12 @@
 								@endcan
 
 								@can('update', $shop)
-									<a href="#" data-link="{{ route('admin.vendor.shop.edit', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+									<a href="javascript:void(0)" data-link="{{ route('admin.vendor.shop.edit', $shop->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 
 									@if($shop->primaryAddress)
-										<a href="#" data-link="{{ route('address.edit', $shop->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
+										<a href="javascript:void(0)" data-link="{{ route('address.edit', $shop->primaryAddress->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update_address') }}" class="fa fa-map-marker"></i></a>&nbsp;
 									@else
-										<a href="#" data-link="{{ route('address.create', ['shop', $shop->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
+										<a href="javascript:void(0)" data-link="{{ route('address.create', ['shop', $shop->id]) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.add_address') }}" class="fa fa-plus-square-o"></i></a>&nbsp;
 									@endif
 								@endcan
 

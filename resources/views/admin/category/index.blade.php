@@ -6,7 +6,7 @@
 	      <h3 class="box-title">{{ trans('app.categories') }}</h3>
 	      <div class="box-tools pull-right">
 			@can('create', App\Category::class)
-				<a href="#" data-link="{{ route('admin.catalog.category.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_category') }}</a>
+				<a href="javascript:void(0)" data-link="{{ route('admin.catalog.category.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_category') }}</a>
 			@endcan
 	      </div>
 	    </div>
@@ -62,7 +62,7 @@
 				        <td>{{ $category->order }}</td>
 				        <td class="row-options">
 							@can('update', $category)
-		                	    <a href="#" data-link="{{ route('admin.catalog.category.edit', $category->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+		                	    <a href="javascript:void(0)" data-link="{{ route('admin.catalog.category.edit', $category->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 	                	    @endcan
 							@can('delete', $category)
 			                    {!! Form::open(['route' => ['admin.catalog.category.trash', $category->id], 'method' => 'delete', 'class' => 'data-form']) !!}
