@@ -239,7 +239,7 @@ class demoSeeder extends Seeder
 
         $this->call('InventoriesSeeder');
 
-        factory(App\Order::class, $this->tinycount)->create();
+        factory(App\Order::class, 7)->create();
 
         factory(App\Dispute::class, 2)->create();
 

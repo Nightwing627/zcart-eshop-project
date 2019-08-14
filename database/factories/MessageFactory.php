@@ -4,12 +4,15 @@ use Carbon\Carbon;
 use Faker\Generator as Faker;
 
 $factory->define(App\Message::class, function (Faker $faker) {
+
+    $shop_id = rand(1, 2);
+
     return [
         // 'shop_id' => $faker->randomElement(\DB::table('shops')->pluck('id')->toArray()),
         // 'customer_id' => $faker->randomElement(\DB::table('customers')->pluck('id')->toArray()),
-        'shop_id' => 1,
+        'shop_id' => $shop_id,
         'customer_id' => 1,
-        'order_id' => $faker->randomElement(\DB::table('orders')->pluck('id')->toArray()),
+        'order_id' => $faker->randomElement(\DB::table('orders')->where('shop_id', $shop_id)->pluck('id')->toArray()),
         'subject' => $faker->sentence,
         'message' => $faker->paragraph,
         'status' => rand(1, 3),

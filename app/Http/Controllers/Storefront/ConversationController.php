@@ -6,6 +6,8 @@ use Auth;
 use App\Order;
 use App\Reply;
 use App\Message;
+use App\Events\Message\NewMessage;
+use App\Events\Message\MessageReplied;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\OrderConversationRequest;
@@ -32,7 +34,15 @@ class ConversationController extends Controller
             else
                 $msg->user_id = $user_id;
 
-            $order->conversation->replies()->save($msg);
+            $reply = $order->conversation->replies()->save($msg);
+
+            // Update parent messase
+            $order->conversation->update([
+                'status' => Message::STATUS_NEW,
+                'label' => Message::LABEL_INBOX,
+            ]);
+
+            event(new MessageReplied($reply));
         }
         else{
             $msg = new Message;
@@ -46,7 +56,9 @@ class ConversationController extends Controller
                 $msg->user_id = $user_id;
             }
 
-            $order->conversation()->save($msg);
+            $conversation = $order->conversation()->save($msg);
+
+            event(new NewMessage($conversation));
         }
 
         // Update the order if goods_received

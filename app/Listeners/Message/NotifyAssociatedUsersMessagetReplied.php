@@ -35,7 +35,7 @@ class NotifyAssociatedUsersMessagetReplied implements ShouldQueue
     public function handle(MessageReplied $event)
     {
         if(!config('system_settings'))
-            setSystemConfig(optional($event->reply->user)->shop_id);
+            setSystemConfig(optional($event->reply->repliable)->shop_id);
 
         if ($event->reply->user_id) {
             if($event->reply->repliable->customer->email)
@@ -43,11 +43,18 @@ class NotifyAssociatedUsersMessagetReplied implements ShouldQueue
                     new MessageRepliedNotification($event->reply, $event->reply->repliable->customer->getName())
                 );
         }
-        else {
-            if($event->reply->repliable->user->email)
+        else if ($event->reply->customer_id){
+            if($event->reply->repliable->user->email){
                 $event->reply->repliable->user->notify(
                     new MessageRepliedNotification($event->reply, $event->reply->repliable->user->getName())
                 );
+            }
+            else if( config('shop_settings.notify_new_message') ){
+                $event->reply->repliable->shop->notify(
+                    new MessageRepliedNotification($event->reply, $event->reply->repliable->shop->name)
+                );
+            }
         }
     }
+
 }

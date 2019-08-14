@@ -1414,5 +1414,5 @@ return [
     'php_locale_code' => 'PHP locale code',
     'trial_ends_at' => 'Trial ends at',
     'view_conversations' => 'View Conversations',
-
+    'view_dispute' => 'View Dispute',
 ];

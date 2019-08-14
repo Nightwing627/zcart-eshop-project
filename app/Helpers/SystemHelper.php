@@ -199,7 +199,7 @@ if ( ! function_exists('setShopConfig') )
      */
     function setShopConfig($shop = Null)
     {
-        if(!config('shop_settings')){
+        if(! config('shop_settings') ){
             $shop_settings = ListHelper::shop_settings($shop);
 
             config()->set('shop_settings', $shop_settings);

@@ -16,6 +16,13 @@ class Reply extends BaseModel
     protected $table = 'replies';
 
     /**
+     * All of the relationships to be touched.
+     *
+     * @var array
+     */
+    protected $touches = ['repliable'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

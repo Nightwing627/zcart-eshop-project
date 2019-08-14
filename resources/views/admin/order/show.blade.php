@@ -251,6 +251,8 @@
             </span>
           @endif
 
+          <span class="spacer10"></span>
+
           @if($order->conversation)
             <a href="{{ route('admin.support.message.show', $order->conversation) }}" class="btn btn-sm btn-info btn-flat">{{ trans('app.view_conversations') }}</a>
           @endif

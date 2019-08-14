@@ -84,15 +84,21 @@
 	                  	<tbody>
 							@forelse($messages as $message)
 		                  		<tr id="item_{{ $message->id }}">
-				                    <td><input id="{{ $message->id }}" type="checkbox" class="massCheck"></td>
+				                    <td>
+				                    	<input id="{{ $message->id }}" type="checkbox" class="massCheck">
+				                    </td>
 				                    <td class="mailbox-name">
 				                    	<a href="{{ route('admin.support.message.show', $message) }}">
-											{!! highlightWords($message->customer->getName(), $search_q) !!}
+				                    		@if($message->status < $message::STATUS_READ)
+												<strong>{!! highlightWords($message->customer->getName(), $search_q) !!}</strong>
+											@else
+												{!! highlightWords($message->customer->getName(), $search_q) !!}
+											@endif
 				                    	</a>
 				                	</td>
 				                    <td class="mailbox-subject">
-				                    	<a href="{{ route('admin.support.message.show', $message) }}">
-				                    		<b>{!! highlightWords($message->subject, $search_q) !!} </b> - {!! highlightWords(str_limit($message->message, 180 - strlen($message->subject)), $search_q) !!}
+				                    	<a href="{{ route('admin.support.message.show', $message) }}" style="{{ $message->status < $message::STATUS_READ ? 'color: #222;' : '' }}">
+				                    		<strong>{!! highlightWords($message->subject, $search_q) !!} </strong> - {!! highlightWords(str_limit($message->message, 180 - strlen($message->subject)), $search_q) !!}
 				                    	</a>
 				                    </td>
 				                    <td class="">
