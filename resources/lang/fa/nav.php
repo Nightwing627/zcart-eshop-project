@@ -52,7 +52,6 @@ return [
     'shipping' => 'Shipping',
     'packaging' => 'Packaging',
     'carriers' => 'Carriers',
-    'order_statuses' => 'Order statuses',
     'payment_methods' => 'Payment methods',
     'payment_statuses' => 'Payment statuses',
     'email_templates' => 'Email templates',

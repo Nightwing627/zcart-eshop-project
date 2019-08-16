@@ -150,7 +150,7 @@ class AccountController extends Controller
     private function orders()
     {
         return Auth::guard('customer')->user()->orders()
-        ->with(['shop:id,name,slug', 'inventories:id,title,slug,product_id', 'status'])->paginate(10);
+        ->with(['shop:id,name,slug', 'inventories:id,title,slug,product_id'])->paginate(10);
     }
 
     /**

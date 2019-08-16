@@ -11,7 +11,6 @@ class ContactUs extends BaseModel
      */
     protected $table = 'contact_us';
 
-
     /**
      * The attributes that should be casted to native types.
      *

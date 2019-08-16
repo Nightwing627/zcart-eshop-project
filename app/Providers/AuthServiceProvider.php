@@ -38,8 +38,6 @@ class AuthServiceProvider extends ServiceProvider
         \App\Merchant::class            => \App\Policies\MerchantPolicy::class,
         \App\Message::class             => \App\Policies\MessagePolicy::class,
         \App\Order::class               => \App\Policies\OrderPolicy::class,
-        \App\OrderStatus::class         => \App\Policies\OrderStatusPolicy::class,
-        \App\OrderStatus::class         => \App\Policies\OrderStatusPolicy::class,
         \App\Packaging::class           => \App\Policies\PackagingPolicy::class,
         \App\Page::class                => \App\Policies\PagePolicy::class,
         \App\Permission::class          => \App\Policies\PermissionPolicy::class,

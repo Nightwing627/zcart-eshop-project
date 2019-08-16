@@ -5,12 +5,15 @@
     <div class="col-md-8">
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title"><i class="fa fa-cart"></i> {{ trans('app.order') . ': ' . $order->order_number }}</h3>
+
+          <h3 class="box-title">
+            <i class="fa fa-cart"></i> {{ trans('app.order') . ': ' . $order->order_number }}
+          </h3>
+
           <div class="box-tools pull-right">
-            <span class="label label-outline" style="background-color: {{ optional($order->status)->label_color }}">
-              {{ $order->status ? strToupper(optional($order->status)->name) : trans('app.statuses.new') }}
-            </span>
+            {!! $order->orderStatus() !!}
           </div>
+
         </div> <!-- /.box-header -->
         <div class="box-body">
           <div class="row">

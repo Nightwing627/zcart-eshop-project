@@ -60,6 +60,18 @@ class ListHelper
             Order::PAYMENT_STATUS_PAID      => trans("app.statuses.paid"),
         ];
     }
+    public static function order_statuses()
+    {
+        return  [
+            Order::STATUS_WAITING_FOR_PAYMENT   =>  trans("app.statuses.waiting_for_payment"),
+            Order::STATUS_PAYMENT_ERROR         =>  trans("app.statuses.payment_error"),
+            Order::STATUS_CONFIRMED             =>  trans("app.statuses.confirmed"),
+            Order::STATUS_FULFILLED             =>  trans("app.statuses.fulfilled"),
+            Order::STATUS_AWAITING_DELIVERY     =>  trans("app.statuses.awaiting_delivery"),
+            Order::STATUS_DELIVERED             =>  trans("app.statuses.delivered"),
+            Order::STATUS_RETURNED              =>  trans("app.statuses.refunded"),
+        ];
+    }
     public static function ticket_priorities()
     {
         return  [
@@ -887,7 +899,7 @@ class ListHelper
      */
     public static function latest_orders()
     {
-        return Order::mine()->with('customer', 'status')->latest()->limit(10)->get();
+        return Order::mine()->with('customer')->latest()->limit(10)->get();
     }
 
     /**
@@ -901,16 +913,6 @@ class ListHelper
         ->where('payment_status', Order::PAYMENT_STATUS_PAID)
         ->where('deleted_at', Null)->orderBy('order_number', 'asc')
         ->pluck('order_number', 'id')->toArray();
-    }
-
-    /**
-     * Get order_statuses list for form dropdown.
-     *
-     * @return array
-     */
-    public static function order_statuses()
-    {
-        return \DB::table('order_statuses')->where('deleted_at', Null)->pluck('name', 'id');
     }
 
     /**
@@ -932,16 +934,6 @@ class ListHelper
     {
         return Inventory::mine()->lowQtt()->with('product', 'image:path,imageable_id,imageable_type')->latest()->limit(10)->get();
     }
-
-    // /**
-    //  * Get payment_statuses list for form dropdown.
-    //  *
-    //  * @return array
-    //  */
-    // public static function payment_statuses()
-    // {
-    //     return \DB::table('payment_statuses')->where('deleted_at', Null)->pluck('name', 'id');
-    // }
 
     /**
      * Get address_types list for form dropdown.

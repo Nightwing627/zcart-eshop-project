@@ -1408,6 +1408,30 @@ if ( ! function_exists('get_payment_method_type') )
     }
 }
 
+if ( ! function_exists('get_order_status_name') )
+{
+    /**
+     * get_order_status_name
+     *
+     * @param  int $label
+     *
+     * @return str
+     */
+    function get_order_status_name($status = 1)
+    {
+        switch ($status) {
+            case Order::STATUS_WAITING_FOR_PAYMENT: return trans("app.statuses.waiting_for_payment");
+            case Order::STATUS_PAYMENT_ERROR: return trans("app.statuses.payment_error");
+            case Order::STATUS_CONFIRMED: return trans("app.statuses.confirmed");
+            case Order::STATUS_FULFILLED: return trans("app.statuses.fulfilled");
+            case Order::STATUS_AWAITING_DELIVERY: return trans("app.statuses.awaiting_delivery");
+            case Order::STATUS_DELIVERED: return trans("app.statuses.delivered");
+            case Order::STATUS_RETURNED: return trans("app.statuses.refunded");
+            default: return '';
+        }
+    }
+}
+
 if ( ! function_exists('get_payment_status_name') )
 {
     /**
@@ -1430,7 +1454,6 @@ if ( ! function_exists('get_payment_status_name') )
         }
     }
 }
-
 
 if ( ! function_exists('get_disput_status_name') )
 {

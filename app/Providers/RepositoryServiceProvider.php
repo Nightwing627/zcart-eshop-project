@@ -98,10 +98,6 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Order\EloquentOrder::class
         );
         $this->app->singleton(
-            \App\Repositories\OrderStatus\OrderStatusRepository::class,
-            \App\Repositories\OrderStatus\EloquentOrderStatus::class
-        );
-        $this->app->singleton(
             \App\Repositories\Packaging\PackagingRepository::class,
             \App\Repositories\Packaging\EloquentPackaging::class
         );

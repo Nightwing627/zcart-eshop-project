@@ -164,15 +164,32 @@ class Dispute extends BaseModel
         return $this->status >= static::STATUS_SOLVED;
     }
 
-	public function statusName($plain = False)
+    public function statusName($plain = False)
     {
+        $status = strtoupper(get_disput_status_name($this->status));
+
+        if( $plain )
+            return $status;
+
         switch ($this->status) {
-            case static::STATUS_NEW: return $plain ? strtoupper(trans('app.statuses.new')) : '<span class="label label-outline">' . trans('app.statuses.new') . '</span>';
-            case static::STATUS_OPEN: return $plain ? strtoupper(trans('app.statuses.open')) : '<span class="label label-primary">' . trans('app.statuses.open') . '</span>';
-            case static::STATUS_WAITING: return $plain ? strtoupper(trans('app.statuses.waiting')) : '<span class="label label-info">' . trans('app.statuses.waiting') . '</span>';
-            case static::STATUS_APPEALED: return $plain ? strtoupper(trans('app.statuses.appealed')) : '<span class="label label-danger">' . trans('app.statuses.appealed') . '</span>';
-            case static::STATUS_SOLVED: return $plain ? strtoupper(trans('app.statuses.solved')) : '<span class="label label-success">' . trans('app.statuses.solved') . '</span>';
-            case static::STATUS_CLOSED: return $plain ? strtoupper(trans('app.statuses.closed')) : '<span class="label label-warning">' . trans('app.statuses.closed') . '</span>';
+            case static::STATUS_NEW: return '<span class="label label-outline">' . $status . '</span>';
+            case static::STATUS_OPEN: return '<span class="label label-primary">' . $status . '</span>';
+            case static::STATUS_WAITING: return '<span class="label label-info">' . $status . '</span>';
+            case static::STATUS_APPEALED: return '<span class="label label-danger">' . $status . '</span>';
+            case static::STATUS_SOLVED: return '<span class="label label-success">' . $status . '</span>';
+            case static::STATUS_CLOSED: return '<span class="label label-warning">' . $status . '</span>';
         }
     }
+
+	// public function statusName($plain = False)
+ //    {
+ //        switch ($this->status) {
+ //            case static::STATUS_NEW: return $plain ? strtoupper(trans('app.statuses.new')) : '<span class="label label-outline">' . trans('app.statuses.new') . '</span>';
+ //            case static::STATUS_OPEN: return $plain ? strtoupper(trans('app.statuses.open')) : '<span class="label label-primary">' . trans('app.statuses.open') . '</span>';
+ //            case static::STATUS_WAITING: return $plain ? strtoupper(trans('app.statuses.waiting')) : '<span class="label label-info">' . trans('app.statuses.waiting') . '</span>';
+ //            case static::STATUS_APPEALED: return $plain ? strtoupper(trans('app.statuses.appealed')) : '<span class="label label-danger">' . trans('app.statuses.appealed') . '</span>';
+ //            case static::STATUS_SOLVED: return $plain ? strtoupper(trans('app.statuses.solved')) : '<span class="label label-success">' . trans('app.statuses.solved') . '</span>';
+ //            case static::STATUS_CLOSED: return $plain ? strtoupper(trans('app.statuses.closed')) : '<span class="label label-warning">' . trans('app.statuses.closed') . '</span>';
+ //        }
+ //    }
 }

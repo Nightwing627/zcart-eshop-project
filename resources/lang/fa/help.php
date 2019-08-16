@@ -343,9 +343,9 @@ return [
 
     'delete_the_cart' => 'Delete the cart and proceed the order',
 
-    'order_status_name' => 'The title of the status that will be visible everywhere.',
+    // 'order_status_name' => 'The title of the status that will be visible everywhere.',
 
-    'order_status_color' => 'The label color of the order status',
+    // 'order_status_color' => 'The label color of the order status',
 
     'order_status_send_email' => 'An email will be sent to the customer when the order status updates',
 
@@ -417,7 +417,7 @@ return [
 
     'notify_customer' => 'A notification email will be send to the customer with necessary information.',
 
-    'order_status_fulfilled' => 'Do you want to mark the order as fulfilled when the order status changed to this?',
+    // 'order_status_fulfilled' => 'Do you want to mark the order as fulfilled when the order status changed to this?',
 
     'shipping_weight' => 'The will be used to calculate the shipping cost.',
 

@@ -281,14 +281,6 @@
                 </li>
               @endcan
 
-              @can('index', \App\OrderStatus::class)
-                <li class=" {{ Request::is('admin/utility/orderStatus*') ? 'active' : '' }}">
-                  <a href="{{ url('admin/utility/orderStatus') }}">
-                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.order_statuses') }}
-                  </a>
-                </li>
-              @endcan
-
               @can('index', \App\Page::class)
                 <li class=" {{ Request::is('admin/utility/page*') ? 'active' : '' }}">
                   <a href="{{ url('admin/utility/page') }}">

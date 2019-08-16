@@ -235,10 +235,10 @@ class Order extends BaseModel
     /**
      * Get the status for the order.
      */
-    public function status()
-    {
-        return $this->belongsTo(OrderStatus::class, 'order_status_id')->withDefault();
-    }
+    // public function status()
+    // {
+    //     return $this->belongsTo(OrderStatus::class, 'order_status_id')->withDefault();
+    // }
 
     /**
      * Get the shop feedback for the order/shop.
@@ -331,9 +331,7 @@ class Order extends BaseModel
      */
     public function scopeUnfulfilled($query)
     {
-        return $query->whereHas('status', function ($q) {
-            $q->where('fulfilled', 0);
-        });
+        return $query->where('order_status_id', '<', static::STATUS_FULFILLED);
     }
 
     /**
@@ -433,50 +431,48 @@ class Order extends BaseModel
 
     public function orderStatus($plain = False)
     {
+        $order_status = strtoupper(get_order_status_name($this->order_status_id));
+
+        if( $plain )
+            return $order_status;
+
         switch ($this->order_status_id) {
             case static::STATUS_WAITING_FOR_PAYMENT:
-                return $plain ? strtoupper(trans('app.statuses.waiting_for_payment')) : '<span class="label label-danger">' . strtoupper(trans('app.statuses.waiting_for_payment')) . '</span>';
-
             case static::STATUS_PAYMENT_ERROR:
-                return $plain ? strtoupper(trans('app.statuses.payment_error')) : '<span class="label label-danger">' . strtoupper(trans('app.statuses.payment_error')) . '</span>';
+            case static::STATUS_RETURNED:
+                return '<span class="label label-danger">' . $order_status . '</span>';
 
             case static::STATUS_CONFIRMED:
-                return $plain ? strtoupper(trans('app.statuses.confirmed')) : '<span class="label label-outline">' . strtoupper(trans('app.statuses.confirmed')) . '</span>';
+            case static::STATUS_AWAITING_DELIVERY:
+                return '<span class="label label-outline">' . $order_status . '</span>';
 
             case static::STATUS_FULFILLED:
-                return $plain ? strtoupper(trans('app.statuses.fulfilled')) : '<span class="label label-info">' . strtoupper(trans('app.statuses.fulfilled')) . '</span>';
-
-            case static::STATUS_AWAITING_DELIVERY:
-                return $plain ? strtoupper(trans('app.statuses.awaiting_delivery')) : '<span class="label label-outline">' . strtoupper(trans('app.statuses.awaiting_delivery')) . '</span>';
+                return '<span class="label label-info">' . $order_status . '</span>';
 
             case static::STATUS_DELIVERED:
-                return $plain ? strtoupper(trans('app.statuses.delivered')) : '<span class="label label-primary">' . strtoupper(trans('app.statuses.delivered')) . '</span>';
-
-            case static::STATUS_RETURNED:
-                return $plain ? strtoupper(trans('app.statuses.refunded')) : '<span class="label label-danger">' . strtoupper(trans('app.statuses.refunded')) . '</span>';
+                return '<span class="label label-primary">' . $order_status . '</span>';
         }
     }
 
     public function paymentStatusName($plain = False)
     {
+        $payment_status = strtoupper(get_payment_status_name($this->payment_status));
+
+        if( $plain )
+            return $payment_status;
+
         switch ($this->payment_status) {
             case static::PAYMENT_STATUS_UNPAID:
-                return $plain ? strtoupper(trans('app.statuses.unpaid')) : '<span class="label label-danger">' . strtoupper(trans('app.statuses.unpaid')) . '</span>';
+            case static::PAYMENT_STATUS_REFUNDED:
+            case static::PAYMENT_STATUS_PARTIALLY_REFUNDED:
+                return '<span class="label label-danger">' . $payment_status . '</span>';
 
             case static::PAYMENT_STATUS_PENDING:
-                return $plain ? strtoupper(trans('app.statuses.pending')) : '<span class="label label-info">' . strtoupper(trans('app.statuses.pending')) . '</span>';
+            case static::PAYMENT_STATUS_INITIATED_REFUND:
+                return '<span class="label label-info">' . $payment_status . '</span>';
 
             case static::PAYMENT_STATUS_PAID:
-                return $plain ? strtoupper(trans('app.statuses.paid')) : '<span class="label label-outline">' . strtoupper(trans('app.statuses.paid')) . '</span>';
-
-            case static::PAYMENT_STATUS_INITIATED_REFUND:
-                return $plain ? strtoupper(trans('app.statuses.refund_initiated')) : '<span class="label label-info">' . strtoupper(trans('app.statuses.refund_initiated')) . '</span>';
-
-            case static::PAYMENT_STATUS_PARTIALLY_REFUNDED:
-                return $plain ? strtoupper(trans('app.statuses.partially_refunded')) : '<span class="label label-info">' . strtoupper(trans('app.statuses.partially_refunded')) . '</span>';
-
-            case static::PAYMENT_STATUS_REFUNDED:
-                return $plain ? strtoupper(trans('app.statuses.refunded')) : '<span class="label label-danger">' . strtoupper(trans('app.statuses.refunded')) . '</span>';
+                return '<span class="label label-outline">' . $payment_status . '</span>';
         }
     }
 }

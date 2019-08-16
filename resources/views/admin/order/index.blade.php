@@ -63,11 +63,7 @@
 									<td>{{ $order->customer->name }}</td>
 									<td>{{ get_formated_currency($order->grand_total) }}</td>
 									<td>{!! $order->paymentStatusName() !!}</td>
-									<td>
-										<span class="label label-outline" style="background-color: {{ optional($order->status)->label_color }}">
-											{{ $order->status ? strToupper(optional($order->status)->name) : trans('app.statuses.new') }}
-										</span>
-									</td>
+									<td>{!! $order->orderStatus() !!}</td>
 									<td class="row-options">
 										@can('archive', $order)
 											{!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
@@ -113,11 +109,7 @@
 									<td>{{ $order->customer->name }}</td>
 									<td>{{ get_formated_currency($order->grand_total )}}</td>
 									<td>{!! $order->paymentStatusName() !!}</td>
-									<td>
-										<span class="label label-outline" style="background-color: {{ optional($order->status)->label_color }}">
-											{{ $order->status ? strToupper(optional($order->status)->name) : trans('app.statuses.new') }}
-										</span>
-									</td>
+									<td>{!! $order->orderStatus() !!}</td>
 									<td class="row-options">
 										@can('archive', $order)
 											{!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}
@@ -164,11 +156,7 @@
 										<td>{{ $order->customer->name }}</td>
 										<td>{{ get_formated_currency($order->grand_total )}}</td>
 										<td>{!! $order->paymentStatusName() !!}</td>
-										<td>
-											<span class="label label-outline" style="background-color: {{ optional($order->status)->label_color }}">
-												{{ $order->status ? strToupper(optional($order->status)->name) : trans('app.statuses.new') }}
-											</span>
-										</td>
+										<td>{!! $order->orderStatus() !!}</td>
 										<td class="row-options">
 											@can('archive', $order)
 												{!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'data-form']) !!}

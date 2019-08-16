@@ -100,7 +100,6 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 			include('admin/Page.php');
 			include('admin/Blog.php');
 			include('admin/Currency.php');
-			include('admin/OrderStatus.php');
 		});
 
 		// Settings Routes for Admin/Merchant

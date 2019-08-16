@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
         $this->call('AttributeSeeder');
         $this->call('GtinSeeder');
         $this->call('PaymentMethodsSeeder');
-        $this->call('OrderStatusesSeeder');
         $this->call('AddressTypesSeeder');
         $this->call('TicketCategoriesSeeder');
         $this->call('DisputeTypesSeeder');

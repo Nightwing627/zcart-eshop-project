@@ -80,7 +80,6 @@ trait Authorizable
     private $utility_modules = [
         'faq',
         'faqTopic',
-        'orderStatus',
         'currency',
         'blog',
         'page'

@@ -12,15 +12,6 @@ class CreateOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_statuses', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->nullable();
-            $table->string('label_color')->nullable();
-            $table->boolean('fulfilled')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
-        });
-
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('order_number')->nullable();
@@ -96,6 +87,5 @@ class CreateOrderTable extends Migration
     {
         Schema::drop('order_items');
         Schema::drop('orders');
-        Schema::drop('order_statuses');
     }
 }

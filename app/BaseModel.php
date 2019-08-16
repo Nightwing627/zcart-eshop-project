@@ -27,5 +27,4 @@ abstract class BaseModel extends Model
         return $query->where('shop_id', Auth::user()->merchantId());
     }
 
-
 }
