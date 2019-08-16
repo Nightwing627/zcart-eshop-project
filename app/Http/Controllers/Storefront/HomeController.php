@@ -191,16 +191,24 @@ class HomeController extends Controller
                 ->withCount(['inventories' => function($query){
                     $query->available();
                 }]);
-            },
-            'attributeValues' => function($q){
-                $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')->with('attribute:id,name,attribute_type_id');
-            },
+            }
         ])
         ->withCount('feedbacks')->firstOrFail();
 
         $this->update_recently_viewed_items($item); //update_recently_viewed_items
 
-        return view('modals.quickview', compact('item'))->render();
+        $variants = ListHelper::variants_of_product($item, $item->shop_id);
+
+        $attr_pivots = \DB::table('attribute_inventory')->select('attribute_id','inventory_id','attribute_value_id')
+        ->whereIn('inventory_id', $variants->pluck('id'))->get();
+
+        $attributes = \App\Attribute::select('id','name','attribute_type_id','order')
+        ->whereIn('id', $attr_pivots->pluck('attribute_id'))
+        ->with(['attributeValues' => function($query) use ($attr_pivots) {
+            $query->whereIn('id', $attr_pivots->pluck('attribute_value_id'))->orderBy('order');
+        }])->orderBy('order')->get();
+
+        return view('modals.quickview', compact('item','attributes'))->render();
     }
 
     /**

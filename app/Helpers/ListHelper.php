@@ -784,7 +784,7 @@ class ListHelper
      */
     public static function variants_of_product($item, $shop = Null)
     {
-        $variants = Inventory::select('id','slug','title','stock_quantity','condition','sale_price','offer_price','offer_start','offer_end','min_order_quantity')->where('product_id', $item->product_id)->available();
+        $variants = Inventory::select('id','slug','title','stock_quantity','condition','sale_price','offer_price','offer_start','offer_end','min_order_quantity')->where('product_id', $item->product_id);
 
         if($shop)
             $variants = $variants->where('shop_id', $shop);
@@ -792,7 +792,9 @@ class ListHelper
         return $variants->with([
             'images:path,imageable_id,imageable_type',
             'attributeValues:id,value,color'
-        ])->get();
+        ])
+        ->available()->get();
+
         // return $variants->with('attributeValues:id,value,color')->available()->get();
     }
 

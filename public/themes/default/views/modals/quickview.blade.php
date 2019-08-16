@@ -14,13 +14,14 @@
                     <div class="row product-attribute">
                         <div class="col-sm-6 col-xs-12">
                             <div class="product-info-options">
-                                @foreach($item->attributeValues as $attribute_value)
+                                {{-- @foreach($item->attributeValues as $attribute_value) --}}
+                                @foreach($attributes as $attribute)
                                     <div class="row">
                                         <div class="col-sm-3 col-xs-4">
-                                            <span class="info-label">{{ $attribute_value->attribute->name }}:</span>
+                                            <span class="info-label">{{ $attribute->name }}:</span>
                                         </div>
                                         <div class="col-sm-9 col-xs-8 nopadding-left">
-                                            {{ $attribute_value->value }}
+                                            {{ implode(', ', $attribute->attributeValues->pluck('value')->toArray()) }}
                                         </div><!-- /.col-sm-9 .col-xs-6 -->
                                     </div><!-- /.row -->
                                 @endforeach
