@@ -667,4 +667,6 @@ return [
 
     'update_trial_period' => 'Update trial period',
 
+    'vendor_needs_approval' => 'If enabled, every new vendor will require manual approval from the platform admin panel to get live.',
+
 ];

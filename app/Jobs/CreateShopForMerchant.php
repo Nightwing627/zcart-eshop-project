@@ -33,6 +33,13 @@ class CreateShopForMerchant
      */
     public function handle()
     {
+        if( isset($this->request['active']) )
+            $status = $this->request['active'];
+        else if( config('system_settings.vendor_needs_approval') )
+            $status = Null;
+        else
+            $status = 1;
+
         $shop = Shop::create([
             'name' => $this->request['shop_name'],
             'description' => isset($this->request['description']) ? $this->request['description'] : trans('app.welcome'),
@@ -45,7 +52,7 @@ class CreateShopForMerchant
             'card_holder_name' => isset($this->request['name']) ? $this->request['name'] : Null,
             'current_billing_plan' => isset($this->request['plan']) ? $this->request['plan'] : Null,
             'trial_ends_at' => (bool) config('system_settings.trial_days') ? now()->addDays(config('system_settings.trial_days')) : Null,
-            'active' => isset($this->request['active']) ? $this->request['active'] : 0,
+            'active' => $status,
         ]);
 
         // configaring The Shop

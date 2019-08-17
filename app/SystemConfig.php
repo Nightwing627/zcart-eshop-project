@@ -24,6 +24,7 @@ class SystemConfig extends BaseModel
     protected $fillable = [
                         'trial_days',
                         'required_card_upfront',
+                        'vendor_needs_approval',
                         'support_phone',
                         'support_phone_toll_free',
                         'support_email',
@@ -76,6 +77,7 @@ class SystemConfig extends BaseModel
      */
     protected $casts = [
                 'required_card_upfront' => 'boolean',
+                'vendor_needs_approval' => 'boolean',
                 'allow_guest_checkout' => 'boolean',
                 'auto_approve_order' => 'boolean',
                 'vendor_can_view_customer_info' => 'boolean',

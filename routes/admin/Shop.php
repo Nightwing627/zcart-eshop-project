@@ -4,6 +4,8 @@
 
     Route::put('subscription/{shop}/updateTrial', 'SubscriptionController@updateTrial')->name('subscription.updateTrial');
 
+    Route::put('shop/{shop}/toggle', 'ShopController@toggleStatus')->name('shop.toggle')->middleware('ajax');
+
 	Route::get('shop/{shop}/staffs', 'ShopController@staffs')->name('shop.staffs');
 
 	Route::delete('shop/{shop}/trash', 'ShopController@trash')->name('shop.trash'); // shop move to trash

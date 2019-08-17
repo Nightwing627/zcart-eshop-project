@@ -44,6 +44,17 @@ body {
   background: url('../img/boxed-bg.jpg') repeat fixed;
 }
 
+.table tbody tr.inactive td, .table tbody tr.inactive th,
+.table tbody tr.inactive td p, .table tbody tr.inactive td p a {
+    background-color: #f7f7f7;
+    color: #b9b9b9;
+}
+
+button,
+.btn:focus {
+  outline: none;
+}
+
 @media (min-width: 992px) {
   .nopadding {
      padding: 0 !important;

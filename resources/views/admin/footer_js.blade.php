@@ -888,7 +888,8 @@
 
 	  	function proceedToggleActionFor(node){
 	      	$.ajax({
-	          	url: node.attr('href'),
+	          	// url: node.attr('href'),
+	          	url: node.data('link'),
 	          	type: 'POST',
 	          	data: {
 	              	"_token": "{{ csrf_token() }}",
@@ -897,6 +898,13 @@
 	          	success: function (data) {
 		            if (data == 'success'){
 		              	notie.alert(1, "{{ trans('responses.success') }}", 2);
+
+		                // For toggle shop status on shop table
+					    var tr = node.closest("tr");
+		                if(tr.length == 1){
+			              	tr.toggleClass('inactive');
+			              	node.children('i:first').toggleClass('fa-heart-o fa-heart');
+		                }
 		            }
 		            else{
 		              	notie.alert(3, "{{ trans('responses.failed') }}", 2);
@@ -923,7 +931,7 @@
 	  	$('.toggle-widget').on("click", function(e){
 			e.preventDefault();
 			var node = $(this);
-		    var box = $(this).closest(".box");
+		    var box = node.closest(".box");
 
 	      	if(node.hasClass('toggle-confirm')){
 	      		return new Promise(function(resolve, reject) {
@@ -961,6 +969,14 @@
 	    	// Remove the removable box from UI
 		    if(box.length == 1 && box.hasClass('removable'))
             	box.remove();
+	  	});
+		//End
+
+		// Toggle Congiguration widgets settings
+	  	$('.toggle-shop').on("click", function(e){
+			e.preventDefault();
+			var node = $(this);
+	      	proceedToggleActionFor(node);
 	  	});
 		//End
 

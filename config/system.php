@@ -111,7 +111,7 @@ return [
     'demo' => [
         'users' => 3,
         'roles' => 3,
-        'shops' => 1,
+        'shops' => 2,
         'customers' => 1,
         'category_groups' => 9,
         'plans' => ['business', 'individual', 'professional'],

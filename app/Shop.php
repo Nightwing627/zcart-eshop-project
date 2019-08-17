@@ -447,9 +447,19 @@ class Shop extends BaseModel
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
+    public function scopeApproved($query)
+    {
+        return $query->where('active', 1);
+    }
+
+    /**
+     * Scope a query to only include active shops.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeActive($query)
     {
-        return $query->where('active', 1)->where(function($q) {
+        return $query->approved()->where(function($q) {
             $q->whereNotNull('current_billing_plan')
             ->where(function($x) {
                 $x->whereNull('trial_ends_at')->orWhere('trial_ends_at', '>', Carbon::now());

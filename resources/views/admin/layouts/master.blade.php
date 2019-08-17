@@ -115,9 +115,9 @@
                         {{ trans('messages.email_verification_notice') }}
                           <a href="{{ route('verify') }}">{{ trans('app.resend_verification_link') }}</a>
                       </div>
-                  @else
-                      @include('admin.partials._listings_notice')
                   @endif
+
+                  @include('admin.partials._listings_notice')
 
               @endif
 

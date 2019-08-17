@@ -8,6 +8,7 @@ use App\Events\Shop\ShopUpdated;
 use App\Events\Shop\ShopDeleted;
 use App\Http\Controllers\Controller;
 use App\Repositories\Shop\ShopRepository;
+use App\Http\Requests\Validations\ToggleShopRequest;
 use App\Http\Requests\Validations\UpdateShopRequest;
 
 class ShopController extends Controller
@@ -104,6 +105,24 @@ class ShopController extends Controller
         event(new ShopUpdated($shop));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+    }
+
+    public function toggleStatus(Request $request, $id)
+    {
+        if( config('app.demo') == true && $id <= config('system.demo.shops', 1) )
+            return response('error', 444);
+
+        $shop = $this->shop->find($id);
+
+        $shop->active = !$shop->active;
+
+        if($shop->save()){
+            event(new ShopUpdated($shop));
+
+            return response("success", 200);
+        }
+
+        return response('error', 405);
     }
 
     /**

@@ -180,10 +180,10 @@ return [
     'no_active_shipping_zone' => 'Your store has no active shipping zone. Please create shipping zones to accept order.',
 
     // Version 1.2.5
-    'your_shop_in_hold' => 'You are in hold, need activation from admin!',
+    'your_shop_in_hold' => 'Your store is on hold! We will review and approve your store as soon as possible!',
     'youe_shop_in_maintenance_mode' => 'The shop in maintenance mode.',
 
-    // Version 1.2.6
+    // Version 1.3.0
     'subscription_updated' => 'Subscription has been updated successfully!',
     'subscription_update_failed' => 'Subscription update has been failed! Please see the log file for details.',
 ];

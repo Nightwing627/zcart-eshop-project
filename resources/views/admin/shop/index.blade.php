@@ -22,9 +22,10 @@
 				</thead>
 				<tbody>
 					@foreach($shops as $shop )
-						<tr>
+						<tr class="{{ ! $shop->active ? 'inactive' : '' }}">
 							<td>
 								<img src="{{ get_storage_file_url(optional($shop->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+
 								<p class="indent10">
 									@can('view', $shop)
 										<a href="javascript:void(0)" data-link="{{ route('admin.vendor.shop.show', $shop->id) }}"  class="ajax-modal-btn">{{ $shop->name }}</a>
@@ -34,10 +35,14 @@
 
 				            		@if($shop->isDown())
 							          	<span class="label label-default indent10">{{ trans('app.maintenance_mode') }}</span>
-				            		@elseif(!$shop->active)
-					            		<span class="label label-default indent10">{{ trans('app.inactive') }}</span>
 									@endif
 								</p>
+
+								@can('update', $shop)
+									<a href="javascript:void(0)" data-link="{{ route('admin.vendor.shop.toggle', $shop) }}" data-doafter="reload" type="button" class="toggle-widget toggle-confirm pull-right">
+										<i class="fa fa-{{ $shop->active ? 'heart-o' : 'heart' }}" data-toggle="tooltip" data-placement="top" title="{{ $shop->active ? trans('app.deactivate') : trans('app.activate') }}"></i>
+									</a>
+								@endcan
 							</td>
 				          	<td>
 				          		{{ $shop->current_billing_plan }}

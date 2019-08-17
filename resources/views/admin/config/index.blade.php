@@ -173,7 +173,7 @@
 								    	<div class="col-sm-6">
 									  		@if($can_update)
 											  	<div class="handle horizontal">
-													<a href="{{ route('admin.setting.config.notification.toggle', 'auto_archive_order') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->auto_archive_order == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->auto_archive_order == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.config.notification.toggle', 'auto_archive_order') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->auto_archive_order == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->auto_archive_order == 1 ? 'true' : 'false' }}" autocomplete="off">
 														<div class="btn-handle"></div>
 													</a>
 											  	</div>
@@ -359,7 +359,7 @@
 							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
-												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_new_message') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_new_message == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_new_message == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="javascript:void(0)" data-link="{{ route('admin.setting.config.notification.toggle', 'notify_new_message') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_new_message == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_new_message == 1 ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>
@@ -380,7 +380,7 @@
 							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
-												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_alert_quantity') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_alert_quantity == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_alert_quantity == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="javascript:void(0)" data-link="{{ route('admin.setting.config.notification.toggle', 'notify_alert_quantity') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_alert_quantity == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_alert_quantity == 1 ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>
@@ -401,7 +401,7 @@
 							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
-												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_inventory_out') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_inventory_out == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_inventory_out == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="javascript:void(0)" data-link="{{ route('admin.setting.config.notification.toggle', 'notify_inventory_out') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_inventory_out == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_inventory_out == 1 ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>
@@ -428,7 +428,7 @@
 							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
-												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_new_order') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_new_order == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_new_order == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="javascript:void(0)" data-link="{{ route('admin.setting.config.notification.toggle', 'notify_new_order') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_new_order == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_new_order == 1 ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>
@@ -448,7 +448,7 @@
 							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
-												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_abandoned_checkout') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_abandoned_checkout == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_abandoned_checkout == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="javascript:void(0)" data-link="{{ route('admin.setting.config.notification.toggle', 'notify_abandoned_checkout') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_abandoned_checkout == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_abandoned_checkout == 1 ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>
@@ -468,7 +468,7 @@
 							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
-												<a href="{{ route('admin.setting.config.notification.toggle', 'notify_new_disput') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_new_disput == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_new_disput == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="javascript:void(0)" data-link="{{ route('admin.setting.config.notification.toggle', 'notify_new_disput') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->notify_new_disput == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->notify_new_disput == 1 ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>

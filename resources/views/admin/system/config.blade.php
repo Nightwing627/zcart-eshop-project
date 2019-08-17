@@ -88,11 +88,11 @@
 									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_trial_days') }}"></i>
 									  	<div class="col-sm-5 nopadding-left">
 									  		@if($can_update)
-										    <div class="input-group">
-									    	    {!! Form::number('trial_days', $system->trial_days, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.trial_days')]) !!}
-										        <span class="input-group-addon">{{ trans('app.form.days') }}</span>
-										    </div>
-									      	<div class="help-block with-errors"></div>
+											    <div class="input-group">
+										    	    {!! Form::number('trial_days', $system->trial_days, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.trial_days')]) !!}
+											        <span class="input-group-addon">{{ trans('app.form.days') }}</span>
+											    </div>
+										      	<div class="help-block with-errors"></div>
 											@else
 												<span>{{ $system->trial_days }}</span>
 											@endif
@@ -109,16 +109,35 @@
 								    	<div class="col-sm-4">
 									  		@if($can_update)
 											  	<div class="handle horizontal text-center">
-													<a href="{{ route('admin.setting.system.notification.toggle', 'required_card_upfront') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->required_card_upfront == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->required_card_upfront == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'required_card_upfront') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->required_card_upfront ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->required_card_upfront ? 'true' : 'false' }}" autocomplete="off">
 														<div class="btn-handle"></div>
 													</a>
 											  	</div>
 											@else
-												<span>{{ $system->required_card_upfront == 1 ? trans('app.on') : trans('app.off') }}</span>
+												<span>{{ $system->required_card_upfront ? trans('app.on') : trans('app.off') }}</span>
 											@endif
 										</div>
-								  	</div>
-								    <!-- /.row -->
+								  	</div> <!-- /.row -->
+
+							    	<div class="row">
+								    	<div class="col-sm-7 text-right">
+											<div class="form-group">
+										        {!! Form::label('vendor_needs_approval', trans('app.vendor_needs_approval'). ':', ['class' => 'with-help control-label']) !!}
+											  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.vendor_needs_approval') }}"></i>
+											</div>
+										</div>
+								    	<div class="col-sm-4">
+									  		@if($can_update)
+											  	<div class="handle horizontal text-center">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'vendor_needs_approval') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->vendor_needs_approval ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->vendor_needs_approval ? 'true' : 'false' }}" autocomplete="off">
+														<div class="btn-handle"></div>
+													</a>
+											  	</div>
+											@else
+												<span>{{ $system->vendor_needs_approval ? trans('app.on') : trans('app.off') }}</span>
+											@endif
+										</div>
+								  	</div> <!-- /.row -->
 								</fieldset>
 
 					    		<fieldset>
@@ -133,12 +152,12 @@
 								    	<div class="col-sm-4">
 									  		@if($can_update)
 											  	<div class="handle horizontal text-center">
-													<a href="{{ route('admin.setting.system.notification.toggle', 'ask_customer_for_email_subscription') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->ask_customer_for_email_subscription == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->ask_customer_for_email_subscription == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'ask_customer_for_email_subscription') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->ask_customer_for_email_subscription ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->ask_customer_for_email_subscription ? 'true' : 'false' }}" autocomplete="off">
 														<div class="btn-handle"></div>
 													</a>
 											  	</div>
 											@else
-												<span>{{ $system->ask_customer_for_email_subscription == 1 ? trans('app.on') : trans('app.off') }}</span>
+												<span>{{ $system->ask_customer_for_email_subscription ? trans('app.on') : trans('app.off') }}</span>
 											@endif
 										</div>
 								  	</div>
@@ -154,12 +173,12 @@
 								    	<div class="col-sm-4">
 									  		@if($can_update)
 											  	<div class="handle horizontal text-center">
-													<a href="{{ route('admin.setting.system.notification.toggle', 'allow_guest_checkout') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->allow_guest_checkout == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->allow_guest_checkout == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'allow_guest_checkout') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->allow_guest_checkout ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->allow_guest_checkout ? 'true' : 'false' }}" autocomplete="off">
 														<div class="btn-handle"></div>
 													</a>
 											  	</div>
 											@else
-												<span>{{ $system->allow_guest_checkout == 1 ? trans('app.on') : trans('app.off') }}</span>
+												<span>{{ $system->allow_guest_checkout ? trans('app.on') : trans('app.off') }}</span>
 											@endif
 										</div>
 								  	</div>
@@ -175,12 +194,12 @@
 								    	<div class="col-sm-4">
 									  		@if($can_update)
 											  	<div class="handle horizontal text-center">
-													<a href="{{ route('admin.setting.system.notification.toggle', 'vendor_can_view_customer_info') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->vendor_can_view_customer_info == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->vendor_can_view_customer_info == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'vendor_can_view_customer_info') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->vendor_can_view_customer_info ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->vendor_can_view_customer_info ? 'true' : 'false' }}" autocomplete="off">
 														<div class="btn-handle"></div>
 													</a>
 											  	</div>
 											@else
-												<span>{{ $system->vendor_can_view_customer_info == 1 ? trans('app.on') : trans('app.off') }}</span>
+												<span>{{ $system->vendor_can_view_customer_info ? trans('app.on') : trans('app.off') }}</span>
 											@endif
 										</div>
 								  	</div>
@@ -267,12 +286,12 @@
 								    	<div class="col-sm-4">
 									  		@if($can_update)
 											  	<div class="handle horizontal text-center">
-													<a href="{{ route('admin.setting.system.notification.toggle', 'show_address_title') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->show_address_title == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->show_address_title == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'show_address_title') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->show_address_title ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->show_address_title ? 'true' : 'false' }}" autocomplete="off">
 														<div class="btn-handle"></div>
 													</a>
 											  	</div>
 											@else
-												<span>{{ $system->show_address_title == 1 ? trans('app.on') : trans('app.off') }}</span>
+												<span>{{ $system->show_address_title ? trans('app.on') : trans('app.off') }}</span>
 											@endif
 										</div>
 								  	</div>
@@ -287,12 +306,12 @@
 								    	<div class="col-sm-4">
 									  		@if($can_update)
 											  	<div class="handle horizontal text-center">
-													<a href="{{ route('admin.setting.system.notification.toggle', 'address_show_country') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->address_show_country == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->address_show_country == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'address_show_country') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->address_show_country ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->address_show_country ? 'true' : 'false' }}" autocomplete="off">
 														<div class="btn-handle"></div>
 													</a>
 											  	</div>
 											@else
-												<span>{{ $system->address_show_country == 1 ? trans('app.on') : trans('app.off') }}</span>
+												<span>{{ $system->address_show_country ? trans('app.on') : trans('app.off') }}</span>
 											@endif
 										</div>
 								  	</div>
@@ -307,12 +326,12 @@
 								    	<div class="col-sm-4">
 									  		@if($can_update)
 											  	<div class="handle horizontal text-center">
-													<a href="{{ route('admin.setting.system.notification.toggle', 'address_show_map') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->address_show_map == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->address_show_map == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'address_show_map') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->address_show_map ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->address_show_map ? 'true' : 'false' }}" autocomplete="off">
 														<div class="btn-handle"></div>
 													</a>
 											  	</div>
 											@else
-												<span>{{ $system->address_show_map == 1 ? trans('app.on') : trans('app.off') }}</span>
+												<span>{{ $system->address_show_map ? trans('app.on') : trans('app.off') }}</span>
 											@endif
 										</div>
 								  	</div>
@@ -415,12 +434,12 @@
 								    	<div class="col-sm-4">
 									  		@if($can_update)
 											  	<div class="handle horizontal text-center">
-													<a href="{{ route('admin.setting.system.notification.toggle', 'show_currency_symbol') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->show_currency_symbol == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->show_currency_symbol == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'show_currency_symbol') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->show_currency_symbol ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->show_currency_symbol ? 'true' : 'false' }}" autocomplete="off">
 														<div class="btn-handle"></div>
 													</a>
 											  	</div>
 											@else
-												<span>{{ $system->show_currency_symbol == 1 ? trans('app.on') : trans('app.off') }}</span>
+												<span>{{ $system->show_currency_symbol ? trans('app.on') : trans('app.off') }}</span>
 											@endif
 										</div>
 								  	</div>
@@ -435,12 +454,12 @@
 								    	<div class="col-sm-4">
 									  		@if($can_update)
 											  	<div class="handle horizontal text-center">
-													<a href="{{ route('admin.setting.system.notification.toggle', 'show_space_after_symbol') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->show_space_after_symbol == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->show_space_after_symbol == 1 ? 'true' : 'false' }}" autocomplete="off">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'show_space_after_symbol') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->show_space_after_symbol ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->show_space_after_symbol ? 'true' : 'false' }}" autocomplete="off">
 														<div class="btn-handle"></div>
 													</a>
 											  	</div>
 											@else
-												<span>{{ $system->show_space_after_symbol == 1 ? trans('app.on') : trans('app.off') }}</span>
+												<span>{{ $system->show_space_after_symbol ? trans('app.on') : trans('app.off') }}</span>
 											@endif
 										</div>
 								  	</div>
@@ -541,7 +560,7 @@
 
 										  	<div class="handle inline pull-right no-margin">
 												<span class="spacer10"></span>
-												<a href="{{ route('admin.setting.system.paymentMethod.toggle', $payment_provider->id) }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $payment_provider->enabled == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $payment_provider->enabled == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.paymentMethod.toggle', $payment_provider->id) }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $payment_provider->enabled == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $payment_provider->enabled == 1 ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>
@@ -786,12 +805,12 @@
 							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
-												<a href="{{ route('admin.setting.system.notification.toggle', 'google_analytic_report') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->google_analytic_report == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->google_analytic_report == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'google_analytic_report') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->google_analytic_report ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->google_analytic_report ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>
 										@else
-											<span>{{ $system->google_analytic_report == 1 ? trans('app.on') : trans('app.off') }}</span>
+											<span>{{ $system->google_analytic_report ? trans('app.on') : trans('app.off') }}</span>
 										@endif
 									</div>
 							  	</div>
@@ -824,12 +843,12 @@
 							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
-												<a href="{{ route('admin.setting.system.notification.toggle', 'notify_when_vendor_registered') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->notify_when_vendor_registered == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->notify_when_vendor_registered == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'notify_when_vendor_registered') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->notify_when_vendor_registered ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->notify_when_vendor_registered ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>
 										@else
-											<span>{{ $system->notify_when_vendor_registered == 1 ? trans('app.on') : trans('app.off') }}</span>
+											<span>{{ $system->notify_when_vendor_registered ? trans('app.on') : trans('app.off') }}</span>
 										@endif
 									</div>
 							  	</div>
@@ -845,12 +864,12 @@
 							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
-												<a href="{{ route('admin.setting.system.notification.toggle', 'notify_new_message') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->notify_new_message == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->notify_new_message == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'notify_new_message') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->notify_new_message ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->notify_new_message ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>
 										@else
-											<span>{{ $system->notify_new_message == 1 ? trans('app.on') : trans('app.off') }}</span>
+											<span>{{ $system->notify_new_message ? trans('app.on') : trans('app.off') }}</span>
 										@endif
 									</div>
 							  	</div>
@@ -866,12 +885,12 @@
 							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
-												<a href="{{ route('admin.setting.system.notification.toggle', 'notify_new_ticket') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->notify_new_ticket == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->notify_new_ticket == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'notify_new_ticket') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->notify_new_ticket ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->notify_new_ticket ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>
 										@else
-											<span>{{ $system->notify_new_ticket == 1 ? trans('app.on') : trans('app.off') }}</span>
+											<span>{{ $system->notify_new_ticket ? trans('app.on') : trans('app.off') }}</span>
 										@endif
 									</div>
 							  	</div>
@@ -887,12 +906,12 @@
 							    	<div class="col-sm-4">
 								  		@if($can_update)
 										  	<div class="handle horizontal">
-												<a href="{{ route('admin.setting.system.notification.toggle', 'notify_when_dispute_appealed') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->notify_when_dispute_appealed == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->notify_when_dispute_appealed == 1 ? 'true' : 'false' }}" autocomplete="off">
+												<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'notify_when_dispute_appealed') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->notify_when_dispute_appealed ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->notify_when_dispute_appealed ? 'true' : 'false' }}" autocomplete="off">
 													<div class="btn-handle"></div>
 												</a>
 										  	</div>
 										@else
-											<span>{{ $system->notify_when_dispute_appealed == 1 ? trans('app.on') : trans('app.off') }}</span>
+											<span>{{ $system->notify_when_dispute_appealed ? trans('app.on') : trans('app.off') }}</span>
 										@endif
 									</div>
 							  	</div>

@@ -158,7 +158,7 @@
 									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.system_maintenance_mode_handle') }}"></i>
 
 									  	<div class="handle">
-											<a href="{{ route('admin.setting.system.maintenanceMode.toggle') }}" type="button" class="toggle-confirm btn btn-lg btn-secondary btn-toggle {{ $system->maintenance_mode == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->maintenance_mode == 1 ? 'true' : 'false' }}" autocomplete="off">
+											<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.maintenanceMode.toggle') }}" type="button" class="toggle-confirm btn btn-lg btn-secondary btn-toggle {{ $system->maintenance_mode == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->maintenance_mode == 1 ? 'true' : 'false' }}" autocomplete="off">
 												<div class="btn-handle"></div>
 											</a>
 									  	</div>

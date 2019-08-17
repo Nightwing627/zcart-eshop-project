@@ -1413,4 +1413,5 @@ return [
     'trial_ends_at' => 'Trial ends at',
     'view_conversations' => 'View Conversations',
     'view_dispute' => 'View Dispute',
+    'vendor_needs_approval' => 'Vendor needs approval',
 ];

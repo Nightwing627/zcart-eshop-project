@@ -489,7 +489,7 @@
 		                	</a>
 
 							<div class="box-tools pull-right">
-		                		<a href="{{ route('admin.dashboard.config.toggle', 'upgrade_plan_notice') }}" type="button" class="btn btn-box-tool toggle-widget toggle-confirm">
+		                		<a href="javascript:void(0)" data-link="{{ route('admin.dashboard.config.toggle', 'upgrade_plan_notice') }}" type="button" class="btn btn-box-tool toggle-widget toggle-confirm">
 			                		<i class="fa fa-trash" data-toggle="tooltip" data-placement="left" title="{{ trans('app.never_show_this') }}"></i>
 			                	</a>
 							</div>
