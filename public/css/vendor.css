@@ -8478,6 +8478,10 @@ li.dt-button.button-page-length.active a{
 .user-block.user-block-sm img {
   float: left;
 }
+.img-xs {
+  max-width: 20px;
+  max-height: 20px;
+}
 .img-sm,
 .box-comments .box-comment img,
 .user-block.user-block-sm img {
@@ -8934,6 +8938,14 @@ table thead th.massActionWrapper .dropdown-toggle{
   font-family: unset !important;
   line-height: 1 !important;
   margin-bottom: 4px !important;
+}
+
+img.verified-badge {
+  margin-bottom: 3px;
+  margin-right: 5px !important;
+}
+.lead img.verified-badge {
+  margin-bottom: 6px;
 }
 /*
  * Skin: Blue

@@ -6,6 +6,7 @@ use Hash;
 use App\Common\Billable;
 use App\Common\Taggable;
 use App\Common\Imageable;
+use App\Common\Attachable;
 use App\Common\Addressable;
 use App\Common\ApiAuthTokens;
 use Laravel\Scout\Searchable;
@@ -20,7 +21,7 @@ use App\Notifications\Auth\CustomerResetPasswordNotification;
 class Customer extends Authenticatable
 {
 
-    use SoftDeletes, Billable, Notifiable, Addressable, Taggable, Imageable, Searchable, ApiAuthTokens;
+    use SoftDeletes, Billable, Notifiable, Addressable, Taggable, Imageable, Attachable, Searchable, ApiAuthTokens;
 
    /**
      * The guard used by the model.

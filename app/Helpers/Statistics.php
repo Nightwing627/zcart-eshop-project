@@ -270,4 +270,14 @@ class Statistics
 
         return \DB::table('disputes')->where('customer_id', $customer)->count();
     }
+
+    public static function pending_approval_count()
+    {
+        return \DB::table('shops')->where('deleted_at', '!=', Null)->where('active','!=',1)->count();
+    }
+
+    public static function pending_verification_count()
+    {
+        return \DB::table('configs')->where('pending_verification', 1)->count();
+    }
 }

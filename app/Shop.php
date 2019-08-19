@@ -40,6 +40,10 @@ class Shop extends BaseModel
     protected $casts = [
         'active' => 'boolean',
         'hide_trial_notice' => 'boolean',
+        'payment_verified' => 'boolean',
+        'id_verified' => 'boolean',
+        'phone_verified' => 'boolean',
+        'address_verified' => 'boolean',
     ];
 
     /**
@@ -92,6 +96,10 @@ class Shop extends BaseModel
                     'trial_ends_at',
                     'hide_trial_notice',
                     'active',
+                    'payment_verified',
+                    'id_verified',
+                    'phone_verified',
+                    'address_verified',
                 ];
 
     /**
@@ -503,6 +511,49 @@ class Shop extends BaseModel
 
         // retrun $stripe_gateway->subscription()->noProrate()->trialFor($newDate);
     }
+
+    public function getVerificationStatus()
+    {
+        if($this->id_verified && $this->phone_verified && $this->address_verified)
+            return trans('app.verified');
+        elseif($this->id_verified || $this->phone_verified || $this->address_verified)
+            return trans('app.partially_verified');
+
+        return trans('app.not_verified');
+    }
+
+    /**
+     * Set the id_verified for the Product.
+     */
+    public function setIdVerifiedAttribute($value)
+    {
+        $this->attributes['id_verified'] = (bool) $value;
+    }
+
+    /**
+     * Set the address_verified for the Product.
+     */
+    public function setAddressVerifiedAttribute($value)
+    {
+        $this->attributes['address_verified'] = (bool) $value;
+    }
+
+    /**
+     * Set the phone_verified for the Product.
+     */
+    public function setPhoneVerifiedAttribute($value)
+    {
+        $this->attributes['phone_verified'] = (bool) $value;
+    }
+
+    /**
+     * Set the active for the Product.
+     */
+    public function setActiveAttribute($value)
+    {
+        $this->attributes['active'] = (bool) $value;
+    }
+
 
     /**
      * Activities for the loggable model

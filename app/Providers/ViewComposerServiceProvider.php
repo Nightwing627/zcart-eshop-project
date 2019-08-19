@@ -1007,6 +1007,9 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                         'latest_products'           => ListHelper::latest_products(),
                         'open_tickets'              => ListHelper::open_tickets(),
+
+                        'pending_verifications'     => Statistics::pending_verification_count(),
+                        'pending_approvals'         => Statistics::pending_approval_count(),
                     ]);
                 });
     }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Shop;
+use App\Config;
 use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Events\Shop\ShopUpdated;
@@ -93,6 +95,7 @@ class ShopController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateShopRequest $request, $id)
@@ -102,11 +105,22 @@ class ShopController extends Controller
 
         $shop = $this->shop->update($request, $id);
 
+        if ($request->has('remove_from_pending_verification_list') && $request->remove_from_pending_verification_list == 1)
+            $shop->config()->update(['pending_verification' => Null]);
+
         event(new ShopUpdated($shop));
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
+    /**
+     * [toggleStatus description]
+     *
+     * @param  Request $request
+     * @param  [type]  $id
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function toggleStatus(Request $request, $id)
     {
         if( config('app.demo') == true && $id <= config('system.demo.shops', 1) )
@@ -123,6 +137,35 @@ class ShopController extends Controller
         }
 
         return response('error', 405);
+    }
+
+    /**
+     * [verifications description]
+     *
+     * @param  Request $request [description]
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function verifications(Request $request)
+    {
+        $merchants = Config::where('pending_verification', 1)->with(['shop.logo', 'attachments' => function($query){
+            $query->orderBy('updated_at', 'desc');
+        }])->get();
+
+        return view('admin.shop.verifications', compact('merchants'));
+    }
+
+    /**
+     * [showVerificationForm description]
+     *
+     * @param  Request $request
+     * @param  Shop    $shop
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showVerificationForm(Request $request, Shop $shop)
+    {
+        return view('admin.shop._verify', compact('shop'));
     }
 
     /**

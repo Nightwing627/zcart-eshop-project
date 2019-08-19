@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
   <!-- Info boxes -->
   <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12 nopadding-right">
@@ -28,8 +29,7 @@
           <!-- /.info-box-content -->
         </div>
         <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
+      </div> <!-- /.col -->
 
       <div class="col-md-3 col-sm-6 col-xs-12 nopadding-right nopadding-left">
         <div class="info-box">
@@ -52,8 +52,7 @@
             <!-- /.info-box-content -->
         </div>
         <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
+      </div> <!-- /.col -->
 
       <!-- fix for small devices only -->
       <div class="clearfix visible-sm-block"></div>
@@ -89,12 +88,9 @@
                   {{ trans('messages.todays_sale_percents', ['percent' => $todays_sale_percents, 'state' => $difference < 0 ? trans('app.down') : trans('app.up')]) }}
                 @endif
               </span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
+          </div><!-- /.info-box-content -->
+        </div><!-- /.info-box -->
+      </div><!-- /.col -->
 
       <div class="col-md-3 col-sm-6 col-xs-12 nopadding-left">
         <div class="info-box">
@@ -123,17 +119,61 @@
                 <i class="icon ion-md-arrow-{{ $difference > 0 ? 'up' : 'down'}}"></i>
                 {{ trans('messages.last_30_days_percents', ['percent' => $last_30_days_percents, 'state' => $difference > 0 ? trans('app.increase') : trans('app.decrease')]) }}
               </span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-  </div>
-  <!-- /.row -->
+          </div><!-- /.info-box-content -->
+        </div><!-- /.info-box -->
+      </div><!-- /.col -->
+  </div><!-- /.row -->
 
   <div class="row">
     <div class="col-md-8 col-sm-7 col-xs-12">
+      @if($pending_verifications > 0 || $pending_approvals > 0)
+          <div class="row">
+              <div class="col-sm-6 col-xs-12 nopadding-right">
+                <div class="info-box bg-yellow">
+                    <span class="info-box-icon"><i class="icon ion-md-filing"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">{{ trans('app.pending_verifications') }}</span>
+                      <span class="info-box-number">
+                          {{ $pending_verifications }}
+                          <a href="{{ route('admin.vendor.shop.verifications') }}" class="pull-right" data-toggle="tooltip" data-placement="left" title="{{ trans('app.take_action') }}" >
+                            <i class="icon ion-md-paper-plane"></i>
+                          </a>
+                      </span>
+
+                      <div class="progress" style="background: transparent;"></div>
+                      <span class="progress-description">
+                          <i class="icon ion-md-hourglass"></i>
+                          {{ trans_choice('messages.pending_verifications', $pending_verifications, ['count' => $pending_verifications]) }}
+                      </span>
+                    </div><!-- /.info-box-content -->
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-xs-12 nopadding-left">
+                <div class="info-box bg-aqua">
+                  <span class="info-box-icon"><i class="icon ion-md-pulse"></i></span>
+
+                  <div class="info-box-content">
+                      <span class="info-box-text">{{ trans('app.pending_approvals') }}</span>
+                      <span class="info-box-number">
+                          {{ $pending_approvals }}
+                          <a href="{{ route('admin.vendor.shop.index') }}" class="pull-right" data-toggle="tooltip" data-placement="left" title="{{ trans('app.take_action') }}" >
+                            <i class="icon ion-md-paper-plane"></i>
+                          </a>
+                      </span>
+
+                      <div class="progress" style="background: transparent;"></div>
+                      <span class="progress-description">
+                          <i class="icon ion-md-hourglass"></i>
+                          {{ trans_choice('messages.pending_approvals', $pending_approvals, ['count' => $pending_approvals]) }}
+                      </span>
+                  </div><!-- /.info-box-content -->
+                </div>
+            </div>
+        </div>
+      @endif
+
       <div class="box">
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs nav-justified">
@@ -154,6 +194,15 @@
 
           <div class="tab-content">
             <div class="tab-pane active" id="visitors_tab">
+              @if(\App\SystemConfig::isGgoogleAnalyticEnabled() && ! \App\SystemConfig::isGgoogleAnalyticConfigured())
+                <div class="callout callout-warning">
+                  <p>
+                    <strong><i class="icon ion-md-nuclear"></i> {{ trans('app.alert') }}</strong>
+                    {{ trans('messages.misconfigured_google_analytics') }}
+                  </p>
+                </div>
+              @endif
+
               <div>{!! $chart->container() !!}</div>
             </div>
             <!-- /.tab-pane -->
@@ -262,10 +311,8 @@
           <!-- /.tab-content -->
         </div>
         <!-- /.nav-tabs-custom -->
-      </div>
-      <!-- /.box -->
-    </div>
-    <!-- /.col-*-* -->
+      </div><!-- /.box -->
+    </div><!-- /.col-*-* -->
 
     <div class="col-md-4 col-sm-5 col-xs-12 nopadding-left">
       @if($dispute_count > 0)

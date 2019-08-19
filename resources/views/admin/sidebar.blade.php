@@ -434,7 +434,7 @@
                 </a>
               </li>
 
-              <li class=" {{ Request::is('admin/setting/config*') ? 'active' : '' }}">
+              <li class=" {{ Request::is('admin/setting/config*') || Request::is('admin/setting/verify*') ? 'active' : '' }}">
                 <a href="{{ url('admin/setting/config') }}">
                   <i class="fa fa-angle-double-right"></i> {{ trans('nav.config') }}
                 </a>

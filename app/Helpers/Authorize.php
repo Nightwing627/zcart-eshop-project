@@ -65,7 +65,7 @@ class Authorize
 	private function isExceptional()
 	{
 		// Some routes only shows personalized information and allow access
-        if(in_array($this->slug, ['dashboard', 'profile', 'secretLogout']))
+        if(in_array($this->slug, ['dashboard', 'profile', 'verify', 'secretLogout']))
             return true;
 
 		// The Super admin will not required to check authorization.

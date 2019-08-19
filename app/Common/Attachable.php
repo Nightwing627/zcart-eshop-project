@@ -2,6 +2,7 @@
 
 namespace App\Common;
 
+use Auth;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -31,6 +32,16 @@ trait Attachable {
         return $this->morphMany(\App\Attachment::class, 'attachable');
     }
 
+	/**
+	 * Return collection of attachments related to the user/customer
+	 *
+	 * @return Illuminate\Database\Eloquent\Collection
+	 */
+	public function files()
+    {
+        return $this->morphMany(\App\Attachment::class, 'ownable');
+    }
+
     /**
      * Save Attachments
      *
@@ -44,13 +55,16 @@ trait Attachable {
 		$data = [];
 		$dir = attachment_storage_dir();
 
+		$ownable['ownable_id'] = Auth::user()->id;
+		$ownable['ownable_type'] = Auth::guard('customer')->check() ? 'App\Customer' : 'App\User';
+
 		if(is_array($attachments)){
 	    	foreach ($attachments as $order => $file) {
-	    		$data[] = $this->storeFile($dir, $file);
+	    		$data[] = array_merge($this->storeFile($dir, $file), $ownable);
 			}
 		}
 		else{
-    		$data[] = $this->storeFile($dir, $attachments);
+    		$data[] = array_merge($this->storeFile($dir, $attachments), $ownable);
 		}
 
         return $this->attachments()->createMany($data);

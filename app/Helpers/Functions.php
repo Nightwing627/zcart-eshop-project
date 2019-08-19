@@ -128,6 +128,13 @@ if ( ! function_exists('get_page_url') )
     }
 }
 
+if ( ! function_exists('get_verified_badge') )
+{
+    function get_verified_badge() {
+        return url("images/placeholders/verified_badge.png");
+    }
+}
+
 if ( ! function_exists('is_serialized') )
 {
     /**

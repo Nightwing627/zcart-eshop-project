@@ -1,8 +1,14 @@
 <?php
 namespace App;
 
+// use App\Common\Loggable;
+use App\Common\Attachable;
+
 class Config extends BaseModel
 {
+    use Attachable;
+    // use Attachable, Loggable;
+
     /**
      * The database table used by the model.
      *
@@ -32,6 +38,13 @@ class Config extends BaseModel
     protected $casts = [
         'maintenance_mode' => 'boolean',
     ];
+
+    /**
+     * The name that will be used when log this model. (optional)
+     *
+     * @var boolean
+     */
+    // protected static $logName = 'config';
 
     /**
      * The attributes that aren't mass assignable.

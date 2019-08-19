@@ -1,5 +1,9 @@
 <?php
 	// Shops
+	Route::get('shop/verifications', 'ShopController@verifications')->name('shop.verifications');
+
+	Route::get('shop/{shop}/verify', 'ShopController@showVerificationForm')->name('shop.verify');
+
     Route::get('subscription/{shop}/editTrial', 'SubscriptionController@editTrial')->name('subscription.editTrial');
 
     Route::put('subscription/{shop}/updateTrial', 'SubscriptionController@updateTrial')->name('subscription.updateTrial');

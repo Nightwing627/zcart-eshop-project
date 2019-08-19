@@ -95,12 +95,23 @@ class SystemConfig extends BaseModel
             ];
 
     /**
+     * Check if Ggoogle Analytic enabled.
+     *
+     * @return bool
+     */
+    public static function isGgoogleAnalyticEnabled()
+    {
+        return (bool) config('system_settings.google_analytic_report');
+    }
+
+    /**
      * Check if Ggoogle Analytic has been Configured.
      *
      * @return bool
      */
     public static function isGgoogleAnalyticConfigured()
     {
-        return (bool) config('analytics.view_id');
+        return (bool) config('analytics.view_id') && file_exists(config('analytics.service_account_credentials_json'));
     }
+
 }

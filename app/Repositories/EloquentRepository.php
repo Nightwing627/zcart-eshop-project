@@ -39,7 +39,6 @@ abstract class EloquentRepository
 
     public function store(Request $request)
     {
-        // return $this->model->fill($request->all())->save();
         return $this->model->create($request->all());
     }
 

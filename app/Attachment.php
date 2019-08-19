@@ -23,6 +23,8 @@ class Attachment extends BaseModel
                     'size',
                     'attachable_id',
                     'attachable_type',
+                    'ownable_id',
+                    'ownable_type'
                 ];
 
     /**
@@ -30,6 +32,15 @@ class Attachment extends BaseModel
      */
 	public function attachable()
     {
-        return $this->morphTo();
+        return $this->morphTo('attachable');
     }
+
+    /**
+     * Get all of the owning attachable models.
+     */
+    public function owner()
+    {
+        return $this->morphTo('ownable');
+    }
+
 }

@@ -4,6 +4,7 @@ namespace App;
 
 use Hash;
 use App\Common\Imageable;
+use App\Common\Attachable;
 use App\Common\Addressable;
 // use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 // class User extends Authenticatable implements MustVerifyEmail
 class User extends Authenticatable
 {
-    use SoftDeletes, Notifiable, Addressable, Imageable;
+    use SoftDeletes, Notifiable, Addressable, Imageable, Attachable;
 
    /**
      * The database table used by the model.

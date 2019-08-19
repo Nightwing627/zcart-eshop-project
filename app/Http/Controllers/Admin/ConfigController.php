@@ -15,12 +15,13 @@ use App\Events\Shop\ConfigUpdated;
 use App\Http\Controllers\Controller;
 use App\Events\Shop\DownForMaintainace;
 use App\Http\Requests\Validations\UpdateConfigRequest;
+use App\Http\Requests\Validations\MerchantVerifyRequest;
 use App\Http\Requests\Validations\UpdateBasicConfigRequest;
 use App\Http\Requests\Validations\ToggleMaintenanceModeRequest;
 
 class ConfigController extends Controller
 {
-    use Authorizable;
+    // use Authorizable;
 
     private $model_name;
 
@@ -81,11 +82,13 @@ class ConfigController extends Controller
 
         if ($request->hasFile('image') || ($request->input('delete_image') == 1))
             $config->shop->deleteLogo();
+
         if ($request->hasFile('image'))
             $config->shop->saveImage($request->file('image'));
 
         if ($request->hasFile('cover_image') || ($request->input('delete_cover_image') == 1))
             $config->shop->deleteFeaturedImage();
+
         if ($request->hasFile('cover_image'))
             $config->shop->saveImage($request->file('cover_image'), true);
 
@@ -107,6 +110,35 @@ class ConfigController extends Controller
         }
 
         return response('error', 405);
+    }
+
+   /**
+     * Display the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function verify(MerchantVerifyRequest $request)
+    {
+        $config = Config::findOrFail(Auth::user()->merchantId());
+
+        return view('admin.config.verify', compact('config'));
+    }
+
+   /**
+     * Display the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function saveVerificationData(MerchantVerifyRequest $request)
+    {
+        $config = Config::findOrFail(Auth::user()->merchantId());
+
+        if ($request->hasFile('documents'))
+            $config->saveAttachments($request->file('documents'));
+
+        $config->update(['pending_verification' => 1]);
+
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
     /**

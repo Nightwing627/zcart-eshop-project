@@ -6,6 +6,7 @@ use App\Attachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use App\Http\Requests\Validations\DeleteAttachmentRequest;
 
 class AttachmentController extends Controller
 {
@@ -24,4 +25,24 @@ class AttachmentController extends Controller
 
 		return back()->with('error', trans('messages.file_not_exist'));
 	}
+
+    /**
+     * Remove the specified resource from storage.
+     *
+	 * @param  Request    $request
+     * @param  Attachment $attachment
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(DeleteAttachmentRequest $request,  Attachment $attachment)
+    {
+	    if (Storage::exists($attachment->path))
+	        Storage::delete($attachment->path);
+
+		if($attachment->forceDelete())
+	        return back()->with('success', trans('messages.file_deleted'));
+
+		return back()->with('error', trans('messages.failed'));
+    }
+
 }

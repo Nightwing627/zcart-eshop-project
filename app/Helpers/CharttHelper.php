@@ -5,6 +5,7 @@ namespace App\Helpers;
 use Analytics;
 use App\Order;
 use App\Visitor;
+use App\SystemConfig;
 use Carbon\Carbon;
 // use App\Helpers\Period;
 use Spatie\Analytics\Period;
@@ -167,7 +168,7 @@ class CharttHelper
     // public static function VisitorsOfLast($months = Null, $start = Null)
    	public static function visitorsOfMonths($months = Null, $start = Null)
     {
-        if(config('system_settings.google_analytic_report') && \App\SystemConfig::isGgoogleAnalyticConfigured()){
+        if(SystemConfig::isGgoogleAnalyticEnabled() && SystemConfig::isGgoogleAnalyticConfigured()){
             //retrieve visitors and pageviews from GoogleAnalytic
             $data = static::fetchVisitorsOfMonthsFromGoogle($months, $start);
 

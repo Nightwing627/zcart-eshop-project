@@ -31,6 +31,7 @@ trait Authorizable
         'showSearchForm'    => 'add',
         'search'            => 'add',
         'restore'           => 'add',
+        'massRestore'       => 'add',
         'fulfill'           => 'fulfill',
         'updateOrderStatus' => 'fulfill',
         'togglePaymentStatus'=> 'fulfill',
@@ -50,13 +51,13 @@ trait Authorizable
         'updateQtt'         => 'edit',
         'updatePassword'    => 'edit',
         'toggle'            => 'edit',
+        'verifications'     => 'edit',
         'delete'            => 'delete',
         'trash'             => 'delete',
         'archive'           => 'archive',
         'destroy'           => 'delete',
         'massDestroy'       => 'delete',
         'massTrash'         => 'delete',
-        'massRestore'       => 'add',
         'emptyTrash'        => 'delete',
         'secretLogin'       => 'login'
     ];

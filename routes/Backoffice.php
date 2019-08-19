@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 			include('admin/SubscriptionPlan.php');
 			include('admin/Announcement.php');
 			include('admin/Language.php');
+			include('admin/Verification.php');
 		});
 
 		// Appearances Routes for Admin

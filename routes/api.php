@@ -5,9 +5,9 @@
 Route::group(['namespace' => 'Api'], function(){
 	Route::get('sliders', 'HomeController@sliders');
 	Route::get('banners', 'HomeController@banners');
-	Route::get('categories', 'CategoryController@index');
 	Route::get('category-grps', 'CategoryController@categoryGroup');
-	Route::get('category-subgrps', 'CategoryController@categorySubGroup');
+	Route::get('category-subgrps/{group?}', 'CategoryController@categorySubGroup');
+	Route::get('categories/{sub_group?}', 'CategoryController@index');
 	Route::get('countries', 'HomeController@countries');
 	Route::get('states/{country}', 'HomeController@states');
 

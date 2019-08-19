@@ -14,13 +14,14 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        \App\Attachment::class          => \App\Policies\AttachmentPolicy::class,
         \App\Attribute::class           => \App\Policies\AttributePolicy::class,
         \App\AttributeValue::class      => \App\Policies\AttributeValuePolicy::class,
         \App\Banner::class              => \App\Policies\BannerPolicy::class,
         \App\Blog::class                => \App\Policies\BlogPolicy::class,
         \App\CarrierValue::class        => \App\Policies\CarrierValuePolicy::class,
         \App\Cart::class                => \App\Policies\CartPolicy::class,
-        \App\Carrier::class              => \App\Policies\CarrierPolicy::class,
+        \App\Carrier::class             => \App\Policies\CarrierPolicy::class,
         \App\Category::class            => \App\Policies\CategoryPolicy::class,
         \App\CategoryGroup::class       => \App\Policies\CategoryGroupPolicy::class,
         \App\CategorySubGroup::class    => \App\Policies\CategorySubGroupPolicy::class,

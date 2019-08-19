@@ -23,6 +23,9 @@ class UpdateShopRequest extends Request
      */
     public function rules()
     {
+        if ($this->has('remove_from_pending_verification_list'))
+            return [];
+
         $id = Request::segment(count(Request::segments())); //Current model ID
 
         return [

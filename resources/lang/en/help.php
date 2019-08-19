@@ -643,7 +643,7 @@ return [
 
     'variant_image' => 'The image of the variant',
 
-    // Version 1.2.6
+    // Version 1.3.0
     'empty_trash' => 'Empty the trash. All items on the trash will be deleted permanently.',
 
     'hide_trial_notice_on_vendor_panel' => 'Hide trial notice on vendor panel',
@@ -663,10 +663,20 @@ return [
 
     'rtl' => 'Is the language is right to left (RTL)?',
 
+    'select_all_verification_documents' => 'Select all documents at once.',
+
     'system_default_language' => 'System default language',
 
     'update_trial_period' => 'Update trial period',
 
     'vendor_needs_approval' => 'If enabled, every new vendor will require manual approval from the platform admin panel to get live.',
+
+    'verified_seller' => 'Verified Seller',
+
+    'mark_address_verified' => 'Mark as address verified',
+
+    'mark_id_verified' => 'Mark as ID verified',
+
+    'mark_phone_verified' => 'Mark as phone verified',
 
 ];

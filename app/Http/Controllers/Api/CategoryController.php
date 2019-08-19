@@ -19,9 +19,12 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $sub_group = Null)
     {
-        $categories = Category::with(['featuredImage'])->active()->get();
+        if($sub_group)
+            $categories = Category::where('category_sub_group_id', $sub_group)->with(['featuredImage'])->active()->get();
+        else
+            $categories = Category::with(['featuredImage'])->active()->get();
 
         return CategoryResource::collection($categories);
     }
@@ -44,9 +47,12 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function categorySubGroup()
+    public function categorySubGroup(Request $request, $group = Null)
     {
-        $categories = CategorySubGroup::with(['featuredImage'])->active()->get();
+        if($group)
+            $categories = CategorySubGroup::where('category_group_id', $group)->with(['featuredImage'])->active()->get();
+        else
+            $categories = CategorySubGroup::with(['featuredImage'])->active()->get();
 
         return CategorySubGroupResource::collection($categories);
     }

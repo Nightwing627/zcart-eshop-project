@@ -83,7 +83,7 @@
 			<a class="ajax-modal-btn btn btn-default" href="javascript:void(0)" data-link="{{ route('admin.account.showChangePasswordForm') }}"><i class="fa fa-lock"></i> {{ trans('app.change_password') }}</a>
 		</div>
 
-	    @if($profile->merchantId())
+	    @if($profile->isFromMerchant())
 		    <hr/>
 			<div class="form-group">
 			  	<label>{{ trans('app.merchant') }}</label>
@@ -92,6 +92,31 @@
 			  	<label>{{ trans('app.form.logo') }}</label>
 		        <img src="{{ get_storage_file_url(optional($profile->shop->image)->path, 'small') }}" class="thumbnail" alt="{{ trans('app.logo') }}">
 		  	</div>
+
+		    <hr/>
+			<div class="form-group">
+			  	<label>{{ $profile->shop->getVerificationStatus() }}</label>
+			  	<ul class="list-unstyled lead">
+			  		<li class="{{ $profile->shop->id_verified ? 'text-success' : 'text-muted' }}">
+			  			<i class="fa fa-{{ $profile->shop->id_verified ? 'check' : 'times' }}-circle-o"></i>
+			  			{{ trans('app.id_verified') }}
+			  		</li>
+			  		<li class="{{ $profile->shop->phone_verified ? 'text-success' : 'text-muted' }}">
+			  			<i class="fa fa-{{ $profile->shop->phone_verified ? 'check' : 'times' }}-circle-o"></i>
+			  			{{ trans('app.phone_verified') }}
+			  		</li>
+			  		<li class="{{ $profile->shop->address_verified ? 'text-success' : 'text-muted' }}">
+			  			<i class="fa fa-{{ $profile->shop->address_verified ? 'check' : 'times' }}-circle-o"></i>
+			  			{{ trans('app.address_verified') }}
+			  		</li>
+			  	</ul>
+
+			  	<span class="spacer30"></span>
+
+	            @can('update', $profile->shop->config)
+				  	<a href="{{ route('admin.setting.verify') }}" class="btn btn-block btn-flat btn-success">{{ trans('app.get_verified') }}</a>
+        	    @endcan
+		  </div>
 	    @endif
   	</div>
 </div>

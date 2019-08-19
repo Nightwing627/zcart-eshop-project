@@ -43,18 +43,20 @@
 				                  	</span>
 				              	</h5>
 
-				                <h5>
-				                	{{ trans('app.order') }}:
-				                	<strong>
-										@can('view', $message->order)
-											<a href="{{ route('admin.order.order.show', $message->order->id) }}">
+			                	@if($message->order)
+					                <h5>
+					                	{{ trans('app.order') }}:
+					                	<strong>
+											@can('view', $message->order)
+												<a href="{{ route('admin.order.order.show', $message->order->id) }}">
+													{{ $message->order->order_number }}
+												</a>
+											@else
 												{{ $message->order->order_number }}
-											</a>
-										@else
-											{{ $message->order->order_number }}
-										@endcan
-				                	</strong>
-				              	</h5>
+											@endcan
+					                	</strong>
+					              	</h5>
+								@endif
 			              	</div>
 		              	</div>
 	              	</div>
