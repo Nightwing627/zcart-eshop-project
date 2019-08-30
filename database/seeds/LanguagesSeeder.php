@@ -28,7 +28,7 @@ class LanguagesSeeder extends Seeder
                 'language' => 'Spanish',
                 'order' => 2,
                 'rtl' => False,
-                'active' => 1,
+                'active' => False,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ], [

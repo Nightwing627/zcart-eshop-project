@@ -180,10 +180,46 @@ return [
     'no_active_shipping_zone' => 'Your store has no active shipping zone. Please create shipping zones to accept order.',
 
     // Version 1.2.5
-    'your_shop_in_hold' => 'You are in hold, need activation from admin!',
+    'your_shop_in_hold' => 'Your store is on hold! We will review and approve your store as soon as possible!',
     'youe_shop_in_maintenance_mode' => 'The shop in maintenance mode.',
 
-    // Version 1.2.6
+    // Version 1.3.0
+    'how_id_verification_helps' => 'How Identity Verification Helps',
+
+    'how_the_verification_process_works' => 'How the process works',
+
     'subscription_updated' => 'Subscription has been updated successfully!',
+
     'subscription_update_failed' => 'Subscription update has been failed! Please see the log file for details.',
+
+    'misconfigured_google_analytics' => 'The Google Analytics report is enabled but not configured or misconfigured! Please check the documentation for help.',
+
+    'pending_approvals' => '[0,1] :count Pending approval need action|[2,*] :count Pending approvals need action',
+
+    'pending_verifications' => '[0,1] :count Pending verification need action|[2,*] :count Pending verifications need action',
+
+    'verification_intro' => 'Once you are verified, we will show the <strong>verified</strong> badge on your business and on your store profile page. This lets your business build trust on the marketplace.',
+
+    'verification_process' => '<ul>
+            <li>You take a picture or scan your ID (passport, driving license or government issued ID) using a HD camera and upload</li>
+            <li>Upload proof of your address (driving license, property tax receipt, utility bill or lease agreement)</li>
+            <li>You take or upload a picture of your face.</li>
+            <li>We will check that they are pictures of the same person.</li>
+            <li>You can not use same documentation(driving license) for ID and Address verification.</li>
+        </ul>',
+
+    'what_the_verification_documents_need' => 'What formal identity documents do I need?',
+
+    'verification_documents' => 'You can use: <ul>
+            <li>your passport</li>
+            <li>your driving license</li>
+            <li>a government issued ID.</li>
+            <li>property tax receipt</li>
+            <li>utility bill</li>
+            <li>lease agreement</li>
+        </ul>
+        Driving licenses and government issued IDs must be made out of plastic. All IDs must be valid.',
+
+    'verified_business_name_like' => 'Your business name will be shown like this',
+
 ];

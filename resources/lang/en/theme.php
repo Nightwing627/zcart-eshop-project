@@ -558,7 +558,6 @@ return [
 	'how_it_works' => 'How It Works',
 	'pricing' => 'Pricing',
 
-
 	// Version 1.2.4
     'first_listed_on' => 'Date first listed on :platform',
     // 'average_customer_review' => 'Average Customer Review',

@@ -34,7 +34,7 @@ class SearchController extends Controller
 
         // Keep results only from active shops
         $products = $products->filter(function ($product) {
-            return ($product->shop->current_billing_plan !== Null) &&
+            return (optional($product->shop)->current_billing_plan !== Null) &&
                     ($product->shop->active == 1) &&
                     $product->shop->hasPaymentMethods() &&
                     ($product->shop->trial_ends_at == Null || $product->shop->trial_ends_at > Carbon::now()) &&

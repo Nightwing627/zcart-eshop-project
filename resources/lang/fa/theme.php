@@ -584,5 +584,4 @@ return [
 	'enter_tracking_number' => 'شماره پیگیری سفارش خود را وارد کنید.',
 	'from_verified_seller' => 'فروشنده تأیید شده',
 	'mark_as_solved' => 'علامت گذاری به عنوان حل شده است',
-
 ];
