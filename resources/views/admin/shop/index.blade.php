@@ -33,6 +33,10 @@
 										{{ $shop->name }}
 									@endcan
 
+				            		@if($shop->isVerified())
+										<img src="{{ get_verified_badge() }}" class="verified-badge img-xs" data-toggle="tooltip" data-placement="top" title="{{ trans('help.verified_seller') }}" alt="verified-badge">
+									@endif
+
 				            		@if($shop->isDown())
 							          	<span class="label label-default indent10">{{ trans('app.maintenance_mode') }}</span>
 									@endif

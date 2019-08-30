@@ -5,6 +5,11 @@
         <div class="col-sm-4 col-md-3">
             <div class="product product-grid-view sc-product-item">
                 <ul class="product-info-labels">
+
+                    @if($item->shop->isVerified() && Route::current()->getName() != 'show.store')
+                        <li>@lang('theme.from_verified_seller')</li>
+                    @endif
+
                     @if($item->orders_count >= config('system.popular.hot_item.sell_count', 3))
                         <li>@lang('theme.hot_item')</li>
                     @endif

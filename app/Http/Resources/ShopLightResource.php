@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ShopResource extends JsonResource
+class ShopLightResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,10 +18,6 @@ class ShopResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'description' => $this->description,
-            'banner_image' => get_cover_img_src($this, 'shop'),
-            'rating' => $this->feedbacks->avg('rating'),
-            'feedbacks' => FeedbackResource::collection($this->feedbacks),
             'image' => get_logo_url($this, 'small'),
         ];
     }

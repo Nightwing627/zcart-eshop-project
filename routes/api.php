@@ -26,13 +26,10 @@ Route::group(['namespace' => 'Api'], function(){
 	Route::get('shop/{slug}/feedbacks', 'FeedbackController@show_shop_feedbacks');
 
 	// CART
-	// Route::group(['middleware' => 'ajax'], function(){
-		Route::post('addToCart/{slug}', 'CartController@addToCart');
-		Route::delete('cart/removeItem', 'CartController@remove');
-	// });
-
+	Route::post('addToCart/{slug}', 'CartController@addToCart');
+	Route::delete('cart/removeItem', 'CartController@remove');
 	Route::get('carts', 'CartController@index');
-	// Route::put('cart/{cart}', 'CartController@update');
+	Route::put('cart/{cart}/update', 'CartController@update');
 	Route::post('cart/{cart}/shipTo', 'CartController@shipTo');
 	Route::post('cart/{cart}/checkout', 'CheckoutController@checkout');
 
@@ -83,6 +80,5 @@ Route::group(['namespace' => 'Api'], function(){
 		Route::get('dispute/{dispute}/response', 'DisputeController@response_form');
 		Route::post('dispute/{dispute}/response', 'DisputeController@response');
 		Route::post('dispute/{dispute}/appeal', 'DisputeController@appeal');
-		// Route::get('orders', 'OrderController@index');
 	});
 });

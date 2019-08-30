@@ -5,7 +5,9 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 5px; right: 10px; z-index: 9; color: #eee;">&times;</button>
             <div class="box-widget widget-shop">
                 <div class="widget-shop-header"  style="background-image:url( {{ get_cover_img_src($shop, 'shop') }} );">
-                    <h2 class="widget-shop-name">{{ $shop->name }}</h2>
+                    <h2 class="widget-shop-name">
+                        {!! $shop->getQualifiedName() !!}
+                    </h2>
                     <p class="member-since small">
                         {{ trans('theme.member_since') }}: {{ $shop->created_at->diffForHumans() }}
                     </p>

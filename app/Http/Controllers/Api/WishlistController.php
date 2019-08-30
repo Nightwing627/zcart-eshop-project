@@ -39,11 +39,19 @@ class WishlistController extends Controller
     {
         $item = Inventory::where('slug', $slug)->firstOrFail();
 
+        $customer_id = Auth::guard('api')->user()->id;
+
+        $item_in_wishlist = Wishlist::where('inventory_id', $item->id)
+        ->where('customer_id', $customer_id)->first();
+
+        if($item_in_wishlist)
+            return response()->json(['message' => trans('api.item_alrealy_in_cart')], 409); // Item alrealy in cart
+
         $wishlist = new Wishlist;
         $wishlist->updateOrCreate([
             'inventory_id'   =>  $item->id,
             'product_id'   =>  $item->product_id,
-            'customer_id' => Auth::guard('api')->user()->id
+            'customer_id' => $customer_id
         ]);
 
         return response()->json(['message' => trans('api.item_added_to_wishlist')], 200);

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use Auth;
 use App\Order;
 use App\Reply;
 use App\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ConversationResource;
 use App\Http\Requests\Validations\OrderDetailRequest;
 use App\Http\Requests\Validations\DirectCheckoutRequest;

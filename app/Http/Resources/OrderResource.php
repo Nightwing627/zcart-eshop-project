@@ -47,8 +47,9 @@ class OrderResource extends JsonResource
             'delivery_date' => $this->delivery_date ? date('F j, Y', strtotime($this->delivery_date)) : Null,
             'tracking_id' => $this->tracking_id,
             'tracking_url' => $this->getTrackingUrl(),
-            'shop' => new ShopResource($this->shop),
+            'shop' => new ShopLightResource($this->shop),
             'items' => OrderItemResource::collection($this->inventories),
+            // 'shop' => new ShopResource($this->shop),
             // 'items' => ListingResource::collection($this->whenLoaded('inventories')),
             // 'items' => $this->inventories,
         ];

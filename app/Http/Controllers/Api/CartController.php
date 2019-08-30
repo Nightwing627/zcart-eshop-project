@@ -10,6 +10,7 @@ use App\Coupon;
 use App\Inventory;
 use App\Packaging;
 use App\ShippingRate;
+use Carbon\Carbon;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,8 +27,8 @@ class CartController extends Controller
     {
         $carts = Cart::whereNull('customer_id')->where('ip_address', $request->ip());
 
-        if(Auth::guard('customer')->check())
-            $carts = $carts->orWhere('customer_id', Auth::guard('customer')->user()->id);
+        if(Auth::guard('api')->check())
+            $carts = $carts->orWhere('customer_id', Auth::guard('api')->user()->id);
 
         $carts = $carts->get();
 
@@ -54,7 +55,7 @@ class CartController extends Controller
         if( ! $item )
             return response()->json(['message' => trans('api.404')], 404);
 
-        $customer_id = Auth::guard('customer')->check() ? Auth::guard('customer')->user()->id : Null;
+        $customer_id = Auth::guard('api')->check() ? Auth::guard('api')->user()->id : Null;
 
         if($customer_id){
             $old_cart = Cart::where('shop_id', $item->shop_id)->where(function($query) use ($customer_id){
@@ -125,23 +126,61 @@ class CartController extends Controller
         return response()->json(['message' => trans('api.item_added_to_cart')], 200);
     }
 
-    // /**
-    //  * Update the cart and redirected to checkout page.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  \App\Cart    $cart
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, Cart $cart)
-    // {
-    //     if( !crosscheckCartOwnership($request, $cart) )
-    //             return redirect()->route('cart.index')->with('warning', trans('theme.notify.please_login_to_checkout'));
+    /**
+     * Update the cart and redirected to checkout page.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Cart    $cart
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Cart $cart)
+    {
+        $item = Inventory::findOrFail($request->item);
+        $pivot = \DB::table('cart_items')->where('cart_id', $cart->id)->where('inventory_id', $item->id)->firstOrFail();
 
-    //     $cart = crosscheckAndUpdateOldCartInfo($request, $cart);
+        if($request->quantity){
+            $quantity = $request->quantity;
+            $old_quantity = $pivot->quantity;
 
-    //     return redirect()->route('cart.checkout', $cart);
-    // }
+            $cart->quantity = $quantity < $item->min_order_quantity ? $item->min_order_quantity : $quantity;
+            $cart->item_count = ( $cart->item_count - $old_quantity ) + $quantity;
+
+            if($item->shipping_weight)
+                $cart->shipping_weight = ( $cart->shipping_weight - ($item->shipping_weight * $old_quantity) ) + ( $item->shipping_weight * $quantity );
+
+            $unit_price = $item->currnt_sale_price();
+
+            $cart->total = ( $cart->total - ($pivot->unit_price * $old_quantity) ) + ( $quantity * $unit_price );
+
+            // Updating pivot data
+            $cart->inventories()->updateExistingPivot($item->id, [
+                'quantity' => $quantity,
+                'unit_price' => $unit_price,
+            ]);
+        }
+
+        if($request->shipTo)
+            $cart->ship_to = $request->shipTo;
+
+        if($request->shipping_zone_id)
+            $cart->shipping_zone_id = $request->shipping_zone_id;
+
+        if($request->shipping_rate_id)
+            $cart->shipping_rate_id = $request->shipping_rate_id;
+
+        if($request->packaging_id)
+            $cart->packaging_id = $request->packaging_id;
+
+        // Update some filed only if the cart is older than 24hrs
+        if($cart->updated_at < Carbon::now()->subHour(24)){
+            $cart->handling = getShopConfig($item->shop_id, 'order_handling_cost');
+        }
+
+        $cart->save();
+
+        return response()->json(['message' => trans('api.cart_updated')], 200);
+    }
 
     /**
      * validate coupon.

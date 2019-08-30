@@ -273,7 +273,7 @@ class Statistics
 
     public static function pending_approval_count()
     {
-        return \DB::table('shops')->where('deleted_at', '!=', Null)->where('active','!=',1)->count();
+        return \DB::table('shops')->where('deleted_at', Null)->where('active','!=',1)->count();
     }
 
     public static function pending_verification_count()

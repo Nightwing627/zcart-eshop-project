@@ -6,8 +6,8 @@ use App\Page;
 use App\Shop;
 use App\Banner;
 use App\Slider;
-use App\Product;
 use App\State;
+use App\Product;
 use App\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -79,7 +79,6 @@ class HomeController extends Controller
         }])->firstOrFail();
 
         // Check shop maintenance_mode
-        // if(getShopConfig($shop->id, 'maintenance_mode'))
         if($shop->isDown())
             return response()->json(['message' => trans('app.marketplace_down')], 404);
 
@@ -159,20 +158,7 @@ class HomeController extends Controller
                 $paymentMethods->forget($key);
         }
 
-
         return PaymentMethodResource::collection($paymentMethods);
-    }
-
-    /**
-     * Return available shipping options for the specified shop.
-     *
-     * @param  str  $shop
-     * @return \Illuminate\Http\Response
-     */
-    public function shipping($shop)
-    {
-        $shop = Shop::where('slug', $shop)->active()->firstOrFail();
-        return PackagingResource::collection($shop->activePackagings);
     }
 
     /**

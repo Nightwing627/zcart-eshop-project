@@ -644,6 +644,12 @@ img.img-medium {
   max-height: 250px;
 }
 
+img.verified-badge {
+  margin-left: 5px;
+  margin-bottom: 3px;
+  margin-right: 5px !important;
+}
+
 /* HiDPI support */
 @media (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi), (min-resolution: 1.25dppx) {
     .icheckbox_minimal-blue, .iradio_minimal-blue {

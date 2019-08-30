@@ -579,4 +579,10 @@ return [
 	'error' => 'خطا',
 	'danger' => 'خطا',
 	'warning' => 'اخطار',
+
+	// Version 1.3.0
+	'enter_tracking_number' => 'شماره پیگیری سفارش خود را وارد کنید.',
+	'from_verified_seller' => 'فروشنده تأیید شده',
+	'mark_as_solved' => 'علامت گذاری به عنوان حل شده است',
+
 ];

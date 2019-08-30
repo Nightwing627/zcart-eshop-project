@@ -34,11 +34,10 @@ class CartResource extends JsonResource
             'taxes' => $this->taxes,
             'discount' => $this->discount,
             'grand_total' => $this->grand_total,
-            'shop' => new ShopResource($this->shop),
-            'items' => $this->inventories,
+            'shop' => new ShopLightResource($this->shop),
+            'items' => OrderItemResource::collection($this->inventories),
+            // 'shop' => new ShopResource($this->shop),
             // 'items' => ItemResource::collection($this->inventories),
-            // 'hot_item' => $this->orders_count >= config('system.popular.hot_item.sell_count', 3) ? true : false,
-            // 'feedbacks' => FeedbackResource::collection($this->feedbacks),
         ];
     }
 }

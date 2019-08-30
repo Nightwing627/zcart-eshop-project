@@ -2,7 +2,9 @@
 	@if($item->product->manufacturer->slug)
   	<a href="{{ route('show.brand', $item->product->manufacturer->slug) }}" class="product-info-seller-name">{{ $item->product->manufacturer->name }}</a>
 	@else
-    <a href="{{ route('show.store', $item->shop->slug) }}" class="product-info-seller-name">{{ $item->shop->name }}</a>
+    <a href="{{ route('show.store', $item->shop->slug) }}" class="product-info-seller-name">
+      {!! $item->shop->getQualifiedName() !!}
+    </a>
 	@endif
 
 	<h5 class="product-info-title space10" data-name="product_name">{{ $item->title }}</h5>

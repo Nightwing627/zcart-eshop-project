@@ -522,6 +522,11 @@ class Shop extends BaseModel
         return trans('app.not_verified');
     }
 
+    public function isVerified()
+    {
+        return $this->id_verified && $this->phone_verified && $this->address_verified;
+    }
+
     /**
      * Set the id_verified for the Product.
      */
@@ -603,5 +608,15 @@ class Shop extends BaseModel
     public function isDown()
     {
         return $this->config->maintenance_mode;
+    }
+
+    public function getQualifiedName()
+    {
+        $badge = '';
+        if($this->isVerified()){
+            $badge = '<img src="' . get_verified_badge() . '" class="verified-badge img-tiny" data-toggle="tooltip" data-placement="top" title="' . trans('help.verified_seller') . '" alt="verified-badge">';
+        }
+
+        return $this->name . $badge;
     }
 }

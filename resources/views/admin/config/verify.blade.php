@@ -14,8 +14,9 @@
 
 				<h3>{{ trans('messages.verified_business_name_like') }}: </h3>
 				<p class="lead">
-					<img src="{{ get_verified_badge() }}" class="verified-badge img-xs" data-toggle="tooltip" data-placement="top" title="{{ trans('help.verified_seller') }}" alt="verified-badge">
+					<img src="{{ get_storage_file_url(optional($config->shop->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
 					<strong>{{ get_site_title() }}</strong>
+					<img src="{{ get_verified_badge() }}" class="verified-badge img-xs" data-toggle="tooltip" data-placement="top" title="{{ trans('help.verified_seller') }}" alt="verified-badge">
 				</p>
 
 				<h3>{!! trans('messages.how_the_verification_process_works') !!}</h3>
