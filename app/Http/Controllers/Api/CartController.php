@@ -30,7 +30,7 @@ class CartController extends Controller
         if(Auth::guard('api')->check())
             $carts = $carts->orWhere('customer_id', Auth::guard('api')->user()->id);
 
-        $carts = $carts->get();
+        $carts = $carts->with('coupon:id,shop_id,name,code,value,type')->get();
 
         // Load related models
         $carts->load(['shop' => function($q) {
@@ -136,8 +136,15 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        $item = Inventory::findOrFail($request->item);
-        $pivot = \DB::table('cart_items')->where('cart_id', $cart->id)->where('inventory_id', $item->id)->firstOrFail();
+        if(is_numeric($request->item))
+            $item = Inventory::findOrFail($request->item);
+        else
+            $item = Inventory::where('slug', $request->item)->first();
+
+        $pivot = \DB::table('cart_items')->where('cart_id', $cart->id)->where('inventory_id', $item->id)->first();
+
+        if(! $pivot )
+            return response()->json(['message' => trans('api.404')], 404);
 
         if($request->quantity){
             $quantity = $request->quantity;
@@ -278,6 +285,7 @@ class CartController extends Controller
         $cart->coupon_id = $coupon->id;
         $cart->save();
 
-        return response()->json($coupon->toArray(), 200);
+        return response()->json(['message' => trans('theme.notify.coupon_applied')], 200);
+        // return response()->json($coupon->toArray(), 200);
     }
 }

@@ -18,7 +18,7 @@ class InventoriesSeeder extends Seeder
     {
         factory(App\Inventory::class, $this->itemCount)->create();
 
-        if (config('app.demo') == true && File::isDirectory(public_path('images/demo'))) {
+        if ( File::isDirectory(public_path('images/demo')) ) {
             $inventories = \DB::table('inventories')->pluck('id')->toArray();
             $path = storage_path('app/public/'.image_storage_dir());
 

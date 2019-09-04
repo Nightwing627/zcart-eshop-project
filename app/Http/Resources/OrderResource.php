@@ -20,7 +20,7 @@ class OrderResource extends JsonResource
             'customer_id' => $this->customer_id,
             'ip_address' => $this->ip_address,
             'email' => $this->email,
-            'disputed' => $this->disputed,
+            'disputed' => $this->dispute()->exists(),
             'order_status' => $this->orderStatus(True),
             'payment_status' => $this->paymentStatusName(True),
             'payment_method' => new PaymentMethodResource($this->paymentMethod),

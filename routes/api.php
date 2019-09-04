@@ -60,7 +60,7 @@ Route::group(['namespace' => 'Api'], function(){
 		Route::put('address/{address}', 'AddressController@update');
 		Route::delete('address/{address}', 'AddressController@delete');
 		Route::get('coupons', 'AccountController@coupons');
-		Route::post('cart/{cart}/applyCoupon', 'CartController@validateCoupon')->middleware(['ajax']);
+		Route::post('cart/{cart}/applyCoupon', 'CartController@validateCoupon');
 		Route::get('wishlist', 'WishlistController@index');
 		Route::get('wishlist/{slug}/add', 'WishlistController@add');
 		Route::delete('wishlist/{wishlist}/remove', 'WishlistController@remove');

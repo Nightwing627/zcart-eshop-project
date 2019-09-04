@@ -46,7 +46,7 @@ class SlidersSeeder extends Seeder
             ]
         ]);
 
-        if (config('app.demo') == true && File::isDirectory(public_path('images/demo'))) {
+        if ( File::isDirectory(public_path('images/demo')) ) {
             $path = storage_path('app/public/'.image_storage_dir());
 
             if(!File::isDirectory($path))

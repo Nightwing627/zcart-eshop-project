@@ -28,6 +28,10 @@ class ShopsSeeder extends Seeder
                         'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                         'timezone_id' => 73,
                         'active' => 1,
+                        'payment_verified' => 1,
+                        'id_verified' => 1,
+                        'phone_verified' => 1,
+                        'address_verified' => 1,
                         'trial_ends_at' => Carbon::Now()->addDays(13),
                         'created_at' => Carbon::Now(),
                         'updated_at' => Carbon::Now(),
@@ -82,7 +86,7 @@ class ShopsSeeder extends Seeder
                 ]
             ]);
 
-            if (config('app.demo') == true && File::isDirectory(public_path('images/demo'))) {
+            if ( File::isDirectory(public_path('images/demo')) ) {
                 $path = storage_path('app/public/'.image_storage_dir());
                 if(!File::isDirectory($path)) File::makeDirectory($path);
 

@@ -79,7 +79,7 @@ class InitSettings
 
     private function can_load()
     {
-        if (INCEVIO_MIX_KEY != "b3d316a6861887f8c61ccc7dde976de1" || md5_file(base_path().'/bootstrap/autoload.php') != "4d2960a296f834b422d795d2a5522378")
+        if (ZCART_MIX_KEY != "017bf8bc885fb37b" || md5_file(base_path().'/bootstrap/autoload.php') != "72dc6cd343ba316c88cfd12d97ae5b3d")
             die("Did you "."remove the "."old files "."!?");
 
         incevioAutoloadHelpers(getMysqliConnection());
