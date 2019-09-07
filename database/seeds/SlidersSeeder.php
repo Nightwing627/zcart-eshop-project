@@ -52,54 +52,26 @@ class SlidersSeeder extends Seeder
             if(!File::isDirectory($path))
                 File::makeDirectory($path);
 
-            File::copy(public_path('images/demo/sliders/1.jpg'), $path . '/slider_1.jpg');
-            File::copy(public_path('images/demo/sliders/2.jpg'), $path . '/slider_2.jpg');
-            File::copy(public_path('images/demo/sliders/3.jpg'), $path . '/slider_3.jpg');
-            File::copy(public_path('images/demo/sliders/4.jpg'), $path . '/slider_4.jpg');
+            $bgs = glob(public_path('images/demo/sliders/*.jpg'));
+            $i = 0;
+            foreach ($bgs as $bg) {
+                $i++;
+                File::copy($bg, $path . "/slider_{$i}.jpg");
 
-            DB::table('images')->insert([
-                [
-                    'name' => 'slider_1.jpg',
-                    'path' => image_storage_dir().'/slider_1.jpg',
-                    'extension' => 'jpg',
-                    'order' => 1,
-                    'featured' => 1,
-                    'imageable_id' => 1,
-                    'imageable_type' => 'App\Slider',
-                    'created_at' => Carbon::Now(),
-                    'updated_at' => Carbon::Now(),
-                ], [
-                    'name' => 'slider_2.jpg',
-                    'path' => image_storage_dir().'/slider_2.jpg',
-                    'extension' => 'jpg',
-                    'order' => 2,
-                    'featured' => 1,
-                    'imageable_id' => 2,
-                    'imageable_type' => 'App\Slider',
-                    'created_at' => Carbon::Now(),
-                    'updated_at' => Carbon::Now(),
-                ], [
-                    'name' => 'slider_3.jpg',
-                    'path' => image_storage_dir().'/slider_3.jpg',
-                    'extension' => 'jpg',
-                    'order' => 3,
-                    'featured' => 1,
-                    'imageable_id' => 3,
-                    'imageable_type' => 'App\Slider',
-                    'created_at' => Carbon::Now(),
-                    'updated_at' => Carbon::Now(),
-                ], [
-                    'name' => 'slider_4.jpg',
-                    'path' => image_storage_dir().'/slider_4.jpg',
-                    'extension' => 'jpg',
-                    'order' => 4,
-                    'featured' => 1,
-                    'imageable_id' => 4,
-                    'imageable_type' => 'App\Slider',
-                    'created_at' => Carbon::Now(),
-                    'updated_at' => Carbon::Now(),
-                ]
-            ]);
+                DB::table('images')->insert([
+                    [
+                        'name' => "slider_{$i}.jpg",
+                        'path' => image_storage_dir()."/slider_{$i}.jpg",
+                        'extension' => 'jpg',
+                        'order' => 1,
+                        'featured' => 1,
+                        'imageable_id' => $i,
+                        'imageable_type' => 'App\Slider',
+                        'created_at' => Carbon::Now(),
+                        'updated_at' => Carbon::Now(),
+                    ]
+                ]);
+            }
         }
     }
 }

@@ -15,6 +15,10 @@ class TimezonesSeeder extends Seeder
         //Get all of the timezones
         $timezones = json_decode(file_get_contents(__DIR__ . '/data/timezones.json'), true);
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        \App\Timezone::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         foreach ($timezones as $timezone){
             DB::table('timezones')->insert([
                 'value' => ((isset($timezone['value'])) ? $timezone['value'] : null),

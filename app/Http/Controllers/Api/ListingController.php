@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ItemResource;
 use App\Http\Resources\ListingResource;
+use App\Http\Resources\ShopListingResource;
+use App\Http\Resources\ManufacturerResource;
 
 class ListingController extends Controller
 {
@@ -170,7 +172,10 @@ class ListingController extends Controller
      */
     public function shop($slug)
     {
-        $shop = Shop::where('slug', $slug)->active()->firstOrFail();
+        $shop = Shop::where('slug', $slug)->active()
+        ->withCount(['inventories' => function($q){
+            $q->available();
+        }])->firstOrFail();
 
         // Check shop maintenance_mode
         if($shop->isDown())
@@ -183,7 +188,8 @@ class ListingController extends Controller
         }])
         ->available()->paginate(20);
 
-        return ListingResource::collection($listings);
+        return (new ShopListingResource($shop))->listings(ListingResource::collection($listings));
+        // return ListingResource::collection($listings);
     }
 
     /**
@@ -208,6 +214,7 @@ class ListingController extends Controller
         }])
         ->active()->paginate(20);
 
-        return ListingResource::collection($listings);
+        return (new ManufacturerResource($brand))->listings(ListingResource::collection($listings));
+        // return ListingResource::collection($listings);
     }
 }

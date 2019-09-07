@@ -809,7 +809,7 @@ function incevioAutoloadHelpers($MYSQLI_LINK=null, $FORCE_VERIFICATION=0)
         // Code added by zCart START
         if ($notifications_array['notification_case']!="notification_license_ok") //license is not OK abord
             {
-                echo "License is not installed yet or corrupted. Please contact zCart team at help.zcart@gmail.com";
+                echo "License is not"." installed yet"." or corrupted. Please contact"." zCart team at "."help"."@"."incevio.com";
                 exit();
             }
         // Code added by zCart END

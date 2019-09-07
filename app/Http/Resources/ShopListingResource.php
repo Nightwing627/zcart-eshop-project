@@ -2,10 +2,20 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\ListHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ShopResource extends JsonResource
+class ShopListingResource extends JsonResource
 {
+
+    protected $listings;
+
+    public function listings($items){
+        $this->listings = $items;
+
+        return $this;
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -24,8 +34,13 @@ class ShopResource extends JsonResource
             'sold_item_count' => \App\Helpers\Statistics::sold_items_count($this->id),
             'active_listings_count' => $this->inventories_count,
             'rating' => $this->feedbacks->avg('rating'),
-            'feedbacks' => FeedbackResource::collection($this->feedbacks),
+            // 'feedbacks' => FeedbackResource::collection($this->feedbacks),
             'image' => get_logo_url($this, 'small'),
+            'listings' => $this->listings,
         ];
+    }
+
+    public static function collection($resource){
+        return new ShopResourceCollection($resource);
     }
 }

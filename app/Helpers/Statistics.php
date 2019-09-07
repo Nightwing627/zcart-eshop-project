@@ -80,7 +80,7 @@ class Statistics
 
     public static function sold_items_count($shop = Null)
     {
-        return \DB::table('order_items')->where('orders.shop_id', $shop)
+        return (int) \DB::table('order_items')->where('orders.shop_id', $shop)
         ->join('orders', 'orders.id', '=', 'order_items.order_id')
         ->select('order_items.quantity')->sum('order_items.quantity');
     }

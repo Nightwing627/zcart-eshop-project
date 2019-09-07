@@ -231,7 +231,7 @@ class CartController extends Controller
             return response()->json(['message' => trans('theme.notify.seller_doesnt_ship')], 404);
 
         // Get shipping address
-        if(is_numeric($request->ship_to))
+        if($request->has('ship_to') && is_numeric($request->ship_to))
             $address = \App\Address::find($request->ship_to)->toString(True);
         else
             $address = get_address_str_from_request_data($request);
