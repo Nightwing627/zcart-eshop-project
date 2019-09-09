@@ -29,6 +29,7 @@ Route::group(['namespace' => 'Api'], function(){
 	Route::post('addToCart/{slug}', 'CartController@addToCart');
 	Route::delete('cart/removeItem', 'CartController@remove');
 	Route::get('carts', 'CartController@index');
+	Route::get('cart/{cart}', 'CartController@show');
 	Route::put('cart/{cart}/update', 'CartController@update');
 	Route::post('cart/{cart}/shipTo', 'CartController@shipTo');
 	Route::post('cart/{cart}/checkout', 'CheckoutController@checkout');

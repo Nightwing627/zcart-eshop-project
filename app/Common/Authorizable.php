@@ -122,6 +122,7 @@ trait Authorizable
     {
         if ( ! $this->checkPermission('', $parameters) )
             return view('errors.forbidden');
+            // return back()->with('error', trans('messages.permission.denied'));
 
         return parent::callAction($method, $parameters);
     }

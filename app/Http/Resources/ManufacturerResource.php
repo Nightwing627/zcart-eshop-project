@@ -34,6 +34,7 @@ class ManufacturerResource extends JsonResource
             'listing_count' => $this->inventories_count,
             'available_from' => date('F j, Y', strtotime($this->created_at)),
             'image' => get_logo_url($this, 'small'),
+            'cover_image' => get_cover_img_src($this, 'brand'),
             'listings' => $this->listings,
             // 'listings' => ListingResource::collection($listings),
         ];

@@ -210,11 +210,7 @@
 				        <td>{{ $archive->created_at->toDayDateTimeString() }}</td>
 						<td>{{ get_formated_currency($archive->grand_total) }}</td>
 						<td>{!! $archive->paymentStatusName() !!}</td>
-						<td>
-							<span class="label label-outline" style="background-color: {{ optional($archive->status)->label_color }}">
-								{{ $archive->status ? strToupper(optional($archive->status)->name) : trans('app.statuses.new') }}
-							</span>
-						</td>
+						<td>{!! $archive->orderStatus() !!}</td>
 						<td>{{ $archive->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('archive', $archive)

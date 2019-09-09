@@ -60,7 +60,7 @@ class PaymentFailed extends Notification implements ShouldQueue
     {
         return [
             'order' => $this->order->order_number,
-            'status' => $this->order->status->name,
+            'status' => $this->order->orderStatus(true),
         ];
     }
 }

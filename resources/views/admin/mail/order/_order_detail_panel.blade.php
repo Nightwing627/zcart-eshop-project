@@ -3,7 +3,7 @@
 {{ trans('messages.order_id') . ': ' . $order_detail->order_number }}<br/>
 {{ trans('messages.payment_method') . ': ' . $order_detail->paymentMethod->name }}<br/>
 {!! trans('messages.payment_status') . ': ' . $order_detail->paymentStatusName() !!}<br/>
-{{ trans('messages.order_status') . ': ' }} <strong>{{ $order_detail->status->name }}</strong><br/>
+{{ trans('messages.order_status') . ': ' }} <strong>{{ $order_detail->orderStatus() }}</strong><br/>
 @if($order_detail->carrier_id)
 {{ trans('messages.shipping_carrier') . ': ' . $order_detail->carrier->name }}<br/>
 @endif

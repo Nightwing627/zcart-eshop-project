@@ -428,23 +428,6 @@ class Shop extends BaseModel
         return false;
     }
 
-    // /**
-    //  * Check if the current subscription plan allow to add more user
-    //  *
-    //  * @return bool
-    //  */
-    // public function uses()
-    // {
-    //     if($this->current_billing_plan){
-    //         $plan = SubscriptionPlan::findOrFail($this->current_billing_plan);
-
-    //         if(Statistics::shop_user_count() < $plan->team_size)
-    //             return True;
-    //     }
-
-    //     return false;
-    // }
-
     public function setHideTrialNoticeAttribute($value)
     {
         $this->attributes['hide_trial_notice'] = (bool) $value;
@@ -497,21 +480,6 @@ class Shop extends BaseModel
         return Carbon::createFromTimeStamp($sub->current_period_end)->toFormattedDateString();
     }
 
-    public function updateTrialDate($newDate)
-    {
-        // $cu = Stripe_Customer::retrieve($user->stripe_id);
-        // $subscription = $cu->subscriptions->retrieve($user->stripe_subscription);
-        // $subscription->trial_end = Carbon::now()->lastOfMonth()->timestamp;
-        // $subscription->save();
-
-        // $user->trial_ends_at = Carbon::now()->lastOfMonth();
-        // $user->save();
-
-        // $stripe_gateway = new StripeGateway($this);
-
-        // retrun $stripe_gateway->subscription()->noProrate()->trialFor($newDate);
-    }
-
     public function getVerificationStatus()
     {
         if($this->id_verified && $this->phone_verified && $this->address_verified)
@@ -520,6 +488,11 @@ class Shop extends BaseModel
             return trans('app.partially_verified');
 
         return trans('app.not_verified');
+    }
+
+    public function getVerifiedAttribute()
+    {
+        return (bool) $this->isVerified();
     }
 
     public function isVerified()
@@ -559,7 +532,6 @@ class Shop extends BaseModel
         $this->attributes['active'] = (bool) $value;
     }
 
-
     /**
      * Activities for the loggable model
      *
@@ -598,6 +570,31 @@ class Shop extends BaseModel
     public function hasBillingToken()
     {
         return $this->hasStripeId();
+    }
+
+    /**
+     * Check if the user has outrange plan
+     *
+     * @return bool
+     */
+    public function hasExpiredPlan()
+    {
+        $subscription = $this->subscriptions->first();
+
+        if ($subscription && ! is_null($subscription->ends_at))
+            return \Carbon\Carbon::now()->gt($subscription->ends_at);
+
+        return false;
+    }
+
+    /**
+     * Check if the user has outrange generic plan
+     *
+     * @return bool
+     */
+    public function hasExpiredOnGenericTrial()
+    {
+        return $this->trial_ends_at && $this->trial_ends_at->isPast();
     }
 
     /**

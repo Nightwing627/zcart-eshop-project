@@ -80,6 +80,22 @@ if ( ! function_exists('get_site_title') )
     }
 }
 
+if ( ! function_exists('get_system_currency'))
+{
+    function get_system_currency()
+    {
+        return config('system_settings.currency.iso_code');
+    }
+}
+
+if ( ! function_exists('get_currency_symbol') )
+{
+    function get_currency_symbol()
+    {
+        return config('system_settings.currency.symbol');
+    }
+}
+
 if ( ! function_exists('get_social_media_links') )
 {
     /**
@@ -792,9 +808,9 @@ if ( ! function_exists('get_formated_currency_symbol') )
     {
         if (config('system_settings.show_currency_symbol')) {
             if (config('system_settings.currency.symbol_first'))
-                return config('system_settings.currency.symbol') . (config('system_settings.show_space_after_symbol') ? ' ' : '');
+                return get_currency_symbol() . (config('system_settings.show_space_after_symbol') ? ' ' : '');
 
-            return (config('system_settings.show_space_after_symbol') ? ' ' : '') . config('system_settings.currency.symbol');
+            return (config('system_settings.show_space_after_symbol') ? ' ' : '') . get_currency_symbol();
         }
 
         return '';
@@ -826,6 +842,8 @@ if ( ! function_exists('get_formated_weight') )
 {
     function get_formated_weight($value = 0)
     {
+        if($value == Null) return Null;
+
         return get_formated_decimal($value, true, 0) . ' ' . config('system_settings.weight_unit');
     }
 }

@@ -195,22 +195,26 @@
               @endcan
 
               <div class="pull-right">
-                @if(!$order->status->fulfilled)
+                @if( $order->isFulfilled() )
+
+                    @unless( $order->isArchived() )
+                      @can('archive', $order)
+                        {!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'inline']) !!}
+                          <button type="submit" class="confirm ajax-silent btn btn-lg btn-default"><i class="fa fa-archive text-muted"></i> {{ trans('app.order_archive') }}</button>
+                        {!! Form::close() !!}
+                      @endcan
+                    @endunless
+
+                    <a href="javascript:void(0)" data-link="{{ route('admin.order.order.edit', $order) }}" class='ajax-modal-btn btn btn-flat btn-lg btn-default' >
+                      {{ trans('app.update') }}
+                    </a>
+
+                @else
+
                   <a href="javascript:void(0)" data-link="{{ route('admin.order.order.fulfillment', $order) }}" class='ajax-modal-btn btn btn-flat btn-lg btn-primary' >
                     {{ trans('app.fulfill_order') }}
                   </a>
-                @else
-                  @unless($order->isArchived())
-                    @can('archive', $order)
-                      {!! Form::open(['route' => ['admin.order.order.archive', $order->id], 'method' => 'delete', 'class' => 'inline']) !!}
-                        <button type="submit" class="confirm ajax-silent btn btn-lg btn-default"><i class="fa fa-archive text-muted"></i> {{ trans('app.order_archive') }}</button>
-                      {!! Form::close() !!}
-                    @endcan
-                  @endunless
 
-                  <a href="javascript:void(0)" data-link="{{ route('admin.order.order.edit', $order) }}" class='ajax-modal-btn btn btn-flat btn-lg btn-default' >
-                    {{ trans('app.update') }}
-                  </a>
                 @endif
               </div>
             </div>

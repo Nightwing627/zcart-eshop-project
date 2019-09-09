@@ -1,4 +1,5 @@
 <?php
+
 return [
 	'access_token_required' => 'A valid access token is required.',
     'auth_failed' => 'These credentials do not match our records.',
@@ -8,6 +9,8 @@ return [
 	'item_removed_from_wishlist' => 'Item has been removed',
 	'item_added_to_cart' => 'Item added to cart',
 	'item_alrealy_in_cart' => 'Item alrealy in your cart',
+	'item_max_stock' => 'This seller has limited stock available',
+	'item_minimum_qtt' => 'You can\'t place an order below this quantity',
 	'item_alrealy_in_wishlist' => 'Item alrealy in your wishlist',
 	'item_removed_from_cart' => 'Item hs been removed',
 	'email_account_not_found' => 'We can\'t find a user with that e-mail address.',

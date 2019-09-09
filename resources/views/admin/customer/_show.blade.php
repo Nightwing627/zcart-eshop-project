@@ -130,7 +130,7 @@
 											<td>{{ $order->order_number }}</td>
 											<td>{{ get_formated_currency($order->grand_total)}}</td>
 											<td>{!! $order->paymentStatusName() !!}</td>
-											<td>{{ optional($order->status)->name }}</td>
+											<td>{!! $order->orderStatus() !!}</td>
 									        <td>{{ $order->created_at->toFormattedDateString() }}</td>
 										</tr>
 									@endforeach

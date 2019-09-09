@@ -54,7 +54,7 @@
 
                         @include('layouts.pricing', ['item' => $wish->inventory])
 
-                        <div class="product-info-desc"> {{ $wish->inventory->description }} </div>
+                        <div class="product-info-desc"> {!! $wish->inventory->description !!} </div>
                         <ul class="product-info-feature-list">
                             <li>{{ $wish->inventory->condition }}</li>
                         </ul>

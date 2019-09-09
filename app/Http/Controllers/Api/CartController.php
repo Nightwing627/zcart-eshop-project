@@ -15,6 +15,7 @@ use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CartResource;
+use App\Http\Resources\ShippingOptionResource;
 use App\Http\Requests\Validations\DirectCheckoutRequest;
 
 class CartController extends Controller
@@ -43,6 +44,24 @@ class CartController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @param  Request $request
+     * @param  Cart    $cart
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request, Cart $cart)
+    {
+        return response()->json([
+            'cart' => new CartResource($cart),
+            'shipping_options' => ShippingOptionResource::collection(filterShippingOptions($cart->shipping_zone_id, $cart->total, $cart->shipping_weight)),
+        ], 200);
+
+        // return new CartResource($cart);
+    }
+
+    /**
      * Add item to the cart.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -67,6 +86,10 @@ class CartController extends Controller
         else{
             $old_cart = Cart::where('shop_id', $item->shop_id)->whereNull('customer_id')->where('ip_address', $request->ip())->first();
         }
+
+        // Check the available stock limit
+        if( $request->quantity > $item->stock_quantity )
+            return response()->json(['message' => trans('api.item_max_stock')], 409);
 
         // Check if the item is alrealy in the cart
         if($old_cart){
@@ -98,6 +121,7 @@ class CartController extends Controller
         $cart->handling = $old_cart ? $old_cart->handling : getShopConfig($item->shop_id, 'order_handling_cost');
         $cart->total = $old_cart ? ($old_cart->total + ($qtt * $unit_price)) : $unit_price;
         $cart->packaging_id = $old_cart ? $old_cart->packaging_id : \App\Packaging::FREE_PACKAGING_ID;
+        $cart->grand_total = $cart->grand_total();
 
         // All items need to have shipping_weight to calculate shipping
         // If any one the item missing shipping_weight set null to cart shipping_weight
@@ -136,17 +160,21 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        if(is_numeric($request->item))
-            $item = Inventory::findOrFail($request->item);
-        else
-            $item = Inventory::where('slug', $request->item)->first();
+        if($request->item && $request->quantity){
+            if(is_numeric($request->item))
+                $item = Inventory::findOrFail($request->item);
+            else
+                $item = Inventory::where('slug', $request->item)->first();
 
-        $pivot = \DB::table('cart_items')->where('cart_id', $cart->id)->where('inventory_id', $item->id)->first();
+            // Check the available stock limit
+            if( $request->quantity > $item->stock_quantity )
+                return response()->json(['message' => trans('api.item_max_stock')], 409);
 
-        if(! $pivot )
-            return response()->json(['message' => trans('api.404')], 404);
+            $pivot = \DB::table('cart_items')->where('cart_id', $cart->id)->where('inventory_id', $item->id)->first();
 
-        if($request->quantity){
+            if(! $pivot )
+                return response()->json(['message' => trans('api.404')], 404);
+
             $quantity = $request->quantity;
             $old_quantity = $pivot->quantity;
 
@@ -159,6 +187,7 @@ class CartController extends Controller
             $unit_price = $item->currnt_sale_price();
 
             $cart->total = ( $cart->total - ($pivot->unit_price * $old_quantity) ) + ( $quantity * $unit_price );
+            $cart->grand_total = $cart->grand_total();
 
             // Updating pivot data
             $cart->inventories()->updateExistingPivot($item->id, [
@@ -186,7 +215,10 @@ class CartController extends Controller
 
         $cart->save();
 
-        return response()->json(['message' => trans('api.cart_updated')], 200);
+        return response()->json([
+            'message' => trans('api.cart_updated'),
+            'cart' => new CartResource($cart),
+        ], 200);
     }
 
     /**
@@ -214,7 +246,10 @@ class CartController extends Controller
             crosscheckAndUpdateOldCartInfo($request, $cart);
         }
 
-        return response()->json(['message' => trans('api.item_removed_from_cart')], 200);
+        return response()->json([
+            'message' => trans('api.item_removed_from_cart'),
+            'cart' => new CartResource($cart),
+        ], 200);
     }
 
     /**
@@ -244,8 +279,8 @@ class CartController extends Controller
         $cart->save();
 
         return response()->json([
-            'address' => $address,
-            'options' => filterShippingOptions($zone->id, $cart->total, $cart->shipping_weight),
+            'cart' => new CartResource($cart),
+            'shipping_address' => $address,
         ], 200);
     }
 

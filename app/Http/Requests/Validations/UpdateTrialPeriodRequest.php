@@ -24,7 +24,7 @@ class UpdateTrialPeriodRequest extends Request
     public function rules()
     {
         return [
-            'trial_ends_at' => 'required|date|after_or_equal:now',
+            'trial_ends_at' => 'required|date',
         ];
     }
 }

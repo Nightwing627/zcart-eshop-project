@@ -20,10 +20,11 @@ class ShopResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'member_since' => date('F j, Y', strtotime($this->created_at)),
+            'verified' => $this->isVerified(),
             'banner_image' => get_cover_img_src($this, 'shop'),
             'sold_item_count' => \App\Helpers\Statistics::sold_items_count($this->id),
             'active_listings_count' => $this->inventories_count,
-            'rating' => $this->feedbacks->avg('rating'),
+            'rating' => $this->rating(),
             'feedbacks' => FeedbackResource::collection($this->feedbacks),
             'image' => get_logo_url($this, 'small'),
         ];

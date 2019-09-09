@@ -175,7 +175,7 @@ class SubscriptionController extends Controller
     public function updateTrial(UpdateTrialPeriodRequest $request, Shop $shop)
     {
         try {
-            $new_end_time = Carbon::createFromFormat('Y-m-d h:i a', $request->get('trial_ends_at'))->timestamp;
+            $new_end_time = Carbon::createFromFormat('Y-m-d h:i a', $request->trial_ends_at)->timestamp;
 
             if($shop->hasBillingToken()){
                 $currentPlan = $shop->owner->getCurrentPlan();
@@ -183,10 +183,10 @@ class SubscriptionController extends Controller
                 $currentPlan->swap($shop->current_billing_plan)->update([ 'trial_ends_at' => $new_end_time ]);
             }
 
-            if($shop->onGenericTrial()){
+            if( $shop->onGenericTrial() || $shop->hasExpiredOnGenericTrial() ){
                 $shop->forceFill([
                     'trial_ends_at' => $new_end_time,
-                    'hide_trial_notice' => $request->get('hide_trial_notice'),
+                    'hide_trial_notice' => $request->hide_trial_notice,
                 ])->save();
             }
         } catch (\Exception $e) {
