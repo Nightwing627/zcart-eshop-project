@@ -1,6 +1,6 @@
 @php
 	if(isset($banner['images'][0]['path']) && Storage::exists($banner['images'][0]['path']))
-		$bg_img = asset('storage/' . $banner['images'][0]['path']);
+		$bg_img = get_storage_file_url($banner['images'][0]['path'], 'full');
 	else
 		$bg_img = '';
 @endphp
@@ -14,7 +14,7 @@
 			<p class="banner-link-btn">{!! $banner['link_label'] ? $banner['link_label'] . ' <i class="fa fa-caret-right"></i>' : '' !!}</p>
 		</div>
 	    @if(Storage::exists($banner['featured_image']['path']))
-		    <img class="banner-img" src="{{ asset('storage/' . $banner['featured_image']['path']) }}" alt="{{ $banner['title'] or 'Banner Image' }}" title="{{ $banner['title'] or 'Banner Image' }}">
+		    <img class="banner-img" src="{{ get_storage_file_url($banner['featured_image']['path'], 'full') }}" alt="{{ $banner['title'] or 'Banner Image' }}" title="{{ $banner['title'] or 'Banner Image' }}">
     	@endif
 	</div>
 </div>

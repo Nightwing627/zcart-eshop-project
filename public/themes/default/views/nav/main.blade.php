@@ -126,7 +126,7 @@
                     </div><!-- /.category-section-inner -->
 
                     @if($catGroup->images->first() && Storage::exists($catGroup->images->first()->path))
-                      <img class="nav-category-section-bg-img" src="{{ asset('storage/' . optional($catGroup->images->first())->path) }}" alt="{{ $catGroup->name }}" title="{{ $catGroup->name }}"/>
+                      <img class="nav-category-section-bg-img" src="{{ get_storage_file_url(optional($catGroup->images->first())->path, 'full') }}" alt="{{ $catGroup->name }}" title="{{ $catGroup->name }}"/>
                     @endif
                   </div><!-- /.category-section -->
                 </li>

@@ -21,7 +21,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $orders = Auth::guard('api')->user()->orders()
-        ->with(['shop:id,name,slug', 'inventories:id,title,slug,product_id', 'inventories.image:path,imageable_id,imageable_type', 'status'])->paginate(10);
+        ->with(['shop:id,name,slug', 'inventories:id,title,slug,product_id', 'inventories.image:path,imageable_id,imageable_type'])->paginate(10);
 
         return OrderResource::collection($orders);
         // return new OrderCollection($orders);
