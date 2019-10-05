@@ -22,6 +22,7 @@ class CustomerResource extends JsonResource
             'sex' => $this->sex ? trans($this->sex) : null,
             'description' => $this->description,
             'active' => $this->active,
+            'email' => $this->email,
             'accepts_marketing' => $this->accepts_marketing,
             'member_since' => $this->created_at->diffForHumans(),
             // 'avatar' => (new ImageResource($this->image))->size('small'),
