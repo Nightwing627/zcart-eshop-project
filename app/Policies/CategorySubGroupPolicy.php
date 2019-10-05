@@ -68,4 +68,16 @@ class CategorySubGroupPolicy
     {
         return (new Authorize($user, 'delete_category_sub_group', $categorySubGroup))->check();
     }
+
+    /**
+     * Determine whether the user can delete the Product.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function massDelete(User $user)
+    {
+        return (new Authorize($user, 'delete_category_sub_group'))->check();
+    }
+
 }

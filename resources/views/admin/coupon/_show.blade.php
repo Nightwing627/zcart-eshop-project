@@ -106,7 +106,7 @@
 				    <!-- /.tab-pane -->
 				    <div class="tab-pane" id="tab_3">
 			            @if($coupon->limited)
-							<table class="table table-hover table-2nd-short">
+							<table class="table table-hover table-2nd-sort">
 								<thead>
 									<tr>
 							          <th>{{ trans('app.avatar') }}</th>

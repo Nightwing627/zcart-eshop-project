@@ -47,7 +47,7 @@
 				</ul>
 				<div class="tab-content">
 				    <div class="tab-pane active" id="tab_1">
-						<table class="table table-hover table-2nd-short">
+						<table class="table table-hover table-2nd-sort">
 							<thead>
 								<tr>
 									<th>{{ trans('app.image') }}</th>

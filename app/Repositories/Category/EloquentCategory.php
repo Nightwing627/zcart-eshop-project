@@ -63,4 +63,25 @@ class EloquentCategory extends EloquentRepository implements BaseRepository, Cat
 
         return $category->forceDelete();
 	}
+
+    public function massDestroy($ids)
+    {
+        $catSubGrps = $this->model->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($catSubGrps as $catSubGrp)
+            $catSubGrp->flushImages();
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $catSubGrps = $this->model->onlyTrashed()->get();
+
+        foreach ($catSubGrps as $catSubGrp)
+            $catSubGrp->flushImages();
+
+        return parent::emptyTrash();
+    }
+
 }

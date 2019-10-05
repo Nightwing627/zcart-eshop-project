@@ -227,7 +227,7 @@
 		    	]
 	    });
 
-	  	$(".table-2nd-short").DataTable({
+	  	$(".table-2nd-sort").DataTable({
 		    "iDisplayLength": {{ getPaginationValue() }},
 		    "aaSorting": [[ 1, "asc" ]],
 		    "oLanguage": {

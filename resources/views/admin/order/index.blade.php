@@ -183,7 +183,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-short">
+			<table class="table table-hover table-2nd-sort">
 				<thead>
 					<tr>
 						<th>{{ trans('app.order_number') }}</th>

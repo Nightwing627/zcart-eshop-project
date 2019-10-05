@@ -291,7 +291,6 @@ class CustomerController extends Controller
         return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
 
-
     /**
      * Empty the Trash the mass resources.
      *

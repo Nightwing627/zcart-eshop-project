@@ -14,7 +14,7 @@
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
-	      <table class="table table-hover table-2nd-short" id="sortable" data-action="{{ Route('admin.catalog.attribute.reorder') }}">
+	      <table class="table table-hover table-2nd-sort" id="sortable" data-action="{{ Route('admin.catalog.attribute.reorder') }}">
 	        <thead>
 		        <tr>
 			        <th width="7px">{{ trans('app.#') }}</th>

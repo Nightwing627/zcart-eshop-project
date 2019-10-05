@@ -114,7 +114,7 @@
 					@if(Auth::user()->isFromPlatform())
 				    <div class="tab-pane" id="latest_orders_tab">
 				    	@if($customer->latest_orders->count())
-							<table class="table table-hover table-2nd-short">
+							<table class="table table-hover table-2nd-sort">
 								<thead>
 									<tr>
 										<th>{{ trans('app.order_number') }}</th>

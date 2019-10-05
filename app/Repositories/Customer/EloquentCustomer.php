@@ -79,7 +79,7 @@ class EloquentCustomer extends EloquentRepository implements BaseRepository, Cus
 
     public function massDestroy($ids)
     {
-        $customers = Customer::onlyTrashed()->whereIn('id', $ids)->get();
+        $customers = Customer::withTrashed()->whereIn('id', $ids)->get();
 
         foreach ($customers as $customer) {
             $customer->flushAddresses();

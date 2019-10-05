@@ -57,4 +57,25 @@ class EloquentCategorySubGroup extends EloquentRepository implements BaseReposit
 
         return $category->forceDelete();
     }
+
+    public function massDestroy($ids)
+    {
+        $categories = $this->model->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($categories as $category)
+            $category->flushImages();
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $categories = $this->model->onlyTrashed()->get();
+
+        foreach ($categories as $category)
+            $category->flushImages();
+
+        return parent::emptyTrash();
+    }
+
 }

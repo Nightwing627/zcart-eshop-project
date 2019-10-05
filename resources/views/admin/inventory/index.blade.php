@@ -23,7 +23,7 @@
 			</ul>
 			<div class="tab-content">
 			    <div class="tab-pane {{ Request::has('tab') ? '' : 'active' }}" id="active_inventory_tab">
-					<table class="table table-hover table-2nd-short">
+					<table class="table table-hover table-2nd-sort">
 						<thead>
 							<tr>
 								<th>{{ trans('app.image') }}</th>
@@ -98,7 +98,7 @@
 				</div>
 
 			    <div class="tab-pane {{ Request::input('tab') == 'inactive_listings' ? 'active' : '' }}" id="inactive_listings_tab">
-					<table class="table table-hover table-2nd-short">
+					<table class="table table-hover table-2nd-sort">
 						<thead>
 							<tr>
 								<th>{{ trans('app.image') }}</th>
@@ -164,7 +164,7 @@
 				</div>
 
 			    <div class="tab-pane {{ Request::input('tab') == 'out_of_stock' ? 'active' : '' }}" id="stock_out_tab">
-					<table class="table table-hover table-2nd-short">
+					<table class="table table-hover table-2nd-sort">
 						<thead>
 							<tr>
 								<th>{{ trans('app.image') }}</th>
@@ -248,7 +248,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-short">
+			<table class="table table-hover table-2nd-sort">
 				<thead>
 					<tr>
 						<th>{{ trans('app.image') }}</th>
