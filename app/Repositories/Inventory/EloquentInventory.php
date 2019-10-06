@@ -216,6 +216,30 @@ class EloquentInventory extends EloquentRepository implements BaseRepository, In
         return $inventory->forceDelete();
     }
 
+    public function massDestroy($ids)
+    {
+        $inventories = $this->model->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($inventories as $inventory){
+            $inventory->detachTags($inventory->id, 'inventory');
+            $inventory->flushImages();
+        }
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $inventories = $this->model->onlyTrashed()->get();
+
+        foreach ($inventories as $inventory){
+            $inventory->detachTags($inventory->id, 'inventory');
+            $inventory->flushImages();
+        }
+
+        return parent::emptyTrash();
+    }
+
     public function findProduct($id)
     {
         return Product::findOrFail($id);

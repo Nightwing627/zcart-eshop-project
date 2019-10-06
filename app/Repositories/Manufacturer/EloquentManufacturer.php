@@ -71,4 +71,24 @@ class EloquentManufacturer extends EloquentRepository implements BaseRepository,
 
         return $manufacturer->forceDelete();
     }
+
+    public function massDestroy($ids)
+    {
+        $manufacturers = $this->model->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($manufacturers as $manufacturer)
+            $manufacturer->flushImages();
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $manufacturers = $this->model->onlyTrashed()->get();
+
+        foreach ($manufacturers as $manufacturer)
+            $manufacturer->flushImages();
+
+        return parent::emptyTrash();
+    }
 }

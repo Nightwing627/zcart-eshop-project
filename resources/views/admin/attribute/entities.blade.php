@@ -11,9 +11,27 @@
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
-	      <table class="table table-hover table-2nd-sort" id="sortable" data-action="{{ Route('admin.catalog.attributeValue.reorder') }}">
+	      <table class="table table-hover table-2nd-no-sort" id="sortable" data-action="{{ Route('admin.catalog.attributeValue.reorder') }}">
 	        <thead>
 		        <tr>
+					@can('massDelete', App\AttributeValue::class)
+						<th class="massActionWrapper">
+			                <!-- Check all button -->
+							<div class="btn-group ">
+								<button type="button" class="btn btn-xs btn-default checkbox-toggle">
+									<i class="fa fa-square-o" data-toggle="tooltip" data-placement="top" title="{{ trans('app.select_all') }}"></i>
+								</button>
+								<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									<span class="caret"></span>
+									<span class="sr-only">{{ trans('app.toggle_dropdown') }}</span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="javascript:void(0)" data-link="{{ route('admin.catalog.attributeValue.massTrash') }}" class="massAction " data-doafter="reload"><i class="fa fa-trash"></i> {{ trans('app.trash') }}</a></li>
+									<li><a href="javascript:void(0)" data-link="{{ route('admin.catalog.attributeValue.massDestroy') }}" class="massAction " data-doafter="reload"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
+								</ul>
+							</div>
+						</th>
+					@endcan
 			        <th width="7px">{{ trans('app.#') }}</th>
 			        <th>{{ trans('app.position') }}</th>
 			        <th>{{ trans('app.values') }}</th>
@@ -22,9 +40,12 @@
 			        <th>{{ trans('app.option') }}</th>
 		        </tr>
 	        </thead>
-	        <tbody>
+	        <tbody id="massSelectArea">
 		        @foreach($attributeValues as $attributeValue )
 			        <tr id="{{ $attributeValue->id }}">
+					  	@can('massDelete', App\AttributeValue::class)
+							<td><input id="{{ $attributeValue->id }}" type="checkbox" class="massCheck"></td>
+					  	@endcan
 			        	<td>
 							<i data-toggle="tooltip" data-placement="top" title="{{ trans('app.move') }}" class="fa fa-arrows sort-handler"></i>
 			        	</td>
@@ -63,7 +84,16 @@
 
 	<div class="box collapsed-box">
 	    <div class="box-header with-border">
-	      <h3 class="box-title"><i class="fa fa-trash-o"></i> {{ trans('app.trash') }}</h3>
+			<h3 class="box-title">
+				@can('massDelete', App\AttributeValue::class)
+					{!! Form::open(['route' => ['admin.catalog.attributeValue.emptyTrash'], 'method' => 'delete', 'class' => 'data-form']) !!}
+						{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm btn btn-default btn-flat ajax-silent', 'title' => trans('help.empty_trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'right']) !!}
+					{!! Form::close() !!}
+				@else
+					<i class="fa fa-trash-o"></i>
+				@endcan
+				{{ trans('app.trash') }}
+			</h3>
 	      <div class="box-tools pull-right">
 	        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 	        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>

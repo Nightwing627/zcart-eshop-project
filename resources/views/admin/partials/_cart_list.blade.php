@@ -10,6 +10,24 @@
         <table class="table table-hover table-no-option">
             <thead>
                 <tr>
+                    @can('massDelete', App\Cart::class)
+                        <th class="massActionWrapper">
+                            <!-- Check all button -->
+                            <div class="btn-group ">
+                                <button type="button" class="btn btn-xs btn-default checkbox-toggle">
+                                    <i class="fa fa-square-o" data-toggle="tooltip" data-placement="top" title="{{ trans('app.select_all') }}"></i>
+                                </button>
+                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">{{ trans('app.toggle_dropdown') }}</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="javascript:void(0)" data-link="{{ route('admin.order.cart.massTrash') }}" class="massAction " data-doafter="reload"><i class="fa fa-trash"></i> {{ trans('app.trash') }}</a></li>
+                                    <li><a href="javascript:void(0)" data-link="{{ route('admin.order.cart.massDestroy') }}" class="massAction " data-doafter="reload"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
+                                </ul>
+                            </div>
+                        </th>
+                    @endcan
                     <th>{{ trans('app.created_at') }}</th>
                     <th>{{ trans('app.customer') }}</th>
                     <th>{{ trans('app.items') }}</th>
@@ -18,9 +36,12 @@
                     <th class="text-right">{{ trans('app.option') }}</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="massSelectArea">
                 @foreach($cart_lists as $cart_list )
                     <tr>
+                        @can('massDelete', App\Cart::class)
+                            <td><input id="{{ $cart_list->id }}" type="checkbox" class="massCheck"></td>
+                        @endcan
                         <td>{{ $cart_list->created_at->diffForHumans() }}</td>
                         <td>{{ $cart_list->customer->name }}</td>
                         <td>{{ $cart_list->item_count }}</td>

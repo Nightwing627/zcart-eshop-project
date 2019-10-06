@@ -67,4 +67,15 @@ class AttributeValuePolicy
     {
         return $user->isFromPlatform() || $user->shop_id == $attributeValue->shop_id;
     }
+
+    /**
+     * Determine whether the user can delete the Product.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function massDelete(User $user)
+    {
+        return $user->isFromPlatform();
+    }
 }

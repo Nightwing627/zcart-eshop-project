@@ -11,9 +11,27 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-option">
+			<table class="table table-hover table-no-sort">
 				<thead>
 					<tr>
+						@can('massDelete', App\Coupon::class)
+							<th class="massActionWrapper">
+				                <!-- Check all button -->
+								<div class="btn-group ">
+									<button type="button" class="btn btn-xs btn-default checkbox-toggle">
+										<i class="fa fa-square-o" data-toggle="tooltip" data-placement="top" title="{{ trans('app.select_all') }}"></i>
+									</button>
+									<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">{{ trans('app.toggle_dropdown') }}</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="javascript:void(0)" data-link="{{ route('admin.promotion.coupon.massTrash') }}" class="massAction " data-doafter="reload"><i class="fa fa-trash"></i> {{ trans('app.trash') }}</a></li>
+										<li><a href="javascript:void(0)" data-link="{{ route('admin.promotion.coupon.massDestroy') }}" class="massAction " data-doafter="reload"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
+									</ul>
+								</div>
+							</th>
+						@endcan
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.code') }}</th>
 						<th>{{ trans('app.restricted') }}</th>
@@ -23,9 +41,12 @@
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
-				<tbody>
+		        <tbody id="massSelectArea">
 					@foreach($coupons as $coupon )
 					<tr>
+					  	@can('massDelete', App\Coupon::class)
+							<td><input id="{{ $coupon->id }}" type="checkbox" class="massCheck"></td>
+					  	@endcan
 						<td>
 							{{ $coupon->name }}
 							@if($coupon->ending_time < \Carbon\Carbon::now())
@@ -35,7 +56,7 @@
 							@endif
 						</td>
 						<td>{{ $coupon->code }}</td>
-						<td>{{ get_yes_or_no(($coupon->customers_count || $coupon->shipping_zones_count)) }}</td>
+						<td>{{ get_yes_or_no(($coupon->customers_count || $coupon->promotion_zones_count)) }}</td>
 						<td>
 							<strong>
 								{{ $coupon->type == 'amount' ? get_formated_currency($coupon->value) : get_formated_decimal($coupon->value) . ' ' . trans('app.percent') }}
@@ -71,7 +92,16 @@
 
 	<div class="box collapsed-box">
 		<div class="box-header with-border">
-			<h3 class="box-title"><i class="fa fa-trash-o"></i>{{ trans('app.trash') }}</h3>
+			<h3 class="box-title">
+				@can('massDelete', App\Coupon::class)
+					{!! Form::open(['route' => ['admin.promotion.coupon.emptyTrash'], 'method' => 'delete', 'class' => 'data-form']) !!}
+						{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm btn btn-default btn-flat ajax-silent', 'title' => trans('help.empty_trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'right']) !!}
+					{!! Form::close() !!}
+				@else
+					<i class="fa fa-trash-o"></i>
+				@endcan
+				{{ trans('app.trash') }}
+			</h3>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 				<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>

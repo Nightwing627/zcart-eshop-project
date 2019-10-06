@@ -68,6 +68,26 @@ class EloquentPackaging extends EloquentRepository implements BaseRepository, Pa
         return $packaging->forceDelete();
     }
 
+    public function massDestroy($ids)
+    {
+        $packagings = $this->model->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($packagings as $packaging)
+            $packaging->flushImages();
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $packagings = $this->model->onlyTrashed()->get();
+
+        foreach ($packagings as $packaging)
+            $packaging->flushImages();
+
+        return parent::emptyTrash();
+    }
+
     public function removeDefault()
     {
         $default = $this->model->where('default', 1)->mine()->first();

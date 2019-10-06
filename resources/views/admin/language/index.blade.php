@@ -11,18 +11,39 @@
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
-	      <table class="table table-hover table-no-sort">
+	      <table class="table table-hover table-2nd-no-sort">
 	        <thead>
-	        <tr>
-	          <th>{{ trans('app.language') }}</th>
-	          <th>{{ trans('app.code') }}</th>
-	          <th>{{ trans('app.php_locale_code') }}</th>
-	          <th>&nbsp;</th>
-	        </tr>
+		        <tr>
+					@can('massDelete', App\Language::class)
+						<th class="massActionWrapper">
+			                <!-- Check all button -->
+							<div class="btn-group ">
+								<button type="button" class="btn btn-xs btn-default checkbox-toggle">
+									<i class="fa fa-square-o" data-toggle="tooltip" data-placement="top" title="{{ trans('app.select_all') }}"></i>
+								</button>
+								<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									<span class="caret"></span>
+									<span class="sr-only">{{ trans('app.toggle_dropdown') }}</span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="javascript:void(0)" data-link="{{ route('admin.setting.language.massTrash') }}" class="massAction " data-doafter="reload"><i class="fa fa-trash"></i> {{ trans('app.trash') }}</a></li>
+									<li><a href="javascript:void(0)" data-link="{{ route('admin.setting.language.massDestroy') }}" class="massAction " data-doafter="reload"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
+								</ul>
+							</div>
+						</th>
+					@endcan
+					<th>{{ trans('app.language') }}</th>
+					<th>{{ trans('app.code') }}</th>
+					<th>{{ trans('app.php_locale_code') }}</th>
+					<th>&nbsp;</th>
+		        </tr>
 	        </thead>
-	        <tbody>
+	        <tbody id="massSelectArea">
 		        @foreach($languages as $language )
 			        <tr>
+					  	@can('massDelete', App\Language::class)
+							<td><input id="{{ $language->id }}" type="checkbox" class="massCheck"></td>
+					  	@endcan
 			          <td width="45%">
 			              	<img src="{{ asset(sys_image_path('flags') . array_slice(explode('_', $language->php_locale_code), -1)[0] . '.png') }}" class="lang-flag small" alt="{{ $language->code }}">
 			              	<span class="indent10">{{ $language->language }}</span>
@@ -58,11 +79,20 @@
 
 	<div class="box collapsed-box">
 	    <div class="box-header with-border">
-	      <h3 class="box-title"><i class="fa fa-trash-o"></i> {{ trans('app.trash') }}</h3>
-	      <div class="box-tools pull-right">
-	        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
-	        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-	      </div>
+			<h3 class="box-title">
+				@can('massDelete', App\Language::class)
+					{!! Form::open(['route' => ['admin.setting.language.emptyTrash'], 'method' => 'delete', 'class' => 'data-form']) !!}
+						{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm btn btn-default btn-flat ajax-silent', 'title' => trans('help.empty_trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'right']) !!}
+					{!! Form::close() !!}
+				@else
+					<i class="fa fa-trash-o"></i>
+				@endcan
+				{{ trans('app.trash') }}
+			</h3>
+	      	<div class="box-tools pull-right">
+	        	<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+	        	<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+	      	</div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
 	      <table class="table table-hover table-2nd-sort">

@@ -13,7 +13,7 @@ class BannerController extends Controller
 {
     use Authorizable;
 
-    private $model_name;
+    private $model;
 
     /**
      * construct
@@ -22,7 +22,7 @@ class BannerController extends Controller
     {
         parent::__construct();
 
-        $this->model_name = trans('app.model.banner');
+        $this->model = trans('app.model.banner');
     }
 
     /**
@@ -63,7 +63,7 @@ class BannerController extends Controller
         if ($request->hasFile('bg_image'))
             $banner->saveImage($request->file('bg_image'));
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
 
     /**
@@ -104,7 +104,7 @@ class BannerController extends Controller
         if ($request->hasFile('bg_image'))
             $banner->saveImage($request->file('bg_image'));
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -119,6 +119,22 @@ class BannerController extends Controller
 
         $banner->forceDelete();
 
-        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy(Request $request)
+    {
+        Banner::whereIn('id', $request->ids)->forceDelete();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
 }

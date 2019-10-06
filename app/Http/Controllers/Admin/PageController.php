@@ -13,7 +13,7 @@ class PageController extends Controller
 {
     // use Authorizable;
 
-    private $model_name;
+    private $model;
 
     /**
      * construct
@@ -21,7 +21,7 @@ class PageController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->model_name = trans('app.model.page');
+        $this->model = trans('app.model.page');
     }
 
     /**
@@ -61,7 +61,7 @@ class PageController extends Controller
         if ($request->hasFile('image'))
             $page->saveImage($request->file('image'), true);
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
 
     /**
@@ -92,7 +92,7 @@ class PageController extends Controller
         if ($request->hasFile('image'))
             $page->saveImage($request->file('image'), true);
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -106,7 +106,7 @@ class PageController extends Controller
     {
         $page->delete();
 
-        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
     }
 
     /**
@@ -120,7 +120,7 @@ class PageController extends Controller
     {
         Page::onlyTrashed()->findOrFail($id)->restore();
 
-        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
     }
 
     /**
@@ -137,6 +137,71 @@ class PageController extends Controller
 
         $page->forceDelete();
 
-        return back()->with('success', trans('messages.deleted', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massTrash(Request $request)
+    {
+        Page::whereIn('id', $request->ids)->delete();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.trashed', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massRestore(Request $request)
+    {
+        Page::onlyTrashed()->whereIn('id', $request->ids)->restore();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.restored', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy(Request $request)
+    {
+        Page::withTrashed()->whereIn('id', $request->ids)->forceDelete();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * Empty the Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function emptyTrash(Request $request)
+    {
+        Page::onlyTrashed()->forceDelete();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
+    }
+
 }

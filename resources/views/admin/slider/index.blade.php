@@ -14,16 +14,36 @@
 		    <table class="table table-hover table-no-sort">
 		        <thead>
 			        <tr>
-			          <th>{{ trans('app.detail') }}</th>
-			          <th>{{ trans('app.slider') }}</th>
-			          <th>{{ trans('app.options') }}</th>
-			          <th>{{ trans('app.created_at') }}</th>
-			          <th>&nbsp;</th>
+						@can('massDelete', App\Slider::class)
+							<th class="massActionWrapper">
+				                <!-- Check all button -->
+								<div class="btn-group ">
+									<button type="button" class="btn btn-xs btn-default checkbox-toggle">
+										<i class="fa fa-square-o" data-toggle="tooltip" data-placement="top" title="{{ trans('app.select_all') }}"></i>
+									</button>
+									<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">{{ trans('app.toggle_dropdown') }}</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="javascript:void(0)" data-link="{{ route('admin.appearance.slider.massDestroy') }}" class="massAction " data-doafter="reload"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
+									</ul>
+								</div>
+							</th>
+						@endcan
+						<th>{{ trans('app.detail') }}</th>
+						<th>{{ trans('app.slider') }}</th>
+						<th>{{ trans('app.options') }}</th>
+						<th>{{ trans('app.created_at') }}</th>
+						<th>&nbsp;</th>
 			        </tr>
 		        </thead>
-		        <tbody>
+				<tbody id="massSelectArea">
 			        @foreach($sliders as $slider )
 				        <tr>
+						  	@can('massDelete', App\Slider::class)
+								<td><input id="{{ $slider->id }}" type="checkbox" class="massCheck"></td>
+						  	@endcan
 				          	<td>
 								<img src="{{ get_storage_file_url(optional($slider->images->first())->path, 'slider_thumb') }}" class="" height ="50%" alt="{{ trans('app.image') }}">
 								<p class="indent10">

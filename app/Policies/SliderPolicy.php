@@ -69,4 +69,15 @@ class SliderPolicy
     {
         return (new Authorize($user, 'customize_appearance', $slider))->check();
     }
+
+    /**
+     * Determine whether the user can delete the Product.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function massDelete(User $user)
+    {
+        return (new Authorize($user, 'customize_appearance'))->check();
+    }
 }

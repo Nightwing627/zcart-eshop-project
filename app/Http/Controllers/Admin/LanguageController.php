@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Language;
 use Illuminate\Http\Request;
@@ -11,7 +9,7 @@ use App\Http\Requests\Validations\UpdateLanguageRequest;
 
 class LanguageController extends Controller
 {
-    private $model_name;
+    private $model;
 
     /**
      * construct
@@ -19,7 +17,7 @@ class LanguageController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->model_name = trans('app.language');
+        $this->model = trans('app.language');
     }
 
     /**
@@ -56,7 +54,7 @@ class LanguageController extends Controller
     {
         $language = Language::create($request->all());
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
 
     /**
@@ -81,7 +79,7 @@ class LanguageController extends Controller
     {
         $language->update($request->all());
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -95,7 +93,7 @@ class LanguageController extends Controller
     {
         $language->delete();
 
-        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
     }
 
     /**
@@ -109,7 +107,7 @@ class LanguageController extends Controller
     {
         Language::onlyTrashed()->findOrFail($id)->restore();
 
-        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
     }
 
     /**
@@ -124,6 +122,72 @@ class LanguageController extends Controller
 
         $language->forceDelete();
 
-        return back()->with('success', trans('messages.deleted', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
+
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massTrash(Request $request)
+    {
+        Language::whereIn('id', $request->ids)->delete();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.trashed', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massRestore(Request $request)
+    {
+        Language::onlyTrashed()->whereIn('id', $request->ids)->restore();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.restored', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy(Request $request)
+    {
+        Language::withTrashed()->whereIn('id', $request->ids)->forceDelete();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * Empty the Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function emptyTrash(Request $request)
+    {
+        Language::onlyTrashed()->forceDelete();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
+    }
+
 }

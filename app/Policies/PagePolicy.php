@@ -69,4 +69,15 @@ class PagePolicy
     {
         return (new Authorize($user, 'delete_page', $page))->check();
     }
+
+    /**
+     * Determine whether the user can delete the Product.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function massDelete(User $user)
+    {
+        return (new Authorize($user, 'delete_page'))->check();
+    }
 }

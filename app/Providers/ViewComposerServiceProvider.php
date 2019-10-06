@@ -637,7 +637,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 $view->with('payment_statuses', ListHelper::payment_statuses());
                 $view->with('payment_methods', optional($config->paymentMethods)->pluck('name', 'id'));
 
-                $inventories = Inventory::mine()->available()->with('product', 'attributeValues')->get();
+                $inventories = Inventory::mine()->available()->with('attributeValues')->get();
 
                 foreach ($inventories as $inventory){
                     $str = ' - ';
@@ -648,7 +648,7 @@ class ViewComposerServiceProvider extends ServiceProvider
 
                     $str = substr($str, 0, -3);
 
-                    $items[$inventory->id] = $inventory->sku .': '. $inventory->product->name . $str . ' - ' . $inventory->condition;
+                    $items[$inventory->id] = $inventory->sku .': '. $inventory->title . $str . ' - ' . $inventory->condition;
 
                     if ($inventory->image)
                         $img_path = optional($inventory->image)->path;

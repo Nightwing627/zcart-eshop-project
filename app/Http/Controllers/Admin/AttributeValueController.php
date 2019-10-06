@@ -152,4 +152,52 @@ class AttributeValueController extends Controller
         return response('success!', 200);
     }
 
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massTrash(Request $request)
+    {
+        $this->attribute_value->massTrash($request->ids);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.trashed', ['model' => $this->model_name])]);
+
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy(Request $request)
+    {
+        $this->attribute_value->massDestroy($request->ids);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model_name])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model_name]));
+    }
+
+    /**
+     * Empty the Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function emptyTrash(Request $request)
+    {
+        $this->attribute_value->emptyTrash($request);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model_name])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model_name]));
+    }
 }

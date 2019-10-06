@@ -1431,4 +1431,7 @@ return [
     'vendor_needs_approval' => 'Vendor needs approval',
     'view_conversations' => 'View Conversations',
     'view_dispute' => 'View Dispute',
+
+    // Version 1.3.3
+    'in_trash' => 'In trash',
 ];

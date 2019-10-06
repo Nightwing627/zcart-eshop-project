@@ -74,4 +74,16 @@ class LanguagePolicy
         return $user->isAdmin();
         // return (new Authorize($user, 'delete_language', $language))->check();
     }
+
+    /**
+     * Determine whether the user can delete the Product.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function massDelete(User $user)
+    {
+        return $user->isAdmin();
+    }
+
 }

@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
@@ -13,7 +11,7 @@ class RoleController extends Controller
 {
     use Authorizable;
 
-    private $model_name;
+    private $model;
 
     private $role;
 
@@ -24,7 +22,7 @@ class RoleController extends Controller
     {
         parent::__construct();
 
-        $this->model_name = trans('app.model.role');
+        $this->model = trans('app.model.role');
 
         $this->role = $role;
     }
@@ -63,7 +61,7 @@ class RoleController extends Controller
     {
         $this->role->store($request);
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
 
     /**
@@ -108,7 +106,7 @@ class RoleController extends Controller
 
         $this->role->update($request, $id);
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -125,7 +123,7 @@ class RoleController extends Controller
 
         $this->role->trash($id);
 
-        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
     }
 
     /**
@@ -139,7 +137,7 @@ class RoleController extends Controller
     {
         $this->role->restore($id);
 
-        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
     }
 
     /**
@@ -153,7 +151,55 @@ class RoleController extends Controller
     {
         $this->role->destroy($id);
 
-        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massTrash(Request $request)
+    {
+        $this->role->massTrash($request->ids);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.trashed', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy(Request $request)
+    {
+        $this->role->massDestroy($request->ids);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * Empty the Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function emptyTrash(Request $request)
+    {
+        $this->role->emptyTrash($request);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
 
 }

@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Repositories\Role;
+<?php namespace App\Repositories\Role;
 
 use Auth;
 use App\Role;

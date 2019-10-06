@@ -73,4 +73,5 @@ class EloquentMerchant extends EloquentRepository implements BaseRepository, Mer
     {
         $merchant->addresses()->create($address);
     }
+
 }

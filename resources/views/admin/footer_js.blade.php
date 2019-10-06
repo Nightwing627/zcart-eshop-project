@@ -292,7 +292,30 @@
 		    },
 		    "aoColumnDefs": [{
 		        "bSortable": false,
-		        "aTargets": [ -1 ]
+		        "aTargets": [ 0,-1 ]
+		     }],
+		    dom: 'Bfrtip',
+		    buttons: [
+		          'copy', 'csv', 'excel', 'pdf', 'print'
+		      ]
+	  	});
+
+	  	$(".table-2nd-no-sort").DataTable({
+		  	"aaSorting": [],
+		    "iDisplayLength": {{ getPaginationValue() }},
+		    "oLanguage": {
+		        "sInfo": "_START_ to _END_ of _TOTAL_ entries",
+		        "sLengthMenu": "Show _MENU_",
+		        "sSearch": "",
+		        "sEmptyTable": "No data found!",
+		        "oPaginate": {
+		          "sNext": '<i class="fa fa-hand-o-right"></i>',
+		          "sPrevious": '<i class="fa fa-hand-o-left"></i>',
+		        },
+		    },
+		    "aoColumnDefs": [{
+		        "bSortable": false,
+		        "aTargets": [ 0,1,-1 ]
 		     }],
 		    dom: 'Bfrtip',
 		    buttons: [
@@ -1065,21 +1088,25 @@
 	{
 	  	//Enable iCheck plugin for checkboxes
 	  	//iCheck for checkbox and radio inputs
-	  	$('#massSelectArea input[type="checkbox"]').iCheck({
-	    	checkboxClass: 'icheckbox_minimal-blue',
-	    	radioClass: 'iradio_flat-blue'
-	 	});
+	    $('tbody input[type="checkbox"]').each(function() {
+		  	$(this).iCheck({
+		    	checkboxClass: 'icheckbox_minimal-blue',
+		    	radioClass: 'iradio_flat-blue'
+		 	});
+	    });
 
 	  	//Enable check and uncheck all functionality
 	  	$(".checkbox-toggle").on('click', function (e) {
 		    var clicks = $(this).data('clicks');
+		    var areaId = $(this).closest('table').children('tbody').attr('id');
+		    var massSelectArea = "#" + areaId;
 
 		    if (clicks) {
 		      $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-		      unCheckAll(); //Uncheck all checkboxes
+		      unCheckAll(massSelectArea); //Uncheck all checkboxes
 		    } else {
 		      $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-		      checkAll();  //Check all checkboxes
+		      checkAll(massSelectArea);  //Check all checkboxes
 		    }
 		    $(this).data("clicks", !clicks);
 	  	});
@@ -1134,7 +1161,7 @@
 							                          });
 							                          break;
 							                      default:
-							                        unCheckAll(); //Uncheck all checkboxes
+							                        unCheckAll("#massSelectArea"); //Uncheck all checkboxes
 							                    }
 							                } else if (data['error']) {
 							                    notie.alert(3, data['error'], 2);
@@ -1143,7 +1170,15 @@
 							                }
 							            },
 							            error: function (data) {
-							              notie.alert(3, "{{ trans('responses.error') }}", 2);
+								            if (data.status == 403){
+								              notie.alert(2, "{{ trans('responses.denied') }}", 3);
+								            }
+								            else if (data.status == 444){
+								              notie.alert(2, "{{ trans('messages.demo_restriction') }}", 5);
+								            }
+								            else {
+								              notie.alert(3, "{{ trans('responses.error') }}", 2);
+								            }
 							            }
 							        });
 			                	}
@@ -1162,12 +1197,12 @@
 	  	});
 	}
 
-	function checkAll(){
-		$("#massSelectArea input[type='checkbox']").iCheck("check");
+	function checkAll(selector = "#massSelectArea"){
+		$(selector + " input[type='checkbox']").iCheck("check");
 	}
 
-	function unCheckAll(){
-		$("#massSelectArea input[type='checkbox']").iCheck("uncheck");
+	function unCheckAll(selector = "#massSelectArea"){
+		$(selector + " input[type='checkbox']").iCheck("uncheck");
 	}
 	//End Mass selection and action section
 

@@ -4,6 +4,7 @@ namespace App\Repositories\Shop;
 
 use App\Shop;
 use Illuminate\Http\Request;
+use App\Events\Shop\ShopDeleted;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -73,4 +74,48 @@ class EloquentShop extends EloquentRepository implements BaseRepository, ShopRep
     {
         $shop->addresses()->create($address);
     }
+
+
+    public function massTrash($ids)
+    {
+        $shops = $this->model->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($shops as $shop){
+            $shop->owner()->delete();
+            $shop->staffs()->delete();
+
+            event(new ShopDeleted($shop->id));
+        }
+
+        return parent::massTrash($ids);
+    }
+
+    public function massDestroy($ids)
+    {
+        $shops = $this->model->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($shops as $shop){
+            $shop->flushAddresses();
+            $shop->staffs()->forceDelete();
+            $shop->flushFeedbacks();
+            $shop->flushImages();
+        }
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $shops = $this->model->onlyTrashed()->get();
+
+        foreach ($shops as $shop){
+            $shop->flushAddresses();
+            $shop->staffs()->forceDelete();
+            $shop->flushFeedbacks();
+            $shop->flushImages();
+        }
+
+        return parent::emptyTrash();
+    }
+
 }

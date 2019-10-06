@@ -69,6 +69,30 @@ class EloquentSupplier extends EloquentRepository implements BaseRepository, Sup
         return $supplier->forceDelete();
     }
 
+    public function massDestroy($ids)
+    {
+        $suppliers = $this->model->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($suppliers as $supplier){
+            $supplier->flushAddresses();
+            $supplier->flushImages();
+        }
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $suppliers = $this->model->onlyTrashed()->get();
+
+        foreach ($suppliers as $supplier){
+            $supplier->flushAddresses();
+            $supplier->flushImages();
+        }
+
+        return parent::emptyTrash();
+    }
+
     public function saveAdrress(array $address, $supplier)
     {
         $supplier->addresses()->create($address);

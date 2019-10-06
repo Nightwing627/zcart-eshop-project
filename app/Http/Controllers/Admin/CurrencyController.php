@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Currency;
 use App\Common\Authorizable;
@@ -96,4 +94,21 @@ class CurrencyController extends Controller
 
         return back()->with('success',  trans('messages.deleted', ['model' => $this->model]));
     }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy(Request $request)
+    {
+        Currency::whereIn('id', $request->ids)->forceDelete();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
+    }
+
 }

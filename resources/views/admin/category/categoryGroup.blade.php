@@ -12,7 +12,7 @@
 	    </div>
 	    <!-- /.box-header -->
 	    <div class="box-body">
-	      <table class="table table-hover table-2nd-sort">
+	      <table class="table table-hover table-2nd-no-sort">
 	        <thead>
 	        <tr>
 				@can('massDelete', App\CategoryGroup::class)

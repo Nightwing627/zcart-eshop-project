@@ -13,7 +13,7 @@ class SliderController extends Controller
 {
     use Authorizable;
 
-    private $model_name;
+    private $model;
 
     /**
      * construct
@@ -22,7 +22,7 @@ class SliderController extends Controller
     {
         parent::__construct();
 
-        $this->model_name = trans('app.model.slider');
+        $this->model = trans('app.model.slider');
     }
 
     /**
@@ -63,7 +63,7 @@ class SliderController extends Controller
         if ($request->hasFile('thumb'))
             $slider->saveImage($request->file('thumb'));
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
 
     /**
@@ -104,7 +104,7 @@ class SliderController extends Controller
         if ($request->hasFile('thumb'))
             $slider->saveImage($request->file('thumb'));
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -119,6 +119,22 @@ class SliderController extends Controller
 
         $slider->forceDelete();
 
-        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy(Request $request)
+    {
+        Slider::whereIn('id', $request->ids)->forceDelete();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
 }

@@ -13,7 +13,16 @@
 
 	<div class="box collapsed-box">
 		<div class="box-header with-bcart">
-			<h3 class="box-title"><i class="fa fa-trash-o"></i> {{ trans('app.trash') }}</h3>
+			<h3 class="box-title">
+				@can('massDelete', App\Cart::class)
+					{!! Form::open(['route' => ['admin.order.cart.emptyTrash'], 'method' => 'delete', 'class' => 'data-form']) !!}
+						{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm btn btn-default btn-flat ajax-silent', 'title' => trans('help.empty_trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'right']) !!}
+					{!! Form::close() !!}
+				@else
+					<i class="fa fa-trash-o"></i>
+				@endcan
+				{{ trans('app.trash') }}
+			</h3>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 				<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>

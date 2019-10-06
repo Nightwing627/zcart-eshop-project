@@ -64,4 +64,24 @@ class EloquentCarrier extends EloquentRepository implements BaseRepository, Carr
 
         return $carrier->forceDelete();
 	}
+
+    public function massDestroy($ids)
+    {
+        $carriers = $this->model->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($carriers as $carrier)
+            $carrier->flushImages();
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $carriers = $this->model->onlyTrashed()->get();
+
+        foreach ($carriers as $carrier)
+            $carrier->flushImages();
+
+        return parent::emptyTrash();
+    }
 }

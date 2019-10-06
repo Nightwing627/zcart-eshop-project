@@ -69,6 +69,30 @@ class EloquentWarehouse extends EloquentRepository implements BaseRepository, Wa
         return $warehouse->forceDelete();
     }
 
+    public function massDestroy($ids)
+    {
+        $warehouses = $this->model->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($warehouses as $warehouse){
+            $warehouse->flushAddresses();
+            $warehouse->flushImages();
+        }
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $warehouses = $this->model->onlyTrashed()->get();
+
+        foreach ($warehouses as $warehouse){
+            $warehouse->flushAddresses();
+            $warehouse->flushImages();
+        }
+
+        return parent::emptyTrash();
+    }
+
     public function saveAdrress(array $address, $warehouse)
     {
         $warehouse->addresses()->create($address);

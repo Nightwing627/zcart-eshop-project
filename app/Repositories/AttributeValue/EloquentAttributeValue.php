@@ -59,6 +59,26 @@ class EloquentAttributeValue extends EloquentRepository implements BaseRepositor
         return $attribute->forceDelete();
     }
 
+    public function massDestroy($ids)
+    {
+        $attributes = $this->model->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($attributes as $attribute)
+            $attribute->flushImages();
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $attributes = $this->model->onlyTrashed()->get();
+
+        foreach ($attributes as $attribute)
+            $attribute->flushImages();
+
+        return parent::emptyTrash();
+    }
+
     public function reorder(array $attributeValues)
     {
         foreach ($attributeValues as $id => $order)

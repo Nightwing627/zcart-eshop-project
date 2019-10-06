@@ -11,7 +11,7 @@ class BlogController extends Controller
 {
     use Authorizable;
 
-    private $model_name;
+    private $model;
 
     private $blog;
 
@@ -21,7 +21,7 @@ class BlogController extends Controller
     public function __construct(BlogRepository $blog)
     {
         parent::__construct();
-        $this->model_name = trans('app.model.blog');
+        $this->model = trans('app.model.blog');
         $this->blog = $blog;
     }
 
@@ -59,7 +59,7 @@ class BlogController extends Controller
     {
         $this->blog->store($request);
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
 
     /**
@@ -86,7 +86,7 @@ class BlogController extends Controller
     {
         $this->blog->update($request, $id);
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -100,7 +100,7 @@ class BlogController extends Controller
     {
         $this->blog->trash($id);
 
-        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
     }
 
     /**
@@ -114,7 +114,7 @@ class BlogController extends Controller
     {
         $this->blog->restore($id);
 
-        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
     }
 
     /**
@@ -127,6 +127,54 @@ class BlogController extends Controller
     {
         $this->blog->destroy($id);
 
-        return back()->with('success', trans('messages.deleted', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massTrash(Request $request)
+    {
+        $this->blog->massTrash($request->ids);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.trashed', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy(Request $request)
+    {
+        $this->blog->massDestroy($request->ids);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * Empty the Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function emptyTrash(Request $request)
+    {
+        $this->blog->emptyTrash($request);
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
 }

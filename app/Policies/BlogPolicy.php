@@ -69,4 +69,16 @@ class BlogPolicy
     {
         return (new Authorize($user, 'delete_utility', $blog))->check();
     }
+
+    /**
+     * Determine whether the user can delete the Product.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function massDelete(User $user)
+    {
+        return (new Authorize($user, 'delete_utility'))->check();
+    }
+
 }

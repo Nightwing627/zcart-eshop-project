@@ -14,17 +14,37 @@
 		    <table class="table table-hover table-no-sort">
 		        <thead>
 			        <tr>
-			          <th>{{ trans('app.detail') }}</th>
-			          <th>{{ trans('app.banner_image') }}</th>
-			          <th>{{ trans('app.background') }}</th>
-			          <th>{{ trans('app.options') }}</th>
-			          <th>{{ trans('app.created_at') }}</th>
-			          <th>&nbsp;</th>
+						@can('massDelete', App\Banner::class)
+							<th class="massActionWrapper">
+				                <!-- Check all button -->
+								<div class="btn-group ">
+									<button type="button" class="btn btn-xs btn-default checkbox-toggle">
+										<i class="fa fa-square-o" data-toggle="tooltip" data-placement="top" title="{{ trans('app.select_all') }}"></i>
+									</button>
+									<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">{{ trans('app.toggle_dropdown') }}</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="javascript:void(0)" data-link="{{ route('admin.appearance.banner.massDestroy') }}" class="massAction " data-doafter="reload"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
+									</ul>
+								</div>
+							</th>
+						@endcan
+						<th>{{ trans('app.detail') }}</th>
+						<th>{{ trans('app.banner_image') }}</th>
+						<th>{{ trans('app.background') }}</th>
+						<th>{{ trans('app.options') }}</th>
+						<th>{{ trans('app.created_at') }}</th>
+						<th>&nbsp;</th>
 			        </tr>
 		        </thead>
-		        <tbody>
+				<tbody id="massSelectArea">
 			        @foreach($banners as $banner )
 				        <tr>
+						  	@can('massDelete', App\Banner::class)
+								<td><input id="{{ $banner->id }}" type="checkbox" class="massCheck"></td>
+						  	@endcan
 				          	<td>
 					          	<strong>{!! $banner->title !!} </strong>
 					          	@unless($banner->group)

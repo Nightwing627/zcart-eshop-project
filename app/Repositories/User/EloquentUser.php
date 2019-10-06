@@ -78,4 +78,29 @@ class EloquentUser extends EloquentRepository implements BaseRepository, UserRep
     {
         $user->addresses()->create($address);
     }
+
+    public function massDestroy($ids)
+    {
+        $users = $this->model->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($users as $user){
+            $user->flushAddresses();
+            $user->flushImages();
+        }
+
+        return parent::massDestroy($ids);
+    }
+
+    public function emptyTrash()
+    {
+        $users = $this->model->onlyTrashed()->get();
+
+        foreach ($users as $user){
+            $user->flushAddresses();
+            $user->flushImages();
+        }
+
+        return parent::emptyTrash();
+    }
+
 }

@@ -8,8 +8,9 @@
   </div>
   <div class="col-md-4 nopadding-left">
     <div class="form-group">
-      {!! Form::label('active', trans('app.form.status')) !!}
-      {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status')]) !!}
+      {!! Form::label('active', trans('app.form.status').'*') !!}
+      {!! Form::select('active', ['1' => trans('app.active'), '0' => trans('app.inactive')], null, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.status'), 'required']) !!}
+      <div class="help-block with-errors"></div>
     </div>
   </div>
 </div>

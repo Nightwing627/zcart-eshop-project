@@ -12,7 +12,7 @@ use App\Http\Requests\Validations\UpdateSubscriptionPlanRequest;
 class SubscriptionPlanController extends Controller
 {
 
-    private $model_name;
+    private $model;
 
     /**
      * construct
@@ -21,7 +21,7 @@ class SubscriptionPlanController extends Controller
     {
         parent::__construct();
 
-        $this->model_name = trans('app.model.subscription_plan');
+        $this->model = trans('app.model.subscription_plan');
     }
 
     /**
@@ -60,7 +60,7 @@ class SubscriptionPlanController extends Controller
 
         $plan->fill($request->all())->save();
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
 
     /**
@@ -113,7 +113,7 @@ class SubscriptionPlanController extends Controller
             DB::rollback();
         }
 
-        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -130,7 +130,7 @@ class SubscriptionPlanController extends Controller
 
         $subscriptionPlan->delete();
 
-        return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
     }
 
     /**
@@ -144,7 +144,7 @@ class SubscriptionPlanController extends Controller
     {
         SubscriptionPlan::onlyTrashed()->findOrFail($id)->restore();
 
-        return back()->with('success', trans('messages.restored', ['model' => $this->model_name]));
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
     }
 
     /**
@@ -157,7 +157,71 @@ class SubscriptionPlanController extends Controller
     {
         SubscriptionPlan::onlyTrashed()->findOrFail($id)->forceDelete();
 
-        return back()->with('success',  trans('messages.deleted', ['model' => $this->model_name]));
+        return back()->with('success',  trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massTrash(Request $request)
+    {
+        SubscriptionPlan::whereIn('plan_id', $request->ids)->delete();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.trashed', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massRestore(Request $request)
+    {
+        SubscriptionPlan::onlyTrashed()->whereIn('plan_id', $request->ids)->restore();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.restored', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
+    }
+
+    /**
+     * Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy(Request $request)
+    {
+        SubscriptionPlan::withTrashed()->whereIn('plan_id', $request->ids)->forceDelete();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * Empty the Trash the mass resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function emptyTrash(Request $request)
+    {
+        SubscriptionPlan::onlyTrashed()->forceDelete();
+
+        if($request->ajax())
+            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
 
     /**
