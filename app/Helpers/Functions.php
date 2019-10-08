@@ -971,6 +971,22 @@ if ( ! function_exists('get_formated_country_name') )
     }
 }
 
+if ( ! function_exists('get_item_details_of') )
+{
+    /**
+     * Return the item detiails for the given inventory id
+     *
+     * @param $tax
+     */
+    function get_item_details_of($id) {
+        $item_details = \DB::table('inventories')->select([
+            'id','sku','description','key_features','condition','condition_note','shipping_weight','min_order_quantity','available_from'
+        ])->where('id', $id)->first();
+
+        return $item_details;
+    }
+}
+
 if ( ! function_exists('get_shipping_zone_of') )
 {
     /**

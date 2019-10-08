@@ -143,7 +143,7 @@
 						        <div class="section-title">
 						          <h4>{!! trans('theme.section_headings.key_features') !!}</h4>
 						        </div>
-								<ul class="key_feature_list">
+								<ul class="key_feature_list" id="item_key_features">
 									@foreach(unserialize($item->key_features) as $key_feature)
 										<li>{!! $key_feature !!}</li>
 									@endforeach
@@ -256,7 +256,7 @@
 						            @if($item->sku)
 						                <tr class="noborder">
 						                	<th class="text-right noborder">{{ trans('theme.sku') }}: </th>
-						                	<td class="noborder" style="width: 75%;">{{ $item->sku }}</td>
+						                	<td class="noborder" id="item_sku" style="width: 75%;">{{ $item->sku }}</td>
 						                </tr>
 						            @endif
 
@@ -277,14 +277,14 @@
 						            @if($item->min_order_quantity)
 						                <tr class="noborder">
 						                	<th class="text-right noborder">{{ trans('theme.min_order_quantity') }}: </th>
-						                	<td class="noborder" style="width: 75%;">{{ $item->min_order_quantity }}</td>
+						                	<td class="noborder" id="item_min_order_qtt" style="width: 75%;">{{ $item->min_order_quantity }}</td>
 						                </tr>
 						            @endif
 
 						            @if($item->shipping_weight)
 						                <tr class="noborder">
 						                	<th class="text-right noborder">{{ trans('theme.shipping_weight') }}: </th>
-						                	<td class="noborder" style="width: 75%;">{{ $item->shipping_weight . ' ' . config('system_settings.weight_unit') }}</td>
+						                	<td class="noborder" id="item_shipping_weight" style="width: 75%;">{{ $item->shipping_weight . ' ' . config('system_settings.weight_unit') }}</td>
 						                </tr>
 						            @endif
 
@@ -298,7 +298,9 @@
 
          		        <div role="tabpanel" class="tab-pane fade" id="seller_desc_tab">
 
-                		  	{!! $item->description !!}
+         		        	<div id="seller_seller_desc">
+	                		  	{!! $item->description !!}
+         		        	</div>
 
                 		  	@if($item->shop->config->return_refund)
 	                		  	<br/><br/><hr class="style4 muted"/><br/>

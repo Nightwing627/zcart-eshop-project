@@ -22,10 +22,10 @@
   	<div class="col-sm-6 col-xs-12 nopadding-left">
       	<div class="product-info-condition space10">
 
-          @lang('theme.condition'): <span><b>{!! $item->getCondition() !!}</b></span>
+          @lang('theme.condition'): <span><b id="item_condition">{!! $item->getCondition() !!}</b></span>
 
           @if($item->condition_note)
-            <sup><i class="fa fa-question" data-toggle="tooltip" title="{!! $item->condition_note !!}" data-placement="top"></i></sup>
+            <sup><i class="fa fa-question" id="item_condition_note" data-toggle="tooltip" title="{!! $item->condition_note !!}" data-placement="top"></i></sup>
           @endif
       	</div>
   	</div>

@@ -4,6 +4,7 @@ foreach ($variants as &$value) {
     foreach ($value->images as &$image)
         unset($image->imageable_id, $image->imageable_type);
 
+    //echo "<pre>"; print_r($variants->toArray()); echo "</pre>"; exit();
   //  $value->key_features = unserialize($value->key_features);
 }
 //echo "<pre>"; print_r($variants->toArray()); echo "</pre>"; exit();
@@ -171,6 +172,8 @@ foreach ($variants as &$value) {
 
         setSalePrice(filtered);         // Set sale price
 
+        // setSetCondition(filtered);         // Set setSetCondition
+
         updateUrls(filtered);           // Set route urls
 
         setStockQuantity(filtered);     // Set availble stock quantity
@@ -181,9 +184,32 @@ foreach ($variants as &$value) {
 
         setShippingOptions();           // Set shipping options
 
+        setItemDetails(filtered);           // Set item details like key features, desc
+
         remove_busy_filter('body');
         $('#loading').hide();
     });
+
+
+
+    function setItemDetails(item)
+    {
+        var details = getFromPHPHelper('get_item_details_of', [item.id]);
+        details = JSON.parse(details);
+        console.log(details.condition_note);
+
+        // var key_features = details.serialize();
+        // console.log(key_features);
+        $('#seller_seller_desc').html(details.description);
+        $('#item_condition').html(details.condition);
+        $('#item_condition_note').attr('data-original-title', details.condition_note);
+        $('#item_sku').html(details.sku);
+        $('#item_min_order_qtt').html(details.min_order_quantity);
+        $('#item_shipping_weight').html(details.shipping_weight + ' ' + "{{ config('system_settings.weight_unit') }}");
+    }
+
+
+
 
     // Ship to box synamic width
     $('#shipTo').on('change', function(){

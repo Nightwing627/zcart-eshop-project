@@ -1,4 +1,4 @@
-@if($product->shop)
+@if($product->shop && Auth::user()->isFromPlatform())
 	<img src="{{ get_storage_file_url(optional($product->shop->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
 	<p class="indent10">
 		@can('view', $product->shop)

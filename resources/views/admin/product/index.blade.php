@@ -39,7 +39,11 @@
 						<th>{{ trans('app.gtin') }}</th>
 						<th width="20%">{{ trans('app.category') }}</th>
 						<th>{{ trans('app.listing') }}</th>
-						<th width="15%">{{ trans('app.added_by') }}</th>
+						@if(Auth::user()->isFromPlatform())
+							<th width="15%">{{ trans('app.added_by') }}</th>
+						@else
+							<th></th>
+						@endif
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 		        </thead>
