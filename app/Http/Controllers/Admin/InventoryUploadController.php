@@ -1,24 +1,39 @@
 <?php
-
-// No WORK DONE YET
-
 namespace App\Http\Controllers\Admin;
 
 use DB;
+use Auth;
 use App\Product;
+use App\Inventory;
 use App\Category;
+use App\Packaging;
 use App\Manufacturer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Rap2hpoutre\FastExcel\FastExcel;
+use App\Repositories\Inventory\InventoryRepository;
 use App\Http\Requests\Validations\ExportCategoryRequest;
-use App\Http\Requests\Validations\ProductUploadRequest;
-use App\Http\Requests\Validations\ProductImportRequest;
+use App\Http\Requests\Validations\InventoryUploadRequest;
+use App\Http\Requests\Validations\InventoryImportRequest;
 
 class InventoryUploadController extends Controller
 {
 
 	private $failed_list = [];
+
+	private $products = [];
+
+    private $inventory;
+
+    /**
+     * construct
+     */
+    public function __construct(InventoryRepository $inventory)
+    {
+        parent::__construct();
+
+        $this->inventory = $inventory;
+    }
 
 	/**
 	 * Show upload form
@@ -27,18 +42,19 @@ class InventoryUploadController extends Controller
 	 */
 	public function showForm()
 	{
-        return view('admin.product._upload_form');
+        return view('admin.inventory._upload_form');
 	}
 
 	/**
 	 * Upload the csv file and generate the review table
 	 *
-	 * @param  ProductUploadRequest $request
+	 * @param  InventoryUploadRequest $request
      * @return \Illuminate\Http\Response
 	 */
-	public function upload(ProductUploadRequest $request)
+	public function upload(InventoryUploadRequest $request)
 	{
-		$path = $request->file('products')->getRealPath();
+		$path = $request->file('inventories')->getRealPath();
+
 		$rows = array_map('str_getcsv', file($path));
 		$rows[0] = array_map('strtolower', $rows[0]);
 	    array_walk($rows, function(&$a) use ($rows) {
@@ -46,19 +62,19 @@ class InventoryUploadController extends Controller
 	    });
 	    array_shift($rows); # remove header column
 
-        return view('admin.product.upload_review', compact('rows'));
+        return view('admin.inventory.upload_review', compact('rows'));
 	}
 
 	/**
 	 * Perform import action
 	 *
-	 * @param  ProductImportRequest $request
+	 * @param  InventoryImportRequest $request
      * @return \Illuminate\Http\Response
 	 */
-	public function import(ProductImportRequest $request)
+	public function import(InventoryImportRequest $request)
 	{
         if( config('app.demo') == true )
-            return redirect()->route('admin.catalog.product.index')->with('warning', trans('messages.demo_restriction'));
+            return redirect()->route('admin.stock.inventory.index')->with('warning', trans('messages.demo_restriction'));
 
 		// Reset the Failed list
 		$this->failed_list = [];
@@ -67,45 +83,58 @@ class InventoryUploadController extends Controller
 			$data = unserialize($row);
 
 			// Ignore if the name field is not given
-			if( ! $data['name'] || ! $data['categories'] ){
-				$reason = $data['name'] ? trans('help.invalid_category') : trans('help.name_field_required');
-				$this->pushIntoFailed($data, $reason);
+			if( ! verifyRequiredDataForBulkInventoryUpload($data) ){
+				$this->pushIntoFailed($data, trans('help.missing_required_data'));
 				continue;
 			}
 
 			// If the slug is not given the make it
 			if( ! $data['slug'] )
-				$data['slug'] = str_slug($data['name'], '-');
+    			$data['slug'] = convertToSlugString($data['title'], $data['sku']);
 
 			// Ignore if the slug is exist in the database
-			$product = Product::select('slug')->where('slug', $data['slug'])->first();
-			if( $product ){
+			$item = Inventory::select('slug')->mine()->where('slug', $data['slug'])->first();
+			if( $item ){
 				$this->pushIntoFailed($data, trans('help.slug_already_exist'));
 				continue;
 			}
 
-			// Find categories and make the category_list. Ignore the row if category not found
-			$data['category_list'] = Category::whereIn('slug', explode(',', $data['categories']))->pluck('id')->toArray();
-			if( empty($data['category_list']) ){
-				$this->pushIntoFailed($data, trans('help.invalid_category'));
+			// Find product in the catalo. Ignore the row if product not found
+			// First search in the $products to reduce db queries. Usefull when the csv have variants
+			$temp = collect($this->products)->first(function ($value, $key) use ($data) {
+			    return $value['gtin'] == $data['gtin'] && $value['gtin_type'] == $data['gtin_type'];
+			});
+
+			if (! $temp) {
+				$product = Product::where('gtin', $data['gtin'])->where('gtin_type', $data['gtin_type'])->first();
+
+				// Push the product to array so next time can get from there
+				array_push($this->products, $product);
+			}
+			else{
+				$product = $temp;
+			}
+
+			if( ! $product ){
+				$this->pushIntoFailed($data, trans('help.invalid_catalog_data'));
 				continue;
 			}
 
-			// Create the product and get it, If failed then insert into the ignored list
-			if( ! $this->createProduct($data) ){
+			// Create the inventory and get it, If failed then insert into the ignored list
+			if( ! $this->createInventory($data, $product) ){
 				$this->pushIntoFailed($data, trans('help.input_error'));
 				continue;
 			}
-		}
 
-        $request->session()->flash('success', trans('messages.imported', ['model' => trans('app.products')]));
+	        $request->session()->flash('success', trans('messages.imported', ['model' => trans('app.inventories')]));
+		}
 
         $failed_rows = $this->getFailedList();
 
 		if(!empty($failed_rows))
-	        return view('admin.product.import_failed', compact('failed_rows'));
+	        return view('admin.inventory.import_failed', compact('failed_rows'));
 
-        return redirect()->route('admin.catalog.product.index');
+        return redirect()->route('admin.stock.inventory.index');
 	}
 
 	/**
@@ -114,46 +143,70 @@ class InventoryUploadController extends Controller
 	 * @param  array $product
 	 * @return App\Product
 	 */
-	private function createProduct($data)
+	private function createInventory($data, $product)
 	{
-		if($data['origin_country'])
-			$origin_country = DB::table('countries')->select('id')->where('iso_3166_2', strtoupper($data['origin_country']))->first();
+		$key_features = array_filter($data, function($key) {
+		    return strpos($key, 'key_feature_') === 0;
+		}, ARRAY_FILTER_USE_KEY);
 
-		if($data['manufacturer'])
-			$manufacturer = Manufacturer::firstOrCreate(['name' => $data['manufacturer']]);
+		if ($data['linked_items']) {
+			$temp_arr = explode(',', $data['linked_items']);
+			$linked_items = Inventory::select('id')->mine()->whereIn('sku', $temp_arr)->pluck('id')->toArray();
+		}
 
-		// Create the product
-		$product = Product::create([
-						'name' => $data['name'],
+		$inventory = Inventory::create([
+						'shop_id' => Auth::user()->merchantId(),
+						'title' => $data['title'],
 						'slug' => $data['slug'],
-						'model_number' => $data['model_number'],
+						'sku' => $data['sku'],
+						'condition' => $data['condition'],
+						'condition_note' => $data['condition_note'],
 						'description' => $data['description'],
-						'gtin' => $data['gtin'],
-						'gtin_type' => $data['gtin_type'],
-						'mpn' => $data['mpn'],
+						'product_id' => $product->id,
+						'stock_quantity' => $data['stock_quantity'],
+						'min_order_quantity' => $data['min_order_quantity'],
+						'key_features' => $key_features,
 						'brand' => $data['brand'],
-						'origin_country' => isset($origin_country) ? $origin_country->id : Null,
-						'manufacturer_id' => isset($manufacturer) ? $manufacturer->id : Null,
-						'min_price' => ($data['minimum_price'] && $data['minimum_price'] > 0) ? $data['minimum_price'] : 0,
-						'max_price' => ($data['maximum_price'] && $data['maximum_price'] > $data['minimum_price']) ? $data['maximum_price'] : Null,
-						'model_number' => $data['model_number'],
-						'requires_shipping' => strtoupper($data['requires_shipping']) == 'TRUE' ? 1 : 0,
+						'user_id' => Auth::user()->id,
+						'sale_price' => $data['price'],
+						'offer_price' => $data['offer_price'] ?: Null,
+						'offer_start' => $data['offer_starts'] ? date('Y-m-d h:i a', strtotime($data['offer_starts'])) : Null,
+						'offer_end' => $data['offer_ends'] ? date('Y-m-d h:i a', strtotime($data['offer_ends'])) : Null,
+						'purchase_price' => $data['purchase_price'],
+						'linked_items' => isset($linked_items) ? $linked_items : Null,
+						'meta_title' => $data['meta_title'],
+						'meta_description' => $data['meta_description'],
+						'free_shipping' => strtoupper($data['free_shipping']) == 'TRUE' ? 1 : 0,
+						'shipping_weight' => $data['shipping_weight'],
+						'available_from' => date('Y-m-d h:i a', strtotime($data['available_from'])),
+						'warehouse_id' => $data['warehouse_id'],
+						'supplier_id' => $data['supplier_id'],
 						'active' => strtoupper($data['active']) == 'TRUE' ? 1 : 0,
 					]);
 
-		// Sync categories
-		if($data['category_list'])
-            $product->categories()->sync($data['category_list']);
+		// Upload images
+		$image_links = array_filter($data, function($key) {
+		    return strpos($key, 'image_link_') === 0;
+		}, ARRAY_FILTER_USE_KEY);
 
-		// Upload featured image
-        if ($data['image_link'])
-            $product->saveImageFromUrl($data['image_link'], true);
+		foreach ($image_links as $index => $image_link){
+			if($image_link)
+	            $inventory->saveImageFromUrl($image_link);
+		}
+
+		// Sync packaging
+		if($data['packaging_ids']){
+			$temp_arr = explode(',', $data['packaging_ids']);
+			$packaging_ids = Packaging::select('id')->mine()->whereIn('id', $temp_arr)->pluck('id')->toArray();
+
+            $inventory->packaging()->sync($packaging_ids);
+		}
 
 		// Sync tags
 		if($data['tags'])
-            $product->syncTags($product, explode(',', $data['tags']));
+            $inventory->syncTags($inventory, explode(',', $data['tags']));
 
-		return $product;
+		return $inventory;
 	}
 
 	/**
@@ -161,12 +214,12 @@ class InventoryUploadController extends Controller
 	 *
 	 * @param  Excel  $excel
 	 */
-	public function downloadCategorySlugs(ExportCategoryRequest $request)
-	{
-		$categories = Category::select('name','slug')->get();
+	// public function downloadCategorySlugs(ExportCategoryRequest $request)
+	// {
+	// 	$categories = Category::select('name','slug')->get();
 
-		return (new FastExcel($categories))->download('categories.xlsx');
-	}
+	// 	return (new FastExcel($categories))->download('categories.xlsx');
+	// }
 
 	/**
 	 * downloadTemplate
@@ -175,11 +228,10 @@ class InventoryUploadController extends Controller
 	 */
 	public function downloadTemplate()
 	{
-		$pathToFile = public_path("csv_templates/products.csv");
+		$pathToFile = public_path("csv_templates/inventories.csv");
 
 		return response()->download($pathToFile);
 	}
-
 
 	/**
 	 * [downloadFailedRows]

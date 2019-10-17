@@ -341,7 +341,8 @@ class Inventory extends BaseModel
     {
         if (count($this->packagings)) return $this->packagings->pluck('id')->toArray();
     }
-    // Mutator cause the searse error
+
+    // This Mutators causes the searse error
     // public function getKeyFeaturesAttribute($value)
     // {
     //     return unserialize($value);

@@ -52,6 +52,7 @@
 					        @endif
 				          	@unless($language->active)
 					          	<span class="indent10 label label-default pull-right">{{ trans('app.inactive') }}</span>
+							    <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="{{ trans('help.new_language_info') }}"></i>
 					        @endunless
 			          </td>
 			          <td>{!! $language->code !!}</td>

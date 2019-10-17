@@ -196,7 +196,6 @@ foreach ($variants as &$value) {
     {
         var details = getFromPHPHelper('get_item_details_of', [item.id]);
         details = JSON.parse(details);
-        console.log(details.condition_note);
 
         // var key_features = details.serialize();
         // console.log(key_features);

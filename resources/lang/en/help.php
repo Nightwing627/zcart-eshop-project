@@ -679,4 +679,10 @@ return [
 
     'mark_phone_verified' => 'Mark as phone verified',
 
+    // Version 1.3.3
+    'missing_required_data' => 'Invalid data, Some required data is missing.',
+
+    'invalid_catalog_data' => 'Invalid catalog data, Recheck the GTIN and other information.',
+
+
 ];

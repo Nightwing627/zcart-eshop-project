@@ -141,7 +141,7 @@
           <div class="form-group">
             {!! Form::label('linked_items[]', trans('app.form.linked_items'), ['class' => 'with-help']) !!}
             <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.inventory_linked_items') }}"></i>
-            {!! Form::select('linked_items[]', $inventories , Null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
+            {!! Form::select('linked_items[]', $inventories , isset($inventory) ? unserialize($inventory->linked_items) : Null, ['class' => 'form-control select2-normal', 'multiple' => 'multiple']) !!}
             <div class="help-block with-errors"></div>
           </div>
         </fieldset>

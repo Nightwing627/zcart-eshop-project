@@ -14,6 +14,7 @@ use App\ShippingRate;
 use App\PaymentMethod;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 if ( ! function_exists('check_internet_connection') )
 {
@@ -536,12 +537,42 @@ if ( ! function_exists('get_logo_url') )
 
 if ( ! function_exists('verifyUniqueSlug') )
 {
-    function verifyUniqueSlug($slug, $table, $field = 'slug')
+    function verifyUniqueSlug($slug, $table, $field = 'slug', $json = TRUE)
     {
         if(\DB::table($table)->select($field)->where($field, $slug)->first())
-            return response()->json('false');
+            return $json ? response()->json('false') : FALSE;
 
-        return response()->json('true');
+        return $json ? response()->json('true') : TRUE;
+    }
+}
+
+if ( ! function_exists('convertToSlugString') )
+{
+    function convertToSlugString($str, $salt = Null, $separator = '-')
+    {
+        if($salt)
+            return str_slug($str, $separator) . $separator . $salt;
+
+        return str_slug($str, $separator);
+    }
+}
+
+if( ! function_exists('verifyRequiredDataForBulkInventoryUpload') )
+{
+    function verifyRequiredDataForBulkInventoryUpload($data)
+    {
+        if (
+            isset($data['title']) &&
+            isset($data['description']) &&
+            isset($data['sku']) &&
+            isset($data['gtin']) &&
+            isset($data['gtin_type']) &&
+            isset($data['stock_quantity']) &&
+            isset($data['condition'])
+        )
+        return TRUE;
+
+        return FALSE;
     }
 }
 

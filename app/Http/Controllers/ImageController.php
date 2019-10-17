@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Response;
 class ImageController extends Controller
 {
 
+    // public function getImages()
+    // {
+    //     return view('images')->with('images', auth()->user()->images);
+    // }
+
     public function show(Request $request, Server $server, $path)
 	{
 		$this->setConfigs($request);
@@ -107,7 +112,6 @@ class ImageController extends Controller
 
 		return Response::json(['error' => trans('messages.file_not_exist')]);
 	}
-
 
 	/**
 	 * sort images order via ajax.

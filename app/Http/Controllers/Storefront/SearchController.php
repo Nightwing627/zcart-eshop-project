@@ -46,6 +46,8 @@ class SearchController extends Controller
             return $item['product_id'].$item['shop_id'];
         });
 
+        $category = Null;
+
         if( $request->has('in')) {
             $category = Category::where('slug', $request->input('in'))->active()->firstOrFail();
             $listings = $category->listings()->available()->get();

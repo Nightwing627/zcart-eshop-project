@@ -1434,4 +1434,7 @@ return [
 
     // Version 1.3.3
     'in_trash' => 'In trash',
+    'key_features' => 'Key features',
+    'offer_starts' => 'Offer starts',
+    'offer_ends' => 'Offer ends',
 ];

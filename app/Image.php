@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Storage;
+
 class Image extends BaseModel
 {
     /**
@@ -39,6 +41,21 @@ class Image extends BaseModel
     {
         if ((bool) $value) $this->attributes['featured'] = $value;
         else $this->attributes['featured'] = null;
+    }
+
+    // public function getUrlAttribute()
+    // {
+    //     return Storage::url($this->path);
+    // }
+
+    public function getUploadedTimeAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
+
+    public function getSizeInKbAttribute()
+    {
+        return $this->size ? round($this->size / 1024, 2) : Null;
     }
 
 }
