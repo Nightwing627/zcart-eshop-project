@@ -8,6 +8,11 @@
 	<div class="box">
 		<div class="box-header with-border">
 			<h3 class="box-title">{{ trans('app.import_failed') }}</h3>
+			<div class="box-tools pull-right">
+				@can('create', App\Product::class)
+					<a href="javascript:void(0)" data-link="{{ route('admin.stock.inventory.bulk') }}" class="ajax-modal-btn btn btn-default btn-flat">{{ trans('app.bulk_import') }}</a>
+				@endcan
+			</div>
 		</div> <!-- /.box-header -->
 
 		<div class="box-body">

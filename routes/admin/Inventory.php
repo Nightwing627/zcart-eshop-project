@@ -1,6 +1,5 @@
 <?php
 // Bulk upload routes
-// Route::get('inventory/upload/downloadCategorySlugs', 'InventoryUploadController@downloadCategorySlugs')->name('inventory.downloadCategorySlugs');
 Route::get('inventory/upload/downloadTemplate', 'InventoryUploadController@downloadTemplate')->name('inventory.downloadTemplate');
 Route::get('inventory/upload', 'InventoryUploadController@showForm')->name('inventory.bulk');
 Route::post('inventory/upload', 'InventoryUploadController@upload')->name('inventory.upload');

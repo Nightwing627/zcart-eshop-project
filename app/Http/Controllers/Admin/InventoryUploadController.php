@@ -210,18 +210,6 @@ class InventoryUploadController extends Controller
 	}
 
 	/**
-	 * [downloadCategorySlugs]
-	 *
-	 * @param  Excel  $excel
-	 */
-	// public function downloadCategorySlugs(ExportCategoryRequest $request)
-	// {
-	// 	$categories = Category::select('name','slug')->get();
-
-	// 	return (new FastExcel($categories))->download('categories.xlsx');
-	// }
-
-	/**
 	 * downloadTemplate
 	 *
 	 * @return response response

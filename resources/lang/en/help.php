@@ -684,5 +684,8 @@ return [
 
     'invalid_catalog_data' => 'Invalid catalog data, Recheck the GTIN and other information.',
 
+    'product_have_to_be_catalog' => 'The product have to be present in the <strong>catalog</strong> system. otherwise it will not upload.',
+
+    'need_to_know_product_gtin' => 'You need to know the <strong>GTIN</strong> of the items before upload.',
 
 ];
