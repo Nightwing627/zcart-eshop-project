@@ -264,6 +264,8 @@
             <a href="{{ route('admin.support.message.show', $order->conversation) }}" class="btn btn-sm btn-info btn-flat">{{ trans('app.view_conversations') }}</a>
           @endif
 
+          {{-- <a href="{{ route('admin.order.order.invoice', $order->id) }}" class="btn btn-sm btn-default btn-flat">{{ trans('app.view_invoice') }}</a> --}}
+
           @if($order->dispute)
             <a href="{{ route('admin.support.dispute.show', $order->dispute) }}" class="btn btn-sm btn-danger btn-flat">{{ trans('app.view_dispute') }}</a>
           @endif

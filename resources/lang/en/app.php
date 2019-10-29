@@ -1437,4 +1437,5 @@ return [
     'key_features' => 'Key features',
     'offer_starts' => 'Offer starts',
     'offer_ends' => 'Offer ends',
+    'view_invoice' => 'View invoice',
 ];

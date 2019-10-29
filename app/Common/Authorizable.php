@@ -14,6 +14,7 @@ trait Authorizable
 {
     private $abilities = [
         'index'             => 'view',
+        'invoice'           => 'view',
         'show'              => 'view',
         'view'              => 'view',
         'staffs'            => 'view',

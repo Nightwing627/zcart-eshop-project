@@ -1,4 +1,5 @@
 <?php
+Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
 // Route::post('order/massTrash', 'OrderController@massTrash')->name('order.massTrash')->middleware('demoCheck');
 // Route::post('order/massDestroy', 'OrderController@massDestroy')->name('order.massDestroy')->middleware('demoCheck');
 // Route::delete('order/emptyTrash', 'OrderController@emptyTrash')->name('order.emptyTrash');

@@ -32,7 +32,10 @@
 		        	@foreach($failed_rows as $row)
 		        		<tr>
 		        			<td>
-		        				<img src="{{ $row['data']['image_link_1'] ?: get_placeholder_img('small') }}" class="img-sm">
+				        		@php
+									$image_links = explode(',', $row['data']['image_links']);
+				        		@endphp
+		        				<img src="{{ count($image_links) ? $image_links[0] : get_placeholder_img('small') }}" class="img-sm">
 		        			</td>
 		        			<td>
 		        				{{ $row['data']['title'] }}<br/>

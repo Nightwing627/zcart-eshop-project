@@ -37,13 +37,14 @@
 
 			        		@php
 			        			$slug = $row['slug'] ?: convertToSlugString($row['title'], $row['sku']);
+								$image_links = explode(',', $row['image_links']);
 			        		@endphp
 
 							{{ Form::hidden('data[]', serialize($row)) }}
 
 			        		<tr>
 			        			<td>
-			        				<img src="{{ $row['image_link_1'] ?: get_placeholder_img('small') }}" class="img-sm">
+			        				<img src="{{ count($image_links) ? $image_links[0] : get_placeholder_img('small') }}" class="img-sm">
 			        			</td>
 			        			<td>{{ $row['title'] }}</td>
 	    						<td>

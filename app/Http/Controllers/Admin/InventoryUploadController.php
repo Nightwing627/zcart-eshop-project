@@ -185,13 +185,20 @@ class InventoryUploadController extends Controller
 					]);
 
 		// Upload images
-		$image_links = array_filter($data, function($key) {
-		    return strpos($key, 'image_link_') === 0;
-		}, ARRAY_FILTER_USE_KEY);
+		// $image_links = array_filter($data, function($key) {
+		//     return strpos($key, 'image_link_') === 0;
+		// }, ARRAY_FILTER_USE_KEY);
 
-		foreach ($image_links as $index => $image_link){
-			if($image_link)
-	            $inventory->saveImageFromUrl($image_link);
+		// if ($image_link)
+		// 	$inventory->saveImageFromUrl($image_link);
+
+		if($data['image_links']){
+			$image_links = explode(',', $data['image_links']);
+
+			foreach ($image_links as $image_link) {
+				if (filter_var($image_link, FILTER_VALIDATE_URL))
+	            	$inventory->saveImageFromUrl($image_link);
+			}
 		}
 
 		// Sync packaging
