@@ -87,22 +87,23 @@ return [
             'refreshToken' => env('GOOGLE_DRIVE_REFRESH_TOKEN'),
             'folderId' => env('GOOGLE_DRIVE_FOLDER_ID'),
         ],
-    ],
 
-    'sftp' => [
-        'driver' => 'sftp',
-        'host' => env('SFTP_HOST'),
-        'username' => env('SFTP_USER'),
-        'password' => env('SFTP_PASSWORD'),
-        'port' => env('SFTP_PORT', 22),
+        'sftp' => [
+            'driver' => 'sftp',
+            'host' => env('SFTP_HOST'),
+            'username' => env('SFTP_USER'),
+            'password' => env('SFTP_PASSWORD'),
+            'port' => env('SFTP_PORT', 22),
 
-        // Settings for SSH key based authentication...
-        // 'privateKey' => '/path/to/privateKey',
-        // 'password' => 'encryption-password',
+            // Settings for SSH key based authentication...
+            // 'privateKey' => '/path/to/privateKey',
+            // 'password' => 'encryption-password',
 
-        // Optional SFTP Settings...
-        // 'root' => '',
-        // 'timeout' => 30,
+            // Optional SFTP Settings...
+            // 'root' => '',
+            // 'timeout' => 30,
+        ],
+
     ],
 
 ];

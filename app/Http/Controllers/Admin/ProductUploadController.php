@@ -61,6 +61,9 @@ class ProductUploadController extends Controller
 		foreach ($request->input('data') as $row) {
 			$data = unserialize($row);
 
+			if(! is_array($data)) // Invalid data
+				continue;
+
 			// Ignore if the name field is not given
 			if( ! $data['name'] || ! $data['categories'] ){
 				$reason = $data['name'] ? trans('help.invalid_category') : trans('help.name_field_required');

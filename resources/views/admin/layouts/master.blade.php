@@ -8,8 +8,8 @@
 
     <title>{{ $title ?? get_site_title() }}</title>
 
-    <link rel="icon" href="{{ Storage::url('icon.png') }}" type="image/x-icon" />
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <link rel="icon" href="{{ Storage::url('icon.png') }}" type="image/x-icon" />
     <link rel="apple-touch-icon" href="{{ Storage::url('icon.png') }}">
 
     <!-- Scripts -->

@@ -557,25 +557,6 @@ if ( ! function_exists('convertToSlugString') )
     }
 }
 
-if( ! function_exists('verifyRequiredDataForBulkInventoryUpload') )
-{
-    function verifyRequiredDataForBulkInventoryUpload($data)
-    {
-        if (
-            isset($data['title']) &&
-            isset($data['description']) &&
-            isset($data['sku']) &&
-            isset($data['gtin']) &&
-            isset($data['gtin_type']) &&
-            isset($data['stock_quantity']) &&
-            isset($data['condition'])
-        )
-        return TRUE;
-
-        return FALSE;
-    }
-}
-
 if ( ! function_exists('generateCouponCode') )
 {
     function generateCouponCode()
@@ -889,6 +870,60 @@ if ( ! function_exists('get_formated_order_number') )
             $shop_id = auth()->user()->merchantId();
 
         return getShopConfig($shop_id, 'order_number_prefix') . $order_id . getShopConfig($shop_id, 'order_number_suffix');
+    }
+}
+
+if ( ! function_exists('file_upload_max_size') )
+{
+    // Returns a file size limit in bytes based on the PHP upload_max_filesize
+    // and post_max_size
+    function file_upload_max_size() {
+      static $max_size = -1;
+
+      if ($max_size < 0) {
+        // Start with post_max_size.
+        $post_max_size = parse_size(ini_get('post_max_size'));
+        if ($post_max_size > 0) {
+          $max_size = $post_max_size;
+        }
+
+        // If upload_max_size is less, then reduce. Except if upload_max_size is
+        // zero, which indicates no limit.
+        $upload_max = parse_size(ini_get('upload_max_filesize'));
+        if ($upload_max > 0 && $upload_max < $max_size) {
+          $max_size = $upload_max;
+        }
+      }
+      return format_bytes($max_size);
+    }
+}
+
+if ( ! function_exists('parse_size') )
+{
+    function parse_size($size) {
+      $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
+      $size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
+      if ($unit) {
+        // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
+        return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
+      }
+      else {
+        return round($size);
+      }
+    }
+}
+
+if ( ! function_exists('format_bytes') )
+{
+    function format_bytes($bytes, $precision = 2) {
+        $units = array('B', 'KB', 'MB', 'GB', 'TB');
+
+        $bytes = max($bytes, 0);
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+        $bytes /= pow(1024, $pow);
+
+        return round($bytes, $precision) . ' ' . $units[$pow];
     }
 }
 
@@ -1303,7 +1338,6 @@ if ( ! function_exists('getPackagingCost') )
     }
 }
 
-
 if ( ! function_exists('getShippingingCost') )
 {
     /**
@@ -1577,6 +1611,25 @@ if ( ! function_exists('isActive'))
             return $className;
         }
         if (strpos(URL::current(), $route)) return $className;
+    }
+}
+
+if( ! function_exists('verifyRequiredDataForBulkInventoryUpload') )
+{
+    function verifyRequiredDataForBulkInventoryUpload($data)
+    {
+        if (
+            isset($data['title']) &&
+            isset($data['description']) &&
+            isset($data['sku']) &&
+            isset($data['gtin']) &&
+            isset($data['gtin_type']) &&
+            isset($data['stock_quantity']) &&
+            isset($data['condition'])
+        )
+        return TRUE;
+
+        return FALSE;
     }
 }
 

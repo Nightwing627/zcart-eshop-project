@@ -38,10 +38,15 @@
 	            var extra = {};
 	            extra['model_id'] = formData.get('model_id');
 	            extra['model_name'] = formData.get('model_name');
+	            extra['redirect_url'] = formData.get('redirect_url');
 	            return extra;
 	        },
-	        uploadAsync: false,
 	        showUpload: false,
+	        enableResumableUpload: true,
+	        resumableUploadOptions: {
+	            // testUrl: "/site/test-file-chunks",
+	            chunkSize: 1024, // 1 MB chunk size
+	        },
 	        dropZoneEnabled: true,
 	        browseOnZoneClick: true,
 	        dropZoneTitle: "{{ trans('app.drag_n_drop_here') }}",
@@ -108,7 +113,15 @@
 		   	$.post(sortUrl, order, function(theResponse, status){
 				notie.alert(1, "{{ trans('responses.reordered') }}", 2);
 		    });
-		});
+		}).on('fileuploaded', function(event, previewId, index, fileId) {
+	        console.log('File Uploaded', 'ID: ' + fileId + ', Thumb ID: ' + previewId);
+	    }).on('fileuploaderror', function(event, previewId, index, fileId) {
+	        console.log('File Upload Error', 'ID: ' + fileId + ', Thumb ID: ' + previewId);
+	    }).on('filebatchuploadcomplete', function(event, preview, config, tags, extraData) {
+	        console.log('File Batch Uploaded', preview, config, tags, extraData);
+			window.location.href = extraData.redirect_url;
+	    });
+
 	    $('div.btn.btn-primary.btn-file').hide();
 
 	    $('#form-ajax-upload').on('submit', function(event) {
@@ -125,7 +138,6 @@
 				var file = $("#uploadBtn")[0].files[0];
 				formData.append("image", file);
 			}
-			// console.log(data);
 
 			$.ajax({
 				url: action,
@@ -138,10 +150,10 @@
 			.done(function(result){
 				formData.append('model_id', result.id);
 				formData.append('model_name', result.model);
+				formData.append('redirect_url', result.redirect);
 
 				$('#dropzone-input').fileinput('upload');
-
-				window.location.href = result.redirect;
+				// window.location.href = result.redirect;
 			})
 			.fail(function(xhr){
 		      	$("#form-ajax-upload").find(":submit").removeAttr("disabled");
