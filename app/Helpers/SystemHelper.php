@@ -95,6 +95,8 @@ if ( ! function_exists('setSystemConfig') )
 
             config()->set('system_settings', $system_settings);
 
+            set_time_limit(300); // Set the max_execution_time to 5mins
+
             setSystemLocale();
 
             setSystemCurrency();

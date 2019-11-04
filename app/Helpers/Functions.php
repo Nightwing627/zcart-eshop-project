@@ -873,6 +873,16 @@ if ( ! function_exists('get_formated_order_number') )
     }
 }
 
+// if ( ! function_exists('php_max_execution_time') )
+// {
+//     // Returns the time limit in php config file
+//     function php_max_execution_time() {
+//         $max_execution_time = ini_get('max_execution_time');
+
+//         return $max_execution_time . 's';
+//     }
+// }
+
 if ( ! function_exists('file_upload_max_size') )
 {
     // Returns a file size limit in bytes based on the PHP upload_max_filesize

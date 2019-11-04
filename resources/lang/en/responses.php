@@ -30,4 +30,9 @@ return [
     'searching' => 'Searching...',
     'you_are_blocked' => 'You\'re temporarily blocked from this site!',
     '404_not_found' => 'Sorry, the page you are looking for could not be found.',
+
+    // Version 1.3.3
+    'no_file_was_uploaded' => 'No file was uploaded.',
+    'error_uploading_file' => 'Error uploading file',
+    'model_not_defined' => 'The model is not defined!',
 ];

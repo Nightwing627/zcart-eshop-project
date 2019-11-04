@@ -222,4 +222,6 @@ return [
 
     'verified_business_name_like' => 'Your business name will be shown like this',
 
+    // Version 1.3.3
+
 ];

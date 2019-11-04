@@ -48,7 +48,7 @@ class ImageController extends Controller
 	    if ($request->hasFile($fileBlob))
 	    {
 	        if (! $request->has('model_id') || !$request->has('model_name') )
-	            return Response::json(['error' => 'The model is not defined!']);
+	            return Response::json(['error' => trans('responses.model_not_defined')]);
 
 	       	// Uploaded file info
 			$rawFile = $request->file($fileBlob);
@@ -110,13 +110,13 @@ class ImageController extends Controller
 				            ]);
 	        } else
 	        {
-	            return Response::json(['error' => 'Error uploading file ' . $realName]);
+	            return Response::json(['error' => trans('responses.error_uploading_file') . ' ' . $realName]);
 	        }
 	    }
 
         // $request->session()->flash('global_msg', trans('messages.img_upload_failed'));
 
-	    return Response::json(['error' => 'No file was uploaded.']);
+	    return Response::json(['error' => trans('responses.no_file_was_uploaded')]);
 	}
 
 	/**

@@ -152,8 +152,11 @@
 				formData.append('model_name', result.model);
 				formData.append('redirect_url', result.redirect);
 
-				$('#dropzone-input').fileinput('upload');
-				// window.location.href = result.redirect;
+				var node = $('#dropzone-input');
+				if(node.fileinput("getFilesCount") > 0) // Upload only if there is files
+					node.fileinput('upload');
+				else
+					window.location.href = result.redirect;
 			})
 			.fail(function(xhr){
 		      	$("#form-ajax-upload").find(":submit").removeAttr("disabled");

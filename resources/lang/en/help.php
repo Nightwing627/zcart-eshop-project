@@ -688,6 +688,5 @@ return [
 
     'need_to_know_product_gtin' => 'You need to know the <strong>GTIN</strong> of the items before upload.',
 
-    'max_upload_size' => 'Maximum upload file size',
-
+    'max_upload_size' => 'Maximum upload file size: :value',
 ];
