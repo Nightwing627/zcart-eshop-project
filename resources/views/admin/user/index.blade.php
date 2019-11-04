@@ -11,7 +11,7 @@
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
-			<table class="table table-hover table-2nd-sort">
+			<table class="table table-hover table-2nd-no-sort">
 				<thead>
 					<tr>
 						@can('massDelete', App\User::class)
@@ -32,6 +32,7 @@
 								</div>
 							</th>
 						@endcan
+						<th>{{ trans('app.avatar') }}</th>
 						<th>{{ trans('app.nice_name') }}</th>
 						<th>{{ trans('app.full_name') }}</th>
 						<th>{{ trans('app.email') }}</th>
@@ -48,23 +49,19 @@
 						  	@endcan
 							<td>
 			            		<img src="{{ get_avatar_src($user, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-								<p class="indent10">
-									<a href="javascript:void(0)" data-link="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn">
-										{{ $user->nice_name }}
-									</a>
-								</p>
 							</td>
-							<td>
-								<a href="javascript:void(0)" data-link="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn">
-									{{ $user->name }}
-								</a>
-							</td>
+							<td>{{ $user->nice_name }}</td>
+							<td>{{ $user->name }}</td>
 							<td>{{ $user->email }}</td>
 							<td>
 								<span class="label label-outline">{{ optional($user->role)->name }}</span>
 							</td>
 				          <td>{{ ($user->active) ? trans('app.active') : trans('app.inactive') }}</td>
 				          <td class="row-options">
+							@can('view', $user)
+								<a href="javascript:void(0)" data-link="{{ route('admin.admin.user.show', $user->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.profile') }}" class="fa fa-user-circle-o"></i></a>&nbsp;
+							@endcan
+
 							@can('secretLogin', $user)
 								<a href="{{ route('admin.user.secretLogin', $user) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.secret_login_user') }}" class="fa fa-user-secret"></i></a>&nbsp;
 							@endcan
@@ -112,9 +109,10 @@
 			</div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
-	    	<table class="table table-hover table-2nd-sort">
+	    	<table class="table table-hover table-no-sort">
 		        <thead>
 		        <tr>
+		          <th>{{ trans('app.avatar') }}</th>
 		          <th>{{ trans('app.nice_name') }}</th>
 		          <th>{{ trans('app.full_name') }}</th>
 		          <th>{{ trans('app.email') }}</th>
@@ -128,14 +126,12 @@
 				        <tr>
 				          	<td>
 					            <img src="{{ get_avatar_src($trash, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-								<p class="indent10">
-									{{ $trash->nice_name }}
-								</p>
 							</td>
+					        <td>{{ $trash->nice_name }}</td>
 					        <td>{{ $trash->name }}</td>
 					        <td>{{ $trash->email }}</td>
 					        <td>
-					        	<span class="label label-outline">{{ $trash->role->name or '' }}</span>
+					        	<span class="label label-outline">{{ optional($trash->role)->name }}</span>
 				          	</td>
 				          <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 				          <td class="row-options">

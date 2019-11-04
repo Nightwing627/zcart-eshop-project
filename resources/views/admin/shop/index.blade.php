@@ -11,7 +11,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-sort">
+			<table class="table table-hover table-2nd-no-sort">
 				<thead>
 					<tr>
 						@can('massDelete', App\Shop::class)
@@ -32,6 +32,7 @@
 								</div>
 							</th>
 						@endcan
+						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.shop_name') }}</th>
 						<th>{{ trans('app.current_billing_plan') }}</th>
 						<th>{{ trans('app.owner') }}</th>
@@ -46,22 +47,17 @@
 						  	@endcan
 							<td>
 								<img src="{{ get_storage_file_url(optional($shop->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
+							</td>
+							<td>
+								{{ $shop->name }}
 
-								<p class="indent10">
-									@can('view', $shop)
-										<a href="javascript:void(0)" data-link="{{ route('admin.vendor.shop.show', $shop->id) }}"  class="ajax-modal-btn">{{ $shop->name }}</a>
-									@else
-										{{ $shop->name }}
-									@endcan
+			            		@if($shop->isVerified())
+									<img src="{{ get_verified_badge() }}" class="verified-badge img-xs" data-toggle="tooltip" data-placement="top" title="{{ trans('help.verified_seller') }}" alt="verified-badge">
+								@endif
 
-				            		@if($shop->isVerified())
-										<img src="{{ get_verified_badge() }}" class="verified-badge img-xs" data-toggle="tooltip" data-placement="top" title="{{ trans('help.verified_seller') }}" alt="verified-badge">
-									@endif
-
-				            		@if($shop->isDown())
-							          	<span class="label label-default indent10">{{ trans('app.maintenance_mode') }}</span>
-									@endif
-								</p>
+			            		@if($shop->isDown())
+						          	<span class="label label-default indent10">{{ trans('app.maintenance_mode') }}</span>
+								@endif
 
 								@can('update', $shop)
 									<a href="javascript:void(0)" data-link="{{ route('admin.vendor.shop.toggle', $shop) }}" data-doafter="reload" type="button" class="toggle-widget toggle-confirm pull-right">
@@ -150,9 +146,10 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-sort">
+			<table class="table table-hover table-no-sort">
 				<thead>
 					<tr>
+						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.email') }}</th>
 						<th>{{ trans('app.owner') }}</th>
@@ -165,10 +162,8 @@
 					<tr>
 						<td>
 							<img src="{{ get_storage_file_url(optional($trash->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
-							<p class="indent10">
-								{{ $trash->name }}
-							</p>
 						</td>
+						<td>{{ $trash->name }}</td>
 						<td>{{ $trash->email }}</td>
 						<td>
 				            <img src="{{ get_avatar_src($trash->owner, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">

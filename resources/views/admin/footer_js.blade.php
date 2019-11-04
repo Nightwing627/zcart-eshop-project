@@ -153,6 +153,7 @@
 			},
 			"columns": [
 	            { 'data': 'checkbox', 'name': 'checkbox', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false },
+	            { 'data': 'image', 'name': 'image', 'orderable': false, 'searchable': false },
 	            { 'data': 'name', 'name': 'name' },
 	            { 'data': 'gtin', 'name': 'gtin' },
 	            { 'data': 'category', 'name': 'category', 'orderable': false, 'searchable': false },
@@ -197,6 +198,7 @@
 			},
 			"columns": [
 	            { 'data': 'checkbox', 'name': 'checkbox', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false },
+	            { 'data': 'image', 'name': 'image', 'orderable': false, 'searchable': false },
 	            { 'data': 'nice_name', 'name': 'nice_name' },
 	            { 'data': 'name', 'name': 'name' },
 	            { 'data': 'email', 'name': 'email' },

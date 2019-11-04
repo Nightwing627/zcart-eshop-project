@@ -11,7 +11,7 @@
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
-			<table class="table table-hover table-2nd-sort">
+			<table class="table table-hover table-2nd-no-sort">
 				<thead>
 					<tr>
 						@can('massDelete', App\Merchant::class)
@@ -32,6 +32,7 @@
 								</div>
 							</th>
 						@endcan
+						<th>{{ trans('app.avatar') }}</th>
 						<th>{{ trans('app.nice_name') }}</th>
 						<th>{{ trans('app.full_name') }}</th>
 						<th>{{ trans('app.shop') }}</th>
@@ -47,25 +48,17 @@
 						  	@endcan
 				          	<td>
 				            	<img src="{{ get_avatar_src($merchant, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+				            </td>
+				            <td>
+								{{ $merchant->nice_name }}
 
-								<p class="indent10">
-									{{ $merchant->nice_name }}
-
-				            		@unless($merchant->active)
-					            		<span class="label label-default indent10">{{ trans('app.inactive') }}</span>
-									@endunless
-								</p>
+			            		@unless($merchant->active)
+				            		<span class="label label-default indent10">{{ trans('app.inactive') }}</span>
+								@endunless
 				          	</td>
-				          	<td>
-								@can('view', $merchant)
-						            <a href="javascript:void(0)" data-link="{{ route('admin.vendor.merchant.show', $merchant->id) }}" class="ajax-modal-btn">{{ $merchant->name }}</a>
-								@else
-						          	{{ $merchant->name }}
-								@endcan
-				          	</td>
+				          	<td>{{ $merchant->name }}</td>
 				          	<td>
 					          	@if($merchant->owns->name)
-
 									<img src="{{ get_storage_file_url(optional($merchant->owns->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
 									<p class="indent10">
 							            <a href="javascript:void(0)" data-link="{{ route('admin.vendor.shop.show', $merchant->owns->id) }}" class="ajax-modal-btn">
@@ -145,9 +138,10 @@
 	      	</div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
-	    	<table class="table table-hover table-2nd-sort">
+	    	<table class="table table-hover table-no-sort">
 		        <thead>
 		        <tr>
+		          <th>{{ trans('app.avatar') }}</th>
 		          <th>{{ trans('app.nice_name') }}</th>
 		          <th>{{ trans('app.full_name') }}</th>
 		          <th>{{ trans('app.email') }}</th>
@@ -161,10 +155,8 @@
 				        <tr>
 				          	<td>
 					            <img src="{{ get_avatar_src($trash, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-								<p class="indent10">
-									{{ $trash->nice_name }}
-								</p>
 							</td>
+					        <td>{{ $trash->nice_name }}</td>
 					        <td>{{ $trash->name }}</td>
 					        <td>{{ $trash->email }}</td>
 					        <td>

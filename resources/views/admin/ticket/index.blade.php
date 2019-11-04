@@ -11,7 +11,7 @@
 				</div>
 			</div> <!-- /.box-header -->
 			<div class="box-body">
-				<table class="table table-hover table-option">
+				<table class="table table-hover table-no-sort">
 					<thead>
 						<tr>
 							<th>{{ trans('app.merchant') }}</th>
@@ -75,7 +75,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-option">
+			<table class="table table-hover table-no-sort">
 				<thead>
 					<tr>
 						<th>{{ trans('app.merchant') }}</th>
@@ -96,8 +96,10 @@
 								<strong>
 									{{ $ticket->shop->name }}
 								</strong>
-								 <br/>
-								{{ trans('app.by') . ' ' . $ticket->user->name }}
+								@if($ticket->user)
+									 <br/>
+									{{ trans('app.by') . ' ' . $ticket->user->name }}
+								@endif
 							</p>
 						</td>
 						<td>
@@ -138,7 +140,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-option">
+			<table class="table table-hover table-no-sort">
 				<thead>
 					<tr>
 						<th>{{ trans('app.shop') }}</th>

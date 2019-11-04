@@ -206,7 +206,7 @@
 				</div>
 
 			    <div class="tab-pane {{ Request::input('tab') == 'out_of_stock' ? 'active' : '' }}" id="stock_out_tab">
-					<table class="table table-hover table-2nd-sort">
+					<table class="table table-hover table-2nd-no-sort">
 						<thead>
 							<tr>
 								@can('massDelete', App\Inventory::class)
@@ -320,7 +320,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-sort">
+			<table class="table table-hover table-no-sort">
 				<thead>
 					<tr>
 						<th>{{ trans('app.image') }}</th>

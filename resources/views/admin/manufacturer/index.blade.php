@@ -11,7 +11,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-sort">
+			<table class="table table-hover table-2nd-no-sort">
 				<thead>
 					<tr>
 						@can('massDelete', App\Manufacturer::class)
@@ -32,6 +32,7 @@
 								</div>
 							</th>
 						@endcan
+						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.phone') }}</th>
 						<th>{{ trans('app.email') }}</th>
@@ -46,14 +47,12 @@
 						  	@can('massDelete', App\Manufacturer::class)
 								<td><input id="{{ $manufacturer->id }}" type="checkbox" class="massCheck"></td>
 						  	@endcan
-							<td>
+						  	<td>
 								<img src="{{ get_storage_file_url(optional($manufacturer->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+						  	</td>
+							<td>
 								<p class="indent10">
-									@can('view', $manufacturer)
-										<a href="javascript:void(0)" data-link="{{ route('admin.catalog.manufacturer.show', $manufacturer->id) }}" class="ajax-modal-btn">{{ $manufacturer->name }}</a>
-									@else
-										{{ $manufacturer->name }}
-									@endcan
+									{{ $manufacturer->name }}
 								</p>
 								@unless($manufacturer->active)
 									<span class="label label-default indent5 small">{{ trans('app.inactive') }}</span>

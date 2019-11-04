@@ -11,7 +11,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-no-sort">
+			<table class="table table-hover table-2nd-no-sort">
 				<thead>
 					<tr>
 						@can('massDelete', App\Packaging::class)
@@ -32,6 +32,7 @@
 								</div>
 							</th>
 						@endcan
+						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.cost') }}</th>
 						<th class="text-center">{{ trans('app.active') }}</th>
@@ -46,14 +47,14 @@
 					  	@endcan
 						<td>
 							<img src="{{ get_storage_file_url(optional($packaging->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
-							<p class="indent10">
-								{{ $packaging->name }}
-								@if($packaging->default)
-									<label class="label label-default indent10">{{ trans('app.default') }}</label>
-								@endif
-								<br>
-								<small>{{ get_formated_dimension($packaging) }}</small>
-							</p>
+						</td>
+						<td>
+							{{ $packaging->name }}
+							@if($packaging->default)
+								<label class="label label-default indent10">{{ trans('app.default') }}</label>
+							@endif
+							<br>
+							<small>{{ get_formated_dimension($packaging) }}</small>
 						</td>
 						<td>
 							{!! $packaging->cost && $packaging->cost > 0 ? get_formated_currency($packaging->cost) : '<label class="label label-primary">' . trans('app.free') . '</label>' !!}
@@ -97,9 +98,10 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-sort">
+			<table class="table table-hover table-no-sort">
 				<thead>
 					<tr>
+						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.cost') }}</th>
 						<th>{{ trans('app.deleted_at') }}</th>
@@ -111,10 +113,10 @@
 					<tr>
 						<td>
 							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
-							<p class="indent10">
-								{{ $trash->name }}<br>
-								<small>{{ get_formated_dimension($trash) }}</small>
-							</p>
+						</td>
+						<td>
+							{{ $trash->name }}<br>
+							<small>{{ get_formated_dimension($trash) }}</small>
 						</td>
 						<td>
 							{!! $trash->cost && $trash->cost > 0 ? get_formated_currency($trash->cost) : '<label class="label label-primary">' . trans('app.free') . '</label>' !!}

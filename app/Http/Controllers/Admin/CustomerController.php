@@ -58,6 +58,9 @@ class CustomerController extends Controller
             ->addColumn('option', function ($customer) {
                 return view( 'admin.partials.actions.customer.options', compact('customer'));
             })
+            ->addColumn('image', function ($customer) {
+                return view( 'admin.partials.actions.customer.image', compact('customer'));
+            })
             ->editColumn('nice_name',  function ($customer) {
                 return view( 'admin.partials.actions.customer.nice_name', compact('customer'));
             })
@@ -67,7 +70,7 @@ class CustomerController extends Controller
             ->editColumn('orders_count', function($customer){
                 return view( 'admin.partials.actions.customer.orders_count', compact('customer'));
             })
-            ->rawColumns([ 'nice_name', 'name', 'orders_count', 'checkbox', 'option' ])
+            ->rawColumns([ 'image', 'nice_name', 'name', 'orders_count', 'checkbox', 'option' ])
             ->make(true);
     }
 

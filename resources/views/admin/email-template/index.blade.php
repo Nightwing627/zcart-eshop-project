@@ -11,7 +11,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-sort">
+			<table class="table table-hover table-no-sort">
 				<thead>
 					<tr>
 						@can('massDelete', App\EmailTemplate::class)
@@ -90,7 +90,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-option">
+			<table class="table table-hover table-no-sort">
 				<thead>
 					<tr>
 						<th>{{ trans('app.name') }}</th>

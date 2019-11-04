@@ -11,7 +11,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-no-sort">
+			<table class="table table-hover table-2nd-no-sort">
 				<thead>
 					<tr>
 						@can('massDelete', App\Carrier::class)
@@ -32,6 +32,7 @@
 								</div>
 							</th>
 						@endcan
+						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.shipping_zones') }}</th>
 						<th class="text-center">{{ trans('app.active') }}</th>
@@ -46,9 +47,9 @@
 					  	@endcan
 						<td>
 							<img src="{{ get_storage_file_url(optional($carrier->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
-							<p class="indent10">
-								{{ $carrier->name }}
-							</p>
+						</td>
+						<td>
+							{{ $carrier->name }}
 						</td>
 						<td>
 							@foreach($carrier->shippingZones as $zone)
@@ -96,9 +97,10 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-sort">
+			<table class="table table-hover table-no-sort">
 				<thead>
 					<tr>
+						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.deleted_at') }}</th>
 						<th>{{ trans('app.option') }}</th>
@@ -109,10 +111,8 @@
 					<tr>
 						<td>
 							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.logo') }}">
-							<p class="indent10">
-								{{ $trash->name }}
-							</p>
 						</td>
+						<td>{{ $trash->name }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('delete', $trash)

@@ -35,6 +35,7 @@
 						@else
 							<th></th>
 						@endcan
+						<th>{{ trans('app.avatar') }}</th>
 						<th>{{ trans('app.nice_name') }}</th>
 						<th>{{ trans('app.full_name') }}</th>
 						<th>{{ trans('app.email') }}</th>
@@ -67,9 +68,10 @@
 	      	</div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
-	      <table class="table table-hover table-2nd-sort">
+	      <table class="table table-hover table-no-sort">
 	        <thead>
 	        <tr>
+	          <th>{{ trans('app.avatar') }}</th>
 	          <th>{{ trans('app.nice_name') }}</th>
 	          <th>{{ trans('app.full_name') }}</th>
 	          <th>{{ trans('app.email') }}</th>
@@ -82,10 +84,8 @@
 			        <tr>
 			          <td>
 			            <img src="{{ get_avatar_src($trash, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
-						<p class="indent10">
-							{{ $trash->nice_name }}
-						</p>
 			          </td>
+			          <td>{{ $trash->nice_name }}</td>
 			          <td>{{ $trash->name }}</td>
 			          <td>{{ $trash->email }}</td>
 			          <td>{{ $trash->deleted_at->diffForHumans() }}</td>

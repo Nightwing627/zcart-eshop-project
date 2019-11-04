@@ -54,6 +54,9 @@ class ProductController extends Controller
             ->addColumn('option', function ($product) {
                 return view( 'admin.partials.actions.product.options', compact('product'));
             })
+            ->editColumn('image', function($product){
+                return view( 'admin.partials.actions.product.image', compact('product'));
+            })
             ->editColumn('name', function($product){
                 return view( 'admin.partials.actions.product.name', compact('product'));
             })
@@ -69,7 +72,7 @@ class ProductController extends Controller
             ->editColumn('added_by', function($product){
                 return view( 'admin.partials.actions.product.added_by', compact('product'));
             })
-            ->rawColumns([ 'name', 'gtin', 'category', 'inventories_count', 'added_by', 'status', 'checkbox', 'option' ])
+            ->rawColumns([ 'image', 'name', 'gtin', 'category', 'inventories_count', 'added_by', 'status', 'checkbox', 'option' ])
             ->make(true);
     }
 

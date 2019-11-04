@@ -11,7 +11,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-no-sort">
+			<table class="table table-hover table-2nd-no-sort">
 				<thead>
 					<tr>
 						@can('massDelete', App\Warehouse::class)
@@ -32,6 +32,7 @@
 								</div>
 							</th>
 						@endcan
+						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.email') }}</th>
 						<th>{{ trans('app.incharge') }}</th>
@@ -47,10 +48,8 @@
 					  	@endcan
 						<td>
 							<img src="{{ get_storage_file_url(optional($warehouse->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
-							<p class="indent10">
-								{{ $warehouse->name }}
-							</p>
 						</td>
+						<td>{{ $warehouse->name }}</td>
 						<td>{{ $warehouse->email }}</td>
 						<td>{{ $warehouse->manager ? $warehouse->manager->getName() : '' }}</td>
 						<td>{{ ($warehouse->active) ? trans('app.active') : trans('app.inactive') }}</td>
@@ -100,9 +99,10 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-sort">
+			<table class="table table-hover table-2nd-no-sort">
 				<thead>
 					<tr>
+						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.email') }}</th>
 						<th>{{ trans('app.incharge') }}</th>
@@ -115,10 +115,8 @@
 					<tr>
 						<td>
 							<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
-							<p class="indent10">
-								{{ $trash->name }}
-							</p>
 						</td>
+						<td>{{ $trash->name }}</td>
 						<td>{{ $trash->email }}</td>
 						<td>{{ $trash->manager ? $trash->manager->getName() : '' }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>

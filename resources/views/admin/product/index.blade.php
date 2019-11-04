@@ -35,6 +35,7 @@
 						@else
 							<th></th>
 						@endcan
+						<th>{{ trans('app.image') }}</th>
 						<th>{{ trans('app.name') }}</th>
 						<th>{{ trans('app.gtin') }}</th>
 						<th width="20%">{{ trans('app.category') }}</th>
