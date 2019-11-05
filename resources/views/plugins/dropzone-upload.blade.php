@@ -45,7 +45,7 @@
 	        enableResumableUpload: true,
 	        resumableUploadOptions: {
 	            // testUrl: "/site/test-file-chunks",
-	            chunkSize: 1024, // 1 MB chunk size
+	            chunkSize: {{ config('image.chunk_size', 1024) }},
 	        },
 	        dropZoneEnabled: true,
 	        browseOnZoneClick: true,

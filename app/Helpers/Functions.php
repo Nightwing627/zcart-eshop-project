@@ -385,11 +385,20 @@ if ( ! function_exists('get_qualified_model') )
     }
 }
 
+if ( ! function_exists('temp_storage_dir') )
+{
+    function temp_storage_dir($dir = '')
+    {
+        return str_finish(public_path("temp/{$dir}"), '/');
+    }
+}
+
 if ( ! function_exists('attachment_storage_dir') )
 {
-    function attachment_storage_dir()
+    function attachment_storage_dir($dir = '')
     {
-        return 'attachments';
+        return "attachments";
+        // return str_finish("attachments/{$dir}", '/');
     }
 }
 

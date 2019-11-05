@@ -13,6 +13,7 @@ use Laravel\Cashier\Cashier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client as HttpClient;
+use Illuminate\Support\Facades\Storage;
 
 if ( ! function_exists('getPlatformFeeForOrder') )
 {

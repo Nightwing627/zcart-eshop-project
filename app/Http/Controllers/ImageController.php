@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Image;
 use League\Glide\Server;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 
@@ -57,61 +58,69 @@ class ImageController extends Controller
 	        $fileExtension = $rawFile->getClientOriginalExtension();
 	        $fileSize = $request->input('fileSize') ?? $rawFile->getClientSize();
 
+			// Linked model info
+        	$model_name = $request->input('model_name');
+        	$model_id = $request->input('model_id');
+
 			// Chunk info
 	        // $fileId = $request->input('fileId');         //  the file identifier
 	        $index =  $request->input('chunkIndex');        // the current file chunk index
 	        $totalChunks = $request->input('chunkCount');   // the total number of chunks for this file
 
 	        // Prepare system info
+        	$allChunksUploaded = False;
 		    $targetDir = image_storage_dir();
+		    $tempDir = temp_storage_dir("$model_name/$model_id");
 	        $uniqFileName = uniqid() . '.' . $fileExtension;
-	        $targetFile = $targetPath = $targetDir . '/' . $uniqFileName;  			// The target file path
-			$path = $this->disk->getAdapter()->getPathPrefix() . '/' . $targetDir; 	// Current storage path
+	        $targetFile = $targetDir . '/' . $uniqFileName;  			// The target file path
 
 	        if ($totalChunks > 1)	// create chunk files only if chunks are greater than 1
-	            $targetFile = $targetDir.'/chunk_' . str_pad($index, 4, '0', STR_PAD_LEFT);
-
-	        if( $this->disk->put($targetFile, file_get_contents($file)) )
 	        {
-	        	$allChunksUploaded = False;
+				if (! is_dir($tempDir)) 	// Make the temp directory if not exist
+					mkdir($tempDir, 0777, true);
 
-	        	if ($totalChunks > 1)
-	        	{
-		            $chunks = glob("$path/chunk_*");	// get list of all chunks uploaded so far to server
+	            $chunkFile = $tempDir . "chunk_" . str_pad($index, 4, '0', STR_PAD_LEFT);
 
+		        if(move_uploaded_file($file, $chunkFile))
+		        {
+		            $chunks = glob($tempDir . "chunk_*");	// get list of all chunks uploaded so far to server
 		            $allChunksUploaded = count($chunks) == $totalChunks;	// all chunks were uploaded
 
-		            if ($allChunksUploaded)
-		            {
-		                $outFile = $path.'/'.$uniqFileName;
-		                $this->combineChunks($chunks, $outFile);	// combines all file chunks to one file
-		            }
-	        	}
+		            if (! $allChunksUploaded) // Return to procceed if all chunks are not uploaded yet
+			            return Response::json(['chunkIndex' => $index]);
 
-	        	if ($totalChunks == 1 || ($totalChunks > 1 && $allChunksUploaded))
-	        	{
-		        	$model = get_qualified_model($request->input('model_name'));
-		        	$attachable = (new $model)->find($request->input('model_id'));
+		            // All chunks are uploaded, combines all file chunks to one file
+	                $file = $tempDir.$uniqFileName;
+	                $this->combineChunks($chunks, $file);
+	            }
+			}
+
+        	if ($totalChunks == 1 || ($totalChunks > 1 && $allChunksUploaded))
+        	{
+		        if( $this->disk->put($targetFile, file_get_contents($file)) )
+		        {
+					if (is_dir($tempDir)) 	// Delete the temp directory if exist
+				        File::deleteDirectory($tempDir);
+
+		        	$model = get_qualified_model($model_name);
+		        	$attachable = (new $model)->find($model_id);
 
 					$data = [
-			            'path' => $targetPath,
+			            'path' => $targetFile,
 			            'name' => $realName,
 			            'extension' => $fileExtension,
 			            'size' => $fileSize,
 			        ];
 
-					if(! $attachable->images()->create($data))
-			            return Response::json(['error' => trans('responses.error')]);
-	        	}
+			        // Success
+					if( $attachable->images()->create($data) )
+			            return Response::json(['chunkIndex' => $index]);
+		        }
 
-	            return Response::json([
-				                'chunkIndex' => $index,
-				                'append' => true
-				            ]);
-	        } else
-	        {
 	            return Response::json(['error' => trans('responses.error_uploading_file') . ' ' . $realName]);
-	        }
+			}
+
+		    return Response::json(['error' => trans('responses.no_file_was_uploaded')]);
 	    }
 
         // $request->session()->flash('global_msg', trans('messages.img_upload_failed'));
@@ -201,10 +210,6 @@ class ImageController extends Controller
 	    }
 
 	    fclose($handle);								// close the file handle
-
-	    // after all are done delete the chunks
-	    foreach ($chunks as $chunk)
-	        @unlink($chunk);
 	}
 
 }
