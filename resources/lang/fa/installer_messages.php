@@ -1,268 +1,211 @@
-<?php
-
-return [
-
-    /**
-     *
-     * Shared translations.
-     *
-     */
-    'title' => config('app.name', 'zCart') . ' Installer',
-    'next' => 'Next Step',
-    'back' => 'Previous',
-    'finish' => 'Install',
-    'forms' => [
-        'errorTitle' => 'The Following errors occurred:',
-    ],
-    'wait' => 'Please wait, installation may take a few minutes.',
-
-    /**
-     *
-     * Home page translations.
-     *
-     */
-    'welcome' => [
-        'templateTitle' => 'Welcome',
-        'title'   => config('app.name', 'zCart') . ' Installer',
-        'message' => 'Easy Installation and Setup Wizard.',
-        'next'    => 'Check Requirements',
-    ],
-
-    /**
-     *
-     * Requirements page translations.
-     *
-     */
-    'requirements' => [
-        'templateTitle' => 'Step 1 | Server Requirements',
-        'title' => 'Server Requirements',
-        'next'    => 'Check Permissions',
-        'required' => 'Need to set all the server requirements to continue',
-    ],
-
-    /**
-     *
-     * Permissions page translations.
-     *
-     */
-    'permissions' => [
-        'templateTitle' => 'Step 2 | Permissions',
-        'title' => 'Permissions',
-        'next' => 'Configure Environment',
-        'required' => 'Set the permissions as required to continue. Read the doc. for help.',
-    ],
-
-    /**
-     *
-     * Environment page translations.
-     *
-     */
-    'environment' => [
-        'menu' => [
-            'templateTitle' => 'Step 3 | Environment Settings',
-            'title' => 'Environment Settings',
-            'desc' => 'Please select how you want to configure the apps <code>.env</code> file.',
-            'wizard-button' => 'Form Wizard Setup',
-            'classic-button' => 'Classic Text Editor',
-        ],
-        'wizard' => [
-            'templateTitle' => 'Step 3 | Environment Settings | Guided Wizard',
-            'title' => 'Guided <code>.env</code> Wizard',
-            'tabs' => [
-                'environment' => 'Environment',
-                'database' => 'Database',
-                'application' => 'Application'
-            ],
-            'form' => [
-                'name_required' => 'An environment name is required.',
-                'app_name_label' => 'App Name',
-                'app_name_placeholder' => 'App Name',
-                'app_environment_label' => 'App Environment',
-                'app_environment_label_local' => 'Local',
-                'app_environment_label_developement' => 'Development',
-                'app_environment_label_qa' => 'Qa',
-                'app_environment_label_production' => 'Production',
-                'app_environment_label_other' => 'Other',
-                'app_environment_placeholder_other' => 'Enter your environment...',
-                'app_debug_label' => 'App Debug',
-                'app_debug_label_true' => 'True',
-                'app_debug_label_false' => 'False',
-                'app_log_level_label' => 'App Log Level',
-                'app_log_level_label_debug' => 'debug',
-                'app_log_level_label_info' => 'info',
-                'app_log_level_label_notice' => 'notice',
-                'app_log_level_label_warning' => 'warning',
-                'app_log_level_label_error' => 'error',
-                'app_log_level_label_critical' => 'critical',
-                'app_log_level_label_alert' => 'alert',
-                'app_log_level_label_emergency' => 'emergency',
-                'app_url_label' => 'App Url',
-                'app_url_placeholder' => 'App Url',
-                'db_connection_failed' => 'Could not connect to the database. Check the configurations.',
-                'db_connection_label' => 'Database Connection',
-                'db_connection_label_mysql' => 'mysql',
-                'db_connection_label_sqlite' => 'sqlite',
-                'db_connection_label_pgsql' => 'pgsql',
-                'db_connection_label_sqlsrv' => 'sqlsrv',
-                'db_host_label' => 'Database Host',
-                'db_host_placeholder' => 'Database Host',
-                'db_port_label' => 'Database Port',
-                'db_port_placeholder' => 'Database Port',
-                'db_name_label' => 'Database Name',
-                'db_name_placeholder' => 'Database Name',
-                'db_username_label' => 'Database User Name',
-                'db_username_placeholder' => 'Database User Name',
-                'db_password_label' => 'Database Password',
-                'db_password_placeholder' => 'Database Password',
-
-                'app_tabs' => [
-                    'more_info' => 'More Info',
-                    'broadcasting_title' => 'Broadcasting, Caching, Session, &amp; Queue',
-                    'broadcasting_label' => 'Broadcast Driver',
-                    'broadcasting_placeholder' => 'Broadcast Driver',
-                    'cache_label' => 'Cache Driver',
-                    'cache_placeholder' => 'Cache Driver',
-                    'session_label' => 'Session Driver',
-                    'session_placeholder' => 'Session Driver',
-                    'queue_label' => 'Queue Driver',
-                    'queue_placeholder' => 'Queue Driver',
-                    'redis_label' => 'Redis Driver',
-                    'redis_host' => 'Redis Host',
-                    'redis_password' => 'Redis Password',
-                    'redis_port' => 'Redis Port',
-
-                    'mail_label' => 'Mail',
-                    'mail_driver_label' => 'Mail Driver',
-                    'mail_driver_placeholder' => 'Mail Driver',
-                    'mail_host_label' => 'Mail Host',
-                    'mail_host_placeholder' => 'Mail Host',
-                    'mail_port_label' => 'Mail Port',
-                    'mail_port_placeholder' => 'Mail Port',
-                    'mail_username_label' => 'Mail Username',
-                    'mail_username_placeholder' => 'Mail Username',
-                    'mail_password_label' => 'Mail Password',
-                    'mail_password_placeholder' => 'Mail Password',
-                    'mail_encryption_label' => 'Mail Encryption',
-                    'mail_encryption_placeholder' => 'Mail Encryption',
-
-                    'pusher_label' => 'Pusher',
-                    'pusher_app_id_label' => 'Pusher App Id',
-                    'pusher_app_id_palceholder' => 'Pusher App Id',
-                    'pusher_app_key_label' => 'Pusher App Key',
-                    'pusher_app_key_palceholder' => 'Pusher App Key',
-                    'pusher_app_secret_label' => 'Pusher App Secret',
-                    'pusher_app_secret_palceholder' => 'Pusher App Secret',
-                ],
-                'buttons' => [
-                    'setup_database' => 'Setup Database',
-                    'setup_application' => 'Setup Application',
-                    'install' => 'Install',
-                ],
-            ],
-        ],
-        'classic' => [
-            'backup' => 'To avoid any mess please copy and save the default configurations somewhere else before you make any changes.',
-            'templateTitle' => 'Step 3 | Environment Settings | Classic Editor',
-            'title' => 'Environment File Editor',
-            'save' => 'Save The Configurations',
-            'back' => 'Use Form Wizard',
-            'install' => 'Install',
-            'required' => 'Fix the issue to continue.',
-        ],
-        'success' => 'Your .env file settings have been saved.',
-        'errors' => 'Unable to save the .env file, Please create it manually.',
-    ],
-
-    'verify' => [
-        'verify_purchase' => 'Verify Purchase',
-        'submit' => 'Submit',
-        'form' => [
-            'email_address_label' => 'Email Address',
-            'email_address_placeholder' => 'Email Address',
-            'purchase_code_label' => 'Purchase Code',
-            'purchase_code_placeholder' => 'Purchase Code or License Key',
-            'root_url_label' => 'Root Url',
-            'root_url_placeholder' => 'ROOT URL (without / at the end)',
-        ],
-    ],
-
-    'install' => 'Install',
-    'verified' => 'License has been successfully verified.',
-    'verification_failed' => 'License verification failed!',
-
-    /**
-     *
-     * Installed Log translations.
-     *
-     */
-    'installed' => [
-        'success_log_message' => config('app.name', 'zCart') . ' Installer successfully INSTALLED on ',
-    ],
-
-    /**
-     *
-     * Final page translations.
-     *
-     */
-    'final' => [
-        'title' => 'Final Step',
-        'templateTitle' => 'Final Step',
-        'finished' => 'Application has been successfully installed.',
-        'migration' => 'Migration &amp; Seed Console Output:',
-        'console' => 'Application Console Output:',
-        'log' => 'Installation Log Entry:',
-        'env' => 'Final .env File:',
-        'exit' => 'Click here to Login',
-        'import_demo_data' => 'Import Demo Data',
-    ],
-
-    /**
-     *
-     * Update specific translations
-     *
-     */
-    'updater' => [
-        /**
-         *
-         * Shared translations.
-         *
-         */
-        'title' => config('app.name', 'zCart') . ' Updater',
-
-        /**
-         *
-         * Welcome page translations for update feature.
-         *
-         */
-        'welcome' => [
-            'title'   => 'Welcome To The Updater',
-            'message' => 'Welcome to the update wizard.',
-        ],
-
-        /**
-         *
-         * Welcome page translations for update feature.
-         *
-         */
-        'overview' => [
-            'title'   => 'Overview',
-            'message' => 'There is 1 update.|There are :number updates.',
-            'install_updates' => "Install Updates"
-        ],
-
-        /**
-         *
-         * Final page translations.
-         *
-         */
-        'final' => [
-            'title' => 'Finished',
-            'finished' => 'Application\'s database has been successfully updated.',
-            'exit' => 'Click here to exit',
-        ],
-
-        'log' => [
-            'success_message' => config('app.name', 'zCart') . ' Installer successfully UPDATED on ',
-        ],
-    ],
-];
+<?php 
+return array (
+  'title' => 'نصب کننده zCart',
+  'next' => 'گام بعدی',
+  'back' => 'قبلی',
+  'finish' => 'نصب',
+  'forms' => 
+  array (
+    'errorTitle' => 'خطاهای زیر رخ داده است:',
+  ),
+  'wait' => 'لطفاً صبر کنید ، نصب ممکن است چند دقیقه طول بکشد.',
+  'welcome' => 
+  array (
+    'templateTitle' => 'خوش آمدی',
+    'title' => 'نصب کننده zCart',
+    'message' => 'جادوگر نصب و راه اندازی آسان.',
+    'next' => 'الزامات را بررسی کنید',
+  ),
+  'requirements' => 
+  array (
+    'templateTitle' => 'مرحله 1 | نیازمندی های سرور',
+    'title' => 'نیازمندی های سرور',
+    'next' => 'مجوزها را بررسی کنید',
+    'required' => 'برای ادامه باید کلیه نیازهای سرور را تنظیم کنید',
+  ),
+  'permissions' => 
+  array (
+    'templateTitle' => 'مرحله 2 | مجوزها',
+    'title' => 'مجوزها',
+    'next' => 'پیکربندی محیط',
+    'required' => 'مجوزها را برای ادامه کار تنظیم کنید. متن را بخوانید. برای کمک.',
+  ),
+  'environment' => 
+  array (
+    'menu' => 
+    array (
+      'templateTitle' => 'مرحله 3 | تنظیمات محیط',
+      'title' => 'تنظیمات محیط',
+      'desc' => 'لطفا نحوه پیکربندی پرونده برنامه <code> .env </code> را انتخاب کنید.',
+      'wizard-button' => 'Wizard Setup را تنظیم کنید',
+      'classic-button' => 'ویرایشگر متن کلاسیک',
+    ),
+    'wizard' => 
+    array (
+      'templateTitle' => 'مرحله 3 | تنظیمات محیط | جادوگر راهنما',
+      'title' => 'راهنمای <code> .env </code> جادوگر',
+      'tabs' => 
+      array (
+        'environment' => 'محیط',
+        'database' => 'بانک اطلاعات',
+        'application' => 'کاربرد',
+      ),
+      'form' => 
+      array (
+        'name_required' => 'یک نام محیطی لازم است',
+        'app_name_label' => 'نام نرم افزار',
+        'app_name_placeholder' => 'نام نرم افزار',
+        'app_environment_label' => 'محیط برنامه',
+        'app_environment_label_local' => 'محلی',
+        'app_environment_label_developement' => 'توسعه',
+        'app_environment_label_qa' => 'قائم',
+        'app_environment_label_production' => 'تولید',
+        'app_environment_label_other' => 'دیگر',
+        'app_environment_placeholder_other' => 'وارد محیط خود شوید ...',
+        'app_debug_label' => 'اشکال زدایی برنامه',
+        'app_debug_label_true' => 'درست است',
+        'app_debug_label_false' => 'غلط',
+        'app_log_level_label' => 'سطح ورود به برنامه',
+        'app_log_level_label_debug' => 'اشکال زدایی',
+        'app_log_level_label_info' => 'اطلاعات',
+        'app_log_level_label_notice' => 'اطلاع',
+        'app_log_level_label_warning' => 'هشدار',
+        'app_log_level_label_error' => 'خطا',
+        'app_log_level_label_critical' => 'بحرانی',
+        'app_log_level_label_alert' => 'هشدار',
+        'app_log_level_label_emergency' => 'اضطراری',
+        'app_url_label' => 'آدرس اینترنتی',
+        'app_url_placeholder' => 'آدرس اینترنتی',
+        'db_connection_failed' => 'اتصال به پایگاه داده امکان پذیر نیست. تنظیمات را بررسی کنید.',
+        'db_connection_label' => 'اتصال به بانک اطلاعاتی',
+        'db_connection_label_mysql' => 'mysql',
+        'db_connection_label_sqlite' => 'sqlite',
+        'db_connection_label_pgsql' => 'pgsql',
+        'db_connection_label_sqlsrv' => 'sqlsrv',
+        'db_host_label' => 'میزبان پایگاه داده',
+        'db_host_placeholder' => 'میزبان پایگاه داده',
+        'db_port_label' => 'درگاه پایگاه داده',
+        'db_port_placeholder' => 'درگاه پایگاه داده',
+        'db_name_label' => 'نام پایگاه داده',
+        'db_name_placeholder' => 'نام پایگاه داده',
+        'db_username_label' => 'نام کاربر پایگاه داده',
+        'db_username_placeholder' => 'نام کاربر پایگاه داده',
+        'db_password_label' => 'رمز عبور پایگاه داده',
+        'db_password_placeholder' => 'رمز عبور پایگاه داده',
+        'app_tabs' => 
+        array (
+          'more_info' => 'اطلاعات بیشتر',
+          'broadcasting_title' => 'پخش ، ذخیره سازی ، جلسه و صف',
+          'broadcasting_label' => 'درایور پخش',
+          'broadcasting_placeholder' => 'درایور پخش',
+          'cache_label' => 'درایور کش',
+          'cache_placeholder' => 'درایور کش',
+          'session_label' => 'راننده جلسه',
+          'session_placeholder' => 'راننده جلسه',
+          'queue_label' => 'درایور صف',
+          'queue_placeholder' => 'درایور صف',
+          'redis_label' => 'راننده Redis',
+          'redis_host' => 'میزبان Redis',
+          'redis_password' => 'دوباره رمز عبور',
+          'redis_port' => 'بندر ردیس',
+          'mail_label' => 'نامه',
+          'mail_driver_label' => 'درایور پست الکترونیکی',
+          'mail_driver_placeholder' => 'درایور پست الکترونیکی',
+          'mail_host_label' => 'میزبان ایمیل',
+          'mail_host_placeholder' => 'میزبان ایمیل',
+          'mail_port_label' => 'پورت پستی',
+          'mail_port_placeholder' => 'پورت پستی',
+          'mail_username_label' => 'نام کاربری ایمیل',
+          'mail_username_placeholder' => 'نام کاربری ایمیل',
+          'mail_password_label' => 'رمز عبور ایمیل',
+          'mail_password_placeholder' => 'رمز عبور ایمیل',
+          'mail_encryption_label' => 'رمزگذاری نامه',
+          'mail_encryption_placeholder' => 'رمزگذاری نامه',
+          'pusher_label' => 'هل دادن',
+          'pusher_app_id_label' => 'شناسه برنامه Pusher',
+          'pusher_app_id_palceholder' => 'شناسه برنامه Pusher',
+          'pusher_app_key_label' => 'کلید برنامه Pusher',
+          'pusher_app_key_palceholder' => 'کلید برنامه Pusher',
+          'pusher_app_secret_label' => 'راز برنامه مخفی',
+          'pusher_app_secret_palceholder' => 'راز برنامه مخفی',
+        ),
+        'buttons' => 
+        array (
+          'setup_database' => 'پایگاه داده راه اندازی',
+          'setup_application' => 'برنامه راه اندازی',
+          'install' => 'نصب',
+        ),
+      ),
+    ),
+    'classic' => 
+    array (
+      'backup' => 'برای جلوگیری از هرگونه خرابکاری ، لطفاً تنظیمات پیش فرض را در جایی دیگر قبل از ایجاد هرگونه تغییر و کپی و ذخیره کنید.',
+      'templateTitle' => 'مرحله 3 | تنظیمات محیط | ویرایشگر کلاسیک',
+      'title' => 'ویرایشگر پرونده محیط',
+      'save' => 'ذخیره تنظیمات',
+      'back' => 'از Wizard Form استفاده کنید',
+      'install' => 'نصب',
+      'required' => 'برای ادامه مشکل را حل کنید.',
+    ),
+    'success' => 'تنظیمات پرونده .env شما ذخیره شده است.',
+    'errors' => 'فایل .env قابل ذخیره نیست ، لطفاً آن را به صورت دستی ایجاد کنید.',
+  ),
+  'verify' => 
+  array (
+    'verify_purchase' => 'خرید را تأیید کنید',
+    'submit' => 'ارسال',
+    'form' => 
+    array (
+      'email_address_label' => 'آدرس ایمیل',
+      'email_address_placeholder' => 'آدرس ایمیل',
+      'purchase_code_label' => 'کد خرید',
+      'purchase_code_placeholder' => 'کد خرید یا کلید مجوز',
+      'root_url_label' => 'ریشه Url',
+      'root_url_placeholder' => 'نشانی اینترنتی ROOT (بدون / در پایان)',
+    ),
+  ),
+  'install' => 'نصب',
+  'verified' => 'مجوز با موفقیت تأیید شد.',
+  'verification_failed' => 'تأیید مجوز انجام نشد!',
+  'installed' => 
+  array (
+    'success_log_message' => 'نصب کننده zCart با موفقیت نصب شد',
+  ),
+  'final' => 
+  array (
+    'title' => 'مرحله نهایی',
+    'templateTitle' => 'مرحله نهایی',
+    'finished' => 'برنامه با موفقیت نصب شده است.',
+    'migration' => 'خروجی کنسول مهاجرت و بذر:',
+    'console' => 'خروجی کنسول برنامه:',
+    'log' => 'ورود به سیستم ورود به سیستم:',
+    'env' => 'فایل نهایی .env:',
+    'exit' => 'برای ورود اینجا کلیک کنید',
+    'import_demo_data' => 'وارد کردن اطلاعات نسخه ی نمایشی',
+  ),
+  'updater' => 
+  array (
+    'title' => 'به روزرسانی zCart',
+    'welcome' => 
+    array (
+      'title' => 'به بروزرسانی خوش آمدید',
+      'message' => 'به جادوگر به روزرسانی خوش آمدید.',
+    ),
+    'overview' => 
+    array (
+      'title' => 'بررسی اجمالی',
+      'message' => '1 بروزرسانی وجود دارد. | به روزرسانی :number وجود دارد.',
+      'install_updates' => 'به روز رسانی ها را نصب کن',
+    ),
+    'final' => 
+    array (
+      'title' => 'تمام شده',
+      'finished' => 'بانک اطلاعاتی برنامه با موفقیت به روز شد.',
+      'exit' => 'برای خروج اینجا را کلیک کنید',
+    ),
+    'log' => 
+    array (
+      'success_message' => 'نصب کننده zCart با موفقیت به روز شد',
+    ),
+  ),
+);

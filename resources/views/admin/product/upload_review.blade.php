@@ -3,7 +3,9 @@
 @section('content')
 	<div class="box">
 		<div class="box-header with-border">
-			<h3 class="box-title">{{ trans('app.preview') }}</h3>
+			<h3 class="box-title">
+				{{ trans('app.preview') }} <small>({{ trans('app.total_number_of_rows', ['value' => count($rows)]) }})</small>
+			</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\Product::class)
 					<a href="javascript:void(0)" data-link="{{ route('admin.catalog.product.bulk') }}" class="ajax-modal-btn btn btn-default btn-flat">{{ trans('app.bulk_import') }}</a>
@@ -28,7 +30,7 @@
 		        </thead>
 		        <tbody>
 		        	@foreach($rows as $row)
-		        		@continue( ! $row['name'] )
+		        		{{-- @continue( ! $row['name'] ) --}}
 
 		        		<tr>
 		        			<td><img src="{{ $row['image_link'] ?: get_placeholder_img('tiny') }}" class="img-sm"></td>
@@ -76,10 +78,11 @@
 
 		<div class="box-footer">
 			<a href="{{ route('admin.catalog.product.index') }}" class="btn btn-default btn-flat">{{ trans('app.cancel') }}</a>
+			<small class="indent20">{{ trans('app.total_number_of_rows', ['value' => count($rows)]) }}</small>
 			<div class="box-tools pull-right">
 				{!! Form::open(['route' => 'admin.catalog.product.import', 'id' => 'form', 'class' => 'inline-form', 'data-toggle' => 'validator']) !!}
 		        	@foreach($rows as $row)
-		        		@continue( ! $row['name'] )
+		        		{{-- @continue( ! $row['name'] ) --}}
 						{{ Form::hidden('data[]', serialize($row)) }}
 		        	@endforeach
 					{!! Form::button(trans('app.looks_good'), ['type' => 'submit', 'class' => 'confirm btn btn-new btn-flat']) !!}

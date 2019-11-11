@@ -1,682 +1,317 @@
-<?php
-
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Help Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used to display application language.
-    | You are free to change them to anything
-    | you want to customize your views to better match your application.
-    |
-    */
-
-    'add_input_field' => 'Add input field',
-
-    'remove_input_field' => 'Remove this input field',
-
-    'marketplace_name' => 'The name of the marketplace name. Visitors will see this name.',
-
-    'system_legal_name' => 'The legal name of the business',
-
-    'min_pass_lenght' => 'Minimum 6 characters',
-
-    'role_name' => 'The title of the user role',
-
-    'role_type' => 'Platform and Merchant. The role type platform only available for the main platform user, a merchant can\'t use this role. The Merchant role type will available when a merchant will add a new user.',
-
-    'role_level' => 'Role level will be use determine who can control who. Example: An user with role level 2 can\'t modify any the user with role level 1. Keep emty if the role is for end level users.',
-
-    'you_cant_set_role_level' => 'Only top-level users can set this value.',
-
-    'cant_edit_special_role' => 'This role type is not editable. Be careful to modify the permissions of this role.',
-
-    'set_role_permissions' => 'Set role permissions very carefully. Choose the \'Role Type\' to get approperit modules.',
-
-    'permission_modules' => 'Enable the module to set permission for the module',
-
-    'shipping_rate_delivery_takes' => 'Be specific, customer will see this.',
-
-    'type_dbreset' => 'Type the exact word "RESET" in the box to confirm your wish.',
-
-    'type_environment' => 'Type the exact word "ENVIRONMENT" in the box to confirm your wish.',
-
-    'type_uninstall' => 'Type the exact word "UNINSTALL" in the box to confirm your wish.',
-
-    'module' => [
-        'name' => 'All users under this role will be able to do specified actions to manage :module.',
-
-        'access' => [
-            'common' => 'This is a :Access module. That means both platform users and merchant users can get access.',
-
-            'platform' => 'This is a :Access module. That means only platform users can get access.',
-
-            'merchant' => 'This is a :Access module. That means only merchant users can get access.',
-        ]
-    ],
-
-    'currency_iso_code' => 'ISO 4217 code. For example, United States dollar has code USD and Japan\'s currency code is JPY.',
-
-    'currency_subunit' => 'The subunit that is a fraction of the base unit. For example: cent, centavo, paisa',
-
-    'currency_symbol_first' => 'Example: $13.21',
-
-    'currency_decimalpoint' => 'Example: 13.21, 13,21',
-
-    'currency_thousands_separator' => 'Example: 1,000, 1.000, 1 000',
-
-    'cover_img_size' => 'Cover image size should be 1280x300px',
-
-    'slug' => 'Slug are usually a search engine friendly URL',
-
-    'shop_slug' => 'This will be used as your shop URL, You can not change it later. Be creative to choose the slug for your shop',
-
-    'shop_url' => 'The complete path to the shop\'s landing page. You can\'t change the url.',
-
-    'shop_timezone' => 'The timezone will not effect the shop or marketplace. Its for just to know more about your shop',
-
-    // 'website' => 'Homepage link',
-
-    'url' => 'Web address',
-
-    'optional' => '(optional)',
-
-    'use_markdown_to_bold' => 'Add ** bothside of important keyword to highlight',
-
-    'announcement_action_text' => 'Optional action button to link the announcement to any url',
-
-    'announcement_action_url' => 'The action url to blog post or any url',
-
-    // 'help_doc_link' => 'Help document link',
-
-    'blog_feature_img_hint' => 'The image size should be 960x480px',
-
-    'code' => 'Code',
-
-    'brand' => 'The brand of the product. Not required but recommended',
-
-    'shop_name' => 'The brand or display name of the shop',
-
-    'shop_status' => 'If active, the shop will be live immediately.',
-
-    'shop_maintenance_mode_handle' => 'If maintenance mode is on, the shop will be offline and all listings will be down from the marketplace until maintenance off.',
-
-    'system_maintenance_mode_handle' => 'If maintenance mode is on, the marketplace will be offline and the maintenance mode flag will be shown to the visitors. Still merchants can access their admin panel.',
-
-    'system_physical_address' => 'The physical location of the marketplace/office',
-
-    'system_email' => 'All notifications will be send to this email address, accept support emails(if set)',
-
-    'system_timezone' => 'This system will use this timezone to operate.',
-
-    'system_currency' => 'The marketplace currency',
-
-    'system_slogan' => 'The tagline that describe your marketplace most',
-
-    'system_length_unit' => 'Unit of length will be use all over the marketplace.',
-
-    'system_weight_unit' => 'Unit of weight will be use all over the marketplace.',
-
-    'system_valume_unit' => 'Unit of valume will be use all over the marketplace.',
-
-    'ask_customer_for_email_subscription' => 'When a new customer register an account ask your customer if he/she want to get promotions and other notifications on email. Turning the option off will result in auto subscription. In that case, make the clear on the terms and condition section.',
-
-    'allow_guest_checkout' => 'This will allow customers to checkout without registering on the site.',
-
-    'vendor_can_view_customer_info' => 'This will allow vendors to see customer\'s detail informations on the order page. Otherwise the name, email address and billing/shipping addresses will be visible.',
-
-    'system_pagination' => 'Set the pagination value for the data tables on the admin panel.',
-
-    'subscription_name' => 'Give a meaningful name to the subscription plan.',
-
-    'subscription_plan_id' => 'This is the identifier that needs to be the exact match with Stripe\'s plan ID',
-
-    'featured_subscription' => 'There should be only one featured subscription',
-
-    'subscription_cost' => 'The cost of the subscription per month',
-
-    'team_size' => 'Team size is the number of total user can register under this team',
-
-    'inventory_limit' => 'The number of total listing. A variant of the same product will be considered as a different item.',
-
-    'marketplace_commission' => 'Percentage of order item value charge by the marketplace',
-
-    'transaction_fee' => 'If you want to charge a flat fee for every single transaction',
-
-    'subscription_best_for' => 'Target customer for this package. This\'ll be visible to customer.',
-
-    'config_return_refund' => 'Return & refund policy for you shop. Please read the marketplace\'s policy before you specify yours.',
-
-    'config_trial_days' => 'Merchant\'ll be charged after the trial period. If you dont take card upfront then merchant account will be freeze after this time.',
-
-    'charge_after_trial_days' => 'Will be charged after the :days days trial period.',
-
-    'required_card_upfront' => 'Do you want to take card information when merchant register?',
-
-    'leave_empty_to_save_as_draft' => 'Leave empty to save as draft',
-
-    'logo_img_size' => 'Logo image size should be minimum 300x300px',
-
-    'brand_logo_size' => 'Logo image size should be 120x40px and .png',
-
-    'brand_icon_size' => 'Icon image size should be 32x32px and .png',
-
-    'config_alert_quantity' => 'A notification email will be send your inventory goes below the alert quantity',
-
-    'config_max_img_size_limit_kb' => 'The maximum image size limit system can upload for product/inventory/logo/avatar. The size in kilobytes.',
-
-    'config_max_number_of_inventory_imgs' => 'Choose how many images can be uploaded for a single inventory item.',
-
-    'config_address_default_country' => 'Set this value to fill the address form faster. Obviously, a user can change the value when adding new address.',
-
-    'config_address_default_state' => 'Set this value to fill the address form faster. Obviously, a user can change the value when adding new address.',
-
-    'config_show_address_title' => 'Show/Hide address title while view/print an address.',
-
-    'config_address_show_country' => 'Show/Hide country name while view/print an address. This is helpful if your marketplace within a small region.',
-
-    'config_address_show_map' => 'Want to show map with addresses? This option will generate map using Google Map.',
-
-    // 'system_date_format' => 'Set the date format for the marketplace. Example: 2018-05-13, 05-13-2018, 13-05-2018',
-
-    // 'config_date_separator' => 'Example: 2018-05-13, 2018.05.13, 2018/05/13',
-
-    // 'system_time_format' => 'Set the time format for the marketplace. Example: 01:00pm or 13:00',
-
-    // 'config_time_separator' => ' Example: 07:00am or 07.00am',
-
-    'config_show_currency_symbol' => 'Do you want to show currency symbol when reprenting a price?  Example: $123',
-
-    'config_show_space_after_symbol' => 'Want to formate the price by puting a space after the symbol. Example: $ 123',
-
-    'config_decimals' => 'How many digits you want to show after the decimal point? Example: 13.21, 13.123',
-
-    // 'config_decimalpoint' => 'Example: 13.21, 13,21',
-
-    // 'config_thousands_separator' => 'Example: 1,000, 1.000, 1 000',
-
-    'config_gift_card_pin_size' => 'How many digits you want to generate giftcard pin number. Default length 10',
-
-    'config_gift_card_serial_number_size' => 'How many digits you want to generate giftcard seria number. Default length 13',
-
-    'config_coupon_code_size' => 'How many digits you want to generate coupon code. Default length 8',
-
-    'shop_email' => 'All notifications will be send to this email address(inventories, orders, tickets, disputs etc.) accept customer support emails(if set)',
-
-    'shop_legal_name' => 'The legal name of the shop',
-
-    'shop_owner_id' => 'The owner and super admin of the shop. A user registered as a Merchant can own a shop. You can\'t change this later.',
-
-    // 'shop_owner_cant_change' => 'The owner of the shop can\'t be changed. Instead you can delete the shop and create a new one.',
-
-    'shop_description' => 'The brand description of the shop, this information will be visible on the shop\'s homepage.',
-
-    'attribute_type' => 'The type of attribute. This will help to show the options on the product page.',
-
-    'attribute_name' => 'This name will show on the product page.',
-
-    'attribute_value' => 'This value will show on the product page as selectable option.',
-
-    'parent_attribute' => 'The option will be shown under this arrtibute.',
-
-    'list_order' => 'Viewing order on the list.',
-
-    // 'external_url' => 'If you own a website you can put the external link here',
-
-    'shop_external_url' => 'If you own a website you can put the external link here, the url can be set as shop\'s landing page.',
-
-    'product_name' => 'Customers will not see this. This name only helps merchants to find the item for listing.',
-
-    'product_featured_image' =>  'Customers will not see this. This only helps merchants to find the item for listing.',
-
-    'product_images' => 'Customers will see this images only if the merchant\'s listing has no images to display.',
-
-    'product_active' => 'Merchants will find active items only.',
-
-    'product_description' => 'Customers will see this. This is the core and common product description.',
-
-    'model_number' => 'An identifier of a product given by its manufacturer. Not required but recommended',
-
-    'gtin' => 'Global Trade Item Number (GTIN) is a unique identifier of a product in the global marketplace. If you like to obtain an ISBN or UPC code for your product, you will find more information at the following websites: http://www.isbn.org/ and http://www.uc-council.org/',
-
-    'mpn' => 'Manufacturer Part Number (MPN) is an unique identifier issued by the manufacturer. You can obtain MPNs from the manufacturer. Not required but recommended',
-
-    'sku' => 'SKU (Stock Keeping Unit) is the seller specific identifier. It will help to manage your inventory',
-
-    'isbn' => 'The International Standard Book Number (ISBN) is a unique commercial book identifier barcode. Each ISBN code identifies uniquely a book. ISBN have either 10 or 13 digits. All ISBN assigned after 1 Jan 2007 have 13 digits. Typically, the ISBN is printed on the back cover of the book',
-
-    'ean' => 'The European Article Number (EAN) is a barcode standard, a 12- or 13-digit product identification  code. You can obtain EANs from the manufacturer. If your products do not have manufacturer EANs, and you need to buy EAN codes, go to GS1 UK http://www.gs1uk.org',
-
-    'upc' => 'Universal Product Code (UPC), also called GTIN-12 and UPC-A. A unique numerical identifier for commercial products that\'s usually associated with a barcode printed on retail merchandise',
-
-    'meta_title' => 'Title tags—technically called title elements—define the title of a document. Title tags are often used on search engine results pages (SERPs) to display preview snippets for a given page, and are important both for SEO and social sharing',
-
-    'meta_description' => 'Meta descriptions are HTML attributes that provide concise explanations of the contents of web pages. Meta descriptions are commonly used on search engine result pages (SERPs) to display preview snippets for a given page',
-
-    'catalog_min_price' => 'Set a minimum price for the product. Vendors can add inventory within this price limits.',
-
-    'catalog_max_price' => 'Set a maximum price for the product. Vendors can add inventory within this price limits.',
-
-    'has_variant' => 'This item has variants like different colors, shapes, sizes etc.',
-
-    'requires_shipping' => 'This item requires shipping.',
-
-    'downloadable' => 'This item is a digital content and buyers can download the item.',
-
-    'manufacturer_url' => 'The official website link of the manufacturer.',
-
-    'manufacturer_email' => 'The system will use this email address to communicate with the manufacturer.',
-
-    'manufacturer_phone' => 'The support phone number of the manufacturer.',
-
-    'supplier_email' => 'The system will use this email address to communicate with the supplier.',
-
-    'supplier_contact_person' => 'Contact person',
-
-    // 'supplier_phone' => 'The support phone number of the supplier.',
-
-    // 'supplier_address' => 'The system will use this address to create invoice.',
-
-    'shop_address' => 'The physical address of the shop.',
-
-    'search_product' => 'You can use any GTIN identifier like UPC, ISBN, EAN, JAN or ITF. You can also use name and model number OR part of name or model number.',
-
-    'seller_description' => 'This is seller specific description of the product. Customer will see this',
-
-    'seller_product_condition' => 'What is the current condition of the product?',
-
-    'condition_note' => 'Condition note is helpful when the product is used/refurbished',
-
-    'select_supplier' => 'Recommended field. This will helps to generate reports',
-
-    'select_warehouse' => 'Choose the warehouse from where the product will be shipped.',
-
-    // 'inventory_select_tax' => 'The Tax will be added with the sale/offer price on the store. Orders created at back office will not apply the tax autometically. You need select the tax when create an order on back office. If your price inclusive the tax, then select -No Tax- option here',
-
-    // 'select_carriers' => 'List of available carriers to ship the product. Leave blank to if the item doesn\'t require shipping',
-
-    'select_packagings' => 'List of available packaging options to ship the product. Leave blank to disable packaging option',
-
-    'available_from' => 'The date when the stock will be available. Default = immediately',
-
-    'sale_price' => 'The price without any tax. Tax will be calculated autometically based on shipping zone.',
-
-    'purchase_price' => 'Recommended field. This will helps to calculate profits and generate reports',
-
-    'min_order_quantity' => 'The quantity allowed to take orders. Must be an integer value. Default = 1',
-
-    'offer_price' => 'The offer price will be effected between the offer start and end dates',
-
-    'offer_start' => 'An offer must have a start date. Required if offer price field is given',
-
-    'offer_end' => 'An offer must have an end date. Required if offer price field is given',
-
-    'seller_inventory_status' => 'Is the item is open to sale? Inactive item will not be shown on the marketplace.',
-
-    'stock_quantity' => 'Number of items you have on your warehouse',
-
-    'offer_starting_time' => 'Offer starting time',
-
-    'offer_ending_time' => 'Offer ending time',
-
-    'set_attribute' => 'If the value is not on the list, you can add appropriate value by just typing the new value',
-
-    'variants' => 'Product variants',
-
-    'delete_this_combination' => 'Delete this combination',
-
-    'romove_this_cart_item' => 'Romove this item from the cart',
-
-    'no_product_found' => 'No product found! Please try different search or add new product',
-
-    'not_available' => 'Not available!',
-
-    'admin_note' => 'Admin note will not visible to customer',
-
-    'message_to_customer' => 'This message will send to customer with the invoice email',
-
-    'empty_cart' => 'The cart is empty',
-
-    'send_invoice_to_customer' => 'Send an invoice to customer with this message',
-
-    'delete_the_cart' => 'Delete the cart and proceed the order',
-
-    // 'order_status_name' => 'The title of the status that will be visible everywhere.',
-
-    // 'order_status_color' => 'The label color of the order status',
-
-    'order_status_send_email' => 'An email will be sent to the customer when the order status updates',
-
-    'order_status_email_template' => 'This email template will be sent to the customer when the order status updates. Mandatory if the email is enabled for the status',
-
-    'update_order_status' => 'Update the order status',
-
-    'email_template_name' => 'Give the template a name. This is for system use only.',
-
-    'template_use_for' => 'The template will be used by',
-
-    'email_template_subject' => 'This will use as the subject of the email.',
-
-    'email_template_body' => 'There are some short codes you can use for dynamic information. Check the bottom of this form to see the available short codes.',
-
-    'email_template_type' => 'The type of the email.',
-
-    'template_sender_email' => 'This email address will use to send emails and receiver can reply to this.',
-
-    'template_sender_name' => 'This name will use as sender name',
-
-    // 'payment_method_name' => 'Name of the payment method',
-
-    // 'payment_method_company_name' => 'The main company name',
-
-    'packaging_name' => 'Customer will see this if the packaging option is available on order checkout',
-
-    'width' => 'The width of the packaging',
-
-    'height' => 'The height of the packaging',
-
-    'depth' => 'The depth of the packaging',
-
-    'packaging_cost' => 'The cost of packaging. You can choose if you want to charge the cost to customers or not',
-
-    'set_as_default_packaging' => 'If checked: this packaging will be used as default shipping package',
-
-    // 'packaging_charge_customer' => 'If checked: the cost will be added with shipping when a customer place an order.',
-
-    'shipping_carrier_name' => 'Name of the shipping carrier',
-
-    // 'shipping_tax' => 'Shipping tax will be added to shipping cost while checkout.',
-
-    'shipping_zone_name' => 'Give a name of zone. Customer will not see this name.',
-
-    'shipping_rate_name' => 'Give a meaningful name. Customer will see this name at checkout. e. g. \'standard shipping\'',
-
-    'shipping_zone_carrier' => 'You can link the shipping carrier. Customer will see this at checkout.',
-
-    'free_shipping' => 'If enabled, The free shipping label will be displayed on the product listing page.',
-
-    'shipping_rate' => 'Check the \'Free shipping\' option or give 0 amount for free shipping',
-
-    'shipping_zone_tax' => 'This tax profile will be applicable when customer make a purchase from this shipping zone',
-
-    'shipping_zone_select_countries' => 'Select countries to this zone that you ship to. Check Rest of the world option for worldwide zone.',
-
-    'rest_of_the_world' => 'This zone includes any countries and regions not already defined in your other shipping zones.',
-
-    'shipping_max_width' => 'Maximum package width handle by the carrier. Leave empty to disable.',
-
-    'shipping_tracking_url' => ' \'@\' will be replaced by the dynamic tracking number',
-
-    'shipping_tracking_url_example' => 'e.g.: http://example.com/track.php?num=@',
-
-    'order_tracking_id' => 'Order tracking ID provided by the shipping service provider.',
-
-    'order_fulfillment_carrier' => 'Choose the shipping carrier to fulfill the order.',
-
-    'notify_customer' => 'A notification email will be send to the customer with necessary information.',
-
-    // 'order_status_fulfilled' => 'Do you want to mark the order as fulfilled when the order status changed to this?',
-
-    'shipping_weight' => 'The will be used to calculate the shipping cost.',
-
-    'order_number_prefix_suffix' => 'The prefix and suffix will be added autometically to formate all order numbers. Leave it blank if you don\'t want to formate order numbers.',
-
-    'customer_not_see_this' => 'Customer will not see this',
-
-    'customer_will_see_this' => 'Customers will see this',
-
-    'refund_select_order' => 'Select the order you want to refund',
-
-    'refund_order_fulfilled' => 'Is the order shipped to the customer?',
-
-    'refund_return_goods' => 'Is the item returned to you?',
-
-    'customer_paid' => 'Customer paid <strong><em> :amount </em></strong>, inclusive all taxes, shipping charges and others.',
-
-    'order_refunded' => 'Previously refunded <strong><em> :amount </em></strong> of total <strong><em> :total </em></strong>',
-
-    'search_customer' => 'Find the customer by email address, nice name or full name.',
-
-    'coupon_quantity' => 'Total number of avaliable coupons',
-
-    'coupon_name' => 'The name will be use in invoice and order summary',
-
-    'coupon_code' => 'The unique coupon code',
-
-    'coupon_value' => 'The value of the coupon',
-
-    'coupon_min_order_amount' => 'Choose minimum order amount for the cart (optional)',
-
-    'coupon_quantity_per_customer' => 'Choose how many times a customer can use this coupon. If you leave it empty then a customer can use this coupon till it\'s availablity.',
-
-    'starting_time' => 'The coupon will be available from this time',
-
-    'ending_time' => 'The coupon will be available till this time',
-
-    'exclude_tax_n_shipping' => 'Exclude tax and shipping cost',
-
-    'exclude_offer_items' => 'Exclude items that already have a running offer or discount',
-
-    // 'coupon_partial_use' => 'Allow partial use of the total coupon value',
-
-    'coupon_limited_to_customers' => 'Choose if you want to make the coupon for specific customers only',
-
-    'coupon_limited_to_shipping_zones' => 'Choose if you want to make the coupon for specific shipping zones only',
-
-    'coupon_limited_to' => 'Use email address or name to find customers',
-
-    'faq_placeholders' => 'You can use this placeholder in your question and answer, this will be replaces by the actual value',
-
-    'gift_card_name' => 'The name of the gift card.',
-
-    'gift_card_pin_code' => 'The unique secret code. The pin code is the passcode for the card. You can\'t change this value later.',
-
-    'gift_card_serial_number' => 'The unique serial number for the card. You can\'t change this value later.',
-
-    'gift_card_value' => 'The value of the card. The customer will receive same amount of discount.',
-
-    'gift_card_activation_time' => 'Activation time of the card. The card can be used after this time.',
-
-    'gift_card_expiry_time' => 'Expiry time of the card. The card can be valid till this time.',
-
-    'gift_card_partial_use' => 'Allow partial use of total card value',
-
-    'number_between' => 'Between :min and :max',
-
-    // 'default_tax_id' => 'Default tax profile will be preselected when add new inventory',
-
-    'default_tax_id' => 'Default tax profile will be applied when the shipping zone not covered by any tax area.',
-
-    'default_payment_method_id' => 'If selected, The payment method will be preselected when create new order',
-
-    'config_order_handling_cost' => 'This additional cost tille be added with the shipping cost of every orders. Leave it blank to disable order handling charge',
-
-    // 'default_carrier' => 'Default carrier will be preselected when placing a new order. It\'ll help to faster the checkout process',
-
-    // 'default_packaging' => 'Set a default packing, if you want to enable the packing options on order., then this default value will help to faster the checkout process',
-
-    'default_warehouse' => 'Default warehouse will be preselected when add new inventory',
-
-    'default_supplier' => 'Default supplier will be preselected when add new inventory',
-
-    'default_packaging_ids_for_inventory' => 'Default packagings will be preselected when add new inventory. This will help you to add inventory faster',
-
-    'config_payment_environment' => 'Is the credentials are for live mode or test more?',
-
-    'config_authorize_net_transaction_key' => 'The transaction key from Authorize.net. If you\'re not sure, contact Authorize.net to get help.',
-
-    'config_authorize_net_api_login_id' => 'The API login ID from Authorize.net. If you\'re not sure, contact Authorize.net to get help.',
-
-    'config_enable_payment_method' => 'The system offers various types of payment gateways. You can enable/disable any payment gateway to control payment options vendor can use to accept payment from customers.',
-
-    'config_additional_details' => 'Displayed on the Payment method page, while the customer is choosing how to pay.',
-
-    'config_payment_instructions' => 'Displayed on the Thank you page, after the customer has placed their order.',
-
-    'config_stripe_publishable_key' => 'Publishable API keys are meant solely to identify your account with Stripe, they aren\'t secret. They can safely be published.',
-
-    'config_paypal_express_account' => 'Usually the email address of your PayPal application. Create your PayPal application from here: https://developer.paypal.com/webapps/developer/applications/myapps',
-
-    'config_paypal_express_client_id' => 'The Client ID is a long unique identifier of your PayPal application. You\'ll find this value on the My Apps & Credentials section on your PayPal dashboard.',
-
-    'config_paypal_express_secret' => 'The PayPal API Secret Key. You\'ll find this value on the My Apps & Credentials section on your PayPal dashboard.',
-
-    'config_paystack_merchant_email' => 'The merchant email of your Paystack account.',
-
-    'config_paystack_public_key' => 'The Public Key is a long unique identifier of your Paystack application. You\'ll find this value on the API keys and Webhooks section in the settings on your Paystack dashboard.',
-
-    'config_paystack_secret' => 'The Paystack API Secret Key. You\'ll find this value on the API keys and Webhooks section in the settings on your Paystack dashboard.',
-
-    'config_auto_archive_order' => 'Automatically archive the order. Select this feature if you do not want to manually archive all orders after they have been fulfilled.',
-
-    // 'config_stripe_secret_key' => 'Secret API keys will be required to charge the customer while checkout.',
-
-    // 'config_paypal_express' => 'You must have a PayPal business account to activate this payment method.',
-
-    'config_pagination' => 'How many list items you want to view per page on the data tables',
-
-    'support_phone' => 'Customer will contact this number for support and query',
-
-    'support_email' => 'You\'ll get all support email to this address',
-
-    'support_phone_toll_free' => 'If you have a toll free number for customer support',
-
-    'default_sender_email_address' => 'All autometed emails to customers will be sent from this email address. And also when a sender email address can\'t set while sending an email',
-
-    'default_email_sender_name' => 'This name will be used as the sender of email send from default sender email address',
-
-    // 'google_analytics_id' => 'The tracking ID from google analytics. It looks something like "UA-XXXXX-XX".',
-
-    'google_analytic_report' => 'You should only enable this, If the system is configured with Google analytics. Otherwise, it may cause errors. Check the documentation for help. Alternatively you can use the application\'s built in report system. ',
-
-    'inventory_linked_items' => 'The linked items will display on the product page as frequently bought together items. This is optional but important.',
-
-    'notify_new_message' => 'Send me a notification when a new message arrived',
-
-    'notify_alert_quantity' => 'Send me a notification when any item on my inventory reach the alert quantity level',
-
-    'notify_inventory_out' => 'Send me a notification when any item on my inventory stock out',
-
-    'notify_new_order' => 'Send me a notification when a new order has been placed on my store',
-
-    'notify_abandoned_checkout' => 'Send me a notification when customer abandoned checkout of my item',
-
-    'notify_when_vendor_registered' => 'Send me a notification when a new vendor has been registered',
-
-    'notify_new_ticket' => 'Send me a notification when a support ticket has been created on the system',
-
-    'notify_new_disput' => 'Send me a notification when a customer submit a new dispute',
-
-    'notify_when_dispute_appealed' => 'Send me a notification when a dispute has been appealed to review by marketplace team',
-
-    'download_template' => '<a href=":url">Download a sample CSV template</a> to see an example of the format required.',
-
-    'download_category_slugs' => '<a href=":url">Download category slugs</a> to get the correct category for your products.',
-
-    'first_row_as_header' => 'The first row is the header. <strong>Don\'t change</strong> this row.',
-
-    'user_category_slug' => 'Use category <strong>slug</strong> in category field.',
-
-    'cover_img' => 'This image will display on the top of the :page page',
-
-    'cat_grp_img' => 'This image will display on the background of the category dropdown box',
-
-    'cat_grp_desc' => 'Customer will not see this. But Merchants will see this.',
-
-    'inactive_for_back_office' => 'If inactive, Customers can still visit the :page page. But merchants will not able to use this :page for future listing.',
-
-    'invalid_rows_will_ignored' => 'Invalid rows will be <strong>ignored</strong>.',
-
-    'upload_rows' => 'Upload no more than <strong>:rows rows</strong> per batch for better performance.',
-
-    'name_field_required' => 'Name field is required.',
-
-    'email_field_required' => 'Email is required.',
-
-    'invalid_email' => 'Invalid email address.',
-
-    'invalid_category' => 'Invalid category.',
-
-    'category_desc' => 'Give a short detail. Customers will see this.',
-
-    'email_already_exist' => 'The email address already in use.',
-
-    'slug_already_exist' => 'The slug already in use.',
-
-    'display_order' => 'This number will be used to arrange viewing order. The smallest number will display first.',
-
-    'banner_title' => 'This line will be highlighted on the banner. Leave it blank if you don\'t want to show the title.',
-
-    'banner_description' => '( Example: 50% Off! ) Leave it blank if you don\'t want to show this.',
-
-    'banner_image' => 'The main image what will display over the background. Commonly use a product image.',
-
-    'banner_background' => 'Choose a color or upload an image as the background.',
-
-    'banner_group' => 'The placement of the banner on the storefront. The banner will not display if the group is not specified.',
-
-    'bs_columns' => 'How many columns this banner will use? The system uses 12 columns grid system to display banners.',
-
-    'banner_order' => 'This number will be used to arrange viewing order in the group of banners. The smallest number will display first.',
-
-    'banner_link' => 'Users will redirect to this link.',
-
-    'link_label' => 'The label of the link button',
-
-    'slider_link' => 'Users will redirect to this link.',
-
-    'slider_title' => 'This line will be highlighted over the slider. Leave it blank if you don\'t want to show the title.',
-
-    'slider_sub_title' => 'The second line of the title. Leave it blank if you don\'t want to show this.',
-
-    'slider_image' => 'The main image what will display as slider. Its required to generate the slider.',
-
-    'slider_img_hint' => 'The slider image should be 1280x300px',
-
-    'slider_order' => 'The slider will be  arranged by this order.',
-
-    'slider_thumb_image' => 'This small image will be used as thumbnail. The system will create a thumbnail if not provided.',
-
-    'slider_thumb_hint' => 'It can be 150x59px',
-
-    'variant_image' => 'The image of the variant',
-
-    // Version 1.3.0
-    'empty_trash' => 'Empty the trash. All items on the trash will be deleted permanently.',
-
-    'hide_trial_notice_on_vendor_panel' => 'Hide trial notice on vendor panel',
-
-    'language_order' => 'The position you want to show this language on the language option. The smallest number will display first.',
-
-    'locale_active' => 'Do you want to show this language on the language option?',
-
-    'locale_code' => 'The locale code, the code must have the same name as the language folder.',
-
-    'locale_code_exmaple' => 'Example for English the code is <em>en</em>',
-
-    'new_language_info' => 'A new language will not affect the system unless you really do the transaction of the language directory. Check the documentation for detail.',
-
-    'php_locale_code' => 'The PHP locale code for system use like translating date, time etc. Please find the full list of the PHP locale code on the documentation.',
-    // 'php_locale_code' => 'The PHP locale code for system use like transacting date, time etc. Please find the full list here https://github.com/ahkmunna/locale-list/blob/master/data/rw/locales.php',
-
-    'rtl' => 'Is the language is right to left (RTL)?',
-
-    'select_all_verification_documents' => 'Select all documents at once.',
-
-    'system_default_language' => 'System default language',
-
-    'update_trial_period' => 'Update trial period',
-
-    'vendor_needs_approval' => 'If enabled, every new vendor will require manual approval from the platform admin panel to get live.',
-
-    'verified_seller' => 'Verified Seller',
-
-    'mark_address_verified' => 'Mark as address verified',
-
-    'mark_id_verified' => 'Mark as ID verified',
-
-    'mark_phone_verified' => 'Mark as phone verified',
-
-];
+<?php 
+return array (
+  'add_input_field' => 'قسمت ورودی را اضافه کنید',
+  'remove_input_field' => 'این قسمت ورودی را حذف کنید',
+  'marketplace_name' => 'نام بازارچه. بازدید کنندگان این نام را خواهند دید.',
+  'system_legal_name' => 'نام قانونی تجارت',
+  'min_pass_lenght' => 'حداقل 6 کاراکتر',
+  'role_name' => 'عنوان نقش کاربر',
+  'role_type' => 'بستر و بازرگان پلت فرم نوع نقش فقط برای کاربر اصلی پلتفرم موجود است ، یک تاجر نمی تواند از این نقش استفاده کند. وقتی یک بازرگان کاربر جدیدی را اضافه کند ، نوع نقش تجاری (Merchant) در دسترس خواهد بود.',
+  'role_level' => 'میزان استفاده از نقش تعیین خواهد کرد که چه کسی می تواند کنترل کند. به عنوان مثال: کاربر با نقش سطح 2 نمی تواند هیچ کاربر با سطح نقش را تغییر دهد 1. در صورتی که نقش برای کاربران سطح نهایی است نقش خود را حفظ کنید.',
+  'you_cant_set_role_level' => 'فقط کاربران سطح بالا می توانند این مقدار را تنظیم کنند.',
+  'cant_edit_special_role' => 'این نوع نقش قابل ویرایش نیست. مراقب باشید که مجوزهای این نقش را اصلاح کنید.',
+  'set_role_permissions' => 'مجوزهای نقش را با دقت تنظیم کنید. برای دریافت ماژول های مناسب ، "نوع نقش" را انتخاب کنید.',
+  'permission_modules' => 'برای تنظیم مجوز برای ماژول ، ماژول را فعال کنید',
+  'shipping_rate_delivery_takes' => 'خاص باشید ، مشتری این را می بیند.',
+  'type_dbreset' => 'کلمه دقیق "RESET" را در جعبه تایپ کنید تا آرزوی خود را تأیید کنید.',
+  'type_environment' => 'کلمه دقیق "محیط زیست" را در جعبه تایپ کنید تا آرزوی خود را تأیید کنید.',
+  'type_uninstall' => 'کلمه دقیق "UNINSTALL" را در جعبه تایپ کنید تا آرزوی خود را تأیید کنید.',
+  'module' => 
+  array (
+    'name' => 'همه کاربران تحت این نقش قادر به انجام اقدامات مشخص برای مدیریت :module خواهند بود.',
+    'access' => 
+    array (
+      'common' => 'این یک ماژول :Access است. این بدان معناست که هم کاربران پلتفرم و هم کاربران بازرگان می توانند به آنها دسترسی پیدا کنند.',
+      'platform' => 'این یک ماژول :Access است. این بدان معناست که فقط کاربران پلتفرم می توانند دسترسی داشته باشند.',
+      'merchant' => 'این یک ماژول :Access است. این بدان معناست که فقط کاربران بازرگان می توانند دسترسی پیدا کنند.',
+    ),
+  ),
+  'currency_iso_code' => 'کد ISO 4217 به عنوان مثال ، دلار آمریکا دارای کد USD و کد ارزی ژاپن JPY است.',
+  'currency_subunit' => 'زیر واحد که کسری از واحد پایه است. به عنوان مثال: cent، centavo، paisa',
+  'currency_symbol_first' => 'مثال: 13.21 دلار',
+  'currency_decimalpoint' => 'مثال: 13.21 ، 13،21',
+  'currency_thousands_separator' => 'مثال: 1000 ، 1.000 ، 1 000',
+  'cover_img_size' => 'اندازه تصویر روی جلد باید 1280x300px باشد',
+  'slug' => 'Slug معمولاً URL دوستانه موتور جستجو است',
+  'shop_slug' => 'این به عنوان آدرس اینترنتی فروشگاه شما استفاده می شود ، شما نمی توانید بعداً آن را تغییر دهید. در انتخاب گل گاو برای فروشگاه خود خلاق باشید',
+  'shop_url' => 'مسیر کامل به صفحه فرود فروشگاه. شما نمی توانید آدرس را تغییر دهید.',
+  'shop_timezone' => 'منطقه زمانی تأثیری در فروشگاه یا بازار نخواهد داشت. این فقط دانستن اطلاعات بیشتر در مورد فروشگاه شماست',
+  'url' => 'آدرس وب',
+  'optional' => '(اختیاری)',
+  'use_markdown_to_bold' => '** برجسته را به هر دو کلید واژه مهم اضافه کنید',
+  'announcement_action_text' => 'دکمه اقدام اختیاری برای پیوند اعلان به هر آدرس اینترنتی',
+  'announcement_action_url' => 'آدرس اینترنتی اقدام به ارسال بلاگ یا هر آدرس اینترنتی',
+  'blog_feature_img_hint' => 'اندازه تصویر باید برابر با 960x480px باشد',
+  'code' => 'کد',
+  'brand' => 'مارک محصول. مورد نیاز نیست اما توصیه می شود',
+  'shop_name' => 'نام تجاری یا نام نمایش فروشگاه',
+  'shop_status' => 'در صورت فعال بودن ، فروشگاه بلافاصله زنده خواهد بود.',
+  'shop_maintenance_mode_handle' => 'در صورت فعال بودن حالت تعمیر و نگهداری ، فروشگاه آفلاین است و تا زمان خاموش نگه داشتن ، تمام لیست ها از بازار پایین می آیند.',
+  'system_maintenance_mode_handle' => 'اگر حالت نگهداری روشن باشد ، بازار به صورت آفلاین است و پرچم حالت نگهداری به بازدید کنندگان نشان داده می شود. بازرگانان هنوز هم می توانند به پنل مدیریت خود دسترسی پیدا کنند.',
+  'system_physical_address' => 'موقعیت فیزیکی بازار / دفتر',
+  'system_email' => 'همه اعلان ها به این آدرس ایمیل ارسال می شوند ، ایمیل های پشتیبانی را می پذیرند (در صورت تنظیم)',
+  'system_timezone' => 'این سیستم از این منطقه زمانی برای بهره برداری استفاده می کند.',
+  'system_currency' => 'ارز بازار',
+  'system_slogan' => 'برچسبی که بیشتر بازار شما را توصیف می کند',
+  'system_length_unit' => 'واحد طول در سراسر بازار استفاده خواهد شد.',
+  'system_weight_unit' => 'واحد وزن در سراسر بازار استفاده خواهد شد.',
+  'system_valume_unit' => 'واحد ارزنده در سراسر بازار استفاده خواهد شد.',
+  'ask_customer_for_email_subscription' => 'هنگامی که یک مشتری جدید یک حساب کاربری ثبت می کند از مشتری خود سؤال کنید که آیا او می خواهد تبلیغات و سایر اعلان ها را از طریق ایمیل دریافت کند. خاموش کردن گزینه منجر به اشتراک خودکار خواهد شد. در این حالت ، در قسمت شرایط و ضوابط وضوح را بیان کنید.',
+  'allow_guest_checkout' => 'این امر به مشتریان امکان می دهد بدون ثبت نام در سایت ، اقدام به پرداخت وجهی کنند.',
+  'vendor_can_view_customer_info' => 'این امر به فروشندگان این امکان را می دهد تا اطلاعات مربوط به مشتری را در صفحه سفارش مشاهده کنند. در غیر اینصورت نام ، آدرس ایمیل و آدرس صورتحساب / حمل و نقل قابل مشاهده خواهد بود.',
+  'system_pagination' => 'مقدار صفحه بندی برای جداول داده را روی پنل مدیریت تنظیم کنید.',
+  'subscription_name' => 'یک نام معنی دار به برنامه اشتراک بدهید.',
+  'subscription_plan_id' => 'این شناسه ای است که باید با ID طرح Stripe مطابقت دقیقی داشته باشد',
+  'featured_subscription' => 'فقط یک اشتراک ویژه وجود دارد',
+  'subscription_cost' => 'هزینه اشتراک در هر ماه',
+  'team_size' => 'اندازه تیم تعداد کل کاربرانی است که می توانند در این تیم ثبت نام کنند',
+  'inventory_limit' => 'تعداد لیست کل. یک نوع از همان محصول به عنوان کالای مختلف در نظر گرفته می شود.',
+  'marketplace_commission' => 'درصد از میزان ارزش کالای سفارش سفارش توسط بازار',
+  'transaction_fee' => 'اگر می خواهید برای هر تراکنش تنها هزینه تختی را شارژ کنید',
+  'subscription_best_for' => 'مشتری هدفمند برای این بسته. این برای مشتری قابل مشاهده خواهد بود.',
+  'config_return_refund' => 'سیاست بازگشت و بازپرداخت برای خرید شما. لطفاً قبل از مشخص کردن خط مشی بازار بخوانید.',
+  'config_trial_days' => 'Merchant\'ll پس از دوره آزمایشی متهم می شود. اگر اصلاً کارت را به صورت مقرون به صرفه نگیرید ، پس از این مدت حساب بازرگانی یخ می شود.',
+  'charge_after_trial_days' => 'پس از دوره آزمایشی :days روز هزینه دریافت می شود.',
+  'required_card_upfront' => 'آیا می خواهید هنگام ثبت نام بازرگان اطلاعات کارت را بگیرید؟',
+  'leave_empty_to_save_as_draft' => 'برای ذخیره به عنوان پیش نویس ، خالی بگذارید',
+  'logo_img_size' => 'اندازه تصویر آرم باید حداقل 300x300px باشد',
+  'brand_logo_size' => 'اندازه تصویر آرم باید 120x40px و ppng باشد',
+  'brand_icon_size' => 'اندازه تصویر آیکون باید 32x32px و .png باشد',
+  'config_alert_quantity' => 'یک ایمیل اطلاع رسانی ارسال می شود که موجودی شما زیر مقدار هشدار پایین می رود',
+  'config_max_img_size_limit_kb' => 'سیستم حداکثر اندازه تصویر حداکثر می تواند برای محصول / موجودی / آرم / نماد بارگذاری شود. اندازه در کیلوبایت.',
+  'config_max_number_of_inventory_imgs' => 'انتخاب کنید که چه تعداد تصویر را می توان برای یک مورد موجودی بارگذاری کرد.',
+  'config_address_default_country' => 'این مقدار را تنظیم کنید تا فرم آدرس سریعتر پر شود. بدیهی است که کاربر می تواند هنگام اضافه کردن آدرس جدید ، مقدار را تغییر دهد.',
+  'config_address_default_state' => 'این مقدار را تنظیم کنید تا فرم آدرس سریعتر پر شود. بدیهی است که کاربر می تواند هنگام اضافه کردن آدرس جدید ، مقدار را تغییر دهد.',
+  'config_show_address_title' => 'نمایش / مخفی کردن عنوان آدرس هنگام مشاهده / چاپ یک آدرس.',
+  'config_address_show_country' => 'نمایش / پنهان کردن نام کشور هنگام مشاهده / چاپ آدرس. اگر بازار شما در یک منطقه کوچک باشد ، این امر مفید است.',
+  'config_address_show_map' => 'آیا می خواهید نقشه را با آدرس نشان دهید؟ این گزینه با استفاده از Google Map نقشه ایجاد می کند.',
+  'config_show_currency_symbol' => 'آیا می خواهید نماد ارز را هنگام ارائه قیمت نشان دهید؟ مثال: 123 دلار',
+  'config_show_space_after_symbol' => 'می خواهید با قرار دادن یک فضای پس از نماد ، قیمت را قالب بندی کنید. مثال: 123 دلار',
+  'config_decimals' => 'بعد از نقطه اعشار چند رقم می خواهید نشان دهید؟ مثال: 13.21 ، 13.123',
+  'config_gift_card_pin_size' => 'چند رقمی که می خواهید شماره پین ​​هدایای کارت را تولید کنید. طول پیش فرض 10',
+  'config_gift_card_serial_number_size' => 'چند رقمی که می خواهید شماره سریال کارت هدیه تولید کنید. طول پیش فرض 13',
+  'config_coupon_code_size' => 'چند رقمی که می خواهید کد کوپن تولید کنید. طول پیش فرض 8',
+  'shop_email' => 'همه اعلان ها به این آدرس ایمیل ارسال می شوند (موجودی ها ، سفارشات ، بلیط ها ، اختلافات و غیره) ایمیل های پشتیبانی مشتری را قبول می کنند (در صورت تنظیم)',
+  'shop_legal_name' => 'نام قانونی فروشگاه',
+  'shop_owner_id' => 'صاحب و فوق العاده مدیر فروشگاه. کاربر ثبت نام شده به عنوان یک بازرگان می تواند یک مغازه داشته باشد. بعداً نمی توانید این را تغییر دهید.',
+  'shop_description' => 'توضیحات نام تجاری فروشگاه ، این اطلاعات در صفحه اصلی فروشگاه قابل مشاهده خواهد بود.',
+  'attribute_type' => 'نوع صفت. این به نشان دادن گزینه ها در صفحه محصول کمک می کند.',
+  'attribute_name' => 'این نام در صفحه محصول نشان داده می شود.',
+  'attribute_value' => 'این مقدار در صفحه محصول به عنوان گزینه قابل انتخاب نشان داده خواهد شد.',
+  'parent_attribute' => 'گزینه زیر این ویژگی نشان داده می شود.',
+  'list_order' => 'مشاهده سفارش در لیست.',
+  'shop_external_url' => 'اگر صاحب یک وب سایت هستید می توانید لینک خارجی را در اینجا قرار دهید ، آدرس اینترنتی می تواند به عنوان صفحه فرود فروشگاه تعیین شود.',
+  'product_name' => 'مشتریان این موضوع را نخواهند دید. این نام فقط به بازرگانان کمک می کند تا مورد را برای لیست پیدا کنند.',
+  'product_featured_image' => 'مشتریان این موضوع را نخواهند دید. این تنها به بازرگانان کمک می کند تا مورد را برای لیست پیدا کنند.',
+  'product_images' => 'مشتریان این تصاویر را تنها در صورتی مشاهده می کنند که در لیست تاجر هیچ تصویری برای نمایش وجود نداشته باشد.',
+  'product_active' => 'بازرگانان فقط موارد فعال را پیدا می کنند.',
+  'product_description' => 'مشتریان این را خواهند دید. این اصلی ترین و اصلی ترین توضیحات محصول است.',
+  'model_number' => 'شناسه محصولی که توسط سازنده آن داده شده است. مورد نیاز نیست اما توصیه می شود',
+  'gtin' => 'شماره تجارت جهانی کالا (GTIN) شناسه منحصر به فرد یک محصول در بازار جهانی است. اگر دوست دارید کد ISBN یا UPC را برای محصول خود بدست آورید ، می توانید اطلاعات بیشتری در وب سایت های زیر کسب کنید: http://www.isbn.org/ و http://www.uc-council.org/',
+  'mpn' => 'قطعه سازنده شماره (MPN) یک شناسه منحصر به فرد است که توسط سازنده صادر می شود. شما می توانید MPN را از تولید کننده بدست آورید. مورد نیاز نیست اما توصیه می شود',
+  'sku' => 'SKU (واحد نگهداری سهام) شناسه خاص فروشنده است. این کمک می کند تا موجودی خود را مدیریت کنید',
+  'isbn' => 'شماره استاندارد بین المللی کتاب (ISBN) یک بارکد شناسه کتاب تجاری منحصر به فرد است. هر کد شابک یک کتاب خاص را مشخص می کند. شابک یا 10 یا 13 رقم دارد. همه شابک که بعد از 1 ژانویه 2007 اختصاص داده شده دارای 13 رقم است. به طور معمول ، شابک روی جلد پشت کتاب چاپ می شود',
+  'ean' => 'شماره مقاله اروپا (EAN) یک استاندارد بارکد ، یک کد شناسایی 12 یا 13 رقمی است. می توانید EAN را از تولید کننده دریافت کنید. اگر محصولات شما EAN های سازنده ندارند و باید کدهای EAN را خریداری کنید ، به http://www.gs1uk.org به GS1 UK بروید.',
+  'upc' => 'کد محصول جهانی (UPC) ، همچنین با نام های GTIN-12 و UPC-A. شناسه عددی منحصر به فرد برای محصولات تجاری که معمولاً با بارکدی چاپ شده روی کالاهای خرده فروشی همراه است',
+  'meta_title' => 'برچسب های عنوان - عناصر عنوان فنی (عناوین فنی) عنوان یک سند را تعریف می کنند. برچسب های عنوان اغلب در صفحات نتایج موتور جستجو (SERP) برای نمایش قطعه های پیش نمایش برای یک صفحه مشخص استفاده می شوند ، و برای SEO و به اشتراک گذاری اجتماعی مهم هستند',
+  'meta_description' => 'توضیحات متا ویژگیهای HTML هستند که توضیحات مختصری درباره محتوای صفحات وب ارائه می دهند. توضیحات متا معمولاً در صفحات نتیجه موتور جستجو (SERP) برای نمایش قطعات پیش نمایش برای یک صفحه معین استفاده می شود',
+  'catalog_min_price' => 'برای محصول حداقل قیمت تعیین کنید. فروشندگان می توانند موجودی را در این محدودیت قیمت اضافه کنند.',
+  'catalog_max_price' => 'حداکثر قیمت را برای محصول تعیین کنید. فروشندگان می توانند موجودی را در این محدودیت قیمت اضافه کنند.',
+  'has_variant' => 'این مورد دارای انواع مختلفی مانند رنگ های مختلف ، اشکال ، اندازه و غیره است.',
+  'requires_shipping' => 'این مورد نیاز به حمل و نقل دارد.',
+  'downloadable' => 'این مورد یک محتوای دیجیتالی است و خریداران می توانند کالا را بارگیری کنند.',
+  'manufacturer_url' => 'لینک رسمی وب سایت تولید کننده.',
+  'manufacturer_email' => 'سیستم از این آدرس ایمیل برای برقراری ارتباط با سازنده استفاده می کند.',
+  'manufacturer_phone' => 'شماره تلفن پشتیبانی سازنده.',
+  'supplier_email' => 'سیستم از این آدرس ایمیل برای برقراری ارتباط با تهیه کننده استفاده می کند.',
+  'supplier_contact_person' => 'تماس با شخص',
+  'shop_address' => 'آدرس فیزیکی مغازه.',
+  'search_product' => 'می توانید از هر شناسه GTIN مانند UPC ، ISBN ، EAN ، JAN یا ITF استفاده کنید. همچنین می توانید از نام و شماره مدل یا بخشی از نام یا شماره مدل استفاده کنید.',
+  'seller_description' => 'این توضیحات فروشنده خاص از محصول است. مشتری این را می بیند',
+  'seller_product_condition' => 'شرایط فعلی محصول چیست؟',
+  'condition_note' => 'توجه داشته باشید که شرایط در هنگام استفاده و بازسازی محصول مفید است',
+  'select_supplier' => 'زمینه پیشنهادی این به تولید گزارش کمک می کند',
+  'select_warehouse' => 'انبار را از آنجا که محصول به آنجا منتقل می شود را انتخاب کنید.',
+  'select_packagings' => 'لیست گزینه های بسته بندی موجود برای ارسال محصول. خالی بگذارید تا گزینه بسته بندی غیرفعال شود',
+  'available_from' => 'تاریخی که سهام در دسترس خواهد بود. پیش فرض = بلافاصله',
+  'sale_price' => 'قیمت بدون هیچ گونه مالیاتی. مالیات بر اساس منطقه حمل و نقل محاسبه می شود.',
+  'purchase_price' => 'زمینه پیشنهادی این به محاسبه سود و تولید گزارش کمک می کند',
+  'min_order_quantity' => 'مقدار مجاز به سفارش است. باید یک عدد صحیح باشد. پیش فرض = 1',
+  'offer_price' => 'قیمت پیشنهاد بین تاریخ شروع و پایان پیشنهاد انجام می شود',
+  'offer_start' => 'یک پیشنهاد باید تاریخ شروع داشته باشد. اگر زمینه قیمت پیشنهاد داده شود لازم است',
+  'offer_end' => 'یک پیشنهاد باید تاریخ پایان داشته باشد. اگر زمینه قیمت پیشنهاد داده شود لازم است',
+  'seller_inventory_status' => 'آیا کالا برای فروش آزاد است؟ کالای غیرفعال در بازار نشان داده نمی شود.',
+  'stock_quantity' => 'تعداد کالاهایی که در انبار خود دارید',
+  'offer_starting_time' => 'زمان شروع پیشنهاد',
+  'offer_ending_time' => 'زمان پایان دادن به پیشنهاد',
+  'set_attribute' => 'اگر مقدار در لیست نیست ، می توانید فقط با وارد کردن مقدار جدید ، مقدار مناسب را اضافه کنید',
+  'variants' => 'انواع محصول',
+  'delete_this_combination' => 'این ترکیب را حذف کنید',
+  'romove_this_cart_item' => 'این مورد را از سبد خرید خارج کنید',
+  'no_product_found' => 'هیچ محصولی یافت نشد! لطفاً جستجوی متفاوتی را امتحان کنید یا محصول جدید را اضافه کنید',
+  'not_available' => 'در دسترس نیست!',
+  'admin_note' => 'یادداشت مدیر برای مشتری قابل مشاهده نخواهد بود',
+  'message_to_customer' => 'این پیام با ایمیل فاکتور به مشتری ارسال می شود',
+  'empty_cart' => 'چرخ دستی خالی است',
+  'send_invoice_to_customer' => 'با این پیام فاکتور را به مشتری ارسال کنید',
+  'delete_the_cart' => 'سبد خرید را حذف کرده و سفارش را ادامه دهید',
+  'order_status_send_email' => 'با بروزرسانی وضعیت سفارش ، ایمیلی برای مشتری ارسال می شود',
+  'order_status_email_template' => 'این به روز رسانی وضعیت سفارش به مشتری ارسال می شود. اجباری اگر ایمیل برای وضعیت فعال باشد',
+  'update_order_status' => 'وضعیت سفارش را به روز کنید',
+  'email_template_name' => 'یک الگوی را بدهید. این فقط برای استفاده از سیستم است.',
+  'template_use_for' => 'این قالب توسط',
+  'email_template_subject' => 'به عنوان موضوع ایمیل استفاده خواهد شد.',
+  'email_template_body' => 'کدهای کوتاه وجود دارد که می توانید برای اطلاعات پویا از آنها استفاده کنید. برای دیدن کد های کوتاه موجود ، پایین این فرم را بررسی کنید.',
+  'email_template_type' => 'نوع ایمیل.',
+  'template_sender_email' => 'از این آدرس ایمیل برای ارسال ایمیل استفاده می شود و گیرنده می تواند به این موضوع پاسخ دهد.',
+  'template_sender_name' => 'این نام به عنوان نام فرستنده استفاده می شود',
+  'packaging_name' => 'اگر گزینه بسته بندی در هنگام سفارش موجود باشد ، مشتری این موضوع را مشاهده می کند',
+  'width' => 'عرض بسته بندی',
+  'height' => 'ارتفاع بسته بندی',
+  'depth' => 'عمق بسته بندی',
+  'packaging_cost' => 'هزینه بسته بندی. می توانید انتخاب کنید که آیا می خواهید هزینه را به مشتریان شارژ کنید یا نه',
+  'set_as_default_packaging' => 'در صورت بررسی: این بسته بندی به عنوان بسته حمل و نقل پیش فرض استفاده می شود',
+  'shipping_carrier_name' => 'نام شرکت حمل و نقل',
+  'shipping_zone_name' => 'نام منطقه را بدهید. مشتری این نام را نخواهد دید.',
+  'shipping_rate_name' => 'یک اسم معنادار بدهید. مشتری این اسم را در صورت پرداخت مشاهده می کند. ه گرم حمل و نقل استاندارد',
+  'shipping_zone_carrier' => 'شما می توانید حامل حمل و نقل را پیوند دهید. مشتری این کار را در صورت پرداخت مشاهده می کند.',
+  'free_shipping' => 'در صورت فعال بودن ، برچسب حمل و نقل رایگان در صفحه فهرست محصولات نمایش داده می شود.',
+  'shipping_rate' => 'گزینه "حمل و نقل رایگان" را بررسی کنید یا مبلغ 0 را برای ارسال رایگان دریافت کنید',
+  'shipping_zone_tax' => 'این مشخصات مالیاتی در صورت خرید از این منطقه حمل و نقل قابل اجرا خواهد بود',
+  'shipping_zone_select_countries' => 'کشورهایی را که به آن منطقه حمل می کنید انتخاب کنید. گزینه جهانی را برای منطقه در سراسر جهان بررسی کنید.',
+  'rest_of_the_world' => 'این منطقه شامل همه کشورها و مناطقی است که قبلاً در مناطق حمل و نقل دیگر مشخص نشده اند.',
+  'shipping_max_width' => 'حداکثر عرض بسته بسته توسط شرکت مخابراتی. خالی بگذارید تا غیرفعال شود.',
+  'shipping_tracking_url' => '\'@\' با شماره ردیابی پویا جایگزین می شود',
+  'shipping_tracking_url_example' => 'به عنوان مثال: http://example.com/track.php؟num=',
+  'order_tracking_id' => 'شناسه ردیابی سفارش ارائه شده توسط ارائه دهنده خدمات حمل و نقل.',
+  'order_fulfillment_carrier' => 'حمل و نقل حمل و نقل را برای انجام سفارش انتخاب کنید.',
+  'notify_customer' => 'یک ایمیل اطلاع رسانی با اطلاعات لازم به مشتری ارسال می شود.',
+  'shipping_weight' => 'این محاسبه برای محاسبه هزینه حمل و نقل استفاده می شود.',
+  'order_number_prefix_suffix' => 'پیشوند و پسوند به طور خودکار اضافه می شود تا تمام شماره های سفارش را قالب بندی کند. اگر نمی خواهید شماره سفارش ایجاد کنید ، آن را خالی بگذارید.',
+  'customer_not_see_this' => 'مشتری این را نمی بیند',
+  'customer_will_see_this' => 'مشتریان این را خواهند دید',
+  'refund_select_order' => 'ترتیب مورد نظر برای بازپرداخت را انتخاب کنید',
+  'refund_order_fulfilled' => 'آیا سفارش به مشتری ارسال می شود؟',
+  'refund_return_goods' => 'آیا مورد به شما برگردانده شده است؟',
+  'customer_paid' => 'مشتری <strong> <em> :amount </em> </strong> را شامل می شود ، شامل کلیه مالیات ها ، هزینه های حمل و نقل و سایر موارد.',
+  'order_refunded' => 'قبلاً <strong> <em> :amount </em> </strong> از کل <strong> <em> :total </em> </strong> بازپرداخت شد',
+  'search_customer' => 'مشتری را از طریق آدرس ایمیل ، نام خوب یا نام کامل پیدا کنید.',
+  'coupon_quantity' => 'تعداد کل کوپن های موجود',
+  'coupon_name' => 'نام در خلاصه فاکتور و سفارش استفاده خواهد شد',
+  'coupon_code' => 'کد کوپن بی نظیر',
+  'coupon_value' => 'ارزش کوپن',
+  'coupon_min_order_amount' => 'حداقل مقدار سفارش را برای سبد انتخاب کنید (اختیاری)',
+  'coupon_quantity_per_customer' => 'انتخاب کنید که مشتری چند بار می تواند از این کوپن استفاده کند. اگر آن را خالی بگذارید مشتری می تواند از این کوپن تا زمان استفاده آن استفاده کند.',
+  'starting_time' => 'کوپن از این زمان در دسترس خواهد بود',
+  'ending_time' => 'کوپن تا این زمان در دسترس خواهد بود',
+  'exclude_tax_n_shipping' => 'هزینه مالیات و هزینه حمل و نقل را حذف نکنید',
+  'exclude_offer_items' => 'مواردی را که قبلاً یک پیشنهاد در حال اجرا یا تخفیف دارند ، حذف نکنید',
+  'coupon_limited_to_customers' => 'اگر می خواهید کوپن را فقط برای مشتریان خاص تهیه کنید ، انتخاب کنید',
+  'coupon_limited_to_shipping_zones' => 'اگر می خواهید کوپن را فقط برای مناطق خاص حمل و نقل تهیه کنید ، انتخاب کنید',
+  'coupon_limited_to' => 'برای پیدا کردن مشتری از آدرس یا نام ایمیل استفاده کنید',
+  'faq_placeholders' => 'شما می توانید در سؤال و پاسخ خود از این مکان یاب استفاده کنید ، این با مقدار واقعی جایگزین می شود',
+  'gift_card_name' => 'نام کارت هدیه.',
+  'gift_card_pin_code' => 'کد مخفی بی نظیر. کد پین رمز عبور کارت است. بعدا نمی توانید این مقدار را تغییر دهید.',
+  'gift_card_serial_number' => 'شماره سریال بی نظیر برای کارت. بعدا نمی توانید این مقدار را تغییر دهید.',
+  'gift_card_value' => 'ارزش کارت. مشتری همان مقدار تخفیف را دریافت می کند.',
+  'gift_card_activation_time' => 'زمان فعال سازی کارت. کارت بعد از این مدت قابل استفاده است.',
+  'gift_card_expiry_time' => 'زمان انقضاء کارت. کارت تا این زمان قابل اعتبار است.',
+  'gift_card_partial_use' => 'استفاده جزئی از ارزش کل کارت را مجاز کنید',
+  'number_between' => 'بین :min و :max',
+  'default_tax_id' => 'مشخصات مالیات پیش فرض زمانی اعمال می شود که منطقه حمل و نقل توسط هیچ منطقه مالیاتی پوشیده نشود.',
+  'default_payment_method_id' => 'در صورت انتخاب ، هنگام ایجاد سفارش جدید ، روش پرداخت انتخاب می شود',
+  'config_order_handling_cost' => 'این هزینه اضافی با هزینه حمل و نقل از هر سفارش اضافه می شود. آن را خالی بگذارید تا هزینه رسیدگی به سفارش غیرفعال شود',
+  'default_warehouse' => 'با اضافه کردن موجودی جدید ، انبار پیش فرض از قبل انتخاب می شود',
+  'default_supplier' => 'با افزودن موجودی جدید ، پیش فرض از پیش فرض انتخاب می شود',
+  'default_packaging_ids_for_inventory' => 'با افزودن موجودی جدید ، بسته های پیش فرض از قبل انتخاب می شوند. این به شما کمک می کند سریعتر موجودی را اضافه کنید',
+  'config_payment_environment' => 'آیا اعتبارنامه ها برای حالت زنده هستند یا تست بیشتری دارند؟',
+  'config_authorize_net_transaction_key' => 'کلید معامله از Authorize.net. اگر مطمئن نیستید ، برای دریافت راهنمایی با Authorize.net تماس بگیرید.',
+  'config_authorize_net_api_login_id' => 'شناسه ورود API از Authorize.net. اگر مطمئن نیستید ، برای دریافت راهنمایی با Authorize.net تماس بگیرید.',
+  'config_enable_payment_method' => 'این سیستم انواع مختلف دروازه پرداخت را ارائه می دهد. برای کنترل گزینه های پرداخت که فروشنده می تواند از آن برای پذیرش پرداخت از مشتریان استفاده کند ، می توانید هر دروازه پرداخت را فعال یا غیرفعال کنید.',
+  'config_additional_details' => 'در صفحه روش پرداخت نمایش داده می شود ، در حالی که مشتری نحوه پرداخت را انتخاب می کند.',
+  'config_payment_instructions' => 'بعد از اینکه مشتری سفارش خود را قرار داد ، در صفحه Thank you نمایش داده می شود.',
+  'config_stripe_publishable_key' => 'کلیدهای API قابل انتشار فقط برای شناسایی حساب شما با Stripe هستند ، آنها مخفی نیستند. آنها با خیال راحت منتشر می شوند.',
+  'config_paypal_express_account' => 'معمولاً آدرس ایمیل برنامه PayPal شما. برنامه PayPal خود را از اینجا ایجاد کنید: https://developer.paypal.com/webapps/developer/applications/myapps',
+  'config_paypal_express_client_id' => 'شناسه مشتری یک شناسه طولانی بی نظیر برنامه PayPal شما است. این مقدار را در بخش برنامه ها و اعتبارنامه های من در داشبورد پی پال خود خواهید یافت.',
+  'config_paypal_express_secret' => 'کلید رمزگذاری API پی پال. این مقدار را در بخش برنامه ها و اعتبارنامه های من در داشبورد پی پال خود خواهید یافت.',
+  'config_paystack_merchant_email' => 'ایمیل تجاری حساب Paystack شما.',
+  'config_paystack_public_key' => 'کلید عمومی یک شناسه طولانی و منحصر به فرد برنامه Paystack شما است. این مقدار را در بخش تنظیمات در داشبورد Paystack خود در بخش کلیدهای API و Webhooks خواهید یافت.',
+  'config_paystack_secret' => 'کلید مخفی API Paystack. این مقدار را در بخش تنظیمات در داشبورد Paystack خود در بخش کلیدهای API و Webhooks خواهید یافت.',
+  'config_auto_archive_order' => 'ترتیب بایگانی خودکار. اگر نمی خواهید همه سفارشات را پس از انجام آنها بایگانی کنید ، این ویژگی را انتخاب کنید.',
+  'config_pagination' => 'چند مورد لیست را که می خواهید در هر صفحه در جداول داده مشاهده کنید',
+  'support_phone' => 'برای پشتیبانی و پرس و جو مشتری با این شماره تماس خواهد گرفت',
+  'support_email' => 'همه ایمیل های پشتیبانی شده را به این آدرس دریافت خواهید کرد',
+  'support_phone_toll_free' => 'اگر شماره پشتیبانی رایگان برای پشتیبانی مشتری دارید',
+  'default_sender_email_address' => 'کلیه ایمیل های اتوماسیون شده به مشتریان از این آدرس ایمیل ارسال می شود. و همچنین وقتی آدرس ایمیل فرستنده نمی تواند هنگام ارسال ایمیل تنظیم کند',
+  'default_email_sender_name' => 'این نام به عنوان فرستنده ایمیل ارسال شده از آدرس ایمیل پیش فرض فرستنده استفاده می شود',
+  'google_analytic_report' => 'اگر سیستم با Google Analytics پیکربندی شده است ، باید این کار را فقط فعال کنید. در غیر این صورت ممکن است باعث بروز خطا شود. اسناد را برای کمک بررسی کنید. از طرف دیگر می توانید از برنامه ساخته شده در سیستم گزارش استفاده کنید.',
+  'inventory_linked_items' => 'موارد پیوند خورده همانطور که اغلب موارد با هم خریداری می شوند در صفحه محصول نمایش داده می شوند این اختیاری است اما مهم است.',
+  'notify_new_message' => 'هنگام ورود پیام جدید ، یک اعلان برای من ارسال کنید',
+  'notify_alert_quantity' => 'هنگامی که هر کالای موجودی من به میزان کمیت هشدار برسد ، یک اعلان برای من ارسال کنید',
+  'notify_inventory_out' => 'وقتی کالای موجودی موجودی من خارج است ، اعلان را برای من ارسال کنید',
+  'notify_new_order' => 'وقتی سفارش جدیدی در فروشگاه من قرار گرفته است ، یک اعلان برای من ارسال کنید',
+  'notify_abandoned_checkout' => 'هنگامی که مشتری چک از کالای من را رها کرد ، به من یک اعلان ارسال کنید',
+  'notify_when_vendor_registered' => 'هنگامی که فروشنده جدید ثبت نام کرده است ، یک اعلان برای من ارسال کنید',
+  'notify_new_ticket' => 'هنگامی که بلیط پشتیبانی در سیستم ایجاد شده است ، یک اعلان را برای من ارسال کنید',
+  'notify_new_disput' => 'وقتی مشتری مشاجره جدیدی ارسال کند ، یک اعلان برای من ارسال کنید',
+  'notify_when_dispute_appealed' => 'وقتی دعوایی برای بررسی توسط تیم بازار مورد درخواست قرار گرفته است ، یک اعلان برای من ارسال کنید',
+  'download_template' => '<a href=":url"> برای دیدن نمونه ای از قالب مورد نیاز ، یک الگوی CSV نمونه بارگیری کنید </a>.',
+  'download_category_slugs' => '<a href=":url"> بارگیری اسلحه های دسته بندی </a> برای دریافت دسته بندی صحیح برای محصولات خود.',
+  'first_row_as_header' => 'ردیف اول هدر است. <strong> تغییر ندهید </ strong> این سطر.',
+  'user_category_slug' => 'در قسمت دسته بندی از دسته <strong> slug </strong> استفاده کنید.',
+  'cover_img' => 'این تصویر در بالای صفحه :page نمایش داده می شود',
+  'cat_grp_img' => 'این تصویر در پس زمینه کادر کشویی طبقه نمایش داده می شود',
+  'cat_grp_desc' => 'مشتری این را نمی بیند. اما بازرگانان این موضوع را خواهند دید.',
+  'inactive_for_back_office' => 'در صورت غیرفعال بودن ، مشتریان هنوز می توانند از صفحه :page بازدید کنند. اما بازرگانان نمی توانند از این :page برای لیست های بعدی استفاده کنند.',
+  'invalid_rows_will_ignored' => 'ردیف های نامعتبر <strong> نادیده گرفته می شوند </ strong>.',
+  'upload_rows' => 'برای عملکرد بهتر ، بیش از <strong> بارگیری نکنید: ردیف ردیفها </ strong> در هر دسته.',
+  'name_field_required' => 'فیلد نام الزامی است',
+  'email_field_required' => 'ایمیل لازم است',
+  'invalid_email' => 'آدرس ایمیل نامعتبر است.',
+  'invalid_category' => 'دسته نامعتبر است',
+  'category_desc' => 'یک جزئیات کوتاه ارائه دهید. مشتریان این را خواهند دید.',
+  'email_already_exist' => 'آدرس ایمیل قبلاً در حال استفاده است.',
+  'slug_already_exist' => 'مثلثی که قبلاً در حال استفاده است.',
+  'display_order' => 'این شماره برای ترتیب سفارش مشاهده استفاده خواهد شد. ابتدا کمترین شماره نمایش داده می شود.',
+  'banner_title' => 'این خط بر روی بنر برجسته خواهد شد. اگر نمی خواهید عنوان را نشان دهید ، آن را خالی بگذارید.',
+  'banner_description' => '(مثال: 50٪ تخفیف!) اگر نمی خواهید این را نشان دهید ، آن را خالی بگذارید.',
+  'banner_image' => 'تصویر اصلی آنچه در پس زمینه نمایش داده می شود. معمولاً از یک تصویر محصول استفاده کنید.',
+  'banner_background' => 'یک رنگ را انتخاب کنید یا یک تصویر را به عنوان پس زمینه بارگذاری کنید.',
+  'banner_group' => 'قرار دادن بنر در فروشگاه. اگر گروه مشخص نشده باشد ، بنر نمایش داده نمی شود.',
+  'bs_columns' => 'چه تعداد ستون از این بنر استفاده خواهد کرد؟ این سیستم از 12 سیستم ستون شبکه برای نمایش بنرها استفاده می کند.',
+  'banner_order' => 'از این شماره برای ترتیب سفارش در گروه بنرها استفاده می شود. ابتدا کمترین شماره نمایش داده می شود.',
+  'banner_link' => 'کاربران به این لینک هدایت می شوند.',
+  'link_label' => 'برچسب دکمه لینک',
+  'slider_link' => 'کاربران به این لینک هدایت می شوند.',
+  'slider_title' => 'این خط بر روی کشویی برجسته خواهد شد. اگر نمی خواهید عنوان را نشان دهید ، آن را خالی بگذارید.',
+  'slider_sub_title' => 'خط دوم عنوان. اگر نمی خواهید این را نشان دهید ، آن را خالی بگذارید.',
+  'slider_image' => 'تصویر اصلی آنچه به صورت کشویی نمایش داده می شود. برای تولید کشویی لازم است.',
+  'slider_img_hint' => 'تصویر کشویی باید 1280x300px باشد',
+  'slider_order' => 'اسلایدر با این دستور مرتب می شود.',
+  'slider_thumb_image' => 'از این تصویر کوچک به عنوان تصویر کوچک استفاده خواهد شد. در صورت عدم ارائه سیستم ، یک تصویر کوچک ایجاد می کند.',
+  'slider_thumb_hint' => 'این می تواند 150x59px باشد',
+  'variant_image' => 'تصویر نوع',
+  'empty_trash' => 'سطل زباله را خالی کنید. همه موارد موجود در سطل زباله برای همیشه حذف می شوند.',
+  'hide_trial_notice_on_vendor_panel' => 'اعلامیه آزمایشی را در پانل فروشنده مخفی کنید',
+  'language_order' => 'موقعیتی که می خواهید این زبان را در گزینه زبان نشان دهید. ابتدا کمترین شماره نمایش داده می شود.',
+  'locale_active' => 'آیا می خواهید این زبان را در گزینه زبان نشان دهید؟',
+  'locale_code' => 'کد محلی ، کد باید به همان نام پوشه زبان باشد.',
+  'locale_code_exmaple' => 'مثال برای انگلیسی کد <em> en </em> است',
+  'new_language_info' => 'یک زبان جدید تاثیری در سیستم نخواهد داشت مگر اینکه واقعاً معامله دایرکتوری زبان را انجام دهید. مستندات را برای جزئیات بیشتر بررسی کنید.',
+  'php_locale_code' => 'کد محلی PHP برای استفاده از سیستم مانند تاریخ ترجمه ، زمان و غیره لطفا لیست کامل کد محلی PHP را در اسناد پیدا کنید.',
+  'rtl' => 'آیا زبان راست به چپ است (RTL)؟',
+  'select_all_verification_documents' => 'همه اسناد را یکجا انتخاب کنید.',
+  'system_default_language' => 'زبان پیش فرض سیستم',
+  'update_trial_period' => 'دوره آزمایشی را به روز کنید',
+  'vendor_needs_approval' => 'در صورت فعال بودن ، هر فروشنده جدیدی برای زنده ماندن نیاز به تأیید دستی از پنل مدیریت سیستم عامل دارد.',
+  'verified_seller' => 'فروشنده تایید شده',
+  'mark_address_verified' => 'علامت گذاری به عنوان تأیید شده',
+  'mark_id_verified' => 'علامت گذاری به عنوان شناسه تأیید شده',
+  'mark_phone_verified' => 'علامت گذاری به عنوان تلفن تأیید شده است',
+  'missing_required_data' => 'داده های نامعتبر است ، برخی از داده های لازم وجود ندارد.',
+  'invalid_catalog_data' => 'داده های کاتالوگ نامعتبر ، GTIN و سایر اطلاعات را دوباره بررسی کنید.',
+  'product_have_to_be_catalog' => 'این محصول باید در سیستم <strong> فروشگاه </ strong> وجود داشته باشد. در غیر این صورت بارگذاری نمی شود.',
+  'need_to_know_product_gtin' => 'قبل از آپلود باید <strong> GTIN </strong> موارد را بدانید.',
+  'max_upload_size' => 'حداکثر اندازه بارگذاری پرونده: :value',
+  'required_fields_csv' => 'این قسمت ها </ strong> الزامی هستند </ strong> <em>: زمینه ها </ em>.',
+);

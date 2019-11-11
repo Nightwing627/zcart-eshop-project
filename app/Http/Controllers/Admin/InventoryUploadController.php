@@ -55,12 +55,17 @@ class InventoryUploadController extends Controller
 	{
 		$path = $request->file('inventories')->getRealPath();
 
-		$rows = array_map('str_getcsv', file($path));
-		$rows[0] = array_map('strtolower', $rows[0]);
-	    array_walk($rows, function(&$a) use ($rows) {
-	      $a = array_combine($rows[0], $a);
+		$data = array_map('str_getcsv', file($path));
+		$data[0] = array_map('strtolower', $data[0]);
+
+	    array_walk($data, function(&$a) use ($data) {
+	      $a = array_combine($data[0], $a);
 	    });
-	    array_shift($rows); # remove header column
+	    array_shift($data); # remove header column
+
+	    $rows = [];
+	    foreach ($data as $values)
+	    	$rows[] = clear_encoding_str($values);
 
         return view('admin.inventory.upload_review', compact('rows'));
 	}
@@ -79,11 +84,16 @@ class InventoryUploadController extends Controller
 		// Reset the Failed list
 		$this->failed_list = [];
 
-		foreach ($request->input('data') as $row) {
+		foreach ($request->input('data') as $row)
+		{
 			$data = unserialize($row);
 
-			// Ignore if the name field is not given
-			if( ! verifyRequiredDataForBulkInventoryUpload($data) ){
+			if(! is_array($data)) // Invalid data
+				continue;
+
+			// Ignore if required info is not given
+			if( ! verifyRequiredDataForBulkUpload($data, 'inventory') )
+			{
 				$this->pushIntoFailed($data, trans('help.missing_required_data'));
 				continue;
 			}

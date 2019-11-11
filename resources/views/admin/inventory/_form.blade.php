@@ -62,7 +62,7 @@
             <div class="file-loading">
               <input id="dropzone-input" name="images[]" type="file" accept="image/*" multiple>
             </div>
-            <span class="small"><i class="fa fa-info-circle"></i> {{ trans('help.max_upload_size') }} : {{ file_upload_max_size() }}</span>
+            <span class="small"><i class="fa fa-info-circle"></i> {{ trans('help.max_upload_size', ['value' => file_upload_max_size()]) }}</span>
           </div>
         </fieldset>
 

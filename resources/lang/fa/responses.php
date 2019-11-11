@@ -1,33 +1,22 @@
-<?php
-
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Server Responses Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used for various
-    | server responses that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
-
-
-    'success' => 'Action has been done successfully!',
-    'failed' => 'Action failed! Something went wrong!!',
-    'select_some_item' => 'Select at least one item',
-    'database_connection_failed' => 'Can not connect to MySQL database. Check database connection details in the .env file.',
-    'denied' => 'Permission denied!',
-    '404' => 'This content is not availeble or you don\'t have permission to access this area',
-    'error' => 'Action failed! There is something wrong on server side',
-    'timeout' => 'Action failed! The request timeout',
-    'reordered' => 'Successfully reordered',
-    'no_files_to_upload' => 'No files found for upload.',
-    'form_validation_failed' => 'Failed: Please check all required inputs are filled and valid',
-    'vendor_config_failed' => 'Registration failed! Please make some changes and try again.',
-    'no_product_found_for_inventory' => 'No result found! Please try different search key',
-    'searching' => 'Searching...',
-    'you_are_blocked' => 'You\'re temporarily blocked from this site!',
-    '404_not_found' => 'Sorry, the page you are looking for could not be found.',
-];
+<?php 
+return array (
+  'success' => 'عمل با موفقیت انجام شد!',
+  'failed' => 'عمل انجام نشد! مشکلی پیش آمد !!',
+  'select_some_item' => 'حداقل یک مورد را انتخاب کنید',
+  'database_connection_failed' => 'نمی توانید به پایگاه داده MySQL وصل شوید. جزئیات اتصال دیتابیس را در پرونده .env بررسی کنید.',
+  'denied' => 'اجازه رد شد!',
+  404 => 'این محتوا در دسترس نیست یا اجازه دسترسی به این منطقه را ندارید',
+  'error' => 'عمل انجام نشد! در سمت سرور مشکلی وجود دارد',
+  'timeout' => 'عمل انجام نشد! زمان درخواست',
+  'reordered' => 'دوباره با موفقیت مرتب شد',
+  'no_files_to_upload' => 'فایلی برای بارگیری یافت نشد',
+  'form_validation_failed' => 'انجام نشد: لطفاً تمام ورودی های مورد نیاز را پر و اعتبار کنید',
+  'vendor_config_failed' => 'ثبت نام نشد! لطفاً تغییراتی ایجاد کرده و دوباره امتحان کنید.',
+  'no_product_found_for_inventory' => 'هیچ نتیجه ای یافت نشد! لطفا کلید جستجوی مختلف را امتحان کنید',
+  'searching' => 'جستجوکردن...',
+  'you_are_blocked' => 'شما به طور موقت از این سایت مسدود شده اید!',
+  '404_not_found' => 'متأسفیم ، صفحه مورد نظر شما یافت نشد.',
+  'no_file_was_uploaded' => 'هیچ پرونده بارگیری نشد.',
+  'error_uploading_file' => 'خطا در بارگیری پرونده',
+  'model_not_defined' => 'مدل تعریف نشده است!',
+);

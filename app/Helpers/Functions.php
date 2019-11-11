@@ -377,6 +377,23 @@ if ( ! function_exists('highlightWords') )
      }
 }
 
+if ( ! function_exists('clear_encoding_str') )
+{
+    function clear_encoding_str($value)
+    {
+        if (is_array($value))
+        {
+            $clean = [];
+            foreach ($value as $key => $val)
+                $clean[$key] = mb_convert_encoding($val, 'UTF-8', 'UTF-8');
+
+            return $clean;
+        }
+
+        return mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+    }
+}
+
 if ( ! function_exists('get_qualified_model') )
 {
     function get_qualified_model($class_name = '')
@@ -560,7 +577,7 @@ if ( ! function_exists('convertToSlugString') )
     function convertToSlugString($str, $salt = Null, $separator = '-')
     {
         if($salt)
-            return str_slug($str, $separator) . $separator . $salt;
+            return str_slug($str, $separator) . $separator . str_slug($salt, $separator);
 
         return str_slug($str, $separator);
     }
@@ -1633,22 +1650,39 @@ if ( ! function_exists('isActive'))
     }
 }
 
-if( ! function_exists('verifyRequiredDataForBulkInventoryUpload') )
+if( ! function_exists('verifyRequiredDataForBulkUpload') )
 {
-    function verifyRequiredDataForBulkInventoryUpload($data)
+    function verifyRequiredDataForBulkUpload($data, $type = 'inventory')
     {
-        if (
-            isset($data['title']) &&
-            isset($data['description']) &&
-            isset($data['sku']) &&
-            isset($data['gtin']) &&
-            isset($data['gtin_type']) &&
-            isset($data['stock_quantity']) &&
-            isset($data['condition'])
-        )
-        return TRUE;
+        if( ! is_array($data) )
+            $data = unserialize($data);
+
+        $required = array_flip(config('system.import_required.'.$type, []));
+
+        $value = array_intersect_ukey($data, $required, 'checkAllValuesExistInAArray');
+
+        if ( count( $value ) == count($required) )
+            return TRUE;
 
         return FALSE;
+    }
+}
+
+if( ! function_exists('checkAllValuesExistInAArray') )
+{
+    /**
+     * check all the Values Exist of $b exist is array $a
+     *
+     * @param  array $a
+     * @param  array $b
+     *
+     * @return mix
+     */
+    function checkAllValuesExistInAArray($a, $b)
+    {
+        if ($a===$b) return 0;
+
+        return ($a>$b)?1:-1;
     }
 }
 

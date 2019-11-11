@@ -2,6 +2,7 @@
 
 namespace App\Common;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -83,7 +84,12 @@ trait Imageable {
 	 */
 	public function saveImage($image, $featured = null)
 	{
-        $path = Storage::put(image_storage_dir(), $image);
+		$dir = image_storage_dir();
+
+		// if(!Storage::exists($dir))
+		// 	Storage::makeDirectory($dir, 0775, true, true);
+
+        $path = Storage::put($dir, $image);
 
         return $this->createImage($path, $image->getClientOriginalName(), $image->getClientOriginalExtension(), $image->getClientSize(), $featured);
 	}
@@ -98,23 +104,34 @@ trait Imageable {
 	public function saveImageFromUrl($url, $featured = null)
 	{
 		// Get file info and validate
-    	$file_info = get_headers($url, TRUE);
-    	if( ! isset($file_info['Content-Length']) ) return;
+    	$file_headers = get_headers($url, TRUE);
+    	$pathinfo = pathinfo($url);
+    	// $size = getimagesize($url);
 
-    	// Get file size
-    	$size = $file_info['Content-Length'];
-    	if(is_array($size))
-	    	$size =  array_key_exists(1, $size) ? $size[1] : $size[0];
+		if ($file_headers === false) return; // when server not found
 
-    	// Get file ext
-    	$extension = substr($url, strrpos($url, '.', -1) + 1);
-    	$extension = in_array($extension, config('image.mime_types')) ? $extension : 'jpeg';
+    	// Get file extension
+    	$extension = isset($pathinfo['extension']) ? $pathinfo['extension'] : substr($url, strrpos($url, '.', -1) + 1);
+
+    	// Check if the file is a valid image file
+    	if(! in_array($extension, config('image.mime_types', ['jpg','png','jpeg']))  ) return;
+
+    	// Get file name
+    	$name = isset($pathinfo['filename']) ? $pathinfo['filename'].'.'.$extension : substr($url, strrpos($url, '/', -1) + 1);
+
+    	// Get the original file
+	    $file_content = file_get_contents($url);
+
+    	// Get file size in Bite
+	    $size = isset($file_headers['Content-Length']) ? $file_headers['Content-Length'] : strlen($file_content);
+		if(is_array($size))
+    		$size = array_key_exists(1, $size) ? $size[1] : $size[0];
 
     	// Make path and upload
-		$path = image_storage_dir() . '/' . str_random(40) . '.' . $extension;
-    	Storage::put($path, file_get_contents($url));
+		$path = image_storage_dir() . '/' . uniqid() . '.' . $extension;
+    	Storage::put($path, $file_content);
 
-        return $this->createImage($path, $url, $extension, $size, $featured);
+        return $this->createImage($path, $name, $extension, $size, $featured);
 	}
 
 	/**

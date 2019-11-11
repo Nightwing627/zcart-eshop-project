@@ -117,7 +117,7 @@ return [
 
                 'app_tabs' => [
                     'more_info' => 'More Info',
-                    'broadcasting_title' => 'Broadcasting, Caching, Session, and Queue',
+                    'broadcasting_title' => 'Broadcasting, Caching, Session, &amp; Queue',
                     'broadcasting_label' => 'Broadcast Driver',
                     'broadcasting_placeholder' => 'Broadcast Driver',
                     'cache_label' => 'Cache Driver',
@@ -208,7 +208,7 @@ return [
         'title' => 'Final Step',
         'templateTitle' => 'Final Step',
         'finished' => 'Application has been successfully installed.',
-        'migration' => 'Migration and Seed Console Output:',
+        'migration' => 'Migration &amp; Seed Console Output:',
         'console' => 'Application Console Output:',
         'log' => 'Installation Log Entry:',
         'env' => 'Final .env File:',

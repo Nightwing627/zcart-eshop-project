@@ -23,10 +23,9 @@ class CreateProductRequest extends Request
      */
     public function rules()
     {
-        $shop_id = Request::user()->merchantId(); //Get current user's shop_id
         Request::merge([
-                    'shop_id' => $shop_id ,
-                    'slug' => str_slug($this->input('name'), '-'),
+                    'shop_id' => $this->user()->merchantId(),
+                    'slug' => convertToSlugString($this->input('name'), $this->input('gtin')),
                 ]); //Set shop_id and slug
 
         return [

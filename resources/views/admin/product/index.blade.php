@@ -87,7 +87,11 @@
 						@foreach($trashes as $trash )
 						<tr>
 							<td>
-								<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								@if($trash->featuredImage)
+									<img src="{{ get_storage_file_url(optional($trash->featuredImage)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.featured_image') }}">
+								@else
+									<img src="{{ get_storage_file_url(optional($trash->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
+								@endif
 							</td>
 							<td>{{ $trash->name }}</td>
 							<td>{{ $trash->model_number }}</td>

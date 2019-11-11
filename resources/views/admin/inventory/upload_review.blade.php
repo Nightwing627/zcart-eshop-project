@@ -3,7 +3,9 @@
 @section('content')
 	<div class="box">
 		<div class="box-header with-border">
-			<h3 class="box-title">{{ trans('app.preview') }}</h3>
+			<h3 class="box-title">
+				{{ trans('app.preview') }} <small>({{ trans('app.total_number_of_rows', ['value' => count($rows)]) }})</small>
+			</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\Product::class)
 					<a href="javascript:void(0)" data-link="{{ route('admin.stock.inventory.bulk') }}" class="ajax-modal-btn btn btn-default btn-flat">{{ trans('app.bulk_import') }}</a>
@@ -33,7 +35,7 @@
 		        			$serializeData = [];
 		        		@endphp
 			        	@foreach($rows as $row)
-			        		@continue( ! verifyRequiredDataForBulkInventoryUpload($row) )
+			        		{{-- @continue( ! verifyRequiredDataForBulkUpload($row) ) --}}
 
 			        		@php
 			        			$slug = $row['slug'] ?: convertToSlugString($row['title'], $row['sku']);
@@ -142,6 +144,7 @@
 
 			<div class="box-footer">
 				<a href="{{ route('admin.stock.inventory.index') }}" class="btn btn-default btn-flat">{{ trans('app.cancel') }}</a>
+				<small class="indent20">{{ trans('app.total_number_of_rows', ['value' => count($rows)]) }}</small>
 				<div class="box-tools pull-right">
 					{!! Form::button(trans('app.looks_good'), ['type' => 'submit', 'class' => 'confirm btn btn-new btn-flat']) !!}
 				</div>

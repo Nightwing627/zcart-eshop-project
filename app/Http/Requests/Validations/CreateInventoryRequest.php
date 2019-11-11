@@ -23,7 +23,7 @@ class CreateInventoryRequest extends Request
      */
     public function rules()
     {
-        $user = Request::user(); //Get current user
+        $user = $this->user(); //Get current user
         Request::merge([
                 'shop_id' => $user->merchantId(),
                 'user_id' => $user->id

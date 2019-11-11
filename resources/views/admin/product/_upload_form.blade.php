@@ -12,6 +12,7 @@
                 <li>{!! trans('help.download_category_slugs', ['url' => route('admin.catalog.product.downloadCategorySlugs')]) !!}</li>
                 <li>{!! trans('help.first_row_as_header') !!}</li>
                 <li>{!! trans('help.user_category_slug') !!}</li>
+                <li>{!! trans('help.required_fields_csv', ['fields' => implode(',', config('system.import_required.product', []))]) !!}</li>
                 <li>{!! trans('help.invalid_rows_will_ignored') !!}</li>
             </ul>
             <span class="spacer20"></span>

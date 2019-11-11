@@ -11,8 +11,8 @@
                 <li>{!! trans('help.product_have_to_be_catalog') !!}</li>
                 <li>{!! trans('help.need_to_know_product_gtin') !!}</li>
                 <li>{!! trans('help.download_template', ['url' => route('admin.stock.inventory.downloadTemplate')]) !!}</li>
-                {{-- <li>{!! trans('help.download_category_slugs', ['url' => route('admin.stock.inventory.downloadCategorySlugs')]) !!}</li> --}}
                 <li>{!! trans('help.first_row_as_header') !!}</li>
+                <li>{!! trans('help.required_fields_csv', ['fields' => implode(',', config('system.import_required.inventory', []))]) !!}</li>
                 <li>{!! trans('help.invalid_rows_will_ignored') !!}</li>
             </ul>
             <span class="spacer20"></span>

@@ -7,7 +7,9 @@
 	</div>
 	<div class="box">
 		<div class="box-header with-border">
-			<h3 class="box-title">{{ trans('app.import_failed') }}</h3>
+			<h3 class="box-title">
+				{{ trans('app.import_failed') }} <small>({{ trans('app.total_number_of_rows', ['value' => count($failed_rows)]) }})</small>
+			</h3>
 		</div> <!-- /.box-header -->
 
 		<div class="box-body">
@@ -66,6 +68,7 @@
 		</div> <!-- /.box-body -->
 		<div class="box-footer">
 			<a href="{{ route('admin.catalog.product.index') }}" class="btn btn-danger btn-flat">{{ trans('app.dismiss') }}</a>
+			<small class="indent20">{{ trans('app.total_number_of_rows', ['value' => count($failed_rows)]) }}</small>
 			<div class="box-tools pull-right">
 				{!! Form::open(['route' => 'admin.catalog.product.downloadFailedRows', 'id' => 'form', 'class' => 'inline-form', 'data-toggle' => 'validator']) !!}
 		        	@foreach($failed_rows as $row)

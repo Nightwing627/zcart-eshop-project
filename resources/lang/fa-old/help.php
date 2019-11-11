@@ -679,17 +679,4 @@ return [
 
     'mark_phone_verified' => 'Mark as phone verified',
 
-    // Version 1.3.3
-    'missing_required_data' => 'Invalid data, Some required data is missing.',
-
-    'invalid_catalog_data' => 'Invalid catalog data, Recheck the GTIN and other information.',
-
-    'product_have_to_be_catalog' => 'The product have to be present in the <strong>catalog</strong> system. otherwise it will not upload.',
-
-    'need_to_know_product_gtin' => 'You need to know the <strong>GTIN</strong> of the items before upload.',
-
-    'max_upload_size' => 'Maximum upload file size: :value',
-
-    'required_fields_csv' => 'These fields are <strong>required</strong> <em>:fields</em>.',
-
 ];

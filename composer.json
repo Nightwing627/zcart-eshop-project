@@ -60,7 +60,8 @@
         "phpspec/phpspec": "^5.1",
         "phpunit/phpunit": "^7.0",
         "symfony/css-selector": "^4.2",
-        "symfony/dom-crawler": "^4.2"
+        "symfony/dom-crawler": "^4.2",
+        "tanmuhittin/laravel-google-translate": "^1.0"
     },
     "config": {
         "optimize-autoloader": true,

@@ -229,7 +229,7 @@ return [
     'order_detail' => 'Order Detail',
     'order_info' => 'Order info',
     'order_id' => 'Order ID',
-    'order_time_date' => 'Order time &amp; date',
+    'order_time_date' => 'Order time and date',
     'order_received' => 'Order received',
     'out_of_stock' => 'Out Of Stock',
     'packaging' => 'Packaging',
@@ -271,7 +271,6 @@ return [
     'return_and_refund_policy' 	=> 'Return and Refund Policy',
     'review' => 'Review',
 	'reviews' => '{0,1} :count Review|{2,*} :count Reviews',
-	// 'reviews_count' => ':count reviews',
 	'running' => 'Running',
 	'search' => 'Search',
 	'search_results' => 'Search Results',
@@ -560,7 +559,6 @@ return [
 
 	// Version 1.2.4
     'first_listed_on' => 'Date first listed on :platform',
-    // 'average_customer_review' => 'Average Customer Review',
 	'created_at' => 'Created at',
 	'dispute_details' => 'Dispute Details',
     'manufacturer' => 'Manufacturer',

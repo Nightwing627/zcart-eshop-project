@@ -37,12 +37,17 @@ class ProductUploadController extends Controller
 	public function upload(ProductUploadRequest $request)
 	{
 		$path = $request->file('products')->getRealPath();
-		$rows = array_map('str_getcsv', file($path));
-		$rows[0] = array_map('strtolower', $rows[0]);
-	    array_walk($rows, function(&$a) use ($rows) {
-	      $a = array_combine($rows[0], $a);
+		$data = array_map('str_getcsv', file($path));
+		$data[0] = array_map('strtolower', $data[0]);
+
+	    array_walk($data, function(&$a) use ($data) {
+	      $a = array_combine($data[0], $a);
 	    });
-	    array_shift($rows); # remove header column
+	    array_shift($data); # remove header column
+
+	    $rows = [];
+	    foreach ($data as $values)
+	    	$rows[] = clear_encoding_str($values);
 
         return view('admin.product.upload_review', compact('rows'));
 	}
@@ -55,25 +60,26 @@ class ProductUploadController extends Controller
 	 */
 	public function import(ProductImportRequest $request)
 	{
-		// Reset the Failed list
-		$this->failed_list = [];
+		$this->failed_list = [];	// Reset the Failed list
 
-		foreach ($request->input('data') as $row) {
+		$shop_id = auth()->user()->merchantId();
+
+		foreach ($request->input('data') as $row)
+		{
 			$data = unserialize($row);
 
-			if(! is_array($data)) // Invalid data
+			if( ! is_array($data) ) // Invalid data
 				continue;
 
-			// Ignore if the name field is not given
-			if( ! $data['name'] || ! $data['categories'] ){
-				$reason = $data['name'] ? trans('help.invalid_category') : trans('help.name_field_required');
-				$this->pushIntoFailed($data, $reason);
+			// Ignore if required info is not given
+			if( ! verifyRequiredDataForBulkUpload($data, 'product') ){
+				$this->pushIntoFailed($data, trans('help.missing_required_data'));
 				continue;
 			}
 
 			// If the slug is not given the make it
 			if( ! $data['slug'] )
-				$data['slug'] = str_slug($data['name'], '-');
+    			$data['slug'] = convertToSlugString($data['name'], $data['gtin']);
 
 			// Ignore if the slug is exist in the database
 			$product = Product::select('slug')->where('slug', $data['slug'])->first();
@@ -88,6 +94,8 @@ class ProductUploadController extends Controller
 				$this->pushIntoFailed($data, trans('help.invalid_category'));
 				continue;
 			}
+
+			$data['shop_id'] = $shop_id; //Set added by info
 
 			// Create the product and get it, If failed then insert into the ignored list
 			if( ! $this->createProduct($data) ){
@@ -122,6 +130,7 @@ class ProductUploadController extends Controller
 
 		// Create the product
 		$product = Product::create([
+						'shop_id' => $data['shop_id'],
 						'name' => $data['name'],
 						'slug' => $data['slug'],
 						'model_number' => $data['model_number'],

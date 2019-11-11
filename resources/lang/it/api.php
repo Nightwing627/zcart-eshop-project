@@ -1,0 +1,21 @@
+<?php 
+return array (
+  'access_token_required' => 'È richiesto un token di accesso valido.',
+  'auth_failed' => 'Queste credenziali non corrispondono ai nostri record.',
+  'auth_out' => 'Disconnesso correttamente!',
+  'cart_updated' => 'Il tuo carrello è stato aggiornato con successo.',
+  'item_added_to_wishlist' => 'Articolo aggiunto alla lista dei desideri',
+  'item_removed_from_wishlist' => 'L\'articolo è stato rimosso',
+  'item_added_to_cart' => 'Articolo aggiunto al carrello',
+  'item_alrealy_in_cart' => 'Articolo già nel carrello',
+  'item_max_stock' => 'Questo venditore ha scorte limitate disponibili',
+  'item_minimum_qtt' => 'Non è possibile effettuare un ordine al di sotto di questa quantità',
+  'item_alrealy_in_wishlist' => 'Articolo già nella tua lista dei desideri',
+  'item_removed_from_cart' => 'L\'articolo è stato rimosso',
+  'email_account_not_found' => 'Non è possibile trovare un utente con quell\'indirizzo e-mail.',
+  'password_reset_link_sent' => 'Il link di reimpostazione della password inviato! Si prega di controllare la tua email.',
+  'password_reset_token_404' => 'Questo token di reimpostazione della password non è valido.',
+  'password_reset_token_invalid' => 'Questo token di reimpostazione della password non è valido.',
+  'password_reset_successful' => 'La tua password è stata aggiornata con successo! Puoi accedere ora.',
+  404 => 'Questo contenuto non è disponibile',
+);

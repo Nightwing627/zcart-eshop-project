@@ -2,8 +2,6 @@
 
 #{{ trans('notifications.new_contact_us_message.greeting') }}
 
-{{ trans('notifications.new_contact_us_message.message_head') }}
-
 {{ $message->message }}
 <br/><br/>
 
