@@ -54,6 +54,9 @@ class ProductPolicy
      */
     public function update(User $user, Product $product)
     {
+        if($user->isFromMerchant())
+            return $product->shop_id == $user->merchantId();
+
         return (new Authorize($user, 'edit_product', $product))->check();
     }
 
@@ -66,6 +69,9 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product)
     {
+        if($user->isFromMerchant())
+            return $product->shop_id == $user->merchantId();
+
         return (new Authorize($user, 'delete_product', $product))->check();
     }
 
@@ -77,7 +83,6 @@ class ProductPolicy
      */
     public function massDelete(User $user)
     {
-        // return false;
         return (new Authorize($user, 'delete_product'))->check();
     }
 }

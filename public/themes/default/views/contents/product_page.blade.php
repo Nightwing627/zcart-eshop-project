@@ -260,7 +260,7 @@
 						                </tr>
 						            @endif
 
-						            @if($item->product->manufacturer)
+						            @if(optional($item->product->manufacturer)->name)
 						                <tr class="noborder">
 						                	<th class="text-right noborder">{{ trans('theme.manufacturer') }}: </th>
 						                	<td class="noborder" style="width: 75%;">{{ $item->product->manufacturer->name }}</td>

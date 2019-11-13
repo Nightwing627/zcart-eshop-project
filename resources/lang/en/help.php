@@ -692,4 +692,6 @@ return [
 
     'required_fields_csv' => 'These fields are <strong>required</strong> <em>:fields</em>.',
 
+    'seller_condition_note' => 'Input more details about the item condition. This will help customers to understand the item.',
+
 ];

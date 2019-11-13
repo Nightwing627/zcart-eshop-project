@@ -1,3 +1,10 @@
+<div class="form-group">
+  {!! Form::label('condition_note', trans('app.form.condition_note'), ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.seller_condition_note') }}"></i>
+  {!! Form::text('condition_note', Null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.placeholder.condition_note')]) !!}
+  <div class="help-block with-errors"></div>
+</div>
+
 <fieldset>
   <legend>{{ trans('app.form.key_features') }}
       <button id="AddMoreField" class="btn btn-xs btn-new" data-toggle="tooltip" data-title="{{ trans('help.add_input_field') }}"><i class="fa fa-plus"></i></button>

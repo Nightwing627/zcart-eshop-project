@@ -2,12 +2,20 @@
 "use strict";
 
 ;(function($, window, document) {
+    $("[data-link]").hide(); // hide the ajax functional button untill the page load completely
+
     $(document).ready(function(){
         $.ajaxSetup ({
             cache: false,
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
             }
+        });
+
+        $("[data-link]").show(); // hide the ajax functional button untill the page load completely
+
+        $('img').on('error', function(){
+            $(this).hide();
         });
 
         initAppPlugins();
