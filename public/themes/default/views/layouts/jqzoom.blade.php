@@ -1,6 +1,9 @@
 <div class="clearfix">
-	<a href="{{ get_product_img_src($item, 'full') }}" id="jqzoom" data-rel="gal-1">
-		<img class="product-img" data-name="product_image" src="{{ get_product_img_src($item, 'large') }}" alt="{{ $item->title }}" title="{{ $item->title }}" />
+	@php
+		$pImg = get_product_img_src($item, 'full');
+	@endphp
+	<a href="{{ $pImg }}" id="jqzoom" data-rel="gal-1">
+		<img class="product-img" data-name="product_image" src="{{ $pImg }}" alt="{{ $item->title }}" title="{{ $item->title }}" />
 	</a>
 </div>
 
@@ -16,9 +19,16 @@
 			$item_images = $item_images->concat($other_images);
 		}
 	@endphp
+
 	@foreach($item_images as $img)
+		@continue(!$img->path)
+
+		@php
+			$sImg = get_storage_file_url($img->path, 'full');
+		@endphp
+
 		<li>
-			<a class="{{ $img->path == optional($item->image)->path ? 'zoomThumbActive' : '' }}" href="javascript:void(0)" data-rel="{gallery:'gal-1', smallimage: '{{ get_storage_file_url($img->path, 'large') }}', largeimage: '{{ get_storage_file_url($img->path, 'full') }}'}">
+			<a class="{{ $img->path == optional($item->image)->path ? 'zoomThumbActive' : '' }}" href="javascript:void(0)" data-rel="{gallery:'gal-1', smallimage: '{{ $sImg }}', largeimage: '{{ $sImg }}'}">
 				<img src="{{ get_storage_file_url($img->path, 'mini') }}" alt="Thumb" title="{{ $item->title }}" />
 			</a>
 		</li>

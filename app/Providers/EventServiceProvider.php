@@ -2,7 +2,12 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Queue\Events\JobProcessed;
+use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -196,6 +201,21 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        Queue::failing(function (JobFailed $event) {
+            Log::error('Job Failed!', [
+                'Queue Connection' => $event->connectionName,
+                'Exception' => $event->exception,
+            ]);
+        });
+
+        Queue::before(function (JobProcessing $event) {
+            Log::info('..................................................................');
+            Log::info('JobProcessing: ', ['payload' => $event->job->payload()]);
+        });
+
+        Queue::after(function (JobProcessed $event) {
+            Log::info('Job Processed Successfully');
+            Log::info('..................................................................');
+        });
     }
 }

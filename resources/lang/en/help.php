@@ -688,10 +688,17 @@ return [
 
     'need_to_know_product_gtin' => 'You need to know the <strong>GTIN</strong> of the items before upload.',
 
-    'max_upload_size' => 'Maximum upload file size: :value',
+    'multi_img_upload_instruction' => 'You can upload a maximum of :number images and each file size can not exceed :size KB',
+
+    'number_of_img_upload_required' => 'You must select at least <b>{n}</b> {files} to upload. Please retry your upload!',
+
+    'msg_invalid_file_extension' => 'Invalid extension for file {name}. Only <b>{extensions}</b> files are supported.',
+
+    'number_of_img_upload_exceeded' => 'You can upload a maximum of <b>{m}</b> files (<b>{n}</b> files detected).',
+
+    'msg_invalid_file_too_learge' => 'File {name} (<b>{size} KB</b>) exceeds maximum allowed upload size of <b>{maxSize} KB</b>. Please retry your upload!',
 
     'required_fields_csv' => 'These fields are <strong>required</strong> <em>:fields</em>.',
 
     'seller_condition_note' => 'Input more details about the item condition. This will help customers to understand the item.',
-
 ];

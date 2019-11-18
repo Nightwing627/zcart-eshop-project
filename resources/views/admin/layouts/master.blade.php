@@ -118,7 +118,6 @@
                   @endif
 
                   @include('admin.partials._listings_notice')
-
               @endif
 
               {{-- Main content --}}

@@ -123,6 +123,17 @@ return [
         ],
     ],
 
+    'inventory_bulk_upload_procceed_notice' => [
+        'subject' => 'Your bulk inventory import request has been procceed.',
+        'greeting' => 'Hello!',
+        'message' => 'We\'re happy to let you know that your bulk inventory import request has been procceed. Total number of rows imported successfully into the platform :success, Failed number of rows :failed ',
+        'failed' => 'Please find the attached file for failed rows.',
+        'action' => [
+            'text' => 'View Inventory',
+            'color' => 'green',
+        ],
+    ],
+
     // Message Notifications
     'new_message' => [
         'subject' => ':subject',

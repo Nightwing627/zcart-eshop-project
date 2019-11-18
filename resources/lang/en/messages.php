@@ -223,5 +223,5 @@ return [
     'verified_business_name_like' => 'Your business name will be shown like this',
 
     // Version 1.3.3
-
+    'csv_import_process_started' => 'The data has been submitted successfully. The process may take a few minimums. You\'ll get an email when it\'s done.',
 ];

@@ -41,6 +41,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Minimum Image size
+    |--------------------------------------------------------------------------
+    |
+    | Specify the minimum size of image can be uploaded
+    | The size is Kilobyte or KB, Default = 5000KB = ~5MB
+    |
+    */
+    'min_size' => 0,
+
+    /*
+    |--------------------------------------------------------------------------
     | Maximum Image size
     |--------------------------------------------------------------------------
     |
@@ -48,7 +59,7 @@ return [
     | The size is Kilobyte or KB, Default = 5000KB = ~5MB
     |
     */
-    'max_size' => 5000,
+    'max_size' => 1024,
 
     /*
     |--------------------------------------------------------------------------
@@ -59,7 +70,7 @@ return [
     | The size is Kilobyte or KB, Default = 500KB
     |
     */
-    'chunk_size' => 500,
+    'chunk_size' => 1024,
 
     /*
     |--------------------------------------------------------------------------
@@ -91,40 +102,40 @@ return [
         |
         | The system will create thumbnails using this settings only.
         | Any request for other than this sizes will return the original image.
-        | Don't modify this values if you are not sure
         | Sets how the image is fitted to its target dimensions.
         | w = width, h = height. All values are in pixels
         | fit = how the image is fitted to its target dimensions, Available values "contain,max,fill,stretch,crop"
+        | Don't modify this values if you are not sure
         |
         */
         'tiny' => [
             'w' => 30,
-            'h' => 30,
+            'h' => 50,
             'fit' => 'contain'
         ],
         'mini' => [
             'w' => 60,
-            'h' => 60,
+            'h' => 100,
             'fit' => 'contain'
         ],
         'small' => [
             'w' => 100,
-            'h' => 100,
+            'h' => 200,
             'fit' => 'contain'
         ],
         'medium' => [
             'w' => 250,
-            'h' => 250,
+            'h' => 400,
             'fit' => 'contain'
         ],
         'large' => [
-            'w' => 500,
-            'h' => 500,
+            'w' => 800,
+            'h' => 1200,
             'fit' => 'contain'
         ],
         'full' => [
             'w' => 1280,
-            'h' => 1000,
+            'h' => 1800,
             'fit' => 'contain'
         ],
 

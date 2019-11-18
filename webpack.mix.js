@@ -75,6 +75,7 @@ mix.scripts([
 // kartik-v-bootstrap-fileinput
 mix.scripts([
         'resources/assets/plugins/kartik-v-bootstrap-fileinput/js/plugins/sortable.min.js',
+        'resources/assets/plugins/kartik-v-bootstrap-fileinput/js/plugins/piexif.min.js',
         'resources/assets/plugins/kartik-v-bootstrap-fileinput/js/fileinput.min.js',
 	], 'public/js/fileinput.js')
    .styles([

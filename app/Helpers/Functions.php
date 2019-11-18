@@ -349,14 +349,47 @@ if ( ! function_exists('getPaginationValue') )
     }
 }
 
-if ( ! function_exists('getNumberOfInventoryImgs') )
+if ( ! function_exists('getMinNumberOfRequiredImgsForInventory') )
+{
+    /**
+     * Return Min Number Of Required Imgs For Inventory to upload per item
+     */
+    function getMinNumberOfRequiredImgsForInventory()
+    {
+        return config('system_settings.min_number_of_inventory_imgs', 0);
+    }
+}
+
+if ( ! function_exists('getMaxNumberOfImgsForInventory') )
 {
     /**
      * Return max_number_of_inventory_imgs allowed to upload per item
      */
-    function getNumberOfInventoryImgs()
+    function getMaxNumberOfImgsForInventory()
     {
-        return config('system_settings.max_number_of_inventory_imgs') ?: 10;
+        return config('system_settings.max_number_of_inventory_imgs', 10);
+    }
+}
+
+if ( ! function_exists('getAllowedMinImgSize') )
+{
+    /**
+     * Return min_img_size_limit_kb allowed to upload
+     */
+    function getAllowedMinImgSize()
+    {
+        return config('system_settings.min_img_size_limit_kb') ?: config('image.min_size', 0);
+    }
+}
+
+if ( ! function_exists('getAllowedMaxImgSize') )
+{
+    /**
+     * Return max_img_size_limit_kb allowed to upload
+     */
+    function getAllowedMaxImgSize()
+    {
+        return config('system_settings.max_img_size_limit_kb') ?: config('image.max_size', 1024);
     }
 }
 

@@ -53,10 +53,16 @@
 	        showClose: false,
 	        showRemove: false,
 	        showCaption: false,
-	        validateInitialCount: true,
 	        maxFilePreviewSize: 25600,
-	        maxFileCount: {{ getNumberOfInventoryImgs() }},
+	        minFileSize: {{ getAllowedMinImgSize() }},
+	        maxFileSize: {{ getAllowedMaxImgSize() }},
+	        minFileCount: {{ getMinNumberOfRequiredImgsForInventory() }},
+	        maxTotalFileCount: {{ getMaxNumberOfImgsForInventory() }},
 	        allowedFileExtensions: ['jpg', 'jpeg', 'gif', 'png'],
+	        msgFilesTooLess : "{!! trans('help.number_of_img_upload_required') !!}",
+	        msgTotalFilesTooMany : "{!! trans('help.number_of_img_upload_exceeded') !!}",
+	        msgInvalidFileExtension : "{!! trans('help.msg_invalid_file_extension') !!}",
+	        msgSizeTooLarge : "{!! trans('help.msg_invalid_file_too_learge') !!}",
 	        dragSettings: {
 	    		animation: 300,
 				onUpdate: function (evt) {
@@ -154,7 +160,7 @@
 
 				var node = $('#dropzone-input');
 				if(node.fileinput("getFilesCount") > 0) // Upload only if there is files
-					node.fileinput('upload');
+					node.fileinput('upload').fileinput('disable');
 				else
 					window.location.href = result.redirect;
 			})
