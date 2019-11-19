@@ -36,6 +36,7 @@ return [
             'cURL',
             'Fileinfo',
             'GD',
+            'pcntl',
         ],
         'apache' => [
             'mod_rewrite',

@@ -61,14 +61,9 @@
 								  	@endcan
 									<td>
 										<img src="{{ get_product_img_src($inventory, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
-									  	{{-- @if($inventory->image)
-											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
-										@else
-											<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
-										@endif --}}
 									</td>
 									<td>{{ $inventory->sku }}</td>
-									<td>{{ $inventory->title }}</td>
+									<td>{!! $inventory->title !!}</td>
 									<td>{{ $inventory->condition }}</td>
 									<td>
 										@if(($inventory->offer_price > 0) && ($inventory->offer_end > \Carbon\Carbon::now()))
@@ -157,15 +152,9 @@
 								  	@endcan
 									<td>
 										<img src="{{ get_product_img_src($inventory, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
-
-									  	{{-- @if($inventory->image)
-											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
-										@else
-											<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
-										@endif --}}
 									</td>
 									<td>{{ $inventory->sku }}</td>
-									<td>{{ $inventory->title }}</td>
+									<td>{!! $inventory->title !!}</td>
 									<td>{{ $inventory->condition }}</td>
 									<td>
 										@if(($inventory->offer_price > 0) && ($inventory->offer_end > \Carbon\Carbon::now()))
@@ -244,14 +233,9 @@
 								  	@endcan
 									<td>
 										<img src="{{ get_product_img_src($inventory, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
-									  	{{-- @if($inventory->image)
-											<img src="{{ get_storage_file_url($inventory->image->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
-										@else
-											<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
-										@endif --}}
 									</td>
 									<td>{{ $inventory->sku }}</td>
-									<td>{{ $inventory->title }}</td>
+									<td>{!! $inventory->title !!}</td>
 									<td>{{ $inventory->condition }}</td>
 									<td>
 										@if(($inventory->offer_price > 0) && ($inventory->offer_end > \Carbon\Carbon::now()))

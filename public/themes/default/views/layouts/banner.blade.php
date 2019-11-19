@@ -17,7 +17,7 @@
 	    	@if( config('filesystems.default') == 's3' )
 			    <img class="banner-img" src="{{ get_storage_file_url($banner['featured_image']['path'], 'full') }}" alt="{{ $banner['title'] or 'Banner Image' }}" title="{{ $banner['title'] or 'Banner Image' }}">
 	    	@else
-			    <img class="banner-img" src="{{ asset('storage/' . $banner['featured_image']['path']) }}" alt="{{ $banner['title'] or 'Banner Image' }}" title="{{ $banner['title'] or 'Banner Image' }}">
+			    <img class="banner-img" src="{{ asset($banner['featured_image']['path']) }}" alt="{{ $banner['title'] or 'Banner Image' }}" title="{{ $banner['title'] or 'Banner Image' }}">
 	    	@endif
     	@endif
 	</div>

@@ -7,7 +7,7 @@
         </div>
         <div class="modal-body">
             <ul>
-                <li>{!! trans('help.upload_rows', ['rows' => 20]) !!}</li>
+                <li>{!! trans('help.upload_rows', ['rows' => get_csv_import_limit()]) !!}</li>
                 <li>{!! trans('help.download_template', ['url' => route('admin.catalog.product.downloadTemplate')]) !!}</li>
                 <li>{!! trans('help.download_category_slugs', ['url' => route('admin.catalog.product.downloadCategorySlugs')]) !!}</li>
                 <li>{!! trans('help.first_row_as_header') !!}</li>

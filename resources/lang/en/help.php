@@ -589,7 +589,7 @@ return [
 
     'invalid_rows_will_ignored' => 'Invalid rows will be <strong>ignored</strong>.',
 
-    'upload_rows' => 'Upload no more than <strong>:rows rows</strong> per batch for better performance.',
+    'upload_rows' => 'You can upload a maximum of <strong>:rows records</strong> per batch for better performance.',
 
     'name_field_required' => 'Name field is required.',
 

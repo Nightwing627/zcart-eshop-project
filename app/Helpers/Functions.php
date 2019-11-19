@@ -131,6 +131,17 @@ if ( ! function_exists('get_shop_url') )
     }
 }
 
+if ( ! function_exists('get_csv_import_limit') )
+{
+    /**
+     * Return the csv_import_limit
+     */
+    function get_csv_import_limit()
+    {
+        return config('system_settings.csv_import_limit') ?: config('system.csv_import_limit', 50);
+    }
+}
+
 if ( ! function_exists('get_page_url') )
 {
     /**
@@ -695,9 +706,7 @@ if ( ! function_exists('get_age') )
 {
     /**
      * Get age of user/customer from date of birth.
-     *
      * @param  str $dob date of bith
-     *
      * @return string
      */
     function get_age($dob)
@@ -710,9 +719,8 @@ if ( ! function_exists('get_formated_file_size') )
 {
     /**
      * Get the formated file size.
-     *
      * @param  int $bytes
-     *
+     * @param  int $precision
      * @return str formated size string
      */
     function get_formated_file_size($bytes = 0, $precision = 2) {

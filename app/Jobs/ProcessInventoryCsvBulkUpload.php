@@ -24,9 +24,15 @@ class ProcessInventoryCsvBulkUpload implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * The number of times the job may be attempted.
+     */
     public $tries = 5;
 
-    // public $timeout = 295;
+    /**
+     * The number of seconds the job can run before timing out.
+     */
+    public $timeout = 1200;
 
     public $user;
 
@@ -58,6 +64,8 @@ class ProcessInventoryCsvBulkUpload implements ShouldQueue
         $this->csv_data = $csv_data;
         $this->success_counter = 0;
         $this->failed_list = [];
+
+        ini_set('max_execution_time', 0); // Set unlimited time
     }
 
     /**

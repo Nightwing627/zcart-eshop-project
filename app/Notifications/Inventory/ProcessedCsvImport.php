@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ProcessedCsvImport extends Notification
+class ProcessedCsvImport extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -62,9 +62,9 @@ class ProcessedCsvImport extends Notification
                         'failed_list' => $this->failed_list
                     ]);
 
-        // if($this->failed_counter > 0 && $this->failed_file_path != ''){
+        if($this->failed_counter > 0 && $this->failed_file_path != ''){
             $mail->attach($this->failed_file_path);
-        // }
+        }
 
         return $mail;
     }

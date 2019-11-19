@@ -163,4 +163,8 @@ return [
 
     'attributes' => [],
 
+
+    // Version 1.3.3
+    'upload_rows' => 'You can upload a maximum of :rows records per batch.',
+
 ];

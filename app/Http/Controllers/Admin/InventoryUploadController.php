@@ -5,6 +5,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Rap2hpoutre\FastExcel\FastExcel;
+use Illuminate\Support\MessageBag;
 use App\Http\Requests\Validations\InventoryUploadRequest;
 use App\Http\Requests\Validations\InventoryImportRequest;
 use App\Jobs\ProcessInventoryCsvBulkUpload as ProcessUpload;
@@ -38,6 +39,12 @@ class InventoryUploadController extends Controller
 	      $a = array_combine($data[0], $a);
 	    });
 	    array_shift($data); # remove header column
+
+	    // Validations check for csv_import_limit
+	    if(count($rows) > get_csv_import_limit()){
+	    	$message_bag = (new MessageBag)->add('error', trans('validation.upload_rows', ['rows' => get_csv_import_limit()]));
+	    	return back()->withErrors($message_bag);
+	    }
 
 	    $rows = [];
 	    foreach ($data as $values)
