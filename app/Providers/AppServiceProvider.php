@@ -16,6 +16,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -44,6 +45,11 @@ class AppServiceProvider extends ServiceProvider
 
         // Add Google recaptcha validation rule
         Validator::extend('recaptcha', 'App\\Helpers\\ReCaptcha@validate');
+
+        // Disable encryption for gdpr cookie
+        $this->app->resolving(EncryptCookies::class, function (EncryptCookies $encryptCookies) {
+            $encryptCookies->disableFor(config('gdpr.cookie.name'));
+        });
 
         // Add pagination on collections
         if (!Collection::hasMacro('paginate')) {

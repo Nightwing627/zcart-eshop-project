@@ -44,8 +44,7 @@ class Storefront
             View::share('pages', ListHelper::pages(\App\Page::VISIBILITY_PUBLIC));
             session(['global_announcement' => ListHelper::activeAnnouncement()]);
 
-        // $languages = \App\Language::orderBy('order', 'asc')->active()->get();
-
+            // $languages = \App\Language::orderBy('order', 'asc')->active()->get();
         }
 
         return $next($request);

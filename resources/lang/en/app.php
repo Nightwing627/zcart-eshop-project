@@ -1398,4 +1398,9 @@ return [
     'offer_ends' => 'Offer ends',
     'view_invoice' => 'View invoice',
     'total_number_of_rows' => 'Total number of rows: :value',
+    'cookie_consent_message' => 'Your experience on this site will be improved by allowing cookies.',
+    'cookie_consent_agree' => 'Allow cookies',
+    'cookies' => 'Cookies',
+    'cookies_terms' => 'Know more',
+
 ];

@@ -156,6 +156,13 @@ if ( ! function_exists('get_page_url') )
     }
 }
 
+if ( ! function_exists('get_cookie_img') )
+{
+    function get_cookie_img() {
+        return url("images/placeholders/cookie.png");
+    }
+}
+
 if ( ! function_exists('get_verified_badge') )
 {
     function get_verified_badge() {
@@ -172,11 +179,15 @@ if ( ! function_exists('is_serialized') )
         // if it isn't a string, it isn't serialized
         if ( !is_string( $data ) )
             return false;
+
         $data = trim( $data );
+
         if ( 'N;' == $data )
             return true;
+
         if ( !preg_match( '/^([adObis]):/', $data, $badions ) )
             return false;
+
         switch ( $badions[1] ) {
             case 'a' :
             case 'O' :
