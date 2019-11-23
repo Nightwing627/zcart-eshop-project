@@ -15,8 +15,8 @@ return [
         'name' => 'zcart_cookie_consent',
 
         /*
-         * Set the cookie duration in days.  Default is 365 * 20.
+         * Set the cookie duration in days.  Default is 365 * 20 = 7300 days.
          */
-        'lifetime' => 365 * 20,
+        'lifetime' => env('APP_DEMO') ? 1 : 7300,
     ]
 ];

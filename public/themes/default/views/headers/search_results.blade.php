@@ -37,7 +37,10 @@
 
             @endif
 
-            <li class="active">"<strong class="text-primary">{{ Request::get('q') }}</strong>"</li>
+            <li class="active">
+              "<strong class="text-primary">{{ Request::get('q') }}</strong>"
+              <span class="indent10">({{ trans('app.search_result_found', ['count' => $products->count()]) }})</span>
+            </li>
           </ol>
         </div>
       </div>

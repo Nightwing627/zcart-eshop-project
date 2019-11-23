@@ -14,6 +14,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Collection;
 // use Illuminate\Pagination\LengthAwarePaginator;
 
+use Illuminate\Database\Eloquent\Builder;
+
 class SearchController extends Controller
 {
     /**
@@ -26,6 +28,11 @@ class SearchController extends Controller
         $term = $request->input('q');
 
         $products = Inventory::search($term)->where('active', 1)->get();
+
+        $products = $products->unique(function ($item) {
+            return $item['product_id'].$item['shop_id'];
+        });
+
         $products->load([
                         'shop:id,current_billing_plan,trial_ends_at,active',
                         'shop.config:shop_id,maintenance_mode',

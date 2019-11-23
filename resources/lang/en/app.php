@@ -1402,5 +1402,6 @@ return [
     'cookie_consent_agree' => 'Allow cookies',
     'cookies' => 'Cookies',
     'cookies_terms' => 'Know more',
+    'search_result_found' => ':count result found',
 
 ];
