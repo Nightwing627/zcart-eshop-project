@@ -108,6 +108,12 @@ return [
         | Don't modify this values if you are not sure
         |
         */
+        'thumbnail' => [
+            'w' => 60,
+            'h' => 60,
+            'fit' => 'contain'
+        ],
+
         'tiny' => [
             'w' => 30,
             'h' => 50,

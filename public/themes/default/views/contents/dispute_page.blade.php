@@ -157,9 +157,9 @@
                             <div class="col-md-2 nopadding-right no-print">
                               @if($reply->user_id)
                                 @if($reply->user->image)
-                                  <img src="{{ get_storage_file_url(optional($reply->user->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+                                  <img src="{{ get_storage_file_url(optional($reply->user->image)->path, 'thumbnail') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
                                 @else
-                                  <img src="{{ get_gravatar_url($reply->user->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+                                  <img src="{{ get_gravatar_url($reply->user->email, 'thumbnail') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
                                 @endif
 
                                 {{ $reply->user->getName() }}
@@ -186,9 +186,9 @@
                             <div class="col-md-2 nopadding-left no-print">
                               @if($reply->customer_id)
                                 @if($reply->customer->image)
-                                  <img src="{{ get_storage_file_url(optional($reply->customer->image)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+                                  <img src="{{ get_storage_file_url(optional($reply->customer->image)->path, 'thumbnail') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
                                 @else
-                                  <img src="{{ get_gravatar_url($reply->customer->email, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
+                                  <img src="{{ get_gravatar_url($reply->customer->email, 'thumbnail') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
                                 @endif
 
                                 {{ $reply->customer->getName() }}

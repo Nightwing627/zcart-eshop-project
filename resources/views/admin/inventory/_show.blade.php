@@ -5,13 +5,6 @@
 
             <div class="col-md-4 nopadding" style="margin-top: 10px;">
 				<img src="{{ get_product_img_src($inventory, 'medium') }}" width="100%" class="thumbnail" alt="{{ trans('app.image') }}">
-				{{-- @if($inventory->product->featuredImage)
-					<img src="{{ get_storage_file_url(optional($inventory->product->featuredImage)->path, 'medium') }}" class="thumbnail" width="100%" alt="{{ trans('app.featured_image') }}">
-			  	@elseif($inventory->image)
-					<img src="{{ get_storage_file_url($inventory->image->path, 'medium') }}"  width="100%" class="thumbnail" alt="{{ trans('app.image') }}">
-				@else
-					<img src="{{ get_storage_file_url(optional($inventory->product->image)->path, 'medium') }}" width="100%" class="thumbnail" alt="{{ trans('app.image') }}">
-				@endif --}}
 			</div>
             <div class="col-md-8 nopadding">
 				<table class="table no-border">

@@ -220,8 +220,8 @@ trait Imageable {
 		$configs = '';
 
 		foreach ($this->images as $image) {
-	    	Storage::url($image->path);
-            $path = Storage::url($image->path);
+            // $path = Storage::url($image->path);
+            $path = url("image/".$image->path);
             $deleteUrl = route('image.delete', $image->id);
             $urls .= '"' .$path . '",';
             $configs .= '{caption:"' . $image->name . '", size:' . $image->size . ', url: "' . $deleteUrl . '", key:' . $image->id . '},';

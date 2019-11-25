@@ -1,7 +1,7 @@
 <section class="store-banner-img-wrapper">
 	<div class="banner banner-o-hid" style="background-color: #333; background-image:url( {{ get_cover_img_src($shop, 'shop') }} );">
 		<div class="banner-caption">
-			<img src="{{ get_storage_file_url(optional($shop->logo)->path, 'mini') }}" class="img-rounded">
+			<img src="{{ get_storage_file_url(optional($shop->logo)->path, 'thumbnail') }}" class="img-rounded">
 			<h5 class="banner-title">
                 <a href="#" data-toggle="modal" data-target="#shopReviewsModal">
 	            	{!! $shop->getQualifiedName() !!}

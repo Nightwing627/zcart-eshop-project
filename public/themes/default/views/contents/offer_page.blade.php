@@ -60,7 +60,7 @@
                     </td>
                     <td class="seller-info">
                         <div class="space10">
-                            <img src="{{ get_storage_file_url(optional($offer->shop->image)->path, 'tiny') }}" class="seller-info-logo img-sm img-circle" alt="{{ trans('theme.logo') }}">
+                            <img src="{{ get_storage_file_url(optional($offer->shop->image)->path, 'thumbnail') }}" class="seller-info-logo img-sm img-circle" alt="{{ trans('theme.logo') }}">
 
                             <a href="{{ route('show.store', $offer->shop->slug) }}" class="seller-info-name">
                                 {!! $offer->shop->getQualifiedName() !!}
