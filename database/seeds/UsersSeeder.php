@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-class UsersSeeder extends Seeder
+class UsersSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

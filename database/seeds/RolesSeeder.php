@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-class RolesSeeder extends Seeder
+class RolesSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

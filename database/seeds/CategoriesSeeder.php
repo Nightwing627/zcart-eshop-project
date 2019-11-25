@@ -1,10 +1,9 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
-class CategoriesSeeder extends Seeder
+class CategoriesSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

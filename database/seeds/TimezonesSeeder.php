@@ -1,9 +1,8 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
 
-class TimezonesSeeder extends Seeder
+class TimezonesSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

@@ -1,9 +1,8 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
 
-class demoSeeder extends Seeder
+class demoSeeder extends BaseSeeder
 {
     private $tinycount = 5;
     private $count = 15;
@@ -243,35 +242,7 @@ class demoSeeder extends Seeder
 
         factory(App\Dispute::class, 2)->create();
 
-        factory(App\Blog::class, $this->tinycount)->create();
-
-        if ( File::isDirectory(public_path('images/demo')) ) {
-            $path = storage_path('app/public/'.image_storage_dir());
-            if(!File::isDirectory($path)) File::makeDirectory($path);
-
-            $blogs = \DB::table('blogs')->pluck('id')->toArray();
-
-            foreach ($blogs as $blog) {
-                $img = public_path("images/demo/blogs/{$blog}.png");
-
-                if( ! file_exists($img) ) continue;
-
-                File::copy($img,  "{$path}/blog_{$blog}.png");
-
-                DB::table('images')->insert([
-                    [
-                        'name' => "blog_{$blog}.png",
-                        'path' => image_storage_dir()."/blog_{$blog}.png",
-                        'extension' => 'png',
-                        'featured' => 1,
-                        'imageable_id' => $blog,
-                        'imageable_type' => 'App\Blog',
-                        'created_at' => Carbon::Now(),
-                        'updated_at' => Carbon::Now(),
-                    ]
-                ]);
-            }
-        }
+        $this->call('BlogSeeder');
 
         factory(App\BlogComment::class, $this->longCount)->create();
 

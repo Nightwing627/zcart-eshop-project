@@ -7,10 +7,10 @@
 /storage/installed
 /resources/lang/*
 !/resources/lang/vendor/*
-!/resources/lang/en
-!/resources/lang/fa
 !/resources/lang/bn
+!/resources/lang/en
 !/resources/lang/es
+!/resources/lang/fa
 /vendor/*
 !/vendor/helper_functions.php
 /.idea

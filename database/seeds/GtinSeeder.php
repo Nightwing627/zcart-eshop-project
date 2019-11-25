@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Database\Seeder;
-
-class GtinSeeder extends Seeder
+class GtinSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

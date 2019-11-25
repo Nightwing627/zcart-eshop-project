@@ -1,9 +1,8 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
 
-class SubscriptionPlansSeeder extends Seeder
+class SubscriptionPlansSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

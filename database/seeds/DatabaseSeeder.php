@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class DatabaseSeeder extends Seeder
+class DatabaseSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

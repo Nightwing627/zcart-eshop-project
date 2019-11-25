@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Database\Seeder;
-
-class DisputeTypesSeeder extends Seeder
+class DisputeTypesSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

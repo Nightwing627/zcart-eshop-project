@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-class ModulesSeeder extends Seeder
+class ModulesSeeder extends BaseSeeder
 {
     /**
      * All modules and its attributes.

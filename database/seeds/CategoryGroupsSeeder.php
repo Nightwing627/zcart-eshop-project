@@ -1,10 +1,9 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
-class CategoryGroupsSeeder extends Seeder
+class CategoryGroupsSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.
@@ -89,30 +88,33 @@ class CategoryGroupsSeeder extends Seeder
             ]
         ]);
 
-        if ( File::isDirectory(public_path('images/demo')) ) {
-            $path = storage_path('app/public/'.image_storage_dir());
-            if(!File::isDirectory($path)) File::makeDirectory($path);
+        if ( File::isDirectory($this->demo_dir) ) {
 
             $category_groups = \DB::table('category_groups')->pluck('id')->toArray();
-            foreach ($category_groups as $grp) {
-                $img = public_path("images/demo/categories/{$grp}.png");
 
+            foreach ($category_groups as $grp)
+            {
+                $img = $this->demo_dir . "/categories/{$grp}.png";
                 if( ! file_exists($img) ) continue;
 
-                File::copy($img,  "{$path}/category_{$grp}.png");
+                $name = "category_{$grp}.png";
+                $targetFile = $this->dir . DIRECTORY_SEPARATOR . $name;
 
-                DB::table('images')->insert([
-                    [
-                        'name' => "category_{$grp}.png",
-                        'path' => image_storage_dir()."/category_{$grp}.png",
-                        'extension' => 'png',
-                        'featured' => 0,
-                        'imageable_id' => $grp,
-                        'imageable_type' => 'App\CategoryGroup',
-                        'created_at' => Carbon::Now(),
-                        'updated_at' => Carbon::Now(),
-                    ]
-                ]);
+                if( $this->disk->put($targetFile, file_get_contents($img)) )
+                {
+                    DB::table('images')->insert([
+                        [
+                            'name' => $name,
+                            'path' => $targetFile,
+                            'extension' => 'png',
+                            'featured' => 0,
+                            'imageable_id' => $grp,
+                            'imageable_type' => 'App\CategoryGroup',
+                            'created_at' => Carbon::Now(),
+                            'updated_at' => Carbon::Now(),
+                        ]
+                    ]);
+                }
             }
         }
     }

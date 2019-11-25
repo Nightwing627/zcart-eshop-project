@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Database\Seeder;
-
-class AddressTypesSeeder extends Seeder
+class AddressTypesSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

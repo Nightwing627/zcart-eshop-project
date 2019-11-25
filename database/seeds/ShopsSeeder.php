@@ -1,10 +1,9 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
-class ShopsSeeder extends Seeder
+class ShopsSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.
@@ -86,26 +85,28 @@ class ShopsSeeder extends Seeder
                 ]
             ]);
 
-            if ( File::isDirectory(public_path('images/demo')) ) {
-                $path = storage_path('app/public/'.image_storage_dir());
-                if(!File::isDirectory($path)) File::makeDirectory($path);
+            if (File::isDirectory($this->demo_dir))
+            {
+                $logos = glob($this->demo_dir . '/logos/*.png');
 
-                $logos = glob(public_path('images/demo/logos/*.png'));
+                $name = "shop_logo_{$shop_id}.png";
+                $targetFile = $this->dir . DIRECTORY_SEPARATOR . $name;
 
-                File::copy($logos[array_rand($logos)], $path . "/shop_logo_{$shop_id}.png");
-
-                DB::table('images')->insert([
-                    [
-                        'name' => "shop_logo_{$shop_id}.png",
-                        'path' => image_storage_dir()."/shop_logo_{$shop_id}.png",
-                        'extension' => 'png',
-                        'featured' => 0,
-                        'imageable_id' => $shop_id,
-                        'imageable_type' => 'App\Shop',
-                        'created_at' => Carbon::Now(),
-                        'updated_at' => Carbon::Now(),
-                    ]
-                ]);
+                if( $this->disk->put($targetFile, file_get_contents($logos[array_rand($logos)])) )
+                {
+                    DB::table('images')->insert([
+                        [
+                            'name' => $name,
+                            'path' => $targetFile,
+                            'extension' => 'png',
+                            'featured' => 0,
+                            'imageable_id' => $shop_id,
+                            'imageable_type' => 'App\Shop',
+                            'created_at' => Carbon::Now(),
+                            'updated_at' => Carbon::Now(),
+                        ]
+                    ]);
+                }
             }
         }
     }

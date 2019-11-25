@@ -1,9 +1,8 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
 
-class EmailTemplateSeeder extends Seeder
+class EmailTemplateSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

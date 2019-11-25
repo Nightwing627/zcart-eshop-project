@@ -1,10 +1,9 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
-class SlidersSeeder extends Seeder
+class SlidersSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.
@@ -46,31 +45,33 @@ class SlidersSeeder extends Seeder
             ]
         ]);
 
-        if ( File::isDirectory(public_path('images/demo')) ) {
-            $path = storage_path('app/public/'.image_storage_dir());
+        if (File::isDirectory($this->demo_dir))
+        {
+            $bgs = glob($this->demo_dir . '/sliders/*.jpg');
 
-            if(!File::isDirectory($path))
-                File::makeDirectory($path);
-
-            $bgs = glob(public_path('images/demo/sliders/*.jpg'));
             $i = 0;
-            foreach ($bgs as $bg) {
+            foreach ($bgs as $bg)
+            {
                 $i++;
-                File::copy($bg, $path . "/slider_{$i}.jpg");
+                $name = "slider_{$i}.jpg";
+                $targetFile = $this->dir . DIRECTORY_SEPARATOR . $name;
 
-                DB::table('images')->insert([
-                    [
-                        'name' => "slider_{$i}.jpg",
-                        'path' => image_storage_dir()."/slider_{$i}.jpg",
-                        'extension' => 'jpg',
-                        'order' => 1,
-                        'featured' => 1,
-                        'imageable_id' => $i,
-                        'imageable_type' => 'App\Slider',
-                        'created_at' => Carbon::Now(),
-                        'updated_at' => Carbon::Now(),
-                    ]
-                ]);
+                if( $this->disk->put($targetFile, file_get_contents($bg)) )
+                {
+                    DB::table('images')->insert([
+                        [
+                            'name' => $name,
+                            'path' => $targetFile,
+                            'extension' => 'jpg',
+                            'order' => 1,
+                            'featured' => 1,
+                            'imageable_id' => $i,
+                            'imageable_type' => 'App\Slider',
+                            'created_at' => Carbon::Now(),
+                            'updated_at' => Carbon::Now(),
+                        ]
+                    ]);
+                }
             }
         }
     }

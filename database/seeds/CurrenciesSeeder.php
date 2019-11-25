@@ -1,9 +1,8 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
 
-class CurrenciesSeeder extends Seeder
+class CurrenciesSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

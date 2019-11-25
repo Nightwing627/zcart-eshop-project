@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Database\Seeder;
-
-class BannerGroupsSeeder extends Seeder
+class BannerGroupsSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Database\Seeder;
-
-class TicketCategoriesSeeder extends Seeder
+class TicketCategoriesSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

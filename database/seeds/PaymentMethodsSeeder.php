@@ -1,9 +1,8 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
 
-class PaymentMethodsSeeder extends Seeder
+class PaymentMethodsSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
-class InventoriesSeeder extends Seeder
+class InventoriesSeeder extends BaseSeeder
 {
 
     private $itemCount = 30;
@@ -18,34 +18,36 @@ class InventoriesSeeder extends Seeder
     {
         factory(App\Inventory::class, $this->itemCount)->create();
 
-        if ( File::isDirectory(public_path('images/demo')) ) {
+        if (File::isDirectory($this->demo_dir))
+        {
             $inventories = \DB::table('inventories')->pluck('id')->toArray();
-            $path = storage_path('app/public/'.image_storage_dir());
 
-            if(!File::isDirectory($path))
-                File::makeDirectory($path);
+            $img_dirs = glob($this->demo_dir . '/products/*', GLOB_ONLYDIR);
 
-            $directories = glob(public_path('images/demo/products/*') , GLOB_ONLYDIR);
+            foreach ($inventories as $item)
+            {
+                $images = glob($img_dirs[array_rand($img_dirs)] . DIRECTORY_SEPARATOR . '*.jpg');
 
-            foreach ($inventories as $item) {
-                $images = glob($directories[array_rand($directories)] . '/*.jpg');
+                foreach ($images as $key => $file)
+                {
+                    $name = str_random(10) . '.png';
+                    $targetFile = $this->dir . DIRECTORY_SEPARATOR . $name;
 
-                foreach ($images as $key => $img) {
-                    $img_name = str_random(10) . '.png';
-                    File::copy($img,  "{$path}/{$img_name}");
-
-                    DB::table('images')->insert([
-                        [
-                            'name' => $img_name,
-                            'path' => image_storage_dir()."/{$img_name}",
-                            'extension' => 'png',
-                            'size' => 0,
-                            'imageable_id' => $item,
-                            'imageable_type' => 'App\Inventory',
-                            'created_at' => Carbon::Now(),
-                            'updated_at' => Carbon::Now(),
-                        ]
-                    ]);
+                    if( $this->disk->put($targetFile, file_get_contents($file)) )
+                    {
+                        DB::table('images')->insert([
+                            [
+                                'name' => $name,
+                                'path' => $targetFile,
+                                'extension' => 'png',
+                                'size' => 0,
+                                'imageable_id' => $item,
+                                'imageable_type' => 'App\Inventory',
+                                'created_at' => Carbon::Now(),
+                                'updated_at' => Carbon::Now(),
+                            ]
+                        ]);
+                    }
                 }
             }
         }

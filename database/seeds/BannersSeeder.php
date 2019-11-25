@@ -1,10 +1,9 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
-class BannersSeeder extends Seeder
+class BannersSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.
@@ -38,47 +37,54 @@ class BannersSeeder extends Seeder
             'group_id' => 'bottom'
         ]);
 
-        if ( File::isDirectory(public_path('images/demo')) ) {
-            $path = storage_path('app/public/'.image_storage_dir());
-            if(!File::isDirectory($path)) File::makeDirectory($path);
-
-            $bgs = glob(public_path('images/demo/banners/backgrounds/*.jpg'));
+        if (File::isDirectory($this->demo_dir))
+        {
+            $bgs = glob($this->demo_dir . '/banners/backgrounds/*.jpg');
             natsort($bgs);
             $i = 0;
-            foreach ($bgs as $bg) {
-                $i++;
-                File::copy($bg, $path . "/banner_bg_{$i}.jpg");
 
-                DB::table('images')->insert([
-                    [
-                        'name' => "banner_bg_{$i}.jpg",
-                        'path' => image_storage_dir()."/banner_bg_{$i}.jpg",
-                        'extension' => 'jpg',
-                        'featured' => 0,
-                        'imageable_id' => $i,
-                        'imageable_type' => 'App\Banner',
-                        'created_at' => Carbon::Now(),
-                        'updated_at' => Carbon::Now(),
-                    ]
-                ]);
+            foreach ($bgs as $bg) { $i++;
 
-                $hover = public_path("images/demo/banners/hover/{$i}.png");
+                $name = "banner_bg_{$i}.jpg";
+                $targetFile = $this->dir . DIRECTORY_SEPARATOR . $name;
+
+                if( $this->disk->put($targetFile, file_get_contents($bg)) )
+                {
+                    DB::table('images')->insert([
+                        [
+                            'name' => $name,
+                            'path' => $targetFile,
+                            'extension' => 'jpg',
+                            'featured' => 0,
+                            'imageable_id' => $i,
+                            'imageable_type' => 'App\Banner',
+                            'created_at' => Carbon::Now(),
+                            'updated_at' => Carbon::Now(),
+                        ]
+                    ]);
+                }
+
+                $hover = $this->demo_dir . "/banners/hover/{$i}.png";
                 if( ! file_exists($hover) ) continue;
 
-                File::copy($hover, $path . "/banner_{$i}.png");
+                $name = "banner_{$i}.png";
+                $targetFile = $this->dir . DIRECTORY_SEPARATOR . $name;
 
-                DB::table('images')->insert([
-                    [
-                        'name' => "banner_{$i}.png",
-                        'path' => image_storage_dir()."/banner_{$i}.png",
-                        'extension' => 'png',
-                        'featured' => 1,
-                        'imageable_id' => $i,
-                        'imageable_type' => 'App\Banner',
-                        'created_at' => Carbon::Now(),
-                        'updated_at' => Carbon::Now(),
-                    ]
-                ]);
+                if( $this->disk->put($targetFile, file_get_contents($hover)) )
+                {
+                    DB::table('images')->insert([
+                        [
+                            'name' => $name,
+                            'path' => $targetFile,
+                            'extension' => 'png',
+                            'featured' => 1,
+                            'imageable_id' => $i,
+                            'imageable_type' => 'App\Banner',
+                            'created_at' => Carbon::Now(),
+                            'updated_at' => Carbon::Now(),
+                        ]
+                    ]);
+                }
             }
         }
     }

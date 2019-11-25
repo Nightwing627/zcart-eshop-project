@@ -1,9 +1,8 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
 
-class FaqsSeeder extends Seeder
+class FaqsSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.
