@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Auth;
 use App\Product;
-use App\Inventory;
 use App\Category;
+use App\Inventory;
 use App\Packaging;
 use App\Attribute;
-use App\AttributeValue;
 use App\Manufacturer;
+use App\AttributeValue;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 use App\Http\Controllers\Controller;
 use Rap2hpoutre\FastExcel\FastExcel;
 use App\Repositories\Inventory\InventoryRepository;
@@ -65,6 +66,12 @@ class InventoryUploadController extends Controller
 	      $a = array_combine($data[0], $a);
 	    });
 	    array_shift($data); # remove header column
+
+	    // Validations check for csv_import_limit
+	    if(count($data) > get_csv_import_limit()){
+	    	$err = (new MessageBag)->add('error', trans('validation.upload_rows', ['rows' => get_csv_import_limit()]));
+	    	return back()->withErrors($err);
+	    }
 
 	    $rows = [];
 	    foreach ($data as $values)

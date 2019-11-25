@@ -113,6 +113,18 @@ return array (
       'color' => 'bleu',
     ),
   ),
+  'inventory_bulk_upload_procceed_notice' => 
+  array (
+    'subject' => 'Votre demande d\'importation d\'inventaire en bloc a été traitée.',
+    'greeting' => 'Bonjour!',
+    'message' => 'Nous sommes heureux de vous informer que votre demande d\'importation d\'inventaire en bloc a été traitée. Nombre total de lignes importées avec succès dans la plate-forme :success, Nombre de lignes ayant échoué :failed',
+    'failed' => 'Veuillez trouver le fichier joint pour les lignes ayant échoué.',
+    'action' => 
+    array (
+      'text' => 'Voir l\'inventaire',
+      'color' => 'vert',
+    ),
+  ),
   'new_message' => 
   array (
     'subject' => ':subject',

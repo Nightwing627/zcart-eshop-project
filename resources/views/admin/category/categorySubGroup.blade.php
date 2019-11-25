@@ -47,7 +47,7 @@
 							<td><input id="{{ $categorySubGrp->id }}" type="checkbox" class="massCheck"></td>
 						@endcan
 			          	<td>
-							<img src="{{ get_storage_file_url(optional($categorySubGrp->featuredImage)->path, 'mini') }}" class="img-sm" alt="{{ trans('app.cover_image') }}">
+							<img src="{{ get_storage_file_url(optional($categorySubGrp->featuredImage)->path, 'cover_thumb') }}" class="img-sm" alt="{{ trans('app.cover_image') }}">
 			          	</td>
 			          <td>	{{ $categorySubGrp->name }}
 							@unless($categorySubGrp->active)

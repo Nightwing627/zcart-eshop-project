@@ -5,6 +5,12 @@
 /storage/*.key
 /storage/*.index
 /storage/installed
+/resources/lang/*
+!/resources/lang/vendor
+!/resources/lang/en
+!/resources/lang/fa
+!/resources/lang/bn
+!/resources/lang/es
 /vendor/*
 !/vendor/helper_functions.php
 /.idea

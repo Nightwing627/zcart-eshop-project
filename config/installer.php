@@ -35,8 +35,10 @@ return [
             'JSON',
             'cURL',
             'Fileinfo',
+            'exif',
             'GD',
-            'pcntl',
+            // 'Pcntl',
+            // 'Memchached'
         ],
         'apache' => [
             'mod_rewrite',

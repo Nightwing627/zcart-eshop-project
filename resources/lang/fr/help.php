@@ -312,6 +312,11 @@ return array (
   'invalid_catalog_data' => 'Données de catalogue non valides, revérifier le GTIN et d\'autres informations.',
   'product_have_to_be_catalog' => 'Le produit doit être présent dans le système <strong> catalogue </ strong>. sinon, il ne sera pas téléchargé.',
   'need_to_know_product_gtin' => 'Vous devez connaître le <strong> GTIN </ strong> des éléments avant de les télécharger.',
-  'max_upload_size' => 'Taille maximale du fichier de téléchargement: :value',
+  'multi_img_upload_instruction' => 'Vous pouvez télécharger un maximum de :number images et chaque taille de fichier ne doit pas dépasser :size Ko.',
+  'number_of_img_upload_required' => 'Vous devez sélectionner au moins <b> {n} </ b> {fichiers} à télécharger. Veuillez réessayer votre téléchargement!',
+  'msg_invalid_file_extension' => 'Extension non valide pour le fichier {nom}. Seuls les fichiers <b> {extensions} </ b> sont pris en charge.',
+  'number_of_img_upload_exceeded' => 'Vous pouvez télécharger un maximum de <b> {m} </ b> fichiers (<b> {n} </ b> fichiers détectés).',
+  'msg_invalid_file_too_learge' => 'Le fichier {nom} (<b> {taille} Ko </ b>) dépasse la taille de téléchargement maximale autorisée de <b> {taille maximale} Ko </ b>. Veuillez réessayer votre téléchargement!',
   'required_fields_csv' => 'Ces champs sont <strong> obligatoires </ strong> <em>: champs </ em>.',
+  'seller_condition_note' => 'Entrez plus de détails sur la condition de l\'article. Cela aidera les clients à comprendre l\'article.',
 );

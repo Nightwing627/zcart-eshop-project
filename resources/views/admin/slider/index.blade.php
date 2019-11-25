@@ -11,7 +11,7 @@
 	      </div>
 	    </div> <!-- /.box-header -->
 	    <div class="box-body">
-		    <table class="table table-hover table-no-sort">
+		    <table class="table table-hover table-2nd-no-sort">
 		        <thead>
 			        <tr>
 						@can('massDelete', App\Slider::class)
@@ -31,6 +31,7 @@
 								</div>
 							</th>
 						@endcan
+						<th>{{ trans('app.thumbnail') }}</th>
 						<th>{{ trans('app.detail') }}</th>
 						<th>{{ trans('app.slider') }}</th>
 						<th>{{ trans('app.options') }}</th>
@@ -45,15 +46,15 @@
 								<td><input id="{{ $slider->id }}" type="checkbox" class="massCheck"></td>
 						  	@endcan
 				          	<td>
-								<img src="{{ get_storage_file_url(optional($slider->images->first())->path, 'slider_thumb') }}" class="" height ="50%" alt="{{ trans('app.image') }}">
-								<p class="indent10">
-						          	<strong style="color: {{ $slider->title_color }}">{!! $slider->title !!} </strong>
-									<br/>
-						          	<small style="color: {{ $slider->sub_title_color }}">{!! $slider->sub_title !!}</small>
-								</p>
+								<img src="{{ get_storage_file_url(optional($slider->images->first())->path, 'cover_thumb') }}" class="" height ="50%" alt="{{ trans('app.image') }}">
+							</td>
+				          	<td>
+					          	<strong style="color: {{ $slider->title_color }}">{!! $slider->title !!} </strong>
+								<br/>
+					          	<small style="color: {{ $slider->sub_title_color }}">{!! $slider->sub_title !!}</small>
 				          	</td>
 					        <td>
-								<img src="{{ get_storage_file_url(optional($slider->featuredImage)->path, 'slider_thumb') }}" class="thumbnail" alt="{{ trans('app.slider_image') }}">
+								<img src="{{ get_storage_file_url(optional($slider->featuredImage)->path, 'cover_thumb') }}" class="thumbnail" alt="{{ trans('app.slider_image') }}">
 					        </td>
 				          	<td>
 					          	{{ trans('app.title_color') . ': ' }}<strong>{!! $slider->title_color !!}</strong>

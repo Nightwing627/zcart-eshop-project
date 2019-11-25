@@ -1,6 +1,6 @@
-<?php
+<?php 
 return array (
-  'nav' =>
+  'nav' => 
   array (
     'about_us' => 'درباره ما',
     'account' => 'حساب',
@@ -37,7 +37,7 @@ return array (
     'your_account' => 'حساب شما',
     'your_orders' => 'سفارشات شما',
   ),
-  'button' =>
+  'button' => 
   array (
     'add_to_cart' => 'افزودن به سبد خرید',
     'add_to_wishlist' => 'به لیست علاقه مندی ها اضافه کنید',
@@ -323,7 +323,7 @@ return array (
   'your_cart' => 'سبد خرید شما',
   'your_order_history' => 'سفارشات شما',
   'up' => 'بالا',
-  'help' =>
+  'help' => 
   array (
     'be_honest_when_leave_feedbacks' => 'بازخورد شما به خریداران دیگر برای تصمیم گیری کمک می کند. بنابراین ، خردمند ، صادق و صادق باشید تا بازخورد خود را ترک کنید.',
     'card_exp_month' => 'ماه انقضا را انتخاب کنید',
@@ -348,11 +348,11 @@ return array (
     'upload_photo' => 'شما می توانید فقط 1 پرونده با اندازه بیش از 2 مگابایت بارگذاری کنید و از JPG ، JPEG یا PNG پشتیبانی می کنید',
     'when_marketplace_steps_in' => 'اگر شما و فروشنده نتوانید به توافق برسید ، ما در این مرحله گام بر می داریم و کمک خواهیم کرد.',
   ),
-  'defaults' =>
+  'defaults' => 
   array (
     'new_message_from' => 'پیام جدید :sender',
   ),
-  'notify' =>
+  'notify' => 
   array (
     'address_created' => 'آدرس با موفقیت ذخیره شد!',
     'address_deleted' => 'آدرس با موفقیت حذف شد!',
@@ -412,14 +412,14 @@ return array (
     'you_will_be_redirected_to_paystack' => 'شما به Paystack هدایت می شوید.',
     'you_will_be_redirected_to_instamojo' => 'شما به Instamojo هدایت می شوید.',
   ),
-  'input_label' =>
+  'input_label' => 
   array (
     'agree' => 'موافقم',
     'i_agree_with_terms' => 'من با <u> <a href=":url" target="_blank"> شرایط </a> </u> موافقم',
     'subscribe' => 'مشترک شدن در خبرنامه',
     'subscribe_to_the_newsletter' => 'من می خواهم از طریق ایمیل پیشنهادات و به روز رسانی ها را دریافت کنم',
   ),
-  'placeholder' =>
+  'placeholder' => 
   array (
     'address_line_1' => 'خط شماره 1',
     'address_line_2' => 'خط آدرس 2',
@@ -457,7 +457,7 @@ return array (
     'write_your_feedback' => 'نظرات خود را در 250 کاراکتر بنویسید',
     'zip_code' => 'کد پستی',
   ),
-  'validation' =>
+  'validation' => 
   array (
     'dispute_type_id_required' => 'نوع اختلاف را انتخاب کنید',
     'dispute_product_id_required_with' => 'محصولاتی را انتخاب کنید که مشکل دارند.',
@@ -465,14 +465,14 @@ return array (
     'feedback_comment_between' => 'نظرات باید بین نویسه :min تا :max باشد.',
     'incorrect_current_password' => 'رمز عبور فعلی شما صحیح نیست!',
   ),
-  'confirm_action' =>
+  'confirm_action' => 
   array (
     'cant_undo' => 'شما مطمئن هستید؟ <br/> شما نمی توانید این عمل را خنثیسازی کنید',
     'delete' => 'آیا مطمئن هستید که می خواهید این منبع را حذف کنید؟ <br/> شما نمی توانید این عمل را خنثیسازی کنید!',
     'goods_received' => 'شما مطمئن هستید؟ <br/> شما نمی توانید این عمل را خنثیسازی کنید',
     'open_a_dispute' => 'قبل از شروع اختلاف ، لطفاً سعی کنید مسئله را با فروشنده حل کنید.',
   ),
-  'section_headings' =>
+  'section_headings' => 
   array (
     'additional_items' => 'موارد اضافی <span class = "text-basic"> برای کشف </span>',
     'contact_seller' => 'برای فروشنده پیامی بگذارید',
@@ -491,28 +491,28 @@ return array (
     'weekly_popular' => 'هفتگی <span class = "text-basic"> محبوب </span>',
     'you_may_also_like' => 'همچنین ممکن است دوست داشته باشید',
   ),
-  'benefit' =>
+  'benefit' => 
   array (
-    'one' =>
+    'one' => 
     array (
       'title' => 'شروع فروش در دقیقه',
       'icon' => 'موشک',
       'detail' => 'مستقیماً در حال رشد شغل خود باشید. ما برای فروش آنلاین همه چیز را کنترل می کنیم. بنابراین می توانید به جای مدیریت زیرساخت ها روی شغل خود تمرکز کنید.',
     ),
-    'two' =>
+    'two' => 
     array (
       'title' => 'داشبورد جامع',
       'icon' => 'رایانه لوحی',
       'detail' => 'برای درک بهتر فروش ، سفارشات و مشتریان برای تهیه هر چه بهتر محصولات خود ، از یک دیدگاه جامع و کامل استفاده کنید.',
     ),
-    'three' =>
+    'three' => 
     array (
       'title' => 'مستقیم و مطمئن پرداخت کنید',
       'icon' => 'کارت اعتباری',
       'detail' => 'ما پول شما را نگه نداریم! این پرداخت به محض پرداخت یک خریدار مستقیم به شما می رود.',
     ),
   ),
-  'plan' =>
+  'plan' => 
   array (
     'inventory_limit' => 'محصولات :limit',
     'marketplace_commission' => 'کمیسیون بازار :commission٪',
@@ -522,24 +522,24 @@ return array (
     'transaction_and_commission' => ':commission٪ + :fee در هر تراکنش',
     'transaction_fee' => ':fee در هر معامله',
   ),
-  'how_it_work_steps' =>
+  'how_it_work_steps' => 
   array (
-    'step_1' =>
+    'step_1' => 
     array (
       'title' => 'به عنوان بازرگان ثبت نام کنید',
       'detail' => 'ایجاد یک حساب کاربری بسیار ساده است ، داشبورد بازرگان شما به محض ثبت نام آماده می شوید. شما می توانید همه چیزهایی را که متعلق به فروشگاه شماست و اداره کار کنید ، مدیریت کنید.',
     ),
-    'step_2' =>
+    'step_2' => 
     array (
       'title' => 'موارد خود را لیست کنید',
       'detail' => 'لیست محصولات شما از طریق استفاده آسان از پورتال سلف سرویس بسیار ساده است. از جمله تصاویر محصول با کیفیت بالا و جزئیات اضافی بارگیری کنید.',
     ),
-    'step_3' =>
+    'step_3' => 
     array (
       'title' => 'فروش و انجام سفارشات',
       'detail' => 'پس از لیست پیشنهادات خود ، مشتریان می توانند از آنها در Marketplace دیدن کنند. ما هنگام سفارش سفارش به شما اطلاع خواهیم داد. انجام سفارش در زمان موعود بسیار مهم است.',
     ),
-    'step_4' =>
+    'step_4' => 
     array (
       'title' => 'فوراً پرداخت کنید',
       'detail' => 'ما پول شما را نگه نداریم ، پرداخت مستقیماً به حساب متصل شما ارسال می شود.',

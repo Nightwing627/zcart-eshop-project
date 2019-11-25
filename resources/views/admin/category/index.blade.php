@@ -46,10 +46,14 @@
 		        @foreach($categories as $category )
 			        <tr>
 					  	@can('massDelete', App\Category::class)
-							<td><input id="{{ $category->id }}" type="checkbox" class="massCheck"></td>
+							<td>
+								@unless($category->products_count)
+									<input id="{{ $category->id }}" type="checkbox" class="massCheck">
+							  	@endunless
+							</td>
 					  	@endcan
 			          	<td>
-							<img src="{{ get_storage_file_url(optional($category->featuredImage)->path, 'mini') }}" class="img-sm" alt="{{ trans('app.cover_image') }}">
+							<img src="{{ get_storage_file_url(optional($category->featuredImage)->path, 'cover_thumb') }}" class="img-sm" alt="{{ trans('app.cover_image') }}">
 			          	</td>
 			          	<td>
 			          		<h5>

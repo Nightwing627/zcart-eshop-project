@@ -113,6 +113,18 @@ return array (
       'color' => 'blu',
     ),
   ),
+  'inventory_bulk_upload_procceed_notice' => 
+  array (
+    'subject' => 'La tua richiesta di importazione di inventario di massa è stata elaborata.',
+    'greeting' => 'Ciao!',
+    'message' => 'Siamo lieti di informarti che la tua richiesta di importazione di inventario di massa è stata elaborata. Numero totale di righe importate correttamente nella piattaforma :success, Numero di righe :failed non riuscito',
+    'failed' => 'Trova il file allegato per le righe non riuscite.',
+    'action' => 
+    array (
+      'text' => 'Visualizza inventario',
+      'color' => 'verde',
+    ),
+  ),
   'new_message' => 
   array (
     'subject' => ':subject',

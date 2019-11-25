@@ -1,6 +1,6 @@
-<?php
+<?php 
 return array (
-  'model' =>
+  'model' => 
   array (
     'address' => 'نشانی',
     'announcement' => 'اعلامیه',
@@ -764,34 +764,34 @@ return array (
   'update_app_license' => 'مجوز را به روز کنید',
   'uninstall_app_license' => 'حذف مجوز',
   'take_a_backup' => 'از نسخه پشتیبان تهیه کنید',
-  'payment_method_type' =>
+  'payment_method_type' => 
   array (
-    'paypal' =>
+    'paypal' => 
     array (
       'name' => 'پی پال',
       'description' => 'گزینه مناسب پرداخت به مشتریان را پیشنهاد دهید. با استفاده از دکمه "پرداخت با پی پال" ، پی پال را به عنوان یک روش پرداخت اضافی بپذیرید.',
       'admin_description' => 'به فروشندگان اجازه دهید راحت ترین گزینه پرداخت را بپذیرند.',
     ),
-    'credit_card' =>
+    'credit_card' => 
     array (
       'name' => 'کارت های اعتباری را بپذیرید',
       'description' => 'پرداخت کارت اعتباری را در پرداخت بپذیرید. این را می توان با سایر راه حلهای پرداخت مانند PayPal Express Checkout ارائه داد.',
       'admin_description' => 'حداقل یک روش پرداخت کارت اعتباری را فعال کنید تا فروشندگان بتوانند کارتهای اعتباری را شارژ کنند. این را می توان با سایر راه حلهای پرداخت مانند PayPal Express Checkout ارائه داد.',
     ),
-    'others' =>
+    'others' => 
     array (
       'name' => 'سایر گزینه های پرداخت',
       'description' => 'گزینه های پرداخت بیشتر را به مشتریان پیشنهاد دهید.',
       'admin_description' => 'فعال کردن گزینه های پرداخت بیشتر ، به فروشندگان امکان می دهد مشتری خود را به روشهای انعطاف پذیرتری تغییر دهند.',
     ),
-    'manual' =>
+    'manual' => 
     array (
       'name' => 'پرداخت دستی',
       'description' => 'گزینه های پرداخت آفلاین را با دستورالعمل های پرداخت خارج از فروشگاه آنلاین خود به مشتریان ارائه دهید.',
       'admin_description' => 'فعال کردن گزینه های پرداخت آفلاین به فروشندگان امکان می دهد مشتری خود را به روش های سنتی تر تغییر دهند. هنگام فعال کردن روش های پرداخت دستی ، از فروشنده خواسته خواهد شد که دستورالعمل و اطلاعات اضافی را دریافت کند.',
     ),
   ),
-  'message_labels' =>
+  'message_labels' => 
   array (
     'inbox' => 'صندوق ورودی',
     'sent' => 'ارسال شد',
@@ -799,7 +799,7 @@ return array (
     'spam' => 'هرزنامه ها',
     'trash' => 'زباله ها',
   ),
-  'statuses' =>
+  'statuses' => 
   array (
     'appealed' => 'استیناف داد',
     'approved' => 'تایید شده',
@@ -827,14 +827,14 @@ return array (
     'waiting' => 'در انتظار',
     'waiting_for_payment' => 'منتظر پرداخت',
   ),
-  'priorities' =>
+  'priorities' => 
   array (
     'low' => 'کم',
     'normal' => 'طبیعی',
     'high' => 'بالا',
     'critical' => 'بحرانی',
   ),
-  'activities' =>
+  'activities' => 
   array (
     'created' => ' :model ایجاد شد.',
     'added' => 'به روزرسانی <strong>:key</strong>: <strong>:value</ strong>',
@@ -845,7 +845,7 @@ return array (
     'billing_info_changed' => 'اطلاعات صورتحساب به روز شده است.',
     'trial_started' => 'دوره آزمایشی تازه آغاز شده است.',
   ),
-  'form' =>
+  'form' => 
   array (
     'body' => 'بدن',
     'action_text' => 'متن عمل',
@@ -1116,7 +1116,7 @@ return array (
     'by_status' => 'براساس وضعیت',
     'by_payments' => 'با پرداخت',
   ),
-  'placeholder' =>
+  'placeholder' => 
   array (
     'body' => 'بدن',
     'action_text' => 'متن عمل',
@@ -1375,4 +1375,9 @@ return array (
   'offer_ends' => 'پیشنهاد به پایان رسید',
   'view_invoice' => 'مشاهده فاکتور',
   'total_number_of_rows' => 'تعداد کل ردیف ها: :value',
+  'cookie_consent_message' => 'تجربه شما در این سایت با اجازه دادن به کوکی ها بهبود می یابد.',
+  'cookie_consent_agree' => 'کوکی ها را مجاز کنید',
+  'cookies' => 'کلوچه ها',
+  'cookies_terms' => 'بیشتر دانستن',
+  'search_result_found' => 'نتیجه :count یافت شد',
 );

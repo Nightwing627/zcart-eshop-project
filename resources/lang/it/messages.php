@@ -168,4 +168,6 @@ return array (
         </ Ul>
         Le patenti di guida e gli ID rilasciati dal governo devono essere realizzati in plastica. Tutti gli ID devono essere validi.',
   'verified_business_name_like' => 'Il nome della tua attività verrà mostrato in questo modo',
+  'csv_import_process_started' => 'I dati sono stati inviati con successo. Il processo potrebbe richiedere alcuni minimi. Riceverai un\'email al termine.',
+  'model_has_association' => 'X1 ha :associate al suo interno. Per eliminare questo :model, rimuovi tutti gli :associate in :model',
 );

@@ -48,8 +48,8 @@ class ProductUploadController extends Controller
 
 	    // Validations check for csv_import_limit
 	    if(count($data) > get_csv_import_limit()){
-	    	$message_bag = (new MessageBag)->add('error', trans('validation.upload_rows', ['rows' => get_csv_import_limit()]));
-	    	return back()->withErrors($message_bag);
+	    	$err = (new MessageBag)->add('error', trans('validation.upload_rows', ['rows' => get_csv_import_limit()]));
+	    	return back()->withErrors($err);
 	    }
 
 	    $rows = [];

@@ -168,6 +168,11 @@ return [
             'h' => 300,
             'fit' => 'contain'
         ],
+        'cover_thumb' => [
+            'w' => 150,
+            'h' => 59,
+            'fit' => 'contain'
+        ],
         'blog' => [
             'w' => 1280,
             'h' => 450,
@@ -188,11 +193,6 @@ return [
             'h' => 300,
             'fit' => 'contain'
         ],
-        'slider_thumb' => [
-            'w' => 150,
-            'h' => 59,
-            'fit' => 'contain'
-        ],
 
         // Add your sizes here
 
@@ -207,6 +207,6 @@ return [
     | for full list of available color visit "http://glide.thephpleague.com/1.0/api/colors/"
     |
     */
-    'background_color' => 'white',
+    'background_color' => '',
 
 ];

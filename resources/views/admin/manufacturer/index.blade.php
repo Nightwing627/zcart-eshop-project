@@ -48,7 +48,7 @@
 								<td><input id="{{ $manufacturer->id }}" type="checkbox" class="massCheck"></td>
 						  	@endcan
 						  	<td>
-								<img src="{{ get_storage_file_url(optional($manufacturer->logo)->path, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.image') }}">
+								<img src="{{ get_storage_file_url(optional($manufacturer->logo)->path, 'tiny') }}" class="img-sm" alt="{{ trans('app.image') }}">
 						  	</td>
 							<td>
 								<p class="indent10">

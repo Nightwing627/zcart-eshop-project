@@ -30,7 +30,6 @@ return [
     'subscription_error' => 'Error creating subscription. Please contact customer support.',
     'cant_delete_faq_topic' => 'Can\'t delete: Please delete all FAQs under the :topic and try again!',
     'nofound'           => ':model is not exist! try another search.',
-    // 'action_failed'     => 'The action has been failed to unknown reason!',
     'file_deleted'      => 'The file has been deleted successfully!',
     'updated_featured_categories' => 'Featured category list updated successfully!',
     'archived'          => ':model has been archived successfully!',
@@ -85,7 +84,7 @@ return [
     // 'you_have_disputes_solve' => 'There are :disputes active disputes! Please review and solve disputes.',
     // 'you_have_refund_request' => 'You have :requests refund request. Please review and take action.',
 
-    // 'failed'    => [
+    // 'action_failed'    => [
     //     'create'   => 'Create :model has been failed!',
     //     'update'   => 'Update :model has been failed!',
     //     'trash'   => ':model has been moved to trash!',
@@ -224,4 +223,6 @@ return [
 
     // Version 1.3.3
     'csv_import_process_started' => 'The data has been submitted successfully. The process may take a few minimums. You\'ll get an email when it\'s done.',
+
+    'model_has_association' => 'The :model has :associate in it. To delete this :model, please remove all :associate under the :model'
 ];

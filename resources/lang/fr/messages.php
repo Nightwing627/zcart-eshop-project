@@ -168,4 +168,6 @@ return array (
         </ ul>
         Les permis de conduire et les cartes d\'identité délivrées par les gouvernements doivent être fabriqués en plastique. Tous les identifiants doivent être valides.',
   'verified_business_name_like' => 'Le nom de votre entreprise sera affiché comme ceci',
+  'csv_import_process_started' => 'Les données ont été soumises avec succès. Le processus peut prendre quelques minimums. Vous recevrez un email lorsque ce sera fait.',
+  'model_has_association' => 'Le :model contient :associate. Pour supprimer ce :model, s\'il vous plaît supprimer tous les :associate sous le :model',
 );

@@ -37,6 +37,7 @@ class RequirementsChecker
 
                             $results['errors'] = true;
                         }
+
                     }
                     break;
                 // check apache requirements

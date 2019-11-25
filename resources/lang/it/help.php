@@ -312,5 +312,11 @@ return array (
   'invalid_catalog_data' => 'Dati di catalogo non validi, ricontrollare il GTIN e altre informazioni.',
   'product_have_to_be_catalog' => 'Il prodotto deve essere presente nel sistema <strong> catalogo </strong>. altrimenti non verrà caricato.',
   'need_to_know_product_gtin' => 'Devi conoscere il <strong> GTIN </strong> degli elementi prima del caricamento.',
-  'max_upload_size' => 'Dimensione massima del file di caricamento: :value',
+  'multi_img_upload_instruction' => 'Puoi caricare un massimo di :number immagini e ogni dimensione del file non può superare :size KB',
+  'number_of_img_upload_required' => 'Devi selezionare almeno <b> {n} </b> {files} per caricare. Riprova a caricare!',
+  'msg_invalid_file_extension' => 'Estensione non valida per il file {nome}. Sono supportati solo i file <b> {extensions} </b>.',
+  'number_of_img_upload_exceeded' => 'Puoi caricare un massimo di <b> {m} </b> file (<b> {n} </b> file rilevati).',
+  'msg_invalid_file_too_learge' => 'Il file {name} (<b> {size} KB </b>) supera la dimensione massima consentita per il caricamento di <b> {maxSize} KB </b>. Riprova a caricare!',
+  'required_fields_csv' => 'Questi campi sono <strong> richiesti </strong> <em>: campi </em>.',
+  'seller_condition_note' => 'Immettere ulteriori dettagli sulla condizione dell\'articolo. Questo aiuterà i clienti a capire l\'articolo.',
 );

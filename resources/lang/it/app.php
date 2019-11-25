@@ -1375,4 +1375,9 @@ return array (
   'offer_ends' => 'L\'offerta termina',
   'view_invoice' => 'Visualizza fattura',
   'total_number_of_rows' => 'Numero totale di righe: :value',
+  'cookie_consent_message' => 'La tua esperienza su questo sito sarà migliorata consentendo i cookie.',
+  'cookie_consent_agree' => 'Consenti i cookie',
+  'cookies' => 'Biscotti',
+  'cookies_terms' => 'Saperne di più',
+  'search_result_found' => 'risultato :count trovato',
 );

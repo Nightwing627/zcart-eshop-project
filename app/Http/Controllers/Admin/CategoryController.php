@@ -99,6 +99,12 @@ class CategoryController extends Controller
      */
     public function trash(Request $request, $id)
     {
+        // Check for association with products
+        if($this->category->find($id)->products->count()){
+            return back()->with('error', trans('messages.failed'))
+            ->with('global_notice', trans('messages.model_has_association', ['model' => $this->model_name, 'associate' => trans('app.products')]));
+        }
+
         $this->category->trash($id);
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));

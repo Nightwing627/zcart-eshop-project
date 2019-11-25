@@ -54,7 +54,7 @@
 			          </td>
 			          <td>
 			          	@if(Storage::exists(optional($categoryGrp->featuredImage)->path))
-							<img src="{{ get_storage_file_url(optional($categoryGrp->featuredImage)->path, 'small') }}" class="img-sm" alt="{{ trans('app.cover_image') }}">
+							<img src="{{ get_storage_file_url(optional($categoryGrp->featuredImage)->path, 'cover_thumb') }}" class="img-sm" alt="{{ trans('app.cover_image') }}">
   						@endif
 			          </td>
 			          <td>
