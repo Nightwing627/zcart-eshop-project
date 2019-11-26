@@ -18,7 +18,7 @@
                                 @foreach($attributes as $attribute)
                                     <div class="row">
                                         <div class="col-sm-3 col-xs-4">
-                                            <span class="info-label">{{ $attribute->name }}:</span>
+                                            <span class="info-label">{!! $attribute->name !!}:</span>
                                         </div>
                                         <div class="col-sm-9 col-xs-8 nopadding-left">
                                             {{ implode(', ', $attribute->attributeValues->pluck('value')->toArray()) }}
@@ -39,7 +39,7 @@
                             </div>
                             <ul class="key_feature_list">
                                 @foreach(unserialize($item->key_features) as $key_feature)
-                                    <li>{{ $key_feature }}</li>
+                                    <li>{!! $key_feature !!}</li>
                                 @endforeach
                             </ul>
                         </div><!-- /.col-sm-9 .col-xs-6 -->
