@@ -49,11 +49,11 @@ return [
         'name' => 'All users under this role will be able to do specified actions to manage :module.',
 
         'access' => [
-            'common' => 'This is a :Access module. That means both platform users and merchant users can get access.',
+            'common' => 'This is a :access module. That means both platform users and merchant users can get access.',
 
-            'platform' => 'This is a :Access module. That means only platform users can get access.',
+            'platform' => 'This is a :access module. That means only platform users can get access.',
 
-            'merchant' => 'This is a :Access module. That means only merchant users can get access.',
+            'merchant' => 'This is a :access module. That means only merchant users can get access.',
         ]
     ],
 

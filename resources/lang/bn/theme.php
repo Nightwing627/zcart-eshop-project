@@ -193,7 +193,7 @@ return array (
   'main_searchbox_placeholder' => 'আমি কেনাকাটা করতে চাই ...',
   'member_since' => 'থেকে সদস্য',
   'manage_your_account' => 'অ্যাকাউন্ট পরিচালনা',
-  'marketplace_steps_in' => 'এক্স 1 পদক্ষেপ ইন',
+  'marketplace_steps_in' => ':marketplace পদক্ষেপ ইন',
   'me' => 'আমাকে',
   'message_history' => 'বার্তা ইতিহাস',
   'message_from_seller' => 'বিক্রেতার কাছ থেকে বার্তা',
@@ -275,7 +275,7 @@ return array (
   'seller_info' => 'বিক্রেতার তথ্য',
   'seller_helps_you' => 'বিক্রেতা আপনাকে সাহায্য করে',
   'serial_number' => 'ক্রমিক সংখ্যা',
-  'share_on' => 'এক্স 1 এ ভাগ করুন',
+  'share_on' => ':name এ ভাগ করুন',
   'ship_to' => 'প্রেরণ',
   'shipping' => 'স্থানান্তর',
   'shipping_options' => 'শিপিং বিকল্প',
@@ -314,7 +314,7 @@ return array (
   'view_detail' => 'বিস্তারিত দেখুন',
   'view_more_offers' => 'আরও অফার দেখুন (গণনা করুন)',
   'warning' => 'সতর্কতা',
-  'when_min_order_value' => 'এক্স 1 বা তারও বেশি ন্যূনতম অর্ডার মান',
+  'when_min_order_value' => ':value বা তারও বেশি ন্যূনতম অর্ডার মান',
   'wishlist' => 'ইচ্ছেতালিকা',
   'write_your_message' => 'আপনার বার্তা লিখুন',
   'years_count' => '{0,1} :count বছর | {2, *} :count বছর',
@@ -328,7 +328,7 @@ return array (
     'be_honest_when_leave_feedbacks' => 'আপনার প্রতিক্রিয়া অন্যান্য ক্রেতাদের সিদ্ধান্ত নিতে সাহায্য করবে। সুতরাং, আপনার মতামত ছেড়ে বিজ্ঞ, আন্তরিক এবং সৎ হন।',
     'card_exp_month' => 'মেয়াদ শেষ হওয়ার মাস নির্বাচন করুন',
     'card_exp_year' => 'মেয়াদ শেষ হওয়ার বছরটি নির্বাচন করুন',
-    'create_account_on_checkout' => 'অ্যাকাউন্ট তৈরি করে আপনি আমাদের <a href=":link" টার্গেট="_blank"> শর্তাবলী </a> এ সম্মত হন। আপনার অ্যাকাউন্টে লগইন করতে একটি সুরক্ষিত পাসওয়ার্ড প্রবেশ করান।',
+    'create_account_on_checkout' => 'অ্যাকাউন্ট তৈরি করে আপনি আমাদের <a href=":link" target="_blank"> শর্তাবলী </a> এ সম্মত হন। আপনার অ্যাকাউন্টে লগইন করতে একটি সুরক্ষিত পাসওয়ার্ড প্রবেশ করান।',
     'customer_paid' => 'আপনি সমস্ত শুল্ক, শিপিং চার্জ এবং অন্যান্য সহ <strong> <em> :amount </em> </strong> প্রদান করেছেন।',
     'enter_cardholder_name' => 'কার্ডধারীর নাম লিখুন',
     'first_step' => 'প্রথম ধাপ',
@@ -350,7 +350,7 @@ return array (
   ),
   'defaults' =>
   array (
-    'new_message_from' => 'এক্স 1 থেকে নতুন বার্তা',
+    'new_message_from' => ':sender থেকে নতুন বার্তা',
   ),
   'notify' =>
   array (
@@ -415,7 +415,7 @@ return array (
   'input_label' =>
   array (
     'agree' => 'আমি রাজী',
-    'i_agree_with_terms' => 'আমি <u> <a href=":url" টার্গেট="_blank"> শর্তাদি </a> </u> সাথে একমত',
+    'i_agree_with_terms' => 'আমি <u> <a href=":url" target="_blank"> শর্তাদি </a> </u> সাথে একমত',
     'subscribe' => 'নিউজলেটার সাবস্ক্রাইব করুন',
     'subscribe_to_the_newsletter' => 'আমি ইমেলের মাধ্যমে অফার এবং আপডেট পেতে চাই',
   ),
@@ -514,13 +514,13 @@ return array (
   ),
   'plan' =>
   array (
-    'inventory_limit' => 'এক্স 1 পণ্য',
+    'inventory_limit' => ':limit পণ্য',
     'marketplace_commission' => ':commission% মার্কেটপ্লেস কমিশন',
     'no_transaction_fee' => 'কোনও লেনদেন ফি নেই',
     'no_marketplace_commission' => 'মার্কেটপ্লেস কমিশন নেই',
-    'team_size' => 'এক্স 1 স্টাফ ব্যবহারকারীরা',
+    'team_size' => ':size স্টাফ ব্যবহারকারীরা',
     'transaction_and_commission' => ':commission% + :fee প্রতি লেনদেন',
-    'transaction_fee' => 'এক্স 1 প্রতি লেনদেন',
+    'transaction_fee' => ':fee প্রতি লেনদেন',
   ),
   'how_it_work_steps' =>
   array (

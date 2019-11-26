@@ -1,6 +1,6 @@
-<?php 
+<?php
 return array (
-  'model' => 
+  'model' =>
   array (
     'address' => 'ঠিকানা',
     'announcement' => 'ঘোষণা',
@@ -47,7 +47,7 @@ return array (
     'user' => 'ব্যবহারকারী',
     'warehouse' => 'গুদাম',
   ),
-  'and_takes' => 'এবং এক্স 1 নেয়',
+  'and_takes' => 'এবং :time নেয়',
   'welcome' => 'স্বাগত',
   'body' => 'শরীর',
   'banner_image' => 'ব্যানার চিত্র',
@@ -233,7 +233,7 @@ return array (
   'date' => 'তারিখ',
   'excl_tax' => 'স্বতন্ত্র। কর',
   'free' => 'বিনামূল্যে',
-  'and_up' => 'এক্স 1 এবং উপরে',
+  'and_up' => ':value এবং উপরে',
   'increase' => 'বৃদ্ধি',
   'decrease' => 'কমান',
   'discounts' => 'ডিসকাউন্ট',
@@ -262,7 +262,7 @@ return array (
   'category_name' => 'বিভাগ নাম',
   'map_location' => 'মানচিত্র আনুমানিক অবস্থান দেখায়।',
   'blog_title' => 'ব্লগ শিরোনাম',
-  'blog_page_header' => 'এক্স 1 ব্লগ',
+  'blog_page_header' => ':platform ব্লগ',
   'draft' => 'খসড়া',
   'published' => 'প্রকাশিত',
   'unpublished' => 'অপ্রকাশিত',
@@ -451,7 +451,7 @@ return array (
   'discount' => 'ডিসকাউন্ট',
   'grand_total' => 'সর্বমোট',
   'invoice' => 'চালান',
-  'purchase_from' => 'এক্স 1 থেকে ক্রয় করুন',
+  'purchase_from' => ':marketplace থেকে ক্রয় করুন',
   'send_invoice_to_customer' => 'চালানটি প্রেরণ করুন',
   'message_to_customer' => 'গ্রাহকের জন্য বার্তা',
   'notify_customer' => 'গ্রাহককে একটি বিজ্ঞপ্তি ইমেল প্রেরণ করুন',
@@ -764,34 +764,34 @@ return array (
   'update_app_license' => 'আপডেট আপডেট',
   'uninstall_app_license' => 'লাইসেন্স আনইনস্টল করুন',
   'take_a_backup' => 'ব্যাকআপ নিন Take',
-  'payment_method_type' => 
+  'payment_method_type' =>
   array (
-    'paypal' => 
+    'paypal' =>
     array (
       'name' => 'পেপ্যাল',
       'description' => 'গ্রাহকদের সবচেয়ে সুবিধাজনক অর্থপ্রদানের বিকল্প সরবরাহ করুন। "পেপাল সহ চেকআউট" বোতামটি ব্যবহার করে পেপ্যালকে অতিরিক্ত অর্থপ্রদানের পদ্ধতি হিসাবে গ্রহণ করুন।',
       'admin_description' => 'বিক্রেতাদের সবচেয়ে সুবিধাজনক অর্থপ্রদানের বিকল্পটি গ্রহণ করার অনুমতি দিন।',
     ),
-    'credit_card' => 
+    'credit_card' =>
     array (
       'name' => 'ক্রেডিট কার্ড গ্রহণ করুন',
       'description' => 'চেকআউটে ক্রেডিট কার্ডের অর্থ প্রদান গ্রহণ করুন। এটি পেপ্যাল ​​এক্সপ্রেস চেকআউট এর মতো অন্যান্য অর্থপ্রদানের সমাধানগুলির সাথে সরবরাহ করা যেতে পারে।',
       'admin_description' => 'বিক্রেতাদের ক্রেডিট কার্ড চার্জ করার অনুমতি দেওয়ার জন্য কমপক্ষে একটি ক্রেডিট কার্ড প্রদানের পদ্ধতি সক্ষম করুন। এটি পেপ্যাল ​​এক্সপ্রেস চেকআউট এর মতো অন্যান্য অর্থপ্রদানের সমাধানগুলির সাথে সরবরাহ করা যেতে পারে।',
     ),
-    'others' => 
+    'others' =>
     array (
       'name' => 'অন্যান্য অর্থপ্রদানের বিকল্পগুলি',
       'description' => 'গ্রাহকদের আরও অর্থ প্রদানের অফার দিন।',
       'admin_description' => 'আরও অর্থ প্রদানের বিকল্পগুলি সক্ষম করা বিক্রেতাদের আরও গ্রাহক উপায়ে তাদের গ্রাহক পরিবর্তন করতে দেবে।',
     ),
-    'manual' => 
+    'manual' =>
     array (
       'name' => 'ম্যানুয়াল পেমেন্ট',
       'description' => 'আপনার অনলাইন স্টোরের বাইরে অর্থ প্রদানের নির্দেশাবলী সহ গ্রাহকদের অফলাইনে অর্থ প্রদানের বিকল্পগুলি সরবরাহ করুন।',
       'admin_description' => 'অফলাইন অর্থপ্রদানের বিকল্পগুলি সক্ষম করা বিক্রেতাদের আরও বেশি .তিহ্যগত উপায়ে তাদের গ্রাহক পরিবর্তন করতে দেবে। বিক্রেতাকে ম্যানুয়াল প্রদানের পদ্ধতি সক্রিয় করার সময় নির্দেশাবলী এবং অতিরিক্ত তথ্যের জন্য জিজ্ঞাসা করা হবে।',
     ),
   ),
-  'message_labels' => 
+  'message_labels' =>
   array (
     'inbox' => 'ইনবক্স',
     'sent' => 'প্রেরিত',
@@ -799,7 +799,7 @@ return array (
     'spam' => 'স্প্যাম',
     'trash' => 'আবর্জনা',
   ),
-  'statuses' => 
+  'statuses' =>
   array (
     'appealed' => 'আবেদন করা',
     'approved' => 'অনুমোদিত',
@@ -827,14 +827,14 @@ return array (
     'waiting' => 'অপেক্ষা',
     'waiting_for_payment' => 'টাকা প্রদানের জন্য অপেক্ষা করছি',
   ),
-  'priorities' => 
+  'priorities' =>
   array (
     'low' => 'কম',
     'normal' => 'সাধারণ',
     'high' => 'উচ্চ',
     'critical' => 'সংকটপূর্ণ',
   ),
-  'activities' => 
+  'activities' =>
   array (
     'created' => ' :model তৈরি হয়েছিল।',
     'added' => 'আপডেট হয়েছে <strong>: কী </ strong>: <strong>: মান </ strong>',
@@ -845,7 +845,7 @@ return array (
     'billing_info_changed' => 'বিলিংয়ের তথ্য আপডেট করা হয়েছে।',
     'trial_started' => 'সবেমাত্র পরীক্ষার সময় শুরু হয়েছিল।',
   ),
-  'form' => 
+  'form' =>
   array (
     'body' => 'শরীর',
     'action_text' => 'ক্রিয়া পাঠ্য',
@@ -1116,7 +1116,7 @@ return array (
     'by_status' => 'স্ট্যাটাসে',
     'by_payments' => 'পেমেন্ট দ্বারা',
   ),
-  'placeholder' => 
+  'placeholder' =>
   array (
     'body' => 'শরীর',
     'action_text' => 'ক্রিয়া পাঠ্য',
@@ -1379,5 +1379,5 @@ return array (
   'cookie_consent_agree' => 'কুকিজ অনুমতি দিন',
   'cookies' => 'বিস্কুট',
   'cookies_terms' => 'আরও জানুন',
-  'search_result_found' => 'এক্স 1 ফলাফল পাওয়া গেছে',
+  'search_result_found' => ':count ফলাফল পাওয়া গেছে',
 );
