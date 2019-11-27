@@ -11,7 +11,6 @@ use App\Observers\RefundObserver;
 use App\Observers\OrderObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Collection;
@@ -35,7 +34,6 @@ class AppServiceProvider extends ServiceProvider
             \URL::forceScheme('https');
         }
 
-        Schema::defaultStringLength(191);
         Blade::withoutDoubleEncoding();
         Paginator::useBootstrapThree();
 

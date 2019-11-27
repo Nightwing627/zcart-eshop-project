@@ -20,6 +20,9 @@ class CookieConsentMiddleware
     {
         $response = $next($request);
 
+        // Ignore the selling theme routes
+        if($request->is('selling*')) return $response;
+
         if (! config('gdpr.cookie.enabled')) {
             return $response;
         }

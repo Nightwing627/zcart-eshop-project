@@ -41,7 +41,7 @@ class InventoryUploadController extends Controller
 	    array_shift($data); # remove header column
 
 	    // Validations check for csv_import_limit
-	    if(count($rows) > get_csv_import_limit()){
+	    if(count($data) > get_csv_import_limit()){
 	    	$message_bag = (new MessageBag)->add('error', trans('validation.upload_rows', ['rows' => get_csv_import_limit()]));
 	    	return back()->withErrors($message_bag);
 	    }
