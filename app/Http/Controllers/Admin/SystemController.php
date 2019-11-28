@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Hash;
 use App\System;
-// use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Output\BufferedOutput;
