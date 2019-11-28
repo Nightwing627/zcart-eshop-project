@@ -275,11 +275,9 @@ class Customer extends Authenticatable
      */
     public function setPasswordAttribute($password)
     {
-        if(Hash::needsRehash($password))
-            $this->attributes['password'] = bcrypt($password);
-        else
-            $this->attributes['password'] = $password;
+        $this->attributes['password'] = Hash::needsRehash($password) ? bcrypt($password) : $password;
     }
+
     public function setAcceptsMarketingAttribute($value)
     {
         $this->attributes['accepts_marketing'] = $value ? 1 : null;

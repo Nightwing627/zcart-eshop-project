@@ -18,21 +18,7 @@
 
       <div class="col-md-8">
         @php
-          $progress = 0;
-
-          if($order->dispute){
-            $dispute_status = $order->dispute->status;
-            $apealed = \App\Dispute::STATUS_APPEALED;
-
-            if($dispute_status == \App\Dispute::STATUS_NEW)
-                $progress = 0;
-            else if($dispute_status < $apealed)
-                $progress = 33.3333;
-            else if($dispute_status == $apealed)
-                $progress = 66.6666;
-            else if($dispute_status > $apealed)
-                $progress = 100;
-          }
+          $progress = $order->dispute ? $order->dispute->progress() : 0;
         @endphp
         <div class="step-wizard-wrapper">
           <div class="step-wizard">

@@ -181,6 +181,16 @@ class Dispute extends BaseModel
         }
     }
 
+    public function progress()
+    {
+        if($this->status == static::STATUS_NEW) return 0;
+        if($this->status < static::STATUS_APPEALED) return 33.3333;
+        if($this->status == static::STATUS_APPEALED) return 66.6666;
+        if($this->status > static::STATUS_APPEALED) return 100;
+
+        return 0;
+    }
+
 	// public function statusName($plain = False)
  //    {
  //        switch ($this->status) {

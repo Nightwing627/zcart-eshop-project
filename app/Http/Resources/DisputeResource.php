@@ -17,6 +17,7 @@ class DisputeResource extends JsonResource
         return [
             'id' => $this->id,
             'reason' => $this->dispute_type->detail,
+            'progress' => $this->progress(),
             'closed' => $this->isClosed(),
             'description' => $this->description,
             'order_received' => $this->order_received == 1 ? trans('theme.yes') : trans('theme.no'),

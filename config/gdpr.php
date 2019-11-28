@@ -2,6 +2,13 @@
 
 return [
 
+    'encrypt' => [
+        /*
+         * If set true, Customer's personal data will be encrypted.
+         */
+        'customer_data' => false,
+    ],
+
     'cookie' => [
         /*
          * Use this setting to enable the cookie consent dialog.
