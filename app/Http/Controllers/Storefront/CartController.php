@@ -111,7 +111,7 @@ class CartController extends Controller
         $cart_item_pivot_data = [];
         $cart_item_pivot_data[$item->id] = [
             'inventory_id' => $item->id,
-            'item_description'=> $item->title . ' - ' . $attributes . ' - ' . $item->condition,
+            'item_description'=> $item->sku . ': ' . $item->title . ' - ' . $attributes . ' - ' . $item->condition,
             'quantity' => $qtt,
             'unit_price' => $unit_price,
         ];

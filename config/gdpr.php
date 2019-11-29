@@ -7,6 +7,11 @@ return [
          * If set true, Customer's personal data will be encrypted.
          */
         'customer_data' => false,
+
+        /*
+         * This key will be used to encript and decript the data
+         */
+        'salt' => env('ENCRYPTION_SALT_KEY', 'dob'),
     ],
 
     'cookie' => [

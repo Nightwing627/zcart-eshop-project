@@ -7,9 +7,10 @@
         </div>
         <div class="modal-body">
             <ul>
-                <li>{!! trans('help.upload_rows', ['rows' => 40]) !!}</li>
+                <li>{!! trans('help.upload_rows', ['rows' => get_csv_import_limit()]) !!}</li>
                 <li>{!! trans('help.download_template', ['url' => route('admin.admin.customer.downloadTemplate')]) !!}</li>
                 <li>{!! trans('help.first_row_as_header') !!}</li>
+                <li>{!! trans('help.required_fields_csv', ['fields' => implode(',', config('system.import_required.customer', []))]) !!}</li>
                 <li>{!! trans('help.invalid_rows_will_ignored') !!}</li>
             </ul>
             <span class="spacer20"></span>

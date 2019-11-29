@@ -48,6 +48,7 @@ return [
     'import_required' => [
         'product' => ['name','categories','gtin','gtin_type'],
         'inventory' => ['title','description','sku','gtin','gtin_type','stock_quantity','condition'],
+        'customer' => ['full_name','email','temporary_password','accepts_marketing','active'],
     ],
 
     /*

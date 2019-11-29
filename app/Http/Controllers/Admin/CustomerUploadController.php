@@ -7,6 +7,7 @@ use App\Customer;
 use App\State;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 use App\Http\Controllers\Controller;
 use Rap2hpoutre\FastExcel\FastExcel;
 use App\Http\Requests\Validations\CustomerUploadRequest;
@@ -36,13 +37,23 @@ class CustomerUploadController extends Controller
 	public function upload(CustomerUploadRequest $request)
 	{
 		$path = $request->file('customers')->getRealPath();
-		$rows = array_map('str_getcsv', file($path));
-		$rows[0] = array_map('strtolower', $rows[0]);
-	    array_walk($rows, function(&$a) use ($rows) {
+		$data = array_map('str_getcsv', file($path));
+		$data[0] = array_map('strtolower', $data[0]);
+	    array_walk($data, function(&$a) use ($data) {
     		$trimed = array_map('trim', $a);
-	      	$a = array_combine($rows[0], $trimed);
+	      	$a = array_combine($data[0], $trimed);
 	    });
-	    array_shift($rows); # remove header column
+	    array_shift($data); # remove header column
+
+	    // Validations check for csv_import_limit
+	    if(count($data) > get_csv_import_limit()){
+	    	$message_bag = (new MessageBag)->add('error', trans('validation.upload_rows', ['rows' => get_csv_import_limit()]));
+	    	return back()->withErrors($message_bag);
+	    }
+
+	    $rows = [];
+	    foreach ($data as $values)
+	    	$rows[] = clear_encoding_str($values);
 
         return view('admin.customer.upload_review', compact('rows'));
 	}
@@ -61,13 +72,16 @@ class CustomerUploadController extends Controller
 		// Reset the Failed list
 		$this->failed_list = [];
 
-		foreach ($request->input('data') as $row) {
+		foreach ($request->input('data') as $row)
+		{
 			$data = unserialize($row);
 
-			// Ignore if the name field is not given
-			if( ! $data['full_name'] || ! $data['email'] ){
-				$reason = $data['full_name'] ? trans('help.email_field_required') : trans('help.name_field_required');
-				$this->pushIntoFailed($data, $reason);
+			if( ! is_array($data) ) // Invalid data
+				continue;
+
+			// Ignore if required info is not given
+			if( ! verifyRequiredDataForBulkUpload($data, 'customer') ){
+				$this->pushIntoFailed($data, trans('help.missing_required_data'));
 				continue;
 			}
 
