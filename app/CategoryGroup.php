@@ -11,6 +11,13 @@ class CategoryGroup extends BaseModel
     use SoftDeletes, CascadeSoftDeletes, Imageable;
 
     /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'category_groups';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

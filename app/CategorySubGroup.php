@@ -11,6 +11,13 @@ class CategorySubGroup extends BaseModel
     use SoftDeletes, CascadeSoftDeletes, Imageable;
 
     /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'category_sub_groups';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

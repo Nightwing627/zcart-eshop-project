@@ -24,18 +24,18 @@ class Customer extends Authenticatable
     use SoftDeletes, Billable, Notifiable, Addressable, Taggable, Imageable, Attachable, Searchable, ApiAuthTokens;
 
    /**
-     * The guard used by the model.
-     *
-     * @var string
-     */
-    protected $guard = 'customer';
-
-   /**
      * The database table used by the model.
      *
      * @var string
      */
     protected $table = 'customers';
+
+   /**
+     * The guard used by the model.
+     *
+     * @var string
+     */
+    protected $guard = 'customer';
 
     /**
      * The attributes excluded from the model's JSON form.

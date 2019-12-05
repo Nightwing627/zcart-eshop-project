@@ -11,7 +11,6 @@ class Dashboard extends BaseModel
      */
     protected $table = 'dashboard_configs';
 
-
     /**
      * The database primary key used by the model.
      *
