@@ -4,5 +4,5 @@
 	Route::post('cart/removeItem', 'CartController@remove')->name('cart.removeItem')->middleware(['ajax']);
 	Route::get('cart/{expressId?}', 'CartController@index')->name('cart.index');
 	Route::put('cart/{cart}', 'CartController@update')->name('cart.update');
-	Route::get('cart/{cart}/checkout', 'CartController@checkout')->name('cart.checkout');
-	Route::get('checkout/{slug}', 'CartController@directCheckout')->name('direct.checkout');
+	Route::get('cart/{cart}/checkout', 'CartController@checkout')->name('cart.checkout')->middleware('checkout');
+	Route::get('checkout/{slug}', 'CartController@directCheckout')->name('direct.checkout')->middleware('checkout');

@@ -81,6 +81,7 @@ class Kernel extends HttpKernel
         'demoCheck' => \App\Http\Middleware\DemoRestrictionCheck::class,
         'ajax' => \App\Http\Middleware\AllowOnlyAjaxRequests::class,
         'install' => \App\Http\Middleware\CanInstall::class,
+        'checkout' => \App\Http\Middleware\CheckForGuestCheckoutMode::class,
     ];
 
     /**
