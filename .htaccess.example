@@ -6,3 +6,10 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /zcart/public/$1
 RewriteCond %{HTTP_HOST} ^(www.)?example.com$
 RewriteRule ^(/)?$ zcart/public/index.php [L]
+
+#Security Settings. Don't change this
+options -Indexes
+<Files .env>
+	Order allow,deny
+	Deny from all
+</Files>
