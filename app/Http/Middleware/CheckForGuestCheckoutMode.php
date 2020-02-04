@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Auth;
 use Closure;
 
 class CheckForGuestCheckoutMode
@@ -16,7 +15,7 @@ class CheckForGuestCheckoutMode
      */
     public function handle($request, Closure $next)
     {
-        if(! config('system_settings.allow_guest_checkout') && ! Auth::guard('customer')->check())
+        if(! allow_checkout())
             return redirect()->route('customer.login')->with('error', trans('theme.notify.please_login_to_checkout'));
 
         return $next($request);

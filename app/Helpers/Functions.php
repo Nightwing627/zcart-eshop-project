@@ -415,6 +415,14 @@ if ( ! function_exists('getAllowedMaxImgSize') )
     }
 }
 
+if (! function_exists('allow_checkout'))
+{
+    function allow_checkout()
+    {
+        return config('system_settings.allow_guest_checkout') || Auth::guard('customer')->check();
+    }
+}
+
 if ( ! function_exists('highlightWords') )
 {
     function highlightWords($content = Null, $words = Null)
