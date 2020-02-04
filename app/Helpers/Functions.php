@@ -1677,7 +1677,7 @@ if ( ! function_exists('get_activity_title') )
         if(!$activity->causer)
             return trans('app.system') . ' ' . $activity->description . ' ' . trans('app.this') . ' ' . $activity->log_name;
 
-        return title_case($activity->description) . ' ' . trans('app.by') . ' ' . $activity->causer->getName();
+        return Str::title($activity->description) . ' ' . trans('app.by') . ' ' . $activity->causer->getName();
     }
 }
 

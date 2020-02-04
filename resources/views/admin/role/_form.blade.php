@@ -85,7 +85,7 @@
               <div class="input-group">
                 {{ Form::hidden($module_name, 0) }}
                 <span class="input-group-addon" id="basic-addon1">
-                  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.module.name', ['module' => str_plural($module->name)]) . ' ' . trans('help.module.access.' . $access_level, ['access' => $access_level]) }}"></i>
+                  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.module.name', ['module' => Str::plural($module->name)]) . ' ' . trans('help.module.access.' . $access_level, ['access' => $access_level]) }}"></i>
                 </span>
                 {!! Form::checkbox($module_name, Null, $module_enabled ? 1 : Null, ['id' => $module_name, 'class' => 'icheckbox_line role-module']) !!}
                 {!! Form::label($module_name, strtoupper($module->name)) !!}

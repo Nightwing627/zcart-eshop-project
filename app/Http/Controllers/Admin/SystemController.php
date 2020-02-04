@@ -12,6 +12,7 @@ use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Jobs\ResetDbAndImportDemoData;
 use App\Events\System\SystemIsLive;
+use Illuminate\Support\Facades\Storage;
 use App\Events\System\SystemInfoUpdated;
 use App\Events\System\DownForMaintainace;
 use App\Http\Requests\Validations\SaveEnvFileRequest;
@@ -64,11 +65,15 @@ class SystemController extends Controller
 
         $system->update($request->except('image', 'delete_image'));
 
-        if ($request->hasFile('icon'))
+        if ($request->hasFile('icon')){
             $request->file('icon')->storeAs('','icon.png');
+            Storage::deleteDirectory(image_cache_path('icon.png'));
+        }
 
-        if ($request->hasFile('logo'))
+        if ($request->hasFile('logo')){
             $request->file('logo')->storeAs('','logo.png');
+            Storage::deleteDirectory(image_cache_path('logo.png'));
+        }
 
         event(new SystemInfoUpdated($system));
 

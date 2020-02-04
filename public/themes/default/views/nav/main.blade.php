@@ -3,7 +3,7 @@
     <div class="navbar-header brand-centered">
       <a class="navbar-brand" href="{{ url('/') }}">
         @if( Storage::exists('logo.png') )
-          <img src="{{ Storage::url('logo.png') }}" alt="{{ trans('app.logo') }}" title="{{ trans('app.logo') }}">
+          <img src="{{ get_storage_file_url('logo.png', 'full') }}" class="brand-logo" alt="{{ trans('app.logo') }}" title="{{ trans('app.logo') }}">
         @else
           <img src="https://placehold.it/140x60/eee?text={{ get_platform_title() }}" alt="{{ trans('app.logo') }}" title="{{ trans('app.logo') }}" />
         @endif

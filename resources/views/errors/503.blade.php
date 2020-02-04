@@ -46,7 +46,7 @@
         <div class="container">
             <div class="content">
                 @if( Storage::exists('logo.png') )
-                  <img src="{{ Storage::url('logo.png') }}" class="brand-logo" alt="LOGO" title="LOGO" />
+                    <img src="{{ get_storage_file_url('logo.png', 'full') }}" class="brand-logo" alt="{{ trans('app.logo') }}" title="{{ trans('app.logo') }}">
                 @else
                   <img src="https://placehold.it/140x60/eee?text={{ get_platform_title() }}" class="brand-logo" alt="LOGO" title="LOGO" />
                 @endif
