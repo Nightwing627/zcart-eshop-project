@@ -14,6 +14,7 @@
 
 	Route::middleware(['auth:customer'])->group(function () {
 		Route::get('order/{order}', 'OrderController@detail')->name('order.detail');
+		Route::get('order/invoice/{order}', 'OrderController@invoice')->name('order.invoice');
 		Route::get('order/track/{order}', 'OrderController@track')->name('order.track');
 		Route::put('order/goodsReceived/{order}', 'OrderController@goods_received')->name('goods.received');
 

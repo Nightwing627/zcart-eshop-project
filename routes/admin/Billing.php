@@ -1,8 +1,5 @@
 <?php
-    // Invoices...
-    // $router->get('/settings/invoices', 'Settings\Billing\InvoiceController@all');
-    // $router->get('/settings/invoice/{id}', 'Settings\Billing\InvoiceController@download');
-
+	Route::get('subscription/invoice/{invoiceId}', 'SubscriptionController@invoice')->name('subscription.invoice');
 	Route::put('card/update', 'SubscriptionController@updateCardinfo')->name('card.update');
 	Route::get('features/{subscriptionPlan}', 'SubscriptionController@features')->name('subscription.features');
 	Route::get('subscribe/{plan}/{merchant?}', 'SubscriptionController@subscribe')->name('subscribe');

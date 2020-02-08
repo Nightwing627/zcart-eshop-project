@@ -3,11 +3,12 @@
 		@php
 			$logChanges = [
 				'current_billing_plan',
+				'card_brand',
 				'card_last_four',
 			];
 		@endphp
 
-	    @forelse($logger->activities() as $activity)
+	    @forelse($logger->logs() as $activity)
 	      	@php
 	        	$changes = $activity->changes()->all();
 	      	@endphp

@@ -1404,4 +1404,9 @@ return [
     'cookies_terms' => 'Know more',
     'search_result_found' => ':count result found',
 
+    // Version 1.4.0
+    'invoices' => 'Invoices',
+    'invoice_for' => 'Subscription fee for :start - :end',
+    'subscription_fee' => 'Subscription fee',
+
 ];

@@ -192,11 +192,11 @@ return [
         App\Providers\HelperServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\GoogleDriveServiceProvider::class,
-        Spatie\Backup\BackupServiceProvider::class,
-        Laravel\Scout\ScoutServiceProvider::class,
-        TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
+        // Spatie\Backup\BackupServiceProvider::class,
+        // Laravel\Scout\ScoutServiceProvider::class,
+        // TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
         App\Providers\MysqlScoutServiceProvider::class,
-        Yab\MySQLScout\Providers\MySQLScoutServiceProvider::class,
+        // Yab\MySQLScout\Providers\MySQLScoutServiceProvider::class,
     ],
 
     /*

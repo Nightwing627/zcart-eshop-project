@@ -47,7 +47,6 @@
 				<fieldset>
 					<legend>{{ trans('app.subscription_plans') }}</legend>
 			  		<table class="table no-border">
-			  			<thead></thead>
 			  			<tbody>
 					  		@foreach($plans as $plan)
 					  			<tr>
@@ -117,9 +116,18 @@
 			</div>
 		@endif
 
+  		<div class="panel panel-default">
+	  		<div class="panel-body">
+				<fieldset>
+					<legend>{{ trans('app.invoices') }} <i class="fa fa-files"></i> </legend>
+					@include('admin.account._invoices', ['billable' => Auth::user()->shop])
+				</fieldset>
+			</div>
+		</div>
+
 		<fieldset>
 			<legend>{{ trans('app.history') }} <i class="fa fa-history"></i> </legend>
-			@include('admin.account._activity_logs', ['logger' => Auth::user()->shop])
+	    	@include('admin.account._activity_logs', ['logger' => Auth::user()->shop])
 		</fieldset>
   	</div>
 </div>

@@ -523,7 +523,9 @@ if ( ! function_exists('get_storage_file_url') )
         if ( !$path )
             return get_placeholder_img($size);
 
-        // return asset("image/{$path}?p={$size}");
+        if($size == Null)
+            return url("image/{$path}");
+
         return url("image/{$path}?p={$size}");
     }
 }

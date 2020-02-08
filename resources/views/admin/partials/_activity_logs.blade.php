@@ -11,10 +11,7 @@
       <div class="panel list-group">
         @forelse($logger->logs() as $log)
           @php
-          // echo "<pre>"; print_r($log); echo "</pre>"; exit('fffff');
             $changes = $log->changes;
-            // $changes = $log->changes()->all();
-            // \Log::info($changes);
           @endphp
 
           <a class="list-group-item" data-toggle="collapse" data-target="#sl-{{ $log->id }}" data-parent="#menu">

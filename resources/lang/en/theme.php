@@ -582,4 +582,7 @@ return [
 	'enter_tracking_number' => 'Enter your order tracking number.',
 	'from_verified_seller' => 'Verified seller',
 	'mark_as_solved' => 'Mark as solved',
+
+	// Version 1.4.0
+	'invoice' => 'Invoice',
 ];

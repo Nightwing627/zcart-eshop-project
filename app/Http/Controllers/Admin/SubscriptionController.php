@@ -216,4 +216,13 @@ class SubscriptionController extends Controller
 
         return True;
     }
+
+    public function invoice(Request $request, $invoiceId)
+    {
+        return $request->user()->shop
+            ->downloadInvoice($invoiceId, [
+                'vendor' => get_platform_title(),
+                'product' => trans('app.subscription_fee'),
+            ]);
+    }
 }

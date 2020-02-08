@@ -665,6 +665,19 @@ class OrderController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  App\Order   $order
+     * @return \Illuminate\Http\Response
+     */
+    public function invoice(Order $order)
+    {
+        // $this->authorize('view', $order); // Check permission
+
+        $order->invoice('D'); // Download the invoice
+    }
+
+    /**
      * Track order shippping.
      *
      * @param  \Illuminate\Http\Request  $request

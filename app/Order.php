@@ -4,7 +4,9 @@ namespace App;
 
 use Carbon\Carbon;
 use App\Common\Loggable;
+use App\Services\PdfInvoice;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends BaseModel
@@ -429,6 +431,80 @@ class Order extends BaseModel
         return Null;
     }
 
+    /**
+     * Render PDF invoice
+     *
+     * @param  string $des I => Display on browser, D => Force Download, F => local path save, S => return document as string
+     *
+     */
+    public function invoice($des = 'D')
+    {
+        $billingAddress = explode("<br/>", strip_tags($this->billing_address, "<br>"));
+        array_unshift($billingAddress, $this->customer->getName());
+
+        $vendorAddress = $this->shop->primaryAddress->toArray();
+        $vendorAddress['address_type'] = $this->shop->legal_name; // Replace the address type with vendor shop name
+        $vendorAddress = array_values($vendorAddress); // Reset the array keys
+
+        $invoice = new PdfInvoice();
+
+        /* Header settings */
+        $invoice->setColor("#007fff");      // pdf color scheme
+        $invoice->setType(trans("invoice.invoice"));    // Invoice Type
+
+        $logo = get_storage_file_url('logo.png', Null); //logo image path
+        if(file_exists($logo))
+            $invoice->setLogo($logo);
+
+        $invoice->setReference($this->order_number);   // Reference
+        $invoice->setDate($this->created_at->format('M d, Y'));   //Billing Date
+        $invoice->setTime($this->created_at->format('h:i:s A'));   //Billing Time
+        // $invoice->setDue(date('M dS ,Y',strtotime('+3 months')));    // Due Date
+        $invoice->setFrom($vendorAddress);
+        $invoice->setTo($billingAddress);
+
+        foreach ($this->inventories as $item) {
+            $invoice->addItem($item->pivot->item_description, "", $item->pivot->quantity, $item->pivot->unit_price);
+        }
+
+        $invoice->addSummary(trans('invoice.total'), $this->total);
+
+        if($this->taxes)
+            $invoice->addSummary(trans('invoice.taxes') . " " . get_formated_decimal($this->taxrate, true, 2)."%", $this->taxes);
+
+        if($this->packaging)
+            $invoice->addSummary(trans('invoice.packaging'), $this->packaging);
+
+        if($this->handling)
+            $invoice->addSummary(trans('invoice.handling'), $this->handling);
+
+        if($this->shipping)
+            $invoice->addSummary(trans('invoice.shipping'), $this->shipping);
+
+        if($this->discount)
+            $invoice->addSummary(trans('invoice.discount'), $this->discount);
+
+        $invoice->addSummary(trans('invoice.grand_total'), $this->grand_total, true);
+
+        $invoice->addBadge($this->paymentStatusName(true));
+
+        if($this->message_to_customer){
+            $invoice->addTitle(trans('invoice.message'));
+            $invoice->addParagraph($this->message_to_customer);
+        }
+
+        $invoice->setFooternote(get_platform_title() . " | " . url('/') . " | " .trans('invoice.footer_note'));
+
+        $invoice->render(get_platform_title() . '-' . $this->order_number .'.pdf', $des);
+    }
+
+    /**
+     * [orderStatus description]
+     *
+     * @param  boolean $plain [description]
+     *
+     * @return [type]         [description]
+     */
     public function orderStatus($plain = False)
     {
         $order_status = strtoupper(get_order_status_name($this->order_status_id));
@@ -454,6 +530,13 @@ class Order extends BaseModel
         }
     }
 
+    /**
+     * [paymentStatusName description]
+     *
+     * @param  boolean $plain [description]
+     *
+     * @return [type]         [description]
+     */
     public function paymentStatusName($plain = False)
     {
         $payment_status = strtoupper(get_payment_status_name($this->payment_status));
