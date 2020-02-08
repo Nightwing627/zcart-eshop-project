@@ -50,31 +50,6 @@ class DisputeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function create()
-    // {
-    //     return view('admin.dispute._create');
-    // }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    // public function store(CreateDisputeRequest $request)
-    // {
-    //     $dispute = $this->dispute->store($request);
-
-    //     event(new DisputeCreated($dispute));
-
-    //     return back()->with('success', trans('messages.created', ['model' => $this->model_name]));
-    // }
-
-    /**
      * Display the specified resource.
      *
      * @param int id

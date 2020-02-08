@@ -186,14 +186,14 @@
 							  	@if( Storage::exists('icon.png') )
 									<div class="form-group text-center">
 										<label class="with-help control-label"> {{ trans('app.icon') }}: </label>
-										<img src="{{ get_storage_file_url('icon.png', 'tiny') }}" class="brand-icon" alt="{{ trans('app.icon') }}">
+										<img src="{{ get_storage_file_url('icon.png', Null) }}" class="brand-icon" alt="{{ trans('app.icon') }}">
 									</div>
 							  	@endif
 
 							  	@if( Storage::exists('logo.png') )
 									<div class="form-group text-center">
 										<label class="with-help control-label"> {{ trans('app.logo') }}: </label>
-										<img src="{{ get_storage_file_url('logo.png', 'tiny') }}" class="brand-logo" alt="{{ trans('app.logo') }}">
+										<img src="{{ get_storage_file_url('logo.png', Null) }}" class="brand-logo" alt="{{ trans('app.logo') }}">
 									</div>
 							  	@endif
 							</div>

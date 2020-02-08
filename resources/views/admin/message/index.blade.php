@@ -11,8 +11,7 @@
       <div class="row">
         <div class="col-md-2 nopadding">
         	@include('admin.message._left_nav')
-        </div>
-        <!-- /.col -->
+        </div> <!-- /.col -->
         <div class="col-md-10 nopadding-right">
           <div class="box box-primary">
             <div class="box-header with-border">
@@ -29,10 +28,8 @@
 					    </div><!-- /input-group -->
 				    {!! Form::close() !!}
                 </div>
-              </div>
-              <!-- /.box-tools -->
-            </div>
-            <!-- /.box-header -->
+              </div> <!-- /.box-tools -->
+            </div> <!-- /.box-header -->
 
             <div class="box-body no-padding">
               	<div class="mailbox-controls">
@@ -75,8 +72,7 @@
 	                	@if($messages->count())
 							{{ $messages->links('admin.partials._pagination_btn') }}
 						@endif
-	                </div>
-	                <!-- /.pull-right -->
+	                </div> <!-- /.pull-right -->
               	</div>
 
               	<div class="table-responsive mailbox-messages" id="massSelectArea">
@@ -125,10 +121,8 @@
 	                  			<tr><p class="text-center"> {{ trans('app.no_data_found') }} </p></tr>
 							@endforelse
 	                  	</tbody>
-	                </table>
-	                <!-- /.table -->
-              	</div>
-              	<!-- /.mail-box-messages -->
+	                </table> <!-- /.table -->
+              	</div> <!-- /.mail-box-messages -->
 
               	<div class="mailbox-controls">
 	                <div class="pull-right">
@@ -139,12 +133,8 @@
                 </div>
                 <br><br>
             </div>
-          </div>
-          <!-- /. box -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </section>
-    <!-- /.content -->
+          </div> <!-- /. box -->
+        </div> <!-- /.col -->
+      </div> <!-- /.row -->
+    </section> <!-- /.content -->
 @endsection

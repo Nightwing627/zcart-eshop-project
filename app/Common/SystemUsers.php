@@ -20,7 +20,8 @@ trait SystemUsers {
      */
     public function admins()
     {
-        return User::where('role_id', Role::ADMIN)->get();
+        return User::whereIn('role_id', [Role::SUPER_ADMIN, Role::ADMIN])->get();
+        // return User::where('role_id', Role::ADMIN)->get();
     }
 
     /**
