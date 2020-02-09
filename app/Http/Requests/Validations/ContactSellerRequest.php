@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Validations;
 
+use Auth;
 use App\Http\Requests\Request;
 
-class ContactUsRequest extends Request
+class ContactSellerRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class ContactUsRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return Auth::guard('customer')->check();
     }
 
     /**
@@ -23,13 +24,11 @@ class ContactUsRequest extends Request
      */
     public function rules()
     {
-      return [
-            'name' => 'required',
-            'phone' => 'nullable|string|max:50',
-            'email' => 'required|email',
+        return [
             'subject' => 'required|max:200',
             'message' => 'required|max:500',
             'g-recaptcha-response' => 'required|recaptcha'
-      ];
+        ];
     }
+
 }

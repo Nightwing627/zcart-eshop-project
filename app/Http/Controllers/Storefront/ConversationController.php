@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Storefront;
 
 use Auth;
+use App\Shop;
 use App\Order;
 use App\Reply;
 use App\Message;
@@ -10,19 +11,46 @@ use App\Events\Message\NewMessage;
 use App\Events\Message\MessageReplied;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Validations\ContactSellerRequest;
 use App\Http\Requests\Validations\OrderConversationRequest;
 
 class ConversationController extends Controller
 {
     /**
-     * Store a newly created resource in storage.
+     * Contact seller.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function contact(ContactSellerRequest $request, $slug)
+    {
+        $shop = Shop::select(['id'])->where('slug', $slug)->active()->first();
+        if(! $shop)
+            return redirect()->back()->with('error', trans('theme.notify.store_not_available'));
+
+        $message = new Message([
+            'customer_id' => Auth::guard('customer')->user()->id,
+            'subject' => $request->input('subject'),
+            'message' => $request->input('message')
+        ]);
+
+        $shop->messages()->save($message);
+
+        event(new NewMessage($message));
+
+        return redirect()->back()->with('success',  trans('theme.notify.message_sent'));
+    }
+
+    /**
+     * Start a order conversation.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Order  $order
      *
      * @return \Illuminate\Http\Response
      */
-    public function contact(OrderConversationRequest $request, Order $order)
+    public function order_conversation(OrderConversationRequest $request, Order $order)
     {
         $user_id = Auth::user()->id;
 

@@ -12,6 +12,9 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 	Route::middleware(['auth:customer'])->group(function () {
 		include('storefront/Account.php');
 		include('storefront/Feedback.php');
+
+		// Conversations
+		Route::post('contact/{slug}', 'ConversationController@contact')->name('seller.contact');
 	});
 
 	Route::get('/', 'HomeController@index')->name('homepage');

@@ -20,6 +20,7 @@ class OrderConversationRequest extends Request
         else{
             return $this->route('order')->shop_id == $this->user()->merchantId();
         }
+
         return false;
     }
 

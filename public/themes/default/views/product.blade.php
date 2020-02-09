@@ -30,6 +30,11 @@
 
     <!-- bottom Banner -->
     @include('banners.bottom')
+
+    @if(Auth::guard('customer')->check())
+      @include('modals.contact_seller')
+    @endif
+
 @endsection
 
 @section('scripts')

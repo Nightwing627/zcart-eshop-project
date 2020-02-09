@@ -585,4 +585,5 @@ return [
 
 	// Version 1.4.0
 	'invoice' => 'Invoice',
+	'subject' => 'Subject',
 ];

@@ -354,6 +354,11 @@ class Shop extends BaseModel
         return $this->belongsTo(Timezone::class);
     }
 
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
     public function tickets()
     {
         return $this->hasMany(Ticket::class);

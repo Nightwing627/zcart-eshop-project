@@ -29,11 +29,20 @@
           @endif
       	</div>
   	</div>
-	</div>
+	</div><!-- /.row -->
 
-	<a href="{{ route('wishlist.add', $item) }}" class="btn btn-link">
-		<i class="fa fa-heart-o"></i> @lang('theme.button.add_to_wishlist')
-	</a>
+  <div class="row">
+    <div class="col-sm-6 col-xs-12 nopadding-right">
+    	<a href="{{ route('wishlist.add', $item) }}" class="btn btn-link">
+    		<i class="fa fa-heart-o"></i> @lang('theme.button.add_to_wishlist')
+    	</a>
+    </div>
+    <div class="col-sm-6 col-xs-12 nopadding-left">
+      <a href="javascript:void(0);" class="btn btn-link" data-toggle="modal" data-target="{{ Auth::guard('customer')->check() ? "#contactSellerModal" : "#loginModal" }}">
+        <i class="fa fa-envelope-o"></i> @lang('theme.button.contact_seller')
+      </a>
+    </div>
+  </div><!-- /.row -->
 </div><!-- /.product-info -->
 
 @include('layouts.share_btns')
