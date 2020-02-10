@@ -12,6 +12,8 @@ use App\Events\Message\MessageReplied;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Validations\ContactSellerRequest;
+use App\Http\Requests\Validations\ArchiveMessageRequest;
+use App\Http\Requests\Validations\ReplyMyMessageRequest;
 use App\Http\Requests\Validations\OrderConversationRequest;
 
 class ConversationController extends Controller
@@ -32,12 +34,44 @@ class ConversationController extends Controller
         $message = new Message([
             'customer_id' => Auth::guard('customer')->user()->id,
             'subject' => $request->input('subject'),
-            'message' => $request->input('message')
+            'message' => $request->input('message'),
+            'product_id' => $request->input('product_id'),
+            'customer_status' => Message::STATUS_READ,
         ]);
 
         $shop->messages()->save($message);
 
         event(new NewMessage($message));
+
+        return redirect()->back()->with('success',  trans('theme.notify.message_sent'));
+    }
+
+    public function show(Message $message)
+    {
+        $tab = 'message';
+        $$tab = $message;
+
+        $message->markAsRead();
+
+        return view('dashboard', compact('tab', $tab));
+    }
+
+    /**
+     * Start a order conversation.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Message $message
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reply(ReplyMyMessageRequest $request, Message $message)
+    {
+        $reply = $message->replies()->create($request->all());
+
+        // Update parent message
+        $message->hasNewReply();
+
+        event(new MessageReplied($reply));
 
         return redirect()->back()->with('success',  trans('theme.notify.message_sent'));
     }
@@ -64,7 +98,7 @@ class ConversationController extends Controller
 
             $reply = $order->conversation->replies()->save($msg);
 
-            // Update parent messase
+            // Update parent message
             $order->conversation->update([
                 'status' => Message::STATUS_NEW,
                 'label' => Message::LABEL_INBOX,
@@ -97,6 +131,21 @@ class ConversationController extends Controller
             $msg->saveAttachments($request->file('photo'));
 
         return back()->with('success', trans('theme.notify.message_sent'));
+    }
+
+    /**
+     * archive message convesation
+     *
+     * @param  Request $request
+     * @param  Message $message
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function archive(ArchiveMessageRequest $request, Message $message)
+    {
+        $message->archive();
+
+        return back()->with('success', trans('theme.message_archived'));
     }
 
 }

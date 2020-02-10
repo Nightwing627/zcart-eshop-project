@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Validations;
 
-use Auth;
+use App\Customer;
 use App\Http\Requests\Request;
 
-class ReplyDisputeRequest extends Request
+class ArchiveMessageRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,14 @@ class ReplyDisputeRequest extends Request
      */
     public function authorize()
     {
-        return Auth::id() == $this->route()->dispute->customer_id;
+        if ($this->user() instanceof Customer) {
+            return $this->route('message')->customer_id == $this->user()->id;
+        }
+        else{
+            return $this->route('message')->shop_id == $this->user()->merchantId();
+        }
+
+        return false;
     }
 
     /**
@@ -24,10 +31,8 @@ class ReplyDisputeRequest extends Request
      */
     public function rules()
     {
-        Request::merge(['customer_id' => Auth::id()]); //Set customer_id
-
         return [
-            'reply' => 'required',
+            //
         ];
     }
 }

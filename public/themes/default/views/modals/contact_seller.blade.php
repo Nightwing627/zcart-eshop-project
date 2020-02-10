@@ -7,6 +7,7 @@
         </div>
         <div class="modal-body">
             {!! Form::open(['route' => ['seller.contact', $item->shop->slug], 'data-toggle' => 'validator']) !!}
+                {!! Form::hidden('product_id', $item->id) !!}
                 <div class="form-group">
                     {!! Form::label('subject', trans('theme.subject').'*') !!}
                     {!! Form::text('subject', Null, ['class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.contact_us_subject'), 'required']) !!}

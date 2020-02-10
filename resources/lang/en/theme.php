@@ -584,6 +584,10 @@ return [
 	'mark_as_solved' => 'Mark as solved',
 
 	// Version 1.4.0
+	'archive' => 'archive',
 	'invoice' => 'Invoice',
+	'message_archived' => 'Message has been archived successfully!',
+	'my_messages' => 'Messages',
+	'of_total' => ':first - :last of :total',
 	'subject' => 'Subject',
 ];

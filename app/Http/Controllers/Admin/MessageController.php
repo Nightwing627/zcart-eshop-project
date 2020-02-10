@@ -110,7 +110,7 @@ class MessageController extends Controller
     {
         $message = $this->message->find($id);
 
-        $this->message->markAsRead($request, $message);
+        $message->markAsRead();
 
         return view('admin.message.show', compact('message'));
     }

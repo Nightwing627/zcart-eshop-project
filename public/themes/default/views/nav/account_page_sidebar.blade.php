@@ -5,8 +5,11 @@
     <li class="{{ $tab == 'dashboard' ? 'active' : '' }}">
     	<a href="{{ route('account', 'dashboard') }}"><i class="fa fa-dashboard"></i> @lang('theme.nav.dashboard')</a>
     </li>
+    <li class="{{ $tab == 'messages' || $tab == 'message' ? 'active' : '' }}">
+        <a href="{{ route('account', 'messages') }}"><i class="fa fa-envelope-o"></i> @lang('theme.my_messages')</a>
+    </li>
     <li class="{{ $tab == 'orders' ? 'active' : '' }}">
-    	<a href="{{ route('account', 'orders') }}"><i class="fa fa-shopping-cart"></i> @lang('theme.nav.my_orders')</a>
+        <a href="{{ route('account', 'orders') }}"><i class="fa fa-shopping-cart"></i> @lang('theme.nav.my_orders')</a>
     </li>
     <li class="{{ $tab == 'wishlist' ? 'active' : '' }}">
     	<a href="{{ route('account', 'wishlist') }}"><i class="fa fa-heart-o"></i> @lang('theme.nav.my_wishlist')</a>

@@ -15,6 +15,9 @@ Route::group(['middleware' => ['storefront'], 'namespace' => 'Storefront'], func
 
 		// Conversations
 		Route::post('contact/{slug}', 'ConversationController@contact')->name('seller.contact');
+		Route::get('message/{message}/archive', 'ConversationController@archive')->name('message.archive');
+		Route::get('my/message/{message}', 'ConversationController@show')->name('message.show');
+		Route::post('message/{message}', 'ConversationController@reply')->name('message.reply');
 	});
 
 	Route::get('/', 'HomeController@index')->name('homepage');

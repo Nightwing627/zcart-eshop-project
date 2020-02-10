@@ -154,6 +154,15 @@ class AccountController extends Controller
     }
 
     /**
+     * Return inbox
+     * @return collection
+     */
+    private function messages()
+    {
+        return Auth::guard('customer')->user()->messages()->with(['shop:id,name,slug', 'item:id,slug,sku', 'order:id,order_number'])->withCount('replies')->paginate(10);
+    }
+
+    /**
      * Return wishlist
      * @return collection
      */

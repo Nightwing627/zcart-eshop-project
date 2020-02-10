@@ -1,4 +1,4 @@
-{{ $paginator->firstItem() . '-' . $paginator->lastItem() . ' of ' . $paginator->total() }}
+{{ trans('app.of_total', ['first' => $paginator->firstItem(), 'last' => $paginator->lastItem(), 'total' => $paginator->total()]) }}
 
 <div class="btn-group">
 	@if ($paginator->onFirstPage())

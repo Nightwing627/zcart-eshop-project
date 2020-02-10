@@ -1407,6 +1407,8 @@ return [
     // Version 1.4.0
     'invoices' => 'Invoices',
     'invoice_for' => 'Subscription fee for :start - :end',
+    'of_total' => ':first - :last of :total',
     'subscription_fee' => 'Subscription fee',
-
+    'to' => 'To',
+    'message_send_by_staff' => 'This message was sent by your staff <b>:user</b>',
 ];

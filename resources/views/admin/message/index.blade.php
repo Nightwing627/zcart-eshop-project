@@ -85,7 +85,7 @@
 				                    </td>
 				                    <td class="mailbox-name">
 				                    	<a href="{{ route('admin.support.message.show', $message) }}">
-				                    		@if($message->status < $message::STATUS_READ)
+				                    		@if($message->isUnread())
 												<strong>{!! highlightWords($message->customer->getName(), $search_q) !!}</strong>
 											@else
 												{!! highlightWords($message->customer->getName(), $search_q) !!}
@@ -93,13 +93,13 @@
 				                    	</a>
 				                	</td>
 				                    <td class="mailbox-subject">
-				                    	<a href="{{ route('admin.support.message.show', $message) }}" style="{{ $message->status < $message::STATUS_READ ? 'color: #222;' : '' }}">
-				                    		<strong>{!! highlightWords($message->subject, $search_q) !!} </strong> - {!! highlightWords(str_limit($message->message, 180 - strlen($message->subject)), $search_q) !!}
+				                    	<a href="{{ route('admin.support.message.show', $message) }}" style="{{ $message->isUnread() ? 'color: #222;' : '' }}">
+				                    		<strong>{!! highlightWords($message->subject, $search_q) !!} </strong> - {!! highlightWords(str_limit(strip_tags($message->message), 180 - strlen($message->subject)), $search_q) !!}
 				                    	</a>
 				                    </td>
 				                    <td class="">
 				                    	<small>
-					                    	@if($message->status < $message::STATUS_READ)
+					                    	@if($message->isUnread())
 					                    		{!! $message->statusName() !!}
 											@endif
 					                    	@if($message->about())

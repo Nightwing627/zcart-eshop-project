@@ -25,13 +25,13 @@ class ReplyMessageRequest extends Request
      */
     public function rules()
     {
-        Request::merge(['user_id' => Auth::id()]); //Set shop_id
+        $extra['user_id'] = Auth::id(); //Set user_id
 
         if (Request::has('email_template_id')) {
-            Request::merge([
-                'reply' => EmailTemplate::find(Request::input('email_template_id'))->body
-            ]);
+            $extra['reply'] = EmailTemplate::find(Request::input('email_template_id'))->body;
         }
+
+        Request::merge($extra); //Set extra data
 
         return [
            'reply' => 'required_without:email_template_id',

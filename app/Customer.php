@@ -204,6 +204,14 @@ class Customer extends Authenticatable
     }
 
     /**
+     * Get the messages for the customer.
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class)->notArchived()->orderBy('customer_status')->orderBy('updated_at','desc');
+    }
+
+    /**
      * Get the coupons for the customer.
      */
     public function coupons()

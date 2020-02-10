@@ -6,10 +6,11 @@ use Auth;
 use App\Scopes\MineScope;
 use App\Common\Repliable;
 use App\Common\Attachable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Message extends BaseModel
 {
-    use Repliable, Attachable;
+    use SoftDeletes, Repliable, Attachable;
 
 	const STATUS_NEW     = 1; 		//Default
     const STATUS_UNREAD  = 2;       //All status before UNREAD value consider as unread
@@ -35,11 +36,15 @@ class Message extends BaseModel
      */
     protected $fillable = [
                     'shop_id',
-                    'customer_id',
+                    'user_id',
                     'subject',
                     'message',
-                    'label',
+                    'customer_id',
+                    'order_id',
+                    'product_id',
                     'status',
+                    'customer_status',
+                    'label',
                 ];
 
     /**
@@ -95,6 +100,14 @@ class Message extends BaseModel
     }
 
     /**
+     * Get the shop associated with the model.
+    */
+    public function item()
+    {
+        return $this->belongsTo(Inventory::class, 'product_id');
+    }
+
+    /**
      * Scope a query to only include records that have the given status.
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -144,15 +157,83 @@ class Message extends BaseModel
         return $query->where('status', self::STATUS_SPAM);
     }
 
+    /**
+     * Scope a query to only include non archived messages.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNotArchived($query)
+    {
+        return $query->where('label', '!=', self::LABEL_TRASH);
+    }
+
     public function about()
     {
-        $str = '';
-        if($this->order_id)
-            $str .= '<span class="label label-outline">' . trans('app.order') . '</span>';
-        else if($this->product_id)
-            $str .= '<span class="label label-outline">' . trans('app.product') . '</span>';
+        if($this->order_id){
+            $str = trans('app.order') . ': ' . $this->order->order_number;
+        }
+        else if($this->product_id){
+            $str = trans('app.product') . ': ' . $this->item->sku;
+        }
 
-        return $str;
+        return isset($str) ? '<span class="label label-outline">' . $str . '</span>' : '';
+    }
+
+    /**
+     * Check if the message is unread
+     * @return boolean
+     */
+    public function isUnread()
+    {
+        $status = $this->getStatusCell();
+
+        return $this->$status < static::STATUS_READ;
+    }
+
+    /**
+     * mark the message as unread
+     */
+    public function markAsUnread()
+    {
+        $this->forceFill([$this->getStatusCell() => static::STATUS_UNREAD])->save();
+    }
+
+    /**
+     * mark the message as read
+     */
+    public function markAsRead()
+    {
+        $this->forceFill([$this->getStatusCell() => static::STATUS_READ])->save();
+    }
+
+    /**
+     * Mark the message as unread when replied
+     */
+    public function hasNewReply()
+    {
+        $status = $this->getStatusCell();
+
+        if($status == 'customer_status'){
+            $data = [
+                'status' => static::STATUS_NEW,
+                'label' => static::LABEL_INBOX,
+            ];
+        }
+        else {
+            $data = [
+                'customer_status' => static::STATUS_UNREAD,
+            ];
+        }
+
+        $this->forceFill($data)->save();
+    }
+
+    /**
+     * Archive the message
+     */
+    public function archive()
+    {
+        $this->forceFill(['customer_status' => static::LABEL_TRASH])->save();
     }
 
     public function labelName()
@@ -168,10 +249,17 @@ class Message extends BaseModel
 
     public function statusName()
     {
-        switch ($this->status) {
-            case static::STATUS_NEW: return '<span class="label label-info">' . trans('app.statuses.new') . '</span>';
-            case static::STATUS_UNREAD: return '<span class="label label-outline">' . trans('app.statuses.unread') . '</span>';
+        $status = $this->getStatusCell();
+
+        switch ($this->$status) {
+            case static::STATUS_NEW: return '<span class="label label-primary">' . trans('app.statuses.new') . '</span>';
+            case static::STATUS_UNREAD: return '<span class="label label-info">' . trans('app.statuses.unread') . '</span>';
             case static::STATUS_READ: return '<span class="label label-default">' . trans('app.statuses.read') . '</span>';
         }
+    }
+
+    public function getStatusCell()
+    {
+        return Auth::user() instanceof Customer ? 'customer_status' : 'status';
     }
 }

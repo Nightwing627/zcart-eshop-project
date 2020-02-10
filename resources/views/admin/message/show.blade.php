@@ -9,6 +9,15 @@
         </div>
         <!-- /.col -->
         <div class="col-md-10 nopadding-right">
+
+        	@if($message->user_id)
+              	<div class="alert alert-info alert-dismissible">
+                	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                  	<strong>{{ trans('app.important') }}: </strong>
+                  	{!! trans('app.message_send_by_staff', ['user' => $message->user->getName()]) !!}
+                </div>
+            @endif
+
           	<div class="box box-primary">
 	            <div class="box-header with-border">
 	              <h3 class="box-title">{{ trans('app.message') }}</h3>
@@ -32,7 +41,7 @@
 		              		<div class="col-md-11 nopadding-left">
 				                <h3>{!! $message->subject !!}</h3>
 				                <h5>
-				                	{{ trans('app.from') }}: <strong>{{ $message->customer->getName() }} </strong>
+				                	{{ $message->user_id ? trans('app.to') : trans('app.from') }}: <strong>{{ $message->customer->getName() }} </strong>
 
 				                	@if($message->order)
 					                	{{ '<' . get_customer_email_from_order($message->order)  . '>' }}
@@ -59,8 +68,8 @@
 								@endif
 			              	</div>
 		              	</div>
-	              	</div>
-	              	<!-- /.mailbox-read-info -->
+	              	</div> <!-- /.mailbox-read-info -->
+
 	              	<div class="mailbox-controls text-center no-print">
 		                <div class="btn-group">
 							@if($message->label < \App\Message::LABEL_DRAFT)
@@ -111,27 +120,22 @@
 									</a>
 			                  	@endcan
 							@endif
-		                </div>
-		                <!-- /.btn-group -->
+		                </div> <!-- /.btn-group -->
 
 	                	<button type="button" class="btn btn-default btn-sm" onclick="window.print();">
 	                  		<i class="fa fa-print"></i> {{ trans('app.print') }}
 	                  	</button>
-	              	</div>
-	              	<!-- /.mailbox-controls -->
+	              	</div> <!-- /.mailbox-controls -->
 
 					<div class="mailbox-read-message">
 						{!! $message->message !!}
 					</div>
-					<!-- /.mailbox-read-message -->
-	            </div>
-	            <!-- /.box-body -->
+	            </div> <!-- /.box-body -->
 
             	@if($message->attachments->count())
 		            <div class="box-footer">
 			            @include('admin.message._view_attachments')
 		            </div>
-	            	<!-- /.box-footer -->
 	            @endif
 
 				@unless($message->label == \App\Message::LABEL_DRAFT)

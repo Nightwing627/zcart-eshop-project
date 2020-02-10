@@ -26,11 +26,13 @@ class CreateMessageRequest extends Request
      */
     public function rules()
     {
+        //Set some extra values
         Request::merge([
             'shop_id' => Auth::user()->merchantId(),
             'user_id' => Auth::user()->id,
-            'label' => (Request::has('draft')) ? Message::LABEL_DRAFT : Message::LABEL_SENT,
-        ]); //Set shop_id
+            'label' => Request::has('draft') ? Message::LABEL_DRAFT : Message::LABEL_SENT,
+            'status' => Message::STATUS_READ,
+        ]);
 
         if (Request::has('email_template_id')) {
             $template = EmailTemplate::find(Request::input('email_template_id'));

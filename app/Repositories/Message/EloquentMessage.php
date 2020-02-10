@@ -20,12 +20,14 @@ class EloquentMessage extends EloquentRepository implements BaseRepository, Mess
 
     public function labelOf($label)
     {
-        return $this->model->mine()->labelOf($label)->with('customer')->withCount('replies')->orderBy('updated_at', 'desc')->paginate(getPaginationValue());
+        return $this->model->mine()->labelOf($label)->with('customer')->withCount('replies')
+        ->orderBy('updated_at', 'desc')->paginate(getPaginationValue());
     }
 
     public function statusOf($status)
     {
-        return $this->model->mine()->statusOf($status)->with('customer')->withCount('replies')->orderBy('updated_at', 'desc')->paginate(getPaginationValue());
+        return $this->model->mine()->statusOf($status)->with('customer')->withCount('replies')
+        ->orderBy('updated_at', 'desc')->paginate(getPaginationValue());
     }
 
     public function updateStatusOrLabel(Request $request, $message, $statusOrLabel, $type)
@@ -48,7 +50,7 @@ class EloquentMessage extends EloquentRepository implements BaseRepository, Mess
 
     public function markAsRead(Request $request, $message)
     {
-        return $this->updateStatusOrLabel($request, $message, Message::STATUS_READ, 'status');
+        return $message->markAsRead();
     }
 
     public function createdByMe()
@@ -87,9 +89,10 @@ class EloquentMessage extends EloquentRepository implements BaseRepository, Mess
 
     public function storeReply(Request $request, $id)
     {
-        $message = $this->model->find($id);
+        $message = $this->model->findOrFail($id);
 
-        $message->update($request->all());
+        // Update parent message
+        $message->hasNewReply();
 
         $reply = $message->replies()->create($request->all());
 
