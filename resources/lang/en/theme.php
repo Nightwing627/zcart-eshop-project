@@ -584,10 +584,13 @@ return [
 	'mark_as_solved' => 'Mark as solved',
 
 	// Version 1.4.0
-	'archive' => 'archive',
+	'add_shipping_address' => 'Add a shipping address',
+	'archive' => 'Archive',
+	'edit_account' => 'Edit My Account',
 	'invoice' => 'Invoice',
 	'message_archived' => 'Message has been archived successfully!',
 	'my_messages' => 'Messages',
 	'of_total' => ':first - :last of :total',
 	'subject' => 'Subject',
+	'unread_messages' => 'Unread messages',
 ];

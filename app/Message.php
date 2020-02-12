@@ -144,7 +144,9 @@ class Message extends BaseModel
      */
     public function scopeUnread($query)
     {
-        return $query->where('status', '<', self::STATUS_READ);
+        $status = $this->getStatusCell();
+
+        return $query->where($status, '<', self::STATUS_READ);
     }
 
     /**

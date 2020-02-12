@@ -113,6 +113,11 @@ return [
             'h' => 60,
             'fit' => 'contain'
         ],
+        'tiny_thumb' => [
+            'w' => 30,
+            'h' => 30,
+            'fit' => 'contain'
+        ],
 
         'tiny' => [
             'w' => 30,

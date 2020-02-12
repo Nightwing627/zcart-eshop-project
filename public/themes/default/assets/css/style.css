@@ -3928,3 +3928,81 @@ h1.blog-post-title a {
   color: #444;
   font-size: 1.18em;
 }
+
+
+.my-info-details {
+    float: left;
+    width: 100%;
+    margin-bottom: 20px;
+    background: #fafafa;
+    border: 1px #e8e8e8 solid;
+    border-top: 0;
+    color: #666;
+}
+.my-info-details ul {
+    margin: 20px 0;
+    width: 100%;
+    float: left;
+}
+.my-info-details li {
+    float: left;
+    width: 20%;
+    background: url(../img/nav_division.png) no-repeat top right;
+}
+.my-info-details li.last {
+    background: 0 0;
+}
+.my-info-details li a {
+    color: #333;
+    text-decoration: none;
+}
+.my-info-details span.v {
+    color: #f60;
+    font-size: 20px;
+    height: 24px;
+    line-height: 24px;
+    display: block;
+}
+.my-info-details span {
+    display: inline-block;
+    margin: 0 auto 5px;
+    width: 100%;
+    text-align: center;
+}
+.my-info-details li.last {
+    background: 0 0;
+    width: 158px;
+}
+.my-info-container .my-info-box {
+  border: 1px solid #e8e8e8;
+  background-color: #fff;
+  padding: 15px;
+}
+.my-info-container .me-info-block {
+    height: 66px;
+}
+.my-info-container .my-photo-block {
+    float: left;
+    width: 70px;
+    position: relative;
+}
+.my-info-container .my-photo-block img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.my-info-container .my-info {
+    float: left;
+    margin-left: 10px;
+}
+.my-info-container .my-info .name {
+  margin-bottom: 10px;
+}
+.my-info-container .my-info .name span {
+    font-size: 18px;
+    min-width: 130px;
+}
+.my-info-container .my-info .messages {
+    float: left;
+    color: #999;
+}

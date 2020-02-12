@@ -27,7 +27,6 @@ class AccountController extends Controller
      */
     public function index($tab = 'dashboard')
     {
-        // Auth::guard('customer')->loginUsingId(33);
         if( ! method_exists($this, $tab) ) abort(404);
 
         // Call the methods dynamically to load needed models
@@ -133,7 +132,19 @@ class AccountController extends Controller
     private function dashboard()
     {
         return Customer::where('id', Auth::guard('customer')->user()->id)
-        ->withCount(['orders','wishlists',
+        ->with([
+            'wishlists' => function($query){
+                $query->with('inventory:id,slug,title','inventory.images')->latest()->take(5);
+            },
+            'orders' => function($query){
+                $query->select(['id','customer_id','shop_id','order_number','item_count','grand_total','order_status_id','created_at'])
+                ->with(['shop:id,slug,name','shop.image'])->latest()->take(5);
+            },
+        ])
+        ->withCount(['orders', 'wishlists',
+            'messages' => function($query){
+                $query->unread();
+            },
             'disputes' => function($query){
                 $query->open();
             },
