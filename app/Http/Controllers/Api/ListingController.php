@@ -27,20 +27,20 @@ class ListingController extends Controller
     {
     	switch ($list) {
     		case 'trending':
-        		$listings = ListHelper::popular_items(config('system.popular.period.trending', 2), config('system.popular.take.trending', 15));
+        		$listings = ListHelper::popular_items(config('mobile_app.popular.period.trending', 2), config('mobile_app.popular.take.trending', 8));
     			break;
 
     		case 'popular':
-		        $listings = ListHelper::popular_items(config('system.popular.period.weekly', 7), config('system.popular.take.weekly', 5));
+		        $listings = ListHelper::popular_items(config('mobile_app.popular.period.weekly', 7), config('mobile_app.popular.take.weekly', 8));
     			break;
 
     		case 'random':
-		        $listings = ListHelper::random_items(10);
+		        $listings = ListHelper::random_items(Null);
     			break;
 
     		case 'latest':
     		default:
-		        $listings = ListHelper::latest_available_items(10);
+		        $listings = ListHelper::latest_available_items(8);
     			break;
     	}
 
@@ -67,7 +67,7 @@ class ListingController extends Controller
             $products = $products->where('free_shipping', 1);
         }
         if(request()->has('new_arrivals')) {
-            $products = $products->where('created_at', '>', Carbon::now()->subDays(config('system.filter.new_arrival', 7)));
+            $products = $products->where('created_at', '>', Carbon::now()->subDays(config('mobile_app.filter.new_arrival', 7)));
         }
         if(request()->has('has_offers')) {
             $products = $products->where('offer_price', '>', 0)
@@ -83,7 +83,7 @@ class ListingController extends Controller
             $price = explode('-', request()->input('price'));
             $products = $products->where('sale_price', '>=', $price[0])->where('sale_price', '<=', $price[1]);
         }
-        $products = $products->paginate(config('system.view_listing_per_page', 16));
+        $products = $products->paginate(config('mobile_app.view_listing_per_page', 16));
 
         return ListingResource::collection($products);
     }
@@ -158,7 +158,7 @@ class ListingController extends Controller
             $q->withArchived();
         }])
         ->with(['feedbacks:rating,feedbackable_id,feedbackable_type,updated_at', 'image:path,imageable_id,imageable_type'])
-        ->paginate(config('system.view_listing_per_page', 16))->appends(request()->except('page'));
+        ->paginate(config('mobile_app.view_listing_per_page', 16))->appends(request()->except('page'));
 
         return ListingResource::collection($listings);
     }

@@ -859,16 +859,20 @@ class ListHelper
      * Get given number of random products
      * @return array
      */
-    public static function random_items($limit = 10)
+    public static function random_items($limit = Null)
     {
-        return Inventory::with([
+        $items = Inventory::with([
             'feedbacks:rating,feedbackable_id,feedbackable_type',
             'image:path,imageable_id,imageable_type',
             'product:id,slug',
             'product.image:path,imageable_id,imageable_type'
         ])
-        ->groupBy('product_id', 'shop_id')
-        ->available()->inRandomOrder()->limit($limit)->get();
+        ->groupBy('product_id', 'shop_id')->inRandomOrder('id')->available();
+
+        if ($limit)
+            return $items->limit($limit)->get();
+
+        return $items->simplePaginate(10);
     }
 
     public static function recentlyViewedItems()
