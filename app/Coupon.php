@@ -279,6 +279,11 @@ class Coupon extends BaseModel
         return $query->where('shop_id', Auth::user()->merchantId());
     }
 
+    public function getFormatedAmountText()
+    {
+        return $this->type == 'amount' ? get_formated_currency($this->value) : get_formated_decimal($this->value) . '%';
+    }
+
     public function validityText($plain = False)
     {
         if($this->ending_time < \Carbon\Carbon::now()){

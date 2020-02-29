@@ -20,7 +20,7 @@ return [
     | Number of product will be display on the product lisitng page and search result.
     |
     */
-    'view_listing_per_page' => 16,
+    'view_listing_per_page' => 8,
     // 'view_blog_post_per_page' => 4,
 
     /*

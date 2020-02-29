@@ -46,7 +46,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Open shop page
+     * Open offers page for the item
      *
      * @param  slug  $slug
      * @return \Illuminate\Http\Response
@@ -193,6 +193,7 @@ class HomeController extends Controller
     public function page($slug)
     {
         $page = Page::where('slug', $slug)->firstOrFail();
+
         return new PageResource($page);
     }
 }

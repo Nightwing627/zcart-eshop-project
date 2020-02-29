@@ -8,6 +8,8 @@ use App\Category;
 use App\Inventory;
 use App\Manufacturer;
 use Carbon\Carbon;
+use App\CategoryGroup;
+use App\CategorySubGroup;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -83,7 +85,7 @@ class ListingController extends Controller
             $price = explode('-', request()->input('price'));
             $products = $products->where('sale_price', '>=', $price[0])->where('sale_price', '<=', $price[1]);
         }
-        $products = $products->paginate(config('mobile_app.view_listing_per_page', 16));
+        $products = $products->paginate(config('mobile_app.view_listing_per_page', 8));
 
         return ListingResource::collection($products);
     }
@@ -145,6 +147,44 @@ class ListingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function categoryGroup($slug)
+    {
+        $categoryGroup = CategoryGroup::where('slug', $slug)->active()->firstOrFail();
+
+        $all_products = prepareFilteredListings(request(), $categoryGroup);
+
+        // Paginate the results
+        $listings = $all_products->paginate(config('mobile_app.view_listing_per_page', 8))->appends(request()->except('page'));
+
+        return ListingResource::collection($listings);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  str $slug category_slug
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function categorySubGroup($slug)
+    {
+        $categorySubGroup = CategorySubGroup::where('slug', $slug)->active()->firstOrFail();
+
+        $all_products = prepareFilteredListings(request(), $categorySubGroup);
+
+        // Paginate the results
+        $listings = $all_products->paginate(config('mobile_app.view_listing_per_page', 8))->appends(request()->except('page'));
+
+        return ListingResource::collection($listings);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  str $slug category_slug
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function category($slug)
     {
         $category = Category::where('slug', $slug)->active()->firstOrFail();
@@ -158,7 +198,7 @@ class ListingController extends Controller
             $q->withArchived();
         }])
         ->with(['feedbacks:rating,feedbackable_id,feedbackable_type,updated_at', 'image:path,imageable_id,imageable_type'])
-        ->paginate(config('mobile_app.view_listing_per_page', 16))->appends(request()->except('page'));
+        ->paginate(config('mobile_app.view_listing_per_page', 8))->appends(request()->except('page'));
 
         return ListingResource::collection($listings);
     }

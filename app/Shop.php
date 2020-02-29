@@ -621,4 +621,10 @@ class Shop extends BaseModel
 
         return $this->name . $badge;
     }
+
+    public function verifiedText()
+    {
+        return $this->isVerified() ? trans('help.verified_seller') : '';
+    }
+
 }

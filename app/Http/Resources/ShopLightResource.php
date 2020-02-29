@@ -19,6 +19,7 @@ class ShopLightResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'verified' => $this->isVerified(),
+            'verified_text' => $this->verifiedText(),
             'rating' => $this->rating(),
             'image' => get_logo_url($this, 'small'),
         ];

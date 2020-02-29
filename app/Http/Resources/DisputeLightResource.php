@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DisputeResource extends JsonResource
+class DisputeLightResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,19 +17,22 @@ class DisputeResource extends JsonResource
         return [
             'id' => $this->id,
             'reason' => $this->dispute_type->detail,
-            'progress' => $this->progress(),
             'closed' => $this->isClosed(),
-            'description' => $this->description,
             'goods_received' => $this->order_received,
             'return_goods' => $this->return_goods,
             'status' => $this->statusName(true),
-            'refund_amount' => $this->refund_amount ? get_formated_currency($this->refund_amount, config('system_settings.decimals', 2)): null,
-            'refund_amount_raw' => $this->refund_amount,
             'updated_at' => $this->updated_at->diffForHumans(),
             'shop' => new ShopLightResource($this->shop),
-            'order_details' => new OrderLightResource($this->order),
-            'attachments' => AttachmentResource::collection($this->attachments),
-            'replies' => ReplyResource::collection($this->replies),
+            'order_details' => [
+                'id' => $this->order->id,
+                'order_number' => $this->order->order_number,
+                'order_status' => $this->order->orderStatus(True),
+                'payment_status' => $this->order->paymentStatusName(True),
+                'grand_total' => get_formated_currency($this->order->grand_total, config('system_settings.decimals', 2)),
+                'grand_total_raw' => $this->order->grand_total,
+                'order_date' => date('F j, Y', strtotime($this->order->created_at)),
+                'items' => OrderItemResource::collection($this->order->inventories),
+            ],
         ];
     }
 }

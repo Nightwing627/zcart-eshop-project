@@ -12,8 +12,8 @@ use App\Events\Dispute\DisputeCreated;
 use App\Events\Dispute\DisputeUpdated;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\DisputeResource;
-use App\Http\Resources\DisputeCollection;
 use App\Http\Resources\DisputeFormResource;
+use App\Http\Resources\DisputeLightResource;
 use App\Http\Requests\Validations\OrderDetailRequest;
 use App\Http\Requests\Validations\CreateDisputeRequest;
 use App\Http\Requests\Validations\ReplyDisputeRequest;
@@ -28,10 +28,10 @@ class DisputeController extends Controller
     public function index(Request $request)
     {
         $disputes = Auth::guard('api')->user()->disputes()
-        ->with(['shop:id,name,slug', 'order.inventories:product_id,slug', 'order.inventories.image'])->paginate(10);
+        ->with(['shop:id,name,slug', 'order.inventories:product_id,slug', 'order.inventories.image'])
+        ->paginate(config('mobile_app.view_listing_per_page', 8));
 
-        return new DisputeCollection($disputes);
-        // return DisputeResource::collection($disputes);
+        return DisputeLightResource::collection($disputes);
     }
 
     /**

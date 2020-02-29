@@ -20,8 +20,10 @@ Route::group(['namespace' => 'Api'], function(){
 	Route::get('listing/{slug}', 'ListingController@item');
 	Route::get('search/{term}', 'ListingController@search');
 	Route::get('shop/{slug}/listings', 'ListingController@shop');
-	Route::get('category/{slug}', 'ListingController@category');
 	Route::get('brand/{slug}', 'ListingController@brand');
+	Route::get('category/{slug}', 'ListingController@category');
+	Route::get('listing/category-subgrp/{slug}', 'ListingController@categorySubGroup');
+	Route::get('listing/category-grp/{slug}', 'ListingController@categoryGroup');
 	Route::get('listing/{slug}/feedbacks', 'FeedbackController@show_item_feedbacks');
 	Route::get('shop/{slug}/feedbacks', 'FeedbackController@show_shop_feedbacks');
 
@@ -81,5 +83,7 @@ Route::group(['namespace' => 'Api'], function(){
 		Route::get('dispute/{dispute}/response', 'DisputeController@response_form');
 		Route::post('dispute/{dispute}/response', 'DisputeController@response');
 		Route::post('dispute/{dispute}/appeal', 'DisputeController@appeal');
+
+		Route::get('attachment/{attachment}/download', 'AttachmentController@download');
 	});
 });

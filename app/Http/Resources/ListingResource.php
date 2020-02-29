@@ -17,6 +17,7 @@ class ListingResource extends JsonResource
         return [
             'id' => $this->id,
             'slug' => $this->slug,
+            'product_id' => $this->product_id,
             'title' => $this->title,
             'condition' => $this->condition,
             'attributes' => AttributeResource::collection($this->whenLoaded('attributeValues')),
@@ -29,12 +30,13 @@ class ListingResource extends JsonResource
             'discount' => trans('theme.percent_off', ['value' => $this->discount_percentage()]),
             'offer_start' => (string) $this->offer_start,
             'offer_end' => (string) $this->offer_end,
-            'stuff_pick' => $this->stuff_pick,
-            'free_shipping' => $this->free_shipping,
-            'hot_item' => $this->orders_count >= config('system.popular.hot_item.sell_count', 3) ? true : false,
             'image' => get_inventory_img_src($this, 'medium'),
             'rating' => $this->feedbacks->avg('rating'),
             // 'feedbacks' => FeedbackResource::collection($this->whenLoaded('feedbacks')),
+            'stuff_pick' => $this->stuff_pick,
+            'free_shipping' => $this->free_shipping,
+            'hot_item' => $this->orders_count >= config('system.popular.hot_item.sell_count', 3) ? true : false,
+            'labels' => $this->getLabels(),
         ];
     }
 }

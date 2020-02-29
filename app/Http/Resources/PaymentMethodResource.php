@@ -16,11 +16,11 @@ class PaymentMethodResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'order' => $this->order,
-            'type' => $this->typeName($this->type),
-            'code' => $this->code,
+            'order' => $this->when(!$request->is('api/order/*'), $this->order),
+            'type' => $this->when(!$request->is('api/order/*'), $this->typeName($this->type)),
+            'code' => $this->when(!$request->is('api/order/*'), $this->code),
             'name' => $this->name,
-            'image' => (new ImageResource($this->image))->size('tiny'),
+            // 'image' => (new ImageResource($this->image))->size('tiny'),
         ];
     }
 }

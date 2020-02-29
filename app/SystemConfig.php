@@ -66,6 +66,7 @@ class SystemConfig extends BaseModel
                         'google_plus_link',
                         'twitter_link',
                         'pinterest_link',
+                        'instagram_link',
                         'youtube_link',
                         'google_analytic_report',
                     ];

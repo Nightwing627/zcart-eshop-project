@@ -41,7 +41,6 @@ class CategoryController extends Controller
         return CategoryGroupResource::collection($categories);
     }
 
-
     /**
      * Display a listing of the resource.
      *

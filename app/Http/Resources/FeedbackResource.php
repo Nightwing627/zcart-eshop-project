@@ -18,15 +18,15 @@ class FeedbackResource extends JsonResource
             'id' => $this->id,
             'rating' => $this->rating,
             'comment' => $this->comment,
-            'verified_purchase' => true,
             'approved' => $this->approved,
             'spam' => $this->spam,
             'updated_at' => $this->updated_at->diffForHumans(),
-            'customer' => [
-                'id' => $this->customer->id,
-                'name' => $this->customer->getName(),
-                'avatar' => get_avatar_src($this->customer, 'tiny'),
-            ],
+            'labels' => $this->when($request->is('api/listing/*'), $this->getLabels()),
+            'customer' => $this->when($request->is('api/listing/*'), [
+                            'id' => $this->customer->id,
+                            'name' => $this->customer->getName(),
+                            'avatar' => get_avatar_src($this->customer, 'tiny'),
+                        ]),
         ];
     }
 }

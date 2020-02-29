@@ -23,6 +23,15 @@ class Reply extends BaseModel
     protected $touches = ['repliable'];
 
     /**
+     * The attributes that should be casted to boolean types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'read' => 'boolean',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

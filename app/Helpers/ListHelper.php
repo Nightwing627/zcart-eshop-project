@@ -872,7 +872,7 @@ class ListHelper
         if ($limit)
             return $items->limit($limit)->get();
 
-        return $items->simplePaginate(10);
+        return $items->simplePaginate(config('mobile_app.view_listing_per_page', 8));
     }
 
     public static function recentlyViewedItems()

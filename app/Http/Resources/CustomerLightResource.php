@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PageResource extends JsonResource
+class CustomerLightResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,10 @@ class PageResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'content' => $this->content,
-            'updated_at' => $this->published_at->diffForHumans(),
-            'published_at' => date('F j, Y', strtotime($this->published_at)),
+            'name' => $this->getName(),
+            'email' => $this->email,
+            'active' => $this->active,
+            'avatar' => get_avatar_src($this, 'small'),
         ];
     }
 }

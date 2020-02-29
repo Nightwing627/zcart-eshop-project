@@ -7,6 +7,7 @@ use App\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\OrderLightResource;
 use App\Http\Resources\ConversationResource;
 // use App\Http\Requests\Validations\DirectCheckoutRequest;
 use App\Http\Requests\Validations\OrderDetailRequest;
@@ -21,10 +22,15 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $orders = Auth::guard('api')->user()->orders()
-        ->with(['shop:id,name,slug', 'inventories:id,title,slug,product_id', 'inventories.image:path,imageable_id,imageable_type'])->paginate(10);
+        ->with([
+            'shop:id,name,slug',
+            'inventories:id,title,slug,product_id',
+            'inventories.image:path,imageable_id,imageable_type',
+            'dispute:id,order_id'
+        ])
+        ->paginate(config('mobile_app.view_listing_per_page', 8));
 
-        return OrderResource::collection($orders);
-        // return new OrderCollection($orders);
+        return OrderLightResource::collection($orders);
     }
 
     /**
@@ -37,6 +43,12 @@ class OrderController extends Controller
      */
     public function show(OrderDetailRequest $request, Order $order)
     {
+        $order->load([
+            'conversation:id,order_id,user_id,customer_id,subject,message,product_id,status,updated_at',
+            'conversation.attachments',
+            'feedback'
+        ]);
+
         return new OrderResource($order);
     }
 
@@ -53,7 +65,6 @@ class OrderController extends Controller
         $order->goods_received();
 
         return new OrderResource($order);
-        // return redirect()->route('order.feedback', $order)->with('success', trans('theme.notify.order_updated'));
     }
 
     /**

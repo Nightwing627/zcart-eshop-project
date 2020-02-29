@@ -18,11 +18,11 @@ class CouponResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'code' => $this->code,
-            'amount' => $this->type == 'amount' ? get_formated_currency($this->value) : get_formated_decimal($this->value) . '%',
+            'amount' => $this->getFormatedAmountText(),
             'validity' => $this->validityText(true),
-            'starting_time' => $this->starting_time,
-            'ending_time' => $this->ending_time,
-            'shop' => $this->shop,
+            'starting_time' => $this->starting_time->format('M j,Y g:i a'),
+            'ending_time' => $this->ending_time->format('M j,Y g:i a'),
+            'shop' => new ShopLightResource($this->shop),
         ];
     }
 }

@@ -24,10 +24,9 @@ class ConversationController extends Controller
      */
     public function show(OrderDetailRequest $request, Order $order)
     {
-        $order->load(['shop:id,name,slug','conversation.replies.attachments']);
+        $order->load(['shop:id,name,slug','conversation.replies','conversation.replies.attachments']);
 
         return new ConversationResource($order->conversation);
-        // return ReplyResource::collection();
     }
 
     /**

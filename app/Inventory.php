@@ -425,6 +425,17 @@ class Inventory extends BaseModel
     }
 
     /**
+     * Check if the item is an hot item
+     *
+     * @return boolean
+     */
+    public function isHotItem()
+    {
+        return true;
+        return $this->orders_count >= config('system.popular.hot_item.sell_count', 3);
+    }
+
+    /**
      * Returns translated name of condition
      *
      * @return str condition
@@ -436,5 +447,23 @@ class Inventory extends BaseModel
             case 'Used': return trans('app.used');
             case 'Refurbished': return trans('app.refurbished');
         }
+    }
+
+    /**
+     * Returns translated label text
+     *
+     * @return array labels
+     */
+    public function getLabels()
+    {
+        $labels = [];
+        if($this->free_shipping)
+            $labels[] = trans('theme.free_shipping');
+        if($this->stuff_pick)
+            $labels[] = trans('theme.stuff_pick');
+        if($this->isHotItem())
+            $labels[] = trans('theme.hot_item');
+
+        return $labels;
     }
 }

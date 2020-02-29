@@ -26,7 +26,7 @@ class FeedbackController extends Controller
      */
     public function show_shop_feedbacks(Request $request, $slug)
     {
-        $shop = Shop::where('slug', $slug)->first();
+        $shop = Shop::where('slug', $slug)->firstOrFail();
 
         return FeedbackResource::collection($shop->feedbacks);
     }
@@ -41,7 +41,7 @@ class FeedbackController extends Controller
      */
     public function show_item_feedbacks(Request $request, $slug)
     {
-        $item = Inventory::where('slug', $slug)->first();
+        $item = Inventory::where('slug', $slug)->firstOrFail();
 
         return FeedbackResource::collection($item->feedbacks);
     }

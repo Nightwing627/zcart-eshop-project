@@ -20,7 +20,6 @@ use App\Notifications\Auth\CustomerResetPasswordNotification;
 
 class Customer extends Authenticatable
 {
-
     use SoftDeletes, Billable, Notifiable, Addressable, Taggable, Imageable, Attachable, Searchable, ApiAuthTokens;
 
    /**

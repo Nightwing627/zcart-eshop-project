@@ -18,9 +18,9 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->getName(),
             'email' => $this->email,
+            'member_since' => optional($this->created_at)->diffForHumans(),
+            'active' => $this->active,
             'avatar' => get_avatar_src($this, 'small'),
-            'member_since' => date('F j, Y', strtotime($this->created_at)),
-            // 'image' => (new ImageResource($this->image))->size('small'),
         ];
     }
 }

@@ -93,7 +93,6 @@
                           <td>
                             <div class="product-img-wrap">
                               <img src="{{ get_inventory_img_src($item, 'small') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
-                              <!-- <img src="{{ get_storage_file_url(optional($item->image)->path, 'small') }}" alt="{{ $item->slug }}" title="{{ $item->slug }}" /> -->
                             </div>
                             <div class="product-info">
                               <a href="{{ route('show.product', $item->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>

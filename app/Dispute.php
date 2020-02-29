@@ -40,6 +40,16 @@ class Dispute extends BaseModel
     protected $dates = ['created_at', 'updated_at'];
 
     /**
+     * The attributes that should be casted to boolean types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'order_received' => 'boolean',
+        'return_goods' => 'boolean',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

@@ -63,4 +63,18 @@ class Feedback extends BaseModel
     {
         $this->attributes['rating'] = $value ? (int) $value : 1;
     }
+
+    /**
+     * Returns translated label text
+     *
+     * @return array labels
+     */
+    public function getLabels()
+    {
+        $labels = [];
+
+        $labels[] = trans('theme.verified_purchase');
+
+        return $labels;
+    }
 }

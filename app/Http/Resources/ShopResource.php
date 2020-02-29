@@ -21,6 +21,7 @@ class ShopResource extends JsonResource
             'description' => $this->description,
             'member_since' => date('F j, Y', strtotime($this->created_at)),
             'verified' => $this->isVerified(),
+            'verified_text' => $this->verifiedText(),
             'banner_image' => get_cover_img_src($this, 'shop'),
             'sold_item_count' => \App\Helpers\Statistics::sold_items_count($this->id),
             'active_listings_count' => $this->inventories_count,

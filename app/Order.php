@@ -43,6 +43,15 @@ class Order extends BaseModel
     protected $dates = ['created_at', 'deleted_at', 'shipping_date', 'delivery_date', 'payment_date'];
 
     /**
+     * The attributes that should be casted to boolean types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'goods_received' => 'boolean',
+    ];
+
+    /**
      * The name that will be used when log this model. (optional)
      *
      * @var boolean

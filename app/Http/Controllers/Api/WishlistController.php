@@ -24,7 +24,7 @@ class WishlistController extends Controller
             'inventory',
             'inventory.feedbacks:rating,feedbackable_id,feedbackable_type',
             'inventory.image:path,imageable_id,imageable_type'
-        ])->paginate(10);
+        ])->paginate(config('mobile_app.view_listing_per_page', 8));
 
         return WishlistResource::collection($wishlists);
     }

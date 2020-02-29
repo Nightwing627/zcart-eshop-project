@@ -17,11 +17,11 @@ class ReplyResource extends JsonResource
         return [
             'id' => $this->id,
             'reply' => $this->reply,
-            'user' => new UserResource($this->user),
-            'customer' => new CustomerResource($this->customer),
+            'user' => $this->when($this->user_id, new UserResource($this->user)),
+            'customer' => $this->when($this->customer_id, new CustomerLightResource($this->customer)),
             'read' => $this->read,
-            'attachments' => AttachmentResource::collection($this->attachments),
             'updated_at' => $this->updated_at->diffForHumans(),
+            'attachments' => $this->when($this->attachments, AttachmentResource::collection($this->attachments)),
         ];
     }
 }
