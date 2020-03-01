@@ -8,7 +8,7 @@
     @include('headers.category_group_page', ['category' => $categoryGroup])
 
     <!-- CONTENT SECTION -->
-    @include('contents.category_page')
+    @include('contents.category_page', ['category' => $categoryGroup])
 
     <!-- BROWSING ITEMS -->
     @include('sliders.browsing_items')

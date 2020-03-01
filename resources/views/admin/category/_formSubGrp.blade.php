@@ -35,6 +35,18 @@
 </div>
 
 <div class="form-group">
+  {!! Form::label('meta_title', trans('app.form.meta_title'), ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.meta_title') }}"></i>
+  {!! Form::text('meta_title', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.meta_title')]) !!}
+</div>
+
+<div class="form-group">
+  {!! Form::label('meta_description', trans('app.form.meta_description'), ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.meta_description') }}"></i>
+  {!! Form::textarea('meta_description', null, ['class' => 'form-control summernote-without-toolbar', 'placeholder' => trans('app.placeholder.meta_description'), 'rows' => '1']) !!}
+</div>
+
+<div class="form-group">
   {!! Form::label('exampleInputFile', trans('app.form.cover_img'), ['class' => 'with-help']) !!}
   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.cover_img', ['page' => trans('app.category')]) }}"></i>
   @if(isset($categorySubGroup) && Storage::exists(optional($categorySubGroup->image)->path))
