@@ -38,7 +38,19 @@
 <div class="form-group">
   {!! Form::label('description', trans('app.form.description') . trans('app.form.optional'), ['class' => 'with-help']) !!}
   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.category_desc') }}"></i>
-  {!! Form::textarea('description', null, ['class' => 'form-control summernote-without-toolbar', 'placeholder' => trans('app.placeholder.category_description'), 'rows' => '2']) !!}
+  {!! Form::textarea('description', null, ['class' => 'form-control summernote-without-toolbar', 'placeholder' => trans('app.placeholder.category_description'), 'rows' => '1']) !!}
+</div>
+
+<div class="form-group">
+  {!! Form::label('meta_title', trans('app.form.meta_title'), ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.meta_title') }}"></i>
+  {!! Form::text('meta_title', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.meta_title')]) !!}
+</div>
+
+<div class="form-group">
+  {!! Form::label('meta_description', trans('app.form.meta_description'), ['class' => 'with-help']) !!}
+  <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.meta_description') }}"></i>
+  {!! Form::textarea('meta_description', null, ['class' => 'form-control summernote-without-toolbar', 'placeholder' => trans('app.placeholder.meta_description'), 'rows' => '1']) !!}
 </div>
 
 <div class="form-group">

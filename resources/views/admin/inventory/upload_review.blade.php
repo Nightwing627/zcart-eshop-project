@@ -61,6 +61,7 @@
 				        				<dl>
 					        				{{ get_formated_currency($row['offer_price']) }}
 					        				<strike>{{ get_formated_currency($row['price']) }}</strike>
+					        				<p class="small">({{ $row['offer_starts'] . ' - ' . $row['offer_ends']}})</p>
 				        				</dl>
 									@else
 				        				{{ get_formated_currency($row['price']) }}
@@ -99,8 +100,6 @@
 			        			<td>
 			        				<dl>
 			        					<dt>{{ trans('app.sku') }}: </dt> <dd>{{ $row['sku'] }}</dd>
-			        					{{-- <dt>{{ trans('app.condition') }}: </dt> <dd>{{ $row['condition'] }}</dd> --}}
-			        					{{-- <dt>{{ trans('app.condition_note') }}: </dt> <dd>{{ $row['condition_note'] }}</dd> --}}
 			        					<dt>{{ trans('app.gtin') }}: </dt> <dd>{{ $row['gtin_type'] . ' ' . $row['gtin'] }}</dd>
 			        					@if($row['brand'])
 			        						<dt>{{ trans('app.brand') }}: </dt> <dd>{{ $row['brand'] }}</dd>

@@ -68,13 +68,13 @@ class Inventory extends BaseModel
                         'offer_end',
                         'shipping_weight',
                         'free_shipping',
+                        'stuff_pick',
                         'available_from',
                         'min_order_quantity',
                         'linked_items',
                         'slug',
                         'meta_title',
                         'meta_description',
-                        'stuff_pick',
                         'active'
                     ];
 

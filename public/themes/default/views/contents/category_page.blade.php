@@ -12,6 +12,11 @@
 
             @include('contents.product_list')
 
+            <div class="clearfix space20"></div>
+            <span class="lead">{!! $category->meta_title !!}</span>
+            <p>{!! $category->meta_description !!}</p>
+            <div class="clearfix space20"></div>
+
           </div><!-- /.col-sm-10 -->
 
         @else

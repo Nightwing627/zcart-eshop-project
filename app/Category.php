@@ -21,7 +21,17 @@ class Category extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['name', 'category_sub_group_id', 'slug', 'description', 'active', 'order', 'featured'];
+    protected $fillable = [
+                    'name',
+                    'category_sub_group_id',
+                    'slug',
+                    'description',
+                    'active',
+                    'order',
+                    'featured',
+                    'meta_title',
+                    'meta_description'
+                ];
 
     /**
      * The attributes that should be mutated to dates.
