@@ -223,6 +223,29 @@
 									  	</div>
 									</div>
 
+							    	<div class="row">
+								    	<div class="col-sm-7 text-right">
+											<div class="form-group">
+										        {!! Form::label('show_seo_info_to_frontend', trans('app.show_seo_info_to_frontend'). ':', ['class' => 'with-help control-label']) !!}
+											  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_show_seo_info_to_frontend') }}"></i>
+											</div>
+										</div>
+								    	<div class="col-sm-4">
+									  		@if($can_update)
+											  	<div class="handle horizontal text-center">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'show_seo_info_to_frontend') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->show_seo_info_to_frontend ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->show_seo_info_to_frontend ? 'true' : 'false' }}" autocomplete="off">
+														<div class="btn-handle"></div>
+													</a>
+											  	</div>
+											@else
+												<span>{{ $system->show_seo_info_to_frontend ? trans('app.on') : trans('app.off') }}</span>
+											@endif
+										</div>
+								  	</div> <!-- /.row -->
+								</fieldset>
+
+					    		<fieldset>
+					    			<legend><i class="fa fa-cubes hidden-sm"></i> {{ trans('app.inventory') }}</legend>
 									<div class="form-group">
 								        {!! Form::label('max_img_size_limit_kb', trans('app.max_img_size_limit_kb'). ':', ['class' => 'with-help col-sm-6 control-label']) !!}
 									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_max_img_size_limit_kb') }}"></i>
@@ -294,8 +317,8 @@
 												<span>{{ $system->show_address_title ? trans('app.on') : trans('app.off') }}</span>
 											@endif
 										</div>
-								  	</div>
-								    <!-- /.row -->
+								  	</div> <!-- /.row -->
+
 							    	<div class="row">
 								    	<div class="col-sm-7 text-right">
 											<div class="form-group">

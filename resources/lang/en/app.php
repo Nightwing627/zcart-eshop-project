@@ -1411,4 +1411,7 @@ return [
     'subscription_fee' => 'Subscription fee',
     'to' => 'To',
     'message_send_by_staff' => 'This message was sent by your staff <b>:user</b>',
+    'show_refund_policy_with_listing' => 'Show refund policy with listing',
+    'show_shop_desc_with_listing' => 'Show shop description with listing',
+    'show_seo_info_to_frontend' => 'Show SEO info to frontend',
 ];

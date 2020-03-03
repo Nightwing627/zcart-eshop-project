@@ -302,7 +302,16 @@
 	                		  	{!! $item->description !!}
          		        	</div>
 
-                		  	@if($item->shop->config->return_refund)
+                		  	@if($item->shop->config->show_shop_desc_with_listing)
+        	        		  	@if($item->description)
+		                		  	<br/><br/><hr class="style4 muted"/>
+	                		  	@endif
+	                		  	<br/>
+	                		  	<h4>{{ trans('theme.seller_info') }}: </h4>
+	                		  	{!! $item->shop->description !!}
+                		  	@endif
+
+                		  	@if($item->shop->config->show_refund_policy_with_listing && $item->shop->config->return_refund)
 	                		  	<br/><br/><hr class="style4 muted"/><br/>
 
 	                		  	<h4>{{ trans('theme.return_and_refund_policy') }}: </h4>

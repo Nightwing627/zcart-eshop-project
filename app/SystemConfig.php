@@ -49,6 +49,7 @@ class SystemConfig extends BaseModel
                         'max_number_of_inventory_imgs',
                         'active_theme',
                         'pagination',
+                        'show_seo_info_to_frontend',
                         'show_address_title',
                         'address_show_country',
                         'address_show_map',
@@ -93,6 +94,7 @@ class SystemConfig extends BaseModel
                 'address_show_country' => 'boolean',
                 'address_show_map' => 'boolean',
                 'google_analytic_report' => 'boolean',
+                'show_seo_info_to_frontend' => 'boolean',
             ];
 
     /**

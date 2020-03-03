@@ -2,7 +2,6 @@
   <div class="container full-width">
       <div class="row">
         @if($products->count())
-
           <div class="col-sm-2 bg-light">
 
             @include('contents.product_list_sidebar_filters')
@@ -12,10 +11,12 @@
 
             @include('contents.product_list')
 
-            <div class="clearfix space20"></div>
-            <span class="lead">{!! $category->meta_title !!}</span>
-            <p>{!! $category->meta_description !!}</p>
-            <div class="clearfix space20"></div>
+            @if(config('system_settings.show_seo_info_to_frontend'))
+              <div class="clearfix space20"></div>
+              <span class="lead">{!! $category->meta_title !!}</span>
+              <p>{!! $category->meta_description !!}</p>
+              <div class="clearfix space20"></div>
+            @endif
 
           </div><!-- /.col-sm-10 -->
 

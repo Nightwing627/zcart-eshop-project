@@ -223,6 +223,45 @@
 					    	<div class="col-sm-6">
 					    		<fieldset>
 					    			<legend>{{ trans('app.store_front') }}</legend>
+							    	<div class="row">
+								    	<div class="col-sm-8 text-right">
+											<div class="form-group">
+										        {!! Form::label('show_shop_desc_with_listing', trans('app.show_shop_desc_with_listing'). ':', ['class' => 'with-help control-label']) !!}
+											  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.show_shop_desc_with_listing') }}"></i>
+											</div>
+										</div>
+								    	<div class="col-sm-4">
+									  		@if($can_update)
+											  	<div class="handle horizontal">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.config.notification.toggle', 'show_shop_desc_with_listing') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->show_shop_desc_with_listing == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->show_shop_desc_with_listing == 1 ? 'true' : 'false' }}" autocomplete="off">
+														<div class="btn-handle"></div>
+													</a>
+											  	</div>
+											@else
+												<span>{{ $config->show_shop_desc_with_listing == 1 ? trans('app.on') : trans('app.off') }}</span>
+											@endif
+										</div>
+								  	</div> <!-- /.row -->
+
+							    	<div class="row">
+								    	<div class="col-sm-8 text-right">
+											<div class="form-group">
+										        {!! Form::label('show_refund_policy_with_listing', trans('app.show_refund_policy_with_listing'). ':', ['class' => 'with-help control-label']) !!}
+											  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.show_refund_policy_with_listing') }}"></i>
+											</div>
+										</div>
+								    	<div class="col-sm-4">
+									  		@if($can_update)
+											  	<div class="handle horizontal">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.config.notification.toggle', 'show_refund_policy_with_listing') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $config->show_refund_policy_with_listing == 1 ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $config->show_refund_policy_with_listing == 1 ? 'true' : 'false' }}" autocomplete="off">
+														<div class="btn-handle"></div>
+													</a>
+											  	</div>
+											@else
+												<span>{{ $config->show_refund_policy_with_listing == 1 ? trans('app.on') : trans('app.off') }}</span>
+											@endif
+										</div>
+								  	</div> <!-- /.row -->
 					    		</fieldset>
 					    	</div>
 

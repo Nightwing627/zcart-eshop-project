@@ -701,4 +701,10 @@ return [
     'required_fields_csv' => 'These fields are <strong>required</strong> <em>:fields</em>.',
 
     'seller_condition_note' => 'Input more details about the item condition. This will help customers to understand the item.',
+
+    'show_refund_policy_with_listing' => 'Show the return and refund policy on the product description page on frontend.',
+
+    'show_shop_desc_with_listing' => 'Show the shop description on the product description page on frontend.',
+
+    'config_show_seo_info_to_frontend' => 'Show SEO info like the meta title, meta description, tags to the frontend.',
 ];
