@@ -37,8 +37,6 @@ class CartResource extends JsonResource
             'grand_total' => get_formated_currency($this->grand_total, config('system_settings.decimals', 2)),
             'shop' => new ShopLightResource($this->shop),
             'items' => OrderItemResource::collection($this->inventories),
-            // 'shop' => new ShopResource($this->shop),
-            // 'items' => ItemResource::collection($this->inventories),
         ];
     }
 }

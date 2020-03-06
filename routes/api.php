@@ -18,6 +18,7 @@ Route::group(['namespace' => 'Api'], function(){
 	Route::get('offers/{slug}', 'HomeController@offers');
 	Route::get('listings/{list?}', 'ListingController@index');
 	Route::get('listing/{slug}', 'ListingController@item');
+	Route::get('variant/{slug}', 'ListingController@variant');
 	Route::get('search/{term}', 'ListingController@search');
 	Route::get('shop/{slug}/listings', 'ListingController@shop');
 	Route::get('brand/{slug}', 'ListingController@brand');

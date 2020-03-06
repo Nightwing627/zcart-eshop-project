@@ -13,10 +13,14 @@ use App\CategorySubGroup;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ImageResource;
 use App\Http\Resources\ItemResource;
+use App\Http\Resources\ItemLightResource;
 use App\Http\Resources\ListingResource;
+use App\Http\Resources\AttributeResource;
 use App\Http\Resources\ShopListingResource;
 use App\Http\Resources\ManufacturerResource;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListingController extends Controller
 {
@@ -97,7 +101,7 @@ class ListingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function item($slug)
+    public function item(Request $request, $slug)
     {
         $item = Inventory::where('slug', $slug)->available()->withCount('feedbacks')->firstOrFail();
 
@@ -109,35 +113,74 @@ class ListingController extends Controller
             },
             'attributeValues' => function($q){
                 $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')
-                ->with('attribute:id,name,attribute_type_id,order');
+                ->with('attribute:id,name,attribute_type_id,order')->orderBy('order');
             },
             'feedbacks.customer:id,nice_name,name',
             'feedbacks.customer.image:path,imageable_id,imageable_type',
-            'images:path,imageable_id,imageable_type',
+            'image:id,path,imageable_id,imageable_type',
         ]);
 
-        // $variants = ListHelper::variants_of_product($item, $item->shop_id);
+        $variants = Inventory::select(['id'])
+        ->where(['product_id' => $item->product_id, 'shop_id' => $item->shop_id])
+        ->with(['images', 'attributes.attributeType', 'attributeValues'])->available()->get();
 
-        // $attr_pivots = \DB::table('attribute_inventory')->select('attribute_id','inventory_id','attribute_value_id')
-        // ->whereIn('inventory_id', $variants->pluck('id'))->get();
+        $attrs = $variants->pluck('attributes')->flatten(1)->toArray();
+        $attrVs = $variants->pluck('attributeValues')->flatten(1)->toArray();
 
-        // $item_attrs = $attr_pivots->where('inventory_id', $item->id)->pluck('attribute_value_id')->toArray();
+        $tempArr = [];
+        foreach ($attrs as $key => $attr) {
+            $tempArr[] = [
+                'id' => $attr['id'],
+                'type' => $attr['attribute_type']['type'],
+                'name' => $attr['name'],
+                'value' => [
+                    'id' => $attrVs[$key]['id'],
+                    'name' => $attrVs[$key]['value']
+                ],
+                'color' => $attrVs[$key]['color'],
+            ];
+        }
 
-        // $attributes = \App\Attribute::select('id','name','attribute_type_id','order')
-        // ->whereIn('id', $attr_pivots->pluck('attribute_id'))
-        // ->with(['attributeValues' => function($query) use ($attr_pivots) {
-        //     $query->whereIn('id', $attr_pivots->pluck('attribute_value_id'))->orderBy('order');
-        // }])->orderBy('order')->get();
+        $uniqueAttrs = array_unique($tempArr, SORT_REGULAR);
 
-        // $variants = $variants->toJson(JSON_HEX_QUOT);
+        $attributes = [];
+        foreach ($uniqueAttrs as $attr) {
+           $attributes[$attr['id']]['name'] = $attr['name'];
+           $attributes[$attr['id']]['value'][$attr['value']['id']] = $attr['value']['name'];
+        }
 
-        // // TEST
-        // $related = ListHelper::related_products($item);
-        // $linked_items = ListHelper::linked_items($item);
+        return (new ItemResource($item))->additional(['variants' => [
+                    'images' => ImageResource::collection($variants->pluck('images')->flatten(1)),
+                    'attributes' => $attributes,
+                ]]);;
+    }
 
-        // $geoip = geoip(request()->ip()); // Set the location of the user
+    /**
+     * Display variant of an item
+     *
+     * @param  str $slug item_slug
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function variant(Request $request, $slug)
+    {
+        $item = Inventory::where('slug', $slug)->available()->firstOrFail();
 
-        return new ItemResource($item);
+        $attributes = $request->input('attributes');
+
+        $variants = Inventory::where(['product_id' => $item->product_id, 'shop_id' => $item->shop_id])
+        ->with(['attributeValues' => function($q){
+            $q->select('id', 'attribute_values.attribute_id', 'value', 'color');
+        }])->available()->get();
+
+        foreach ($variants as $key => $variant) {
+            $temp = $variant->attributeValues->pluck('value')->toArray();
+
+            if(! (bool) array_diff($temp, $attributes))
+                return new ItemLightResource($variant);
+        }
+
+        return response()->json(['message' => trans('api.item_not_available')], 404);
     }
 
     /**

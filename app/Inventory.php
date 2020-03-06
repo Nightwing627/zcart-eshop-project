@@ -271,7 +271,6 @@ class Inventory extends BaseModel
             return get_percentage_of($this->sale_price, $this->offer_price);
 
         return 0;
-        // return 0 . '%';
     }
 
     /**

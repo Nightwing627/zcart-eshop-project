@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ItemLinghtResource extends JsonResource
+class ItemLightResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -27,12 +27,14 @@ class ItemLinghtResource extends JsonResource
             'currency' => get_system_currency(),
             'currency_symbol' => get_currency_symbol(),
             'price' => get_formated_currency($this->sale_price, config('system_settings.decimals', 2)),
-            'offer_price' => get_formated_currency($this->offer_price, config('system_settings.decimals', 2)),
-            'discount' => trans('theme.percent_off', ['value' => $this->discount_percentage()]),
+            'offer_price' => $this->hasOffer() ? get_formated_currency($this->offer_price, config('system_settings.decimals', 2)) : Null,
+            'discount' => $this->hasOffer() ? trans('theme.percent_off', ['value' => $this->discount_percentage()]) : Null,
             'free_shipping' => $this->free_shipping,
             'min_order_quantity' => $this->min_order_quantity,
             'rating' => $this->rating(),
-            'image' => get_inventory_img_src($this, 'medium'),
+            'image' => $this->when(!$request->is('api/variant/*'), get_inventory_img_src($this, 'medium')),
+            'image_id' => $this->when($request->is('api/variant/*'), $this->image->id),
+            'attributes' => $this->when($request->is('api/variant/*'), AttributeDryResource::collection($this->whenLoaded('attributeValues'))),
             // 'attribute_values' => $this->attributeValues,
         ];
     }

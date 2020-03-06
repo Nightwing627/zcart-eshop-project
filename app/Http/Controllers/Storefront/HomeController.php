@@ -144,7 +144,7 @@ class HomeController extends Controller
                 $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')->with('attribute:id,name,attribute_type_id,order');
             },
             'feedbacks.customer:id,nice_name,name',
-            'images:path,imageable_id,imageable_type',
+            'images:id,path,imageable_id,imageable_type',
         ]);
 
         $this->update_recently_viewed_items($item); //update_recently_viewed_items

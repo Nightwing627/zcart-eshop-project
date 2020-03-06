@@ -22,7 +22,7 @@ class ConversationResource extends JsonResource
             'subject' => $this->subject,
             'message' => $this->message,
             'order_id' => $this->order_id,
-            'item' => new ItemLinghtResource($this->item),
+            'item' => new ItemLightResource($this->item),
             'status' => $this->status,
             'label' => $this->label,
             'attachments' => $this->when($this->attachments, AttachmentResource::collection($this->attachments)),
