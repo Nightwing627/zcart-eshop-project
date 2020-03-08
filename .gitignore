@@ -5,6 +5,7 @@
 /storage/*.key
 /storage/*.index
 /storage/installed
+/storage/logs/
 /resources/lang/*
 !/resources/lang/vendor/*
 !/resources/lang/bn/theme.php
