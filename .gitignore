@@ -5,7 +5,15 @@
 /storage/*.key
 /storage/*.index
 /storage/installed
-/storage/logs/*
+/storage/logs/**
+/resources/lang/**
+!/resources/lang/vendor/**
+!/resources/lang/bn/theme.php
+!/resources/lang/en/theme.php
+!/resources/lang/es/theme.php
+!/resources/lang/fa/theme.php
+/vendor/**
+!/vendor/helper_functions.php
 /.idea
 /.vagrant
 Homestead.json
