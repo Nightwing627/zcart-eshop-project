@@ -70,9 +70,12 @@ Route::group(['namespace' => 'Api'], function(){
 		Route::delete('wishlist/{wishlist}/remove', 'WishlistController@remove');
 		Route::get('orders', 'OrderController@index');
 		Route::get('order/{order}', 'OrderController@show');
-		Route::post('order/{order}/conversation', 'ConversationController@store');
-		Route::get('order/{order}/conversation', 'ConversationController@show');
+		Route::get('order/{order}/conversation', 'OrderController@conversation');
+		Route::post('order/{order}/conversation', 'OrderController@save_conversation');
 		Route::get('order/{order}/track', 'OrderController@track');
+		Route::get('conversations', 'ConversationController@conversations');
+		Route::get('shop/{shop}/contact', 'ConversationController@conversation');
+		Route::post('shop/{shop}/contact', 'ConversationController@save_conversation');
 		Route::post('shop/{order}/feedback', 'FeedbackController@save_shop_feedbacks');
 		Route::post('order/{order}/feedback', 'FeedbackController@save_product_feedbacks');
 		Route::post('order/{order}/goodsReceived', 'OrderController@goods_received');

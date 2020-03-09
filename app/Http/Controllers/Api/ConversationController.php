@@ -2,78 +2,88 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Order;
-use App\Reply;
-use App\Message;
+use App\Shop;
+// use App\Order;
+// use App\Reply;
+// use App\Message;
+use App\ChatConversation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Events\Chat\NewMessageEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ConversationResource;
-use App\Http\Requests\Validations\OrderDetailRequest;
-use App\Http\Requests\Validations\DirectCheckoutRequest;
+// use App\Http\Requests\Validations\OrderDetailRequest;
+// use App\Http\Requests\Validations\DirectCheckoutRequest;
+use App\Http\Requests\Validations\ChatConversationRequest;
+use App\Http\Requests\Validations\SaveChatConversationRequest;
 
 class ConversationController extends Controller
 {
     /**
-     * Display order conversation page.
+     * Show all conversations
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  App\Order   $order
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(OrderDetailRequest $request, Order $order)
+    public function conversations(Request $request)
     {
-        $order->load(['shop:id,name,slug','conversation.replies','conversation.replies.attachments']);
-
-        return new ConversationResource($order->conversation);
+        $conversations = ChatConversation::where('customer_id', Auth::guard('api')->id())->get();
+        
+        return ConversationResource::collection($conversations);
     }
 
     /**
-     * Display order conversation page.
+     * Show single conversation
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  App\Order   $order
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(OrderDetailRequest $request, Order $order)
+    public function conversation(ChatConversationRequest $request, Shop $shop)
     {
-        $user_id = Auth::user()->id;
+        $conversation = ChatConversation::where(['customer_id' => Auth::guard('api')->id(), 'shop_id' => $shop->id])->with('replies')->first();
+        
+        if($conversation)
+            return new ConversationResource($conversation);
+    
+        return response(trans('api.no_conversation'), 404);
+    }
 
-        if($order->conversation){
-            $msg = new Reply;
-            $msg->reply = $request->input('message');
-            if(Auth::guard('api')->check())
-                $msg->customer_id = $user_id;
-            else
-                $msg->user_id = $user_id;
+    /**
+     * Save message
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function save_conversation(SaveChatConversationRequest $request, Shop $shop)
+    {
+        $conversation = ChatConversation::where(['customer_id' => $request->customer_id, 'shop_id' => $shop->id])->first();
 
-            $order->conversation->replies()->save($msg);
+        if($conversation){
+            $conversation->markAsUnread();
+            $msg_object = $conversation->replies()->create([
+                'customer_id' => $request->customer_id,
+                'user_id' => $request->user_id,
+                'reply' => $request->message,
+            ]);
         }
-        else{
-            $msg = new Message;
-            $msg->message = $request->input('message');
-            $msg->shop_id = $order->shop_id;
-            if(Auth::guard('api')->check()){
-                $msg->subject = trans('theme.defaults.new_message_from', ['sender' => Auth::user()->getName()]);
-                $msg->customer_id = $user_id;
-            }
-            else{
-                $msg->user_id = $user_id;
-            }
-
-            $order->conversation()->save($msg);
+        else if($request->customer_id){
+            $msg_object = ChatConversation::create([
+                'shop_id' => $shop->id,
+                'customer_id' => $request->customer_id,
+                'message' => $request->message,
+                'status' => ChatConversation::STATUS_NEW,
+            ]);
+        }
+        else {
+            return response(trans('responses.unauthorized'), 401);
         }
 
-        // Update the order if goods_received
-        if($request->has('goods_received'))
-            $order->goods_received();
+        // event(new NewMessageEvent($msg_object, $request->message));
 
-        if ($request->hasFile('photo'))
-            $msg->saveAttachments($request->file('photo'));
-
-        return new ConversationResource($order->conversation);
+        return new ConversationResource($conversation);
     }
 
 }

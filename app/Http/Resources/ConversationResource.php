@@ -21,12 +21,13 @@ class ConversationResource extends JsonResource
             'customer' => $this->when($this->customer_id, new CustomerLightResource($this->customer)),
             'subject' => $this->subject,
             'message' => $this->message,
-            'order_id' => $this->order_id,
+            'order_id' => $this->when($this->order_id, $this->order_id),
             'item' => new ItemLightResource($this->item),
             'status' => $this->status,
             'label' => $this->label,
             'attachments' => $this->when($this->attachments, AttachmentResource::collection($this->attachments)),
-            'replies' => ReplyResource::collection($this->replies),
+            'replies' => ReplyResource::collection($this->whenLoaded('replies')),
+            // 'replies' => ReplyResource::collection($this->replies),
         ];
     }
 }

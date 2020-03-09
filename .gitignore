@@ -6,13 +6,7 @@
 /storage/*.index
 /storage/installed
 /storage/logs/**
-/resources/lang/*
 /resources/assets
-!/resources/lang/vendor/**
-!/resources/lang/bn/theme.php
-!/resources/lang/en/theme.php
-!/resources/lang/es/theme.php
-!/resources/lang/fa/theme.php
 /vendor/**
 !/vendor/helper_functions.php
 /.idea
