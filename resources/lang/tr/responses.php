@@ -1,0 +1,22 @@
+<?php 
+return array (
+  'success' => 'İşlem başarıyla yapıldı!',
+  'failed' => 'Eylem başarısız! Bir şeyler yanlış gitti!!',
+  'select_some_item' => 'En az bir öğe seçin',
+  'database_connection_failed' => 'MySQL veritabanına bağlanılamıyor. .Env dosyasındaki veritabanı bağlantı ayrıntılarını kontrol edin.',
+  'denied' => 'İzin reddedildi!',
+  404 => 'Bu içerik mevcut değil veya bu alana erişim izniniz yok.',
+  'error' => 'Eylem başarısız! Sunucu tarafında bir sorun var',
+  'timeout' => 'Eylem başarısız! İstek zaman aşımı',
+  'reordered' => 'Başarıyla yeniden düzenlendi',
+  'no_files_to_upload' => 'Yüklenecek dosya bulunamadı.',
+  'form_validation_failed' => 'Başarısız oldu: Lütfen gerekli tüm girişlerin doldurulduğunu ve geçerli olduğunu kontrol edin',
+  'vendor_config_failed' => 'Kayıt başarısız! Lütfen bazı değişiklikler yapın ve tekrar deneyin.',
+  'no_product_found_for_inventory' => 'Sonuç bulunamadı! Lütfen farklı bir arama anahtarı deneyin',
+  'searching' => 'Aramak...',
+  'you_are_blocked' => 'Bu siteden geçici olarak engellendi!',
+  '404_not_found' => 'Üzgünüz, aradığınız sayfa bulunamadı.',
+  'no_file_was_uploaded' => 'Hiçbir dosya yüklenmedi.',
+  'error_uploading_file' => 'Dosya yüklenirken hata oluştu',
+  'model_not_defined' => 'Model tanımlanmadı!',
+);

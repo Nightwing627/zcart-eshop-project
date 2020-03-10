@@ -1,0 +1,22 @@
+<?php 
+return array (
+  'success' => 'Handlingen er udført med succes!',
+  'failed' => 'Handlingen mislykkedes! Noget gik galt!!',
+  'select_some_item' => 'Vælg mindst et element',
+  'database_connection_failed' => 'Kan ikke oprette forbindelse til MySQL-database. Kontroller detaljer om databaseforbindelse i .env-filen.',
+  'denied' => 'Adgang nægtet!',
+  404 => 'Dette indhold er ikke tilgængeligt, eller du har ikke tilladelse til at få adgang til dette område',
+  'error' => 'Handlingen mislykkedes! Der er noget galt på serversiden',
+  'timeout' => 'Handlingen mislykkedes! Timeout for anmodningen',
+  'reordered' => 'Omorganiseret',
+  'no_files_to_upload' => 'Der blev ikke fundet nogen filer til upload.',
+  'form_validation_failed' => 'Mislykkedes: Kontroller, at alle nødvendige input er udfyldte og gyldige',
+  'vendor_config_failed' => 'Registreringen fejlede! Foretag nogle ændringer, og prøv igen.',
+  'no_product_found_for_inventory' => 'Intet resultat fundet! Prøv en anden søgenøgle',
+  'searching' => 'Søger...',
+  'you_are_blocked' => 'Du er midlertidigt blokeret fra dette sted!',
+  '404_not_found' => 'Beklager, den side, du leder efter, kunne ikke findes.',
+  'no_file_was_uploaded' => 'Ingen fil blev uploadet.',
+  'error_uploading_file' => 'Fejl ved upload af fil',
+  'model_not_defined' => 'Modellen er ikke defineret!',
+);

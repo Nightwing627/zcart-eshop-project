@@ -1,0 +1,21 @@
+<?php 
+return array (
+  'access_token_required' => 'Diperlukan token akses yang valid.',
+  'auth_failed' => 'Kredensial ini tidak cocok dengan catatan kami.',
+  'auth_out' => 'Berhasil keluar!',
+  'cart_updated' => 'Keranjang Anda telah berhasil diperbarui.',
+  'item_added_to_wishlist' => 'Item ditambahkan ke wishlist',
+  'item_removed_from_wishlist' => 'Item telah dihapus',
+  'item_added_to_cart' => 'Item ditambahkan ke troli',
+  'item_alrealy_in_cart' => 'Barang sudah ada di keranjang Anda',
+  'item_max_stock' => 'Penjual ini memiliki stok terbatas',
+  'item_minimum_qtt' => 'Anda tidak dapat memesan di bawah jumlah ini',
+  'item_alrealy_in_wishlist' => 'Item sudah ada di wishlist Anda',
+  'item_removed_from_cart' => 'Item telah dihapus',
+  'email_account_not_found' => 'Kami tidak dapat menemukan pengguna dengan alamat email itu.',
+  'password_reset_link_sent' => 'Tautan pengaturan ulang kata sandi terkirim! Silakan periksa email Anda.',
+  'password_reset_token_404' => 'Token atur ulang kata sandi ini tidak valid.',
+  'password_reset_token_invalid' => 'Token atur ulang kata sandi ini tidak valid.',
+  'password_reset_successful' => 'Kata sandi Anda telah berhasil diperbarui! Anda bisa masuk sekarang.',
+  404 => 'Konten ini tidak tersedia',
+);

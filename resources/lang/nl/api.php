@@ -1,0 +1,21 @@
+<?php 
+return array (
+  'access_token_required' => 'Een geldig toegangstoken is vereist.',
+  'auth_failed' => 'Deze gegevens komen niet overeen met onze gegevens.',
+  'auth_out' => 'Succesvol afgemeld!',
+  'cart_updated' => 'Uw winkelwagen is succesvol bijgewerkt.',
+  'item_added_to_wishlist' => 'Item toegevoegd aan verlanglijstje',
+  'item_removed_from_wishlist' => 'Item is verwijderd',
+  'item_added_to_cart' => 'Artikel toegevoegd aan winkelwagen',
+  'item_alrealy_in_cart' => 'Item staat al in uw winkelwagen',
+  'item_max_stock' => 'Deze verkoper heeft beperkte voorraad beschikbaar',
+  'item_minimum_qtt' => 'U kunt geen bestelling plaatsen onder deze hoeveelheid',
+  'item_alrealy_in_wishlist' => 'Item staat al in uw verlanglijst',
+  'item_removed_from_cart' => 'Item is verwijderd',
+  'email_account_not_found' => 'We kunnen geen gebruiker vinden met dat e-mailadres.',
+  'password_reset_link_sent' => 'De link voor het opnieuw instellen van het wachtwoord is verzonden! Controleer uw e-mail.',
+  'password_reset_token_404' => 'Dit token voor het opnieuw instellen van het wachtwoord is ongeldig.',
+  'password_reset_token_invalid' => 'Dit token voor het opnieuw instellen van het wachtwoord is ongeldig.',
+  'password_reset_successful' => 'Je wachtwoord is succesvol bijgewerkt! U kunt nu inloggen.',
+  404 => 'Deze inhoud is niet beschikbaar',
+);

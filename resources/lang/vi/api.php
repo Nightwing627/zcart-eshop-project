@@ -1,0 +1,21 @@
+<?php 
+return array (
+  'access_token_required' => 'Mã thông báo truy cập hợp lệ là bắt buộc.',
+  'auth_failed' => 'Những thông tin không phù hợp với hồ sơ của chúng tôi.',
+  'auth_out' => 'Đăng xuất thành công!',
+  'cart_updated' => 'Giỏ hàng của bạn đã được cập nhật thành công.',
+  'item_added_to_wishlist' => 'Mục được thêm vào danh sách mong muốn',
+  'item_removed_from_wishlist' => 'Mục đã được gỡ bỏ',
+  'item_added_to_cart' => 'Mục được thêm vào giỏ hàng',
+  'item_alrealy_in_cart' => 'Mục đã có trong giỏ hàng của bạn',
+  'item_max_stock' => 'Người bán này có sẵn cổ phiếu hạn chế',
+  'item_minimum_qtt' => 'Bạn không thể đặt hàng dưới số lượng này',
+  'item_alrealy_in_wishlist' => 'Mục đã có trong danh sách mong muốn của bạn',
+  'item_removed_from_cart' => 'Mục đã được gỡ bỏ',
+  'email_account_not_found' => 'Chúng tôi không thể tìm thấy người dùng có địa chỉ email đó.',
+  'password_reset_link_sent' => 'Liên kết đặt lại mật khẩu đã được gửi! Vui lòng kiểm tra email của bạn.',
+  'password_reset_token_404' => 'Mã thông báo đặt lại mật khẩu này không hợp lệ.',
+  'password_reset_token_invalid' => 'Mã thông báo đặt lại mật khẩu này không hợp lệ.',
+  'password_reset_successful' => 'Mật khẩu của bạn đã được cập nhật thành công! Bạn có thể đăng nhập ngay bây giờ.',
+  404 => 'Nội dung này không có sẵn',
+);

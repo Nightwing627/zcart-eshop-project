@@ -1,0 +1,21 @@
+<?php 
+return array (
+  'access_token_required' => '有効なアクセストークンが必要です。',
+  'auth_failed' => 'これらの資格情報は記録と一致しません。',
+  'auth_out' => 'ログアウトしました！',
+  'cart_updated' => 'カートは正常に更新されました。',
+  'item_added_to_wishlist' => 'ウィッシュリストにアイテムを追加しました',
+  'item_removed_from_wishlist' => 'アイテムが削除されました',
+  'item_added_to_cart' => 'カートに追加されたアイテム',
+  'item_alrealy_in_cart' => 'すでにカートに入っているアイテム',
+  'item_max_stock' => 'この販売者は在庫が限られています',
+  'item_minimum_qtt' => 'この数量を下回る注文はできません',
+  'item_alrealy_in_wishlist' => 'すでにウィッシュリストにあるアイテム',
+  'item_removed_from_cart' => 'アイテムが削除されました',
+  'email_account_not_found' => 'その電子メールアドレスを持つユーザーが見つかりません。',
+  'password_reset_link_sent' => 'パスワードリセットリンクが送信されました！メールを確認してください。',
+  'password_reset_token_404' => 'このパスワードリセットトークンは無効です。',
+  'password_reset_token_invalid' => 'このパスワードリセットトークンは無効です。',
+  'password_reset_successful' => 'パスワードは正常に更新されました！今すぐログインできます。',
+  404 => 'このコンテンツは利用できません',
+);

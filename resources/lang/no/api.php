@@ -1,0 +1,21 @@
+<?php 
+return array (
+  'access_token_required' => 'Et gyldig tilgangstoken er påkrevd.',
+  'auth_failed' => 'Disse opplysningene samsvarer ikke med postene våre.',
+  'auth_out' => 'Logget ut vellykket!',
+  'cart_updated' => 'Handlekurven din har blitt oppdatert.',
+  'item_added_to_wishlist' => 'Varen lagt til ønskeliste',
+  'item_removed_from_wishlist' => 'Varen er fjernet',
+  'item_added_to_cart' => 'Varen lagt i handlekurven',
+  'item_alrealy_in_cart' => 'Varen er allerede i handlekurven din',
+  'item_max_stock' => 'Denne selgeren har begrenset antall tilgjengelig',
+  'item_minimum_qtt' => 'Du kan ikke legge inn en ordre under dette antallet',
+  'item_alrealy_in_wishlist' => 'Vare allerede i ønskelisten din',
+  'item_removed_from_cart' => 'Varen er fjernet',
+  'email_account_not_found' => 'Vi kan ikke finne en bruker med den e-postadressen.',
+  'password_reset_link_sent' => 'Koblingen for tilbakestilling av passord sendt! Vennligst sjekk din e-post.',
+  'password_reset_token_404' => 'Tokenet for tilbakestilling av passord er ugyldig.',
+  'password_reset_token_invalid' => 'Tokenet for tilbakestilling av passord er ugyldig.',
+  'password_reset_successful' => 'Passordet ditt har blitt oppdatert! Du kan logge inn nå.',
+  404 => 'Dette innholdet er ikke tilgjengelig',
+);

@@ -1,0 +1,22 @@
+<?php 
+return array (
+  'success' => 'Åtgärden har gjorts framgångsrikt!',
+  'failed' => 'Åtgärden misslyckades! Något gick fel!!',
+  'select_some_item' => 'Välj minst ett objekt',
+  'database_connection_failed' => 'Kan inte ansluta till MySQL-databasen. Kontrollera databasanslutningsinformation i .env-filen.',
+  'denied' => 'Åtkomst nekad!',
+  404 => 'Detta innehåll är inte tillgängligt eller så har du inte behörighet att komma åt detta område',
+  'error' => 'Åtgärden misslyckades! Det är något fel på serversidan',
+  'timeout' => 'Åtgärden misslyckades! Timeout för begäran',
+  'reordered' => 'Ombeställd',
+  'no_files_to_upload' => 'Inga filer hittade för överföring.',
+  'form_validation_failed' => 'Misslyckades: Kontrollera att alla ingångar som krävs är fyllda och giltiga',
+  'vendor_config_failed' => 'Registreringen misslyckades! Gör några ändringar och försök igen.',
+  'no_product_found_for_inventory' => 'Inga resultat! Försök med annan söknyckel',
+  'searching' => 'Sökande...',
+  'you_are_blocked' => 'Du är tillfälligt blockerad från den här webbplatsen!',
+  '404_not_found' => 'Den sidan du letade efter kunde inte hittas.',
+  'no_file_was_uploaded' => 'Ingen fil laddades upp.',
+  'error_uploading_file' => 'Fel vid uppladdning av fil',
+  'model_not_defined' => 'Modellen är inte definierad!',
+);

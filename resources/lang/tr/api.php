@@ -1,0 +1,21 @@
+<?php 
+return array (
+  'access_token_required' => 'Geçerli bir erişim belirteci gereklidir.',
+  'auth_failed' => 'Bu kimlik bilgileri kayıtlarımızla eşleşmiyor.',
+  'auth_out' => 'Başarılı bir şekilde çıkış yaptınız!',
+  'cart_updated' => 'Alışveriş sepetiniz başarıyla güncellendi.',
+  'item_added_to_wishlist' => 'Ürün istek listesine eklendi',
+  'item_removed_from_wishlist' => 'Öğe kaldırıldı',
+  'item_added_to_cart' => 'Ürün sepete eklendi',
+  'item_alrealy_in_cart' => 'Sepetinizde zaten bulunan ürün',
+  'item_max_stock' => 'Bu satıcıda sınırlı stok mevcut',
+  'item_minimum_qtt' => 'Bu miktarın altına sipariş veremezsiniz',
+  'item_alrealy_in_wishlist' => 'Zaten istek listenizdeki öğe',
+  'item_removed_from_cart' => 'Öğe kaldırıldı',
+  'email_account_not_found' => 'Bu e-posta adresine sahip bir kullanıcı bulamıyoruz.',
+  'password_reset_link_sent' => 'Şifre sıfırlama bağlantısı gönderildi! Lütfen emailinizi kontrol edin.',
+  'password_reset_token_404' => 'Bu şifre sıfırlama belirteci geçersiz.',
+  'password_reset_token_invalid' => 'Bu şifre sıfırlama belirteci geçersiz.',
+  'password_reset_successful' => 'Şifreniz başarıyla güncellendi! Şimdi giriş yapabilirsiniz.',
+  404 => 'bu içerik mevcut değil',
+);

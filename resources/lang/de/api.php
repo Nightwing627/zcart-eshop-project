@@ -1,0 +1,21 @@
+<?php 
+return array (
+  'access_token_required' => 'Ein gültiges Zugriffstoken ist erforderlich.',
+  'auth_failed' => 'Diese Anmeldeinformationen stimmen nicht mit unseren Aufzeichnungen überein.',
+  'auth_out' => 'Erfolgreich ausgeloggt!',
+  'cart_updated' => 'Ihr Warenkorb wurde erfolgreich aktualisiert.',
+  'item_added_to_wishlist' => 'Artikel zur Wunschliste hinzugefügt',
+  'item_removed_from_wishlist' => 'Gegenstand wurde entfernt',
+  'item_added_to_cart' => 'Artikel zum Warenkorb hinzugefügt',
+  'item_alrealy_in_cart' => 'Artikel bereits in Ihrem Warenkorb',
+  'item_max_stock' => 'Dieser Verkäufer hat eine begrenzte Anzahl verfügbarer Artikel',
+  'item_minimum_qtt' => 'Unterhalb dieser Menge können Sie keine Bestellung aufgeben',
+  'item_alrealy_in_wishlist' => 'Artikel bereits in Ihrer Wunschliste',
+  'item_removed_from_cart' => 'Gegenstand wurde entfernt',
+  'email_account_not_found' => 'Wir können keinen Benutzer mit dieser E-Mail-Adresse finden.',
+  'password_reset_link_sent' => 'Der Link zum Zurücksetzen des Passworts wurde gesendet! Bitte überprüfen Sie Ihre E-Mails.',
+  'password_reset_token_404' => 'Dieses Token zum Zurücksetzen des Kennworts ist ungültig.',
+  'password_reset_token_invalid' => 'Dieses Token zum Zurücksetzen des Kennworts ist ungültig.',
+  'password_reset_successful' => 'Ihr Passwort wurde erfolgreich aktuallisiert! Sie können sich jetzt anmelden.',
+  404 => 'Dieser Inhalt ist nicht verfügbar',
+);

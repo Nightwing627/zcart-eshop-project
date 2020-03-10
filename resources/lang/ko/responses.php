@@ -1,0 +1,22 @@
+<?php 
+return array (
+  'success' => '작업이 성공적으로 완료되었습니다!',
+  'failed' => '행동 실패! 뭔가 잘못 됐어 !!',
+  'select_some_item' => '하나 이상의 항목을 선택하십시오',
+  'database_connection_failed' => 'MySQL 데이터베이스에 연결할 수 없습니다. .env 파일에서 데이터베이스 연결 세부 사항을 확인하십시오.',
+  'denied' => '권한이 거부되었습니다!',
+  404 => '이 콘텐츠를 사용할 수 없거나이 영역에 액세스 할 수있는 권한이 없습니다',
+  'error' => '행동 실패! 서버 측에 문제가 있습니다',
+  'timeout' => '행동 실패! 요청 시간 초과',
+  'reordered' => '재주문 성공',
+  'no_files_to_upload' => '업로드 할 파일이 없습니다.',
+  'form_validation_failed' => '실패 : 모든 필수 입력이 채워지고 유효한지 확인하십시오',
+  'vendor_config_failed' => '등록 실패! 변경 한 후 다시 시도하십시오.',
+  'no_product_found_for_inventory' => '결과가 없습니다! 다른 검색 키를 시도하십시오',
+  'searching' => '수색...',
+  'you_are_blocked' => '이 사이트에서 일시적으로 차단되었습니다!',
+  '404_not_found' => '죄송합니다. 찾고있는 페이지를 찾을 수 없습니다.',
+  'no_file_was_uploaded' => '파일이 업로드되지 않았습니다.',
+  'error_uploading_file' => '파일 업로드 오류',
+  'model_not_defined' => '모델이 정의되지 않았습니다!',
+);

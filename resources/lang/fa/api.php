@@ -1,0 +1,21 @@
+<?php 
+return array (
+  'access_token_required' => 'یک نشانه دسترسی معتبر لازم است.',
+  'auth_failed' => 'این اعتبارنامه با سوابق ما مطابقت ندارد.',
+  'auth_out' => 'با موفقیت خارج شد!',
+  'cart_updated' => 'سبد خرید شما با موفقیت به روز شد.',
+  'item_added_to_wishlist' => 'مورد به لیست دلخواه اضافه شد',
+  'item_removed_from_wishlist' => 'مورد حذف شده است',
+  'item_added_to_cart' => 'مورد به سبد خرید اضافه شد',
+  'item_alrealy_in_cart' => 'مورد موجود در سبد خرید شما',
+  'item_max_stock' => 'این فروشنده دارای سهام محدود است',
+  'item_minimum_qtt' => 'شما نمی توانید سفارش زیر این مقدار بدهید',
+  'item_alrealy_in_wishlist' => 'مورد موجود در لیست دلخواه شما است',
+  'item_removed_from_cart' => 'مورد حذف شده است',
+  'email_account_not_found' => 'ما نمی توانیم یک کاربر با آن آدرس ایمیل پیدا کنیم.',
+  'password_reset_link_sent' => 'پیوند تنظیم مجدد رمز عبور ارسال شد! لطفا ایمیل خود را چک کنید.',
+  'password_reset_token_404' => 'این رمز بازنشانی رمز ورود نامعتبر است.',
+  'password_reset_token_invalid' => 'این رمز بازنشانی رمز ورود نامعتبر است.',
+  'password_reset_successful' => 'رمز عبور شما با موفقیت به روز شد! اکنون می توانید وارد شوید',
+  404 => 'این محتوا در دسترس نیست',
+);
