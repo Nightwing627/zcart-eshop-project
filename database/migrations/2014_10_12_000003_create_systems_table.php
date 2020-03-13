@@ -85,7 +85,7 @@ class CreateSystemsTable extends Migration
             $table->boolean('address_show_map')->nullable();
 
             // Checkout
-            $table->boolean('allow_guest_checkout')->nullable()->default(false);
+            $table->boolean('allow_guest_checkout')->nullable()->default(true);
             $table->boolean('auto_approve_order')->nullable()->default(false);
 
             // Notification Settings

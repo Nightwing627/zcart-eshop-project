@@ -28,8 +28,8 @@ class CreateCustomersTable extends Migration
             $table->text('card_holder_name')->nullable();
             $table->string('card_brand')->nullable();
             $table->string('card_last_four')->nullable();
-            $table->boolean('active')->nullable();
-            $table->boolean('accepts_marketing')->nullable();
+            $table->boolean('active')->nullable()->default(true);
+            $table->boolean('accepts_marketing')->nullable()->default(true);
             $table->string('verification_token', 100)->nullable();
             $table->rememberToken();
             $table->softDeletes();

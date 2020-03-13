@@ -1375,6 +1375,28 @@ if ( ! function_exists('filterShippingOptions') )
     }
 }
 
+if ( ! function_exists('getFreeShippingObject') )
+{
+    /**
+     * Return free shipping options 
+     *
+     * @param $zone
+     */
+    function getFreeShippingObject($zone = Null)
+    {
+        return [
+                'id' => Null,
+                'name' => trans('api.free_shipping'),
+                'shipping_zone_id' => $zone ? $zone->id : Null,
+                'carrier_id' => Null,
+                'carrier_name' => Null,
+                'cost'=> "$0.00",
+                'cost_raw'=> 0,
+                'delivery_takes' => trans('api.std_delivery_time'),
+            ];
+    }
+}
+
 if ( ! function_exists('getPlatformDefaultPackaging') )
 {
     /**

@@ -20,6 +20,7 @@ use App\Http\Resources\ListingResource;
 use App\Http\Resources\AttributeResource;
 use App\Http\Resources\ShopListingResource;
 use App\Http\Resources\ManufacturerResource;
+use App\Http\Resources\ShippingOptionResource;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListingController extends Controller
@@ -149,10 +150,36 @@ class ListingController extends Controller
            $attributes[$attr['id']]['value'][$attr['value']['id']] = $attr['value']['name'];
         }
 
+        // Shipping Zone
+        $geoip = geoip(request()->ip()); // Set the location of the user
+        $shipping_country_id = get_id_of_model('countries', 'iso_3166_2', $geoip->iso_code);
+
         return (new ItemResource($item))->additional(['variants' => [
                     'images' => ImageResource::collection($variants->pluck('images')->flatten(1)),
                     'attributes' => $attributes,
-                ]]);;
+                ],
+                'shipping_country_id' => $shipping_country_id,
+                'shipping_options' => $this->get_shipping_options($item, $shipping_country_id, $geoip->state),
+                'countries' => ListHelper::countries(), // Country list for shop_to dropdown
+            ]);
+    }
+
+    /**
+     * Return shipping options.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function shipTo(Request $request, Inventory $item)
+    {
+        $shipping_options = $this->get_shipping_options($item, $request->country_id, $request->state_id);
+
+        if(!$shipping_options )
+            return response()->json(['message' => trans('theme.notify.seller_doesnt_ship')], 404);
+
+        return response()->json([
+            'shipping_options' => $shipping_options,
+        ], 200);
     }
 
     /**
@@ -299,5 +326,32 @@ class ListingController extends Controller
 
         return (new ManufacturerResource($brand))->listings(ListingResource::collection($listings));
         // return ListingResource::collection($listings);
+    }
+
+    /**
+     * Return available shipping options for the item
+     *
+     * @param  item  $item
+     * @param  country_id  $country_id
+     * @param  state_id  $state
+     *
+     * @return array|Null
+     */    
+    private function get_shipping_options($item, $country_id, $state)
+    {
+        $zone = get_shipping_zone_of($item->shop_id, $country_id, $state);
+
+        if(!$zone) return Null;
+
+        $free_shipping = [];
+        if($item->free_shipping)
+            $free_shipping[] = getFreeShippingObject($zone);
+
+        $shipping_options = ShippingOptionResource::collection(
+            filterShippingOptions($zone->id, $item->currnt_sale_price(), $item->shipping_weight)
+        );
+
+        return empty($free_shipping) ? $shipping_options :
+                collect($free_shipping)->merge($shipping_options);
     }
 }

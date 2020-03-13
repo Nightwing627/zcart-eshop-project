@@ -593,6 +593,7 @@ return [
 	'of_total' => ':first - :last of :total',
 	'subject' => 'Subject',
 	'unread_messages' => 'Unread messages',
+	'std_delivery_time' => 'Standard delivery time',
 
     // Version 2.0.0
     'chat_welcome' => 'Hey! Have a question?',

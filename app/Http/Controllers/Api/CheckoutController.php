@@ -17,6 +17,7 @@ use App\Events\Order\OrderCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Http\Requests\Validations\DirectCheckoutRequest;
+use App\Http\Requests\Validations\ApiCheckoutCartRequest;
 
 class CheckoutController extends Controller
 {
@@ -26,7 +27,7 @@ class CheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function checkout(Request $request, Cart $cart)
+    public function checkout(ApiCheckoutCartRequest $request, Cart $cart)
     {
         if( !crosscheckCartOwnership($request, $cart) )
             return response()->json(['message' => trans('theme.notify.please_login_to_checkout')], 404);
@@ -35,6 +36,7 @@ class CheckoutController extends Controller
         $cart->shipping_rate_id = $request->shipping_option_id;
         $cart->packaging_id = $request->packaging_id;
         $cart->payment_method_id = $request->payment_method_id;
+        $cart->shipping_address = $request->shipping_address;
 
         if($request->shipping_option_id)
             $cart->shipping = getShippingingCost($request->shipping_option_id);

@@ -416,7 +416,7 @@ class Order extends BaseModel
     }
 
     // Update the goods_received field when customer confirm or change status
-    public function goods_received()
+    public function mark_as_goods_received()
     {
         return $this->update(['order_status_id' => 6, 'goods_received' => 1]); // Delivered Status. This id is freezed by system config
     }

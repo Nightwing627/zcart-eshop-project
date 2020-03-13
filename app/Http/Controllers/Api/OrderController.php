@@ -7,16 +7,13 @@ use App\Order;
 use App\Reply;
 use App\Message;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\OrderLightResource;
-// use App\Http\Resources\ConversationResource;
 use App\Http\Resources\ConversationResource;
 use App\Http\Requests\Validations\OrderDetailRequest;
 use App\Http\Requests\Validations\DirectCheckoutRequest;
 // use App\Http\Requests\Validations\DirectCheckoutRequest;
-use App\Http\Requests\Validations\OrderDetailRequest;
 use App\Http\Requests\Validations\ConfirmGoodsReceivedRequest;
 
 class OrderController extends Controller
@@ -131,7 +128,7 @@ class OrderController extends Controller
      */
     public function goods_received(ConfirmGoodsReceivedRequest $request, Order $order)
     {
-        $order->goods_received();
+        $order->mark_as_goods_received();
 
         return new OrderResource($order);
     }

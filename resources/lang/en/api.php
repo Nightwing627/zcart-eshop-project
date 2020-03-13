@@ -9,6 +9,7 @@ return [
 	'item_removed_from_wishlist' => 'Item has been removed',
 	'item_added_to_cart' => 'Item added to cart',
 	'item_alrealy_in_cart' => 'Item alrealy in your cart',
+	'item_alrealy_in_wishlist' => 'Item alrealy in your wishlist',
 	'item_max_stock' => 'This seller has limited stock available',
 	'item_minimum_qtt' => 'You can\'t place an order below this quantity',
 	'item_alrealy_in_wishlist' => 'Item alrealy in your wishlist',
@@ -19,4 +20,6 @@ return [
     'password_reset_token_invalid' => 'This password reset token is invalid.',
     'password_reset_successful' => 'Your password has been updated successfully! You can login now.',
 	'404' => 'This content is not availeble',
+	'std_delivery_time' => 'Standard delivery time',
+	'free_shipping' => 'Free Shipping',
 ];

@@ -22,9 +22,10 @@ Route::group(['namespace' => 'Api'], function(){
 	Route::get('search/{term}', 'ListingController@search');
 	Route::get('shop/{slug}/listings', 'ListingController@shop');
 	Route::get('brand/{slug}', 'ListingController@brand');
-	Route::get('category/{slug}', 'ListingController@category');
+	Route::get('listing/category/{slug}', 'ListingController@category');
 	Route::get('listing/category-subgrp/{slug}', 'ListingController@categorySubGroup');
 	Route::get('listing/category-grp/{slug}', 'ListingController@categoryGroup');
+	Route::post('listing/{item}/shipTo', 'ListingController@shipTo');
 	Route::get('listing/{slug}/feedbacks', 'FeedbackController@show_item_feedbacks');
 	Route::get('shop/{slug}/feedbacks', 'FeedbackController@show_shop_feedbacks');
 

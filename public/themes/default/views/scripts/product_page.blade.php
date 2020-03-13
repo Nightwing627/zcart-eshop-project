@@ -53,7 +53,8 @@ foreach ($variants as &$value) {
 
                     if(free_shipping){
                         options += "<tr><td><div class='radio'><label id='0' data-option='" + JSON.stringify({name: '{{ trans('theme.free_shipping') }}', rate: 0}) + "'><input type='radio' name='shipping_option' id='{{ trans('theme.free_shipping') }}' value='"+ getFormatedValue(0) +"' "+ preChecked +"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ trans('theme.free_shipping') }}</label></div></td>" +
-                        '<td>&nbsp;</td><td>&nbsp;</td>' +
+                        '<td>&nbsp;</td>' +
+                        '<td><small class"text-muted">{{ trans('theme.std_delivery_time') }}</small></td>' +
                         '<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(0) +'</span></td></tr>';
                     }
 
@@ -394,7 +395,7 @@ foreach ($variants as &$value) {
             $('#summary-shipping-cost').attr('data-value', 0).html(shipping.name);
             $('#summary-shipping-carrier').text(' ');
 
-            $('#delivery-time').text(' ');
+            $('#delivery-time').text('{{ trans('theme.std_delivery_time') }}');
             $('#shipping-rate-id').val('Null');
         }
         else {

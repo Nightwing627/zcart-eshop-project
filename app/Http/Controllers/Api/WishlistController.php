@@ -45,7 +45,7 @@ class WishlistController extends Controller
         ->where('customer_id', $customer_id)->first();
 
         if($item_in_wishlist)
-            return response()->json(['message' => trans('api.item_alrealy_in_cart')], 409); // Item alrealy in cart
+            return response()->json(['message' => trans('api.item_alrealy_in_wishlist')], 409); // Item alrealy in cart
 
         $wishlist = new Wishlist;
         $wishlist->updateOrCreate([

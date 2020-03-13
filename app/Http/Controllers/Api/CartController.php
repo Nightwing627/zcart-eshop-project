@@ -13,9 +13,11 @@ use App\ShippingRate;
 use Carbon\Carbon;
 use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
+use App\Services\NewCustomer;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CartResource;
 use App\Http\Resources\ShippingOptionResource;
+use App\Http\Requests\Validations\CartShipToRequest;
 use App\Http\Requests\Validations\DirectCheckoutRequest;
 
 class CartController extends Controller
@@ -53,12 +55,23 @@ class CartController extends Controller
      */
     public function show(Request $request, Cart $cart)
     {
-        return response()->json([
-            'cart' => new CartResource($cart),
-            'shipping_options' => ShippingOptionResource::collection(filterShippingOptions($cart->shipping_zone_id, $cart->total, $cart->shipping_weight)),
-        ], 200);
+        // $resulte['cart'] = new CartResource($cart);
 
-        // return new CartResource($cart);
+        // if(Auth::guard('api')->check()){
+        //     $resulte['shipping_options'] = new CartResource($cart);
+
+        // } else {
+        //     $resulte['shipping_options'] = $this->get_shipping_options($cart, $cart->shippingZone);
+        // }
+
+        // return response()->json($resulte, 200);
+
+        // return response()->json([
+        //     'cart' => new CartResource($cart),
+        //     'shipping_options' => $this->get_shipping_options($cart, $cart->shippingZone),
+        // ], 200);
+
+        return new CartResource($cart);
     }
 
     /**
@@ -111,12 +124,12 @@ class CartController extends Controller
         $cart->item_count = $old_cart ? ($old_cart->item_count + 1) : 1;
         $cart->quantity = $old_cart ? ($old_cart->quantity + $qtt) : $qtt;
 
-        if($request->shipTo)
-            $cart->ship_to = $request->shipTo;
+        if($request->ship_to)
+            $cart->ship_to = $request->ship_to;
 
         //Reset if the old cart exist, bcoz shipping rate will change after adding new item
-        $cart->shipping_zone_id = $old_cart ? Null : $request->shippingZoneId;
-        $cart->shipping_rate_id = $old_cart ? Null : $request->shippingRateId == 'Null' ? Null : $request->shippingRateId;
+        $cart->shipping_zone_id = $old_cart ? Null : $request->shipping_zone_id;
+        $cart->shipping_rate_id = $old_cart ? Null : $request->shipping_id == 'Null' ? Null : $request->shipping_id;
 
         $cart->handling = $old_cart ? $old_cart->handling : getShopConfig($item->shop_id, 'order_handling_cost');
         $cart->total = $old_cart ? ($old_cart->total + ($qtt * $unit_price)) : $unit_price;
@@ -196,8 +209,8 @@ class CartController extends Controller
             ]);
         }
 
-        if($request->shipTo)
-            $cart->ship_to = $request->shipTo;
+        if($request->ship_to)
+            $cart->ship_to = $request->ship_to;
 
         if($request->shipping_zone_id)
             $cart->shipping_zone_id = $request->shipping_zone_id;
@@ -208,10 +221,9 @@ class CartController extends Controller
         if($request->packaging_id)
             $cart->packaging_id = $request->packaging_id;
 
-        // Update some filed only if the cart is older than 24hrs
-        if($cart->updated_at < Carbon::now()->subHour(24)){
+        // Update some filed only if the cart is older than 24hrs (only to increase performance)
+        if($cart->updated_at < Carbon::now()->subHour(24))
             $cart->handling = getShopConfig($item->shop_id, 'order_handling_cost');
-        }
 
         $cart->save();
 
@@ -258,16 +270,26 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function shipTo(Request $request, Cart $cart)
+    public function shipTo(CartShipToRequest $request, Cart $cart)
     {
+        if( !crosscheckCartOwnership($request, $cart) )
+            return response()->json(['message' => trans('theme.notify.please_login_to_checkout')], 404);
+
+        if ($request->email && $request->has('create-account') && $request->password) {
+            $customer = (new NewCustomer)->save($request);
+            $cart->customer_id = $customer->id; //Set customer_id
+        }
+
         $zone = get_shipping_zone_of($cart->shop_id, $request->country_id, $request->state_id);
 
-        if( ! $zone )
+        $shipping_options = $this->get_shipping_options($cart, $zone);
+
+        if( !$zone || !$shipping_options )
             return response()->json(['message' => trans('theme.notify.seller_doesnt_ship')], 404);
 
         // Get shipping address
-        if($request->has('ship_to') && is_numeric($request->ship_to))
-            $address = \App\Address::find($request->ship_to)->toString(True);
+        if($request->has('address_id') && is_numeric($request->address_id))
+            $address = \App\Address::find($request->address_id)->toString(True);
         else
             $address = get_address_str_from_request_data($request);
 
@@ -276,11 +298,13 @@ class CartController extends Controller
         $cart->taxrate = $taxrate;
         $cart->taxes = ($cart->total * $taxrate)/100;
         $cart->shipping_zone_id = $zone->id;
+        $cart->ship_to = $request->country_id;
         $cart->save();
 
         return response()->json([
             'cart' => new CartResource($cart),
             'shipping_address' => $address,
+            'shipping_options' => $shipping_options,
         ], 200);
     }
 
@@ -322,5 +346,29 @@ class CartController extends Controller
 
         return response()->json(['message' => trans('theme.notify.coupon_applied')], 200);
         // return response()->json($coupon->toArray(), 200);
+    }
+
+    /**
+     * Return available shipping options for the cart
+     *
+     * @param  cart  $cart
+     * @param  shipping zone  $zone
+     *
+     * @return array|Null
+     */
+    private function get_shipping_options($cart, $zone = Null)
+    {
+        if(! $zone) return Null;
+
+        $free_shipping = [];
+        if($cart->is_free_shipping())
+            $free_shipping[] = getFreeShippingObject($zone);
+
+        $shipping_options = ShippingOptionResource::collection(
+            filterShippingOptions($zone->id, $cart->total, $cart->shipping_weight)
+        );
+
+        return empty($free_shipping) ? $shipping_options :
+                collect($free_shipping)->merge($shipping_options);
     }
 }

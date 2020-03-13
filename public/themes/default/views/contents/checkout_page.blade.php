@@ -154,7 +154,7 @@
                 @if(config('system_settings.ask_customer_for_email_subscription'))
                   <div class="checkbox">
                     <label>
-                      {!! Form::checkbox('subscribe', null, null, ['class' => 'i-check']) !!} {!! trans('theme.input_label.subscribe_to_the_newsletter') !!}
+                      {!! Form::checkbox('accepts_marketing', null, null, ['class' => 'i-check']) !!} {!! trans('theme.input_label.subscribe_to_the_newsletter') !!}
                     </label>
                   </div>
                 @endif

@@ -16,7 +16,7 @@ class SaveChatConversationRequest extends Request
     {
         if($this->customer_id()) return true; // If the user is customer allow chat
 
-        $user = Auth::guard('web')->check() ? Auth::guard('web')->user() : Null;
+        $user = Auth::guard('web')->check() ? Auth::guard('web')->user() : Null; 
         if ($user && $user->merchantId() == $this->chat->shop_id)
             return true;
 

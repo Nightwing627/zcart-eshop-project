@@ -6,10 +6,10 @@ use DB;
 use Auth;
 use App\Cart;
 use App\Order;
-use App\Customer;
 use Paypalpayment;
 use Instamojo\Instamojo;
 use Illuminate\Http\Request;
+use App\Services\NewCustomer;
 use App\Events\Order\OrderPaid;
 use App\Events\Order\OrderCreated;
 use App\Http\Controllers\Controller;
@@ -17,7 +17,6 @@ use App\Exceptions\AuthorizeNetException;
 use App\Http\Requests\Validations\OrderDetailRequest;
 use App\Http\Requests\Validations\CheckoutCartRequest;
 use App\Http\Requests\Validations\ConfirmGoodsReceivedRequest;
-use App\Notifications\Auth\SendVerificationEmail as EmailVerificationNotification;
 
 use net\authorize\api\contract\v1 as AuthorizeNetAPI;
 use net\authorize\api\controller as AuthorizeNetController;
@@ -33,7 +32,7 @@ class OrderController extends Controller
     public function create(CheckoutCartRequest $request, Cart $cart)
     {
         if ($request->email && $request->has('create-account') && $request->password) {
-            $customer = $this->createNewCustomer($request);
+            $customer = (new NewCustomer)->save($request);
             $request->merge(['customer_id' => $customer->id]); //Set customer_id
         }
 
@@ -659,7 +658,7 @@ class OrderController extends Controller
      */
     public function goods_received(ConfirmGoodsReceivedRequest $request, Order $order)
     {
-        $order->goods_received();
+        $order->mark_as_goods_received();
 
         return redirect()->route('order.feedback', $order)->with('success', trans('theme.notify.order_updated'));
     }
@@ -688,37 +687,6 @@ class OrderController extends Controller
     public function track(Request $request, Order $order)
     {
         return view('order_tracking', compact('order'));
-    }
-
-    /**
-     * Create a new Customer
-     *
-     * @param  Request $request
-     *
-     * @return App\Customer
-     */
-    private function createNewCustomer($request)
-    {
-        $customer = Customer::create([
-            'name' => $request->address_title,
-            'email' => $request->email,
-            'password' => $request->password,
-            'accepts_marketing' => $request->subscribe,
-            'verification_token' => str_random(40),
-            'active' => 1,
-        ]);
-
-        // Sent email address verification notich to customer
-        $customer->notify(new EmailVerificationNotification($customer));
-
-        $customer->addresses()->create($request->all()); //Save address
-
-        if ( Auth::guard('web')->check() )
-            Auth::logout();
-
-        Auth::guard('customer')->login($customer); //Login the customer
-
-        return $customer;
     }
 
     /**

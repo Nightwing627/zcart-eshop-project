@@ -21,6 +21,7 @@ class ShippingOptionResource extends JsonResource
             'carrier_id' => $this->carrier_id,
             'carrier_name' => $this->carrier_name,
             'cost' => get_formated_currency($this->rate, config('system_settings.decimals', 2)),
+            'cost_raw' => $this->rate,
             'delivery_takes' => $this->delivery_takes,
         ];
     }
