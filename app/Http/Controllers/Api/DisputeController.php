@@ -88,9 +88,9 @@ class DisputeController extends Controller
     public function response_form(Request $request, Dispute $dispute)
     {
         return [
-                    'dispute' => $dispute,
-                    'statuses' => \App\Helpers\ListHelper::dispute_statuses()
-                ];
+            'dispute' => $dispute,
+            'statuses' => \App\Helpers\ListHelper::dispute_statuses()
+        ];
     }
 
     /**
