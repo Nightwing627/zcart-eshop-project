@@ -9,7 +9,7 @@
 
 	<div class="box-body">
 
-        @if(auth()->user()->shop->canAddMoreInventory())
+        @if(Auth::user()->shop->canAddMoreInventory())
 	        <div class="form-group">
 	          <div class="input-group input-group-lg">
 	            <span class="input-group-addon"> <i class="fa fa-search text-muted"></i> </span>

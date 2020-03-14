@@ -1411,6 +1411,7 @@ return [
     'subscription_fee' => 'Subscription fee',
     'to' => 'To',
     'message_send_by_staff' => 'This message was sent by your staff <b>:user</b>',
+    'can_use_own_catalog_only' => 'Can use own catalog only',
 
     // Version 2.0.0
     'chats' => 'Chats',

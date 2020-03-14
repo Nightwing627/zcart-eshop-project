@@ -13,7 +13,7 @@ class CreateInventoryWithVariantRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return $this->user()->shop->canAddThisInventory($this->product_id);
     }
 
     /**
@@ -23,8 +23,7 @@ class CreateInventoryWithVariantRequest extends Request
      */
     public function rules()
     {
-        // echo "<pre>"; print_r(Request::all()); echo "</pre>"; exit();
-        $user = Request::user(); //Get current user
+        $user = $this->user(); //Get current user
         Request::merge([
                         'shop_id' => $user->shop_id,
                         'user_id' => $user->id

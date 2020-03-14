@@ -39,48 +39,6 @@
 				        {!! Form::model($system, ['method' => 'PUT', 'route' => ['admin.setting.system.update'], 'files' => true, 'id' => 'form2', 'class' => 'form-horizontal ajax-form', 'data-toggle' => 'validator']) !!}
 					    	<div class="col-sm-6">
 					    		<fieldset>
-					    			<legend>{{ trans('app.units') }}</legend>
-									<div class="form-group">
-								        {!! Form::label('weight_unit', '*' . trans('app.weight_unit'). ':', ['class' => 'with-help col-sm-5 control-label']) !!}
-									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.system_weight_unit') }}"></i>
-									  	<div class="col-sm-6 nopadding-left">
-									  		@if($can_update)
-											    {!! Form::select('weight_unit', ['g' => 'Gram(g)', 'kg' => 'Kilogram(kg)', 'lb' => 'Pound(lb)', 'oz' => 'Ounce(oz)'], $system->weight_unit, ['class' => 'form-control select2-normal', 'required']) !!}
-										      	<div class="help-block with-errors"></div>
-											@else
-												<span>{{ $system->weight_unit }}</span>
-											@endif
-									  	</div>
-									</div>
-
-									<div class="form-group">
-								        {!! Form::label('length_unit', '*' . trans('app.length_unit'). ':', ['class' => 'with-help col-sm-5 control-label']) !!}
-									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.system_length_unit') }}"></i>
-									  	<div class="col-sm-6 nopadding-left">
-									  		@if($can_update)
-											    {!! Form::select('length_unit', ['meter' => 'Meter(M)', 'cm' => 'Centemeter(cm)', 'in' => 'Inch(in)'], $system->length_unit, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
-										      	<div class="help-block with-errors"></div>
-											@else
-												<span>{{ $system->length_unit }}</span>
-											@endif
-									  	</div>
-									</div>
-
-									<div class="form-group">
-								        {!! Form::label('valume_unit', '*' . trans('app.valume_unit'). ':', ['class' => 'with-help col-sm-5 control-label']) !!}
-									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.system_valume_unit') }}"></i>
-									  	<div class="col-sm-6 nopadding-left">
-									  		@if($can_update)
-											    {!! Form::select('valume_unit', ['liter' => 'Liter(L)', 'gal' => 'gallon(gal)'], $system->valume_unit, ['class' => 'form-control select2-normal', 'required']) !!}
-										      	<div class="help-block with-errors"></div>
-											@else
-												<span>{{ $system->valume_unit }}</span>
-											@endif
-									  	</div>
-									</div>
-					    		</fieldset>
-
-					    		<fieldset>
 					    			<legend>{{ trans('app.config_subscription_section') }}</legend>
 
 									<div class="form-group">
@@ -139,6 +97,48 @@
 										</div>
 								  	</div> <!-- /.row -->
 								</fieldset>
+
+					    		<fieldset>
+					    			<legend>{{ trans('app.units') }}</legend>
+									<div class="form-group">
+								        {!! Form::label('weight_unit', '*' . trans('app.weight_unit'). ':', ['class' => 'with-help col-sm-5 control-label']) !!}
+									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.system_weight_unit') }}"></i>
+									  	<div class="col-sm-6 nopadding-left">
+									  		@if($can_update)
+											    {!! Form::select('weight_unit', ['g' => 'Gram(g)', 'kg' => 'Kilogram(kg)', 'lb' => 'Pound(lb)', 'oz' => 'Ounce(oz)'], $system->weight_unit, ['class' => 'form-control select2-normal', 'required']) !!}
+										      	<div class="help-block with-errors"></div>
+											@else
+												<span>{{ $system->weight_unit }}</span>
+											@endif
+									  	</div>
+									</div>
+
+									<div class="form-group">
+								        {!! Form::label('length_unit', '*' . trans('app.length_unit'). ':', ['class' => 'with-help col-sm-5 control-label']) !!}
+									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.system_length_unit') }}"></i>
+									  	<div class="col-sm-6 nopadding-left">
+									  		@if($can_update)
+											    {!! Form::select('length_unit', ['meter' => 'Meter(M)', 'cm' => 'Centemeter(cm)', 'in' => 'Inch(in)'], $system->length_unit, ['class' => 'form-control select2-normal', 'placeholder' => trans('app.placeholder.select'), 'required']) !!}
+										      	<div class="help-block with-errors"></div>
+											@else
+												<span>{{ $system->length_unit }}</span>
+											@endif
+									  	</div>
+									</div>
+
+									<div class="form-group">
+								        {!! Form::label('valume_unit', '*' . trans('app.valume_unit'). ':', ['class' => 'with-help col-sm-5 control-label']) !!}
+									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.system_valume_unit') }}"></i>
+									  	<div class="col-sm-6 nopadding-left">
+									  		@if($can_update)
+											    {!! Form::select('valume_unit', ['liter' => 'Liter(L)', 'gal' => 'gallon(gal)'], $system->valume_unit, ['class' => 'form-control select2-normal', 'required']) !!}
+										      	<div class="help-block with-errors"></div>
+											@else
+												<span>{{ $system->valume_unit }}</span>
+											@endif
+									  	</div>
+									</div>
+					    		</fieldset>
 
 					    		<fieldset>
 					    			<legend>{{ trans('app.config_customer_section') }}</legend>
@@ -209,6 +209,55 @@
 
 					    	<div class="col-sm-6">
 					    		<fieldset>
+					    			<legend><i class="fa fa-cubes hidden-sm"></i> {{ trans('app.inventory') }}</legend>
+							    	<div class="row">
+								    	<div class="col-sm-7 text-right">
+											<div class="form-group">
+										        {!! Form::label('can_use_own_catalog_only', trans('app.can_use_own_catalog_only'). ':', ['class' => 'with-help control-label']) !!}
+											  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_can_use_own_catalog_only') }}"></i>
+											</div>
+										</div>
+								    	<div class="col-sm-4">
+									  		@if($can_update)
+											  	<div class="handle horizontal text-center">
+													<a href="javascript:void(0)" data-link="{{ route('admin.setting.system.notification.toggle', 'can_use_own_catalog_only') }}" type="button" class="btn btn-md btn-secondary btn-toggle {{ $system->can_use_own_catalog_only ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $system->can_use_own_catalog_only ? 'true' : 'false' }}" autocomplete="off">
+														<div class="btn-handle"></div>
+													</a>
+											  	</div>
+											@else
+												<span>{{ $system->can_use_own_catalog_only ? trans('app.on') : trans('app.off') }}</span>
+											@endif
+										</div>
+								  	</div> <!-- /.row -->
+
+									<div class="form-group">
+								        {!! Form::label('max_img_size_limit_kb', trans('app.max_img_size_limit_kb'). ':', ['class' => 'with-help col-sm-6 control-label']) !!}
+									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_max_img_size_limit_kb') }}"></i>
+									  	<div class="col-sm-5 nopadding-left">
+									  		@if($can_update)
+									    	    {!! Form::number('max_img_size_limit_kb', $system->max_img_size_limit_kb, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.max_img_size_limit_kb')]) !!}
+										      	<div class="help-block with-errors"></div>
+											@else
+												<span>{{ $system->max_img_size_limit_kb }}</span>
+											@endif
+									  	</div>
+									</div>
+
+									<div class="form-group">
+								        {!! Form::label('max_number_of_inventory_imgs', trans('app.max_number_of_inventory_imgs'). ':', ['class' => 'with-help col-sm-6 control-label']) !!}
+									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_max_number_of_inventory_imgs') }}"></i>
+									  	<div class="col-sm-5 nopadding-left">
+									  		@if($can_update)
+									    	    {!! Form::number('max_number_of_inventory_imgs', $system->max_number_of_inventory_imgs, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.max_number_of_inventory_imgs')]) !!}
+										      	<div class="help-block with-errors"></div>
+											@else
+												<span>{{ $system->max_number_of_inventory_imgs }}</span>
+											@endif
+									  	</div>
+									</div>
+					    		</fieldset>
+
+					    		<fieldset>
 					    			<legend><i class="fa fa-laptop hidden-sm"></i> {{ trans('app.views') }}</legend>
 									<div class="form-group">
 								        {!! Form::label('pagination', trans('app.pagination'). ':', ['class' => 'with-help col-sm-6 control-label']) !!}
@@ -243,35 +292,6 @@
 										</div>
 								  	</div> <!-- /.row -->
 								</fieldset>
-
-					    		<fieldset>
-					    			<legend><i class="fa fa-cubes hidden-sm"></i> {{ trans('app.inventory') }}</legend>
-									<div class="form-group">
-								        {!! Form::label('max_img_size_limit_kb', trans('app.max_img_size_limit_kb'). ':', ['class' => 'with-help col-sm-6 control-label']) !!}
-									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_max_img_size_limit_kb') }}"></i>
-									  	<div class="col-sm-5 nopadding-left">
-									  		@if($can_update)
-									    	    {!! Form::number('max_img_size_limit_kb', $system->max_img_size_limit_kb, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.max_img_size_limit_kb')]) !!}
-										      	<div class="help-block with-errors"></div>
-											@else
-												<span>{{ $system->max_img_size_limit_kb }}</span>
-											@endif
-									  	</div>
-									</div>
-
-									<div class="form-group">
-								        {!! Form::label('max_number_of_inventory_imgs', trans('app.max_number_of_inventory_imgs'). ':', ['class' => 'with-help col-sm-6 control-label']) !!}
-									  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.config_max_number_of_inventory_imgs') }}"></i>
-									  	<div class="col-sm-5 nopadding-left">
-									  		@if($can_update)
-									    	    {!! Form::number('max_number_of_inventory_imgs', $system->max_number_of_inventory_imgs, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.max_number_of_inventory_imgs')]) !!}
-										      	<div class="help-block with-errors"></div>
-											@else
-												<span>{{ $system->max_number_of_inventory_imgs }}</span>
-											@endif
-									  	</div>
-									</div>
-					    		</fieldset>
 
 					    		<fieldset>
 					    			<legend>{{ trans('app.address') }}</legend>

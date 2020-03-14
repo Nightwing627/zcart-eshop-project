@@ -59,6 +59,7 @@ class SystemConfig extends BaseModel
                         'auto_approve_order',
                         'ask_customer_for_email_subscription',
                         'vendor_can_view_customer_info',
+                        'can_use_own_catalog_only',
                         'notify_when_vendor_registered',
                         'notify_when_dispute_appealed',
                         'notify_new_message',
@@ -95,6 +96,7 @@ class SystemConfig extends BaseModel
                 'address_show_map' => 'boolean',
                 'google_analytic_report' => 'boolean',
                 'show_seo_info_to_frontend' => 'boolean',
+                'can_use_own_catalog_only' => 'boolean',
             ];
 
     /**

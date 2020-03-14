@@ -433,6 +433,32 @@ class Shop extends BaseModel
         return false;
     }
 
+    /**
+     * Check if the vandor can creat listing using this product
+     *
+     * @return bool
+     */
+    public function canAddThisInventory($product)
+    {
+        if($this->canUseSystemCatalog()) return true;
+
+        $product = Product::select('shop_id')->where('id', $product)->first();
+
+        if(!$product) return false;
+
+        return $product->shop_id == $this->id;
+    }
+
+    /**
+     * Check if shop can use common catalog or just its own
+     *
+     * @return bool
+     */
+    public function canUseSystemCatalog()
+    {
+        return ! config('system_settings.can_use_own_catalog_only');
+    }
+
     public function setHideTrialNoticeAttribute($value)
     {
         $this->attributes['hide_trial_notice'] = (bool) $value;

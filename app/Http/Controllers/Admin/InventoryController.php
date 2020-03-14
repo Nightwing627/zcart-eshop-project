@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Common\Authorizable;
 use App\Http\Controllers\Controller;
 use App\Repositories\Inventory\InventoryRepository;
+use App\Http\Requests\Validations\AddInventoryRequest;
 use App\Http\Requests\Validations\ProductSearchRequest;
 use App\Http\Requests\Validations\CreateInventoryRequest;
 use App\Http\Requests\Validations\UpdateInventoryRequest;
@@ -49,7 +50,7 @@ class InventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function setVariant(Request $request, $product_id)
+    public function setVariant(AddInventoryRequest $request, $product_id)
     {
         return view('admin.inventory._set_variant', compact('product_id'));
     }
@@ -59,7 +60,7 @@ class InventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function add(Request $request, $id)
+    public function add(AddInventoryRequest $request, $id)
     {
         if(! $request->user()->shop->canAddMoreInventory())
             return redirect()->route('admin.stock.inventory.index')->with('error', trans('messages.cant_add_more_inventory'));
@@ -79,7 +80,7 @@ class InventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function addWithVariant(Request $request, $id)
+    public function addWithVariant(AddInventoryRequest $request, $id)
     {
         if(! $request->user()->shop->canAddMoreInventory())
             return redirect()->route('admin.stock.inventory.index')->with('error', trans('messages.cant_add_more_inventory'));

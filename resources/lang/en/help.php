@@ -713,4 +713,6 @@ return [
 
     'config_show_seo_info_to_frontend' => 'Show SEO info like the meta title, meta description, tags to the frontend.',
 
+    'config_can_use_own_catalog_only' => 'If enabled, the vendors can use only his/her own catalog product to create listings.',
+
 ];

@@ -19,14 +19,12 @@ class SearchController extends Controller
         if(strlen($term) < 3)
             return Response::json($results);
 
-        $products = Product::search($term)->where('active', 1)->take(5)->get();
+        $query = Product::search($term)->where('active', 1);
 
-        // $products = Product::where('gtin', $term)
-        //             ->orWhere('model_number', 'LIKE', '%'. $term .'%')
-        //             ->orWhere('name', 'LIKE', '%'. $term .'%')
-        //             ->get();
+        if(! $request->user()->shop->canUseSystemCatalog())
+            $query->where('shop_id', $request->user()->merchantId());
 
-        // $products->load('image');
+        $products = $query->take(5)->get();
 
         $results = '';
 
@@ -49,13 +47,6 @@ class SearchController extends Controller
 			return Response::json($results);
 
         $customers = Customer::search($term)->where('active', 1)->take(5)->get();
-
-    //     $customers = Customer::select('id','nice_name','name','email')
-    //             ->where('active', 1)
-    //     		->where('email', 'LIKE', '%'.$term.'%')
-				// ->orWhere('nice_name', 'LIKE', '%'.$term.'%')
-				// ->orWhere('name', 'LIKE', '%'.$term.'%')
-    //             ->take(5)->get();
 
         foreach ($customers as $customer)
 		    $results[] = ['text' => get_formated_cutomer_str($customer) , 'id' => $customer->id];
