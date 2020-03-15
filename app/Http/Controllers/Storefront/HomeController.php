@@ -57,15 +57,14 @@ class HomeController extends Controller
         ->active()->firstOrFail();
 
         // Take only available items
-        $all_products = $category->listings()->available();
+        $all_products = $category->listings()->available()->filter($request->all());
 
         // Parameter for filter options
         $brands = ListHelper::get_unique_brand_names_from_linstings($all_products);
         $priceRange = ListHelper::get_price_ranges_from_linstings($all_products);
 
         // Filter results
-        $products = $all_products->filter($request->all())
-        ->withCount(['feedbacks', 'orders' => function($query){
+        $products = $all_products->withCount(['feedbacks', 'orders' => function($query){
             $query->where('order_items.created_at', '>=', Carbon::now()->subHours(config('system.popular.hot_item.period', 24)));
         }])
         ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])

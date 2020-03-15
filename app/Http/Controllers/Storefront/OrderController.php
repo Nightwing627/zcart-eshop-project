@@ -236,7 +236,7 @@ class OrderController extends Controller
         try {
             $response = $instamojoApi->paymentRequestCreate([
                             "purpose" => trans('theme.order_id') . ': ' . $order->order_number,
-                            "amount" => number_format($order->grand_total, 2),
+                            "amount" => number_format($order->grand_total, 2, '.', ''),
                             "buyer_name" => Auth::guard('customer')->check() ?
                                             Auth::guard('customer')->user()->getName() : $request->address_title,
                             "send_email" => true,

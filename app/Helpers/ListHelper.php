@@ -450,7 +450,8 @@ class ListHelper
      */
     public static function recentBlogs()
     {
-        return Blog::select(['id','title','slug','excerpt','published_at'])->recent()->take(5)->get();
+        return Blog::select(['id','title','slug','excerpt','published_at'])
+        ->published()->recent()->take(5)->get();
     }
 
     /**
@@ -580,10 +581,10 @@ class ListHelper
      */
     public static function get_price_ranges_from_linstings($listings)
     {
-        $priceRange = [];
+        $prices = $listings->pluck('sale_price');
 
-        $priceRange['min'] = floor($listings->min('sale_price'));
-        $priceRange['max'] = ceil($listings->max('sale_price'));
+        $priceRange['min'] = floor($prices->min());
+        $priceRange['max'] = ceil($prices->max());
 
         return $priceRange;
     }

@@ -89,7 +89,7 @@ class Blog extends BaseModel
      */
     public function scopeRecent($query)
     {
-        return $query->published()->orderBy('published_at', 'DESC');
+        return $query->orderBy('published_at', 'DESC');
     }
 
     /**

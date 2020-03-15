@@ -18,7 +18,6 @@ class EloquentBlog extends EloquentRepository implements BaseRepository, BlogRep
 
     public function all()
     {
-        // return $this->model->published()->with('author','image')->orderBy('created_at', 'desc')->withCount('comments')->get();
         return $this->model->with('author','image')->orderBy('created_at', 'desc')->withCount('comments')->get();
     }
 

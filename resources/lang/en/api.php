@@ -22,4 +22,5 @@ return [
 	'404' => 'This content is not availeble',
 	'std_delivery_time' => 'Standard delivery time',
 	'free_shipping' => 'Free Shipping',
+	'auth_required' => 'Please login to access this content.',
 ];

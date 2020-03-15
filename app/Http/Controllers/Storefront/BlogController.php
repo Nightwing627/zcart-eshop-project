@@ -17,7 +17,7 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::select(['id','title','slug','excerpt','user_id','published_at','likes','dislikes'])
-        ->published()->with('author:id,name,nice_name','tags')->withCount('comments')
+        ->published()->recent()->with('author:id,name,nice_name','tags')->withCount('comments')
         ->paginate(config('system.view_blog_post_per_page', 4));
 
         $tags = $this->getTags($blogs);

@@ -55,6 +55,9 @@ class CartController extends Controller
      */
     public function show(Request $request, Cart $cart)
     {
+        if( !crosscheckCartOwnership($request, $cart) )
+            return response()->json(['message' => trans('api.auth_required')], 403);
+
         // $resulte['cart'] = new CartResource($cart);
 
         // if(Auth::guard('api')->check()){
@@ -223,7 +226,7 @@ class CartController extends Controller
 
         // Update some filed only if the cart is older than 24hrs (only to increase performance)
         if($cart->updated_at < Carbon::now()->subHour(24))
-            $cart->handling = getShopConfig($item->shop_id, 'order_handling_cost');
+            $cart->handling = getShopConfig($cart->shop_id, 'order_handling_cost');
 
         $cart->save();
 
@@ -273,7 +276,7 @@ class CartController extends Controller
     public function shipTo(CartShipToRequest $request, Cart $cart)
     {
         if( !crosscheckCartOwnership($request, $cart) )
-            return response()->json(['message' => trans('theme.notify.please_login_to_checkout')], 404);
+            return response()->json(['message' => trans('api.auth_required')], 403);
 
         if ($request->email && $request->has('create-account') && $request->password) {
             $customer = (new NewCustomer)->save($request);
