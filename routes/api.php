@@ -88,6 +88,7 @@ Route::group(['namespace' => 'Api'], function(){
 		Route::get('dispute/{dispute}/response', 'DisputeController@response_form');
 		Route::post('dispute/{dispute}/response', 'DisputeController@response');
 		Route::post('dispute/{dispute}/appeal', 'DisputeController@appeal');
+		Route::put('dispute/{dispute}/solved', 'DisputeController@mark_as_solved');
 
 		Route::get('attachment/{attachment}/download', 'AttachmentController@download');
 	});

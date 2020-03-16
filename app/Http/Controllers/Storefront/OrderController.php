@@ -36,8 +36,6 @@ class OrderController extends Controller
             $request->merge(['customer_id' => $customer->id]); //Set customer_id
         }
 
-        crosscheckAndUpdateOldCartInfo($request, $cart);
-
         // Get shipping address
         if(is_numeric($request->ship_to))
             $address = \App\Address::find($request->ship_to)->toString(True);

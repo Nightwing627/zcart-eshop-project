@@ -10,11 +10,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Events\Dispute\DisputeCreated;
 use App\Events\Dispute\DisputeUpdated;
+use App\Events\Dispute\DisputeSolved;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\DisputeResource;
 use App\Http\Resources\DisputeFormResource;
 use App\Http\Resources\DisputeLightResource;
 use App\Http\Requests\Validations\OrderDetailRequest;
+use App\Http\Requests\Validations\DisputeDetailRequest;
 use App\Http\Requests\Validations\CreateDisputeRequest;
 use App\Http\Requests\Validations\ReplyDisputeRequest;
 use App\Notifications\SuperAdmin\DisputeAppealed as DisputeAppealedNotification;
@@ -72,7 +74,7 @@ class DisputeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Dispute $dispute)
+    public function show(DisputeDetailRequest $request, Dispute $dispute)
     {
         return new DisputeResource($dispute->load('shop:id,name,slug'));
     }
@@ -85,7 +87,7 @@ class DisputeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function response_form(Request $request, Dispute $dispute)
+    public function response_form(DisputeDetailRequest $request, Dispute $dispute)
     {
         return [
             'dispute' => $dispute,
@@ -117,6 +119,17 @@ class DisputeController extends Controller
         event(new DisputeUpdated($response));
 
         return new DisputeResource($dispute->load('shop:id,name,slug'));
+    }
+
+    public function mark_as_solved(DisputeDetailRequest $request, Dispute $dispute)
+    {
+        $dispute->status = Dispute::STATUS_SOLVED;
+
+        $dispute->save();
+
+        event(new DisputeSolved($dispute));
+
+        return response()->json(trans('theme.notify.dispute_updated'), 200);
     }
 
     /**
