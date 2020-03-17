@@ -26,7 +26,7 @@ class ApiCheckoutCartRequest extends Request
     {
         $rules = [
             'shipping_address'  =>  'required',
-            'shipping_option_id'=>  'required',
+            'shipping_option_id'=>  'present',
             'payment_method_id' =>  'required',
             'shipping_address'  =>  'required',
             'buyer_note'        =>  'nullable|max:500',

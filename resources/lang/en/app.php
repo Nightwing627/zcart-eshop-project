@@ -385,7 +385,7 @@ return [
     'available_from' => 'Available from',
     'active_from' => 'Active from',
     'active_till' => 'Active till',
-    'description_not_available' => 'Description is not availeble.',
+    'description_not_available' => 'Description is not available.',
     'no_offer_available' => 'This listing doesn\'t have any active offer.',
     'slug' => 'Slug',
     'meta_title' => 'Meta title',

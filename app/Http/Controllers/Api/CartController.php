@@ -19,6 +19,7 @@ use App\Http\Resources\CartResource;
 use App\Http\Resources\ShippingOptionResource;
 use App\Http\Requests\Validations\CartShipToRequest;
 use App\Http\Requests\Validations\DirectCheckoutRequest;
+use App\Http\Requests\Validations\ApiUpdateCartRequest;
 
 class CartController extends Controller
 {
@@ -132,7 +133,7 @@ class CartController extends Controller
 
         //Reset if the old cart exist, bcoz shipping rate will change after adding new item
         $cart->shipping_zone_id = $old_cart ? Null : $request->shipping_zone_id;
-        $cart->shipping_rate_id = $old_cart ? Null : $request->shipping_id == 'Null' ? Null : $request->shipping_id;
+        $cart->shipping_rate_id = $old_cart ? Null : $request->shipping_option_id == 'Null' ? Null : $request->shipping_option_id;
 
         $cart->handling = $old_cart ? $old_cart->handling : getShopConfig($item->shop_id, 'order_handling_cost');
         $cart->total = $old_cart ? ($old_cart->total + ($qtt * $unit_price)) : $unit_price;
@@ -174,7 +175,7 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart $cart)
+    public function update(ApiUpdateCartRequest $request, Cart $cart)
     {
         if($request->item && $request->quantity){
             if(is_numeric($request->item))
@@ -203,7 +204,6 @@ class CartController extends Controller
             $unit_price = $item->currnt_sale_price();
 
             $cart->total = ( $cart->total - ($pivot->unit_price * $old_quantity) ) + ( $quantity * $unit_price );
-            $cart->grand_total = $cart->grand_total();
 
             // Updating pivot data
             $cart->inventories()->updateExistingPivot($item->id, [
@@ -212,21 +212,35 @@ class CartController extends Controller
             ]);
         }
 
-        if($request->ship_to)
-            $cart->ship_to = $request->ship_to;
-
-        if($request->shipping_zone_id)
+        if($request->shipping_zone_id){
             $cart->shipping_zone_id = $request->shipping_zone_id;
+            $cart->taxrate = getTaxRate(optional($cart->shippingZone)->tax_id);
+            $cart->taxes = $cart->get_tax_amount();
+        }
 
-        if($request->shipping_rate_id)
-            $cart->shipping_rate_id = $request->shipping_rate_id;
+        if($request->shipping_option_id){
+            $cart->shipping_rate_id = $request->shipping_option_id;
+            $cart->shipping = optional($cart->shippingRate)->rate;
+        }
 
-        if($request->packaging_id)
+        if($request->packaging_id){
             $cart->packaging_id = $request->packaging_id;
+            $cart->packaging = optional($cart->shippingPackage)->cost;
+        }
+
+        if($request->ship_to){
+            $cart->ship_to = $request->ship_to;
+            $zone = get_shipping_zone_of($cart->shop_id, $request->ship_to);
+            $cart->shipping_zone_id = $zone ? $zone->id : Null;
+            $cart->taxrate = $zone ? getTaxRate($zone->tax_id) : Null;
+            $cart->taxes = $cart->get_tax_amount();
+        }
 
         // Update some filed only if the cart is older than 24hrs (only to increase performance)
         if($cart->updated_at < Carbon::now()->subHour(24))
             $cart->handling = getShopConfig($cart->shop_id, 'order_handling_cost');
+
+        $cart->grand_total = $cart->grand_total();
 
         $cart->save();
 
@@ -297,11 +311,11 @@ class CartController extends Controller
             $address = get_address_str_from_request_data($request);
 
         // Update the cart with shipping zone value
-        $taxrate = $zone->tax_id ? getTaxRate($zone->tax_id) : Null;
-        $cart->taxrate = $taxrate;
-        $cart->taxes = ($cart->total * $taxrate)/100;
+        $cart->taxrate = getTaxRate($zone->tax_id);
+        $cart->taxes = $cart->get_tax_amount();
         $cart->shipping_zone_id = $zone->id;
         $cart->ship_to = $request->country_id;
+        $cart->grand_total = $cart->grand_total();
         $cart->save();
 
         return response()->json([
@@ -345,6 +359,7 @@ class CartController extends Controller
         // Update the cart with coupon value
         $cart->discount = $disc_amnt < $cart->total ? $disc_amnt : $cart->total; // Discount the amount or the cart total
         $cart->coupon_id = $coupon->id;
+        $cart->grand_total = $cart->grand_total();
         $cart->save();
 
         return response()->json(['message' => trans('theme.notify.coupon_applied')], 200);

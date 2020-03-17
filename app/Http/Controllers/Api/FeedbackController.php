@@ -8,6 +8,7 @@ use App\Feedback;
 use App\Inventory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\FeedbackResource;
 use App\Http\Resources\ConversationResource;
 use App\Http\Requests\Validations\OrderDetailRequest;
@@ -55,11 +56,14 @@ class FeedbackController extends Controller
      */
     public function save_shop_feedbacks(ShopFeedbackCreateRequest $request, Order $order)
     {
-        $feedback = $order->shop->feedbacks()->create($request->all());
+        if($order->feedback_id)
+            return response()->json(['message' => trans('api.your_feedback_saved')], 200);
 
+        $feedback = $order->shop->feedbacks()->create($request->all());
         $order->feedback_given($feedback->id);
 
-        return new OrderResource($order);
+        return response()->json(['message' => trans('api.your_feedback_saved')], 200);
+        // return new OrderResource($order);
     }
 
     /**
@@ -85,6 +89,7 @@ class FeedbackController extends Controller
             ->where('inventory_id', $inventory->id)->update(['feedback_id' => $feedback->id]);
         }
 
-        return new OrderResource($order);
+        return response()->json(['message' => trans('api.your_feedback_saved')], 200);
+        // return new OrderResource($order);
     }
 }

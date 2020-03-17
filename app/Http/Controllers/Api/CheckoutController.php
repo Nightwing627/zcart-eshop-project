@@ -38,12 +38,12 @@ class CheckoutController extends Controller
         $cart->payment_method_id = $request->payment_method_id;
         $cart->shipping_address = $request->shipping_address;
 
-        if($request->shipping_option_id)
-            $cart->shipping = getShippingingCost($request->shipping_option_id);
+        $cart->shipping = $request->shipping_option_id ? getShippingingCost($request->shipping_option_id) : Null;
 
         if($request->packaging_id)
             $cart->packaging = getPackagingCost($request->packaging_id);
 
+        $cart->grand_total = $cart->grand_total();
         $cart->save();
 
         $cart = crosscheckAndUpdateOldCartInfo($request, $cart);

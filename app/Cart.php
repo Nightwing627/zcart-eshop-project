@@ -196,10 +196,7 @@ class Cart extends BaseModel
      */
     public function is_free_shipping()
     {
-        if( ! $this->shipping_rate_id )
-            return TRUE;
-
-        return FALSE;
+        return ! $this->shipping_rate_id;
     }
 
     /**
@@ -215,4 +212,8 @@ class Cart extends BaseModel
         $this->attributes['billing_address'] = is_numeric($value) ? $value : Null;
     }
 
+    public function get_tax_amount()
+    {
+        return $this->total * ($this->taxrate/100);
+    }
 }

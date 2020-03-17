@@ -1284,11 +1284,11 @@ if ( ! function_exists('getTaxRate') )
      *
      * @param $tax
      */
-    function getTaxRate($tax = Null)
+    function getTaxRate($tax_id = Null)
     {
-        $tax = $tax ?? Tax::DEFAULT_TAX_ID;
+        $tax_id = $tax_id ?? Tax::DEFAULT_TAX_ID;
 
-        $rate = \DB::table('taxes')->select('taxrate')->where('id', $tax)->first();
+        $rate = \DB::table('taxes')->select('taxrate')->where('id', $tax_id)->first();
 
         return $rate ? $rate->taxrate : Null;
     }
@@ -1378,7 +1378,7 @@ if ( ! function_exists('filterShippingOptions') )
 if ( ! function_exists('getFreeShippingObject') )
 {
     /**
-     * Return free shipping options 
+     * Return free shipping options
      *
      * @param $zone
      */

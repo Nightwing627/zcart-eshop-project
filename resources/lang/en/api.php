@@ -19,8 +19,9 @@ return [
     'password_reset_token_404' => 'This password reset token is invalid.',
     'password_reset_token_invalid' => 'This password reset token is invalid.',
     'password_reset_successful' => 'Your password has been updated successfully! You can login now.',
-	'404' => 'This content is not availeble',
+	'404' => 'This content is not available',
 	'std_delivery_time' => 'Standard delivery time',
 	'free_shipping' => 'Free Shipping',
 	'auth_required' => 'Please login to access this content.',
+	'your_feedback_saved' => 'Thank you for your feedback!',
 ];
