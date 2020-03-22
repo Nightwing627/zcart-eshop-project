@@ -3,16 +3,9 @@
 foreach ($variants as &$value) {
     foreach ($value->images as &$image)
         unset($image->imageable_id, $image->imageable_type);
-
-    //echo "<pre>"; print_r($variants->toArray()); echo "</pre>"; exit();
-  //  $value->key_features = unserialize($value->key_features);
 }
-//echo "<pre>"; print_r($variants->toArray()); echo "</pre>"; exit();
-//$escaped_varitants_data = $variants->toJson(JSON_HEX_QUOT|JSON_HEX_APOS|JSON_HEX_AMP);
-//$escaped_varitants_data = str_replace("\u0022", "\\\"", $escaped_varitants_data );
-//$escaped_varitants_data = str_replace("\u0027", "\\'",  $escaped_varitants_data );
-//echo "<pre>"; print_r($escaped_varitants_data); echo "</pre>"; exit();
 ?>
+
 <script type="text/javascript">
 "use strict";
 ;(function($, window, document) {
@@ -103,12 +96,6 @@ foreach ($variants as &$value) {
                     var option = shipping.parent('label').data('option');
                     setShippingCost(option);
                     break;
-
-                // case 'packaging-options-popover':
-                //     var packaging = node.find('input[name=packaging_option]:checked');
-                //     var id = packaging.parent('label').attr('id');
-                //     setPackagingCost(cart, packaging.attr('id'), packaging.val(), id);
-                //     break;
             }
             // Hide the popover
             $('[data-toggle="popover"]').popover('hide');
@@ -169,8 +156,6 @@ foreach ($variants as &$value) {
             return;
         }
 
-        // console.log(filtered);
-
         setSalePrice(filtered);         // Set sale price
 
         // setSetCondition(filtered);         // Set setSetCondition
@@ -199,7 +184,6 @@ foreach ($variants as &$value) {
         details = JSON.parse(details);
 
         // var key_features = details.serialize();
-        // console.log(key_features);
         $('#seller_seller_desc').html(details.description);
         $('#item_condition').html(details.condition);
         $('#item_condition_note').attr('data-original-title', details.condition_note);
@@ -242,10 +226,8 @@ foreach ($variants as &$value) {
     //////////////////////////
     function filterItems(options)
     {
-        // if (!options || $.isEmptyObject(variants))   return NaN;
         options = JSON.stringify(options.sort());
 
-        // return jQuery.parseJSON(variants).find(function (item) {
         return $.parseJSON(variants).find(function (variant) {
             // Get the attr sets of the item
             var attrs = variant.attribute_values.map(a => a.id);
@@ -274,14 +256,12 @@ foreach ($variants as &$value) {
             itemWrapper.find('.old-price').show().html(getFormatedPrice(item.sale_price));
             // itemWrapper.find('.old-price').show().html(getFormatedPrice(item.sale_price).replace(/\.?0+$/, ''));
             itemWrapper.find('.product-info-price-new').html(getFormatedPrice(item.offer_price));
-            // itemWrapper.find('.product-info-price-new').html(getFormatedPrice(item.offer_price).replace(/\.?0+$/, ''));
             itemWrapper.find('.percent-off').show().html(getFormatedValue(off,0) + '{{trans('theme.percnt_off')}}');
         }
         else {
             unitPrice = Number(item.sale_price);       // Update the unit price for calculation
             itemWrapper.find('.old-price, .percent-off').hide().text('');
             itemWrapper.find('.product-info-price-new').html(getFormatedPrice(item.sale_price));
-            // itemWrapper.find('.product-info-price-new').html(getFormatedPrice(item.sale_price).replace(/\.?0+$/, ''));
         }
     }
 
@@ -313,19 +293,6 @@ foreach ($variants as &$value) {
 
             //binding
             $("#jqzoom").jqzoom();
-
-            // jqzoom
-            // $('#jqzoom').jqzoom({
-            //     zoomType: 'standard',
-            //     lens: true,
-            //     preloadImages: false,
-            //     alwaysOn: false,
-            //     zoomWidth: 530,
-            //     zoomHeight: 530,
-            //     xOffset:0,
-            //     yOffset: 0,
-            //     position: 'left'
-            // });
         }
     }
 

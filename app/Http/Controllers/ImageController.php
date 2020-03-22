@@ -76,7 +76,7 @@ class ImageController extends Controller
 
 	        if ($totalChunks > 1)	// create chunk files only if chunks are greater than 1
 	        {
-				if (! is_dir($tempDir)) 	// Make the temp directory if not exist
+				if (! file_exists($tempDir)) 	// Make the temp directory if not exist
 					mkdir($tempDir, 0777, true);
 
 	            $chunkFile = $tempDir . "chunk_" . str_pad($index, 4, '0', STR_PAD_LEFT);

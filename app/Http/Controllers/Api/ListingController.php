@@ -296,7 +296,7 @@ class ListingController extends Controller
         ->withCount(['orders' => function($q){
             $q->withArchived();
         }])
-        ->available()->paginate(20);
+        ->available()->paginate(config('mobile_app.view_listing_per_page', 10));
 
         return (new ShopListingResource($shop))->listings(ListingResource::collection($listings));
         // return ListingResource::collection($listings);
@@ -322,7 +322,7 @@ class ListingController extends Controller
         ->withCount(['orders' => function($q){
             $q->withArchived();
         }])
-        ->active()->paginate(20);
+        ->active()->paginate(config('mobile_app.view_listing_per_page', 10));
 
         return (new ManufacturerResource($brand))->listings(ListingResource::collection($listings));
         // return ListingResource::collection($listings);
@@ -336,7 +336,7 @@ class ListingController extends Controller
      * @param  state_id  $state
      *
      * @return array|Null
-     */    
+     */
     private function get_shipping_options($item, $country_id, $state)
     {
         $zone = get_shipping_zone_of($item->shop_id, $country_id, $state);

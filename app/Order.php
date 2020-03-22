@@ -441,6 +441,24 @@ class Order extends BaseModel
     }
 
     /**
+     * Check if this order can still be evaluated
+     */
+    public function canEvaluate()
+    {
+        // Check if the shop has been rated yet
+        if(! $this->feedback_id)
+            return True;
+
+        // Check if all items are been rated yet
+        foreach ($this->inventories as $item) {
+            if(! $item->pivot->feedback_id)
+                return True;
+        }
+
+        return False;
+    }
+
+    /**
      * Render PDF invoice
      *
      * @param  string $des I => Display on browser, D => Force Download, F => local path save, S => return document as string

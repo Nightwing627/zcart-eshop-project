@@ -29,7 +29,7 @@ class ConversationController extends Controller
     public function conversations(Request $request)
     {
         $conversations = ChatConversation::where('customer_id', Auth::guard('api')->id())->get();
-        
+
         return ConversationResource::collection($conversations);
     }
 
@@ -43,10 +43,10 @@ class ConversationController extends Controller
     public function conversation(ChatConversationRequest $request, Shop $shop)
     {
         $conversation = ChatConversation::where(['customer_id' => Auth::guard('api')->id(), 'shop_id' => $shop->id])->with('replies')->first();
-        
+
         if($conversation)
             return new ConversationResource($conversation);
-    
+
         return response(trans('api.no_conversation'), 404);
     }
 
@@ -59,7 +59,10 @@ class ConversationController extends Controller
      */
     public function save_conversation(SaveChatConversationRequest $request, Shop $shop)
     {
-        $conversation = ChatConversation::where(['customer_id' => $request->customer_id, 'shop_id' => $shop->id])->first();
+        $conversation = ChatConversation::where([
+            'customer_id' => $request->customer_id,
+            'shop_id' => $shop->id
+        ])->first();
 
         if($conversation){
             $conversation->markAsUnread();

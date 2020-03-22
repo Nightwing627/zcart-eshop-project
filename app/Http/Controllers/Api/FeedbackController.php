@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Auth;
 use App\Shop;
 use App\Order;
 use App\Feedback;
@@ -57,7 +58,7 @@ class FeedbackController extends Controller
     public function save_shop_feedbacks(ShopFeedbackCreateRequest $request, Order $order)
     {
         if($order->feedback_id)
-            return response()->json(['message' => trans('api.your_feedback_saved')], 200);
+            return response()->json(['message' => trans('api.you_already_gave_feedback')], 200);
 
         $feedback = $order->shop->feedbacks()->create($request->all());
         $order->feedback_given($feedback->id);
@@ -79,6 +80,9 @@ class FeedbackController extends Controller
         $customer_id = Auth::guard('api')->user()->id; //Set customer_id
 
         foreach ($order->inventories as $inventory) {
+            //Skip the item that is not present or given feedback before
+            if(! isset($inputs[$inventory->id]) || $inventory->pivot->feedback_id) continue;
+
             $feedback_data = $inputs[$inventory->id];
             $feedback_data['customer_id'] = $customer_id;
 

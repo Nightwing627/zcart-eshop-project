@@ -148,9 +148,7 @@ class AccountController extends Controller
             'disputes' => function($query){
                 $query->open();
             },
-            'coupons' => function($query){
-                $query->active();
-            }
+            'coupons'
         ])->first();
     }
 
@@ -195,7 +193,12 @@ class AccountController extends Controller
     private function disputes()
     {
         return Auth::guard('customer')->user()->disputes()
-        ->with(['shop:id,name,slug', 'order.inventories:product_id,slug', 'order.inventories.image', 'order.inventories.product'])
+        ->with([
+            'shop:id,name,slug',
+            'order.inventories:product_id,slug',
+            'order.inventories.image',
+            'order.inventories.product'
+        ])
         ->paginate(10);
     }
 
@@ -206,7 +209,7 @@ class AccountController extends Controller
     private function coupons()
     {
         return Auth::guard('customer')->user()->coupons()
-        ->active()->with('shop:id,name,slug')->paginate(20);
+        ->with('shop:id,name,slug')->paginate(20);
     }
 
     /**

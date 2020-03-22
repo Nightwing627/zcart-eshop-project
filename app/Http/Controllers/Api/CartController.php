@@ -132,11 +132,17 @@ class CartController extends Controller
             $cart->ship_to = $request->ship_to;
 
         //Reset if the old cart exist, bcoz shipping rate will change after adding new item
-        $cart->shipping_zone_id = $old_cart ? Null : $request->shipping_zone_id;
-        $cart->shipping_rate_id = $old_cart ? Null : $request->shipping_option_id == 'Null' ? Null : $request->shipping_option_id;
+        if ($old_cart) {
+            $cart->shipping_zone_id = Null;
+            $cart->shipping_rate_id = Null;
+        }
+        else{
+            $cart->shipping_zone_id = $request->shipping_zone_id;
+            $cart->shipping_rate_id = $request->shipping_option_id == 'Null' ? Null : $request->shipping_option_id;
+        }
 
         $cart->handling = $old_cart ? $old_cart->handling : getShopConfig($item->shop_id, 'order_handling_cost');
-        $cart->total = $old_cart ? ($old_cart->total + ($qtt * $unit_price)) : $unit_price;
+        $cart->total = $old_cart ? ($old_cart->total + ($qtt * $unit_price)) : ($qtt * $unit_price);
         $cart->packaging_id = $old_cart ? $old_cart->packaging_id : \App\Packaging::FREE_PACKAGING_ID;
         $cart->grand_total = $cart->grand_total();
 
@@ -315,6 +321,8 @@ class CartController extends Controller
         $cart->taxes = $cart->get_tax_amount();
         $cart->shipping_zone_id = $zone->id;
         $cart->ship_to = $request->country_id;
+        $cart->shipping_address = $address;
+        $cart->email = $request->email;
         $cart->grand_total = $cart->grand_total();
         $cart->save();
 
@@ -341,20 +349,20 @@ class CartController extends Controller
         if( ! $coupon )
             return response()->json(['message' => trans('theme.notify.coupon_not_exist')], 404);
 
-        if( ! $coupon->isLive() || ! $coupon->isValidCustomer() )
-            return response()->json(['message' => trans('theme.notify.coupon_not_valid')], 403);
+        if( ! $coupon->isLive() || ! $coupon->isValidCustomer(Auth::guard('api')->id()) )
+            return response()->json(['message' => trans('theme.notify.coupon_not_valid')], 412);
 
         if( $coupon->min_order_amount && $cart->total < $coupon->min_order_amount )
-            return response()->json(['message' => trans('theme.notify.coupon_min_order_value')], 403);
+            return response()->json(['message' => trans('theme.notify.coupon_min_order_value')], 412);
 
         if( ! $coupon->isValidZone($request->zone) )
-            return response()->json(['message' => trans('theme.notify.coupon_not_valid_for_zone')], 403);
+            return response()->json(['message' => trans('theme.notify.coupon_not_valid_for_zone')], 412);
 
         if( ! $coupon->hasQtt() )
-            return response()->json(['message' => trans('theme.notify.coupon_limit_expired')], 403);
+            return response()->json(['message' => trans('theme.notify.coupon_limit_expired')], 412);
 
         // The coupon is valid
-        $disc_amnt = 'percent' == $coupon->type ? ( $coupon->value * ($cart->total/100) ) : $coupon->value;
+        $disc_amnt = 'percent' == $coupon->type ? ( $cart->total * ($coupon->value/100) ) : $coupon->value;
 
         // Update the cart with coupon value
         $cart->discount = $disc_amnt < $cart->total ? $disc_amnt : $cart->total; // Discount the amount or the cart total
@@ -362,8 +370,10 @@ class CartController extends Controller
         $cart->grand_total = $cart->grand_total();
         $cart->save();
 
-        return response()->json(['message' => trans('theme.notify.coupon_applied')], 200);
-        // return response()->json($coupon->toArray(), 200);
+        return response()->json([
+            'message' => trans('theme.notify.coupon_applied'),
+            'cart' => new CartResource($cart),
+        ], 200);
     }
 
     /**

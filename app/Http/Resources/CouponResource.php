@@ -19,9 +19,10 @@ class CouponResource extends JsonResource
             'name' => $this->name,
             'code' => $this->code,
             'amount' => $this->getFormatedAmountText(),
+            'valid' => $this->isLive(),
             'validity' => $this->validityText(true),
-            'starting_time' => $this->starting_time->format('M j,Y g:i a'),
-            'ending_time' => $this->ending_time->format('M j,Y g:i a'),
+            // 'starting_time' => $this->starting_time->format('M j,Y g:i a'),
+            // 'ending_time' => $this->ending_time->format('M j,Y g:i a'),
             'shop' => new ShopLightResource($this->shop),
         ];
     }

@@ -1349,7 +1349,7 @@ if ( ! function_exists('filterShippingOptions') )
      */
     function filterShippingOptions($zone, $price, $weight = Null)
     {
-        $results = \DB::table('shipping_rates')->where('shipping_zone_id', $zone);
+        $results = \DB::table('shipping_rates')->where('shipping_zone_id', $zone)->orderBy('rate');
 
         $results->where(function($query) use ($price, $weight) {
             $query->where('based_on', 'price')

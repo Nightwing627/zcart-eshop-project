@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Abruzzo",
+    "iso_3166_2": "65"
+  },
+  {
+    "name": "Basilicata",
+    "iso_3166_2": "77"
+  },
+  {
+    "name": "Calabria",
+    "iso_3166_2": "78"
+  },
+  {
+    "name": "Campania",
+    "iso_3166_2": "72"
+  },
+  {
+    "name": "Emilia-Romagna",
+    "iso_3166_2": "45"
+  },
+  {
+    "name": "Lazio",
+    "iso_3166_2": "62"
+  },
+  {
+    "name": "Liguria",
+    "iso_3166_2": "42"
+  },
+  {
+    "name": "Lombardy",
+    "iso_3166_2": "25"
+  },
+  {
+    "name": "Marche",
+    "iso_3166_2": "57"
+  },
+  {
+    "name": "Molise",
+    "iso_3166_2": "67"
+  },
+  {
+    "name": "Piedmont",
+    "iso_3166_2": "21"
+  },
+  {
+    "name": "Apulia",
+    "iso_3166_2": "75"
+  },
+  {
+    "name": "Tuscany",
+    "iso_3166_2": "52"
+  },
+  {
+    "name": "Umbria",
+    "iso_3166_2": "55"
+  },
+  {
+    "name": "Veneto",
+    "iso_3166_2": "34"
+  },
+  {
+    "name": "Friuli Venezia Giulia",
+    "iso_3166_2": "36"
+  },
+  {
+    "name": "Sardinia",
+    "iso_3166_2": "88"
+  },
+  {
+    "name": "Sicily",
+    "iso_3166_2": "82"
+  },
+  {
+    "name": "Trentino-South Tyrol",
+    "iso_3166_2": "32"
+  },
+  {
+    "name": "Aosta Valley",
+    "iso_3166_2": "23"
+  }
+]

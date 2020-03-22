@@ -86,7 +86,7 @@ class AccountController extends Controller
     public function coupons()
     {
         $coupons = Auth::guard('api')->user()->coupons()
-        ->active()->with('shop:id,name,slug')->paginate(10);
+        ->with('shop')->paginate(10);
 
         return CouponResource::collection($coupons);
     }

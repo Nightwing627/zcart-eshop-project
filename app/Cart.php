@@ -56,6 +56,7 @@ class Cart extends BaseModel
                         'shipping_weight',
                         'shipping_address',
                         'billing_address',
+                        'email',
                         'coupon_id',
                         'payment_method_id',
                         'payment_status',
@@ -183,10 +184,9 @@ class Cart extends BaseModel
      */
     public function grand_total()
     {
-        if($this->is_free_shipping())
-            return ($this->total + $this->taxes + $this->packaging) - $this->discount;
+        $grand_total =  ($this->total + $this->handling + $this->taxes + $this->packaging) - $this->discount;
 
-        return ($this->total + $this->handling + $this->taxes + $this->shipping + $this->packaging) - $this->discount;
+        return $this->is_free_shipping() ? $grand_total : ($grand_total + $this->shipping);
     }
 
     /**
@@ -215,5 +215,16 @@ class Cart extends BaseModel
     public function get_tax_amount()
     {
         return $this->total * ($this->taxrate/100);
+    }
+
+    public function getLabelText()
+    {
+        $txt = '';
+        if($this->coupon_id && $this->discount){
+            $txt .= trans('app.coupon_applied', ['coupon' => $this->coupon->name]);
+            // $txt .= trans('app.discount_applied', ['amount' => get_formated_currency($this->discount)]);
+        }
+
+        return $txt;
     }
 }

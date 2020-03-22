@@ -207,7 +207,8 @@ class Customer extends Authenticatable
      */
     public function messages()
     {
-        return $this->hasMany(Message::class)->notArchived()->orderBy('customer_status')->orderBy('updated_at','desc');
+        return $this->hasMany(Message::class)->notArchived()
+        ->orderBy('customer_status')->orderBy('updated_at','desc');
     }
 
     /**
@@ -215,7 +216,8 @@ class Customer extends Authenticatable
      */
     public function coupons()
     {
-        return $this->belongsToMany(Coupon::class)->withTimestamps();
+        return $this->belongsToMany(Coupon::class)->active()
+        ->orderBy('ending_time','desc')->withTimestamps();
     }
 
     public function disputes()

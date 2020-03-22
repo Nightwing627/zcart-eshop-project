@@ -301,9 +301,9 @@ if ( ! function_exists('saveOrderFromCart') )
                 'grand_total' => $cart->grand_total(),
                 'order_number' => get_formated_order_number($cart->shop_id),
                 'carrier_id' => $cart->carrier() ? $cart->carrier->id : NULL,
-                'shipping_address' => $request->shipping_address,
-                'billing_address' => $request->shipping_address,
-                'email' => $request->email,
+                'shipping_address' => $request->shipping_address ?? $cart->shipping_address,
+                'billing_address' => $request->shipping_address ?? $cart->shipping_address,
+                'email' => $request->email ?? $cart->email,
                 'buyer_note' => $request->buyer_note
             ])
         );

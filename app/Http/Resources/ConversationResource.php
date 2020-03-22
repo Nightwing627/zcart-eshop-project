@@ -16,7 +16,7 @@ class ConversationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            // 'shop' => $this->shop,
+            'shop_id' => $this->shop_id,
             'user' => $this->when($this->user_id, new UserResource($this->user)),
             'customer' => $this->when($this->customer_id, new CustomerLightResource($this->customer)),
             'subject' => $this->subject,

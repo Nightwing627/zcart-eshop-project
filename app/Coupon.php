@@ -108,7 +108,7 @@ class Coupon extends BaseModel
     }
 
     /**
-     * Check if the coupon is Live
+     * Check if the coupon is Live or in valid period
      *
      * @return bool
      */
@@ -281,34 +281,40 @@ class Coupon extends BaseModel
 
     public function getFormatedAmountText()
     {
-        return $this->type == 'amount' ? get_formated_currency($this->value) : get_formated_decimal($this->value) . '%';
+        return $this->type == 'amount' ?
+                get_formated_currency($this->value) :
+                get_formated_decimal($this->value) . '%';
     }
 
     public function validityText($plain = False)
     {
-        if($this->ending_time < \Carbon\Carbon::now()){
-            $text = $plain ?  :
+        $now = Carbon::now();
+        $ending_time = $this->ending_time->format('M j, g:i a');
+        $starting_time = $this->starting_time->format('M j, g:i a');
+
+        if($this->ending_time < $now){
+            return $plain ? trans('theme.expired_at') .': ' . $ending_time :
                 '<span class="text-muted small">'. trans('theme.expired_at') .': '
-                    . $this->ending_time->format('M j, g:i a') .'</span>';
-        }
-        elseif($this->starting_time < \Carbon\Carbon::now()){
-            $text = $plain ? trans('theme.use_before') .': ' . $this->ending_time->format('M j, g:i a') :
-                '<span class="text-muted small">'. trans('theme.use_before') .':'. '</span> '
-                    . $this->ending_time->format('M j, g:i a');
-        }
-        elseif($this->starting_time > \Carbon\Carbon::now()){
-            $text = $plain ?
-                trans('theme.use_between') .': '. $this->starting_time->format('M j, g:i a') . ' ' . trans('theme.and') . ' ' . $this->ending_time->format('M j, g:i a') :
-                '<span class="text-muted small">'
-                    . trans('theme.use_between') .':'. '</span> '
-                    . $this->starting_time->format('M j, g:i a') . '<br/>'
-                    . '<span class="text-muted small">'. trans('theme.and') .'</span> '
-                    . $this->ending_time->format('M j, g:i a');
-        }
-        else {
-            $text = $plain ? trans('theme.invalid') : '<span class="text-muted small">'. trans('theme.invalid') . '</span>';
+                    . $ending_time .'</span>';
         }
 
-        return $text;
+        if($this->starting_time < $now){
+            return $plain ?
+                trans('theme.use_before') .': ' . $ending_time :
+                '<span class="text-muted small">'. trans('theme.use_before') .':'. '</span> '
+                    . $ending_time;
+        }
+
+        if($this->starting_time > $now){
+            return $plain ?
+                trans('theme.use_between') .': '. $starting_time . ' ' . trans('theme.and') . ' ' . $ending_time :
+                '<span class="text-muted small">'
+                    . trans('theme.use_between') .':'. '</span> '
+                    . $starting_time . '<br/>'
+                    . '<span class="text-muted small">'. trans('theme.and') .'</span> '
+                    . $ending_time;
+        }
+
+        return $plain ? trans('theme.invalid') : '<span class="text-muted small">'. trans('theme.invalid') . '</span>';
     }
 }

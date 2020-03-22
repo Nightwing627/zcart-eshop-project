@@ -10,6 +10,8 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 	// Markerplace Admin only routes
 	Route::middleware(['admin'])->group(function ()
 	{
+		include('incevio.php');
+
 		Route::group(['namespace' => 'Report'], function()
 		{
 			include('admin/Report.php');

@@ -22,24 +22,11 @@ class OrderItemResource extends JsonResource
             'unit_price' => get_formated_currency($this->pivot->unit_price, config('system_settings.decimals', 2)),
             'total' => get_formated_currency($this->pivot->unit_price * $this->pivot->quantity, config('system_settings.decimals', 2)),
             'image' => get_inventory_img_src($this, 'small'),
+            'feedback' => $this->when($request->is('api/order/*'), function() {
+                $feedback = \App\Feedback::find($this->pivot->feedback_id);
 
-            'feedback' => $this->when($this->pivot->feedback_id, function() {
-                $temp = \App\Feedback::find($this->pivot->feedback_id);
-
-                return new FeedbackResource($temp);
+                return $feedback ? new FeedbackResource($feedback) : Null;
             }),
-
-            // 'pivot' => $this->when(isset($this->pivot), [
-            //     // 'inventory_id' => $this->pivot->inventory_id,
-            //     'item_description' => $this->pivot->item_description,
-            //     'quantity' => $this->pivot->quantity,
-            //     'unit_price' => get_formated_currency($this->pivot->unit_price, config('system_settings.decimals', 2)),
-            //     'total' => get_formated_currency($this->pivot->unit_price * $this->pivot->quantity, config('system_settings.decimals', 2)),
-            //     'image' => get_inventory_img_src($this, 'small'),
-            //     // 'feedback_id' => $this->pivot->feedback_id,
-            //     // 'created_at' => date('F j, Y', strtotime($this->created_at)),
-            //     // 'updated_at' => date('F j, Y', strtotime($this->updated_at)),
-            // ]),
         ];
     }
 }

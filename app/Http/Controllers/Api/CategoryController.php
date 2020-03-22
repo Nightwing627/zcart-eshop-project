@@ -48,10 +48,13 @@ class CategoryController extends Controller
      */
     public function categorySubGroup(Request $request, $group = Null)
     {
-        if($group)
-            $categories = CategorySubGroup::where('category_group_id', $group)->with(['featuredImage'])->active()->get();
-        else
+        if($group){
+            $categories = CategorySubGroup::where('category_group_id', $group)->with(['featuredImage'])
+            ->active()->get();
+        }
+        else{
             $categories = CategorySubGroup::with(['featuredImage'])->active()->get();
+        }
 
         return CategorySubGroupResource::collection($categories);
     }

@@ -24,17 +24,14 @@ class CheckoutCartRequest extends Request
      */
     public function rules()
     {
-        crosscheckAndUpdateOldCartInfo($request, $cart); // Update cart info
+        crosscheckAndUpdateOldCartInfo($this, $this->route('cart')); // Update cart info
 
         $rules = [];
         if ( ! Auth::guard('customer')->check() ) {
-            if( $this->has('create-account') ){
-                $rules['email'] =  'required|email|max:255|unique:customers';
-                $rules['password'] =  'nullable|required_with:create-account|confirmed|min:6';
-            }
-            else {
-                $rules['email'] =  'required|email|max:255';
-            }
+            $unique_ck = $this->has('create-account') ? '|unique:customers' : '';
+
+            $rules['email'] =  'required|email|max:255' . $unique_ck;
+            $rules['password'] =  'required_with:create-account|confirmed|min:6';
         }
 
         if( 'saved_card' != $this->payment_method )

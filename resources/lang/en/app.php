@@ -1405,21 +1405,23 @@ return [
     'search_result_found' => ':count result found',
 
     // Version 1.4.0
+    'can_use_own_catalog_only' => 'Can use own catalog only',
+    'coupon_applied' => 'Coupon \":coupon\" applied',
+    'discount_applied' => ':amount discount applied',
     'invoices' => 'Invoices',
     'invoice_for' => 'Subscription fee for :start - :end',
+    'message_send_by_staff' => 'This message was sent by your staff <b>:user</b>',
     'of_total' => ':first - :last of :total',
     'subscription_fee' => 'Subscription fee',
     'to' => 'To',
-    'message_send_by_staff' => 'This message was sent by your staff <b>:user</b>',
-    'can_use_own_catalog_only' => 'Can use own catalog only',
 
     // Version 2.0.0
     'chats' => 'Chats',
     'chat_conversations' => 'Chat conversations',
     'notify_new_chat' => 'Notify new chat message',
-    'support_agent' => 'Support agent',
-    'you' => 'You',
     'show_refund_policy_with_listing' => 'Show refund policy with listing',
     'show_shop_desc_with_listing' => 'Show shop description with listing',
     'show_seo_info_to_frontend' => 'Show SEO info to frontend',
+    'support_agent' => 'Support agent',
+    'you' => 'You',
 ];

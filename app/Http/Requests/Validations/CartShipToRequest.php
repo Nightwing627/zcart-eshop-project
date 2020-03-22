@@ -32,19 +32,15 @@ class CartShipToRequest extends Request
             ];
         }
         else {
-            if( $this->has('create-account') ){
-                $rules['email'] =  'required|email|max:255|unique:customers';
-                $rules['password'] =  'nullable|required_with:create-account|confirmed|min:6';
-            }
-            else {
-                $rules['email'] =  'required|email|max:255';
-            }
+            $unique_ck = $this->has('create-account') ? '|unique:customers' : '';
 
             $rules = [
                 'address_title' => 'required',
                 'address_line_1' => 'required',
                 'zip_code' => 'required',
                 'country_id' => 'required|integer',
+                'email' =>  'required|email|max:255' . $unique_ck,
+                'password' => 'required_with:create-account|confirmed|min:6',
             ];
         }
 
