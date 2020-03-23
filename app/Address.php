@@ -18,7 +18,8 @@ class Address extends BaseModel
      *
      * @var array
      */
-    protected $with = ['country:id,name,country_code,iso_3166_2', 'state:id,name,country_id,iso_3166_2'];
+    protected $with = ['country:id,name,iso_3166_2', 'state:id,name,country_id'];
+    // protected $with = ['country:id,name,country_code,iso_3166_2', 'state:id,name,country_id,iso_3166_2'];
 
     /**
      * The attributes that are mass assignable.

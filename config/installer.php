@@ -37,6 +37,7 @@ return [
             'Fileinfo',
             'exif',
             'GD',
+            // 'geoip',
             // 'Pcntl',
             // 'Memchached'
         ],

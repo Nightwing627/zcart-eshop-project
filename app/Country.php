@@ -20,6 +20,22 @@ class Country extends BaseModel
     }
 
     /**
+     * Get all of the timezone for the country.
+     */
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
+    }
+
+    /**
+     * Get all of the currency for the country.
+     */
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
+
+    /**
      * Get all of the manufacturer for the country.
      */
     public function manufacturer()

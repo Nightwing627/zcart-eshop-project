@@ -18,7 +18,6 @@ class CountryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'iso_3166_2' => $this->iso_3166_2,
-            'iso_3166_3' => $this->iso_3166_3,
         ];
     }
 }

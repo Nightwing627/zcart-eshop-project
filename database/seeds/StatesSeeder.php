@@ -25,7 +25,8 @@ class StatesSeeder extends BaseSeeder
             $country_id = $country->id;
             $country_name = $country->name;
 
-            if(!$country_name) continue; //If the $country_id not found in countries table then ignore the file and move next
+            //If the $country_id not found in countries table then ignore the file and move next
+            if(! $country_id) continue;
 
             $json = json_decode(file_get_contents($file), true);
 
@@ -33,13 +34,13 @@ class StatesSeeder extends BaseSeeder
             {
                 DB::table('states')->insert([
                     'country_id' => $country_id,
-                    'country_name' => $country_name,
+                    // 'country_name' => $country_name,
                     'name' => $state['name'],
-                    'iso_3166_2' => isset($state['iso_3166_2']) ? $state['iso_3166_2'] : NULL,
-                    'region' => isset($state['region']) ? $state['region'] : NULL,
-                    'region_code' => isset($state['region_code']) ? $state['region_code'] : NULL,
+                    // 'iso_3166_2' => isset($state['iso_3166_2']) ? $state['iso_3166_2'] : NULL,
+                    // 'region' => isset($state['region']) ? $state['region'] : NULL,
+                    // 'region_code' => isset($state['region_code']) ? $state['region_code'] : NULL,
                     'calling_code' => isset($state['calling_code']) ? $state['calling_code'] : NULL,
-                    'active' => isset($state['active']) ? $state['active'] : 1,
+                    // 'active' => isset($state['active']) ? $state['active'] : 1,
                     'created_at' => Carbon::Now(),
                     'updated_at' => Carbon::Now(),
                 ]);

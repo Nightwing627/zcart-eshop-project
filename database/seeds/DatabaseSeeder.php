@@ -14,10 +14,10 @@ class DatabaseSeeder extends BaseSeeder
         Model::unguard();
 
         $this->call('BannerGroupsSeeder');
-        $this->call('CountriesSeeder');
-        $this->call('StatesSeeder');
         $this->call('TimezonesSeeder');
         $this->call('CurrenciesSeeder');
+        $this->call('CountriesSeeder');
+        $this->call('StatesSeeder');
         $this->call('RolesSeeder');
         $this->call('SystemsSeeder');
         $this->call('UsersSeeder');

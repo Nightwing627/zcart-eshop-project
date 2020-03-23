@@ -12,75 +12,79 @@ class CreateCountriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('countries', function (Blueprint $table) {
+        Schema::create('timezones', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('capital', 255)->nullable();
-            $table->string('citizenship', 255)->nullable();
-            $table->string('country_code', 3)->nullable();
-            $table->string('currency', 255)->nullable();
-            $table->string('currency_code', 255)->nullable();
-            $table->string('currency_sub_unit', 255)->nullable();
-            $table->string('currency_symbol', 3)->nullable();
-            $table->string('full_name', 255)->nullable();
-            $table->string('iso_3166_2', 2)->nullable();
-            $table->string('iso_3166_3', 3)->nullable();
-            $table->string('name', 255);
-            $table->string('region_code', 3)->nullable();
-            $table->string('sub_region_code', 3)->nullable();
-            $table->boolean('eea')->nullable();
-            $table->string('calling_code', 3)->nullable();
-            $table->string('flag', 6)->nullable();
-            $table->boolean('active')->default(1);
+            $table->string('value')->nullable();
+            $table->string('abbr')->nullable();
+            $table->integer('offset')->nullable();
+            $table->string('text')->nullable();
+            $table->string('utc')->nullable();
+            $table->boolean('dst')->nullable()->default(false);
+            // $table->json('utc')->nullable();
             $table->timestamps();
-        });
-
-        Schema::create('states', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('country_id')->unsigned();
-            $table->string('country_name', 255)->nullable();
-            $table->string('name', 255)->nullable();
-            $table->string('region', 255)->nullable();
-            $table->string('iso_3166_2', 2)->nullable();
-            $table->string('region_code', 10)->nullable();
-            $table->string('calling_code', 5)->nullable();
-            $table->boolean('active')->default(1);
-            $table->timestamps();
-
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });
 
         Schema::create('currencies', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('priority')->nullable()->default(100);
-            $table->string('iso_code', 255)->nullable();
-            $table->string('name', 255)->nullable();
+            $table->string('iso_code', 3);
+            $table->string('iso_numeric', 3)->nullable();
+            $table->string('name', 255);
             $table->string('symbol', 255)->nullable();
             $table->string('disambiguate_symbol', 255)->nullable();
-            $table->string('alternate_symbols', 255)->nullable();
+            // $table->string('alternate_symbols', 255)->nullable();
             $table->string('subunit', 255)->nullable();
             $table->integer('subunit_to_unit')->default(100);
             $table->boolean('symbol_first')->default(1);
             $table->string('html_entity', 255)->nullable();
             $table->string('decimal_mark', 25)->nullable();
             $table->string('thousands_separator', 25)->nullable();
-            $table->string('iso_numeric', 25)->nullable();
             $table->integer('smallest_denomination')->default(1);
-            $table->boolean('active')->default(1);
+            // $table->boolean('active')->default(1);
             $table->timestamps();
         });
 
-        Schema::create('timezones', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('value')->nullable();
-            $table->string('abbr')->nullable();
-            $table->integer('offset')->nullable();
-            $table->boolean('isdst')->nullable();
-            $table->string('text')->nullable();
-            $table->string('utc')->nullable();
-            // $table->json('utc')->nullable();
+            $table->string('name', 255);
+            $table->string('full_name', 255)->nullable();
+            $table->string('capital', 255)->nullable();
+            $table->integer('currency_id')->unsigned()->nullable();
+            $table->integer('timezone_id')->unsigned()->nullable();
+            $table->string('citizenship', 255)->nullable();
+            // $table->string('country_code', 3)->nullable();
+            // $table->string('currency', 255)->nullable();
+            // $table->string('currency_code', 255)->nullable();
+            // $table->string('currency_sub_unit', 255)->nullable();
+            // $table->string('currency_symbol', 3)->nullable();
+            $table->string('iso_3166_2', 2);
+            // $table->string('iso_3166_3', 3)->nullable();
+            // $table->string('region_code', 3)->nullable();
+            // $table->string('sub_region_code', 3)->nullable();
+            $table->string('calling_code', 3)->nullable();
+            $table->string('flag', 6)->nullable();
+            $table->boolean('eea')->nullable()->default(false);
+            // $table->boolean('active')->nullable()->default(1);
             $table->timestamps();
+
+            $table->foreign('timezone_id')->references('id')->on('timezones')->onDelete('set null');
+            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('set null');
         });
 
+        Schema::create('states', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('country_id')->unsigned();
+            // $table->string('country_name', 255)->nullable();
+            $table->string('name', 255)->nullable();
+            // $table->string('region', 255)->nullable();
+            // $table->string('iso_3166_2', 2)->nullable();
+            // $table->string('region_code', 10)->nullable();
+            $table->string('calling_code', 5)->nullable();
+            // $table->boolean('active')->nullable()->default(1);
+            $table->timestamps();
+
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+        });
     }
 
     /**
@@ -90,9 +94,9 @@ class CreateCountriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('timezones');
-        Schema::drop('currencies');
         Schema::drop('states');
         Schema::drop('countries');
+        Schema::drop('currencies');
+        Schema::drop('timezones');
     }
 }

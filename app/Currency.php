@@ -18,7 +18,6 @@ class Currency extends BaseModel
      */
     protected $casts = [
         'symbol_first' => 'boolean',
-        'active' => 'boolean',
     ];
 
 	/**
@@ -26,5 +25,29 @@ class Currency extends BaseModel
 	 *
 	 * @var array
 	 */
-	protected $guarded = [];
+	protected $guarded = ['id'];
+
+    /**
+     * Get all of the countries for the currency.
+     */
+    public function countries()
+    {
+        return $this->hasMany(Country::class);
+    }
+
+    /**
+     * Setters
+     */
+    // public function setAlternateSymbolsAttribute($value)
+    // {
+    //     $this->attributes['alternate_symbols'] = serialize($value);
+    // }
+
+    /**
+     * Getters
+     */
+    // public function getAlternateSymbolsAttribute($value)
+    // {
+    //     return unserialize($value);
+    // }
 }

@@ -20,13 +20,12 @@ class TimezonesSeeder extends BaseSeeder
 
         foreach ($timezones as $timezone){
             DB::table('timezones')->insert([
-                'value' => ((isset($timezone['value'])) ? $timezone['value'] : null),
-                'abbr' => ((isset($timezone['abbr'])) ? $timezone['abbr'] : null),
-                'offset' => ((isset($timezone['offset'])) ? $timezone['offset'] : null),
-                'isdst' => ((isset($timezone['isdst'])) ? $timezone['isdst'] : null),
-                'text' => ((isset($timezone['text'])) ? $timezone['text'] : null),
-                'utc' => ((isset($timezone['utc'])) ? $timezone['utc'] : null),
-                // 'utc' => ((isset($timezone['utc'])) ? json_encode($timezone['utc']) : null),
+                'value' => isset($timezone['value']) ? $timezone['value'] : Null,
+                'abbr' => isset($timezone['abbr']) ? $timezone['abbr'] : Null,
+                'offset' => isset($timezone['offset']) ? $timezone['offset'] : Null,
+                'text' => isset($timezone['text']) ? $timezone['text'] : Null,
+                'utc' => isset($timezone['utc']) ? $timezone['utc'] : Null,
+                'dst' => isset($timezone['dst']) ? $timezone['dst'] : Null,
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ]);

@@ -168,7 +168,7 @@ class HomeController extends Controller
      */
     public function countries()
     {
-        $countries = Country::select('id','name','iso_3166_2','iso_3166_3')->get();
+        $countries = Country::select('id','name','iso_3166_2')->get();
         return CountryResource::collection($countries);
     }
 

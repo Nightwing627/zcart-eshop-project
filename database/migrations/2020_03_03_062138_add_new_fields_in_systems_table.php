@@ -16,6 +16,7 @@ class AddNewFieldsInSystemsTable extends Migration
         Schema::table('systems', function (Blueprint $table) {
             $table->boolean('show_seo_info_to_frontend')->nullable()->after('pagination')->default(true);
             $table->boolean('can_use_own_catalog_only')->nullable()->after('vendor_can_view_customer_info')->default(false);
+            // $table->text('country_ids')->after('pagination')->nullable();
         });
     }
 
@@ -27,6 +28,7 @@ class AddNewFieldsInSystemsTable extends Migration
     public function down()
     {
         Schema::table('systems', function (Blueprint $table) {
+            // $table->dropColumn('country_ids');
             $table->dropColumn('can_use_own_catalog_only');
             $table->dropColumn('show_seo_info_to_frontend');
         });
