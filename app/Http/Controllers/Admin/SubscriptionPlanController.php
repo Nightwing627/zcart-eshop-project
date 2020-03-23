@@ -168,6 +168,9 @@ class SubscriptionPlanController extends Controller
      */
     public function massTrash(Request $request)
     {
+        if(config('app.demo') == true)
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         SubscriptionPlan::whereIn('plan_id', $request->ids)->delete();
 
         if($request->ajax())
@@ -200,6 +203,9 @@ class SubscriptionPlanController extends Controller
      */
     public function massDestroy(Request $request)
     {
+        if(config('app.demo') == true)
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         SubscriptionPlan::withTrashed()->whereIn('plan_id', $request->ids)->forceDelete();
 
         if($request->ajax())

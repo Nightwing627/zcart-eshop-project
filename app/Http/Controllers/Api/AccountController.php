@@ -100,7 +100,7 @@ class AccountController extends Controller
     public function password_update(SelfPasswordUpdateRequest $request)
     {
         if( config('app.demo') == true && Auth::guard('api')->user()->id <= config('system.demo.customers', 1) )
-            return ['warning' => trans('messages.demo_restriction')];
+            return response()->json(['message' => trans('messages.demo_restriction')], 400);
 
         $customer = Customer::where('id', Auth::guard('api')->user()->id)->first();
         $customer->update($request->all());

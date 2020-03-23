@@ -100,7 +100,7 @@ class ShopController extends Controller
      */
     public function update(UpdateShopRequest $request, $id)
     {
-        if( config('app.demo') == true && $id <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $id <= config('system.demo.shops', 2) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $shop = $this->shop->update($request, $id);
@@ -123,7 +123,7 @@ class ShopController extends Controller
      */
     public function toggleStatus(Request $request, $id)
     {
-        if( config('app.demo') == true && $id <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $id <= config('system.demo.shops', 2) )
             return response('error', 444);
 
         $shop = $this->shop->find($id);
@@ -177,7 +177,7 @@ class ShopController extends Controller
      */
     public function trash(Request $request, $id)
     {
-        if( config('app.demo') == true && $id <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $id <= config('system.demo.shops', 2) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $this->shop->trash($id);
@@ -223,6 +223,9 @@ class ShopController extends Controller
      */
     public function massTrash(Request $request)
     {
+        if(config('app.demo') == true)
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $this->shop->massTrash($request->ids);
 
         if($request->ajax())
@@ -239,6 +242,9 @@ class ShopController extends Controller
      */
     public function massDestroy(Request $request)
     {
+        if(config('app.demo') == true)
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $this->shop->massDestroy($request->ids);
 
         if($request->ajax())

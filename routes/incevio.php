@@ -1,24 +1,39 @@
 <?php
-Route::get('incevio/clear/{all?}', function($all = Null) {
+Route::group(['prefix' => 'incevio'], function()
+{
+    // New version upgrade
+    Route::get('upgrade/{option?}', function($option = 'migrate'){
+        $out = '';
 
-	$out = '';
+        Artisan::call('migrate');
+        $out .= '<info>✔</info> '. Artisan::output() .'<br/>';
 
-    Artisan::call('config:clear');
-	$out .= '<info>✔</info> '. Artisan::output() .'<br/>';
+       return $out;
+    });
 
-    Artisan::call('route:clear');
-    $out .= '<info>✔</info> '. Artisan::output() .'<br/>';
+    // Clear config. cache etc
+    Route::get('clear/{all?}', function($all = Null) {
 
-    if($all){
-        Artisan::call('cache:clear');
-	    $out .= '<info>✔</info> '. Artisan::output() .'<br/>';
+    	$out = '';
 
-        Artisan::call('incevio:clear-cache');
+        Artisan::call('config:clear');
     	$out .= '<info>✔</info> '. Artisan::output() .'<br/>';
 
-        Artisan::call('view:clear');
-    	$out .= '<info>✔</info> '. Artisan::output() .'<br/>';
-    }
+        Artisan::call('route:clear');
+        $out .= '<info>✔</info> '. Artisan::output() .'<br/>';
 
-   return $out;
+        if($all){
+            Artisan::call('cache:clear');
+    	    $out .= '<info>✔</info> '. Artisan::output() .'<br/>';
+
+            Artisan::call('incevio:clear-cache');
+        	$out .= '<info>✔</info> '. Artisan::output() .'<br/>';
+
+            Artisan::call('view:clear');
+        	$out .= '<info>✔</info> '. Artisan::output() .'<br/>';
+        }
+
+       return $out;
+    });
+
 });

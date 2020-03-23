@@ -254,6 +254,9 @@ class CustomerController extends Controller
      */
     public function massTrash(Request $request)
     {
+        if(config('app.demo') == true)
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $this->customer->massTrash($request->ids);
 
         if($request->ajax())
@@ -286,6 +289,9 @@ class CustomerController extends Controller
      */
     public function massDestroy(Request $request)
     {
+        if(config('app.demo') == true)
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $this->customer->massDestroy($request->ids);
 
         if($request->ajax())

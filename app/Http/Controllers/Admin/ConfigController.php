@@ -71,7 +71,7 @@ class ConfigController extends Controller
     {
         $config = Config::findOrFail($id);
 
-        if( config('app.demo') == true && $config->shop_id <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $config->shop_id <= config('system.demo.shops', 2) )
             return back()->with('warning', trans('messages.demo_restriction'));
 
         $this->authorize('update', $config); // Check permission
@@ -97,7 +97,7 @@ class ConfigController extends Controller
 
     public function updateConfig(UpdateConfigRequest $request, $id)
     {
-        if( config('app.demo') == true && $id <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $id <= config('system.demo.shops', 2) )
             return response('error', 444);
 
         $config = Config::findOrFail($id);
@@ -152,7 +152,7 @@ class ConfigController extends Controller
     {
         $config = Config::findOrFail($request->user()->merchantId());
 
-        if( config('app.demo') == true && $config->shop_id <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $config->shop_id <= config('system.demo.shops', 2) )
             return response('error', 444);
 
         $this->authorize('update', $config); // Check permission
@@ -176,7 +176,7 @@ class ConfigController extends Controller
      */
     public function toggleMaintenanceMode(ToggleMaintenanceModeRequest $request, $id)
     {
-        if( config('app.demo') == true && $id <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $id <= config('system.demo.shops', 2) )
             return response('error', 444);
 
         $config = Config::findOrFail($id);

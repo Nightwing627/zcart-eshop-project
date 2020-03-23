@@ -162,6 +162,9 @@ class RoleController extends Controller
      */
     public function massTrash(Request $request)
     {
+        if(config('app.demo') == true)
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $this->role->massTrash($request->ids);
 
         if($request->ajax())
@@ -178,6 +181,9 @@ class RoleController extends Controller
      */
     public function massDestroy(Request $request)
     {
+        if(config('app.demo') == true)
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $this->role->massDestroy($request->ids);
 
         if($request->ajax())

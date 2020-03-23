@@ -137,6 +137,7 @@ return [
         'users' => 3,
         'roles' => 3,
         'shops' => 2,
+        'langs' => 4,
         'customers' => 1,
         'category_groups' => 9,
         'plans' => ['business', 'individual', 'professional'],

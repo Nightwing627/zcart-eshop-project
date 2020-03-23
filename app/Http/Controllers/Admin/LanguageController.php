@@ -77,6 +77,9 @@ class LanguageController extends Controller
      */
     public function update(UpdateLanguageRequest $request, Language $language)
     {
+        if( config('app.demo') == true && $language->id <= config('system.demo.langs', 4) )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $language->update($request->all());
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model]));
@@ -91,6 +94,9 @@ class LanguageController extends Controller
      */
     public function trash(Request $request, Language $language)
     {
+        if( config('app.demo') == true && $language->id <= config('system.demo.langs', 4) )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $language->delete();
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
@@ -118,6 +124,9 @@ class LanguageController extends Controller
      */
     public function destroy($id)
     {
+        if( config('app.demo') == true && $language->id <= config('system.demo.langs', 4) )
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         $language = Language::onlyTrashed()->findOrFail($id);
 
         $language->forceDelete();
@@ -134,6 +143,9 @@ class LanguageController extends Controller
      */
     public function massTrash(Request $request)
     {
+        if(config('app.demo') == true)
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         Language::whereIn('id', $request->ids)->delete();
 
         if($request->ajax())
@@ -166,6 +178,9 @@ class LanguageController extends Controller
      */
     public function massDestroy(Request $request)
     {
+        if(config('app.demo') == true)
+            return back()->with('warning', trans('messages.demo_restriction'));
+
         Language::withTrashed()->whereIn('id', $request->ids)->forceDelete();
 
         if($request->ajax())
