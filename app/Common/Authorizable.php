@@ -82,6 +82,7 @@ trait Authorizable
      */
     private $utility_modules = [
         'faq',
+        'emailTemplate',
         'faqTopic',
         'blog',
         'page'

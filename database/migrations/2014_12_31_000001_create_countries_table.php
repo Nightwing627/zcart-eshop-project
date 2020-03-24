@@ -39,7 +39,7 @@ class CreateCountriesTable extends Migration
             $table->string('decimal_mark', 25)->nullable();
             $table->string('thousands_separator', 25)->nullable();
             $table->integer('smallest_denomination')->default(1);
-            $table->integer('priority', 3)->nullable()->default(100);
+            $table->integer('priority')->nullable()->default(100);
             $table->boolean('active')->nullable()->default(false);
             $table->timestamps();
         });

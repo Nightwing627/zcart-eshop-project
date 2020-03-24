@@ -6,7 +6,7 @@
 			<h3 class="box-title">{{ trans('app.email_templates') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\EmailTemplate::class)
-					<a href="javascript:void(0)" data-link="{{ route('admin.setting.emailTemplate.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_template') }}</a>
+					<a href="javascript:void(0)" data-link="{{ route('admin.utility.emailTemplate.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_template') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
@@ -26,8 +26,8 @@
 										<span class="sr-only">{{ trans('app.toggle_dropdown') }}</span>
 									</button>
 									<ul class="dropdown-menu" role="menu">
-										<li><a href="javascript:void(0)" data-link="{{ route('admin.setting.emailTemplate.massTrash') }}" class="massAction " data-doafter="reload"><i class="fa fa-trash"></i> {{ trans('app.trash') }}</a></li>
-										<li><a href="javascript:void(0)" data-link="{{ route('admin.setting.emailTemplate.massDestroy') }}" class="massAction " data-doafter="reload"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
+										<li><a href="javascript:void(0)" data-link="{{ route('admin.utility.emailTemplate.massTrash') }}" class="massAction " data-doafter="reload"><i class="fa fa-trash"></i> {{ trans('app.trash') }}</a></li>
+										<li><a href="javascript:void(0)" data-link="{{ route('admin.utility.emailTemplate.massDestroy') }}" class="massAction " data-doafter="reload"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
 									</ul>
 								</div>
 							</th>
@@ -53,14 +53,14 @@
 						<td>{{ $template->template_for }}</td>
 						<td class="row-options">
 							@can('view', $template)
-								<a href="javascript:void(0)" data-link="{{ route('admin.setting.emailTemplate.show', $template->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.preview') }}" class="fa fa-eye"></i></a>&nbsp;
+								<a href="javascript:void(0)" data-link="{{ route('admin.utility.emailTemplate.show', $template->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.preview') }}" class="fa fa-eye"></i></a>&nbsp;
 							@endcan
 							@can('update', $template)
-								<a href="javascript:void(0)" data-link="{{ route('admin.setting.emailTemplate.edit', $template->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="javascript:void(0)" data-link="{{ route('admin.utility.emailTemplate.edit', $template->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $template)
-								{!! Form::open(['route' => ['admin.setting.emailTemplate.trash', $template->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+								{!! Form::open(['route' => ['admin.utility.emailTemplate.trash', $template->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 								{!! Form::close() !!}
 							@endcan
@@ -76,7 +76,7 @@
 		<div class="box-header with-border">
 			<h3 class="box-title">
 				@can('massDelete', App\EmailTemplate::class)
-					{!! Form::open(['route' => ['admin.setting.emailTemplate.emptyTrash'], 'method' => 'delete', 'class' => 'data-form']) !!}
+					{!! Form::open(['route' => ['admin.utility.emailTemplate.emptyTrash'], 'method' => 'delete', 'class' => 'data-form']) !!}
 						{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm btn btn-default btn-flat ajax-silent', 'title' => trans('help.empty_trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'right']) !!}
 					{!! Form::close() !!}
 				@else
@@ -111,9 +111,9 @@
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('delete', $trash)
-								<a href="{{ route('admin.setting.emailTemplate.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
+								<a href="{{ route('admin.utility.emailTemplate.restore', $trash->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.restore') }}" class="fa fa-database"></i></a>&nbsp;
 
-								{!! Form::open(['route' => ['admin.setting.emailTemplate.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+								{!! Form::open(['route' => ['admin.utility.emailTemplate.destroy', $trash->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 									{!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete_permanently'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 								{!! Form::close() !!}
 							@endcan

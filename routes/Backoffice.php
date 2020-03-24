@@ -98,6 +98,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		// Utility Routes for Admin/Merchant
 		Route::group(['as' => 'utility.', 'prefix' => 'utility'], function()
 		{
+			include('admin/EmailTemplate.php');
 			include('admin/Faq.php');
 			include('admin/Page.php');
 			include('admin/Blog.php');
@@ -108,7 +109,6 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 		{
 			include('admin/UserRole.php');
 			include('admin/Tax.php');
-			include('admin/EmailTemplate.php');
 			include('admin/Config.php');
 			include('admin/System.php');
 			include('admin/SystemConfig.php');

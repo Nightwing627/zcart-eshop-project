@@ -376,14 +376,6 @@
               </li>
             @endcan
 
-            @can('index', \App\EmailTemplate::class)
-              <li class=" {{ Request::is('admin/setting/emailTemplate*') ? 'active' : '' }}">
-                <a href="{{ url('admin/setting/emailTemplate') }}">
-                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.email_templates') }}
-                </a>
-              </li>
-            @endcan
-
             @can('view', \App\Config::class)
               <li class=" {{ Request::is('admin/setting/general*') ? 'active' : '' }}">
                 <a href="{{ url('admin/setting/general') }}">
@@ -453,6 +445,13 @@
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
+              @can('index', \App\EmailTemplate::class)
+                <li class=" {{ Request::is('admin/utility/emailTemplate*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/utility/emailTemplate') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.email_templates') }}
+                  </a>
+                </li>
+              @endcan
 
               @can('index', \App\Page::class)
                 <li class=" {{ Request::is('admin/utility/page*') ? 'active' : '' }}">

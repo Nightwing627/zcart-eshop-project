@@ -69,10 +69,10 @@ class ModulesSeeder extends BaseSeeder
             'actions' => 'view,response'
         ],
 
-        'Email Template' => [
-            'access' => 'Platform',
-            'actions' => 'view,add,edit,delete'
-        ],
+        // 'Email Template' => [
+        //     'access' => 'Platform',
+        //     'actions' => 'view,add,edit,delete'
+        // ],
 
         // 'Gift Card' => [
         //     'access' => 'Platform',

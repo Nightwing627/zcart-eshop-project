@@ -19,7 +19,7 @@ class EmailTemplatePolicy
      */
     public function index(User $user)
     {
-        return (new Authorize($user, 'view_email_template'))->check();
+        return (new Authorize($user, 'view_utility'))->check();
     }
 
     /**
@@ -31,7 +31,7 @@ class EmailTemplatePolicy
      */
     public function view(User $user, EmailTemplate $emailTemplate)
     {
-        return (new Authorize($user, 'view_email_template', $emailTemplate))->check();
+        return (new Authorize($user, 'view_utility', $emailTemplate))->check();
     }
 
     /**
@@ -42,7 +42,7 @@ class EmailTemplatePolicy
      */
     public function create(User $user)
     {
-        return (new Authorize($user, 'add_email_template'))->check();
+        return (new Authorize($user, 'add_utility'))->check();
     }
 
     /**
@@ -54,7 +54,7 @@ class EmailTemplatePolicy
      */
     public function update(User $user, EmailTemplate $emailTemplate)
     {
-        return (new Authorize($user, 'edit_email_template', $emailTemplate))->check();
+        return (new Authorize($user, 'edit_utility', $emailTemplate))->check();
     }
 
     /**
@@ -66,7 +66,7 @@ class EmailTemplatePolicy
      */
     public function delete(User $user, EmailTemplate $emailTemplate)
     {
-        return (new Authorize($user, 'delete_email_template', $emailTemplate))->check();
+        return (new Authorize($user, 'delete_utility', $emailTemplate))->check();
     }
 
     /**
@@ -77,7 +77,7 @@ class EmailTemplatePolicy
      */
     public function massDelete(User $user)
     {
-        return (new Authorize($user, 'delete_email_template'))->check();
+        return (new Authorize($user, 'delete_utility'))->check();
     }
 
 }
