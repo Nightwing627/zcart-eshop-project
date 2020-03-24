@@ -19,7 +19,8 @@ class CurrencyPolicy
      */
     public function index(User $user)
     {
-        return (new Authorize($user, 'view_utility'))->check();
+        return $user->isAdmin();
+        // return (new Authorize($user, 'view_utility'))->check();
     }
 
     /**
@@ -31,7 +32,8 @@ class CurrencyPolicy
      */
     public function view(User $user, Currency $currency)
     {
-        return (new Authorize($user, 'view_utility', $currency))->check();
+        return $user->isAdmin();
+        // return (new Authorize($user, 'view_utility', $currency))->check();
     }
 
     /**
@@ -42,7 +44,8 @@ class CurrencyPolicy
      */
     public function create(User $user)
     {
-        return (new Authorize($user, 'add_utility'))->check();
+        return $user->isAdmin();
+        // return (new Authorize($user, 'add_utility'))->check();
     }
 
     /**
@@ -54,7 +57,8 @@ class CurrencyPolicy
      */
     public function update(User $user, Currency $currency)
     {
-        return (new Authorize($user, 'edit_utility', $currency))->check();
+        return $user->isAdmin();
+        // return (new Authorize($user, 'edit_utility', $currency))->check();
     }
 
     /**
@@ -66,7 +70,8 @@ class CurrencyPolicy
      */
     public function delete(User $user, Currency $currency)
     {
-        return (new Authorize($user, 'delete_utility', $currency))->check();
+        return $user->isAdmin();
+        // return (new Authorize($user, 'delete_utility', $currency))->check();
     }
 
     /**
@@ -77,6 +82,7 @@ class CurrencyPolicy
      */
     public function massDelete(User $user)
     {
-        return (new Authorize($user, 'delete_utility'))->check();
+        return $user->isAdmin();
+        // return (new Authorize($user, 'delete_utility'))->check();
     }
 }

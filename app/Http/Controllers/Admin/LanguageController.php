@@ -27,7 +27,7 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        $languages = Language::orderBy('order', 'asc')->get();
+        $languages = Language::orderBy('active', 'desc')->orderBy('order', 'asc')->get();
 
         $trashes = Language::onlyTrashed()->get();
 

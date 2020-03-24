@@ -817,7 +817,8 @@
     "decimal_mark": ",",
     "thousands_separator": ".",
     "iso_numeric": "978",
-    "smallest_denomination": 1
+    "smallest_denomination": 1,
+    "active": 1
   },
   "fjd": {
     "priority": 100,
@@ -1138,7 +1139,8 @@
     "decimal_mark": ".",
     "thousands_separator": ",",
     "iso_numeric": "356",
-    "smallest_denomination": 50
+    "smallest_denomination": 50,
+    "active": 1
   },
   "iqd": {
     "priority": 100,
@@ -1242,7 +1244,8 @@
     "decimal_mark": ".",
     "thousands_separator": ",",
     "iso_numeric": "392",
-    "smallest_denomination": 1
+    "smallest_denomination": 1,
+    "active": 1
   },
   "kes": {
     "priority": 100,
@@ -2610,7 +2613,8 @@
     "decimal_mark": ".",
     "thousands_separator": ",",
     "iso_numeric": "840",
-    "smallest_denomination": 1
+    "smallest_denomination": 1,
+    "active": 1
   },
   "uyu": {
     "priority": 100,

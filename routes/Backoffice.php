@@ -101,7 +101,6 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 			include('admin/Faq.php');
 			include('admin/Page.php');
 			include('admin/Blog.php');
-			include('admin/Currency.php');
 		});
 
 		// Settings Routes for Admin/Merchant
@@ -116,6 +115,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'as' => 'admin.'
 			include('admin/PaymentConfig.php');
 			include('admin/SubscriptionPlan.php');
 			include('admin/Announcement.php');
+			include('admin/Currency.php');
 			include('admin/Language.php');
 			include('admin/Verification.php');
 		});

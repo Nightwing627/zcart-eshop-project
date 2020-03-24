@@ -44,6 +44,8 @@ class CurrenciesSeeder extends BaseSeeder
 
                 'smallest_denomination' => isset($currency['smallest_denomination']) ? $currency['smallest_denomination'] : 1,
 
+                'active' => isset($currency['active']) ? $currency['active'] : False,
+
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ]);

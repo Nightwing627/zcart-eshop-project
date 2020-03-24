@@ -18,6 +18,7 @@ class Currency extends BaseModel
      */
     protected $casts = [
         'symbol_first' => 'boolean',
+        'active' => 'boolean',
     ];
 
 	/**
@@ -36,9 +37,27 @@ class Currency extends BaseModel
     }
 
     /**
+     * Scope a query to only include active records.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active', True);
+    }
+
+    /**
      * Setters
      */
-    // public function setAlternateSymbolsAttribute($value)
+     public function setActiveAttribute($value)
+    {
+        $this->attributes['active'] = (bool) $value;
+    }
+     public function setSymbolFirstAttribute($value)
+    {
+        $this->attributes['symbol_first'] = (bool) $value;
+    }
+   // public function setAlternateSymbolsAttribute($value)
     // {
     //     $this->attributes['alternate_symbols'] = serialize($value);
     // }

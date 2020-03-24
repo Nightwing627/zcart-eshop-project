@@ -25,12 +25,18 @@ class CreateCurrencyRequest extends Request
     {
         return [
            'name' => 'required|string',
+           'priority' => 'nullable|numeric',
+           'active' => 'required',
            'iso_code' => 'required|size:3|unique:currencies',
+           'iso_numeric' => 'required|size:3|unique:currencies',
            'symbol' => 'required',
            'subunit' => 'required',
            'decimal_mark' => 'required',
            'thousands_separator' => 'required',
-           'symbol_first' => 'required'
+           'symbol_first' => 'required',
+           'subunit_to_unit' => 'required|numeric',
+           'smallest_denomination' => 'required|numeric',
+           'subunit_to_unit' => 'required|numeric',
         ];
     }
 }

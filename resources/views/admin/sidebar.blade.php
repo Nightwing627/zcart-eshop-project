@@ -265,49 +265,6 @@
         @endif
         @endif
 
-        @if(Gate::allows('index', \App\OrderStatus::class) || Gate::allows('index', \App\Currency::class))
-          <li class="treeview {{ Request::is('admin/utility*') ? 'active' : '' }}">
-            <a href="#">
-              <i class="fa fa-asterisk"></i>
-              <span>{{ trans('nav.utilities') }}</span>
-              <i class="fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="treeview-menu">
-              @can('index', \App\Currency::class)
-                <li class=" {{ Request::is('admin/utility/currency*') ? 'active' : '' }}">
-                  <a href="{{ url('admin/utility/currency') }}">
-                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.currencies') }}
-                  </a>
-                </li>
-              @endcan
-
-              @can('index', \App\Page::class)
-                <li class=" {{ Request::is('admin/utility/page*') ? 'active' : '' }}">
-                  <a href="{{ url('admin/utility/page') }}">
-                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.pages') }}
-                  </a>
-                </li>
-              @endcan
-
-              @can('index', \App\Blog::class)
-                <li class=" {{ Request::is('admin/utility/blog*') ? 'active' : '' }}">
-                  <a href="{{ url('admin/utility/blog') }}">
-                    <i class="fa fa-angle-double-right"></i> <span>{{ trans('nav.blogs') }}</span>
-                  </a>
-                </li>
-              @endcan
-
-              @can('index', \App\Faq::class)
-                <li class=" {{ Request::is('admin/utility/faq*') ? 'active' : '' }}">
-                  <a href="{{ url('admin/utility/faq') }}">
-                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.faqs') }}
-                  </a>
-                </li>
-              @endcan
-            </ul>
-          </li>
-        @endif
-
         @if(Gate::allows('index', \App\Message::class) || Gate::allows('index', \App\Ticket::class) || Gate::allows('index', \App\Dispute::class) || Gate::allows('index', \App\Refund::class))
           <li class="treeview {{ Request::is('admin/support*') ? 'active' : '' }}">
             <a href="#">
@@ -472,6 +429,13 @@
             @endif
 
             @if(Auth::user()->isAdmin())
+
+              <li class=" {{ Request::is('admin/setting/currency*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/currency') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.currencies') }}
+                </a>
+              </li>
+
               <li class=" {{ Request::is('admin/setting/language*') ? 'active' : '' }}">
                 <a href="{{ url('admin/setting/language') }}">
                   <i class="fa fa-angle-double-right"></i> {{ trans('app.languages') }}
@@ -480,6 +444,42 @@
             @endif
           </ul>
         </li>
+
+        @if(Gate::allows('index', \App\Page::class))
+          <li class="treeview {{ Request::is('admin/utility*') ? 'active' : '' }}">
+            <a href="#">
+              <i class="fa fa-asterisk"></i>
+              <span>{{ trans('nav.utilities') }}</span>
+              <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+
+              @can('index', \App\Page::class)
+                <li class=" {{ Request::is('admin/utility/page*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/utility/page') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.pages') }}
+                  </a>
+                </li>
+              @endcan
+
+              @can('index', \App\Blog::class)
+                <li class=" {{ Request::is('admin/utility/blog*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/utility/blog') }}">
+                    <i class="fa fa-angle-double-right"></i> <span>{{ trans('nav.blogs') }}</span>
+                  </a>
+                </li>
+              @endcan
+
+              @can('index', \App\Faq::class)
+                <li class=" {{ Request::is('admin/utility/faq*') ? 'active' : '' }}">
+                  <a href="{{ url('admin/utility/faq') }}">
+                    <i class="fa fa-angle-double-right"></i> {{ trans('nav.faqs') }}
+                  </a>
+                </li>
+              @endcan
+            </ul>
+          </li>
+        @endif
 
         @if(Auth::user()->isAdmin() || Auth::user()->isMerchant())
           <li class="treeview {{ Request::is('admin/report*') || Request::is('admin/shop/report*') ? 'active' : '' }}">

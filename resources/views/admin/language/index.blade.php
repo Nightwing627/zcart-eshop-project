@@ -48,12 +48,12 @@
 			              	<img src="{{ asset(sys_image_path('flags') . array_slice(explode('_', $language->php_locale_code), -1)[0] . '.png') }}" class="lang-flag small" alt="{{ $language->code }}">
 			              	<span class="indent10">{{ $language->language }}</span>
 				          	@if($language->rtl)
-					          	<span class="indent10 label label-primary pull-right">{{ trans('app.rtl') }}</span>
+					          	<span class="indent10 label label-outline">{{ trans('app.rtl') }}</span>
 					        @endif
-				          	@unless($language->active)
-					          	<span class="indent10 label label-default pull-right">{{ trans('app.inactive') }}</span>
+				          	@if($language->active)
+					          	<span class="indent10 label label-primary pull-right">{{ trans('app.active') }}</span>
 							    <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="{{ trans('help.new_language_info') }}"></i>
-					        @endunless
+					        @endif
 			          </td>
 			          <td>{!! $language->code !!}</td>
 			          <td>{!! $language->php_locale_code !!}</td>

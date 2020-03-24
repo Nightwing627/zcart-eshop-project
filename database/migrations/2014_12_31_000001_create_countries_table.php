@@ -26,7 +26,6 @@ class CreateCountriesTable extends Migration
 
         Schema::create('currencies', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('priority')->nullable()->default(100);
             $table->string('iso_code', 3);
             $table->string('iso_numeric', 3)->nullable();
             $table->string('name', 255);
@@ -40,7 +39,8 @@ class CreateCountriesTable extends Migration
             $table->string('decimal_mark', 25)->nullable();
             $table->string('thousands_separator', 25)->nullable();
             $table->integer('smallest_denomination')->default(1);
-            // $table->boolean('active')->default(1);
+            $table->integer('priority', 3)->nullable()->default(100);
+            $table->boolean('active')->nullable()->default(false);
             $table->timestamps();
         });
 

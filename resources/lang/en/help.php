@@ -61,7 +61,7 @@ return [
 
     'currency_subunit' => 'The subunit that is a fraction of the base unit. For example: cent, centavo, paisa',
 
-    'currency_symbol_first' => 'Example: $13.21',
+    'currency_symbol_first' => 'Is the symbol will be placed on left? Example: $13.21',
 
     'currency_decimalpoint' => 'Example: 13.21, 13,21',
 
@@ -715,4 +715,17 @@ return [
 
     'config_can_use_own_catalog_only' => 'If enabled, the vendors can use only his/her own catalog product to create listings.',
 
+    'currency_iso_numeric' => 'ISO 4217 numeric code. For example: USD = 840 and JPY = 392',
+
+    'currency_active' => 'Active currencies will be shown on the marketplace.',
+
+    'currency_symbol' => 'The currency symbol',
+
+    'currency_disambiguate_symbol' => 'Example: USD = US$ and BDT = BD$',
+
+    'currency_html_entity' => 'Example: JPY = ' . htmlentities('&#x00A5;') . ' and INR = ' . htmlentities('&#x20b9;'),
+
+    'currency_smallest_denomination' => 'The smallest denomination of the currency. Default value is 1',
+
+    'currency_subunit_to_unit' => 'The number of subunits requires for a single unit. Default value is 100',
 ];

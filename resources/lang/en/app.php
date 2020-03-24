@@ -1408,11 +1408,17 @@ return [
     'can_use_own_catalog_only' => 'Can use own catalog only',
     'coupon_applied' => 'Coupon \":coupon\" applied',
     'discount_applied' => ':amount discount applied',
+    'disambiguate_symbol' => 'Disambiguate symbol',
+    'html_entity' => 'HTML entity',
     'invoices' => 'Invoices',
     'invoice_for' => 'Subscription fee for :start - :end',
+    'iso_numeric' => 'ISO numeric code',
     'message_send_by_staff' => 'This message was sent by your staff <b>:user</b>',
     'of_total' => ':first - :last of :total',
+    'smallest_denomination' => 'Smallest denomination',
     'subscription_fee' => 'Subscription fee',
+    'subunit_to_unit' => 'Subunit to unit',
+    'symbol_first' => 'Symbol first',
     'to' => 'To',
 
     // Version 2.0.0

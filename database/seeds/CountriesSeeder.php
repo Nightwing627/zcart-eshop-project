@@ -45,7 +45,7 @@ class CountriesSeeder extends BaseSeeder
                 // 'sub_region_code' => $country['sub-region-code'],
                 'calling_code' => $country['calling_code'],
                 'flag' => isset($country['flag']) ? $country['flag'] : Null,
-                'eea' => (bool)$country['eea'],
+                'eea' => (bool) $country['eea'],
                 'created_at' => Carbon::Now(),
                 'updated_at' => Carbon::Now(),
             ]);

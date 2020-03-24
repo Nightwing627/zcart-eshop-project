@@ -6,12 +6,12 @@
 			<h3 class="box-title">{{ trans('app.currencies') }}</h3>
 			<div class="box-tools pull-right">
 				@can('create', App\Currency::class)
-					<a href="javascript:void(0)" data-link="{{ route('admin.utility.currency.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_currency') }}</a>
+					<a href="javascript:void(0)" data-link="{{ route('admin.setting.currency.create') }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_currency') }}</a>
 				@endcan
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-sort">
+			<table class="table table-hover table-2nd-no-sort">
 				<thead>
 					<tr>
 						@can('massDelete', App\Currency::class)
@@ -26,7 +26,7 @@
 										<span class="sr-only">{{ trans('app.toggle_dropdown') }}</span>
 									</button>
 									<ul class="dropdown-menu" role="menu">
-										<li><a href="javascript:void(0)" data-link="{{ route('admin.utility.currency.massDestroy') }}" class="massAction " data-doafter="reload"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
+										<li><a href="javascript:void(0)" data-link="{{ route('admin.setting.currency.massDestroy') }}" class="massAction " data-doafter="reload"><i class="fa fa-times"></i> {{ trans('app.delete_permanently') }}</a></li>
 									</ul>
 								</div>
 							</th>
@@ -47,7 +47,13 @@
 							<td><input id="{{ $currency->id }}" type="checkbox" class="massCheck"></td>
 					  	@endcan
 						<td>{{ $currency->iso_code }}</td>
-						<td>{{ $currency->name }}</td>
+						<td>
+							{{ $currency->name }}
+				          	@if($currency->active)
+					          	<span class="indent10 label label-primary pull-right">{{ trans('app.active') }}</span>
+							    {{-- <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="{{ trans('help.new_language_info') }}"></i> --}}
+					        @endif
+						</td>
 						<td>{{ $currency->symbol }}</td>
 						<td>{{ $currency->subunit }}</td>
 						<td>
@@ -58,11 +64,11 @@
 						</td>
 						<td class="row-options">
 							@can('update', $currency)
-								<a href="javascript:void(0)" data-link="{{ route('admin.utility.currency.edit', $currency->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
+								<a href="javascript:void(0)" data-link="{{ route('admin.setting.currency.edit', $currency->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
 							@endcan
 
 							@can('delete', $currency)
-								{!! Form::open(['route' => ['admin.utility.currency.destroy', $currency->id], 'method' => 'delete', 'class' => 'data-form']) !!}
+								{!! Form::open(['route' => ['admin.setting.currency.destroy', $currency->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 									{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.delete'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 								{!! Form::close() !!}
 							@endcan
