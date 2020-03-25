@@ -422,6 +422,12 @@
 
             @if(Auth::user()->isAdmin())
 
+              <li class=" {{ Request::is('admin/setting/country*') ? 'active' : '' }}">
+                <a href="{{ url('admin/setting/country') }}">
+                  <i class="fa fa-angle-double-right"></i> {{ trans('nav.countries') }}
+                </a>
+              </li>
+
               <li class=" {{ Request::is('admin/setting/currency*') ? 'active' : '' }}">
                 <a href="{{ url('admin/setting/currency') }}">
                   <i class="fa fa-angle-double-right"></i> {{ trans('nav.currencies') }}

@@ -401,9 +401,9 @@ return [
 
     'shipping_zone_tax' => 'This tax profile will be applicable when customer make a purchase from this shipping zone',
 
-    'shipping_zone_select_countries' => 'Select countries to this zone that you ship to. Check Rest of the world option for worldwide zone.',
+    'shipping_zone_select_countries' => 'If you don\'t see the country in the options, probably the marketplace is not operational in that area. You can contact the marketplace support admin to make a request to add the country into the business area.',
 
-    'rest_of_the_world' => 'This zone includes any countries and regions not already defined in your other shipping zones.',
+    'rest_of_the_world' => 'This zone includes any countries and regions within the marketplace business area that are not already defined in your other shipping zones.',
 
     'shipping_max_width' => 'Maximum package width handle by the carrier. Leave empty to disable.',
 
@@ -703,19 +703,15 @@ return [
     'seller_condition_note' => 'Input more details about the item condition. This will help customers to understand the item.',
 
     // Version 1.4.0
-    'notify_new_chat' => 'Send me an email notification when a new chat message arrived',
-
-    'support_agent' => 'The support agent will get all the support notifications. If not set, the merchant will get all notifications.',
-
-    'show_refund_policy_with_listing' => 'Show the return and refund policy on the product description page on frontend.',
-
-    'show_shop_desc_with_listing' => 'Show the shop description on the product description page on frontend.',
+    'active_business_zone' => 'Your business operation area. Vendors will be able to create shipping zones within active areas only.',
 
     'config_show_seo_info_to_frontend' => 'Show SEO info like the meta title, meta description, tags to the frontend.',
 
     'config_can_use_own_catalog_only' => 'If enabled, the vendors can use only his/her own catalog product to create listings.',
 
     'currency_iso_numeric' => 'ISO 4217 numeric code. For example: USD = 840 and JPY = 392',
+
+    'country_iso_numeric' => 'ISO 3166-1 numeric code. For example: USA = 840 and JAPAN = 392',
 
     'currency_active' => 'Active currencies will be shown on the marketplace.',
 
@@ -728,4 +724,17 @@ return [
     'currency_smallest_denomination' => 'The smallest denomination of the currency. Default value is 1',
 
     'currency_subunit_to_unit' => 'The number of subunits requires for a single unit. Default value is 100',
+
+    'eea' => 'European Economic Area',
+
+    'support_agent' => 'The support agent will get all the support notifications. If not set, the merchant will get all notifications.',
+
+    'show_refund_policy_with_listing' => 'Show the return and refund policy on the product description page on frontend.',
+
+    'show_shop_desc_with_listing' => 'Show the shop description on the product description page on frontend.',
+
+    'marketplace_business_area' => 'The marketplace business area',
+
+    'notify_new_chat' => 'Send me an email notification when a new chat message arrived',
+
 ];

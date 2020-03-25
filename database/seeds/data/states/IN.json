@@ -1,146 +1,146 @@
 [
   {
-    "iso_3166_2": "AP",
+    "iso_code": "AP",
     "name": "Andhra Pradesh"
   },
   {
-    "iso_3166_2": "AR",
+    "iso_code": "AR",
     "name": "Arunachal Pradesh"
   },
   {
-    "iso_3166_2": "AS",
+    "iso_code": "AS",
     "name": "Assam"
   },
   {
-    "iso_3166_2": "BR",
+    "iso_code": "BR",
     "name": "Bihar"
   },
   {
-    "iso_3166_2": "CT",
+    "iso_code": "CT",
     "name": "Chhattisgarh"
   },
   {
-    "iso_3166_2": "GA",
+    "iso_code": "GA",
     "name": "Goa"
   },
   {
-    "iso_3166_2": "GJ",
+    "iso_code": "GJ",
     "name": "Gujarat"
   },
   {
-    "iso_3166_2": "HR",
+    "iso_code": "HR",
     "name": "Haryana"
   },
   {
-    "iso_3166_2": "HP",
+    "iso_code": "HP",
     "name": "Himachal Pradesh"
   },
   {
-    "iso_3166_2": "JK",
+    "iso_code": "JK",
     "name": "Jammu and Kashmir"
   },
   {
-    "iso_3166_2": "JH",
+    "iso_code": "JH",
     "name": "Jharkhand"
   },
   {
-    "iso_3166_2": "KA",
+    "iso_code": "KA",
     "name": "Karnataka"
   },
   {
-    "iso_3166_2": "KL",
+    "iso_code": "KL",
     "name": "Kerala"
   },
   {
-    "iso_3166_2": "MP",
+    "iso_code": "MP",
     "name": "Madhya Pradesh"
   },
   {
-    "iso_3166_2": "MH",
+    "iso_code": "MH",
     "name": "Maharashtra"
   },
   {
-    "iso_3166_2": "MN",
+    "iso_code": "MN",
     "name": "Manipur"
   },
   {
-    "iso_3166_2": "ML",
+    "iso_code": "ML",
     "name": "Meghalaya"
   },
   {
-    "iso_3166_2": "MZ",
+    "iso_code": "MZ",
     "name": "Mizoram"
   },
   {
-    "iso_3166_2": "NL",
+    "iso_code": "NL",
     "name": "Nagaland"
   },
   {
-    "iso_3166_2": "OR",
+    "iso_code": "OR",
     "name": "Odisha"
   },
   {
-    "iso_3166_2": "PB",
+    "iso_code": "PB",
     "name": "Punjab"
   },
   {
-    "iso_3166_2": "RJ",
+    "iso_code": "RJ",
     "name": "Rajasthan"
   },
   {
-    "iso_3166_2": "SK",
+    "iso_code": "SK",
     "name": "Sikkim"
   },
   {
-    "iso_3166_2": "TN",
+    "iso_code": "TN",
     "name": "Tamil Nadu"
   },
   {
-    "iso_3166_2": "TG",
+    "iso_code": "TG",
     "name": "Telangana"
   },
   {
-    "iso_3166_2": "TR",
+    "iso_code": "TR",
     "name": "Tripura"
   },
   {
-    "iso_3166_2": "UP",
+    "iso_code": "UP",
     "name": "Uttar Pradesh"
   },
   {
-    "iso_3166_2": "UT",
+    "iso_code": "UT",
     "name": "Uttarakhand"
   },
   {
-    "iso_3166_2": "WB",
+    "iso_code": "WB",
     "name": "West Bengal"
   },
   {
-    "iso_3166_2": "AN",
+    "iso_code": "AN",
     "name": "Andaman and Nicobar Islands"
   },
   {
-    "iso_3166_2": "CH",
+    "iso_code": "CH",
     "name": "Chandigarh"
   },
   {
-    "iso_3166_2": "DN",
+    "iso_code": "DN",
     "name": "Dadra and Nagar Haveli"
   },
   {
-    "iso_3166_2": "DD",
+    "iso_code": "DD",
     "name": "Daman and Diu"
   },
   {
-    "iso_3166_2": "LD",
+    "iso_code": "LD",
     "name": "Lakshadweep"
   },
   {
-    "iso_3166_2": "DL",
+    "iso_code": "DL",
     "name": "National Capital Territory of Delhi"
   },
   {
-    "iso_3166_2": "PY",
+    "iso_code": "PY",
     "name": "Puducherry"
   }
 ]

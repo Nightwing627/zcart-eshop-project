@@ -1,238 +1,238 @@
 [
   {
     "name": "Alabama",
-    "iso_3166_2": "AL"
+    "iso_code": "AL"
   },
   {
     "name": "Alaska",
-    "iso_3166_2": "AK"
+    "iso_code": "AK"
   },
   {
     "name": "American Samoa",
-    "iso_3166_2": "AS"
+    "iso_code": "AS"
   },
   {
     "name": "Arizona",
-    "iso_3166_2": "AZ"
+    "iso_code": "AZ"
   },
   {
     "name": "Arkansas",
-    "iso_3166_2": "AR"
+    "iso_code": "AR"
   },
   {
     "name": "California",
-    "iso_3166_2": "CA"
+    "iso_code": "CA"
   },
   {
     "name": "Colorado",
-    "iso_3166_2": "CO"
+    "iso_code": "CO"
   },
   {
     "name": "Connecticut",
-    "iso_3166_2": "CT"
+    "iso_code": "CT"
   },
   {
     "name": "Delaware",
-    "iso_3166_2": "DE"
+    "iso_code": "DE"
   },
   {
     "name": "District Of Columbia",
-    "iso_3166_2": "DC"
+    "iso_code": "DC"
   },
   {
     "name": "Federated States Of Micronesia",
-    "iso_3166_2": "FM"
+    "iso_code": "FM"
   },
   {
     "name": "Florida",
-    "iso_3166_2": "FL"
+    "iso_code": "FL"
   },
   {
     "name": "Georgia",
-    "iso_3166_2": "GA"
+    "iso_code": "GA"
   },
   {
     "name": "Guam",
-    "iso_3166_2": "GU"
+    "iso_code": "GU"
   },
   {
     "name": "Hawaii",
-    "iso_3166_2": "HI"
+    "iso_code": "HI"
   },
   {
     "name": "Idaho",
-    "iso_3166_2": "ID"
+    "iso_code": "ID"
   },
   {
     "name": "Illinois",
-    "iso_3166_2": "IL"
+    "iso_code": "IL"
   },
   {
     "name": "Indiana",
-    "iso_3166_2": "IN"
+    "iso_code": "IN"
   },
   {
     "name": "Iowa",
-    "iso_3166_2": "IA"
+    "iso_code": "IA"
   },
   {
     "name": "Kansas",
-    "iso_3166_2": "KS"
+    "iso_code": "KS"
   },
   {
     "name": "Kentucky",
-    "iso_3166_2": "KY"
+    "iso_code": "KY"
   },
   {
     "name": "Louisiana",
-    "iso_3166_2": "LA"
+    "iso_code": "LA"
   },
   {
     "name": "Maine",
-    "iso_3166_2": "ME"
+    "iso_code": "ME"
   },
   {
     "name": "Marshall Islands",
-    "iso_3166_2": "MH"
+    "iso_code": "MH"
   },
   {
     "name": "Maryland",
-    "iso_3166_2": "MD"
+    "iso_code": "MD"
   },
   {
     "name": "Massachusetts",
-    "iso_3166_2": "MA"
+    "iso_code": "MA"
   },
   {
     "name": "Michigan",
-    "iso_3166_2": "MI"
+    "iso_code": "MI"
   },
   {
     "name": "Minnesota",
-    "iso_3166_2": "MN"
+    "iso_code": "MN"
   },
   {
     "name": "Mississippi",
-    "iso_3166_2": "MS"
+    "iso_code": "MS"
   },
   {
     "name": "Missouri",
-    "iso_3166_2": "MO"
+    "iso_code": "MO"
   },
   {
     "name": "Montana",
-    "iso_3166_2": "MT"
+    "iso_code": "MT"
   },
   {
     "name": "Nebraska",
-    "iso_3166_2": "NE"
+    "iso_code": "NE"
   },
   {
     "name": "Nevada",
-    "iso_3166_2": "NV"
+    "iso_code": "NV"
   },
   {
     "name": "New Hampshire",
-    "iso_3166_2": "NH"
+    "iso_code": "NH"
   },
   {
     "name": "New Jersey",
-    "iso_3166_2": "NJ"
+    "iso_code": "NJ"
   },
   {
     "name": "New Mexico",
-    "iso_3166_2": "NM"
+    "iso_code": "NM"
   },
   {
     "name": "New York",
-    "iso_3166_2": "NY"
+    "iso_code": "NY"
   },
   {
     "name": "North Carolina",
-    "iso_3166_2": "NC"
+    "iso_code": "NC"
   },
   {
     "name": "North Dakota",
-    "iso_3166_2": "ND"
+    "iso_code": "ND"
   },
   {
     "name": "Northern Mariana Islands",
-    "iso_3166_2": "MP"
+    "iso_code": "MP"
   },
   {
     "name": "Ohio",
-    "iso_3166_2": "OH"
+    "iso_code": "OH"
   },
   {
     "name": "Oklahoma",
-    "iso_3166_2": "OK"
+    "iso_code": "OK"
   },
   {
     "name": "Oregon",
-    "iso_3166_2": "OR"
+    "iso_code": "OR"
   },
   {
     "name": "Palau",
-    "iso_3166_2": "PW"
+    "iso_code": "PW"
   },
   {
     "name": "Pennsylvania",
-    "iso_3166_2": "PA"
+    "iso_code": "PA"
   },
   {
     "name": "Puerto Rico",
-    "iso_3166_2": "PR"
+    "iso_code": "PR"
   },
   {
     "name": "Rhode Island",
-    "iso_3166_2": "RI"
+    "iso_code": "RI"
   },
   {
     "name": "South Carolina",
-    "iso_3166_2": "SC"
+    "iso_code": "SC"
   },
   {
     "name": "South Dakota",
-    "iso_3166_2": "SD"
+    "iso_code": "SD"
   },
   {
     "name": "Tennessee",
-    "iso_3166_2": "TN"
+    "iso_code": "TN"
   },
   {
     "name": "Texas",
-    "iso_3166_2": "TX"
+    "iso_code": "TX"
   },
   {
     "name": "Utah",
-    "iso_3166_2": "UT"
+    "iso_code": "UT"
   },
   {
     "name": "Vermont",
-    "iso_3166_2": "VT"
+    "iso_code": "VT"
   },
   {
     "name": "Virgin Islands",
-    "iso_3166_2": "VI"
+    "iso_code": "VI"
   },
   {
     "name": "Virginia",
-    "iso_3166_2": "VA"
+    "iso_code": "VA"
   },
   {
     "name": "Washington",
-    "iso_3166_2": "WA"
+    "iso_code": "WA"
   },
   {
     "name": "West Virginia",
-    "iso_3166_2": "WV"
+    "iso_code": "WV"
   },
   {
     "name": "Wisconsin",
-    "iso_3166_2": "WI"
+    "iso_code": "WI"
   },
   {
     "name": "Wyoming",
-    "iso_3166_2": "WY"
+    "iso_code": "WY"
   }
 ]

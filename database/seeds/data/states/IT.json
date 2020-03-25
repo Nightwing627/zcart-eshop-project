@@ -1,82 +1,82 @@
 [
   {
     "name": "Abruzzo",
-    "iso_3166_2": "65"
+    "iso_code": "65"
   },
   {
     "name": "Basilicata",
-    "iso_3166_2": "77"
+    "iso_code": "77"
   },
   {
     "name": "Calabria",
-    "iso_3166_2": "78"
+    "iso_code": "78"
   },
   {
     "name": "Campania",
-    "iso_3166_2": "72"
+    "iso_code": "72"
   },
   {
     "name": "Emilia-Romagna",
-    "iso_3166_2": "45"
+    "iso_code": "45"
   },
   {
     "name": "Lazio",
-    "iso_3166_2": "62"
+    "iso_code": "62"
   },
   {
     "name": "Liguria",
-    "iso_3166_2": "42"
+    "iso_code": "42"
   },
   {
     "name": "Lombardy",
-    "iso_3166_2": "25"
+    "iso_code": "25"
   },
   {
     "name": "Marche",
-    "iso_3166_2": "57"
+    "iso_code": "57"
   },
   {
     "name": "Molise",
-    "iso_3166_2": "67"
+    "iso_code": "67"
   },
   {
     "name": "Piedmont",
-    "iso_3166_2": "21"
+    "iso_code": "21"
   },
   {
     "name": "Apulia",
-    "iso_3166_2": "75"
+    "iso_code": "75"
   },
   {
     "name": "Tuscany",
-    "iso_3166_2": "52"
+    "iso_code": "52"
   },
   {
     "name": "Umbria",
-    "iso_3166_2": "55"
+    "iso_code": "55"
   },
   {
     "name": "Veneto",
-    "iso_3166_2": "34"
+    "iso_code": "34"
   },
   {
     "name": "Friuli Venezia Giulia",
-    "iso_3166_2": "36"
+    "iso_code": "36"
   },
   {
     "name": "Sardinia",
-    "iso_3166_2": "88"
+    "iso_code": "88"
   },
   {
     "name": "Sicily",
-    "iso_3166_2": "82"
+    "iso_code": "82"
   },
   {
     "name": "Trentino-South Tyrol",
-    "iso_3166_2": "32"
+    "iso_code": "32"
   },
   {
     "name": "Aosta Valley",
-    "iso_3166_2": "23"
+    "iso_code": "23"
   }
 ]

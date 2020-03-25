@@ -35,4 +35,8 @@ return [
     'no_file_was_uploaded' => 'No file was uploaded.',
     'error_uploading_file' => 'Error uploading file',
     'model_not_defined' => 'The model is not defined!',
+
+    // Version 1.4.0
+    'invalid_data' => 'Invalid data.',
+
 ];

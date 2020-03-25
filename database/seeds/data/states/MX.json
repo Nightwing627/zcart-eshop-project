@@ -1,130 +1,130 @@
 [
   {
     "name": "Aguascalientes",
-    "iso_3166_2": "AG"
+    "iso_code": "AG"
   },
   {
     "name": "Baja California",
-    "iso_3166_2": "BC"
+    "iso_code": "BC"
   },
   {
     "name": "Baja California Sur",
-    "iso_3166_2": "BS"
+    "iso_code": "BS"
   },
   {
     "name": "Campeche",
-    "iso_3166_2": "CM"
+    "iso_code": "CM"
   },
   {
     "name": "Chiapas",
-    "iso_3166_2": "CS"
+    "iso_code": "CS"
   },
   {
     "name": "Chihuahua",
-    "iso_3166_2": "CH"
+    "iso_code": "CH"
   },
   {
     "name": "Coahuila",
-    "iso_3166_2": "MX"
+    "iso_code": "MX"
   },
   {
     "name": "Colima",
-    "iso_3166_2": "CL"
+    "iso_code": "CL"
   },
   {
     "name": "Federal District",
-    "iso_3166_2": "DF"
+    "iso_code": "DF"
   },
   {
     "name": "Durango",
-    "iso_3166_2": "DG"
+    "iso_code": "DG"
   },
   {
     "name": "Guanajuato",
-    "iso_3166_2": "GT"
+    "iso_code": "GT"
   },
   {
     "name": "Guerrero",
-    "iso_3166_2": "GR"
+    "iso_code": "GR"
   },
   {
     "name": "Hidalgo",
-    "iso_3166_2": "HG"
+    "iso_code": "HG"
   },
   {
     "name": "Jalisco",
-    "iso_3166_2": "JA"
+    "iso_code": "JA"
   },
   {
     "name": "Mexico",
-    "iso_3166_2": "ME"
+    "iso_code": "ME"
   },
   {
     "name": "Michoacán",
-    "iso_3166_2": "MI"
+    "iso_code": "MI"
   },
   {
     "name": "Morelos",
-    "iso_3166_2": "MO"
+    "iso_code": "MO"
   },
   {
     "name": "Nayarit",
-    "iso_3166_2": "NA"
+    "iso_code": "NA"
   },
   {
     "name": "Nuevo León",
-    "iso_3166_2": "NL"
+    "iso_code": "NL"
   },
   {
     "name": "Oaxaca",
-    "iso_3166_2": "OA"
+    "iso_code": "OA"
   },
   {
     "name": "Puebla",
-    "iso_3166_2": "PU"
+    "iso_code": "PU"
   },
   {
     "name": "Querétaro",
-    "iso_3166_2": "QE"
+    "iso_code": "QE"
   },
   {
     "name": "Quintana Roo",
-    "iso_3166_2": "QR"
+    "iso_code": "QR"
   },
   {
     "name": "San Luis Potosí",
-    "iso_3166_2": "SL"
+    "iso_code": "SL"
   },
   {
     "name": "Sinaloa",
-    "iso_3166_2": "SI"
+    "iso_code": "SI"
   },
   {
     "name": "Sonora",
-    "iso_3166_2": "SO"
+    "iso_code": "SO"
   },
   {
     "name": "Tabasco",
-    "iso_3166_2": "TB"
+    "iso_code": "TB"
   },
   {
     "name": "Tamaulipas",
-    "iso_3166_2": "TM"
+    "iso_code": "TM"
   },
   {
     "name": "Tlaxcala",
-    "iso_3166_2": "TL"
+    "iso_code": "TL"
   },
   {
     "name": "Veracruz",
-    "iso_3166_2": "VE"
+    "iso_code": "VE"
   },
   {
     "name": "Yucatán",
-    "iso_3166_2": "YU"
+    "iso_code": "YU"
   },
   {
     "name": "Zacatecas",
-    "iso_3166_2": "ZA"
+    "iso_code": "ZA"
   }
 ]

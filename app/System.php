@@ -59,6 +59,7 @@ class System extends BaseModel
             'legal_name',
             'slogan',
             'email',
+            'worldwide_business_area',
             'timezone_id',
             'currency_id',
             'default_language',
@@ -70,6 +71,7 @@ class System extends BaseModel
      * @var array
      */
     protected $casts = [
+        'worldwide_business_area' => 'boolean',
         'maintenance_mode' => 'boolean',
     ];
 
@@ -107,6 +109,14 @@ class System extends BaseModel
     public function timezone()
     {
         return $this->belongsTo(Timezone::class);
+    }
+
+    /**
+     * Getters
+     */
+    public function getBusinessAreaAttribute($value)
+    {
+        return $value ? trans("app.worldwide") : trans("app.active_business_area");
     }
 
     /**

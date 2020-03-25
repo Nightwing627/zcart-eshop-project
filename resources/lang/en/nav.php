@@ -77,4 +77,5 @@ return [
 
     // Version 1.4.0
     'chats' => 'chats',
+    'countries' => 'Business Area',
 ];

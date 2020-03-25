@@ -1,138 +1,138 @@
 [
   {
-    "iso_3166_2": "AC",
+    "iso_code": "AC",
     "name": "Special Region of Aceh"
   },
   {
-    "iso_3166_2": "BA",
+    "iso_code": "BA",
     "name": "Bali"
   },
   {
-    "iso_3166_2": "BB",
+    "iso_code": "BB",
     "name": "Bangka–Belitung Islands"
   },
   {
-    "iso_3166_2": "BT",
+    "iso_code": "BT",
     "name": "Banten"
   },
   {
-    "iso_3166_2": "BE",
+    "iso_code": "BE",
     "name": "Bengkulu"
   },
   {
-    "iso_3166_2": "JT",
+    "iso_code": "JT",
     "name": "Central Java"
   },
   {
-    "iso_3166_2": "KT",
+    "iso_code": "KT",
     "name": "Central Kalimantan"
   },
   {
-    "iso_3166_2": "ST",
+    "iso_code": "ST",
     "name": "Central Sulawesi"
   },
   {
-    "iso_3166_2": "JI",
+    "iso_code": "JI",
     "name": "East Java"
   },
   {
-    "iso_3166_2": "KI",
+    "iso_code": "KI",
     "name": "East Kalimantan"
   },
   {
-    "iso_3166_2": "NT",
+    "iso_code": "NT",
     "name": "East Nusa Tenggara"
   },
   {
-    "iso_3166_2": "GO",
+    "iso_code": "GO",
     "name": "Gorontalo"
   },
   {
-    "iso_3166_2": "JK",
+    "iso_code": "JK",
     "name": "Jakarta Special Capital Region"
   },
   {
-    "iso_3166_2": "JA",
+    "iso_code": "JA",
     "name": "Jambi"
   },
   {
-    "iso_3166_2": "LA",
+    "iso_code": "LA",
     "name": "Lampung"
   },
   {
-    "iso_3166_2": "MA",
+    "iso_code": "MA",
     "name": "Maluku"
   },
   {
-    "iso_3166_2": "KU",
+    "iso_code": "KU",
     "name": "North Kalimantan"
   },
   {
-    "iso_3166_2": "MU",
+    "iso_code": "MU",
     "name": "North Maluku"
   },
   {
-    "iso_3166_2": "SA",
+    "iso_code": "SA",
     "name": "North Sulawesi"
   },
   {
-    "iso_3166_2": "SU",
+    "iso_code": "SU",
     "name": "North Sumatra"
   },
   {
-    "iso_3166_2": "PA",
+    "iso_code": "PA",
     "name": "Special Region of Papua"
   },
   {
-    "iso_3166_2": "RI",
+    "iso_code": "RI",
     "name": "Riau"
   },
   {
-    "iso_3166_2": "KR",
+    "iso_code": "KR",
     "name": "Riau Islands"
   },
   {
-    "iso_3166_2": "SG",
+    "iso_code": "SG",
     "name": "Southeast Sulawesi"
   },
   {
-    "iso_3166_2": "KS",
+    "iso_code": "KS",
     "name": "South Kalimantan"
   },
   {
-    "iso_3166_2": "SN",
+    "iso_code": "SN",
     "name": "South Sulawesi"
   },
   {
-    "iso_3166_2": "SS",
+    "iso_code": "SS",
     "name": "South Sumatra"
   },
   {
-    "iso_3166_2": "JB",
+    "iso_code": "JB",
     "name": "West Java"
   },
   {
-    "iso_3166_2": "KB",
+    "iso_code": "KB",
     "name": "West Kalimantan"
   },
   {
-    "iso_3166_2": "NB",
+    "iso_code": "NB",
     "name": "West Nusa Tenggara"
   },
   {
-    "iso_3166_2": "PB",
+    "iso_code": "PB",
     "name": "Special Region of West Papua"
   },
   {
-    "iso_3166_2": "SR",
+    "iso_code": "SR",
     "name": "West Sulawesi"
   },
   {
-    "iso_3166_2": "SB",
+    "iso_code": "SB",
     "name": "West Sumatra"
   },
   {
-    "iso_3166_2": "YO",
+    "iso_code": "YO",
     "name": "Special Region of Yogyakarta"
   }
 ]

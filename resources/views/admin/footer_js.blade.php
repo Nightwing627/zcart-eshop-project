@@ -469,10 +469,17 @@
 		});
 
 		$(".select2-multi").select2({
-		    maximumSelectionLength: 2,
+		    dropdownAutoWidth: true,
+		    multiple: true,
+		    width: '100%',
+		    height: '30px',
+		    placeholder: "{{ trans('app.placeholder.select') }}",
+		    allowClear: true
 		});
 
 		$(".select2").not(".dataTables_length .select2").css('width', '100%');
+
+		$('.select2-search__field').css('width', '100%');
 
 	  	//product Seach
 		$('#searchProduct').on('keyup', function(e){

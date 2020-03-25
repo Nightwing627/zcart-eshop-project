@@ -143,6 +143,14 @@ class ListHelper
         ];
     }
 
+    public static function marketplace_business_area()
+    {
+        return  [
+            '1' => trans("app.worldwide"),
+            '0' => trans("app.active_business_area"),
+        ];
+    }
+
     public static function faq_topics_for()
     {
         return  [
@@ -986,6 +994,21 @@ class ListHelper
      *
      * @return array
      */
+    public static function active_bussiness_areas()
+    {
+        $countries = \DB::table('countries');
+
+        if(! config('system_settings.worldwide_business_area'))
+            $countries->where('active', 1);
+
+        return $countries->orderBy('name', 'asc')->pluck('name', 'id');
+    }
+
+    /**
+     * Get country list for form dropdown.
+     *
+     * @return array
+     */
     public static function countries()
     {
         return \DB::table('countries')->orderBy('name', 'asc')->pluck('name', 'id');
@@ -1009,15 +1032,18 @@ class ListHelper
      *
      * @return array
      */
-    public static function currencies()
+    public static function currencies($all = false)
     {
-        $currencies = \DB::table('currencies')->select('name', 'iso_code', 'id')->where('active', 1)
-        ->orderBy('priority', 'asc')->orderBy('name', 'asc')->get();
-        // $currencies = \DB::table('currencies')->where('active', 1)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+         $query = \DB::table('currencies')->select('name', 'symbol', 'iso_code', 'id');
+
+         if(!$all)
+             $query->where('active', 1);
+
+        $currencies = $query->orderBy('priority', 'asc')->orderBy('name', 'asc')->get();
 
         $result = [];
         foreach ($currencies as $currency)
-            $result[$currency->id] = $currency->name . ' (' . $currency->iso_code . ')';
+            $result[$currency->id] = $currency->name . ' (' . $currency->iso_code . ' ' . $currency->symbol . ')';
 
         return $result;
     }

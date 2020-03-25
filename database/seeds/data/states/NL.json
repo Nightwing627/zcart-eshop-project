@@ -1,58 +1,58 @@
 [
   {
-    "iso_3166_2": "DR",
+    "iso_code": "DR",
     "name": "Drenthe"
   },
   {
-    "iso_3166_2": "FL",
+    "iso_code": "FL",
     "name": "Flevoland"
   },
   {
-    "iso_3166_2": "FR",
+    "iso_code": "FR",
     "name": "Friesland"
   },
   {
-    "iso_3166_2": "GD",
+    "iso_code": "GD",
     "name": "Gelderland"
   },
   {
-    "iso_3166_2": "GR",
+    "iso_code": "GR",
     "name": "Groningen"
   },
   {
-    "iso_3166_2": "LB",
+    "iso_code": "LB",
     "name": "Limburg"
   },
   {
-    "iso_3166_2": "NB",
+    "iso_code": "NB",
     "name": "Noord-Brabant"
   },
   {
-    "iso_3166_2": "NH",
+    "iso_code": "NH",
     "name": "Noord-Holland"
   },
   {
-    "iso_3166_2": "OV",
+    "iso_code": "OV",
     "name": "Overijssel"
   },
   {
-    "iso_3166_2": "UT",
+    "iso_code": "UT",
     "name": "Utrecht"
   },
   {
-    "iso_3166_2": "ZH",
+    "iso_code": "ZH",
     "name": "Zuid-Holland"
   },
   {
-    "iso_3166_2": "ZL",
+    "iso_code": "ZL",
     "name": "Zeeland"
   },
   {
-    "iso_3166_2": "AW",
+    "iso_code": "AW",
     "name": "Aruba"
   },
   {
-    "iso_3166_2": "BQ",
+    "iso_code": "BQ",
     "name": "Bonaire"
   },
   {
@@ -62,11 +62,11 @@
     "name": "Sint Eustatius"
   },
   {
-    "iso_3166_2": "CW",
+    "iso_code": "CW",
     "name": "Curaçao"
   },
   {
-    "iso_3166_2": "SX",
+    "iso_code": "SX",
     "name": "Sint Maarten"
   }
  ]

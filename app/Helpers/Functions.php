@@ -1113,23 +1113,34 @@ if ( ! function_exists('get_countries_name_with_states') )
     }
 }
 
+if ( ! function_exists('get_flag_img_by_code') )
+{
+    function get_flag_img_by_code($code, $plain = false)
+    {
+        $full_path = sys_image_path('flags') . $code . '.png';
+
+        if(! file_exists($full_path))
+            $full_path = sys_image_path('flags') . 'default.gif';
+
+        if($plain)
+            return asset($full_path);
+
+        return '<img src="'. asset($full_path) .'" alt="'. $code .'"/>';
+    }
+}
+
 if ( ! function_exists('get_formated_country_name') )
 {
-    function get_formated_country_name($country, $code = null) {
+    function get_formated_country_name($country, $code = null)
+    {
         if (is_numeric($country)) {
             $country_data = \DB::table('countries')->select('iso_3166_2', 'name')->find($country);
             $country = $country_data->name;
             $code = $country_data->iso_3166_2;
         }
 
-        if($code) {
-            $full_path = sys_image_path('flags') . $code . '.png';
-
-            if(!file_exists($full_path))
-                $full_path = sys_image_path('flags') . 'default.gif';
-
-            return '<img src="'. asset($full_path) .'" alt="'. $code .'"> <span class="indent5">' . $country . '</span>';
-        }
+        if($code)
+            return get_flag_img_by_code($code) . ' <span class="indent5">' . $country . '</span>';
 
         return $country;
     }

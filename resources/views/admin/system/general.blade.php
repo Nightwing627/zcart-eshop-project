@@ -74,6 +74,19 @@
 								</div>
 
 								<div class="form-group">
+							        {!! Form::label('worldwide_business_area', '*' . trans('app.business_area'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
+								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.marketplace_business_area') }}"></i>
+								  	<div class="col-sm-8 nopadding-left">
+								  		@if($can_update)
+									        {!! Form::select('worldwide_business_area', $business_areas , $system->worldwide_business_area, ['class' => 'form-control select2-normal', 'required']) !!}
+									  		<div class="help-block with-errors"></div>
+										@else
+											<span>{{ $system->business_area }}</span>
+										@endif
+								  	</div>
+								</div>
+
+								<div class="form-group">
 							        {!! Form::label('timezone_id', '*' . trans('app.form.timezone'). ':', ['class' => 'with-help col-sm-3 control-label']) !!}
 								  	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title="{{ trans('help.system_timezone') }}"></i>
 								  	<div class="col-sm-8 nopadding-left">

@@ -50,6 +50,8 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         $this->composeBillingSection();
 
+        $this->composeCountryForm();
+
         $this->composeTicketSection();
 
         $this->composeBlogForm();
@@ -295,7 +297,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 function($view)
                 {
                     $view->with('taxes', ListHelper::taxes());
-                    $view->with('countries', ListHelper::countries());
+                    $view->with('countries', ListHelper::active_bussiness_areas());
                 });
     }
 
@@ -311,6 +313,22 @@ class ViewComposerServiceProvider extends ServiceProvider
                 function($view)
                 {
                     $view->with('timezones', ListHelper::timezones());
+                });
+    }
+
+    /**
+     * compose partial view of country form
+     */
+    private function composeCountryForm()
+    {
+        View::composer(
+
+                'admin.country._form',
+
+                function($view)
+                {
+                    $view->with('timezones', ListHelper::timezones());
+                    $view->with('currencies', ListHelper::currencies(true));
                 });
     }
 
@@ -1141,6 +1159,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                     $view->with('timezones', ListHelper::timezones());
                     $view->with('currencies', ListHelper::currencies());
                     $view->with('languages', ListHelper::languages());
+                    $view->with('business_areas', ListHelper::marketplace_business_area());
                 });
     }
 

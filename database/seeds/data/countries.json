@@ -2,7 +2,7 @@
    "4":{
       "capital":"Kabul",
       "citizenship":"Afghan",
-      "country-code":"004",
+      "iso_numeric":"004",
       "currency":"afghani",
       "currency_code":"AFN",
       "currency_sub_unit":"pul",
@@ -20,7 +20,7 @@
    "8":{
       "capital":"Tirana",
       "citizenship":"Albanian",
-      "country-code":"008",
+      "iso_numeric":"008",
       "currency":"lek",
       "currency_code":"ALL",
       "currency_sub_unit":"(qindar (pl. qindarka))",
@@ -38,7 +38,7 @@
    "10":{
       "capital":"Antartica",
       "citizenship":"of Antartica",
-      "country-code":"010",
+      "iso_numeric":"010",
       "currency":"",
       "currency_code":"",
       "currency_sub_unit":"",
@@ -56,7 +56,7 @@
    "12":{
       "capital":"Algiers",
       "citizenship":"Algerian",
-      "country-code":"012",
+      "iso_numeric":"012",
       "currency":"Algerian dinar",
       "currency_code":"DZD",
       "currency_sub_unit":"centime",
@@ -74,7 +74,7 @@
    "16":{
       "capital":"Pago Pago",
       "citizenship":"American Samoan",
-      "country-code":"016",
+      "iso_numeric":"016",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -92,7 +92,7 @@
    "20":{
       "capital":"Andorra la Vella",
       "citizenship":"Andorran",
-      "country-code":"020",
+      "iso_numeric":"020",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -110,7 +110,7 @@
    "24":{
       "capital":"Luanda",
       "citizenship":"Angolan",
-      "country-code":"024",
+      "iso_numeric":"024",
       "currency":"kwanza",
       "currency_code":"AOA",
       "currency_sub_unit":"c\u00eantimo",
@@ -128,7 +128,7 @@
    "28":{
       "capital":"St John\u2019s",
       "citizenship":"of Antigua and Barbuda",
-      "country-code":"028",
+      "iso_numeric":"028",
       "currency":"East Caribbean dollar",
       "currency_code":"XCD",
       "currency_sub_unit":"cent",
@@ -146,7 +146,7 @@
    "31":{
       "capital":"Baku",
       "citizenship":"Azerbaijani",
-      "country-code":"031",
+      "iso_numeric":"031",
       "currency":"Azerbaijani manat",
       "currency_code":"AZN",
       "currency_sub_unit":"kepik (inv.)",
@@ -164,7 +164,7 @@
    "32":{
       "capital":"Buenos Aires",
       "citizenship":"Argentinian",
-      "country-code":"032",
+      "iso_numeric":"032",
       "currency":"Argentine peso",
       "currency_code":"ARS",
       "currency_sub_unit":"centavo",
@@ -182,7 +182,7 @@
    "36":{
       "capital":"Canberra",
       "citizenship":"Australian",
-      "country-code":"036",
+      "iso_numeric":"036",
       "currency":"Australian dollar",
       "currency_code":"AUD",
       "currency_sub_unit":"cent",
@@ -200,7 +200,7 @@
    "40":{
       "capital":"Vienna",
       "citizenship":"Austrian",
-      "country-code":"040",
+      "iso_numeric":"040",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -218,7 +218,7 @@
    "44":{
       "capital":"Nassau",
       "citizenship":"Bahamian",
-      "country-code":"044",
+      "iso_numeric":"044",
       "currency":"Bahamian dollar",
       "currency_code":"BSD",
       "currency_sub_unit":"cent",
@@ -236,7 +236,7 @@
    "48":{
       "capital":"Manama",
       "citizenship":"Bahraini",
-      "country-code":"048",
+      "iso_numeric":"048",
       "currency":"Bahraini dinar",
       "currency_code":"BHD",
       "currency_sub_unit":"fils (inv.)",
@@ -254,7 +254,7 @@
    "50":{
       "capital":"Dhaka",
       "citizenship":"Bangladeshi",
-      "country-code":"050",
+      "iso_numeric":"050",
       "currency":"taka (inv.)",
       "currency_code":"BDT",
       "currency_sub_unit":"poisha (inv.)",
@@ -272,7 +272,7 @@
    "51":{
       "capital":"Yerevan",
       "citizenship":"Armenian",
-      "country-code":"051",
+      "iso_numeric":"051",
       "currency":"dram (inv.)",
       "currency_code":"AMD",
       "currency_sub_unit":"luma",
@@ -290,7 +290,7 @@
    "52":{
       "capital":"Bridgetown",
       "citizenship":"Barbadian",
-      "country-code":"052",
+      "iso_numeric":"052",
       "currency":"Barbados dollar",
       "currency_code":"BBD",
       "currency_sub_unit":"cent",
@@ -308,7 +308,7 @@
    "56":{
       "capital":"Brussels",
       "citizenship":"Belgian",
-      "country-code":"056",
+      "iso_numeric":"056",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -326,7 +326,7 @@
    "60":{
       "capital":"Hamilton",
       "citizenship":"Bermudian",
-      "country-code":"060",
+      "iso_numeric":"060",
       "currency":"Bermuda dollar",
       "currency_code":"BMD",
       "currency_sub_unit":"cent",
@@ -344,7 +344,7 @@
    "64":{
       "capital":"Thimphu",
       "citizenship":"Bhutanese",
-      "country-code":"064",
+      "iso_numeric":"064",
       "currency":"ngultrum (inv.)",
       "currency_code":"BTN",
       "currency_sub_unit":"chhetrum (inv.)",
@@ -362,7 +362,7 @@
    "68":{
       "capital":"Sucre (BO1)",
       "citizenship":"Bolivian",
-      "country-code":"068",
+      "iso_numeric":"068",
       "currency":"boliviano",
       "currency_code":"BOB",
       "currency_sub_unit":"centavo",
@@ -380,7 +380,7 @@
    "70":{
       "capital":"Sarajevo",
       "citizenship":"of Bosnia and Herzegovina",
-      "country-code":"070",
+      "iso_numeric":"070",
       "currency":"convertible mark",
       "currency_code":"BAM",
       "currency_sub_unit":"fening",
@@ -398,7 +398,7 @@
    "72":{
       "capital":"Gaborone",
       "citizenship":"Botswanan",
-      "country-code":"072",
+      "iso_numeric":"072",
       "currency":"pula (inv.)",
       "currency_code":"BWP",
       "currency_sub_unit":"thebe (inv.)",
@@ -416,7 +416,7 @@
    "74":{
       "capital":"Bouvet island",
       "citizenship":"of Bouvet island",
-      "country-code":"074",
+      "iso_numeric":"074",
       "currency":"",
       "currency_code":"",
       "currency_sub_unit":"",
@@ -434,7 +434,7 @@
    "76":{
       "capital":"Brasilia",
       "citizenship":"Brazilian",
-      "country-code":"076",
+      "iso_numeric":"076",
       "currency":"real (pl. reais)",
       "currency_code":"BRL",
       "currency_sub_unit":"centavo",
@@ -452,7 +452,7 @@
    "84":{
       "capital":"Belmopan",
       "citizenship":"Belizean",
-      "country-code":"084",
+      "iso_numeric":"084",
       "currency":"Belize dollar",
       "currency_code":"BZD",
       "currency_sub_unit":"cent",
@@ -470,7 +470,7 @@
    "86":{
       "capital":"Diego Garcia",
       "citizenship":"Changosian",
-      "country-code":"086",
+      "iso_numeric":"086",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -488,7 +488,7 @@
    "90":{
       "capital":"Honiara",
       "citizenship":"Solomon Islander",
-      "country-code":"090",
+      "iso_numeric":"090",
       "currency":"Solomon Islands dollar",
       "currency_code":"SBD",
       "currency_sub_unit":"cent",
@@ -506,7 +506,7 @@
    "92":{
       "capital":"Road Town",
       "citizenship":"British Virgin Islander;",
-      "country-code":"092",
+      "iso_numeric":"092",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -524,7 +524,7 @@
    "96":{
       "capital":"Bandar Seri Begawan",
       "citizenship":"Bruneian",
-      "country-code":"096",
+      "iso_numeric":"096",
       "currency":"Brunei dollar",
       "currency_code":"BND",
       "currency_sub_unit":"sen (inv.)",
@@ -542,7 +542,7 @@
    "100":{
       "capital":"Sofia",
       "citizenship":"Bulgarian",
-      "country-code":"100",
+      "iso_numeric":"100",
       "currency":"lev (pl. leva)",
       "currency_code":"BGN",
       "currency_sub_unit":"stotinka",
@@ -560,7 +560,7 @@
    "104":{
       "capital":"Yangon",
       "citizenship":"Burmese",
-      "country-code":"104",
+      "iso_numeric":"104",
       "currency":"kyat",
       "currency_code":"MMK",
       "currency_sub_unit":"pya",
@@ -578,7 +578,7 @@
    "108":{
       "capital":"Bujumbura",
       "citizenship":"Burundian",
-      "country-code":"108",
+      "iso_numeric":"108",
       "currency":"Burundi franc",
       "currency_code":"BIF",
       "currency_sub_unit":"centime",
@@ -596,7 +596,7 @@
    "112":{
       "capital":"Minsk",
       "citizenship":"Belarusian",
-      "country-code":"112",
+      "iso_numeric":"112",
       "currency":"Belarusian rouble",
       "currency_code":"BYR",
       "currency_sub_unit":"kopek",
@@ -614,7 +614,7 @@
    "116":{
       "capital":"Phnom Penh",
       "citizenship":"Cambodian",
-      "country-code":"116",
+      "iso_numeric":"116",
       "currency":"riel",
       "currency_code":"KHR",
       "currency_sub_unit":"sen (inv.)",
@@ -632,7 +632,7 @@
    "120":{
       "capital":"Yaound\u00e9",
       "citizenship":"Cameroonian",
-      "country-code":"120",
+      "iso_numeric":"120",
       "currency":"CFA franc (BEAC)",
       "currency_code":"XAF",
       "currency_sub_unit":"centime",
@@ -650,7 +650,7 @@
    "124":{
       "capital":"Ottawa",
       "citizenship":"Canadian",
-      "country-code":"124",
+      "iso_numeric":"124",
       "currency":"Canadian dollar",
       "currency_code":"CAD",
       "currency_sub_unit":"cent",
@@ -668,7 +668,7 @@
    "132":{
       "capital":"Praia",
       "citizenship":"Cape Verdean",
-      "country-code":"132",
+      "iso_numeric":"132",
       "currency":"Cape Verde escudo",
       "currency_code":"CVE",
       "currency_sub_unit":"centavo",
@@ -686,7 +686,7 @@
    "136":{
       "capital":"George Town",
       "citizenship":"Caymanian",
-      "country-code":"136",
+      "iso_numeric":"136",
       "currency":"Cayman Islands dollar",
       "currency_code":"KYD",
       "currency_sub_unit":"cent",
@@ -704,7 +704,7 @@
    "140":{
       "capital":"Bangui",
       "citizenship":"Central African",
-      "country-code":"140",
+      "iso_numeric":"140",
       "currency":"CFA franc (BEAC)",
       "currency_code":"XAF",
       "currency_sub_unit":"centime",
@@ -722,7 +722,7 @@
    "144":{
       "capital":"Colombo",
       "citizenship":"Sri Lankan",
-      "country-code":"144",
+      "iso_numeric":"144",
       "currency":"Sri Lankan rupee",
       "currency_code":"LKR",
       "currency_sub_unit":"cent",
@@ -740,7 +740,7 @@
    "148":{
       "capital":"N\u2019Djamena",
       "citizenship":"Chadian",
-      "country-code":"148",
+      "iso_numeric":"148",
       "currency":"CFA franc (BEAC)",
       "currency_code":"XAF",
       "currency_sub_unit":"centime",
@@ -758,7 +758,7 @@
    "152":{
       "capital":"Santiago",
       "citizenship":"Chilean",
-      "country-code":"152",
+      "iso_numeric":"152",
       "currency":"Chilean peso",
       "currency_code":"CLP",
       "currency_sub_unit":"centavo",
@@ -776,7 +776,7 @@
    "156":{
       "capital":"Beijing",
       "citizenship":"Chinese",
-      "country-code":"156",
+      "iso_numeric":"156",
       "currency":"renminbi-yuan (inv.)",
       "currency_code":"CNY",
       "currency_sub_unit":"jiao (10)",
@@ -794,7 +794,7 @@
    "158":{
       "capital":"Taipei",
       "citizenship":"Taiwanese",
-      "country-code":"158",
+      "iso_numeric":"158",
       "currency":"new Taiwan dollar",
       "currency_code":"TWD",
       "currency_sub_unit":"fen (inv.)",
@@ -812,7 +812,7 @@
    "162":{
       "capital":"Flying Fish Cove",
       "citizenship":"Christmas Islander",
-      "country-code":"162",
+      "iso_numeric":"162",
       "currency":"Australian dollar",
       "currency_code":"AUD",
       "currency_sub_unit":"cent",
@@ -830,7 +830,7 @@
    "166":{
       "capital":"Bantam",
       "citizenship":"Cocos Islander",
-      "country-code":"166",
+      "iso_numeric":"166",
       "currency":"Australian dollar",
       "currency_code":"AUD",
       "currency_sub_unit":"cent",
@@ -848,7 +848,7 @@
    "170":{
       "capital":"Santa Fe de Bogot\u00e1",
       "citizenship":"Colombian",
-      "country-code":"170",
+      "iso_numeric":"170",
       "currency":"Colombian peso",
       "currency_code":"COP",
       "currency_sub_unit":"centavo",
@@ -866,7 +866,7 @@
    "174":{
       "capital":"Moroni",
       "citizenship":"Comorian",
-      "country-code":"174",
+      "iso_numeric":"174",
       "currency":"Comorian franc",
       "currency_code":"KMF",
       "currency_sub_unit":"",
@@ -884,7 +884,7 @@
    "175":{
       "capital":"Mamoudzou",
       "citizenship":"Mahorais",
-      "country-code":"175",
+      "iso_numeric":"175",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -902,7 +902,7 @@
    "178":{
       "capital":"Brazzaville",
       "citizenship":"Congolese",
-      "country-code":"178",
+      "iso_numeric":"178",
       "currency":"CFA franc (BEAC)",
       "currency_code":"XAF",
       "currency_sub_unit":"centime",
@@ -920,7 +920,7 @@
    "180":{
       "capital":"Kinshasa",
       "citizenship":"Congolese",
-      "country-code":"180",
+      "iso_numeric":"180",
       "currency":"Congolese franc",
       "currency_code":"CDF",
       "currency_sub_unit":"centime",
@@ -938,7 +938,7 @@
    "184":{
       "capital":"Avarua",
       "citizenship":"Cook Islander",
-      "country-code":"184",
+      "iso_numeric":"184",
       "currency":"New Zealand dollar",
       "currency_code":"NZD",
       "currency_sub_unit":"cent",
@@ -956,7 +956,7 @@
    "188":{
       "capital":"San Jos\u00e9",
       "citizenship":"Costa Rican",
-      "country-code":"188",
+      "iso_numeric":"188",
       "currency":"Costa Rican col\u00f3n (pl. colones)",
       "currency_code":"CRC",
       "currency_sub_unit":"c\u00e9ntimo",
@@ -974,7 +974,7 @@
    "191":{
       "capital":"Zagreb",
       "citizenship":"Croatian",
-      "country-code":"191",
+      "iso_numeric":"191",
       "currency":"kuna (inv.)",
       "currency_code":"HRK",
       "currency_sub_unit":"lipa (inv.)",
@@ -992,7 +992,7 @@
    "192":{
       "capital":"Havana",
       "citizenship":"Cuban",
-      "country-code":"192",
+      "iso_numeric":"192",
       "currency":"Cuban peso",
       "currency_code":"CUP",
       "currency_sub_unit":"centavo",
@@ -1010,7 +1010,7 @@
    "196":{
       "capital":"Nicosia",
       "citizenship":"Cypriot",
-      "country-code":"196",
+      "iso_numeric":"196",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -1028,7 +1028,7 @@
    "203":{
       "capital":"Prague",
       "citizenship":"Czech",
-      "country-code":"203",
+      "iso_numeric":"203",
       "currency":"Czech koruna (pl. koruny)",
       "currency_code":"CZK",
       "currency_sub_unit":"hal\u00e9r",
@@ -1046,7 +1046,7 @@
    "204":{
       "capital":"Porto Novo (BJ1)",
       "citizenship":"Beninese",
-      "country-code":"204",
+      "iso_numeric":"204",
       "currency":"CFA franc (BCEAO)",
       "currency_code":"XOF",
       "currency_sub_unit":"centime",
@@ -1064,7 +1064,7 @@
    "208":{
       "capital":"Copenhagen",
       "citizenship":"Danish",
-      "country-code":"208",
+      "iso_numeric":"208",
       "currency":"Danish krone",
       "currency_code":"DKK",
       "currency_sub_unit":"\u00f8re (inv.)",
@@ -1082,7 +1082,7 @@
    "212":{
       "capital":"Roseau",
       "citizenship":"Dominican",
-      "country-code":"212",
+      "iso_numeric":"212",
       "currency":"East Caribbean dollar",
       "currency_code":"XCD",
       "currency_sub_unit":"cent",
@@ -1100,7 +1100,7 @@
    "214":{
       "capital":"Santo Domingo",
       "citizenship":"Dominican",
-      "country-code":"214",
+      "iso_numeric":"214",
       "currency":"Dominican peso",
       "currency_code":"DOP",
       "currency_sub_unit":"centavo",
@@ -1118,7 +1118,7 @@
    "218":{
       "capital":"Quito",
       "citizenship":"Ecuadorian",
-      "country-code":"218",
+      "iso_numeric":"218",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -1136,7 +1136,7 @@
    "222":{
       "capital":"San Salvador",
       "citizenship":"Salvadoran",
-      "country-code":"222",
+      "iso_numeric":"222",
       "currency":"Salvadorian col\u00f3n (pl. colones)",
       "currency_code":"SVC",
       "currency_sub_unit":"centavo",
@@ -1154,7 +1154,7 @@
    "226":{
       "capital":"Malabo",
       "citizenship":"Equatorial Guinean",
-      "country-code":"226",
+      "iso_numeric":"226",
       "currency":"CFA franc (BEAC)",
       "currency_code":"XAF",
       "currency_sub_unit":"centime",
@@ -1172,7 +1172,7 @@
    "231":{
       "capital":"Addis Ababa",
       "citizenship":"Ethiopian",
-      "country-code":"231",
+      "iso_numeric":"231",
       "currency":"birr (inv.)",
       "currency_code":"ETB",
       "currency_sub_unit":"cent",
@@ -1190,7 +1190,7 @@
    "232":{
       "capital":"Asmara",
       "citizenship":"Eritrean",
-      "country-code":"232",
+      "iso_numeric":"232",
       "currency":"nakfa",
       "currency_code":"ERN",
       "currency_sub_unit":"cent",
@@ -1208,7 +1208,7 @@
    "233":{
       "capital":"Tallinn",
       "citizenship":"Estonian",
-      "country-code":"233",
+      "iso_numeric":"233",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -1226,7 +1226,7 @@
    "234":{
       "capital":"T\u00f3rshavn",
       "citizenship":"Faeroese",
-      "country-code":"234",
+      "iso_numeric":"234",
       "currency":"Danish krone",
       "currency_code":"DKK",
       "currency_sub_unit":"\u00f8re (inv.)",
@@ -1244,7 +1244,7 @@
    "238":{
       "capital":"Stanley",
       "citizenship":"Falkland Islander",
-      "country-code":"238",
+      "iso_numeric":"238",
       "currency":"Falkland Islands pound",
       "currency_code":"FKP",
       "currency_sub_unit":"new penny",
@@ -1262,7 +1262,7 @@
    "239":{
       "capital":"King Edward Point (Grytviken)",
       "citizenship":"of South Georgia and the South Sandwich Islands",
-      "country-code":"239",
+      "iso_numeric":"239",
       "currency":"",
       "currency_code":"",
       "currency_sub_unit":"",
@@ -1280,7 +1280,7 @@
    "242":{
       "capital":"Suva",
       "citizenship":"Fijian",
-      "country-code":"242",
+      "iso_numeric":"242",
       "currency":"Fiji dollar",
       "currency_code":"FJD",
       "currency_sub_unit":"cent",
@@ -1298,7 +1298,7 @@
    "246":{
       "capital":"Helsinki",
       "citizenship":"Finnish",
-      "country-code":"246",
+      "iso_numeric":"246",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -1316,7 +1316,7 @@
    "248":{
       "capital":"Mariehamn",
       "citizenship":"\u00c5land Islander",
-      "country-code":"248",
+      "iso_numeric":"248",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -1332,7 +1332,7 @@
    "250":{
       "capital":"Paris",
       "citizenship":"French",
-      "country-code":"250",
+      "iso_numeric":"250",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -1350,7 +1350,7 @@
    "254":{
       "capital":"Cayenne",
       "citizenship":"Guianese",
-      "country-code":"254",
+      "iso_numeric":"254",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -1368,7 +1368,7 @@
    "258":{
       "capital":"Papeete",
       "citizenship":"Polynesian",
-      "country-code":"258",
+      "iso_numeric":"258",
       "currency":"CFP franc",
       "currency_code":"XPF",
       "currency_sub_unit":"centime",
@@ -1386,7 +1386,7 @@
    "260":{
       "capital":"Port-aux-Francais",
       "citizenship":"of French Southern and Antarctic Lands",
-      "country-code":"260",
+      "iso_numeric":"260",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -1404,7 +1404,7 @@
    "262":{
       "capital":"Djibouti",
       "citizenship":"Djiboutian",
-      "country-code":"262",
+      "iso_numeric":"262",
       "currency":"Djibouti franc",
       "currency_code":"DJF",
       "currency_sub_unit":"",
@@ -1422,7 +1422,7 @@
    "266":{
       "capital":"Libreville",
       "citizenship":"Gabonese",
-      "country-code":"266",
+      "iso_numeric":"266",
       "currency":"CFA franc (BEAC)",
       "currency_code":"XAF",
       "currency_sub_unit":"centime",
@@ -1440,7 +1440,7 @@
    "268":{
       "capital":"Tbilisi",
       "citizenship":"Georgian",
-      "country-code":"268",
+      "iso_numeric":"268",
       "currency":"lari",
       "currency_code":"GEL",
       "currency_sub_unit":"tetri (inv.)",
@@ -1458,7 +1458,7 @@
    "270":{
       "capital":"Banjul",
       "citizenship":"Gambian",
-      "country-code":"270",
+      "iso_numeric":"270",
       "currency":"dalasi (inv.)",
       "currency_code":"GMD",
       "currency_sub_unit":"butut",
@@ -1475,7 +1475,7 @@
    },
    "275":{
       "citizenship":"Palestinian",
-      "country-code":"275",
+      "iso_numeric":"275",
       "iso_3166_2":"PS",
       "iso_3166_3":"PSE",
       "name":"Palestinian Territory, Occupied",
@@ -1489,7 +1489,7 @@
    "276":{
       "capital":"Berlin",
       "citizenship":"German",
-      "country-code":"276",
+      "iso_numeric":"276",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -1507,7 +1507,7 @@
    "288":{
       "capital":"Accra",
       "citizenship":"Ghanaian",
-      "country-code":"288",
+      "iso_numeric":"288",
       "currency":"Ghana cedi",
       "currency_code":"GHS",
       "currency_sub_unit":"pesewa",
@@ -1525,7 +1525,7 @@
    "292":{
       "capital":"Gibraltar",
       "citizenship":"Gibraltarian",
-      "country-code":"292",
+      "iso_numeric":"292",
       "currency":"Gibraltar pound",
       "currency_code":"GIP",
       "currency_sub_unit":"penny",
@@ -1543,7 +1543,7 @@
    "296":{
       "capital":"Tarawa",
       "citizenship":"Kiribatian",
-      "country-code":"296",
+      "iso_numeric":"296",
       "currency":"Australian dollar",
       "currency_code":"AUD",
       "currency_sub_unit":"cent",
@@ -1561,7 +1561,7 @@
    "300":{
       "capital":"Athens",
       "citizenship":"Greek",
-      "country-code":"300",
+      "iso_numeric":"300",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -1579,7 +1579,7 @@
    "304":{
       "capital":"Nuuk",
       "citizenship":"Greenlander",
-      "country-code":"304",
+      "iso_numeric":"304",
       "currency":"Danish krone",
       "currency_code":"DKK",
       "currency_sub_unit":"\u00f8re (inv.)",
@@ -1597,7 +1597,7 @@
    "308":{
       "capital":"St George\u2019s",
       "citizenship":"Grenadian",
-      "country-code":"308",
+      "iso_numeric":"308",
       "currency":"East Caribbean dollar",
       "currency_code":"XCD",
       "currency_sub_unit":"cent",
@@ -1615,7 +1615,7 @@
    "312":{
       "capital":"Basse Terre",
       "citizenship":"Guadeloupean",
-      "country-code":"312",
+      "iso_numeric":"312",
       "currency":"euro",
       "currency_code":"EUR ",
       "currency_sub_unit":"cent",
@@ -1633,7 +1633,7 @@
    "316":{
       "capital":"Aga\u00f1a (Hag\u00e5t\u00f1a)",
       "citizenship":"Guamanian",
-      "country-code":"316",
+      "iso_numeric":"316",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -1651,7 +1651,7 @@
    "320":{
       "capital":"Guatemala City",
       "citizenship":"Guatemalan",
-      "country-code":"320",
+      "iso_numeric":"320",
       "currency":"quetzal (pl. quetzales)",
       "currency_code":"GTQ",
       "currency_sub_unit":"centavo",
@@ -1669,7 +1669,7 @@
    "324":{
       "capital":"Conakry",
       "citizenship":"Guinean",
-      "country-code":"324",
+      "iso_numeric":"324",
       "currency":"Guinean franc",
       "currency_code":"GNF",
       "currency_sub_unit":"",
@@ -1687,7 +1687,7 @@
    "328":{
       "capital":"Georgetown",
       "citizenship":"Guyanese",
-      "country-code":"328",
+      "iso_numeric":"328",
       "currency":"Guyana dollar",
       "currency_code":"GYD",
       "currency_sub_unit":"cent",
@@ -1705,7 +1705,7 @@
    "332":{
       "capital":"Port-au-Prince",
       "citizenship":"Haitian",
-      "country-code":"332",
+      "iso_numeric":"332",
       "currency":"gourde",
       "currency_code":"HTG",
       "currency_sub_unit":"centime",
@@ -1723,7 +1723,7 @@
    "334":{
       "capital":"Territory of Heard Island and McDonald Islands",
       "citizenship":"of Territory of Heard Island and McDonald Islands",
-      "country-code":"334",
+      "iso_numeric":"334",
       "currency":"",
       "currency_code":"",
       "currency_sub_unit":"",
@@ -1741,7 +1741,7 @@
    "336":{
       "capital":"Vatican City",
       "citizenship":"of the Holy See\/of the Vatican",
-      "country-code":"336",
+      "iso_numeric":"336",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -1759,7 +1759,7 @@
    "340":{
       "capital":"Tegucigalpa",
       "citizenship":"Honduran",
-      "country-code":"340",
+      "iso_numeric":"340",
       "currency":"lempira",
       "currency_code":"HNL",
       "currency_sub_unit":"centavo",
@@ -1777,7 +1777,7 @@
    "344":{
       "capital":"(HK3)",
       "citizenship":"Hong Kong Chinese",
-      "country-code":"344",
+      "iso_numeric":"344",
       "currency":"Hong Kong dollar",
       "currency_code":"HKD",
       "currency_sub_unit":"cent",
@@ -1795,7 +1795,7 @@
    "348":{
       "capital":"Budapest",
       "citizenship":"Hungarian",
-      "country-code":"348",
+      "iso_numeric":"348",
       "currency":"forint (inv.)",
       "currency_code":"HUF",
       "currency_sub_unit":"(fill\u00e9r (inv.))",
@@ -1813,7 +1813,7 @@
    "352":{
       "capital":"Reykjavik",
       "citizenship":"Icelander",
-      "country-code":"352",
+      "iso_numeric":"352",
       "currency":"kr\u00f3na (pl. kr\u00f3nur)",
       "currency_code":"ISK",
       "currency_sub_unit":"",
@@ -1831,7 +1831,7 @@
    "356":{
       "capital":"New Delhi",
       "citizenship":"Indian",
-      "country-code":"356",
+      "iso_numeric":"356",
       "currency":"Indian rupee",
       "currency_code":"INR",
       "currency_sub_unit":"paisa",
@@ -1849,7 +1849,7 @@
    "360":{
       "capital":"Jakarta",
       "citizenship":"Indonesian",
-      "country-code":"360",
+      "iso_numeric":"360",
       "currency":"Indonesian rupiah (inv.)",
       "currency_code":"IDR",
       "currency_sub_unit":"sen (inv.)",
@@ -1867,7 +1867,7 @@
    "364":{
       "capital":"Tehran",
       "citizenship":"Iranian",
-      "country-code":"364",
+      "iso_numeric":"364",
       "currency":"Iranian rial",
       "currency_code":"IRR",
       "currency_sub_unit":"(dinar) (IR1)",
@@ -1885,7 +1885,7 @@
    "368":{
       "capital":"Baghdad",
       "citizenship":"Iraqi",
-      "country-code":"368",
+      "iso_numeric":"368",
       "currency":"Iraqi dinar",
       "currency_code":"IQD",
       "currency_sub_unit":"fils (inv.)",
@@ -1903,7 +1903,7 @@
    "372":{
       "capital":"Dublin",
       "citizenship":"Irish",
-      "country-code":"372",
+      "iso_numeric":"372",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -1921,7 +1921,7 @@
    "376":{
       "capital":"(IL1)",
       "citizenship":"Israeli",
-      "country-code":"376",
+      "iso_numeric":"376",
       "currency":"shekel",
       "currency_code":"ILS",
       "currency_sub_unit":"agora",
@@ -1939,7 +1939,7 @@
    "380":{
       "capital":"Rome",
       "citizenship":"Italian",
-      "country-code":"380",
+      "iso_numeric":"380",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -1957,7 +1957,7 @@
    "384":{
       "capital":"Yamoussoukro (CI1)",
       "citizenship":"Ivorian",
-      "country-code":"384",
+      "iso_numeric":"384",
       "currency":"CFA franc (BCEAO)",
       "currency_code":"XOF",
       "currency_sub_unit":"centime",
@@ -1975,7 +1975,7 @@
    "388":{
       "capital":"Kingston",
       "citizenship":"Jamaican",
-      "country-code":"388",
+      "iso_numeric":"388",
       "currency":"Jamaica dollar",
       "currency_code":"JMD",
       "currency_sub_unit":"cent",
@@ -1993,7 +1993,7 @@
    "392":{
       "capital":"Tokyo",
       "citizenship":"Japanese",
-      "country-code":"392",
+      "iso_numeric":"392",
       "currency":"yen (inv.)",
       "currency_code":"JPY",
       "currency_sub_unit":"(sen (inv.)) (JP1)",
@@ -2011,7 +2011,7 @@
    "398":{
       "capital":"Astana",
       "citizenship":"Kazakh",
-      "country-code":"398",
+      "iso_numeric":"398",
       "currency":"tenge (inv.)",
       "currency_code":"KZT",
       "currency_sub_unit":"tiyn",
@@ -2029,7 +2029,7 @@
    "400":{
       "capital":"Amman",
       "citizenship":"Jordanian",
-      "country-code":"400",
+      "iso_numeric":"400",
       "currency":"Jordanian dinar",
       "currency_code":"JOD",
       "currency_sub_unit":"100 qirsh",
@@ -2047,7 +2047,7 @@
    "404":{
       "capital":"Nairobi",
       "citizenship":"Kenyan",
-      "country-code":"404",
+      "iso_numeric":"404",
       "currency":"Kenyan shilling",
       "currency_code":"KES",
       "currency_sub_unit":"cent",
@@ -2065,7 +2065,7 @@
    "408":{
       "capital":"Pyongyang",
       "citizenship":"North Korean",
-      "country-code":"408",
+      "iso_numeric":"408",
       "currency":"North Korean won (inv.)",
       "currency_code":"KPW",
       "currency_sub_unit":"chun (inv.)",
@@ -2083,7 +2083,7 @@
    "410":{
       "capital":"Seoul",
       "citizenship":"South Korean",
-      "country-code":"410",
+      "iso_numeric":"410",
       "currency":"South Korean won (inv.)",
       "currency_code":"KRW",
       "currency_sub_unit":"(chun (inv.))",
@@ -2101,7 +2101,7 @@
    "414":{
       "capital":"Kuwait City",
       "citizenship":"Kuwaiti",
-      "country-code":"414",
+      "iso_numeric":"414",
       "currency":"Kuwaiti dinar",
       "currency_code":"KWD",
       "currency_sub_unit":"fils (inv.)",
@@ -2119,7 +2119,7 @@
    "417":{
       "capital":"Bishkek",
       "citizenship":"Kyrgyz",
-      "country-code":"417",
+      "iso_numeric":"417",
       "currency":"som",
       "currency_code":"KGS",
       "currency_sub_unit":"tyiyn",
@@ -2137,7 +2137,7 @@
    "418":{
       "capital":"Vientiane",
       "citizenship":"Lao",
-      "country-code":"418",
+      "iso_numeric":"418",
       "currency":"kip (inv.)",
       "currency_code":"LAK",
       "currency_sub_unit":"(at (inv.))",
@@ -2155,7 +2155,7 @@
    "422":{
       "capital":"Beirut",
       "citizenship":"Lebanese",
-      "country-code":"422",
+      "iso_numeric":"422",
       "currency":"Lebanese pound",
       "currency_code":"LBP",
       "currency_sub_unit":"(piastre)",
@@ -2173,7 +2173,7 @@
    "426":{
       "capital":"Maseru",
       "citizenship":"Basotho",
-      "country-code":"426",
+      "iso_numeric":"426",
       "currency":"loti (pl. maloti)",
       "currency_code":"LSL",
       "currency_sub_unit":"sente",
@@ -2191,7 +2191,7 @@
    "428":{
       "capital":"Riga",
       "citizenship":"Latvian",
-      "country-code":"428",
+      "iso_numeric":"428",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -2209,7 +2209,7 @@
    "430":{
       "capital":"Monrovia",
       "citizenship":"Liberian",
-      "country-code":"430",
+      "iso_numeric":"430",
       "currency":"Liberian dollar",
       "currency_code":"LRD",
       "currency_sub_unit":"cent",
@@ -2227,7 +2227,7 @@
    "434":{
       "capital":"Tripoli",
       "citizenship":"Libyan",
-      "country-code":"434",
+      "iso_numeric":"434",
       "currency":"Libyan dinar",
       "currency_code":"LYD",
       "currency_sub_unit":"dirham",
@@ -2245,7 +2245,7 @@
    "438":{
       "capital":"Vaduz",
       "citizenship":"Liechtensteiner",
-      "country-code":"438",
+      "iso_numeric":"438",
       "currency":"Swiss franc",
       "currency_code":"CHF",
       "currency_sub_unit":"centime",
@@ -2263,7 +2263,7 @@
    "440":{
       "capital":"Vilnius",
       "citizenship":"Lithuanian",
-      "country-code":"440",
+      "iso_numeric":"440",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -2281,7 +2281,7 @@
    "442":{
       "capital":"Luxembourg",
       "citizenship":"Luxembourger",
-      "country-code":"442",
+      "iso_numeric":"442",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -2299,7 +2299,7 @@
    "446":{
       "capital":"Macao (MO3)",
       "citizenship":"Macanese",
-      "country-code":"446",
+      "iso_numeric":"446",
       "currency":"pataca",
       "currency_code":"MOP",
       "currency_sub_unit":"avo",
@@ -2317,7 +2317,7 @@
    "450":{
       "capital":"Antananarivo",
       "citizenship":"Malagasy",
-      "country-code":"450",
+      "iso_numeric":"450",
       "currency":"ariary",
       "currency_code":"MGA",
       "currency_sub_unit":"iraimbilanja (inv.)",
@@ -2335,7 +2335,7 @@
    "454":{
       "capital":"Lilongwe",
       "citizenship":"Malawian",
-      "country-code":"454",
+      "iso_numeric":"454",
       "currency":"Malawian kwacha (inv.)",
       "currency_code":"MWK",
       "currency_sub_unit":"tambala (inv.)",
@@ -2353,7 +2353,7 @@
    "458":{
       "capital":"Kuala Lumpur (MY1)",
       "citizenship":"Malaysian",
-      "country-code":"458",
+      "iso_numeric":"458",
       "currency":"ringgit (inv.)",
       "currency_code":"MYR",
       "currency_sub_unit":"sen (inv.)",
@@ -2371,7 +2371,7 @@
    "462":{
       "capital":"Mal\u00e9",
       "citizenship":"Maldivian",
-      "country-code":"462",
+      "iso_numeric":"462",
       "currency":"rufiyaa",
       "currency_code":"MVR",
       "currency_sub_unit":"laari (inv.)",
@@ -2389,7 +2389,7 @@
    "466":{
       "capital":"Bamako",
       "citizenship":"Malian",
-      "country-code":"466",
+      "iso_numeric":"466",
       "currency":"CFA franc (BCEAO)",
       "currency_code":"XOF",
       "currency_sub_unit":"centime",
@@ -2407,7 +2407,7 @@
    "470":{
       "capital":"Valletta",
       "citizenship":"Maltese",
-      "country-code":"470",
+      "iso_numeric":"470",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -2425,7 +2425,7 @@
    "474":{
       "capital":"Fort-de-France",
       "citizenship":"Martinican",
-      "country-code":"474",
+      "iso_numeric":"474",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -2443,7 +2443,7 @@
    "478":{
       "capital":"Nouakchott",
       "citizenship":"Mauritanian",
-      "country-code":"478",
+      "iso_numeric":"478",
       "currency":"ouguiya",
       "currency_code":"MRO",
       "currency_sub_unit":"khoum",
@@ -2461,7 +2461,7 @@
    "480":{
       "capital":"Port Louis",
       "citizenship":"Mauritian",
-      "country-code":"480",
+      "iso_numeric":"480",
       "currency":"Mauritian rupee",
       "currency_code":"MUR",
       "currency_sub_unit":"cent",
@@ -2479,7 +2479,7 @@
    "484":{
       "capital":"Mexico City",
       "citizenship":"Mexican",
-      "country-code":"484",
+      "iso_numeric":"484",
       "currency":"Mexican peso",
       "currency_code":"MXN",
       "currency_sub_unit":"centavo",
@@ -2497,7 +2497,7 @@
    "492":{
       "capital":"Monaco",
       "citizenship":"Monegasque",
-      "country-code":"492",
+      "iso_numeric":"492",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -2515,7 +2515,7 @@
    "496":{
       "capital":"Ulan Bator",
       "citizenship":"Mongolian",
-      "country-code":"496",
+      "iso_numeric":"496",
       "currency":"tugrik",
       "currency_code":"MNT",
       "currency_sub_unit":"m\u00f6ng\u00f6 (inv.)",
@@ -2533,7 +2533,7 @@
    "498":{
       "capital":"Chisinau",
       "citizenship":"Moldovan",
-      "country-code":"498",
+      "iso_numeric":"498",
       "currency":"Moldovan leu (pl. lei)",
       "currency_code":"MDL",
       "currency_sub_unit":"ban",
@@ -2551,7 +2551,7 @@
    "499":{
       "capital":"Podgorica",
       "citizenship":"Montenegrin",
-      "country-code":"499",
+      "iso_numeric":"499",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -2567,7 +2567,7 @@
    "500":{
       "capital":"Plymouth (MS2)",
       "citizenship":"Montserratian",
-      "country-code":"500",
+      "iso_numeric":"500",
       "currency":"East Caribbean dollar",
       "currency_code":"XCD",
       "currency_sub_unit":"cent",
@@ -2585,7 +2585,7 @@
    "504":{
       "capital":"Rabat",
       "citizenship":"Moroccan",
-      "country-code":"504",
+      "iso_numeric":"504",
       "currency":"Moroccan dirham",
       "currency_code":"MAD",
       "currency_sub_unit":"centime",
@@ -2603,7 +2603,7 @@
    "508":{
       "capital":"Maputo",
       "citizenship":"Mozambican",
-      "country-code":"508",
+      "iso_numeric":"508",
       "currency":"metical",
       "currency_code":"MZN",
       "currency_sub_unit":"centavo",
@@ -2621,7 +2621,7 @@
    "512":{
       "capital":"Muscat",
       "citizenship":"Omani",
-      "country-code":"512",
+      "iso_numeric":"512",
       "currency":"Omani rial",
       "currency_code":"OMR",
       "currency_sub_unit":"baiza",
@@ -2639,7 +2639,7 @@
    "516":{
       "capital":"Windhoek",
       "citizenship":"Namibian",
-      "country-code":"516",
+      "iso_numeric":"516",
       "currency":"Namibian dollar",
       "currency_code":"NAD",
       "currency_sub_unit":"cent",
@@ -2657,7 +2657,7 @@
    "520":{
       "capital":"Yaren",
       "citizenship":"Nauruan",
-      "country-code":"520",
+      "iso_numeric":"520",
       "currency":"Australian dollar",
       "currency_code":"AUD",
       "currency_sub_unit":"cent",
@@ -2675,7 +2675,7 @@
    "524":{
       "capital":"Kathmandu",
       "citizenship":"Nepalese",
-      "country-code":"524",
+      "iso_numeric":"524",
       "currency":"Nepalese rupee",
       "currency_code":"NPR",
       "currency_sub_unit":"paisa (inv.)",
@@ -2693,7 +2693,7 @@
    "528":{
       "capital":"Amsterdam (NL2)",
       "citizenship":"Dutch",
-      "country-code":"528",
+      "iso_numeric":"528",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -2711,7 +2711,7 @@
    "531":{
       "capital":"Willemstad",
       "citizenship":"Cura\u00e7aoan",
-      "country-code":"531",
+      "iso_numeric":"531",
       "currency":"Netherlands Antillean guilder (CW1)",
       "currency_code":"ANG",
       "currency_sub_unit":"cent",
@@ -2727,7 +2727,7 @@
    "533":{
       "capital":"Oranjestad",
       "citizenship":"Aruban",
-      "country-code":"533",
+      "iso_numeric":"533",
       "currency":"Aruban guilder",
       "currency_code":"AWG",
       "currency_sub_unit":"cent",
@@ -2745,7 +2745,7 @@
    "534":{
       "capital":"Philipsburg",
       "citizenship":"Sint Maartener",
-      "country-code":"534",
+      "iso_numeric":"534",
       "currency":"Netherlands Antillean guilder (SX1)",
       "currency_code":"ANG",
       "currency_sub_unit":"cent",
@@ -2760,7 +2760,7 @@
    },
    "535":{
       "citizenship":"of Bonaire, Sint Eustatius and Saba",
-      "country-code":"535",
+      "iso_numeric":"535",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -2775,7 +2775,7 @@
    "540":{
       "capital":"Noum\u00e9a",
       "citizenship":"New Caledonian",
-      "country-code":"540",
+      "iso_numeric":"540",
       "currency":"CFP franc",
       "currency_code":"XPF",
       "currency_sub_unit":"centime",
@@ -2793,7 +2793,7 @@
    "548":{
       "capital":"Port Vila",
       "citizenship":"Vanuatuan",
-      "country-code":"548",
+      "iso_numeric":"548",
       "currency":"vatu (inv.)",
       "currency_code":"VUV",
       "currency_sub_unit":"",
@@ -2811,7 +2811,7 @@
    "554":{
       "capital":"Wellington",
       "citizenship":"New Zealander",
-      "country-code":"554",
+      "iso_numeric":"554",
       "currency":"New Zealand dollar",
       "currency_code":"NZD",
       "currency_sub_unit":"cent",
@@ -2829,7 +2829,7 @@
    "558":{
       "capital":"Managua",
       "citizenship":"Nicaraguan",
-      "country-code":"558",
+      "iso_numeric":"558",
       "currency":"c\u00f3rdoba oro",
       "currency_code":"NIO",
       "currency_sub_unit":"centavo",
@@ -2847,7 +2847,7 @@
    "562":{
       "capital":"Niamey",
       "citizenship":"Nigerien",
-      "country-code":"562",
+      "iso_numeric":"562",
       "currency":"CFA franc (BCEAO)",
       "currency_code":"XOF",
       "currency_sub_unit":"centime",
@@ -2865,7 +2865,7 @@
    "566":{
       "capital":"Abuja",
       "citizenship":"Nigerian",
-      "country-code":"566",
+      "iso_numeric":"566",
       "currency":"naira (inv.)",
       "currency_code":"NGN",
       "currency_sub_unit":"kobo (inv.)",
@@ -2883,7 +2883,7 @@
    "570":{
       "capital":"Alofi",
       "citizenship":"Niuean",
-      "country-code":"570",
+      "iso_numeric":"570",
       "currency":"New Zealand dollar",
       "currency_code":"NZD",
       "currency_sub_unit":"cent",
@@ -2901,7 +2901,7 @@
    "574":{
       "capital":"Kingston",
       "citizenship":"Norfolk Islander",
-      "country-code":"574",
+      "iso_numeric":"574",
       "currency":"Australian dollar",
       "currency_code":"AUD",
       "currency_sub_unit":"cent",
@@ -2919,7 +2919,7 @@
    "578":{
       "capital":"Oslo",
       "citizenship":"Norwegian",
-      "country-code":"578",
+      "iso_numeric":"578",
       "currency":"Norwegian krone (pl. kroner)",
       "currency_code":"NOK",
       "currency_sub_unit":"\u00f8re (inv.)",
@@ -2937,7 +2937,7 @@
    "580":{
       "capital":"Saipan",
       "citizenship":"Northern Mariana Islander",
-      "country-code":"580",
+      "iso_numeric":"580",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -2955,7 +2955,7 @@
    "581":{
       "capital":"United States Minor Outlying Islands",
       "citizenship":"of United States Minor Outlying Islands",
-      "country-code":"581",
+      "iso_numeric":"581",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -2973,7 +2973,7 @@
    "583":{
       "capital":"Palikir",
       "citizenship":"Micronesian",
-      "country-code":"583",
+      "iso_numeric":"583",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -2991,7 +2991,7 @@
    "584":{
       "capital":"Majuro",
       "citizenship":"Marshallese",
-      "country-code":"584",
+      "iso_numeric":"584",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -3009,7 +3009,7 @@
    "585":{
       "capital":"Melekeok",
       "citizenship":"Palauan",
-      "country-code":"585",
+      "iso_numeric":"585",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -3027,7 +3027,7 @@
    "586":{
       "capital":"Islamabad",
       "citizenship":"Pakistani",
-      "country-code":"586",
+      "iso_numeric":"586",
       "currency":"Pakistani rupee",
       "currency_code":"PKR",
       "currency_sub_unit":"paisa",
@@ -3045,7 +3045,7 @@
    "591":{
       "capital":"Panama City",
       "citizenship":"Panamanian",
-      "country-code":"591",
+      "iso_numeric":"591",
       "currency":"balboa",
       "currency_code":"PAB",
       "currency_sub_unit":"cent\u00e9simo",
@@ -3063,7 +3063,7 @@
    "598":{
       "capital":"Port Moresby",
       "citizenship":"Papua New Guinean",
-      "country-code":"598",
+      "iso_numeric":"598",
       "currency":"kina (inv.)",
       "currency_code":"PGK",
       "currency_sub_unit":"toea (inv.)",
@@ -3081,7 +3081,7 @@
    "600":{
       "capital":"Asunci\u00f3n",
       "citizenship":"Paraguayan",
-      "country-code":"600",
+      "iso_numeric":"600",
       "currency":"guaran\u00ed",
       "currency_code":"PYG",
       "currency_sub_unit":"c\u00e9ntimo",
@@ -3099,7 +3099,7 @@
    "604":{
       "capital":"Lima",
       "citizenship":"Peruvian",
-      "country-code":"604",
+      "iso_numeric":"604",
       "currency":"new sol",
       "currency_code":"PEN",
       "currency_sub_unit":"c\u00e9ntimo",
@@ -3117,7 +3117,7 @@
    "608":{
       "capital":"Manila",
       "citizenship":"Filipino",
-      "country-code":"608",
+      "iso_numeric":"608",
       "currency":"Philippine peso",
       "currency_code":"PHP",
       "currency_sub_unit":"centavo",
@@ -3135,7 +3135,7 @@
    "612":{
       "capital":"Adamstown",
       "citizenship":"Pitcairner",
-      "country-code":"612",
+      "iso_numeric":"612",
       "currency":"New Zealand dollar",
       "currency_code":"NZD",
       "currency_sub_unit":"cent",
@@ -3153,7 +3153,7 @@
    "616":{
       "capital":"Warsaw",
       "citizenship":"Polish",
-      "country-code":"616",
+      "iso_numeric":"616",
       "currency":"zloty",
       "currency_code":"PLN",
       "currency_sub_unit":"grosz (pl. groszy)",
@@ -3171,7 +3171,7 @@
    "620":{
       "capital":"Lisbon",
       "citizenship":"Portuguese",
-      "country-code":"620",
+      "iso_numeric":"620",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -3189,7 +3189,7 @@
    "624":{
       "capital":"Bissau",
       "citizenship":"Guinea-Bissau national",
-      "country-code":"624",
+      "iso_numeric":"624",
       "currency":"CFA franc (BCEAO)",
       "currency_code":"XOF",
       "currency_sub_unit":"centime",
@@ -3207,7 +3207,7 @@
    "626":{
       "capital":"Dili",
       "citizenship":"East Timorese",
-      "country-code":"626",
+      "iso_numeric":"626",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -3225,7 +3225,7 @@
    "630":{
       "capital":"San Juan",
       "citizenship":"Puerto Rican",
-      "country-code":"630",
+      "iso_numeric":"630",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -3243,7 +3243,7 @@
    "634":{
       "capital":"Doha",
       "citizenship":"Qatari",
-      "country-code":"634",
+      "iso_numeric":"634",
       "currency":"Qatari riyal",
       "currency_code":"QAR",
       "currency_sub_unit":"dirham",
@@ -3261,7 +3261,7 @@
    "638":{
       "capital":"Saint-Denis",
       "citizenship":"Reunionese",
-      "country-code":"638",
+      "iso_numeric":"638",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -3279,7 +3279,7 @@
    "642":{
       "capital":"Bucharest",
       "citizenship":"Romanian",
-      "country-code":"642",
+      "iso_numeric":"642",
       "currency":"Romanian leu (pl. lei)",
       "currency_code":"RON",
       "currency_sub_unit":"ban (pl. bani)",
@@ -3297,7 +3297,7 @@
    "643":{
       "capital":"Moscow",
       "citizenship":"Russian",
-      "country-code":"643",
+      "iso_numeric":"643",
       "currency":"Russian rouble",
       "currency_code":"RUB",
       "currency_sub_unit":"kopek",
@@ -3315,7 +3315,7 @@
    "646":{
       "capital":"Kigali",
       "citizenship":"Rwandan; Rwandese",
-      "country-code":"646",
+      "iso_numeric":"646",
       "currency":"Rwandese franc",
       "currency_code":"RWF",
       "currency_sub_unit":"centime",
@@ -3333,7 +3333,7 @@
    "652":{
       "capital":"Gustavia",
       "citizenship":"of Saint Barth\u00e9lemy",
-      "country-code":"652",
+      "iso_numeric":"652",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -3349,7 +3349,7 @@
    "654":{
       "capital":"Jamestown",
       "citizenship":"Saint Helenian",
-      "country-code":"654",
+      "iso_numeric":"654",
       "currency":"Saint Helena pound",
       "currency_code":"SHP",
       "currency_sub_unit":"penny",
@@ -3367,7 +3367,7 @@
    "659":{
       "capital":"Basseterre",
       "citizenship":"Kittsian; Nevisian",
-      "country-code":"659",
+      "iso_numeric":"659",
       "currency":"East Caribbean dollar",
       "currency_code":"XCD",
       "currency_sub_unit":"cent",
@@ -3385,7 +3385,7 @@
    "660":{
       "capital":"The Valley",
       "citizenship":"Anguillan",
-      "country-code":"660",
+      "iso_numeric":"660",
       "currency":"East Caribbean dollar",
       "currency_code":"XCD",
       "currency_sub_unit":"cent",
@@ -3403,7 +3403,7 @@
    "662":{
       "capital":"Castries",
       "citizenship":"Saint Lucian",
-      "country-code":"662",
+      "iso_numeric":"662",
       "currency":"East Caribbean dollar",
       "currency_code":"XCD",
       "currency_sub_unit":"cent",
@@ -3421,7 +3421,7 @@
    "663":{
       "capital":"Marigot",
       "citizenship":"of Saint Martin",
-      "country-code":"663",
+      "iso_numeric":"663",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -3437,7 +3437,7 @@
    "666":{
       "capital":"Saint-Pierre",
       "citizenship":"St-Pierrais; Miquelonnais",
-      "country-code":"666",
+      "iso_numeric":"666",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -3455,7 +3455,7 @@
    "670":{
       "capital":"Kingstown",
       "citizenship":"Vincentian",
-      "country-code":"670",
+      "iso_numeric":"670",
       "currency":"East Caribbean dollar",
       "currency_code":"XCD",
       "currency_sub_unit":"cent",
@@ -3473,7 +3473,7 @@
    "674":{
       "capital":"San Marino",
       "citizenship":"San Marinese",
-      "country-code":"674",
+      "iso_numeric":"674",
       "currency":"euro",
       "currency_code":"EUR ",
       "currency_sub_unit":"cent",
@@ -3491,7 +3491,7 @@
    "678":{
       "capital":"S\u00e3o Tom\u00e9",
       "citizenship":"S\u00e3o Tom\u00e9an",
-      "country-code":"678",
+      "iso_numeric":"678",
       "currency":"dobra",
       "currency_code":"STD",
       "currency_sub_unit":"centavo",
@@ -3509,7 +3509,7 @@
    "682":{
       "capital":"Riyadh",
       "citizenship":"Saudi Arabian",
-      "country-code":"682",
+      "iso_numeric":"682",
       "currency":"riyal",
       "currency_code":"SAR",
       "currency_sub_unit":"halala",
@@ -3527,7 +3527,7 @@
    "686":{
       "capital":"Dakar",
       "citizenship":"Senegalese",
-      "country-code":"686",
+      "iso_numeric":"686",
       "currency":"CFA franc (BCEAO)",
       "currency_code":"XOF",
       "currency_sub_unit":"centime",
@@ -3545,7 +3545,7 @@
    "688":{
       "capital":"Belgrade",
       "citizenship":"Serb",
-      "country-code":"688",
+      "iso_numeric":"688",
       "currency":"Serbian dinar",
       "currency_code":"RSD",
       "currency_sub_unit":"para (inv.)",
@@ -3561,7 +3561,7 @@
    "690":{
       "capital":"Victoria",
       "citizenship":"Seychellois",
-      "country-code":"690",
+      "iso_numeric":"690",
       "currency":"Seychelles rupee",
       "currency_code":"SCR",
       "currency_sub_unit":"cent",
@@ -3579,7 +3579,7 @@
    "694":{
       "capital":"Freetown",
       "citizenship":"Sierra Leonean",
-      "country-code":"694",
+      "iso_numeric":"694",
       "currency":"leone",
       "currency_code":"SLL",
       "currency_sub_unit":"cent",
@@ -3597,7 +3597,7 @@
    "702":{
       "capital":"Singapore",
       "citizenship":"Singaporean",
-      "country-code":"702",
+      "iso_numeric":"702",
       "currency":"Singapore dollar",
       "currency_code":"SGD",
       "currency_sub_unit":"cent",
@@ -3615,7 +3615,7 @@
    "703":{
       "capital":"Bratislava",
       "citizenship":"Slovak",
-      "country-code":"703",
+      "iso_numeric":"703",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -3633,7 +3633,7 @@
    "704":{
       "capital":"Hanoi",
       "citizenship":"Vietnamese",
-      "country-code":"704",
+      "iso_numeric":"704",
       "currency":"dong",
       "currency_code":"VND",
       "currency_sub_unit":"(10 h\u00e0o",
@@ -3651,7 +3651,7 @@
    "705":{
       "capital":"Ljubljana",
       "citizenship":"Slovene",
-      "country-code":"705",
+      "iso_numeric":"705",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -3669,7 +3669,7 @@
    "706":{
       "capital":"Mogadishu",
       "citizenship":"Somali",
-      "country-code":"706",
+      "iso_numeric":"706",
       "currency":"Somali shilling",
       "currency_code":"SOS",
       "currency_sub_unit":"cent",
@@ -3687,7 +3687,7 @@
    "710":{
       "capital":"Pretoria (ZA1)",
       "citizenship":"South African",
-      "country-code":"710",
+      "iso_numeric":"710",
       "currency":"rand",
       "currency_code":"ZAR",
       "currency_sub_unit":"cent",
@@ -3705,7 +3705,7 @@
    "716":{
       "capital":"Harare",
       "citizenship":"Zimbabwean",
-      "country-code":"716",
+      "iso_numeric":"716",
       "currency":"Zimbabwe dollar (ZW1)",
       "currency_code":"ZWL",
       "currency_sub_unit":"cent",
@@ -3723,7 +3723,7 @@
    "724":{
       "capital":"Madrid",
       "citizenship":"Spaniard",
-      "country-code":"724",
+      "iso_numeric":"724",
       "currency":"euro",
       "currency_code":"EUR",
       "currency_sub_unit":"cent",
@@ -3741,7 +3741,7 @@
    "728":{
       "capital":"Juba",
       "citizenship":"South Sudanese",
-      "country-code":"728",
+      "iso_numeric":"728",
       "currency":"South Sudanese pound",
       "currency_code":"SSP",
       "currency_sub_unit":"piaster",
@@ -3757,7 +3757,7 @@
    "729":{
       "capital":"Khartoum",
       "citizenship":"Sudanese",
-      "country-code":"729",
+      "iso_numeric":"729",
       "currency":"Sudanese pound",
       "currency_code":"SDG",
       "currency_sub_unit":"piastre",
@@ -3773,7 +3773,7 @@
    "732":{
       "capital":"Al aaiun",
       "citizenship":"Sahrawi",
-      "country-code":"732",
+      "iso_numeric":"732",
       "currency":"Moroccan dirham",
       "currency_code":"MAD",
       "currency_sub_unit":"centime",
@@ -3791,7 +3791,7 @@
    "740":{
       "capital":"Paramaribo",
       "citizenship":"Surinamese",
-      "country-code":"740",
+      "iso_numeric":"740",
       "currency":"Surinamese dollar",
       "currency_code":"SRD",
       "currency_sub_unit":"cent",
@@ -3809,7 +3809,7 @@
    "744":{
       "capital":"Longyearbyen",
       "citizenship":"of Svalbard",
-      "country-code":"744",
+      "iso_numeric":"744",
       "currency":"Norwegian krone (pl. kroner)",
       "currency_code":"NOK",
       "currency_sub_unit":"\u00f8re (inv.)",
@@ -3827,7 +3827,7 @@
    "748":{
       "capital":"Mbabane",
       "citizenship":"Swazi",
-      "country-code":"748",
+      "iso_numeric":"748",
       "currency":"lilangeni",
       "currency_code":"SZL",
       "currency_sub_unit":"cent",
@@ -3845,7 +3845,7 @@
    "752":{
       "capital":"Stockholm",
       "citizenship":"Swedish",
-      "country-code":"752",
+      "iso_numeric":"752",
       "currency":"krona (pl. kronor)",
       "currency_code":"SEK",
       "currency_sub_unit":"\u00f6re (inv.)",
@@ -3863,7 +3863,7 @@
    "756":{
       "capital":"Berne",
       "citizenship":"Swiss",
-      "country-code":"756",
+      "iso_numeric":"756",
       "currency":"Swiss franc",
       "currency_code":"CHF",
       "currency_sub_unit":"centime",
@@ -3881,7 +3881,7 @@
    "760":{
       "capital":"Damascus",
       "citizenship":"Syrian",
-      "country-code":"760",
+      "iso_numeric":"760",
       "currency":"Syrian pound",
       "currency_code":"SYP",
       "currency_sub_unit":"piastre",
@@ -3899,7 +3899,7 @@
    "762":{
       "capital":"Dushanbe",
       "citizenship":"Tajik",
-      "country-code":"762",
+      "iso_numeric":"762",
       "currency":"somoni",
       "currency_code":"TJS",
       "currency_sub_unit":"diram",
@@ -3917,7 +3917,7 @@
    "764":{
       "capital":"Bangkok",
       "citizenship":"Thai",
-      "country-code":"764",
+      "iso_numeric":"764",
       "currency":"baht (inv.)",
       "currency_code":"THB",
       "currency_sub_unit":"satang (inv.)",
@@ -3935,7 +3935,7 @@
    "768":{
       "capital":"Lom\u00e9",
       "citizenship":"Togolese",
-      "country-code":"768",
+      "iso_numeric":"768",
       "currency":"CFA franc (BCEAO)",
       "currency_code":"XOF",
       "currency_sub_unit":"centime",
@@ -3953,7 +3953,7 @@
    "772":{
       "capital":"(TK2)",
       "citizenship":"Tokelauan",
-      "country-code":"772",
+      "iso_numeric":"772",
       "currency":"New Zealand dollar",
       "currency_code":"NZD",
       "currency_sub_unit":"cent",
@@ -3971,7 +3971,7 @@
    "776":{
       "capital":"Nuku\u2019alofa",
       "citizenship":"Tongan",
-      "country-code":"776",
+      "iso_numeric":"776",
       "currency":"pa\u2019anga (inv.)",
       "currency_code":"TOP",
       "currency_sub_unit":"seniti (inv.)",
@@ -3989,7 +3989,7 @@
    "780":{
       "capital":"Port of Spain",
       "citizenship":"Trinidadian; Tobagonian",
-      "country-code":"780",
+      "iso_numeric":"780",
       "currency":"Trinidad and Tobago dollar",
       "currency_code":"TTD",
       "currency_sub_unit":"cent",
@@ -4007,7 +4007,7 @@
    "784":{
       "capital":"Abu Dhabi",
       "citizenship":"Emirian",
-      "country-code":"784",
+      "iso_numeric":"784",
       "currency":"UAE dirham",
       "currency_code":"AED",
       "currency_sub_unit":"fils (inv.)",
@@ -4025,7 +4025,7 @@
    "788":{
       "capital":"Tunis",
       "citizenship":"Tunisian",
-      "country-code":"788",
+      "iso_numeric":"788",
       "currency":"Tunisian dinar",
       "currency_code":"TND",
       "currency_sub_unit":"millime",
@@ -4043,7 +4043,7 @@
    "792":{
       "capital":"Ankara",
       "citizenship":"Turk",
-      "country-code":"792",
+      "iso_numeric":"792",
       "currency":"Turkish lira (inv.)",
       "currency_code":"TRY",
       "currency_sub_unit":"kurus (inv.)",
@@ -4061,7 +4061,7 @@
    "795":{
       "capital":"Ashgabat",
       "citizenship":"Turkmen",
-      "country-code":"795",
+      "iso_numeric":"795",
       "currency":"Turkmen manat (inv.)",
       "currency_code":"TMT",
       "currency_sub_unit":"tenge (inv.)",
@@ -4079,7 +4079,7 @@
    "796":{
       "capital":"Cockburn Town",
       "citizenship":"Turks and Caicos Islander",
-      "country-code":"796",
+      "iso_numeric":"796",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -4097,7 +4097,7 @@
    "798":{
       "capital":"Funafuti",
       "citizenship":"Tuvaluan",
-      "country-code":"798",
+      "iso_numeric":"798",
       "currency":"Australian dollar",
       "currency_code":"AUD",
       "currency_sub_unit":"cent",
@@ -4115,7 +4115,7 @@
    "800":{
       "capital":"Kampala",
       "citizenship":"Ugandan",
-      "country-code":"800",
+      "iso_numeric":"800",
       "currency":"Uganda shilling",
       "currency_code":"UGX",
       "currency_sub_unit":"cent",
@@ -4133,7 +4133,7 @@
    "804":{
       "capital":"Kiev",
       "citizenship":"Ukrainian",
-      "country-code":"804",
+      "iso_numeric":"804",
       "currency":"hryvnia",
       "currency_code":"UAH",
       "currency_sub_unit":"kopiyka",
@@ -4151,7 +4151,7 @@
    "807":{
       "capital":"Skopje",
       "citizenship":"of the former Yugoslav Republic of Macedonia",
-      "country-code":"807",
+      "iso_numeric":"807",
       "currency":"denar (pl. denars)",
       "currency_code":"MKD",
       "currency_sub_unit":"deni (inv.)",
@@ -4169,7 +4169,7 @@
    "818":{
       "capital":"Cairo",
       "citizenship":"Egyptian",
-      "country-code":"818",
+      "iso_numeric":"818",
       "currency":"Egyptian pound",
       "currency_code":"EGP",
       "currency_sub_unit":"piastre",
@@ -4187,7 +4187,7 @@
    "826":{
       "capital":"London",
       "citizenship":"British",
-      "country-code":"826",
+      "iso_numeric":"826",
       "currency":"pound sterling",
       "currency_code":"GBP",
       "currency_sub_unit":"penny (pl. pence)",
@@ -4205,7 +4205,7 @@
    "831":{
       "capital":"St Peter Port",
       "citizenship":"of Guernsey",
-      "country-code":"831",
+      "iso_numeric":"831",
       "currency":"Guernsey pound (GG2)",
       "currency_code":"GGP (GG2)",
       "currency_sub_unit":"penny (pl. pence)",
@@ -4221,7 +4221,7 @@
    "832":{
       "capital":"St Helier",
       "citizenship":"of Jersey",
-      "country-code":"832",
+      "iso_numeric":"832",
       "currency":"Jersey pound (JE2)",
       "currency_code":"JEP (JE2)",
       "currency_sub_unit":"penny (pl. pence)",
@@ -4237,7 +4237,7 @@
    "833":{
       "capital":"Douglas",
       "citizenship":"Manxman; Manxwoman",
-      "country-code":"833",
+      "iso_numeric":"833",
       "currency":"Manx pound (IM2)",
       "currency_code":"IMP (IM2)",
       "currency_sub_unit":"penny (pl. pence)",
@@ -4253,7 +4253,7 @@
    "834":{
       "capital":"Dodoma (TZ1)",
       "citizenship":"Tanzanian",
-      "country-code":"834",
+      "iso_numeric":"834",
       "currency":"Tanzanian shilling",
       "currency_code":"TZS",
       "currency_sub_unit":"cent",
@@ -4271,7 +4271,7 @@
    "840":{
       "capital":"Washington DC",
       "citizenship":"American",
-      "country-code":"840",
+      "iso_numeric":"840",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -4289,7 +4289,7 @@
    "850":{
       "capital":"Charlotte Amalie",
       "citizenship":"US Virgin Islander",
-      "country-code":"850",
+      "iso_numeric":"850",
       "currency":"US dollar",
       "currency_code":"USD",
       "currency_sub_unit":"cent",
@@ -4307,7 +4307,7 @@
    "854":{
       "capital":"Ouagadougou",
       "citizenship":"Burkinabe",
-      "country-code":"854",
+      "iso_numeric":"854",
       "currency":"CFA franc (BCEAO)",
       "currency_code":"XOF",
       "currency_sub_unit":"centime",
@@ -4325,7 +4325,7 @@
    "858":{
       "capital":"Montevideo",
       "citizenship":"Uruguayan",
-      "country-code":"858",
+      "iso_numeric":"858",
       "currency":"Uruguayan peso",
       "currency_code":"UYU",
       "currency_sub_unit":"cent\u00e9simo",
@@ -4343,7 +4343,7 @@
    "860":{
       "capital":"Tashkent",
       "citizenship":"Uzbek",
-      "country-code":"860",
+      "iso_numeric":"860",
       "currency":"sum (inv.)",
       "currency_code":"UZS",
       "currency_sub_unit":"tiyin (inv.)",
@@ -4361,7 +4361,7 @@
    "862":{
       "capital":"Caracas",
       "citizenship":"Venezuelan",
-      "country-code":"862",
+      "iso_numeric":"862",
       "currency":"bol\u00edvar fuerte (pl. bol\u00edvares fuertes)",
       "currency_code":"VEF",
       "currency_sub_unit":"c\u00e9ntimo",
@@ -4379,7 +4379,7 @@
    "876":{
       "capital":"Mata-Utu",
       "citizenship":"Wallisian; Futunan; Wallis and Futuna Islander",
-      "country-code":"876",
+      "iso_numeric":"876",
       "currency":"CFP franc",
       "currency_code":"XPF",
       "currency_sub_unit":"centime",
@@ -4397,7 +4397,7 @@
    "882":{
       "capital":"Apia",
       "citizenship":"Samoan",
-      "country-code":"882",
+      "iso_numeric":"882",
       "currency":"tala (inv.)",
       "currency_code":"WST",
       "currency_sub_unit":"sene (inv.)",
@@ -4415,7 +4415,7 @@
    "887":{
       "capital":"San\u2019a",
       "citizenship":"Yemenite",
-      "country-code":"887",
+      "iso_numeric":"887",
       "currency":"Yemeni rial",
       "currency_code":"YER",
       "currency_sub_unit":"fils (inv.)",
@@ -4433,7 +4433,7 @@
    "894":{
       "capital":"Lusaka",
       "citizenship":"Zambian",
-      "country-code":"894",
+      "iso_numeric":"894",
       "currency":"Zambian kwacha (inv.)",
       "currency_code":"ZMW",
       "currency_sub_unit":"ngwee (inv.)",

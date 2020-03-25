@@ -12,6 +12,23 @@ class Country extends BaseModel
     protected $table = 'countries';
 
     /**
+     * The attributes that should be casted to boolean types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'eea' => 'boolean',
+        'active' => 'boolean',
+    ];
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = ['id'];
+
+    /**
      * Get all of the states for the country.
      */
     public function states()
@@ -78,4 +95,25 @@ class Country extends BaseModel
         return $this->hasMany(Address::class);
     }
 
+    /**
+     * Scope a query to only include active records.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active', True);
+    }
+
+    /**
+     * Setters
+     */
+    public function setEeaAttribute($value)
+    {
+        $this->attributes['eea'] = (bool) $value;
+    }
+    public function setActiveAttribute($value)
+    {
+        $this->attributes['active'] = (bool) $value;
+    }
 }

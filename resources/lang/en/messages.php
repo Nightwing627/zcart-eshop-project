@@ -227,6 +227,9 @@ return [
     'model_has_association' => 'The :model has :associate in it. To delete this :model, please remove all :associate under the :model',
 
     // Version 1.4.0
+    'active_worldwide_business_area' => 'The status will not affect as the marketplace business area is set to worldwide! To change the business area settings please check the configuration section.',
+
     'please_select_conversation' => 'Please select a conversation from the left.',
+
     'session_expired' => 'Your session has been expired! Please login.',
 ];

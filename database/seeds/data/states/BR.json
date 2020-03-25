@@ -1,110 +1,110 @@
 [
   {
-    "iso_3166_2": "AC",
+    "iso_code": "AC",
     "name": "Acre"
   },
   {
-    "iso_3166_2": "AL",
+    "iso_code": "AL",
     "name": "Alagoas"
   },
   {
-    "iso_3166_2": "AP",
+    "iso_code": "AP",
     "name": "Amapá"
   },
   {
-    "iso_3166_2": "AM",
+    "iso_code": "AM",
     "name": "Amazonas"
   },
   {
-    "iso_3166_2": "BA",
+    "iso_code": "BA",
     "name": "Bahia"
   },
   {
-    "iso_3166_2": "CE",
+    "iso_code": "CE",
     "name": "Ceará"
   },
   {
-    "iso_3166_2": "DF",
+    "iso_code": "DF",
     "name": "Distrito Federal"
   },
   {
-    "iso_3166_2": "ES",
+    "iso_code": "ES",
     "name": "Espírito Santo"
   },
   {
-    "iso_3166_2": "GO",
+    "iso_code": "GO",
     "name": "Goiás"
   },
   {
-    "iso_3166_2": "MA",
+    "iso_code": "MA",
     "name": "Maranhão"
   },
   {
-    "iso_3166_2": "MT",
+    "iso_code": "MT",
     "name": "Mato Grosso"
   },
   {
-    "iso_3166_2": "MS",
+    "iso_code": "MS",
     "name": "Mato Grosso do Sul"
   },
   {
-    "iso_3166_2": "MG",
+    "iso_code": "MG",
     "name": "Minas Gerais"
   },
   {
-    "iso_3166_2": "PA",
+    "iso_code": "PA",
     "name": "Pará"
   },
   {
-    "iso_3166_2": "PB",
+    "iso_code": "PB",
     "name": "Paraíba"
   },
   {
-    "iso_3166_2": "PR",
+    "iso_code": "PR",
     "name": "Paraná"
   },
   {
-    "iso_3166_2": "PE",
+    "iso_code": "PE",
     "name": "Pernambuco"
   },
   {
-    "iso_3166_2": "PI",
+    "iso_code": "PI",
     "name": "Piauí"
   },
   {
-    "iso_3166_2": "RJ",
+    "iso_code": "RJ",
     "name": "Rio de Janeiro"
   },
   {
-    "iso_3166_2": "RN",
+    "iso_code": "RN",
     "name": "Rio Grande do Norte"
   },
   {
-    "iso_3166_2": "RS",
+    "iso_code": "RS",
     "name": "Rio Grande do Sul"
   },
   {
-    "iso_3166_2": "RO",
+    "iso_code": "RO",
     "name": "Rondônia"
   },
   {
-    "iso_3166_2": "RR",
+    "iso_code": "RR",
     "name": "Roraima"
   },
   {
-    "iso_3166_2": "SC",
+    "iso_code": "SC",
     "name": "Santa Catarina"
   },
   {
-    "iso_3166_2": "SP",
+    "iso_code": "SP",
     "name": "São Paulo"
   },
   {
-    "iso_3166_2": "SE",
+    "iso_code": "SE",
     "name": "Sergipe"
   },
   {
-    "iso_3166_2": "TO",
+    "iso_code": "TO",
     "name": "Tocantins"
   }
 ]

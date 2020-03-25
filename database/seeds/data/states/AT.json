@@ -1,38 +1,38 @@
 [
   {
-    "iso_3166_2": "B",
+    "iso_code": "B",
     "name": "Burgenland"
   },
   {
-    "iso_3166_2": "K",
+    "iso_code": "K",
     "name": "Kärnten"
   },
   {
-    "iso_3166_2": "NÖ",
+    "iso_code": "NÖ",
     "name": "Niederösterreich"
   },
   {
-    "iso_3166_2": "OÖ",
+    "iso_code": "OÖ",
     "name": "Oberösterreich"
   },
   {
-    "iso_3166_2": "S",
+    "iso_code": "S",
     "name": "Salzburg"
   },
   {
-    "iso_3166_2": "ST",
+    "iso_code": "ST",
     "name": "Steiermark"
   },
   {
-    "iso_3166_2": "T",
+    "iso_code": "T",
     "name": "Tirol"
   },
   {
-    "iso_3166_2": "V",
+    "iso_code": "V",
     "name": "Vorarlberg"
   },
   {
-    "iso_3166_2": "W",
+    "iso_code": "W",
     "name": "Wien"
   }
 ]

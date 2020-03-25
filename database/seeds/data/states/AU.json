@@ -9,18 +9,18 @@
     "name": "Australian Capital Territory"
   },
   {
-    "iso_3166_2": "CX",
+    "iso_code": "CX",
     "name": "Christmas Island"
   },
   {
-    "iso_3166_2": "CC",
+    "iso_code": "CC",
     "name": "Cocos Islands"
   },
   {
     "name": "Coral Sea Islands"
   },
   {
-    "iso_3166_2": "HM",
+    "iso_code": "HM",
     "name": "Heard Island and McDonald Islands"
   },
   {
@@ -30,18 +30,18 @@
     "name": "New South Wales"
   },
   {
-    "iso_3166_2": "NF",
+    "iso_code": "NF",
     "name": "Norfolk Island"
   },
   {
-    "iso_3166_2": "NT",
+    "iso_code": "NT",
     "name": "Northern Territory"
   },
   {
     "name": "Queensland"
   },
   {
-    "iso_3166_2": "SA",
+    "iso_code": "SA",
     "name": "South Australia"
   },
   {
@@ -51,7 +51,7 @@
     "name": "Victoria"
   },
   {
-    "iso_3166_2": "WA",
+    "iso_code": "WA",
     "name": "Western Australia"
   }
 ]

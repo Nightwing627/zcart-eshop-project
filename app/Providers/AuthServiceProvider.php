@@ -28,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\Config::class              => \App\Policies\ConfigPolicy::class,
         \App\Coupon::class              => \App\Policies\CouponPolicy::class,
         \App\Customer::class            => \App\Policies\CustomerPolicy::class,
+        \App\Country::class            => \App\Policies\CountryPolicy::class,
         \App\Currency::class            => \App\Policies\CurrencyPolicy::class,
         \App\Dispute::class             => \App\Policies\DisputePolicy::class,
         \App\EmailTemplate::class       => \App\Policies\EmailTemplatePolicy::class,

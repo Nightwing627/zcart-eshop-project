@@ -1,54 +1,54 @@
 [
 	{
-		"iso_3166_2":"AB",
+		"iso_code":"AB",
 		"name":"Alberta"
 	},
 	{
-		"iso_3166_2":"BC",
+		"iso_code":"BC",
 		"name":"British Columbia"
 	},
 	{
-		"iso_3166_2":"MB",
+		"iso_code":"MB",
 		"name":"Manitoba"
 	},
 	{
-		"iso_3166_2":"NB",
+		"iso_code":"NB",
 		"name":"New Brunswick"
 	},
 	{
-		"iso_3166_2":"NL",
+		"iso_code":"NL",
 		"name":"Newfoundland and Labrador"
 	},
 	{
-		"iso_3166_2":"NS",
+		"iso_code":"NS",
 		"name":"Nova Scotia"
 	},
 	{
-		"iso_3166_2":"NU",
+		"iso_code":"NU",
 		"name":"Nunavut"
 	},
 	{
-		"iso_3166_2":"NT",
+		"iso_code":"NT",
 		"name":"Northwest Territories"
 	},
 	{
-		"iso_3166_2":"ON",
+		"iso_code":"ON",
 		"name":"Ontario"
 	},
 	{
-		"iso_3166_2":"PE",
+		"iso_code":"PE",
 		"name":"Prince Edward Island"
 	},
 	{
-		"iso_3166_2":"QC",
+		"iso_code":"QC",
 		"name":"Quebec"
 	},
 	{
-		"iso_3166_2":"SK",
+		"iso_code":"SK",
 		"name":"Saskatchewan"
 	},
 	{
-		"iso_3166_2":"YT",
+		"iso_code":"YT",
 		"name":"Yukon"
 	}
 ]

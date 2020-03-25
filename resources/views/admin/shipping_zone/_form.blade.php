@@ -21,7 +21,7 @@
     <div class="form-group">
       {!! Form::label('country_ids', trans('app.form.country').'*', ['class' => 'with-help']) !!}
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('help.shipping_zone_select_countries') }}"></i>
-      {!! Form::select('country_ids[]', $countries , null, ['id' => 'country_ids', 'class' => 'form-control select2-normal', 'multiple' => 'multiple', (isset($shipping_zone) && $shipping_zone->rest_of_the_world) ? 'disabled' : 'required']) !!}
+      {!! Form::select('country_ids[]', $countries , null, ['id' => 'country_ids', 'class' => 'form-control select2-multi', 'multiple' => 'multiple', (isset($shipping_zone) && $shipping_zone->rest_of_the_world) ? 'disabled' : 'required']) !!}
       <div class="help-block with-errors">
         {!! Form::checkbox('rest_of_the_world', 1, null, ['id' => 'rest_of_the_world', 'class' => 'icheck']) !!} {{ trans('app.rest_of_the_world') }}
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('help.rest_of_the_world') }}"></i>

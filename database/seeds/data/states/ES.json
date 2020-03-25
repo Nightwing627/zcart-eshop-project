@@ -1,186 +1,186 @@
 [
   {
     "name": "La Coruña",
-    "iso_3166_2": "C"
+    "iso_code": "C"
   },
   {
     "name": "Lugo",
-    "iso_3166_2": "LU"
+    "iso_code": "LU"
   },
   {
     "name": "Vizcaya",
-    "iso_3166_2": "BI"
+    "iso_code": "BI"
   },
   {
     "name": "Guipúzcoa",
-    "iso_3166_2": "SS"
+    "iso_code": "SS"
   },
   {
     "name": "Huesca",
-    "iso_3166_2": "HU"
+    "iso_code": "HU"
   },
   {
     "name": "Lérida",
-    "iso_3166_2": "L"
+    "iso_code": "L"
   },
   {
     "name": "Gerona",
-    "iso_3166_2": "GI"
+    "iso_code": "GI"
   },
   {
     "name": "Barcelona",
-    "iso_3166_2": "B"
+    "iso_code": "B"
   },
   {
     "name": "Tarragona",
-    "iso_3166_2": "T"
+    "iso_code": "T"
   },
   {
     "name": "Castellón",
-    "iso_3166_2": "CS"
+    "iso_code": "CS"
   },
   {
     "name": "Valencia",
-    "iso_3166_2": "V"
+    "iso_code": "V"
   },
   {
     "name": "Alicante",
-    "iso_3166_2": "A"
+    "iso_code": "A"
   },
   {
     "name": "Murcia",
-    "iso_3166_2": "MU"
+    "iso_code": "MU"
   },
   {
     "name": "Zaragoza",
-    "iso_3166_2": "Z"
+    "iso_code": "Z"
   },
   {
     "name": "Teruel",
-    "iso_3166_2": "TE"
+    "iso_code": "TE"
   },
   {
     "name": "Cuenca",
-    "iso_3166_2": "CU"
+    "iso_code": "CU"
   },
   {
     "name": "Albacete",
-    "iso_3166_2": "AB"
+    "iso_code": "AB"
   },
   {
     "name": "Almeria",
-    "iso_3166_2": "AL"
+    "iso_code": "AL"
   },
   {
     "name": "Granada",
-    "iso_3166_2": "GR"
+    "iso_code": "GR"
   },
   {
     "name": "Málaga",
-    "iso_3166_2": "MA"
+    "iso_code": "MA"
   },
   {
     "name": "Tenerife",
-    "iso_3166_2": "TF"
+    "iso_code": "TF"
   },
   {
     "name": "Cádiz",
-    "iso_3166_2": "CA"
+    "iso_code": "CA"
   },
   {
     "name": "Sevilla",
-    "iso_3166_2": "SE"
+    "iso_code": "SE"
   },
   {
     "name": "Huelva",
-    "iso_3166_2": "H"
+    "iso_code": "H"
   },
   {
     "name": "Las Palmas",
-    "iso_3166_2": "GC"
+    "iso_code": "GC"
   },
   {
     "name": "Madrid",
-    "iso_3166_2": "M"
+    "iso_code": "M"
   },
   {
     "name": "Badajoz",
-    "iso_3166_2": "BA"
+    "iso_code": "BA"
   },
   {
     "name": "Cáceres",
-    "iso_3166_2": "CC"
+    "iso_code": "CC"
   },
   {
     "name": "Toledo",
-    "iso_3166_2": "TO"
+    "iso_code": "TO"
   },
   {
     "name": "Ciudad Real",
-    "iso_3166_2": "CR"
+    "iso_code": "CR"
   },
   {
     "name": "Salamanca",
-    "iso_3166_2": "SA"
+    "iso_code": "SA"
   },
   {
     "name": "Córdoba",
-    "iso_3166_2": "CO"
+    "iso_code": "CO"
   },
   {
     "name": "Jaén",
-    "iso_3166_2": "J"
+    "iso_code": "J"
   },
   {
     "name": "Ávila",
-    "iso_3166_2": "AV"
+    "iso_code": "AV"
   },
   {
     "name": "Valladolid",
-    "iso_3166_2": "VA"
+    "iso_code": "VA"
   },
   {
     "name": "Zamora",
-    "iso_3166_2": "ZA"
+    "iso_code": "ZA"
   },
   {
     "name": "Álava",
-    "iso_3166_2": "VI"
+    "iso_code": "VI"
   },
   {
     "name": "Segovia",
-    "iso_3166_2": "SG"
+    "iso_code": "SG"
   },
   {
     "name": "Burgos",
-    "iso_3166_2": "BU"
+    "iso_code": "BU"
   },
   {
     "name": "Pontevedra",
-    "iso_3166_2": "PO"
+    "iso_code": "PO"
   },
   {
     "name": "León",
-    "iso_3166_2": "LE"
+    "iso_code": "LE"
   },
   {
     "name": "Orense",
-    "iso_3166_2": "OU"
+    "iso_code": "OU"
   },
   {
     "name": "Palencia",
-    "iso_3166_2": "P"
+    "iso_code": "P"
   },
   {
     "name": "La Rioja",
-    "iso_3166_2": "LO"
+    "iso_code": "LO"
   },
   {
     "name": "Soria",
-    "iso_3166_2": "SO"
+    "iso_code": "SO"
   },
   {
     "name": "Guadalajara",
-    "iso_3166_2": "GU"
+    "iso_code": "GU"
   }
 ]

@@ -49,11 +49,11 @@ class Currency extends BaseModel
     /**
      * Setters
      */
-     public function setActiveAttribute($value)
+    public function setActiveAttribute($value)
     {
         $this->attributes['active'] = (bool) $value;
     }
-     public function setSymbolFirstAttribute($value)
+    public function setSymbolFirstAttribute($value)
     {
         $this->attributes['symbol_first'] = (bool) $value;
     }
