@@ -200,7 +200,7 @@ class CustomerUploadController extends Controller
 
 		// Get the country id
 		if($data[$type.'_address_country_code']){
-			$country = DB::table('countries')->select(['id','name'])->where('iso_3166_2', strtoupper($data[$type.'_address_country_code']))->first();
+			$country = DB::table('countries')->select(['id','name'])->where('iso_code', strtoupper($data[$type.'_address_country_code']))->first();
 		}
 		$address['country_id'] = isset($country) && ! empty($country) ? $country->id : config('system_settings.address_default_country');
 

@@ -52,14 +52,15 @@ class CreateCountriesTable extends Migration
             $table->integer('currency_id')->unsigned()->nullable();
             $table->integer('timezone_id')->unsigned()->nullable();
             $table->string('citizenship', 255)->nullable();
+            $table->string('iso_code', 2);
             // $table->string('country_code', 3)->nullable();
             // $table->string('currency', 255)->nullable();
             // $table->string('currency_code', 255)->nullable();
             // $table->string('currency_sub_unit', 255)->nullable();
             // $table->string('currency_symbol', 3)->nullable();
-            $table->string('iso_3166_2', 2);
-            $table->string('iso_3166_3', 3);
-            $table->string('iso_numeric', 3);
+            // $table->string('iso_3166_2', 2);
+            // $table->string('iso_3166_3', 3);
+            $table->string('iso_numeric', 3)->nullable();
             // $table->string('region_code', 3)->nullable();
             // $table->string('sub_region_code', 3)->nullable();
             $table->string('calling_code', 3)->nullable();
@@ -75,7 +76,7 @@ class CreateCountriesTable extends Migration
         Schema::create('states', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('country_id')->unsigned();
-            $table->string('iso_code')->nullable();
+            $table->string('iso_code');
             $table->string('iso_numeric')->nullable();
             // $table->string('country_name', 255)->nullable();
             $table->string('name', 255)->nullable();

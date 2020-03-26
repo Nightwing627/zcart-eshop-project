@@ -25,7 +25,6 @@ class CreateStateRequest extends Request
     {
         return [
            'name' => 'required|string',
-           'iso_numeric' => 'required|size:3|unique:states',
            'iso_code' => 'required|max:3|unique:states',
            'active' => 'required',
         ];

@@ -19,10 +19,29 @@ class State extends BaseModel
     protected $guarded = ['id'];
 
     /**
+     * The attributes that should be casted to boolean types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'active' => 'boolean',
+    ];
+
+    /**
      * Get the country of the state.
      */
     public function country()
     {
         return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * Check if the state is in active business area
+     *
+     * @return bool
+     */
+    public function getInActiveBusinessAreaAttribute()
+    {
+        return config('system_settings.worldwide_business_area') ? TRUE : $this->active;
     }
 }

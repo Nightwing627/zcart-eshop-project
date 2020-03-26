@@ -40,7 +40,7 @@ class ShopsSeeder extends BaseSeeder
                 'address_type' => 'Primary',
                 'addressable_type' => 'App\Shop',
                 'address_line_1' => 'Demo Platform Address',
-                'state_id' => 806,
+                'state_id' => 380,
                 'zip_code' => 63585,
                 'country_id' => 604,
                 'addressable_id' => $shop_id,

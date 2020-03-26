@@ -26,9 +26,8 @@ class CreateCountryRequest extends Request
         return [
            'name' => 'required|string',
            'full_name' => 'required|string',
-           'iso_3166_2' => 'required|size:2|unique:countries',
-           'iso_3166_3' => 'required|size:3|unique:countries',
-           'iso_numeric' => 'required|max:3|unique:countries',
+           'iso_code' => 'required|size:2|unique:countries',
+           'iso_numeric' => 'nullable|max:3|unique:countries',
            'eea' => 'required',
            'active' => 'required',
         ];

@@ -130,7 +130,7 @@ class ProductUploadController extends Controller
 	private function createProduct($data)
 	{
 		if($data['origin_country'])
-			$origin_country = DB::table('countries')->select('id')->where('iso_3166_2', strtoupper($data['origin_country']))->first();
+			$origin_country = DB::table('countries')->select('id')->where('iso_code', strtoupper($data['origin_country']))->first();
 
 		if($data['manufacturer'])
 			$manufacturer = Manufacturer::firstOrCreate(['name' => $data['manufacturer']]);

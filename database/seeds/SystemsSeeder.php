@@ -71,7 +71,7 @@ class SystemsSeeder extends BaseSeeder
         DB::table('addresses')->insert([
             'address_type' => 'Primary',
             'address_line_1' => 'Platform Address',
-            'state_id' => 806,
+            'state_id' => 386,
             'zip_code' => 63585,
             'country_id' => 604,
             'city' => 'Hollywood',

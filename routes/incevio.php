@@ -1,6 +1,19 @@
 <?php
 Route::group(['prefix' => 'incevio'], function()
 {
+    // Check different type system information
+    Route::get('check/{option?}', function($option = 'version'){
+        switch ($option) {
+            case 'ip':
+            case 'geoip':
+                return geoip(request()->ip())->toArray(); // Show the geo info
+
+            case 'version':
+            default:
+                return \App\System::VERSION; // Show the current installed version of the application
+        }
+    });
+
     // New version upgrade
     Route::get('upgrade/{option?}', function($option = 'migrate'){
         $out = '';

@@ -238,7 +238,7 @@
             <img src="{{ get_avatar_src($order->customer, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 
             <span class="admin-user-widget-title indent5">
-              @if(config('system_settings.vendor_can_view_customer_info'))
+              @if(config('system_settings.vendor_can_view_customer_info') && $order->customer_id)
                 <a href="javascript:void(0)" data-link="{{ route('admin.admin.customer.show', $order->customer->id) }}" class="ajax-modal-btn">
                   {{ $order->customer->getName() }}
                 </a>

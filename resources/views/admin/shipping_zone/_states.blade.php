@@ -10,19 +10,21 @@
               <div class="input-group input-group-lg">
                 <span class="input-group-addon no-border"> <i class="fa fa-search text-muted"></i> </span>
                 {!! Form::text('', null, ['id' => 'search_this', 'class' => 'form-control no-border', 'placeholder' => trans('app.placeholder.search')]) !!}
+                <span class="input-group-addon no-border"> <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('help.shipping_zone_select_states') }}"></i> </span>
               </div>
             </div>
 
-            @php
-                $states = get_states_of($country);
-            @endphp
             <table class="table table-striped" id="search_table">
                 <tbody>
-                    @foreach($states as $state_id => $state_name)
+                    @foreach(get_business_area_of($country) as $state)
                         <tr>
                             <td>
-                                {!! Form::checkbox('states[]', $state_id, in_array($state_id, $shipping_zone->state_ids), ['id' => $state_id, 'class' => 'icheckbox_line']) !!}
-                                {!! Form::label($state_name, strtoupper($state_name), ['class' => 'indent5']) !!}
+                                {!! Form::checkbox('states[]', $state->id, in_array($state->id, $shipping_zone->state_ids), ['id' => $state->id, 'class' => 'icheckbox_line', (! $state->in_active_business_area) ? 'disabled' : '']) !!}
+                                {!! Form::label($state->name, $state->name, ['class' => 'indent5']) !!}
+
+                                @unless($state->in_active_business_area)
+                                    <i class="fa fa-question-circle pull-right" style="margin-top: -23px; margin-right: 10px; position:relative; z-index: 999" data-toggle="tooltip" title="{{ trans('help.not_in_business_area') }}"></i>
+                                @endunless
                             </td>
                         </tr>
                     @endforeach

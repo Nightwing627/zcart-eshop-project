@@ -1417,8 +1417,6 @@ return [
     'disambiguate_symbol' => 'Disambiguate symbol',
     'eea' => 'EEA',
     'html_entity' => 'HTML entity',
-    'iso_3166_2' => 'ISO 3166_2 code',
-    'iso_3166_3' => 'ISO 3166_3 code',
     'invoices' => 'Invoices',
     'invoice_for' => 'Subscription fee for :start - :end',
     'iso_numeric' => 'ISO numeric code',
@@ -1432,6 +1430,7 @@ return [
     'symbol_first' => 'Symbol first',
     'to' => 'To',
     'active_business_area' => 'Active business area only',
+    'not_in_business_area' => 'Out of business area',
 
     // Version 2.0.0
     'chats' => 'Chats',

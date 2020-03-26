@@ -10,7 +10,7 @@
         }
         else{
           $geoip = geoip(request()->ip());
-          $shipping_country_id = get_id_of_model('countries', 'iso_3166_2', $geoip->iso_code);
+          $shipping_country_id = get_id_of_model('countries', 'iso_code', $geoip->iso_code);
           $shipping_state_id = $geoip->state;
         }
 

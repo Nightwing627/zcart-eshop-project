@@ -35,7 +35,6 @@
 						@endcan
 						<th>{{ trans('app.iso_code') }}</th>
 						<th>{{ trans('app.name') }}</th>
-						<th>{{ trans('app.iso_numeric') }}</th>
 						<th>{{ trans('app.calling_code') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
@@ -55,7 +54,6 @@
 							    <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="{{ trans('help.active_business_zone') }}"></i>
 					        @endif
 						</td>
-						<td>{{ $state->iso_numeric }}</td>
 						<td>{{ $state->calling_code }}</td>
 						<td class="row-options">
 							@can('update', $country)

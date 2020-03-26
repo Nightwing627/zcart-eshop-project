@@ -5,6 +5,7 @@ namespace App\Repositories\ShippingZone;
 use Auth;
 use App\ShippingZone;
 use App\Helpers\ListHelper;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
@@ -53,18 +54,28 @@ class EloquentShippingZone extends EloquentRepository implements BaseRepository,
         return $zone;
     }
 
-    public function updateStates(Request $request, $zone, $country)
+    public function updateStates(Request $request, $id, $country)
     {
-        $zone = $this->model->findOrFail($zone);
+        $shop_id = $request->user()->merchantId(); //Get current user's shop_id
 
-        //Remove all state ids of the country
-        $states = get_states_of($country);
-        $temp_state_ids = array_diff($zone->state_ids, array_keys($states));
+        // State ids that are already in other shipping zones
+        $allZones = ShippingZone::select('id', 'state_ids')->where('shop_id', $shop_id)->get();
+        $zone = $allZones->where('id', $id)->first();
+        $otherZones = $allZones->where('id', '!=', $id)->all();
+
+        $otherZone_stateIds = Arr::flatten(array_filter(collect($otherZones)->pluck('state_ids')->toArray()));
+        $new_stateIds = $request->input('states');
+        $valid_newIds = array_diff($new_stateIds, $otherZone_stateIds);
+
+        //Remove all state ids of the country and keep the other country states
+        if(!empty($valid_newIds)){
+            $states = \DB::table('states')->where('country_id', $country)->pluck('id')->toArray();
+            $kept = array_diff($zone->state_ids, $states);
+            $valid_newIds = empty($kept) ? $valid_newIds : array_merge($valid_newIds, $kept);
+        }
 
         //Creating new and updated values
-        $state_ids = array_merge($temp_state_ids, $request->input('states'));
-
-        $zone->state_ids = $state_ids;
+        $zone->state_ids = $valid_newIds;
         $zone->save();
 
         return $zone;
@@ -76,7 +87,7 @@ class EloquentShippingZone extends EloquentRepository implements BaseRepository,
 
         //Remove state ids of the country
         $old_states = $zone->state_ids;
-        $states = get_states_of($country);
+        $states = get_states_of($country, true);
         $state_ids = array_diff($old_states, array_keys($states));
 
         //Remove country id

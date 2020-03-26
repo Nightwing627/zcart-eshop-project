@@ -59,6 +59,8 @@ return [
 
     'currency_iso_code' => 'ISO 4217 code. For example, United States dollar has code USD and Japan\'s currency code is JPY.',
 
+    'country_iso_code' => 'ISO 3166_2 code. For example, Example: For United States of America the code is US',
+
     'currency_subunit' => 'The subunit that is a fraction of the base unit. For example: cent, centavo, paisa',
 
     'currency_symbol_first' => 'Is the symbol will be placed on left? Example: $13.21',
@@ -401,7 +403,7 @@ return [
 
     'shipping_zone_tax' => 'This tax profile will be applicable when customer make a purchase from this shipping zone',
 
-    'shipping_zone_select_countries' => 'If you don\'t see the country in the options, probably the marketplace is not operational in that area. You can contact the marketplace support admin to make a request to add the country into the business area.',
+    'shipping_zone_select_countries' => 'If you don\'t see the country in the options, probably the marketplace is not operational in that area. You can contact the marketplace support admin to make a request to add the country in the business area.',
 
     'rest_of_the_world' => 'This zone includes any countries and regions within the marketplace business area that are not already defined in your other shipping zones.',
 
@@ -715,6 +717,8 @@ return [
 
     'currency_active' => 'Active currencies will be shown on the marketplace.',
 
+    'country_active' => 'Active currencies will be included in business area.',
+
     'currency_symbol' => 'The currency symbol',
 
     'currency_disambiguate_symbol' => 'Example: USD = US$ and BDT = BD$',
@@ -733,8 +737,11 @@ return [
 
     'show_shop_desc_with_listing' => 'Show the shop description on the product description page on frontend.',
 
+    'shipping_zone_select_states' => 'If you don\'t see the option you\'re looking for, probably the marketplace is not operational in that area. You can contact the marketplace support admin to make a request to add the area.',
+
     'marketplace_business_area' => 'The marketplace business area',
 
     'notify_new_chat' => 'Send me an email notification when a new chat message arrived',
 
+    'not_in_business_area' => 'This area is not in marketplace\'s active business area. Maybe recently removed by the marketplace admin.',
 ];

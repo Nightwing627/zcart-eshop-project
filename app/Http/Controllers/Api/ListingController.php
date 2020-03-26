@@ -152,7 +152,7 @@ class ListingController extends Controller
 
         // Shipping Zone
         $geoip = geoip(request()->ip()); // Set the location of the user
-        $shipping_country_id = get_id_of_model('countries', 'iso_3166_2', $geoip->iso_code);
+        $shipping_country_id = get_id_of_model('countries', 'iso_code', $geoip->iso_code);
 
         return (new ItemResource($item))->additional(['variants' => [
                     'images' => ImageResource::collection($variants->pluck('images')->flatten(1)),

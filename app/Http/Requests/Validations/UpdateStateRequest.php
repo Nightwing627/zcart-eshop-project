@@ -33,9 +33,6 @@ class UpdateStateRequest extends Request
         if(! $state->iso_code)
            $rules['iso_code'] = 'required|size:3|unique:states';
 
-        if(! $state->iso_numeric)
-           $rules['iso_numeric'] = 'required|size:3|unique:states';
-
         return $rules;
     }
 }

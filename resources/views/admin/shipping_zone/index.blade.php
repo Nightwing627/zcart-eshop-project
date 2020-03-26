@@ -79,29 +79,36 @@
 									@else
 										@if (!empty($shipping_zone->country_ids))
 											@php
-												$countries = get_countries_name_with_states($shipping_zone->country_ids);
+												$countries = get_countries_in_shipping_zone($shipping_zone);
 											@endphp
 
-											@foreach ($countries as $id => $country)
-												<li class="list-group-item">
+											@foreach ($countries as $country)
+												<li class="list-group-item {{ $country->in_active_business_area ? "" : "disabled" }}">
+
 													<h4 class="list-group-item-heading inline">
-														{!! get_formated_country_name($country['name'], $country['code']) !!}
+														{!! get_formated_country_name($country->name, $country->iso_code) !!}
 													</h4>
 
-													{!! Form::open(['route' => ['admin.shipping.shippingZone.removeCountry', $shipping_zone->id, $id], 'method' => 'delete', 'class' => 'data-form']) !!}
+										          	@unless($country->in_active_business_area)
+											          	<span class="indent10 label label-outline" data-toggle="tooltip" data-placement="top" title="{{ trans('help.not_in_business_area') }}">{{ trans('app.not_in_business_area') }}</span>
+											        @endunless
+
+													{!! Form::open(['route' => ['admin.shipping.shippingZone.removeCountry', $shipping_zone->id, $country->id], 'method' => 'delete', 'class' => 'data-form']) !!}
 														{!! Form::button('<i class="fa fa-times-circle"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent small text-muted pull-right', 'title' => trans('app.remove'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
 													{!! Form::close() !!}
 
-													@if($states_count = count($country['states']))
+													@if($country->states_count)
 														<p class="list-group-item-text">
 															<span class="indent40">
-																{{ trans('app._of_states', ['states' => $shipping_zone->state_ids ? count( array_intersect($shipping_zone->state_ids, $country['states'])) : '0', 'allStates' => $states_count]) }}
+																{{ trans('app._of_states', ['states' => $shipping_zone->state_ids ? count( array_intersect($shipping_zone->state_ids, $country->states->pluck('id')->toArray())) : '0', 'allStates' => $country->states_count]) }}
 															</span>
 
-															<small class="pull-right">
-																<a href="javascript:void(0)" data-link="{{ route('admin.shipping.shippingZone.editStates', [$shipping_zone->id, $id]) }}"  class="ajax-modal-btn"><i  class="fa fa-edit"></i> {{ trans('app.edit') }}</a>
-															</small>
-														</p>
+												          	@if($country->in_active_business_area)
+																<small class="pull-right">
+																	<a href="javascript:void(0)" data-link="{{ route('admin.shipping.shippingZone.editStates', [$shipping_zone->id, $country->id]) }}"  class="ajax-modal-btn"><i  class="fa fa-edit"></i> {{ trans('app.edit') }}</a>
+																</small>
+													        @endif
+															</p>
 													@endif
 												</li>
 											@endforeach

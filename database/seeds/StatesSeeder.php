@@ -18,9 +18,9 @@ class StatesSeeder extends BaseSeeder
 
         foreach ($files as $file)
         {
-            $country_code = basename($file, ".json"); // Get the the country iso_3166_2 from file name
+            $country_code = basename($file, ".json"); // Get the the country iso_code from file name
 
-            $country = \DB::table('countries')->where('iso_3166_2', $country_code)->first();
+            $country = \DB::table('countries')->where('iso_code', $country_code)->first();
 
             $country_id = $country->id;
             $country_name = $country->name;
@@ -32,6 +32,8 @@ class StatesSeeder extends BaseSeeder
 
             foreach ($json as $key => $state)
             {
+                if(! isset($state['iso_code'])) continue;
+
                 DB::table('states')->insert([
                     'country_id' => $country_id,
                     // 'country_name' => $country_name,

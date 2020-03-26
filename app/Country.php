@@ -116,4 +116,14 @@ class Country extends BaseModel
     {
         $this->attributes['active'] = (bool) $value;
     }
+
+    /**
+     * Check if the state is in active business area
+     *
+     * @return bool
+     */
+    public function getInActiveBusinessAreaAttribute()
+    {
+        return config('system_settings.worldwide_business_area') ? TRUE : $this->active;
+    }
 }

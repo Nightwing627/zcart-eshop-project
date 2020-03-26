@@ -26,20 +26,15 @@ class UpdateCountryRequest extends Request
         $rules = [
           'name' => 'required|string',
           'full_name' => 'required|string',
+          'iso_numeric' => 'nullable|max:3|unique:countries',
           'eea' => 'required',
           'active' => 'required',
         ];
 
         $country = $this->route('country');
 
-        if(! $country->iso_3166_2)
-           $rules['iso_3166_2'] = 'required|size:3|unique:countries';
-
-        if(! $country->iso_3166_3)
-           $rules['iso_3166_3'] = 'required|size:3|unique:countries';
-
-        if(! $country->iso_numeric)
-           $rules['iso_numeric'] = 'required|max:3|unique:countries';
+        if(! $country->iso_code)
+           $rules['iso_code'] = 'required|size:3|unique:countries';
 
         return $rules;
     }

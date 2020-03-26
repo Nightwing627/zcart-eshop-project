@@ -47,8 +47,8 @@
 					  	@can('massDelete', App\Country::class)
 							<td><input id="{{ $country->id }}" type="checkbox" class="massCheck"></td>
 					  	@endcan
-						<td>{!! get_flag_img_by_code($country->iso_3166_2) !!}</td>
-						<td>{{ $country->iso_3166_2 }}</td>
+						<td>{!! get_flag_img_by_code($country->iso_code) !!}</td>
+						<td>{{ $country->iso_code }}</td>
 						<td>
 							{{ $country->name }}
 

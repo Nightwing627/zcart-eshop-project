@@ -1,5 +1,5 @@
 @php
-	$shipping_country_id = get_id_of_model('countries', 'iso_3166_2', $geoip->iso_code);
+	$shipping_country_id = get_id_of_model('countries', 'iso_code', $geoip->iso_code);
 
 	$shipping_zone = get_shipping_zone_of($item->shop_id, $shipping_country_id, $geoip->state);
 	$shipping_options = isset($shipping_zone->id) ? getShippingRates($shipping_zone->id) : 'NaN';

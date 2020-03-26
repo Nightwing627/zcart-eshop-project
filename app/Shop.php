@@ -153,10 +153,10 @@ class Shop extends BaseModel
     /**
      * Get the ShippingZones for the shop.
      */
-    public function shipping_zones()
-    {
-        return $this->hasMany(ShippingZone::class);
-    }
+    // public function shipping_zones()
+    // {
+    //     return $this->hasMany(ShippingZone::class);
+    // }
 
     /**
      * Get the carriers for the shop.

@@ -91,8 +91,7 @@ class CountryController extends Controller
     {
         if(
             ($country->iso_numeric && $request->has('iso_numeric')) ||
-            ($country->iso_3166_2 && $request->has('iso_3166_2')) ||
-            ($country->iso_3166_3 && $request->has('iso_3166_3'))
+            ($country->iso_code && $request->has('iso_code'))
         )
             return back()->with('error', trans('response.invalid_data'));
 

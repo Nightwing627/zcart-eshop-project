@@ -16,6 +16,8 @@ class CountriesSeeder extends BaseSeeder
 
         foreach ($countries as $countryId => $country){
 
+            if(! isset($country['iso_code'])) continue;
+
             if(isset($country['currency_code'])){
                 $currency = \DB::table('currencies')->select('id')
                 ->where('iso_code', $country['currency_code'])->first();
@@ -39,9 +41,9 @@ class CountriesSeeder extends BaseSeeder
                 // 'currency_code' => isset($country['currency_code']) ? $country['currency_code'] : Null,
                 // 'currency_sub_unit' => isset($country['currency_sub_unit']) ? $country['currency_sub_unit'] : Null,
                 // 'currency_symbol' => isset($country['currency_symbol']) ? $country['currency_symbol'] : Null,
-                'iso_3166_2' => $country['iso_3166_2'],
-                'iso_3166_3' => $country['iso_3166_3'],
-                'iso_numeric' => $country['iso_numeric'],
+                'iso_code' => $country['iso_code'],
+                // 'iso_3166_3' => $country['iso_3166_3'],
+                'iso_numeric' => isset($country['iso_numeric']) ? $country['iso_numeric'] : Null,
                 // 'region_code' => $country['region-code'],
                 // 'sub_region_code' => $country['sub-region-code'],
                 'calling_code' => $country['calling_code'],

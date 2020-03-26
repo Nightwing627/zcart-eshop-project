@@ -3,7 +3,9 @@
 use App\Tax;
 use App\User;
 use App\Order;
+use App\State;
 use App\System;
+use App\Country;
 use App\Dispute;
 use App\Packaging;
 use App\Product;
@@ -1080,17 +1082,23 @@ if ( ! function_exists('get_formated_shipping_range_of') )
     }
 }
 
+// Shipping zone
+if ( ! function_exists('get_countries_in_shipping_zone') )
+{
+    function get_countries_in_shipping_zone($shipping_zone)
+    {
+        return Country::select('id', 'iso_code', 'name', 'active')
+        ->whereIn('id', $shipping_zone->country_ids)
+        ->withCount('states')->with('states:id,country_id')->get();
+    }
+}
+
 // COUNTRY
 if ( ! function_exists('get_countries_name_with_states') )
 {
-    /**
-     * Return taxe rate for the given tax id
-     *
-     * @param $country
-     */
     function get_countries_name_with_states($ids) {
         if (is_array($ids)) {
-            $countries = \DB::table('countries')->select('iso_3166_2', 'name', 'id')->whereIn('id', $ids)->get()->toArray();
+            $countries = \DB::table('countries')->select('iso_code', 'name', 'id')->whereIn('id', $ids)->get()->toArray();
             $all_states = \DB::table('states')->whereIn('country_id', $ids)->pluck('country_id', 'id')->toArray();
 
             if(!empty($countries)) {
@@ -1100,7 +1108,7 @@ if ( ! function_exists('get_countries_name_with_states') )
                             return $value == $country->id;
                         });
 
-                    $result[$country->id]['code'] = $country->iso_3166_2;
+                    $result[$country->id]['code'] = $country->iso_code;
                     $result[$country->id]['name'] = $country->name;
                     $result[$country->id]['states'] = array_keys($states);
                 }
@@ -1108,7 +1116,7 @@ if ( ! function_exists('get_countries_name_with_states') )
             }
         }
         else{
-            $country_data = \DB::table('countries')->select('iso_3166_2', 'name')->find($country);
+            $country_data = \DB::table('countries')->select('iso_code', 'name')->find($country);
         }
     }
 }
@@ -1134,9 +1142,9 @@ if ( ! function_exists('get_formated_country_name') )
     function get_formated_country_name($country, $code = null)
     {
         if (is_numeric($country)) {
-            $country_data = \DB::table('countries')->select('iso_3166_2', 'name')->find($country);
+            $country_data = \DB::table('countries')->select('iso_code', 'name')->find($country);
             $country = $country_data->name;
-            $code = $country_data->iso_3166_2;
+            $code = $country_data->iso_code;
         }
 
         if($code)
@@ -1172,14 +1180,14 @@ if ( ! function_exists('get_shipping_zone_of') )
     function get_shipping_zone_of($shop, $country, $state = null) {
         // If the iso_2 code given as country
         if( ! is_numeric($country) ) {
-            $temp = \DB::table('countries')->select('id')->where('iso_3166_2', $country)->first();
+            $temp = \DB::table('countries')->select('id')->where('iso_code', $country)->first();
             $country = optional($temp)->id;
         }
 
         // If the iso_2 code given as state
         if($state && !is_numeric($state) ) {
-            $temp = \DB::table('states')->select('id')->whereNotNull('iso_3166_2')->where([
-                ['iso_3166_2', '=', $state],
+            $temp = \DB::table('states')->select('id')->whereNotNull('iso_code')->where([
+                ['iso_code', '=', $state],
                 ['country_id', '=', $country]
             ])->first();
 
@@ -1241,12 +1249,41 @@ if ( ! function_exists('get_states_of') )
      *
      * @return array
      */
-    function get_states_of($countries)
+    function get_states_of($countries, $all = False)
     {
-        if (is_array($countries))
-            return \DB::table('states')->whereIn('country_id', $countries)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+        $states = \DB::table('states');
 
-        return \DB::table('states')->where('country_id', $countries)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+        if (is_array($countries))
+            $states->whereIn('country_id', $countries);
+        else
+            $states->where('country_id', $countries);
+
+        if (! $all)
+            $states->where('active', 1);
+
+        return $states->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+    }
+}
+
+if ( ! function_exists('get_business_area_of') )
+{
+    /**
+     * Get states ids of given countries.
+     *
+     * @param  int $countries
+     *
+     * @return array
+     */
+    function get_business_area_of($countries)
+    {
+        $states = State::select('id','name','iso_code','active')->orderBy('name', 'asc');
+
+        if (is_array($countries))
+            $states->whereIn('country_id', $countries);
+        else
+            $states->where('country_id', $countries);
+
+        return $states->get();
     }
 }
 

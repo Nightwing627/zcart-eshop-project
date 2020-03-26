@@ -65,7 +65,7 @@
   <div class="col-md-6 nopadding-left">
     <div class="form-group">
       {!! Form::label('state_id', trans('app.form.state')) !!}
-      {!! Form::select('state_id', $states , isset($address) ? $address->sate_id : config('system_settings.address_default_state'), ['class' => 'form-control select2-tag', 'placeholder' => trans('app.placeholder.state')]) !!}
+      {!! Form::select('state_id', $states , isset($address) ? $address->sate_id : config('system_settings.address_default_state'), ['class' => 'form-control select2', 'placeholder' => trans('app.placeholder.state')]) !!}
     </div>
   </div>
 </div>

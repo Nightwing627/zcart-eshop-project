@@ -18,8 +18,8 @@ class Address extends BaseModel
      *
      * @var array
      */
-    protected $with = ['country:id,name,iso_3166_2', 'state:id,name,country_id'];
-    // protected $with = ['country:id,name,country_code,iso_3166_2', 'state:id,name,country_id,iso_3166_2'];
+    protected $with = ['country:id,name,iso_code', 'state:id,name,country_id'];
+    // protected $with = ['country:id,name,country_code,iso_code', 'state:id,name,country_id,iso_code'];
 
     /**
      * The attributes that are mass assignable.
@@ -130,7 +130,7 @@ class Address extends BaseModel
             $html []= $this->city . ', ';
 
         if(strlen($this->state_id) || $this->zip_code)
-            $html []= sprintf('%s %s', e($this->state_id ? $this->state->name : ''), e($this->zip_code));
+            $html []= sprintf('%s %s', e($this->state_id ? optional($this->state)->name : ''), e($this->zip_code));
 
         if(config('system_settings.address_show_country') && $this->country)
             $html []= e($this->country->name);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Validations;
 
+use App\ShippingZone;
+use Illuminate\Support\Arr;
 use App\Http\Requests\Request;
 
 class CreateShippingZoneRequest extends Request
@@ -28,9 +30,17 @@ class CreateShippingZoneRequest extends Request
 
         if ($this->has('rest_of_the_world')) {
             Request::merge(['state_ids' => [], 'country_ids' => []]);
-        }else if($this->has('country_ids')){
-            $state_ids = get_states_of($this->input('country_ids'));
-            Request::merge(['state_ids' => array_keys($state_ids)]);
+        }else if($this->has('country_ids'))
+        {
+            // All state ids of select countries
+            $all_state_ids = \DB::table('states')->whereIn('country_id', $this->input('country_ids'))
+            ->where('active', 1)->pluck('id')->toArray();
+
+            // Skip state ids that are already in other shipping zones
+            $zones = ShippingZone::where('shop_id', $shop_id)->pluck('state_ids')->toArray();
+            $existing_ids = Arr::flatten(array_filter($zones));
+
+            Request::merge(['state_ids' => array_diff($all_state_ids, $existing_ids)]);
         }
 
         return [
