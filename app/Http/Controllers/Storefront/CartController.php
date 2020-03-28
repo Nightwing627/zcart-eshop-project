@@ -36,7 +36,7 @@ class CartController extends Controller
             $q->with(['config', 'packagings' => function($query){
                 $query->active();
             }])->active();
-        }, 'inventories.image', 'shippingPackage']);
+        }, 'state:id,name', 'country:id,name', 'inventories.image', 'shippingPackage']);
 
         $platformDefaultPackaging = getPlatformDefaultPackaging(); // Get platform's default packaging
 
@@ -89,6 +89,12 @@ class CartController extends Controller
 
         if($request->shipTo)
             $cart->ship_to = $request->shipTo;
+
+        if($request->shipToCountryId)
+            $cart->ship_to_country_id = $request->shipToCountryId;
+
+        if($request->shipToStateId)
+            $cart->ship_to_state_id = $request->shipToStateId;
 
         //Reset if the old cart exist, bcoz shipping rate will change after adding new item
         $cart->shipping_zone_id = $old_cart ? Null : $request->shippingZoneId;

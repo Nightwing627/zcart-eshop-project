@@ -223,6 +223,10 @@ foreach ($variants as &$value) {
             var text = state_id ? "#shipTo_state" : "#shipTo_country";
             $("#shipTo").text($(text+" option:selected").html());
 
+            // Set ship to country and state
+            $('#shipto-country-id').val(country_id);
+            $('#shipto-state-id').val(state_id);
+
             var zone = getFromPHPHelper('get_shipping_zone_of', [shop_id, country_id, state_id]);
             zone = JSON.parse(zone);
 

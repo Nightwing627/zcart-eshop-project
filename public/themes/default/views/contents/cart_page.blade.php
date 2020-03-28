@@ -2,58 +2,53 @@
   <div class="container">
     @if($carts->count() > 0)
       @php
-        if(Auth::guard('customer')->check()){
-          $customer = Auth::guard('customer')->user();
-          $shipping_address = $customer->shippingAddress ? $customer->shippingAddress : $customer->primaryAddress;
-          $shipping_country_id = $shipping_address ? $shipping_address->country_id : config('system_settings.address_default_country');
-          $shipping_state_id = $shipping_address ? $shipping_address->state_id : config('system_settings.address_default_state');
-        }
-        else{
           $geoip = geoip(request()->ip());
-          $shipping_country_id = get_id_of_model('countries', 'iso_code', $geoip->iso_code);
-          $shipping_state_id = $geoip->state;
-        }
-
-        $country_dropdown = '';
-        foreach($business_areas as $country){
-          $country_dropdown .= '<option value="' . $country->id . '" ';
-          $country_dropdown .= $country->id == $shipping_country_id ? 'selected' : '';
-          $country_dropdown .= '>' . $country->name . '</option>';
-        }
+          $current_shipping_country = $business_areas->where('iso_code', $geoip->iso_code)->first();
       @endphp
 
       @foreach($carts as $cart)
         @php
-          $shop_id = $cart->shop_id;
-          $cart_total = 0;
-          if($cart->shop){
-            $default_packaging = $cart->shippingPackage ??
-            optional($cart->shop->packagings)->where('default',1)->first() ??
-            $platformDefaultPackaging;
-          }
-          else{
-              $default_packaging = $cart->shippingPackage ?? $platformDefaultPackaging;
-          }
+            $cart_total = 0;
 
-          $shipping_zone = get_shipping_zone_of($shop_id, $shipping_country_id, $shipping_state_id);
+            $shipping_country_id = $cart->country->id ?? optional($current_shipping_country)->id;
 
-          $shipping_options = isset($shipping_zone->id) ? getShippingRates($shipping_zone->id) : 'NaN';
+            // if(! $shipping_country_id)
+              // CANT SHIPP
 
-          $packaging_options = optional($cart->shop)->packagings;
+            $shop_id = $cart->shop_id;
+
+            $shipping_zone = get_shipping_zone_of($shop_id, $shipping_country_id, $cart->state->id);
+
+            $shipping_options = isset($shipping_zone->id) ? getShippingRates($shipping_zone->id) : 'NaN';
+
+            $packaging_options = optional($cart->shop)->packagings;
+
+            if($cart->shop){
+              $default_packaging = $cart->shippingPackage ??
+                                    optional($cart->shop->packagings)->where('default',1)->first() ??
+                                    $platformDefaultPackaging;
+            }
+            else{
+                $default_packaging = $cart->shippingPackage ?? $platformDefaultPackaging;
+            }
         @endphp
 
         <div class="row shopping-cart-table-wrap space30 {{$expressId == $cart->id ? 'selected' : ''}}" id="cartId{{$cart->id}}" data-cart="{{$cart->id}}">
           {!! Form::model($cart, ['method' => 'PUT', 'route' => ['cart.update', $cart->id], 'id' => 'formId'.$cart->id]) !!}
             {{ Form::hidden('cart_id', $cart->id, ['id' => 'cart-id'.$cart->id]) }}
             {{ Form::hidden('shop_id', $cart->shop->id, ['id' => 'shop-id'.$cart->id]) }}
-            {{ Form::hidden('zone_id', isset($shipping_zone->id) ? $shipping_zone->id : Null, ['id' => 'zone-id'.$cart->id]) }}
             {{ Form::hidden('tax_id', isset($shipping_zone->id) ? $shipping_zone->tax_id : Null, ['id' => 'tax-id'.$cart->id]) }}
             {{ Form::hidden('taxrate', Null, ['id' => 'cart-taxrate'.$cart->id]) }}
             {{ Form::hidden('packaging_id', $default_packaging ? $default_packaging->id : Null, ['id' => 'packaging-id'.$cart->id]) }}
+            {{ Form::hidden('ship_to', $cart->ship_to, ['id' => 'ship-to'.$cart->id]) }}
+            {{ Form::hidden('zone_id', isset($shipping_zone->id) ? $shipping_zone->id : Null, ['id' => 'zone-id'.$cart->id]) }}
             {{ Form::hidden('shipping_rate_id', $cart->shipping_rate_id, ['id' => 'shipping-rate-id'.$cart->id]) }}
+            {{ Form::hidden('ship_to_country_id', $cart->ship_to_country_id, ['id' => 'shipto-country-id'.$cart->id]) }}
+            {{ Form::hidden('ship_to_state_id', $cart->ship_to_state_id, ['id' => 'shipto-state-id'.$cart->id]) }}
             {{-- {{ Form::hidden('shipping_rate_id', Null, ['id' => 'shipping-rate-id'.$cart->id]) }} --}}
             {{ Form::hidden('discount_id', $cart->coupon_id, ['id' => 'discount-id'.$cart->id]) }}
             {{ Form::hidden('handling_cost', optional($cart->shop->config)->order_handling_cost, ['id' => 'handling-cost'.$cart->id]) }}
+
             <div class="col-md-9 nopadding">
                 <div class="shopping-cart-header-section">
                   <span>@lang('theme.store'):</span>
@@ -65,9 +60,9 @@
 
                   <span class="pull-right">
                       @lang('theme.ship_to'):
-                      <select name="ship_to" class="selectBoxIt ship_to" id="shipTo{{$cart->id}}" data-cart="{{$cart->id}}">
-                        {!! $country_dropdown !!}
-                      </select>
+                      <a id="shipTo{{$cart->id}}" class="ship_to" data-cart="{{$cart->id}}" data-country="{{$shipping_country_id}}" data-state="{{$cart->state->id}}" href="javascript:void(0)">
+                        {{ $cart->state->id ? $cart->state->name : $cart->country->name }}
+                      </a>
                   </span>
                 </div>
 
@@ -96,7 +91,6 @@
                             <input type="hidden" id="unitWeight{{$item->id}}" value="{{$item->shipping_weight}}">
                             {{ Form::hidden('shipping_weight['.$item->id.']', ($item->shipping_weight * $item->pivot->quantity), ['id' => 'itemWeight'.$item->id, 'class' => 'itemWeight'.$cart->id]) }}
                             <img src="{{ get_product_img_src($item, 'mini') }}" class="img-mini" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
-                            {{-- <img src="{{ get_storage_file_url(optional($item->image)->path, 'mini') }}" class="img-mini" alt="{{ $item->slug }}" title="{{ $item->slug }}" /> --}}
                           </td>
                           <td>
                             <div class="shopping-cart-item-title">

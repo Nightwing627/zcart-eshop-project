@@ -542,6 +542,12 @@ if ( ! function_exists('crosscheckAndUpdateOldCartInfo') )
         else if ( Auth::guard('api')->check() )
             $cart->customer_id = Auth::guard('api')->user()->id;
 
+        if($request->ship_to_country_id)
+            $cart->ship_to_country_id = $request->ship_to_country_id;
+
+        if($request->ship_to_state_id)
+            $cart->ship_to_state_id = $request->ship_to_state_id;
+
         $cart->ship_to = $request->ship_to ?? $request->country_id ?? $cart->ship_to;
         $cart->shipping_weight = $shipping_weight;
         $cart->quantity = $quantity;

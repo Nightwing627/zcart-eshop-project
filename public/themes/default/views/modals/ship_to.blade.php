@@ -9,6 +9,8 @@
         <div class="modal-body">
             {!! Form::open(['route' => ['register'], 'data-toggle' => 'validator', 'id' => 'shipToForm']) !!}
 
+                {{ Form::hidden('cart', Null, ['id' => 'cartinfo']) }} {{-- For the carts page --}}
+
                 <p class="space10">{!! trans('theme.delivery_locations_info') !!}</p>
 
                 {{-- <button class="btn btn-block btn-lg flat btn-black space20" id="login_to_shipp_btn">{{ trans('app.login_to_choose_address') }}</button> --}}

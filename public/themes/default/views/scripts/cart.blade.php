@@ -31,18 +31,65 @@
 			}
     	});
 
-        // Update shipping options
-        $(".ship_to").on('change', function(e) {
-	        var cart = $(this).data('cart');
-	        var shop = $('#shop-id'+cart).val();
-	        var countryId = $(this).val();
+// NEW CODE //////////////////////////
 
-		    var zone = getFromPHPHelper('get_shipping_zone_of', [shop, countryId]);
-			zone = JSON.parse(zone);
+    // Open the form
+    $(".ship_to").on("click", function(e) {
+        e.preventDefault();
+        $('#shipToModal').modal(); // Open the modal
 
-			if($.isEmptyObject(zone)){
-	            @include('layouts.notification', ['message' => trans('theme.notify.seller_doesnt_ship'), 'type' => 'warning', 'icon' => 'times-circle'])
-			}
+        // Select the current id
+        var country = $(this).attr('data-country');
+        var state = $(this).attr('data-state');
+
+		$("#shipTo_country").selectBoxIt().selectBoxIt('destroy'); //Reset the selectBoxIt
+		$("#shipTo_country option[selected]").removeAttr("selected"); //Reset the old value
+        $('#shipTo_country option[value="'+country+'"]').attr("selected", "selected"); //Select the current value
+        $('#shipTo_country').selectBoxIt(); //Initialise the selectBoxIt
+
+        // Populate states field if required
+        if(state && $("#state_id_select_wrapper").hasClass('hidden'))
+            populateStateSelect(country, state);
+
+        // Set the cart id into the form
+        $("input#cartinfo").val($(this).data('cart'));
+    });
+
+    // Submit
+    $("#shipToForm").on("submit", function(e){
+        e.preventDefault();
+
+        var data = $('form#shipToForm').serialize();
+
+        var cart = $("input#cartinfo").val();
+        var shop_id = $('#shop-id'+cart).val();
+
+        var country_id = $("#shipTo_country").val();
+        var state_id = $("#shipTo_state").val();
+
+        // Check if the state is selected if exist
+        if(state_id || $("#state_id_select_wrapper").hasClass('hidden'))
+        {
+            // Set the ship to text
+            var text = state_id ? "#shipTo_state" : "#shipTo_country";
+            $("#shipTo"+cart).text($(text+" option:selected").html());
+
+            // Set the values into the cart data
+	        $('input#shipto-country-id'+cart).val(country_id);
+	        $('input#shipto-state-id'+cart).val(state_id);
+
+            $('#shipToModal').modal('hide'); //Hide the modal
+
+            // Set the ship to text
+            var text = state_id ? "#shipTo_state" : "#shipTo_country";
+            $("#shipTo").text($(text+" option:selected").html());
+
+            var zone = getFromPHPHelper('get_shipping_zone_of', [shop_id, country_id, state_id]);
+            zone = JSON.parse(zone);
+
+            if($.isEmptyObject(zone)){
+                @include('layouts.notification', ['message' => trans('theme.notify.seller_doesnt_ship'), 'type' => 'warning', 'icon' => 'times-circle'])
+            }
 
 			$("#zone-id"+cart).val(zone.id);
 			$("#tax-id"+cart).val(zone.tax_id);
@@ -55,7 +102,65 @@
 
 			// Remove the discount if the zone changes as discount can be depends on zone
 			resetDiscount(cart);
-    	});
+        }
+    });
+
+    //When change ship to Country
+    $("#shipTo_country").change(function() {
+        var id = $(this).val();
+        $("#shipTo").attr('data-country', id).attr('data-state', null);
+        populateStateSelect(id);
+    });
+
+    //When change ship to state
+    $("#shipTo_state").change(function() {
+        $("#shipTo").attr('data-state', $(this).val());
+    });
+
+    $("#login_to_shipp_btn").on('click', function(e){
+        e.preventDefault();
+
+        $('#shipToModal').modal('hide');
+        $('#loginModal').modal();
+    });
+
+    function populateStateSelect(country, state = null)
+    {
+        $.ajax({
+            delay: 250,
+            data: "id="+country,
+            url: "{{ route('ajax.getCountryStates') }}",
+            success: function(result)
+            {
+                $("#shipTo_state").empty().selectBoxIt("refresh");
+                if(result.length === 0){
+                    // $("#shipTo").attr('data-state', null);
+                    // $("#shipTo_state").empty().selectBoxIt("refresh");
+                    $("#state_id_select_wrapper").removeClass('show').addClass('hidden').removeAttr('required');
+                }
+                else{
+                    $("#state_id_select_wrapper").removeClass('hidden').addClass('show');
+                    $("#shipTo_state").empty().attr('required', 'required').selectBoxIt("refresh");
+
+                    // Preparing the options and set the value
+                    var options = '<option value="">{{ trans('theme.select') }}</option>';
+                    for (var n in result) {
+                        options += '<option value="' + n +'">'+ result[n] +'</option>';
+                    }
+                    $("#shipTo_state").append(options);
+
+                    // Pre select the state
+                    if(state)
+                        $('#shipTo_state option[value="'+state+'"]').attr("selected", "selected");
+
+                    $("#shipTo_state").selectBoxIt("refresh");
+                }
+            }
+        });
+
+        return;
+    }
+// END NEW CODE //////////////////////////
 
         // Update Item total on qty change
         $(".product-info-qty-input").on('change', function(e) {

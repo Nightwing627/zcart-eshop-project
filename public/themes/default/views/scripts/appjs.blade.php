@@ -219,9 +219,11 @@
             var item = $(this).closest('.sc-product-item');
             var qtt = item.find('input.product-info-qty-input').val();
             var shipTo = item.find('#shipTo').data('country');
-            // var shipTo = item.find('select#shipTo').val();
             var shippingZoneId = item.find('input#shipping-zone-id').val();
             var shippingRateId = item.find('input#shipping-rate-id').val();
+            var shipToCountryId = item.find('input#shipto-country-id').val();
+            var shipToStateId = item.find('input#shipto-state-id').val();
+
             $.ajax({
                 url: $(this).data('link'),
                 type: 'POST',
@@ -229,6 +231,8 @@
                     'shipTo' : shipTo,
                     'shippingZoneId' : shippingZoneId,
                     'shippingRateId' : shippingRateId,
+                    'shipToCountryId' : shipToCountryId,
+                    'shipToStateId' : shipToStateId,
                     'quantity': qtt ? qtt : 1
                 },
                 complete: function (xhr, textStatus) {

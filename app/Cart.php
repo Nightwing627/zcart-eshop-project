@@ -40,6 +40,8 @@ class Cart extends BaseModel
                         'customer_id',
                         'ip_address',
                         'ship_to',
+                        'ship_to_country_id',
+                        'ship_to_state_id',
                         'shipping_zone_id',
                         'shipping_rate_id',
                         'packaging_id',
@@ -69,7 +71,30 @@ class Cart extends BaseModel
      */
     public function shipTo()
     {
-        return $this->belongsTo(Country::class, 'ship_to');
+        return $this->belongsTo(Address::class, 'ship_to');
+        // return $this->belongsTo(Country::class, 'ship_to');
+    }
+
+    /**
+     * Get the country associated with the cart.
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'ship_to_country_id')->withDefault([
+            'id' => Null,
+            'name' => geoip(request()->ip())->country,
+        ]);
+    }
+
+    /**
+     * Get the state associated with the cart.
+     */
+    public function state()
+    {
+        return $this->belongsTo(State::class, 'ship_to_state_id')->withDefault([
+            'id' => Null,
+            'name' => geoip(request()->ip())->state_name,
+        ]);
     }
 
     /**
