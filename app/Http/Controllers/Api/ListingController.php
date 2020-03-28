@@ -160,7 +160,7 @@ class ListingController extends Controller
                 ],
                 'shipping_country_id' => $shipping_country_id,
                 'shipping_options' => $this->get_shipping_options($item, $shipping_country_id, $geoip->state),
-                'countries' => ListHelper::countries(), // Country list for shop_to dropdown
+                'countries' => ListHelper::countries(), // Country list for ship_to dropdown
             ]);
     }
 

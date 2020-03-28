@@ -10,6 +10,7 @@ use App\Shop;
 use App\Banner;
 use App\Slider;
 use App\Product;
+use App\Country;
 use App\Category;
 use App\Inventory;
 use App\Manufacturer;
@@ -168,10 +169,10 @@ class HomeController extends Controller
         if( ! $linked_items->count() )
             $linked_items = $related->random($related->count() >= 3 ? 3 : $related->count());
 
-        $geoip = geoip(request()->ip()); // Set the location of the user
-        $countries = ListHelper::countries(); // Country list for shop_to dropdown
+        // Country list for ship_to dropdown
+        $business_areas = Country::select('id', 'name', 'iso_code')->orderBy('name', 'asc')->get();
 
-        return view('product', compact('item', 'variants', 'attributes', 'item_attrs', 'related', 'linked_items', 'geoip', 'countries'));
+        return view('product', compact('item', 'variants', 'attributes', 'item_attrs', 'related', 'linked_items', 'business_areas'));
     }
 
     /**

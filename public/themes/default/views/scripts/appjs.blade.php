@@ -218,7 +218,8 @@
             e.preventDefault();
             var item = $(this).closest('.sc-product-item');
             var qtt = item.find('input.product-info-qty-input').val();
-            var shipTo = item.find('select#shipTo').val();
+            var shipTo = item.find('#shipTo').data('country');
+            // var shipTo = item.find('select#shipTo').val();
             var shippingZoneId = item.find('input#shipping-zone-id').val();
             var shippingRateId = item.find('input#shipping-rate-id').val();
             $.ajax({

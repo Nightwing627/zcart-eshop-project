@@ -35,33 +35,33 @@
             </li>
             <li>
               <span>{{ trans('theme.subtotal') }}</span>
-              <span>{{ get_formated_currency($cart->total, 2) }}</span>
+              <span>{{ get_formated_currency($cart->total, config('system_settings.decimals', 2)) }}</span>
             </li>
             <li>
               <span>{{ trans('theme.shipping') }}</span>
               <span>
-                {{ $cart->get_shipping_cost() > 0 ? get_formated_currency($cart->get_shipping_cost(), 2) : trans('theme.free_shipping') }}
+                {{ $cart->get_shipping_cost() > 0 ? get_formated_currency($cart->get_shipping_cost(), config('system_settings.decimals', 2)) : trans('theme.free_shipping') }}
               </span>
             </li>
             @if($cart->packaging > 0)
               <li>
                 <span>{{ trans('theme.packaging') }}</span>
-                <span>{{ get_formated_currency($cart->packaging, 2) }}</span>
+                <span>{{ get_formated_currency($cart->packaging, config('system_settings.decimals', 2)) }}</span>
               </li>
             @endif
             <li>
               <span>{{ trans('theme.discount') }}</span>
-              <span>-{{ get_formated_currency($cart->discount, 2) }}</span>
+              <span>-{{ get_formated_currency($cart->discount, config('system_settings.decimals', 2)) }}</span>
             </li>
             @if($cart->taxes > 0)
               <li>
                 <span>{{ trans('theme.taxes') }}</span>
-                <span>{{ get_formated_currency($cart->taxes, 2) }}</span>
+                <span>{{ get_formated_currency($cart->taxes, config('system_settings.decimals', 2)) }}</span>
               </li>
             @endif
             <li>
               <span class="lead">{{ trans('theme.total') }}</span>
-              <span class="lead">{{ get_formated_currency($cart->grand_total(), 2) }}</span>
+              <span class="lead">{{ get_formated_currency($cart->grand_total(), config('system_settings.decimals', 2)) }}</span>
             </li>
           </ul>
 

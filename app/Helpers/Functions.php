@@ -15,6 +15,7 @@ use App\Inventory;
 use App\ShippingRate;
 use App\PaymentMethod;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -1177,23 +1178,55 @@ if ( ! function_exists('get_shipping_zone_of') )
      *
      * @param $tax
      */
-    function get_shipping_zone_of($shop, $country, $state = null) {
-        // If the iso_2 code given as country
+    function get_shipping_zone_of($shop, $country, $state = null)
+    {
+        $cant_ship = new stdClass(); // A blank std class for null
+
+        // If the iso_2 code given instead of ID as country
         if( ! is_numeric($country) ) {
-            $temp = \DB::table('countries')->select('id')->where('iso_code', $country)->first();
-            $country = optional($temp)->id;
+            $temp_country = \DB::table('countries')->select('id','active')->where('iso_code', $country)->first();
+            $country = optional($temp_country)->id;
         }
 
-        // If the iso_2 code given as state
+        // If the iso_2 code given instead of ID as state
         if($state && !is_numeric($state) ) {
-            $temp = \DB::table('states')->select('id')->whereNotNull('iso_code')->where([
+            $temp_state = \DB::table('states')->select('id','active')->where([
                 ['iso_code', '=', $state],
                 ['country_id', '=', $country]
             ])->first();
-
-            $state = optional($temp)->id;
+            $state = optional($temp_state)->id;
         }
 
+        // Check if the marketplace is worldwide_business_area
+        if(! config('system_settings.worldwide_business_area'))
+        {
+            // Need the country's active value to check the business area
+            if( ! isset($temp_country)){
+                $temp_country = \DB::table('countries')->select('id','active')->where([
+                    ['id', '=', $country],
+                    ['active', '=', 1]
+                ])->first();
+
+                // Return back if the area is not in active business area
+                if( ! $temp_country || $temp_country->active != 1)
+                    return $cant_ship;
+            }
+
+            // Need the state's active value to check the business area
+            if( $state && ! isset($temp_state)){
+                $temp_state = \DB::table('states')->select('id','active')->where([
+                    ['id', '=', $state],
+                    ['country_id', '=', $country],
+                    ['active', '=', 1]
+                ])->first();
+
+                // Return back if the area is not in active business area
+                if( ! $temp_state || $temp_state->active != 1)
+                    return $cant_ship;
+            }
+        }
+
+        // Get number of states
         if($state)
             $state_counts = get_state_count_of($country);
 
@@ -1207,9 +1240,8 @@ if ( ! function_exists('get_shipping_zone_of') )
 
             $countries = unserialize($zone->country_ids);
 
-            if( empty($countries) ) continue;
-
-            if( ! in_array($country, $countries) ) continue;
+            // Skip if the country is not found in this zone
+            if( empty($countries) || ! in_array($country, $countries) ) continue;
 
             // If the country has no state or the state is not given, then return the zone
             if ( $state == null || $state_counts == 0)
@@ -1217,14 +1249,14 @@ if ( ! function_exists('get_shipping_zone_of') )
 
             $states = unserialize($zone->state_ids);
 
+            // Skip if the country has states but the id not supplied
             if ( $state_counts > 0 && $state == null ) continue;
 
             if( in_array($state, $states) )
                 return $zone;
         }
 
-        return isset($worldwide) ? $worldwide : new stdClass();
-        // return isset($worldwide) ? $worldwide : false;
+        return isset($worldwide) ? $worldwide : $cant_ship;
     }
 }
 

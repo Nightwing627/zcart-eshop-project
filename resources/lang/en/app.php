@@ -1431,6 +1431,7 @@ return [
     'to' => 'To',
     'active_business_area' => 'Active business area only',
     'not_in_business_area' => 'Out of business area',
+    'login_to_choose_address' => 'Login to see your addresses',
 
     // Version 2.0.0
     'chats' => 'Chats',

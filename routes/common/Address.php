@@ -1,5 +1,5 @@
 <?php
-Route::get('address/ajax/getCountryStates', 'AddressController@ajaxCountryStates')->name('ajax.getCountryStates')->middleware('ajax');
+// Route::get('address/ajax/getCountryStates', 'AddressController@ajaxCountryStates')->name('ajax.getCountryStates')->middleware('ajax');
 
 Route::get('address/addresses/{addressable_type}/{addressable_id}', 'AddressController@addresses')->name('address.addresses');
 

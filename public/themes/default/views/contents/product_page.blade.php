@@ -1,7 +1,11 @@
 @php
-	$shipping_country_id = get_id_of_model('countries', 'iso_code', $geoip->iso_code);
+	$geoip = geoip(request()->ip());
+	$shipping_country = $business_areas->where('iso_code', $geoip->iso_code)->first();
+	$shipping_state = \DB::table('states')->select('id', 'name', 'iso_code')->where([
+		['country_id', '=', $shipping_country->id], ['iso_code', '=', $geoip->state]
+	])->first();
 
-	$shipping_zone = get_shipping_zone_of($item->shop_id, $shipping_country_id, $geoip->state);
+	$shipping_zone = get_shipping_zone_of($item->shop_id, $shipping_country->id, optional($shipping_state)->id);
 	$shipping_options = isset($shipping_zone->id) ? getShippingRates($shipping_zone->id) : 'NaN';
 @endphp
 
@@ -52,11 +56,11 @@
 				                            <span id="summary-shipping-cost" data-value="0"></span>
 					                        <div id="product-info-shipping-detail">
 					                            <span>{{ strtolower(trans('theme.to')) }}
-							                      	<select name="ship_to" class="ship_to" id="shipTo">
-													    @foreach($countries as $country_id => $country_name)
-															<option value="{{$country_id}}" {{$country_id == $shipping_country_id ? 'selected' : ''}}>{{$country_name}}</option>
-													    @endforeach
-							                      	</select>
+
+					                            	<a id="shipTo" data-country="{{$shipping_country->id}}" data-state="{{$shipping_state->id}}" class="ship_to" href="javascript:void(0)">
+					                            		{{ $shipping_state ? $shipping_state->name : $geoip->country }}
+					                            	</a>
+
 													<select id="width_tmp_select"><option id="width_tmp_option"></option></select>
 					                            </span>
 

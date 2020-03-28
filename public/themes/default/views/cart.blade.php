@@ -17,5 +17,6 @@
 @endsection
 
 @section('scripts')
+    @include('modals.ship_to')
     @include('scripts.cart')
 @endsection

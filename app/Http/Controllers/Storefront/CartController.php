@@ -7,6 +7,7 @@ use App\Shop;
 use App\Cart;
 use App\Order;
 use App\Coupon;
+use App\Country;
 use App\Inventory;
 use App\Packaging;
 use App\ShippingRate;
@@ -37,11 +38,12 @@ class CartController extends Controller
             }])->active();
         }, 'inventories.image', 'shippingPackage']);
 
-        $countries = ListHelper::countries(); // Country list for shop_to dropdown
-
         $platformDefaultPackaging = getPlatformDefaultPackaging(); // Get platform's default packaging
 
-        return view('cart', compact('carts','countries','platformDefaultPackaging','expressId'));
+        // Country list for ship_to dropdown
+        $business_areas = Country::select('id', 'name', 'iso_code')->orderBy('name', 'asc')->get();
+
+        return view('cart', compact('carts','business_areas','platformDefaultPackaging','expressId'));
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace App\Repositories\Address;
 
 use App\Address;
-use App\Helpers\ListHelper;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepository;
 
@@ -27,11 +26,6 @@ class EloquentAddress extends EloquentRepository implements BaseRepository, Addr
         $data['addresses'] = $addressable->addresses()->with('country', 'state')->get();
 
         return $data;
-    }
-
-    public function getStates($country)
-    {
-        return ListHelper::states($country);
     }
 
     public function getAddressableModel($addressable_type, $addressable_id)

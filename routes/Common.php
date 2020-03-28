@@ -12,6 +12,8 @@ Route::group(['middleware' => ['ajax']], function(){
 	Route::get('cart/ajax/getTaxRate', 'Admin\ShippingZoneController@ajaxGetTaxRate')->name('ajax.getTaxRate');
 });
 
+Route::get('address/ajax/getCountryStates', 'AddressController@ajaxCountryStates')->name('ajax.getCountryStates')->middleware('ajax');
+
 Route::group(['middleware' => ['auth']], function(){
 	include('common/Image.php');
 	include('common/Attachment.php');

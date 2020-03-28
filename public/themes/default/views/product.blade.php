@@ -38,5 +38,6 @@
 @endsection
 
 @section('scripts')
+    @include('modals.ship_to')
     @include('scripts.product_page')
 @endsection

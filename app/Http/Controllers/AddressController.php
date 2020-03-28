@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\State;
 use App\Address;
+use App\Helpers\ListHelper;
 use Illuminate\Http\Request;
 use App\Repositories\Address\AddressRepository;
 use App\Http\Requests\Validations\CreateAddressRequest;
@@ -109,7 +110,7 @@ class AddressController extends Controller
     public function ajaxCountryStates(Request $request)
     {
         if ($request->ajax()){
-            $states = $this->address->getStates($request->input('id'));
+            $states = ListHelper::states($request->input('id'));
 
             return response($states, 200);
         }
