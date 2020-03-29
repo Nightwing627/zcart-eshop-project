@@ -1467,7 +1467,7 @@ if ( ! function_exists('getFreeShippingObject') )
         return [
                 'id' => Null,
                 'name' => trans('api.free_shipping'),
-                'shipping_zone_id' => $zone ? $zone->id : Null,
+                'shipping_zone_id' => $zone && !is_numeric($zone) ? $zone->id : $zone,
                 'carrier_id' => Null,
                 'carrier_name' => Null,
                 'cost'=> "$0.00",

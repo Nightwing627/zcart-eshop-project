@@ -25,5 +25,6 @@ return [
 	'std_delivery_time' => 'Standard delivery time',
 	'you_already_gave_feedback' => 'You already gave your feedback!',
 	'your_feedback_saved' => 'Thank you for your feedback!',
+	'invalid_request' => 'Invalid request!',
 	'404' => 'This content is not available',
 ];
