@@ -51,8 +51,8 @@
 				    	              		<span class="info-label" data-options="{{ $shipping_options }}" id="shipping-options" >@lang('theme.shipping'):</span>
 								            {{ Form::hidden('shipping_zone_id', Null, ['id' => 'shipping-zone-id']) }}
 								            {{ Form::hidden('shipping_rate_id', Null, ['id' => 'shipping-rate-id']) }}
-								            {{ Form::hidden('shipto_country_id', Null, ['id' => 'shipto-country-id']) }}
-								            {{ Form::hidden('shipto_country_id', Null, ['id' => 'shipto-state-id']) }}
+								            {{ Form::hidden('shipto_country_id', $shipping_country->id, ['id' => 'shipto-country-id']) }}
+								            {{ Form::hidden('shipto_state_id', $shipping_state ? $shipping_state->id : Null, ['id' => 'shipto-state-id']) }}
 										</div>
 									  	<div class="col-sm-9 col-xs-8 nopadding-left">
 				                            <span id="summary-shipping-cost" data-value="0"></span>

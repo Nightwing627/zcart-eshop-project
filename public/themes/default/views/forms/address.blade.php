@@ -9,7 +9,7 @@
 <div class="row">
   <div class="col-md-8 nopadding-right">
     <div class="form-group">
-      {!! Form::select('country_id', $countries , isset($address) ? Null : ( isset($cart) ? $cart->ship_to : config('system_settings.address_default_country') ), ['class' => 'form-control flat', 'required']) !!}
+      {!! Form::select('country_id', $countries , isset($address) ? Null : ( isset($cart) ? $cart->ship_to_country_id : config('system_settings.address_default_country') ), ['id' => 'address_country_id', 'class' => 'form-control flat', 'placeholder' => trans('theme.country'), 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -39,7 +39,7 @@
   </div>
   <div class="col-md-6 nopadding-left">
     <div class="form-group">
-      {!! Form::text('state_id', isset($address) ? optional($address->state)->name : Null , ['class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.state'), 'required']) !!}
+      {!! Form::select('state_id', isset($states) ? $states : [], isset($cart) ? $cart->ship_to_state_id : ( isset($address) ? Null : config('system_settings.address_default_state') ), ['id' => 'address_state_id', 'class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.state'), empty($states) ? '' : 'required']) !!}
       <div class="help-block with-errors"></div>
     </div>
   </div>

@@ -143,40 +143,29 @@
 
     <div role="tabpanel" class="tab-pane fade" id="address-tab">
       <div class="row">
-        @forelse($account->addresses as $address)
-          <div class="col-md-6 space50">
-            {!! Form::model($address, ['method' => 'PUT', 'route' => ['my.address.update', $address], 'data-toggle' => 'validator']) !!}
-              <fieldset>
-                <legend>{{ $address->address_type . ' ' . trans('theme.address')}}</legend>
+        <div class="col-md-8 col-sm-offset-2 space30">
+            @forelse($account->addresses as $address)
+              {!! $address->toHtml() !!}
+              <div class="btn-group pull-right space20" role="group" aria-label="..." style="margin-top: -100px;">
+                  <a href="{{ route('my.address.delete', $address->id) }}" class="confirm btn btn-default btn-xs flat pull-right" data-confirm="@lang('theme.confirm_action.delete')">
+                    <i class="fa fa-trash-o"></i> @lang('theme.button.delete')
+                  </a>
 
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      {!! Form::select('address_type', $address_types, null, ['class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.address_type'), 'required']) !!}
-                      <div class="help-block with-errors"></div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <a href="{{ route('my.address.delete', $address->id) }}" class="confirm btn btn-default btn-sm flat pull-right" data-confirm="@lang('theme.confirm_action.delete')"><i class="fa fa-trash-o"></i> @lang('theme.button.delete')</a>
-                  </div>
-                </div>
-
-                @include('forms.address')
-
-                <button type="submit" class='btn btn-default btn-sm flat pull-right'><i class="fa fa-save"></i> {{ trans('theme.button.update') }}</button>
-              {!! Form::close() !!}
-            </fieldset>
-            <hr/>
-          </div><!-- /.col-md-6 -->
-        @empty
-          <div class="clearfix space50"></div>
-          <p class="lead text-center space50">
-            @lang('theme.nothing_found')
-          </p>
-        @endforelse
+                  <a href="{{ route('my.address.edit', $address) }}" class="addressForm btn btn-default btn-xs flat pull-right" >
+                    <i class="fa fa-edit"></i> @lang('theme.edit')
+                  </a>
+              </div>
+              <hr/>
+            @empty
+              <div class="clearfix space50"></div>
+              <p class="lead text-center space50">
+                @lang('theme.nothing_found')
+              </p>
+            @endforelse
+        </div>
 
         <div class="col-sm-12 text-center">
-          <a href="#" data-toggle="modal" data-target="#createAddressModal" class="btn btn-black flat">
+          <a href="{{ route('my.address.create') }}" class="addressForm btn btn-black flat">
             <i class="fa fa-address-card-o"></i> @lang('theme.button.add_new_address')
           </a>
         </div>
@@ -186,5 +175,3 @@
 </div><!-- /.tabpanel -->
 
 <div class="clearfix space50"></div>
-
-@include('modals.create_address')

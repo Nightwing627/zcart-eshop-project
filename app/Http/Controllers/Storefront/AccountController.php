@@ -36,96 +36,6 @@ class AccountController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request)
-    {
-        if( config('app.demo') == true && Auth::guard('customer')->user()->id <= config('system.demo.customers', 1) )
-            return redirect()->route('account', 'account#account-info-tab')->with('warning', trans('messages.demo_restriction'));
-
-        Auth::guard('customer')->user()->update($request->all());
-
-        return redirect()->route('account', 'account#account-info-tab')->with('success', trans('theme.notify.info_updated'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function password_update(SelfPasswordUpdateRequest $request)
-    {
-        if( config('app.demo') == true && Auth::guard('customer')->user()->id <= config('system.demo.customers', 1) )
-            return redirect()->route('account', 'account#password-tab')->with('warning', trans('messages.demo_restriction'));
-
-        Auth::guard('customer')->user()->update($request->all());
-
-        // event(new PasswordUpdated(Auth::user()));
-
-        return redirect()->route('account', 'account#password-tab')->with('success', trans('theme.notify.info_updated'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function save_address(CreateAddressRequest $request)
-    {
-        $address = Auth::guard('customer')->user()->addresses()->create($request->all());
-
-        return redirect()->to(url()->previous().'?address='.$address->id.'#address-tab')->with('success', trans('theme.notify.address_created'));
-    }
-
-
-    public function avatar(SelfAvatarUpdateRequest $request)
-    {
-        Auth::guard('customer')->user()->deleteImage();
-
-        Auth::guard('customer')->user()->saveImage($request->file('avatar'));
-
-        return redirect()->route('account', 'account#account-info-tab')->with('success', trans('theme.notify.info_updated'));
-    }
-
-    public function delete_avatar(Request $request)
-    {
-        Auth::guard('customer')->user()->deleteImage();
-
-        return redirect()->route('account', 'account#account-info-tab')->with('success', trans('theme.notify.info_deleted'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function address_update(SelfAddressUpdateRequest $request, Address $address)
-    {
-        $address->update($request->all());
-
-        return redirect()->route('account', 'account#address-tab')->with('success', trans('theme.notify.info_updated'));
-    }
-
-    /**
-     * delete the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function address_delete(SelfAddressDeleteRequest $request, Address $address)
-    {
-        $address->delete();
-
-        return redirect()->route('account', 'account#address-tab')->with('success', trans('theme.notify.address_deleted'));
-    }
-
-    /**
      * Load dashboard content
      * @return mix
      */
@@ -232,5 +142,125 @@ class AccountController extends Controller
     private function gift_cards()
     {
         return Auth::guard('customer')->user()->gift_cards()->paginate(20);
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        if( config('app.demo') == true && Auth::guard('customer')->user()->id <= config('system.demo.customers', 1) )
+            return redirect()->route('account', 'account#account-info-tab')->with('warning', trans('messages.demo_restriction'));
+
+        Auth::guard('customer')->user()->update($request->all());
+
+        return redirect()->route('account', 'account#account-info-tab')->with('success', trans('theme.notify.info_updated'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function password_update(SelfPasswordUpdateRequest $request)
+    {
+        if( config('app.demo') == true && Auth::guard('customer')->user()->id <= config('system.demo.customers', 1) )
+            return redirect()->route('account', 'account#password-tab')->with('warning', trans('messages.demo_restriction'));
+
+        Auth::guard('customer')->user()->update($request->all());
+
+        // event(new PasswordUpdated(Auth::user()));
+
+        return redirect()->route('account', 'account#password-tab')->with('success', trans('theme.notify.info_updated'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function create_address(Request $request)
+    {
+        $countries = ListHelper::countries(); // Country list for ship_to dropdown
+        $address_types = ListHelper::address_types();
+        $states = config('system_settings.address_default_state') ? ListHelper::states(config('system_settings.address_default_country')) : [];
+
+        return view('modals._create_address', compact('countries','states','address_types'))->render();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function save_address(CreateAddressRequest $request)
+    {
+        $address = Auth::guard('customer')->user()->addresses()->create($request->all());
+
+        return redirect()->to(url()->previous().'?address='.$address->id.'#address-tab')->with('success', trans('theme.notify.address_created'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function address_edit(Request $request, Address $address)
+    {
+        $countries = ListHelper::countries(); // Country list for ship_to dropdown
+        $states = $address->state_id ? ListHelper::states($address->country_id) : [];
+        $address_types = ListHelper::address_types();
+
+        return view('modals._edit_address', compact('address','countries','states','address_types'))->render();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function address_update(SelfAddressUpdateRequest $request, Address $address)
+    {
+        $address->update($request->all());
+
+        return redirect()->route('account', 'account#address-tab')->with('success', trans('theme.notify.info_updated'));
+    }
+
+    /**
+     * delete the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function address_delete(SelfAddressDeleteRequest $request, Address $address)
+    {
+        $address->delete();
+
+        return redirect()->route('account', 'account#address-tab')->with('success', trans('theme.notify.address_deleted'));
+    }
+
+    public function avatar(SelfAvatarUpdateRequest $request)
+    {
+        Auth::guard('customer')->user()->deleteImage();
+
+        Auth::guard('customer')->user()->saveImage($request->file('avatar'));
+
+        return redirect()->route('account', 'account#account-info-tab')->with('success', trans('theme.notify.info_updated'));
+    }
+
+    public function delete_avatar(Request $request)
+    {
+        Auth::guard('customer')->user()->deleteImage();
+
+        return redirect()->route('account', 'account#account-info-tab')->with('success', trans('theme.notify.info_deleted'));
     }
 }

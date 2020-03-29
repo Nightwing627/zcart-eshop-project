@@ -61,7 +61,7 @@ class SystemsSeeder extends BaseSeeder
             // Address Defults
             'address_show_map' => 1,
             'address_default_country' => 840, //Country id
-            'address_default_state' => 1221, //State id
+            'address_default_state' => 453, //State id
             'address_show_country' => 1,
 
             'created_at' => Carbon::Now(),
@@ -71,9 +71,9 @@ class SystemsSeeder extends BaseSeeder
         DB::table('addresses')->insert([
             'address_type' => 'Primary',
             'address_line_1' => 'Platform Address',
-            'state_id' => 386,
+            'state_id' => 453,
             'zip_code' => 63585,
-            'country_id' => 604,
+            'country_id' => 840,
             'city' => 'Hollywood',
             'addressable_id' => 1,
             'addressable_type' => 'App\System',

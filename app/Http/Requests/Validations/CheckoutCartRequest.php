@@ -31,7 +31,7 @@ class CheckoutCartRequest extends Request
             $unique_ck = $this->has('create-account') ? '|unique:customers' : '';
 
             $rules['email'] =  'required|email|max:255' . $unique_ck;
-            $rules['password'] =  'required_with:create-account|confirmed|min:6';
+            $rules['password'] =  'required_with:create-account|nullable|confirmed|min:6';
         }
 
         if( 'saved_card' != $this->payment_method )

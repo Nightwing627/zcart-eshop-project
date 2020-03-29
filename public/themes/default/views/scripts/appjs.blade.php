@@ -201,6 +201,59 @@
         if($recaptcha) {
             $recaptcha.setAttribute("required", "required");
         }
+
+        // ADDRESS FORM MODAL
+        $(".addressForm").on("click", function(e) {
+            e.preventDefault();
+            apply_busy_filter('body');
+
+            var url = $(this).attr('href');
+            $.get(url, function(data) {
+                remove_busy_filter('body');
+                $('#addressFormModal').html(data).modal();
+
+                //Initialize application plugins after ajax load the content
+                if (typeof initAppPlugins == 'function') {
+                    initAppPlugins();
+                }
+            });
+        });
+
+        //Country
+        $("#address_country_id").on('change', function() {
+              var ID = $("#address_country_id").select2('data')[0].id;
+              var url = "{{ route('ajax.getCountryStates') }}"
+
+              $.ajax({
+                  delay: 250,
+                  data: "id="+ID,
+                  url: url,
+                  success: function(result){
+                    var data = [];
+                    if(result.length !== 0){
+                      data = $.map(result, function(val, id) {
+                          return { id: id, text: val };
+                      })
+                    }
+
+                    console.log(data);
+                    // $("#state_id").select2({
+                    //   allowClear: true,
+                    //   tags: true,
+                    {{-- //   placeholder: "{{ trans('app.placeholder.state') }}", --}}
+                    //   data: data,
+                    //   sortResults: function(results, container, query) {
+                    //       if (query.term) {
+                    //           return results.sort();
+                    //       }
+                    //       return results;
+                    //   }
+                    // });
+                  }
+              });
+            }
+        );
+
     });
 
     //App plugins
@@ -361,6 +414,35 @@
             }
         });
         // END Product qty field
+
+        // Address form
+        $("#address_country_id").on('change', function() {
+              var country = $(this).val();
+              var state_node = $('#address_state_id');
+
+              $.ajax({
+                  delay: 250,
+                  data: "id="+country,
+                  url: "{{ route('ajax.getCountryStates') }}",
+                  success: function(result){
+                    var data = '<option value="">{{trans('theme.placeholder.state')}}</option>';
+                    if(result.length !== 0){
+                        data += $.map(result, function(val, id) {
+                            return '<option value="'+id+'">'+val+'</option>';
+                        })
+
+                        state_node.attr('required', 'required');
+                    }
+                    else{
+                        state_node.removeAttr('required');
+                    }
+
+                    state_node.html(data);
+                  }
+              });
+            }
+        );
+        // END Address form
     }
 
     // Filters

@@ -170,9 +170,10 @@ class CartController extends Controller
         abort_unless( $shop, 406, trans('theme.notify.seller_has_no_payment_method') );
 
         $customer = Auth::guard('customer')->check() ? Auth::guard('customer')->user() : Null;
-        $countries = ListHelper::countries(); // Country list for shop_to dropdown
+        $countries = ListHelper::countries(); // Country list for ship_to dropdown
+        $states = $cart->ship_to_state_id ? ListHelper::states($cart->ship_to_country_id) : []; // Sate list of the country for ship_to dropdown
 
-        return view('checkout', compact('cart', 'customer', 'shop', 'countries'));
+        return view('checkout', compact('cart', 'customer', 'shop', 'countries', 'states'));
     }
 
     /**

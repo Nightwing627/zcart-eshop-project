@@ -77,8 +77,11 @@
             @include('auth.modals')
         @endunless
 
-        <!-- Quick view Modal-->
+        <!-- Quick View Modal-->
         <div id="quickViewModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+        <!-- Address Edit Modal-->
+        <div id="addressFormModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
         <!-- SCRIPTS -->
         <script src="{{ theme_asset_url('js/vendor.js') }}"></script>

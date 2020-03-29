@@ -77,51 +77,58 @@
 
         <div class="col-md-5">
           <h3 class="widget-title">{{ trans('theme.ship_to') }}</h3>
+
           @if(isset($customer))
-            <div class="row customer-address-list">
-              @php
-                $pre_select = Null;
-              @endphp
-              @foreach($customer->addresses as $address)
-                @php
-                  $ship_to_this_address = Null;
-                  if($pre_select == Null){  // If any address not selected yet
-                    if($customer->addresses->count() == 1) {  // Has onely address
-                      $pre_select = 1; $ship_to_this_address = TRUE;
-                    }
-                    elseif(Request::has('address')) { // Just created this address
-                      if(request()->address == $address->id){
-                        $pre_select = 1; $ship_to_this_address = TRUE;
+
+              <div class="row customer-address-list">
+                  @php
+                    $pre_select = Null;
+                  @endphp
+                  @foreach($customer->addresses as $address)
+                    @php
+                      $ship_to_this_address = Null;
+                      if($pre_select == Null){  // If any address not selected yet
+                        if($customer->addresses->count() == 1) {  // Has onely address
+                          $pre_select = 1; $ship_to_this_address = TRUE;
+                        }
+                        elseif(Request::has('address')) { // Just created this address
+                          if(request()->address == $address->id){
+                            $pre_select = 1; $ship_to_this_address = TRUE;
+                          }
+                        }
+                        elseif($cart->ship_to == $address->country_id) {  // Zone selected at cart page
+                          $pre_select = 1; $ship_to_this_address = TRUE;
+                        }
+                        elseif($cart->ship_to == Null && $address->address_type === 'Shipping') {  // Customer's shipping address
+                          $pre_select = 1; $ship_to_this_address = TRUE;
+                        }
                       }
-                    }
-                    elseif($cart->ship_to == $address->country_id) {  // Zone selected at cart page
-                      $pre_select = 1; $ship_to_this_address = TRUE;
-                    }
-                    elseif($cart->ship_to == Null && $address->address_type === 'Shipping') {  // Customer's shipping address
-                      $pre_select = 1; $ship_to_this_address = TRUE;
-                    }
-                  }
-                @endphp
+                    @endphp
 
-                <div class="col-sm-12 col-md-6 nopadding-{{ $loop->iteration%2 == 1 ? 'right' : 'left'}}">
-                  <div class="address-list-item {{ $ship_to_this_address == true ? 'selected' : '' }}">
-                    {!! $address->toHtml('<br/>', false) !!}
-                    <input type="radio" class="ship-to-address" name="ship_to" value="{{$address->id}}" {{ $ship_to_this_address == true ? 'checked' : '' }} data-country="{{$address->country_id}}" required>
-                  </div>
-                </div>
-                @if($loop->iteration%2 == 0)
-                  <div class="clearfix"></div>
-                @endif
-              @endforeach
-            </div>
+                    <div class="col-sm-12 col-md-6 nopadding-{{ $loop->iteration%2 == 1 ? 'right' : 'left'}}">
+                      <div class="address-list-item {{ $ship_to_this_address == true ? 'selected' : '' }}">
+                        {!! $address->toHtml('<br/>', false) !!}
+                        <input type="radio" class="ship-to-address" name="ship_to" value="{{$address->id}}" {{ $ship_to_this_address == true ? 'checked' : '' }} data-country="{{$address->country_id}}" required>
+                      </div>
+                    </div>
+                    @if($loop->iteration%2 == 0)
+                      <div class="clearfix"></div>
+                    @endif
+                  @endforeach
+              </div>
 
-            <small id="ship-to-error-block" class="text-danger pull-right"></small>
+              <small id="ship-to-error-block" class="text-danger pull-right"></small>
 
-            <div class="space20"></div>
-            <a href="#" data-toggle="modal" data-target="#createAddressModal" class="btn btn-default btn-sm flat space20">
-              <i class="fa fa-address-card-o"></i> @lang('theme.button.add_new_address')
-            </a>
+              <div class="space20"></div>
+
+              <div class="col-sm-12 space20">
+                  <a href="{{ route('my.address.create') }}" class="addressForm btn btn-default btn-sm flat pull-right">
+                    <i class="fa fa-address-card-o"></i> @lang('theme.button.add_new_address')
+                  </a>
+              </div>
+
           @else
+
               @include('forms.address')
 
               <div class="form-group">
@@ -343,7 +350,3 @@
     {!! Form::close() !!}
   </div>
 </section>
-
-@if(isset($customer))
-  @include('modals.create_address')
-@endif

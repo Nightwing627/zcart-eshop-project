@@ -1,12 +1,11 @@
-<div class="modal fade" id="createAddressModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-sm" role="document">
+<div class="modal-dialog modal-sm" role="document">
     <div class="modal-content flat">
         <div class="modal-header">
             <a class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
-            {{ trans('theme.button.add_new_address') }}
+            {{ $address->address_type .' '. trans('theme.address') }}
         </div>
         <div class="modal-body">
-            {!! Form::open(['route' => 'my.address.save', 'data-toggle' => 'validator']) !!}
+            {!! Form::model($address, ['route' => ['my.address.update', $address], 'method' => 'PUT', 'data-toggle' => 'validator']) !!}
                 @if(isset($address_types))
                     <div class="form-group">
                       {!! Form::select('address_type', $address_types, null, ['class' => 'form-control flat', 'placeholder' => trans('theme.placeholder.address_type'), 'required']) !!}
@@ -23,4 +22,4 @@
         <div class="modal-footer">
         </div>
     </div><!-- /.modal-content -->
-</div><!-- /#disputeOpenModal -->
+</div><!-- /.modal-dialog -->

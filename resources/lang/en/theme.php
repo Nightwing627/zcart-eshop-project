@@ -589,6 +589,7 @@ return [
 	'country' => 'Country',
     'delivery_locations_info' => 'Delivery options and delivery speeds may vary for different locations',
     'choose_your_location' => 'Choose your location',
+	'edit' => 'Edit',
 	'edit_account' => 'Edit My Account',
 	'invoice' => 'Invoice',
 	'message_archived' => 'Message has been archived successfully!',

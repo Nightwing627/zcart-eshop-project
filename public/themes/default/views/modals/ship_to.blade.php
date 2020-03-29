@@ -11,8 +11,6 @@
 
                 {{ Form::hidden('cart', Null, ['id' => 'cartinfo']) }} {{-- For the carts page --}}
 
-                <p class="space10">{!! trans('theme.delivery_locations_info') !!}</p>
-
                 {{-- <button class="btn btn-block btn-lg flat btn-black space20" id="login_to_shipp_btn">{{ trans('app.login_to_choose_address') }}</button> --}}
 
                 {{-- <div class="hr-sect">{{ trans('theme.or') }}</div> --}}
@@ -29,13 +27,15 @@
                     </div>
                 </div>
 
-                <div class="row select-box-wrapper hidden space10" id="state_id_select_wrapper">
+                <div class="row select-box-wrapper hidden" id="state_id_select_wrapper">
                     <div class="form-group col-md-12">
                         <label for="state_id">{{ trans('theme.placeholder.state') }}:</label>
                         <select name="state_id" id="shipTo_state" class="selectBoxIt"></select>
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
+
+                <p class="space20 small"><i class="fa fa-info-circle"></i> {!! trans('theme.delivery_locations_info') !!}</p>
 
                 <div class="col-xs-5 pull-right">
                     <input class="btn btn-block btn-lg flat btn-primary" type="submit" value="{{ trans('theme.button.submit') }}">
