@@ -39,4 +39,11 @@ class ShippingRate extends BaseModel
         ]);
     }
 
+    /**
+     * Getters
+     */
+    public function getCarrierNameAttribute()
+    {
+        return $this->carrier->name;
+    }
 }

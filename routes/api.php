@@ -14,11 +14,12 @@ Route::group(['namespace' => 'Api'], function(){
 	Route::get('page/{slug}', 'HomeController@page');
 	Route::get('shop/{slug}', 'HomeController@shop');
 	Route::get('packaging/{shop}', 'HomeController@packaging');
+	Route::post('shipping/{shop}', 'HomeController@shipping');
 	Route::get('paymentOptions/{shop}', 'HomeController@paymentOptions');
 	Route::get('offers/{slug}', 'HomeController@offers');
 	Route::get('listings/{list?}', 'ListingController@index');
 	Route::get('listing/{slug}', 'ListingController@item');
-	Route::get('variant/{slug}', 'ListingController@variant');
+	Route::post('variant/{slug}', 'ListingController@variant');
 	Route::get('search/{term}', 'ListingController@search');
 	Route::get('shop/{slug}/listings', 'ListingController@shop');
 	Route::get('brand/{slug}', 'ListingController@brand');
@@ -36,6 +37,7 @@ Route::group(['namespace' => 'Api'], function(){
 	Route::get('cart/{cart}', 'CartController@show');
 	Route::put('cart/{cart}/update', 'CartController@update');
 	Route::post('cart/{cart}/shipTo', 'CartController@shipTo');
+	Route::post('cart/{cart}/shipping', 'CartController@shipping');
 	Route::post('cart/{cart}/checkout', 'CheckoutController@checkout');
 
 	// Route::get('cart/{expressId?}', 'CartController@index')->name('cart.index');

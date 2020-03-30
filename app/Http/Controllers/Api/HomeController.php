@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Cart;
 use App\Page;
 use App\Shop;
 use App\Banner;
@@ -9,6 +10,7 @@ use App\Slider;
 use App\State;
 use App\Product;
 use App\Country;
+use App\ShippingRate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ShopResource;
@@ -20,6 +22,8 @@ use App\Http\Resources\StateResource;
 use App\Http\Resources\CountryResource;
 use App\Http\Resources\PackagingResource;
 use App\Http\Resources\PaymentMethodResource;
+use App\Http\Resources\ShippingOptionResource;
+use App\Http\Requests\Validations\ShippingOptionRequest;
 
 class HomeController extends Controller
 {
@@ -100,6 +104,20 @@ class HomeController extends Controller
         return $packagings->prepend($platformDefaultPackaging);
         // return new PackagingResource($platformDefaultPackaging);
         // return PackagingResource::collection($shop->activePackagings);
+    }
+
+    /**
+     * Return available shipping options for the specified shop.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  str  $shop
+     * @return \Illuminate\Http\Response
+     */
+    public function shipping(ShippingOptionRequest $request, Shop $shop)
+    {
+        $shippingOptions = ShippingRate::where('shipping_zone_id', $request->zone)->with('carrier:id,name')->get();
+
+        return ShippingOptionResource::collection($shippingOptions);
     }
 
     /**

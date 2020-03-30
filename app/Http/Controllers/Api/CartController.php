@@ -135,10 +135,12 @@ class CartController extends Controller
         if ($old_cart) {
             $cart->shipping_zone_id = Null;
             $cart->shipping_rate_id = Null;
+            $cart->shipping = Null;
         }
         else{
             $cart->shipping_zone_id = $request->shipping_zone_id;
             $cart->shipping_rate_id = $request->shipping_option_id == 'Null' ? Null : $request->shipping_option_id;
+            $cart->shipping = $request->shipping_option_id == 'Null' ? Null : optional($cart->shippingRate)->rate;
         }
 
         $cart->handling = $old_cart ? $old_cart->handling : getShopConfig($item->shop_id, 'order_handling_cost');
@@ -331,6 +333,30 @@ class CartController extends Controller
             'shipping_address' => $address,
             'shipping_options' => $shipping_options,
         ], 200);
+    }
+
+    /**
+     * Return available shipping options for the specified shop.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Cart  $cart
+     * @return \Illuminate\Http\Response
+     */
+    public function shipping(Request $request, Cart $cart)
+    {
+        $free_shipping = [];
+        if($cart->is_free_shipping())
+            $free_shipping[] = getFreeShippingObject($cart->shipping_zone_id);
+
+        $geoip = geoip(request()->ip());
+        $country_id = $cart->ship_to_country_id ?? $geoip->iso_code;
+        $state_id = $cart->ship_to_state_id ?? $geoip->state;
+
+        $zone = get_shipping_zone_of($cart->shop_id, $country_id, $state_id);
+        $shipping_options = $this->get_shipping_options($cart, $zone);
+
+        return empty($free_shipping) ? $shipping_options :
+                collect($free_shipping)->merge($shipping_options);
     }
 
     /**
