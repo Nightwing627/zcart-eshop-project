@@ -615,6 +615,7 @@
 											</p>
 								    		@if($payment_provider->code == 'authorize-net' ||
 								    		    $payment_provider->code == 'instamojo' ||
+								    		    $payment_provider->code == 'cybersource' ||
 								    		    $payment_provider->code == 'paystack' ||
 								    			$type_id == \App\PaymentMethod::TYPE_PAYPAL ||
 								    			$type_id == \App\PaymentMethod::TYPE_MANUAL

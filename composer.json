@@ -18,6 +18,7 @@
         "fideloper/proxy": "^4.0",
         "fzaninotto/faker": "^1.8",
         "guzzlehttp/guzzle": "^6.3",
+        "incevio/cybersource-wrapper": "^1.0",
         "instamojo/instamojo-php": "^0.3.0",
         "ixudra/curl": "^6.16",
         "laracasts/flash": "^3.0",

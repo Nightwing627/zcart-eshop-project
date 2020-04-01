@@ -297,21 +297,21 @@ class Shop extends BaseModel
         return $this->hasMany(Order::class)->selectRaw('SUM(total) as total, shop_id')->groupBy('shop_id');
     }
 
-    /**
-     * Get the stripe for the shop.
-     */
-    public function stripe()
-    {
-        return $this->hasOne(ConfigStripe::class, 'shop_id')->withDefault();
-    }
+    // /**
+    //  * Get the stripe for the shop.
+    //  */
+    // public function stripe()
+    // {
+    //     return $this->hasOne(ConfigStripe::class, 'shop_id')->withDefault();
+    // }
 
-    /**
-     * Get the authorizeNet for the shop.
-     */
-    public function authorizeNet()
-    {
-        return $this->hasOne(ConfigAuthorizeNet::class, 'shop_id')->withDefault();
-    }
+    // /**
+    //  * Get the authorizeNet for the shop.
+    //  */
+    // public function authorizeNet()
+    // {
+    //     return $this->hasOne(ConfigAuthorizeNet::class, 'shop_id')->withDefault();
+    // }
 
     /**
      * Get the paypalExpress for the shop.
@@ -321,30 +321,30 @@ class Shop extends BaseModel
         return $this->hasOne(ConfigPaypalExpress::class, 'shop_id')->withDefault();
     }
 
-    /**
-     * Get the instamojo for the shop.
-     */
-    public function instamojo()
-    {
-        return $this->hasOne(ConfigInstamojo::class, 'shop_id')->withDefault();
-    }
+    // /**
+    //  * Get the instamojo for the shop.
+    //  */
+    // public function instamojo()
+    // {
+    //     return $this->hasOne(ConfigInstamojo::class, 'shop_id')->withDefault();
+    // }
 
-    /**
-     * Get the paystack for the shop.
-     */
-    public function paystack()
-    {
-        return $this->hasOne(ConfigPaystack::class, 'shop_id')->withDefault();
-    }
+    // /**
+    //  * Get the paystack for the shop.
+    //  */
+    // public function paystack()
+    // {
+    //     return $this->hasOne(ConfigPaystack::class, 'shop_id')->withDefault();
+    // }
 
    /**
      * Get the manualPaymentMethods for the shop.
      */
-    public function manualPaymentMethods()
-    {
-        return $this->belongsToMany(PaymentMethod::class, 'config_manual_payments', 'shop_id', 'payment_method_id')
-        ->withPivot('additional_details', 'payment_instructions')->withTimestamps();
-    }
+    // public function manualPaymentMethods()
+    // {
+    //     return $this->belongsToMany(PaymentMethod::class, 'config_manual_payments', 'shop_id', 'payment_method_id')
+    //     ->withPivot('additional_details', 'payment_instructions')->withTimestamps();
+    // }
 
     /**
      * Get the timezone the shop.

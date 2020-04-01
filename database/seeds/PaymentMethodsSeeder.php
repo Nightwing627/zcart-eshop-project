@@ -54,6 +54,20 @@ class PaymentMethodsSeeder extends BaseSeeder
             'updated_at' => Carbon::Now(),
         ]);
         DB::table('payment_methods')->insert([
+            'name' => 'CyberSource',
+            'code' => 'cybersource',
+            'type' => 2,
+            'company_name' => 'CyberSource',
+            'website' => 'https://cybersource.com/',
+            'help_doc_link' => 'https://www.cybersource.com/',
+            'description' => 'CyberSource is an E-commerce credit card payment system management company. Customers process online payments, streamline online fraud management, and simplify payment security. <br/><strong>By using CyberSource: </strong><br/>- You have to have your CyberSource account. <br/>- You agree to CyberSource\'s <a href="https://usa.visa.com/legal/privacy-policy.html" target="_blank">Terms of Service</a>.',
+            'admin_description' => 'CyberSource is one of the most popular and Multi-Channel Payment Gateway.',
+            'admin_help_doc_link' => 'https://developer.cybersource.com/api/developer-guides/dita-gettingstarted/registration.html',
+            'order' => 4,
+            'created_at' => Carbon::Now(),
+            'updated_at' => Carbon::Now(),
+        ]);
+        DB::table('payment_methods')->insert([
             'name' => 'Instamojo',
             'code' => 'instamojo',
             'type' => 2,
@@ -63,7 +77,7 @@ class PaymentMethodsSeeder extends BaseSeeder
             'description' => 'Instamojo is one of the most popular and Multi-Channel Payment Gateway for India - Accept Credit/Debit Cards, Wallets, Net Banking, UPI & EMI. <br/><strong>By using Instamojo: </strong><br/>- You have to have your Instamojo business account. <br/>- You agree to Instamojo\'s <a href="https://www.instamojo.com/terms/" target="_blank">Terms of Service</a>.',
             'admin_description' => 'Instamojo is one of the most popular and Multi-Channel Payment Gateway for India - Accept Credit/Debit Cards, Wallets, Net Banking, UPI & EMI. Enable Instamojo to your vendors.',
             'admin_help_doc_link' => 'https://www.instamojo.com/',
-            'order' => 2,
+            'order' => 5,
             'created_at' => Carbon::Now(),
             'updated_at' => Carbon::Now(),
         ]);
@@ -77,7 +91,7 @@ class PaymentMethodsSeeder extends BaseSeeder
             'description' => 'Modern online and offline payments for Africa. Paystack helps businesses in Africa get paid by anyone, anywhere in the world. <br/><strong>By using Paystack: </strong><br/>- You agree to Paystack\'s <a href="https://paystack.com/terms" target="_blank">Terms of Service</a>.',
             'admin_description' => 'Modern online and offline payments for Africa. Paystack helps businesses in Africa get paid by anyone, anywhere in the world.',
             'admin_help_doc_link' => 'https://paystack.helpscoutdocs.com/',
-            'order' => 4,
+            'order' => 1,
             'created_at' => Carbon::Now(),
             'updated_at' => Carbon::Now(),
         ]);

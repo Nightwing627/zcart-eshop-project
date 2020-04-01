@@ -19,6 +19,11 @@
 	Route::put('instamojo/{instamojo}/update', 'ConfigInstamojoController@update')->name('instamojo.update');
 	Route::get('instamojo/deactivate', 'ConfigInstamojoController@deactivate')->name('instamojo.deactivate');
 
+	// CyberSource
+	Route::get('cybersource/activate', 'ConfigCyberSourceController@activate')->name('cybersource.activate');
+	Route::put('cybersource/{cybersource}/update', 'ConfigCyberSourceController@update')->name('cybersource.update');
+	Route::get('cybersource/deactivate', 'ConfigCyberSourceController@deactivate')->name('cybersource.deactivate');
+
 	// AuthorizeNet
 	Route::get('authorizeNet/activate', 'ConfigAuthorizeNetController@activate')->name('authorizeNet.activate');
 	Route::put('authorizeNet/{authorizeNet}/update', 'ConfigAuthorizeNetController@update')->name('authorizeNet.update');

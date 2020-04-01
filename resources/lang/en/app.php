@@ -1433,6 +1433,11 @@ return [
     'not_in_business_area' => 'Out of business area',
     'login_to_choose_address' => 'Login to see your addresses',
 
+    'publishable_key' => 'Publishable key',
+    'cybersource_api_key_id' => 'API key ID',
+    'cybersource_merchant_id' => 'Merchant ID',
+    'cybersource_secret' => 'Secret Key',
+
     // Version 2.0.0
     'chats' => 'Chats',
     'chat_conversations' => 'Chat conversations',
