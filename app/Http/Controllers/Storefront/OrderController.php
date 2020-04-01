@@ -21,6 +21,8 @@ use App\Http\Requests\Validations\ConfirmGoodsReceivedRequest;
 use net\authorize\api\contract\v1 as AuthorizeNetAPI;
 use net\authorize\api\controller as AuthorizeNetController;
 
+use CybersourcePayments;
+
 class OrderController extends Controller
 {
     /**
@@ -75,6 +77,12 @@ class OrderController extends Controller
                         $this->chargeWithAuthorizeNet($request, $order);
                         break;
 
+                    case 'cybersource':
+                        DB::commit();         // Everything is fine. Now commit the transaction Don't change it
+                        // Charge using cybersource
+                        $this->chargeWithCyberSource($request, $order, $cart);
+                        break;
+
                     case 'paystack':
                         DB::commit();           // Everything is fine. Now commit the transaction Don't change it
                         // Charge using paystack
@@ -94,9 +102,11 @@ class OrderController extends Controller
             if (
                 $e instanceOf \Stripe\Error\Base ||
                 $e instanceOf \Yabacon\Paystack\Exception\ApiException ||
+                $e instanceOf \Incevio\Cybersource\CybersourceSDK\ApiException ||
                 $e instanceOf AuthorizeNetException
             ) {
                 \Log::error('Payment failed:: ' . $e->getMessage());
+                \Log::error('ResponseBody::' . $e->getResponseBody());
                 $error = trans('theme.notify.invalid_request');
             }
             else {
@@ -131,18 +141,72 @@ class OrderController extends Controller
         return redirect()->route('order.success', $order)->with('success', trans('theme.notify.order_placed'));
     }
 
-    /**
-     * Charge using Stripe
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Order  $order
-     *
-     * @return [type]
-     */
+
+    private function chargeWithCyberSource($request, Order $order)
+    {
+        // Get the vendor configs
+        $vendorConfig = $order->shop->config->cybersource;
+        // If the stripe is not cofigured
+        if( ! $vendorConfig )
+            return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
+
+        // Set vendor's cybersource config
+        config()->set('cybersource_config.authType', 'http_signature');
+        config()->set('cybersource_config.mode', 'cyberSource.environment.' . $vendorConfig->sandbox ? 'SANDBOX' : 'PRODUCTION');
+        config()->set('cybersource_config.merchantID', $vendorConfig->merchant_id);
+        config()->set('cybersource_config.apiKeyID', $vendorConfig->api_key_id);
+        config()->set('cybersource_config.secretKey', $vendorConfig->secret);
+
+        $name = explode(' ', $request->cardholder_name);
+        $fname = $name[0];
+        $lname = count($name) > 1 ? end($name) : $fname;
+
+        $billtoArr = [
+            "firstName"          => $fname,
+            "lastName"           => $lname,
+            "address1"           => $request->address_line_1,
+            "address2"           => $request->address_line_2,
+            "postalCode"         => $request->zip_code,
+            "locality"           => $request->city,
+            "country"            => get_value_from($request->country_id, 'countries', 'iso_code'),
+            "administrativeArea" => $request->state_id ? get_value_from($request->state_id, 'states', 'iso_code') : '',
+            "phoneNumber"        => $request->phone,
+            "email"              => $request->email ?? $order->email,
+        ];
+        $amountDetailsArr = [
+            "totalAmount" => get_formated_decimal($order->grand_total, false, 2),
+            "currency"    => get_currency_code()
+        ];
+
+        $paymentCardInfo = [
+            "number"          => $request->cnumber,
+            "securityCode"    => $request->ccode,
+            "expirationMonth" => $request->card_expiry_month,
+            "expirationYear"  => $request->card_expiry_year,
+        ];
+        $cliRefInfoArr = [
+            "code" => get_platform_title() . " " . trans('app.order') . " " . $order->order_number,
+        ];
+
+        try {
+            $response = CybersourcePayments::processPayment($cliRefInfoArr, $amountDetailsArr, $billtoArr, $paymentCardInfo, false);
+
+            if($response[0]['status'] == 'AUTHORIZED')
+                return $response[0]['id'];
+
+            throw new \Incevio\Cybersource\CybersourceSDK\ApiException($response[0]['errorInformation']);
+        }
+        catch(Cybersource\ApiException $e)
+        {
+            \Log::error('ResponseBody:: ' . $e->getResponseBody());
+            throw new \Incevio\Cybersource\CybersourceSDK\ApiException($e->getMessage());
+        }
+    }
+
     private function chargeWithStripe($request, Order $order)
     {
         // Get stripe user id for the connected stripe account of the vendor
-        $vendorStripeAccountId = $order->shop->stripe->stripe_user_id;
+        $vendorStripeAccountId = $order->shop->config->stripe->stripe_user_id;
 
         // If the stripe is not cofigured
         if( ! $vendorStripeAccountId )
@@ -208,19 +272,10 @@ class OrderController extends Controller
         ], ["stripe_account" => $vendorStripeAccountId]);
     }
 
-    /**
-     * [chargeWithInstamojo description]
-     *
-     * @param  [type] $request [description]
-     * @param  Order  $order   [description]
-     * @param  Cart   $cart    [description]
-     *
-     * @return [type]          [description]
-     */
     private function chargeWithInstamojo($request, Order $order, Cart $cart)
     {
         // Get the vendor configs
-        $vendorInstamojoConfig = $order->shop->instamojo;
+        $vendorInstamojoConfig = $order->shop->config->instamojo;
         // If the stripe is not cofigured
         if( ! $vendorInstamojoConfig )
             return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
@@ -256,15 +311,6 @@ class OrderController extends Controller
         exit();
     }
 
-    /**
-     * [instamojoRedirect description]
-     *
-     * @param  Request $request [description]
-     * @param  [type]  $order   [description]
-     * @param  [type]  $cart    [description]
-     *
-     * @return [type]           [description]
-     */
     public function instamojoSuccess(Request $request, $order, $cart)
     {
         if ( $request->payment_status != 'Credit' || ! $request->has('payment_request_id') ||  ! $request->has('payment_id') )
@@ -287,18 +333,10 @@ class OrderController extends Controller
         return redirect()->route('order.success', $order)->with('success', trans('theme.notify.order_placed'));
     }
 
-    /**
-     * [chargeWithAuthorizeNet description]
-     *
-     * @param  [type] $request [description]
-     * @param  Order  $order   [description]
-     *
-     * @return [type]          [description]
-     */
     private function chargeWithAuthorizeNet($request, Order $order)
     {
         // Get the vendor configs
-        $vendorAuthorizeNetConfig = $order->shop->authorizeNet;
+        $vendorAuthorizeNetConfig = $order->shop->config->authorizeNet;
         // If the stripe is not cofigured
         if( ! $vendorAuthorizeNetConfig )
             return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
@@ -321,7 +359,7 @@ class OrderController extends Controller
         // Create a transaction
         $transactionRequestType = new AuthorizeNetAPI\TransactionRequestType();
         $transactionRequestType->setTransactionType("authCaptureTransaction");
-        $transactionRequestType->setAmount(get_formated_decimal($order->grand_total));
+        $transactionRequestType->setAmount(get_formated_decimal($order->grand_total, false, 2));
         $transactionRequestType->setPayment($paymentOne);
         $ApiRequest = new AuthorizeNetAPI\CreateTransactionRequest();
         $ApiRequest->setMerchantAuthentication($merchantAuthentication);
@@ -357,19 +395,10 @@ class OrderController extends Controller
         return FALSE;
     }
 
-    /**
-     * [chargeWithPaystack description]
-     *
-     * @param  [type] $request [description]
-     * @param  Order  $order   [description]
-     * @param  Cart   $cart    [description]
-     *
-     * @return [type]          [description]
-     */
     private function chargeWithPaystack($request, Order $order, Cart $cart)
     {
         // Get the vendor configs
-        $vendorPaystackConfig = $order->shop->paystack;
+        $vendorPaystackConfig = $order->shop->config->paystack;
         // If the stripe is not cofigured
         if( ! $vendorPaystackConfig )
             return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
@@ -410,15 +439,6 @@ class OrderController extends Controller
         exit();
     }
 
-    /**
-     * [paystackPaymentSuccess description]
-     *
-     * @param  Request $request [description]
-     * @param  [type]  $order   [description]
-     * @param  [type]  $cart    [description]
-     *
-     * @return [type]           [description]
-     */
     public function paystackPaymentSuccess(Request $request, $order, $cart)
     {
         if ( ! $request->has('trxref') ||  ! $request->has('reference') )
@@ -441,18 +461,10 @@ class OrderController extends Controller
         return redirect()->route('order.success', $order)->with('success', trans('theme.notify.order_placed'));
     }
 
-    /**
-     * Charge using Stripe
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Order  $order
-     *
-     * @return [type]
-     */
     private function chargeWithPayPal($request, Order $order)
     {
         // Get the vendor configs
-        $vendorPaypalConfig = $order->shop->paypalExpress;
+        $vendorPaypalConfig = $order->shop->config->paypalExpress;
 
         // If the paypal is not cofigured
         if( ! $vendorPaypalConfig )
@@ -538,14 +550,6 @@ class OrderController extends Controller
         return response()->json([$payment->toArray(), 'approval_url' => $payment->getApprovalLink()], 200);
     }
 
-    /**
-     * Payment done successfully. Sync inventory and trigger event
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Order  $order
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function paypalPaymentSuccess(Request $request, $order)
     {
         if ( ! $request->has('token') ||  ! $request->has('paymentId') || ! $request->has('PayerID') )
@@ -556,7 +560,7 @@ class OrderController extends Controller
 
         // ///////////////////////////////////
         // Get the vendor configs
-        $vendorPaypalConfig = $order->shop->paypalExpress;
+        $vendorPaypalConfig = $order->shop->config->paypalExpress;
 
         // // If the paypal is not cofigured
         // if( ! $vendorPaypalConfig )
@@ -600,14 +604,6 @@ class OrderController extends Controller
         return redirect()->route("payment.failed", $order);
     }
 
-    /**
-     * Payment failed. revert the order
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Order  $order
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function paymentFailed(Request $request, $order)
     {
         // $cart = $this->revertOrder($order);
@@ -688,100 +684,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Create a new order from the cart
-     *
-     * @param  Request $request
-     * @param  App\Cart $cart
-     *
-     * @return App\Order
-     */
-    // private function saveOrderFromCart($request, $cart)
-    // {
-    //     // Get shipping address
-    //     if(is_numeric($request->ship_to))
-    //         $address = \App\Address::find($request->ship_to)->toString(True);
-    //     else
-    //         $address = get_address_str_from_request_data($request);
-
-    //     // Set shipping_rate_id and handling cost to NULL if its free shipping
-    //     if($cart->is_free_shipping()) {
-    //         $cart->shipping_rate_id = Null;
-    //         $cart->handling = Null;
-    //     }
-
-    //     // Save the order
-    //     $order = new Order;
-    //     $order->fill(
-    //         array_merge($cart->toArray(), [
-    //             'grand_total' => $cart->grand_total(),
-    //             'order_number' => get_formated_order_number($cart->shop_id),
-    //             'carrier_id' => $cart->carrier() ? $cart->carrier->id : NULL,
-    //             'shipping_address' => $address,
-    //             'billing_address' => $address,
-    //             'email' => $request->email,
-    //             'buyer_note' => $request->buyer_note
-    //         ])
-    //     );
-    //     $order->save();
-
-    //     // Add order item into pivot table
-    //     $cart_items = $cart->inventories->pluck('pivot');
-    //     $order_items = [];
-    //     foreach ($cart_items as $item) {
-    //         $order_items[] = [
-    //             'order_id'          => $order->id,
-    //             'inventory_id'      => $item->inventory_id,
-    //             'item_description'  => $item->item_description,
-    //             'quantity'          => $item->quantity,
-    //             'unit_price'        => $item->unit_price,
-    //             'created_at'        => $item->created_at,
-    //             'updated_at'        => $item->updated_at,
-    //         ];
-    //     }
-    //     \DB::table('order_items')->insert($order_items);
-
-    //     return $order;
-    // }
-
-    // /**
-    //  * Revert order to cart
-    //  *
-    //  * @param  App\Order $Order
-    //  *
-    //  * @return App\Cart
-    //  */
-    // private function revertOrder($order)
-    // {
-    //     if( !$order instanceOf Order )
-    //         $order = Order::find($order);
-
-    //     if (!$order) return;
-
-    //     // Save the cart
-    //     $cart = Cart::create(array_merge($order->toArray(), ['ip_address' => request()->ip()]));
-
-    //     // Add order item into pivot table
-    //     $order_items = $order->inventories->pluck('pivot');
-    //     $cart_items = [];
-    //     foreach ($order_items as $item) {
-    //         $cart_items[] = [
-    //             'cart_id'           => $cart->id,
-    //             'inventory_id'      => $item->inventory_id,
-    //             'item_description'  => $item->item_description,
-    //             'quantity'          => $item->quantity,
-    //             'unit_price'        => $item->unit_price,
-    //             'created_at'        => $item->created_at,
-    //             'updated_at'        => $item->updated_at,
-    //         ];
-    //     }
-    //     \DB::table('cart_items')->insert($cart_items);
-
-    //     $order->forceDelete();   // Delete the order
-
-    //     return $cart;
-    // }
-
-    /**
      * MarkOrderAsPaid
      */
     private function markOrderAsPaid($order)
@@ -799,21 +701,6 @@ class OrderController extends Controller
 
         return $order;
     }
-
-    // /**
-    //  * Sync up the inventory
-    //  * @param  Order $order
-    //  *
-    //  * @return void
-    //  */
-    // private function syncInventory(Order $order)
-    // {
-    //     foreach ($order->inventories as $item) {
-    //         $item->decrement('stock_quantity', $item->pivot->quantity);
-    //     }
-
-    //     return;
-    // }
 
     private function logErrors($error, $feedback)
     {

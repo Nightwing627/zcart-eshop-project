@@ -135,6 +135,14 @@ class Config extends BaseModel
     }
 
     /**
+     * Get the cybersource for the shop.
+     */
+    public function cybersource()
+    {
+        return $this->hasOne(ConfigCyberSource::class, 'shop_id');
+    }
+
+    /**
      * Get the supplier.
      */
     public function supplier()

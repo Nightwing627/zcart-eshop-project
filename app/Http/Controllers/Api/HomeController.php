@@ -131,32 +131,32 @@ class HomeController extends Controller
         $shop = Shop::where('slug', $shop)->active()->firstOrFail();
 
         $paymentMethods = $shop->paymentMethods;
-        $activeManualPaymentMethods = $shop->manualPaymentMethods;
+        $activeManualPaymentMethods = $shop->config->manualPaymentMethods;
         foreach ($paymentMethods as $key => $payment_provider) {
             $has_config = FALSE;
             switch ($payment_provider->code) {
                 case 'stripe':
-                  $has_config = $shop->stripe ? TRUE : FALSE;
+                  $has_config = $shop->config->stripe ? TRUE : FALSE;
                   // $info = trans('theme.notify.we_dont_save_card_info');
                   break;
 
                 case 'instamojo':
-                  $has_config = $shop->instamojo ? TRUE : FALSE;
+                  $has_config = $shop->config->instamojo ? TRUE : FALSE;
                   // $info = trans('theme.notify.you_will_be_redirected_to_instamojo');
                   break;
 
                 case 'authorize-net':
-                  $has_config = $shop->authorizeNet ? TRUE : FALSE;
+                  $has_config = $shop->config->authorizeNet ? TRUE : FALSE;
                   // $info = trans('theme.notify.we_dont_save_card_info');
                   break;
 
                 case 'paypal-express':
-                  $has_config = $shop->paypalExpress ? TRUE : FALSE;
+                  $has_config = $shop->config->paypalExpress ? TRUE : FALSE;
                   // $info = trans('theme.notify.you_will_be_redirected_to_paypal');
                   break;
 
                 case 'paystack':
-                  $has_config = $shop->paystack ? TRUE : FALSE;
+                  $has_config = $shop->config->paystack ? TRUE : FALSE;
                   // $info = trans('theme.notify.you_will_be_redirected_to_paystack');
                   break;
 

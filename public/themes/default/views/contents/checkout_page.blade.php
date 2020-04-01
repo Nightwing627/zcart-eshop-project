@@ -187,7 +187,7 @@
         <div class="col-md-4">
             <h3 class="widget-title">{{ trans('theme.payment_options') }}</h3>
             @php
-              $activeManualPaymentMethods = $shop->manualPaymentMethods;
+              $activeManualPaymentMethods = $shop->config->manualPaymentMethods;
             @endphp
 
             <div class="space30">
@@ -195,27 +195,32 @@
                 @php
                   switch ($payment_provider->code) {
                     case 'stripe':
-                      $has_config = $shop->stripe ? TRUE : FALSE;
+                      $has_config = $shop->config->stripe ? TRUE : FALSE;
                       $info = trans('theme.notify.we_dont_save_card_info');
                       break;
 
                     case 'instamojo':
-                      $has_config = $shop->instamojo ? TRUE : FALSE;
+                      $has_config = $shop->config->instamojo ? TRUE : FALSE;
                       $info = trans('theme.notify.you_will_be_redirected_to_instamojo');
                       break;
 
                     case 'authorize-net':
-                      $has_config = $shop->authorizeNet ? TRUE : FALSE;
+                      $has_config = $shop->config->authorizeNet ? TRUE : FALSE;
+                      $info = trans('theme.notify.we_dont_save_card_info');
+                      break;
+
+                    case 'cybersource':
+                      $has_config = $shop->config->cybersource ? TRUE : FALSE;
                       $info = trans('theme.notify.we_dont_save_card_info');
                       break;
 
                     case 'paypal-express':
-                      $has_config = $shop->paypalExpress ? TRUE : FALSE;
+                      $has_config = $shop->config->paypalExpress ? TRUE : FALSE;
                       $info = trans('theme.notify.you_will_be_redirected_to_paypal');
                       break;
 
                     case 'paystack':
-                      $has_config = $shop->paystack ? TRUE : FALSE;
+                      $has_config = $shop->config->paystack ? TRUE : FALSE;
                       $info = trans('theme.notify.you_will_be_redirected_to_paystack');
                       break;
 

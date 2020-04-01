@@ -48,6 +48,12 @@
 	    	else
 	    		hideAuthorizeNetCardForm();
 
+	    	// Alter checkout button text Authorize Net
+			if ('cybersource' == code)
+				showAuthorizeNetCardForm();
+	    	else
+	    		hideAuthorizeNetCardForm();
+
 	    	// Alter checkout button
 			if ('paypal-express' == code){
 	            $('#paypal-express-btn').removeClass('hide');
@@ -85,9 +91,10 @@
 		// Show cart form if the card option is selected
 		var paymentOptionSelected = $('input[name="payment_method"]:checked');
 		if ( paymentOptionSelected.length > 0) {
-			if( paymentOptionSelected.data('code') == 'stripe' )
+			var code = paymentOptionSelected.data('code');
+			if( code == 'stripe' )
 				showCardForm();
-			if( paymentOptionSelected.data('code') == 'authorize-net' )
+			if( code == 'authorize-net' || code == 'cybersource' )
 				showAuthorizeNetCardForm();
 		}
 
