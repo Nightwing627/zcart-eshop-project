@@ -36,6 +36,7 @@ trait Authorizable
         'fulfill'           => 'fulfill',
         'updateOrderStatus' => 'fulfill',
         'togglePaymentStatus'=> 'fulfill',
+        'saveAdminNote'     => 'fulfill',
         'initiate'          => 'initiate',
         'form'              => 'initiate',
         'approve'           => 'approve',

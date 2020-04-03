@@ -70,11 +70,33 @@
           <div class="row">
             <div class="col-md-6">
               <dir class="spacer30"></dir>
+              @if($order->buyer_note)
+                {{ trans('app.buyer_note') }}:
+                <blockquote>
+                  {!! $order->buyer_note !!}
+                </blockquote>
+              @endif
+
+              <dir class="spacer30"></dir>
               @if($order->admin_note)
                 {{ trans('app.admin_note') }}:
+
+                @can('fulfill', $order)
+                   <a href="javascript:void(0)" data-link="{{ route('admin.order.order.adminNote', $order) }}" class='ajax-modal-btn btn btn-link' >
+                      {{ trans('app.edit') }}
+                    </a>
+                @endcan
+
                 <blockquote>
                   {!! $order->admin_note !!}
                 </blockquote>
+              @else
+                @can('fulfill', $order)
+                    <dir class="spacer20"></dir>
+                    <a href="javascript:void(0)" data-link="{{ route('admin.order.order.adminNote', $order) }}" class='ajax-modal-btn btn btn-link' >
+                        {{ trans('app.add_admin_note') }}
+                    </a>
+                @endcan
               @endif
             </div>
             <div class="col-md-6" id="summary-block">

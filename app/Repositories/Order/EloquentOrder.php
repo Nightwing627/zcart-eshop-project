@@ -99,6 +99,16 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
         return $order->save();
     }
 
+    public function updateAdminNote(Request $request, $order)
+    {
+        if(! $order instanceof Order)
+            $order = $this->model->find($order);
+
+        $order->admin_note = $request->input('admin_note');
+
+        return $order->save();
+    }
+
     public function togglePaymentStatus($order)
     {
         if(! $order instanceof Order)

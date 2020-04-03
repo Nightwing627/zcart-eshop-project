@@ -1404,10 +1404,12 @@ return [
     'cookies_terms' => 'Know more',
     'search_result_found' => ':count result found',
 
-    // Version 1.4.0
+    // Version 2.0.0
     'add_country' => 'Add country',
+    'add_admin_note' => 'Add admin note',
     'add_state' => 'Add state',
     'business_area' => 'Business area',
+    'buyer_note' => 'Buyer note',
     'can_use_own_catalog_only' => 'Can use own catalog only',
     'capital' => 'Capital',
     'calling_code' => 'Calling code',
@@ -1433,7 +1435,7 @@ return [
     'not_in_business_area' => 'Out of business area',
     'login_to_choose_address' => 'Login to see your addresses',
 
-    // Version 2.0.0
+    // Version 2.1.0
     'chats' => 'Chats',
     'chat_conversations' => 'Chat conversations',
     'notify_new_chat' => 'Notify new chat message',

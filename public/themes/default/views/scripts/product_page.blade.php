@@ -241,7 +241,9 @@ foreach ($variants as &$value) {
             var options = getFromPHPHelper('getShippingRates', [zone.id]);
             $("#shipping-options").data('options', JSON.parse(options))
 
-            setShippingOptions();
+            // Reset shipping option if the zone are not same the same
+            if(zone.id != $('#shipping-zone-id').val())
+                setShippingOptions();
 
             $('#shipToModal').modal('hide'); //Hide the modal
         }
