@@ -3,14 +3,14 @@
     @if($carts->count() > 0)
       @php
           $geoip = geoip(request()->ip());
-          $current_shipping_country = $business_areas->where('iso_code', $geoip->iso_code)->first();
+          $geoip_country = $business_areas->where('iso_code', $geoip->iso_code)->first();
       @endphp
 
       @foreach($carts as $cart)
         @php
             $cart_total = 0;
 
-            $shipping_country_id = $cart->country->id ?? optional($current_shipping_country)->id;
+            $shipping_country_id = $cart->country->id ?? optional($geoip_country)->id;
 
             // if(! $shipping_country_id)
               // CANT SHIPP

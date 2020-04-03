@@ -24,7 +24,7 @@ class CheckoutCartRequest extends Request
      */
     public function rules()
     {
-        crosscheckAndUpdateOldCartInfo($this, $this->route('cart')); // Update cart info
+        // crosscheckAndUpdateOldCartInfo($this, $this->route('cart')); // Update cart info
 
         $rules = [];
         if ( ! Auth::guard('customer')->check() ) {

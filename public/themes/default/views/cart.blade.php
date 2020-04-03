@@ -19,4 +19,5 @@
 @section('scripts')
     @include('modals.ship_to')
     @include('scripts.cart')
+    @include('scripts.dynamic_checkout')
 @endsection

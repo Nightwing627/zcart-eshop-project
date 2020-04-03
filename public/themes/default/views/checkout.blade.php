@@ -12,4 +12,5 @@
 
 @section('scripts')
     @include('scripts.checkout')
+    @include('scripts.dynamic_checkout')
 @endsection

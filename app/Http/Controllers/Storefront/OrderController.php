@@ -31,6 +31,8 @@ class OrderController extends Controller
      */
     public function create(CheckoutCartRequest $request, Cart $cart)
     {
+        $cart = crosscheckAndUpdateOldCartInfo($request, $cart);
+
         if ($request->email && $request->has('create-account') && $request->password) {
             $customer = (new NewCustomer)->save($request);
             $request->merge(['customer_id' => $customer->id]); //Set customer_id
