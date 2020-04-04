@@ -38,7 +38,7 @@
                     <div class="col-xs-7">
                         <div class="form-group">
                             <label>
-                                {!! Form::checkbox('agree', null, null, ['class' => 'icheck', 'required']) !!} {!! trans('theme.input_label.i_agree_with_terms') !!}
+                                {!! Form::checkbox('agree', null, null, ['class' => 'icheck', 'required']) !!} {!! trans('theme.input_label.i_agree_with_terms', ['url' => route('page.open', \App\Page::PAGE_TNC_FOR_CUSTOMER)]) !!}
                             </label>
                             <div class="help-block with-errors"></div>
                         </div>

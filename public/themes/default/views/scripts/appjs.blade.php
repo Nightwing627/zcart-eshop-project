@@ -18,6 +18,15 @@
             $(this).hide();
         });
 
+        // Adjust the category manu height with contents
+        $('.menu-category-dropdown').mouseover(function() {
+            var height = $(this).height();
+
+            if(height > 491)
+                $('.category-section').css('min-height', height);
+        });
+
+
         initAppPlugins();
 
         // Activate the tab if the url has any #hash

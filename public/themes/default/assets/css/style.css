@@ -3035,11 +3035,6 @@ table .product-info-price .percent-off {
 .shopping-cart-item-table .product-info-qty-item {
   zoom: 0.81!important;
 }
-@media (max-width: 992px) {
-  .shopping-cart-item-table .product-info-qty-item {
-    zoom: 0.50!important;
-  }
-}
 .shopping-cart-item-table > tfoot > tr > td,
 .shopping-cart-item-table > thead > tr > th {
     padding: 10px;
@@ -4006,4 +4001,23 @@ h1.blog-post-title a {
 .my-info-container .my-info .messages {
     float: left;
     color: #999;
+}
+
+table.shopping-cart-item-table .large-screen-only,
+table.shopping-cart-item-table td[colspan="2"] {
+  display: none;
+}
+
+@media screen and (min-width: 1025px) {
+  table.shopping-cart-item-table .large-screen-only {
+    display: table-cell;
+  }
+
+  table.shopping-cart-item-table td[colspan="5"] {
+    display: none;
+  }
+
+  table.shopping-cart-item-table td[colspan="2"] {
+    display: table-cell;
+  }
 }

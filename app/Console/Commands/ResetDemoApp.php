@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Schema;
 
 class ResetDemoApp extends Command
 {
@@ -43,12 +44,16 @@ class ResetDemoApp extends Command
 
         $this->call('down'); // Maintenance mode on
 
+        Schema::disableForeignKeyConstraints();
+
         $this->call('incevio:fresh');
 
         $this->call('incevio:demo');
 
         // if( config('app.demo') != true )
         //     $this->call('incevio:boost');
+
+        Schema::enableForeignKeyConstraints();
 
         $this->call('up'); // Maintenance mode off
     }

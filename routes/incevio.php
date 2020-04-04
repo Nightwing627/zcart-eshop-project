@@ -1,6 +1,9 @@
 <?php
 Route::group(['prefix' => 'incevio'], function()
 {
+    // prevent access in demo mode
+    if(config('app.demo') == true) return false;
+
     // Check different type system information
     Route::get('check/{option?}', function($option = 'version'){
         switch ($option) {
@@ -20,6 +23,21 @@ Route::group(['prefix' => 'incevio'], function()
 
         Artisan::call('migrate');
         $out .= '<info>✔</info> '. Artisan::output() .'<br/>';
+
+       return $out;
+    });
+
+    // New version upgrade
+    Route::get('command/{option?}', function($option = 'job'){
+        $out = '';
+
+        if($option == 'job'){
+            Artisan::call('queue:work');
+            $out .= '<info>✔</info> '. Artisan::output() .'<br/>';
+        }
+        else{
+            $out = 'Invalid command!';
+        }
 
        return $out;
     });

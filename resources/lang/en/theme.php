@@ -583,7 +583,7 @@ return [
 	'from_verified_seller' => 'Verified seller',
 	'mark_as_solved' => 'Mark as solved',
 
-	// Version 1.4.0
+    // Version 2.0.0
 	'add_shipping_address' => 'Add a shipping address',
 	'archive' => 'Archive',
 	'country' => 'Country',
@@ -600,7 +600,7 @@ return [
 	'unread_messages' => 'Unread messages',
 	'std_delivery_time' => 'Standard delivery time',
 
-    // Version 2.0.0
+    // Version 2.1.0
     'chat_welcome' => 'Hey! Have a question?',
     'connecting' => 'Connecting...',
     'login_to_chat' => 'We\'re just one step away! Please login to start the conversation.',
