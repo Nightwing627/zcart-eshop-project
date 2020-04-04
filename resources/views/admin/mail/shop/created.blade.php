@@ -4,8 +4,8 @@
 {{ trans('notifications.shop_created.message', ['shop_name' => $shop->name]) }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.shop_created.action.color')])
-{{ trans('notifications.shop_created.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'green'])
+{{ trans('notifications.shop_created.button_text') }}
 @endcomponent
 
 {{ trans('messages.thanks') }},<br>

@@ -4,8 +4,8 @@
 {{ trans('notifications.system_is_down.message', ['marketplace' => get_platform_title()]) }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.system_is_down.action.color')])
-{{ trans('notifications.system_is_down.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'blue'])
+{{ trans('notifications.system_is_down.button_text') }}
 @endcomponent
 
 {{ trans('messages.thanks') }},<br>

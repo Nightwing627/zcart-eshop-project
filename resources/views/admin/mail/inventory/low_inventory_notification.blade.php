@@ -4,8 +4,8 @@
 {{ trans('notifications.low_inventory_notification.message') }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.low_inventory_notification.action.color')])
-{{ trans('notifications.low_inventory_notification.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'red'])
+{{ trans('notifications.low_inventory_notification.button_text') }}
 @endcomponent
 
 {{ trans('messages.thanks') }},<br>

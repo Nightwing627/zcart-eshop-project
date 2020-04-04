@@ -4,8 +4,8 @@
 {{ trans('notifications.ticket_acknowledgement.message', ['ticket_id' => $ticket->id]) }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.ticket_acknowledgement.action.color')])
-{{ trans('notifications.ticket_acknowledgement.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'blue'])
+{{ trans('notifications.ticket_acknowledgement.button_text') }}
 @endcomponent
 
 @include('admin.mail.ticket._ticket_detail_panel', ['ticket_detail' => $ticket])

@@ -4,8 +4,8 @@
 {{ trans('notifications.merchant_order_created_notification.message', ['order' => $order->order_number]) }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.merchant_order_created_notification.action.color')])
-{{ trans('notifications.merchant_order_created_notification.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'blue'])
+{{ trans('notifications.merchant_order_created_notification.button_text') }}
 @endcomponent
 
 @include('admin.mail.order._order_detail_panel', ['order_detail' => $order])

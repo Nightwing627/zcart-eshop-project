@@ -27,10 +27,7 @@ return [
         'subject' => ':marketplace Monthly subscription fee invoice',
         'greeting' => 'Hello :merchant!',
         'message' => 'Thanks for your continued support. We\'ve attached a copy of your invoice for your records. Please let us know if you have any questions or concerns!',
-        'action' => [
-            'text' => 'Go to the Dashboard',
-            'color' => 'green',
-        ],
+        'button_text' => 'Go to the Dashboard',
     ],
 
     // Customer Notifications
@@ -38,26 +35,20 @@ return [
         'subject' => 'Welcome to the :marketplace marketplace!',
         'greeting' => 'Congratulation :customer!',
         'message' => 'Your account has been created successfully! Click the button below to verify your email address.',
-        'action' => [
-            'text' => 'Verify me',
-            'color' => 'green',
-        ],
+        'button_text' => 'Verify me',
     ],
 
     'customer_updated' => [
         'subject' => 'Account information updated successfully!',
         'greeting' => 'Hello :customer!',
         'message' => 'This is a notification to let you know that your account has been updated successfully!',
-        'action' => [
-            'text' => 'Visit your profile',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Visit your profile',
     ],
 
     'customer_password_reset' => [
         'subject' => 'Reset Password Notification',
         'greeting' => 'Hello!',
-        'message' => 'You are receiving this email because we received a password reset request for your account. If you did not request a password reset, Just ignore this notification and no further action is required.',
+        'message' => 'You are receiving this email because we received a password reset request for your account. If you did not request a password reset, Just ignore this notification and no further button_text is required.',
         'button_text' => 'Reset Password',
     ],
 
@@ -66,50 +57,35 @@ return [
         'subject' => '[Order ID: :order_id] Dispute has been submitted successfully',
         'greeting' => 'Hello :customer',
         'message' => 'This is a notification to let you know that we have received your dispute  for the Order ID: :order_id, Our support team will get back to you as soon as possible.',
-        'action' => [
-            'text' => 'View the dispute',
-            'color' => 'blue',
-        ],
+        'button_text' => 'View the dispute',
     ],
 
     'dispute_created' => [
         'subject' => 'New dispute for Order ID: :order_id',
         'greeting' => 'Hello :merchant!',
         'message' => 'You have received a new dispute for Order ID: :order_id. Please review and resolve the issue with the customer.',
-        'action' => [
-            'text' => 'View the dispute',
-            'color' => 'green',
-        ],
+        'button_text' => 'View the dispute',
     ],
 
     'dispute_updated' => [
         'subject' => '[Order ID: :order_id] Dispute status has been updated!',
         'greeting' => 'Hello :customer!',
         'message' => 'A dispute for the Order ID :order_id has been updated with this message from the vendor ":reply". Please check below and contact us if you need any assistance.',
-        'action' => [
-            'text' => 'View the dispute',
-            'color' => 'blue',
-        ],
+        'button_text' => 'View the dispute',
     ],
 
     'dispute_appealed' => [
         'subject' => '[Order ID: :order_id] Dispute appealed!',
         'greeting' => 'Hello!',
         'message' => 'A dispute for the Order ID :order_id has been appealed with this message ":reply". Please check below for detail.',
-        'action' => [
-            'text' => 'View the dispute',
-            'color' => 'blue',
-        ],
+        'button_text' => 'View the dispute',
     ],
 
     'appealed_dispute_replied' => [
         'subject' => '[Order ID: :order_id] New respons for appealed dispute!',
         'greeting' => 'Hello!',
         'message' => 'A dispute for the Order ID :order_id has been responded with this message: </br></br> ":reply"',
-        'action' => [
-            'text' => 'View the dispute',
-            'color' => 'blue',
-        ],
+        'button_text' => 'View the dispute',
     ],
 
     // Inventory
@@ -117,10 +93,7 @@ return [
         'subject' => 'Low inventory alert!',
         'greeting' => 'Hello!',
         'message' => 'One or more of your inventory items getting low. It time to add more inventory to keep the item live on the marketplace.',
-        'action' => [
-            'text' => 'Update Inventory',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Update Inventory',
     ],
 
     'inventory_bulk_upload_procceed_notice' => [
@@ -128,10 +101,7 @@ return [
         'greeting' => 'Hello!',
         'message' => 'We\'re happy to let you know that your bulk inventory import request has been procceed. Total number of rows imported successfully into the platform :success, Failed number of rows :failed ',
         'failed' => 'Please find the attached file for failed rows.',
-        'action' => [
-            'text' => 'View Inventory',
-            'color' => 'green',
-        ],
+        'button_text' => 'View Inventory',
     ],
 
     // Message Notifications
@@ -139,20 +109,14 @@ return [
         'subject' => ':subject',
         'greeting' => 'Hello :receiver',
         'message' => ':message',
-        'action' => [
-            'text' => 'View the message on site',
-            'color' => 'blue',
-        ],
+        'button_text' => 'View the message on site',
     ],
 
     'message_replied' => [
         'subject' => ':user replied :subject',
         'greeting' => 'Hello :receiver',
         'message' => ':reply',
-        'action' => [
-            'text' => 'View the message on site',
-            'color' => 'blue',
-        ],
+        'button_text' => 'View the message on site',
     ],
 
     // Order Notifications
@@ -160,60 +124,42 @@ return [
         'subject' => '[Order ID: :order] your order has been placed successfully!',
         'greeting' => 'Hello :customer',
         'message' => 'Thank you for choosing us! Your order [Order ID :order] has been placed successfully. We\'ll let you know the status of the order.',
-        'action' => [
-            'text' => 'Visit the shop',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Visit the shop',
     ],
 
     'merchant_order_created_notification' => [
         'subject' => 'New order [Order ID: :order] has been placed on your shop!',
         'greeting' => 'Hello :merchant',
         'message' => 'A new order [Order ID :order] has been placed. Please check the order detail and fulfill the order asap.',
-        'action' => [
-            'text' => 'Fulfill the order',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Fulfill the order',
     ],
 
     'order_updated' => [
         'subject' => '[Order ID: :order] your order status has been updated!',
         'greeting' => 'Hello :customer',
         'message' => 'This is a notification to let you know that your order [Order ID :order] has been updated. Please see below for order detail. You can also check your orders from your dashboard.',
-        'action' => [
-            'text' => 'Visit the shop',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Visit the shop',
     ],
 
     'order_fulfilled' => [
         'subject' => '[Order ID: :order] Your order on it\'s way!',
         'greeting' => 'Hello :customer',
         'message' => 'This is a notification to let you know that your order [Order ID :order] has been shipped and it\'s on your way. Please see below for order detail. You can also check your orders from your dashboard.',
-        'action' => [
-            'text' => 'Visit the shop',
-            'color' => 'green',
-        ],
+        'button_text' => 'Visit the shop',
     ],
 
     'order_paid' => [
         'subject' => '[Order ID: :order] Your order been paid successfully!',
         'greeting' => 'Hello :customer',
         'message' => 'This is a notification to let you know that your order [Order ID :order] has been paid successfully and it\'s on your way. Please see below for order detail. You can also check your orders from your dashboard.',
-        'action' => [
-            'text' => 'Visit the shop',
-            'color' => 'green',
-        ],
+        'button_text' => 'Visit the shop',
     ],
 
     'order_payment_failed' => [
         'subject' => '[Order ID: :order] payment failed!',
         'greeting' => 'Hello :customer',
         'message' => 'This is a notification to let you know that your order [Order ID :order] payment has been failed. Please see below for order detail. You can also check your orders from your dashboard.',
-        'action' => [
-            'text' => 'Visit the shop',
-            'color' => 'red',
-        ],
+        'button_text' => 'Visit the shop',
     ],
 
     // Refund Notifications
@@ -240,50 +186,35 @@ return [
         'subject' => 'Your shop is ready to go!',
         'greeting' => 'Congratulation :merchant!',
         'message' => 'Your shop :shop_name has been created successfully! Click the button below to login into shop admin panel.',
-        'action' => [
-            'text' => 'Go to the Dashboard',
-            'color' => 'green',
-        ],
+        'button_text' => 'Go to the Dashboard',
     ],
 
     'shop_updated' => [
         'subject' => 'Shop information updated successfully!',
         'greeting' => 'Hello :merchant!',
         'message' => 'This is a notification to let you know that your shop :shop_name has been updated successfully!',
-        'action' => [
-            'text' => 'Go to the Dashboard',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Go to the Dashboard',
     ],
 
     'shop_config_updated' => [
         'subject' => 'Shop configuration updated successfully!',
         'greeting' => 'Hello :merchant!',
         'message' => 'Your shop configuration has been updated successfully! Click the button below to login into shop admin panel.',
-        'action' => [
-            'text' => 'Go to the Dashboard',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Go to the Dashboard',
     ],
 
     'shop_down_for_maintainace' => [
         'subject' => 'Your shop is down!',
         'greeting' => 'Hello :merchant!',
         'message' => 'This is a notification to let you know that your shop :shop_name is down! No customer can visit your shop until it\'s back to live again.',
-        'action' => [
-            'text' => 'Go to the Config page',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Go to the Config page',
     ],
 
     'shop_is_live' => [
         'subject' => 'Your shop is back to LIVE!',
         'greeting' => 'Hello :merchant',
         'message' => 'This is a notification to let you know that your shop :shop_name is back to live successfully!',
-        'action' => [
-            'text' => 'Go to the Dashboard',
-            'color' => 'green',
-        ],
+        'button_text' => 'Go to the Dashboard',
     ],
 
     'shop_deleted' => [
@@ -297,40 +228,28 @@ return [
         'subject' => 'Your marketplace :marketplace is down now!',
         'greeting' => 'Hello :user!',
         'message' => 'This is a notification to let you know that your marketplace :marketplace is down! No customer can visit your marketplace until it\'s back to live again.',
-        'action' => [
-            'text' => 'Go to the config page',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Go to the config page',
     ],
 
     'system_is_live' => [
         'subject' => 'Your marketplace :marketplace is back to LIVE!',
         'greeting' => 'Hello :user!',
         'message' => 'This is a notification to let you know that your marketplace :marketplace is back to live successfully!',
-        'action' => [
-            'text' => 'Go to the Dashboard',
-            'color' => 'green',
-        ],
+        'button_text' => 'Go to the Dashboard',
     ],
 
     'system_info_updated' => [
         'subject' => ':marketplace - marketplace information updated successfully!',
         'greeting' => 'Hello :user!',
         'message' => 'This is a notification to let you know that your marketplace :marketplace has been updated successfully!',
-        'action' => [
-            'text' => 'Go to the Dashboard',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Go to the Dashboard',
     ],
 
     'system_config_updated' => [
         'subject' => ':marketplace - marketplace configuration updated successfully!',
         'greeting' => 'Hello :user!',
         'message' => 'The configuration of your marketplace :marketplace has been updated successfully! Click the button below to login into the admin panel.',
-        'action' => [
-            'text' => 'View settings',
-            'color' => 'blue',
-        ],
+        'button_text' => 'View settings',
     ],
 
     'new_contact_us_message' => [
@@ -345,50 +264,35 @@ return [
         'subject' => '[Ticket ID: :ticket_id] :subject',
         'greeting' => 'Hello :user',
         'message' => 'This is a notification to let you know that we have received your ticket :ticket_id successfully! Our support team will get back to you as soon as possible.',
-        'action' => [
-            'text' => 'View the ticket',
-            'color' => 'blue',
-        ],
+        'button_text' => 'View the ticket',
     ],
 
     'ticket_created' => [
         'subject' => 'New Support Ticket [Ticket ID: :ticket_id] :subject',
         'greeting' => 'Hello!',
         'message' => 'You have received a new support ticket ID :ticket_id, Sender :sender from the vendor :vendor. Review and assing the ticket to support team.',
-        'action' => [
-            'text' => 'View the ticket',
-            'color' => 'green',
-        ],
+        'button_text' => 'View the ticket',
     ],
 
     'ticket_assigned' => [
         'subject' => 'A ticket just assinged to you [Ticket ID: :ticket_id] :subject',
         'greeting' => 'Hello :user',
         'message' => 'This is a notification to let you know that ticket [Ticket ID: :ticket_id] :subject just assinged to you. Review and reply the ticket to as soon as possible.',
-        'action' => [
-            'text' => 'Reply the ticket',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Reply the ticket',
     ],
 
     'ticket_replied' => [
         'subject' => ':user replied the ticket [Ticket ID: :ticket_id] :subject',
         'greeting' => 'Hello :user',
         'message' => ':reply',
-        'action' => [
-            'text' => 'View the ticket',
-            'color' => 'blue',
-        ],
+        'button_text' => 'View the ticket',
     ],
 
     'ticket_updated' => [
         'subject' => 'A Ticket [Ticket ID: :ticket_id] :subject has been updated!',
         'greeting' => 'Hello :user!',
         'message' => 'One of your support tickets ticket ID #:ticket_id :subject has been updated. Please contact us if you need any assistance.',
-        'action' => [
-            'text' => 'View the ticket',
-            'color' => 'blue',
-        ],
+        'button_text' => 'View the ticket',
     ],
 
     // User Notifications
@@ -397,19 +301,13 @@ return [
         'greeting' => 'Congratulation :user!',
         'message' => 'You have been added to the :marketplace by :admin! Click the button below to login into your account. Use the temporary password for initial login.',
         'alert' => 'Don\'t forgot to change your password after login.',
-        'action' => [
-            'text' => 'Visit your profile',
-            'color' => 'green',
-        ],
+        'button_text' => 'Visit your profile',
     ],
     'user_updated' => [
         'subject' => 'Account information updated successfully!',
         'greeting' => 'Hello :user!',
         'message' => 'This is a notification to let you know that your account has been updated successfully!',
-        'action' => [
-            'text' => 'Visit your profile',
-            'color' => 'blue',
-        ],
+        'button_text' => 'Visit your profile',
     ],
 
     // Vendor Notifications
@@ -417,10 +315,7 @@ return [
         'subject' => 'New vendor just registered!',
         'greeting' => 'Congratulation!',
         'message' => 'Your marketplace :marketplace just got a new verdor with shop name <strong>:shop_name</strong> and the merchant\'s email address is :merchant_email',
-        'action' => [
-            'text' => 'Go to the Dashboard',
-            'color' => 'green',
-        ],
+        'button_text' => 'Go to the Dashboard',
     ],
 
     // User/Merchant Notification
@@ -436,9 +331,6 @@ return [
         'subject' => 'Dispute [Order ID: :order_id] has been marked as solved!',
         'greeting' => 'Hello :customer!',
         'message' => 'The dispute for Order ID: :order_id has been marked as solved. Thank you for being with us.',
-        'action' => [
-            'text' => 'View the dispute',
-            'color' => 'green',
-        ],
+        'button_text' => 'View the dispute',
     ],
 ];

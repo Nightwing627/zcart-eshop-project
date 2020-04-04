@@ -1,453 +1,309 @@
-<?php 
+<?php
 return array (
-  'password_updated' => 
+  'password_updated' =>
   array (
     'subject' => 'รหัสผ่าน :marketplace ของคุณได้รับการอัปเดตเรียบร้อยแล้ว!',
     'greeting' => 'สวัสดี :user!',
     'message' => 'รหัสผ่านเข้าสู่ระบบบัญชีของคุณได้รับการเปลี่ยนแปลงเรียบร้อยแล้ว! หากคุณไม่ได้ทำการเปลี่ยนแปลงนี้โปรดติดต่อเราโดยเร็ว! คลิกที่ปุ่มด้านล่างเพื่อเข้าสู่หน้าโปรไฟล์ของคุณ',
     'button_text' => 'เยี่ยมชมโปรไฟล์ของคุณ',
   ),
-  'invoice_created' => 
+  'invoice_created' =>
   array (
     'subject' => ':marketplace ใบแจ้งหนี้ค่าสมัครรายเดือน',
     'greeting' => 'สวัสดี :merchant!',
     'message' => 'ขอบคุณสำหรับการสนับสนุนอย่างต่อเนื่อง เราได้แนบสำเนาใบแจ้งหนี้สำหรับบันทึกของคุณ โปรดแจ้งให้เราทราบหากคุณมีคำถามหรือข้อสงสัย!',
-    'action' => 
-    array (
-      'text' => 'ไปที่หน้าแดชบอร์ด',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'ไปที่หน้าแดชบอร์ด',
   ),
-  'customer_registered' => 
+  'customer_registered' =>
   array (
     'subject' => 'ยินดีต้อนรับสู่ตลาด :marketplace!',
     'greeting' => 'ขอแสดงความยินดี :customer!',
     'message' => 'สร้างบัญชีของคุณสำเร็จแล้ว! คลิกปุ่มด้านล่างเพื่อยืนยันที่อยู่อีเมลของคุณ',
-    'action' => 
-    array (
-      'text' => 'ยืนยันฉัน',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'ยืนยันฉัน',
   ),
-  'customer_updated' => 
+  'customer_updated' =>
   array (
     'subject' => 'อัปเดตข้อมูลบัญชีสำเร็จแล้ว!',
     'greeting' => 'สวัสดี :customer!',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าบัญชีของคุณได้รับการอัปเดตเรียบร้อยแล้ว!',
-    'action' => 
-    array (
-      'text' => 'เยี่ยมชมโปรไฟล์ของคุณ',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'เยี่ยมชมโปรไฟล์ของคุณ',
   ),
-  'customer_password_reset' => 
+  'customer_password_reset' =>
   array (
     'subject' => 'รีเซ็ตการแจ้งเตือนรหัสผ่าน',
     'greeting' => 'สวัสดี!',
     'message' => 'คุณได้รับอีเมลนี้เนื่องจากเราได้รับคำขอรีเซ็ตรหัสผ่านสำหรับบัญชีของคุณ หากคุณไม่ได้ร้องขอการรีเซ็ตรหัสผ่านเพียงเพิกเฉยการแจ้งเตือนนี้และไม่จำเป็นต้องดำเนินการใด ๆ อีก',
     'button_text' => 'รีเซ็ตรหัสผ่าน',
   ),
-  'dispute_acknowledgement' => 
+  'dispute_acknowledgement' =>
   array (
     'subject' => '[รหัสคำสั่งซื้อ: :order_id] ส่งข้อพิพาทสำเร็จแล้ว',
     'greeting' => 'สวัสดี :customer',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าเราได้รับการโต้แย้งของคุณสำหรับรหัสคำสั่งซื้อ: :order_id แล้วทีมสนับสนุนของเราจะติดต่อคุณกลับโดยเร็วที่สุด',
-    'action' => 
-    array (
-      'text' => 'ดูข้อพิพาท',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ดูข้อพิพาท',
   ),
-  'dispute_created' => 
+  'dispute_created' =>
   array (
     'subject' => 'ข้อพิพาทใหม่สำหรับรหัสการสั่งซื้อ: :order_id',
     'greeting' => 'สวัสดี :merchant!',
     'message' => 'คุณได้รับข้อพิพาทใหม่สำหรับรหัสคำสั่งซื้อ: :order_id โปรดตรวจสอบและแก้ไขปัญหากับลูกค้า',
-    'action' => 
-    array (
-      'text' => 'ดูข้อพิพาท',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'ดูข้อพิพาท',
   ),
-  'dispute_updated' => 
+  'dispute_updated' =>
   array (
     'subject' => '[รหัสคำสั่งซื้อ: :order_id] สถานะข้อพิพาทได้รับการอัปเดตแล้ว!',
     'greeting' => 'สวัสดี :customer!',
     'message' => 'ข้อพิพาทสำหรับ Order ID :order_id ได้รับการอัปเดตด้วยข้อความนี้จากผู้ขาย ": คำตอบ" กรุณาตรวจสอบด้านล่างและติดต่อเราหากคุณต้องการความช่วยเหลือใด ๆ',
-    'action' => 
-    array (
-      'text' => 'ดูข้อพิพาท',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ดูข้อพิพาท',
   ),
-  'dispute_appealed' => 
+  'dispute_appealed' =>
   array (
     'subject' => '[รหัสคำสั่งซื้อ: :order_id] ข้อพิพาทยื่นอุทธรณ์!',
     'greeting' => 'สวัสดี!',
     'message' => 'ข้อพิพาทสำหรับ Order ID :order_id ได้รับการอุทธรณ์ด้วยข้อความนี้ ": คำตอบ" กรุณาตรวจสอบรายละเอียดด้านล่าง',
-    'action' => 
-    array (
-      'text' => 'ดูข้อพิพาท',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ดูข้อพิพาท',
   ),
-  'appealed_dispute_replied' => 
+  'appealed_dispute_replied' =>
   array (
     'subject' => '[ID การสั่งซื้อ: :order_id] คำตอบใหม่สำหรับข้อโต้แย้งการอุทธรณ์!',
     'greeting' => 'สวัสดี!',
     'message' => 'ข้อพิพาทสำหรับ Order ID :order_id ได้รับการตอบกลับด้วยข้อความนี้: </br> </br> ": ตอบกลับ"',
-    'action' => 
-    array (
-      'text' => 'ดูข้อพิพาท',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ดูข้อพิพาท',
   ),
-  'low_inventory_notification' => 
+  'low_inventory_notification' =>
   array (
     'subject' => 'การแจ้งเตือนสินค้าคงคลังต่ำ!',
     'greeting' => 'สวัสดี!',
     'message' => 'รายการสินค้าคงคลังของคุณอย่างน้อยหนึ่งรายการเหลือน้อย ถึงเวลาที่จะเพิ่มสินค้าคงคลังมากขึ้นเพื่อให้รายการอยู่ในตลาด',
-    'action' => 
-    array (
-      'text' => 'ปรับปรุงสินค้าคงคลัง',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ปรับปรุงสินค้าคงคลัง',
   ),
-  'inventory_bulk_upload_procceed_notice' => 
+  'inventory_bulk_upload_procceed_notice' =>
   array (
     'subject' => 'คำขอนำเข้าคลังโฆษณาจำนวนมากของคุณสำเร็จแล้ว',
     'greeting' => 'สวัสดี!',
     'message' => 'เรายินดีที่จะแจ้งให้คุณทราบว่าคำขอนำเข้าพื้นที่โฆษณาจำนวนมากของคุณประสบความสำเร็จ จำนวนแถวทั้งหมดที่นำเข้าสู่แพลตฟอร์ม :success สำเร็จจำนวนแถว :failed ที่ล้มเหลว',
     'failed' => 'กรุณาค้นหาไฟล์ที่แนบมาสำหรับแถวที่ล้มเหลว',
-    'action' => 
-    array (
-      'text' => 'ดูสินค้าคงคลัง',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'ดูสินค้าคงคลัง',
   ),
-  'new_message' => 
+  'new_message' =>
   array (
     'subject' => ':subject',
     'greeting' => 'สวัสดี :receiver',
     'message' => ':message',
-    'action' => 
-    array (
-      'text' => 'ดูข้อความบนเว็บไซต์',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ดูข้อความบนเว็บไซต์',
   ),
-  'message_replied' => 
+  'message_replied' =>
   array (
     'subject' => ':user ตอบกลับ :subject',
     'greeting' => 'สวัสดี :receiver',
     'message' => ':reply',
-    'action' => 
-    array (
-      'text' => 'ดูข้อความบนเว็บไซต์',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ดูข้อความบนเว็บไซต์',
   ),
-  'order_created' => 
+  'order_created' =>
   array (
     'subject' => '[รหัสคำสั่งซื้อ: :order] ส่งคำสั่งซื้อของคุณสำเร็จแล้ว!',
     'greeting' => 'สวัสดี :customer',
     'message' => 'ขอบคุณที่เลือกเรา! ใบสั่งซื้อของคุณ [Order ID :order] ได้รับการจัดส่งเรียบร้อยแล้ว เราจะแจ้งให้คุณทราบสถานะของการสั่งซื้อ',
-    'action' => 
-    array (
-      'text' => 'เยี่ยมชมร้านค้า',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'เยี่ยมชมร้านค้า',
   ),
-  'merchant_order_created_notification' => 
+  'merchant_order_created_notification' =>
   array (
     'subject' => 'คำสั่งซื้อใหม่ [Order ID: :order] ได้ถูกวางลงบนร้านของคุณแล้ว!',
     'greeting' => 'สวัสดี :merchant',
     'message' => 'มีการสั่งซื้อใหม่ [Order ID :order] แล้ว โปรดตรวจสอบรายละเอียดการสั่งซื้อและปฏิบัติตามคำสั่งโดยเร็ว',
-    'action' => 
-    array (
-      'text' => 'เติมเต็มคำสั่งซื้อ',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'เติมเต็มคำสั่งซื้อ',
   ),
-  'order_updated' => 
+  'order_updated' =>
   array (
     'subject' => '[รหัสคำสั่งซื้อ: :order] สถานะคำสั่งซื้อของคุณได้รับการปรับปรุงแล้ว!',
     'greeting' => 'สวัสดี :customer',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าการสั่งซื้อของคุณ [Order ID :order] ได้รับการปรับปรุง โปรดดูรายละเอียดการสั่งซื้อด้านล่าง คุณสามารถตรวจสอบคำสั่งซื้อได้จากแผงควบคุม',
-    'action' => 
-    array (
-      'text' => 'เยี่ยมชมร้านค้า',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'เยี่ยมชมร้านค้า',
   ),
-  'order_fulfilled' => 
+  'order_fulfilled' =>
   array (
     'subject' => '[รหัสคำสั่งซื้อ: :order] คำสั่งซื้อของคุณกำลังดำเนินไป!',
     'greeting' => 'สวัสดี :customer',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าการสั่งซื้อของคุณ [Order ID :order] ได้ถูกส่งไปแล้วและกำลังดำเนินการอยู่ โปรดดูรายละเอียดการสั่งซื้อด้านล่าง คุณสามารถตรวจสอบคำสั่งซื้อได้จากแผงควบคุม',
-    'action' => 
-    array (
-      'text' => 'เยี่ยมชมร้านค้า',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'เยี่ยมชมร้านค้า',
   ),
-  'order_paid' => 
+  'order_paid' =>
   array (
     'subject' => '[รหัสคำสั่งซื้อ: :order] ใบสั่งซื้อของคุณได้รับการชำระเรียบร้อยแล้ว!',
     'greeting' => 'สวัสดี :customer',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าการสั่งซื้อของคุณ [Order ID :order] ได้รับการชำระเรียบร้อยแล้วและเป็นไปตามที่คุณต้องการ โปรดดูรายละเอียดการสั่งซื้อด้านล่าง คุณสามารถตรวจสอบคำสั่งซื้อได้จากแผงควบคุม',
-    'action' => 
-    array (
-      'text' => 'เยี่ยมชมร้านค้า',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'เยี่ยมชมร้านค้า',
   ),
-  'order_payment_failed' => 
+  'order_payment_failed' =>
   array (
     'subject' => '[ID การสั่งซื้อ: การชำระเงิน :order] ล้มเหลว!',
     'greeting' => 'สวัสดี :customer',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าการสั่งซื้อของคุณ [การชำระเงิน ID การสั่งซื้อ :order] ล้มเหลว โปรดดูรายละเอียดการสั่งซื้อด้านล่าง คุณสามารถตรวจสอบคำสั่งซื้อได้จากแผงควบคุม',
-    'action' => 
-    array (
-      'text' => 'เยี่ยมชมร้านค้า',
-      'color' => 'สีแดง',
-    ),
+    'button_text' => 'เยี่ยมชมร้านค้า',
   ),
-  'refund_initiated' => 
+  'refund_initiated' =>
   array (
     'subject' => '[รหัสคำสั่งซื้อ: :order] ได้ทำการคืนเงินแล้ว!',
     'greeting' => 'สวัสดี :customer',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าเราได้เริ่มคำขอคืนเงินสำหรับใบสั่งของคุณ :order สมาชิกคนหนึ่งในทีมของเราจะตรวจสอบคำขอในไม่ช้า เราจะแจ้งให้คุณทราบสถานะของคำขอ',
   ),
-  'refund_approved' => 
+  'refund_approved' =>
   array (
     'subject' => '[รหัสคำสั่งซื้อ: :order] คำขอคืนเงินได้รับการอนุมัติแล้ว!',
     'greeting' => 'สวัสดี :customer',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าเราได้อนุมัติคำขอคืนเงินสำหรับใบสั่งซื้อของคุณ :order จำนวนเงินที่ขอคืนคือ :amount เราได้ส่งเงินไปยังวิธีการชำระเงินของคุณแล้วอาจใช้เวลาสองสามวันกว่าจะมีผลกับบัญชีของคุณ ติดต่อผู้ให้บริการชำระเงินของคุณหากคุณไม่เห็นเงินมีผลในสองสามวัน',
   ),
-  'refund_declined' => 
+  'refund_declined' =>
   array (
     'subject' => '[รหัสคำสั่งซื้อ: :order] คำขอคืนเงินถูกปฏิเสธ!',
     'greeting' => 'สวัสดี :customer',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าคำขอคืนเงินของคุณถูกปฏิเสธสำหรับการสั่งซื้อ :order หากคุณไม่พอใจกับวิธีแก้ปัญหาของผู้ค้าคุณสามารถติดต่อผู้ขายโดยตรงจากแพลตฟอร์มหรือแม้กระทั่งคุณสามารถยื่นอุทธรณ์ข้อพิพาทใน :marketplace เราจะเข้าสู่การแก้ไขปัญหา',
   ),
-  'shop_created' => 
+  'shop_created' =>
   array (
     'subject' => 'ร้านค้าของคุณพร้อมแล้ว!',
     'greeting' => 'ขอแสดงความยินดี :merchant!',
     'message' => 'สร้างร้านค้า :shop_name ของคุณสำเร็จแล้ว! คลิกที่ปุ่มด้านล่างเพื่อเข้าสู่แผงผู้ดูแลระบบร้านค้า',
-    'action' => 
-    array (
-      'text' => 'ไปที่หน้าแดชบอร์ด',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'ไปที่หน้าแดชบอร์ด',
   ),
-  'shop_updated' => 
+  'shop_updated' =>
   array (
     'subject' => 'อัปเดตข้อมูลร้านค้าเรียบร้อยแล้ว!',
     'greeting' => 'สวัสดี :merchant!',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าร้านค้า :shop_name ของคุณได้รับการอัปเดตเรียบร้อยแล้ว!',
-    'action' => 
-    array (
-      'text' => 'ไปที่หน้าแดชบอร์ด',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ไปที่หน้าแดชบอร์ด',
   ),
-  'shop_config_updated' => 
+  'shop_config_updated' =>
   array (
     'subject' => 'อัปเดตการกำหนดค่าร้านค้าสำเร็จแล้ว!',
     'greeting' => 'สวัสดี :merchant!',
     'message' => 'อัปเดตการกำหนดค่าร้านค้าของคุณสำเร็จแล้ว! คลิกที่ปุ่มด้านล่างเพื่อเข้าสู่แผงผู้ดูแลระบบร้านค้า',
-    'action' => 
-    array (
-      'text' => 'ไปที่หน้าแดชบอร์ด',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ไปที่หน้าแดชบอร์ด',
   ),
-  'shop_down_for_maintainace' => 
+  'shop_down_for_maintainace' =>
   array (
     'subject' => 'ร้านค้าของคุณไม่ทำงาน!',
     'greeting' => 'สวัสดี :merchant!',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าร้านค้า :shop_name ของคุณไม่ทำงาน! ลูกค้าไม่สามารถเยี่ยมชมร้านค้าของคุณจนกว่ามันจะกลับมามีชีวิตอีกครั้ง',
-    'action' => 
-    array (
-      'text' => 'ไปที่หน้ากำหนดค่า',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ไปที่หน้ากำหนดค่า',
   ),
-  'shop_is_live' => 
+  'shop_is_live' =>
   array (
     'subject' => 'ร้านค้าของคุณกลับมาเป็นสดอีกครั้ง!',
     'greeting' => 'สวัสดี :merchant',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าร้านค้า :shop_name ของคุณกลับมามีชีวิตอีกครั้งเรียบร้อยแล้ว!',
-    'action' => 
-    array (
-      'text' => 'ไปที่หน้าแดชบอร์ด',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'ไปที่หน้าแดชบอร์ด',
   ),
-  'shop_deleted' => 
+  'shop_deleted' =>
   array (
     'subject' => 'ร้านค้าของคุณถูกลบจาก :marketplace!',
     'greeting' => 'สวัสดีพ่อค้า!',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าร้านค้าของคุณถูกลบออกจาก marker ของเราแล้ว! เราจะคิดถึงคุณ',
   ),
-  'system_is_down' => 
+  'system_is_down' =>
   array (
     'subject' => 'ตลาด :marketplace ของคุณไม่ทำงาน!',
     'greeting' => 'สวัสดี :user!',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่า :marketplace ตลาดของคุณไม่ทำงาน! ลูกค้าไม่สามารถเยี่ยมชมตลาดของคุณจนกว่ามันจะกลับมามีชีวิตอีกครั้ง',
-    'action' => 
-    array (
-      'text' => 'ไปที่หน้ากำหนดค่า',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ไปที่หน้ากำหนดค่า',
   ),
-  'system_is_live' => 
+  'system_is_live' =>
   array (
     'subject' => 'ตลาด :marketplace ของคุณกลับมามีชีวิตอีกครั้ง!',
     'greeting' => 'สวัสดี :user!',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าตลาด :marketplace ของคุณกลับมามีชีวิตอีกครั้งเรียบร้อย',
-    'action' => 
-    array (
-      'text' => 'ไปที่หน้าแดชบอร์ด',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'ไปที่หน้าแดชบอร์ด',
   ),
-  'system_info_updated' => 
+  'system_info_updated' =>
   array (
     'subject' => ':marketplace - อัปเดตข้อมูลการตลาดสำเร็จแล้ว!',
     'greeting' => 'สวัสดี :user!',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าตลาด :marketplace ของคุณได้รับการอัปเดตเรียบร้อยแล้ว!',
-    'action' => 
-    array (
-      'text' => 'ไปที่หน้าแดชบอร์ด',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ไปที่หน้าแดชบอร์ด',
   ),
-  'system_config_updated' => 
+  'system_config_updated' =>
   array (
     'subject' => ':marketplace - อัปเดตการกำหนดค่าตลาดสำเร็จแล้ว!',
     'greeting' => 'สวัสดี :user!',
     'message' => 'การกำหนดค่าของตลาด :marketplace ของคุณได้รับการอัปเดตเรียบร้อยแล้ว! คลิกที่ปุ่มด้านล่างเพื่อเข้าสู่แผงผู้ดูแลระบบ',
-    'action' => 
-    array (
-      'text' => 'ดูการตั้งค่า',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ดูการตั้งค่า',
   ),
-  'new_contact_us_message' => 
+  'new_contact_us_message' =>
   array (
     'subject' => 'ข้อความใหม่ผ่านแบบฟอร์มติดต่อเรา: :subject',
     'greeting' => 'สวัสดี!',
     'message_footer_with_phone' => 'คุณสามารถตอบกลับอีเมลนี้หรือติดต่อโดยตรงกับโทรศัพท์นี้ :phone',
     'message_footer' => 'คุณสามารถตอบกลับอีเมลนี้โดยตรง',
   ),
-  'ticket_acknowledgement' => 
+  'ticket_acknowledgement' =>
   array (
     'subject' => '[รหัสตั๋ว: :ticket_id] :subject',
     'greeting' => 'สวัสดี :user',
     'message' => 'นี่เป็นการแจ้งเตือนให้คุณทราบว่าเราได้รับตั๋ว :ticket_id ของคุณเรียบร้อยแล้ว ทีมสนับสนุนของเราจะติดต่อกลับหาคุณโดยเร็วที่สุด',
-    'action' => 
-    array (
-      'text' => 'ดูตั๋ว',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ดูตั๋ว',
   ),
-  'ticket_created' => 
+  'ticket_created' =>
   array (
     'subject' => 'ตั๋วสนับสนุนใหม่ [รหัสตั๋ว: :ticket_id] :subject',
     'greeting' => 'สวัสดี!',
     'message' => 'คุณได้รับตั๋วการสนับสนุนใหม่ ID :ticket_id, ผู้ส่ง :sender จากผู้ขาย :vendor ตรวจสอบและประเมินตั๋วเพื่อสนับสนุนทีม',
-    'action' => 
-    array (
-      'text' => 'ดูตั๋ว',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'ดูตั๋ว',
   ),
-  'ticket_assigned' => 
+  'ticket_assigned' =>
   array (
     'subject' => 'ตั๋วเพิ่งได้รับมอบหมายให้คุณ [ตั๋วหาก: :ticket_id] :subject',
     'greeting' => 'สวัสดี :user',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าตั๋ว [รหัสตั๋ว: :ticket_id] :subject เพิ่งยืนยันกับคุณ ตรวจสอบและตอบตั๋วไปโดยเร็วที่สุด',
-    'action' => 
-    array (
-      'text' => 'ตอบตั๋ว',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ตอบตั๋ว',
   ),
-  'ticket_replied' => 
+  'ticket_replied' =>
   array (
     'subject' => ':user ตอบตั๋ว [Ticket ID: :ticket_id] :subject',
     'greeting' => 'สวัสดี :user',
     'message' => ':reply',
-    'action' => 
-    array (
-      'text' => 'ดูตั๋ว',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ดูตั๋ว',
   ),
-  'ticket_updated' => 
+  'ticket_updated' =>
   array (
     'subject' => 'ตั๋ว [Ticket ID: :ticket_id] :subject ได้รับการอัพเดตแล้ว!',
     'greeting' => 'สวัสดี :user!',
     'message' => 'หนึ่งในตั๋วตั๋วสนับสนุน # ID ของคุณ: ticket_id :subject ได้รับการอัปเดตแล้ว กรุณาติดต่อเราหากคุณต้องการความช่วยเหลือใด ๆ',
-    'action' => 
-    array (
-      'text' => 'ดูตั๋ว',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'ดูตั๋ว',
   ),
-  'user_created' => 
+  'user_created' =>
   array (
     'subject' => ':admin เพิ่มคุณในตลาด :marketplace!',
     'greeting' => 'ขอแสดงความยินดี :user!',
     'message' => 'คุณได้รับการเพิ่มใน :marketplace โดย :admin! คลิกที่ปุ่มด้านล่างเพื่อเข้าสู่บัญชีของคุณ ใช้รหัสผ่านชั่วคราวสำหรับการเข้าสู่ระบบครั้งแรก',
     'alert' => 'อย่าลืมเปลี่ยนรหัสผ่านหลังจากเข้าสู่ระบบ',
-    'action' => 
-    array (
-      'text' => 'เยี่ยมชมโปรไฟล์ของคุณ',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'เยี่ยมชมโปรไฟล์ของคุณ',
   ),
-  'user_updated' => 
+  'user_updated' =>
   array (
     'subject' => 'อัปเดตข้อมูลบัญชีสำเร็จแล้ว!',
     'greeting' => 'สวัสดี :user!',
     'message' => 'นี่คือการแจ้งเตือนเพื่อแจ้งให้คุณทราบว่าบัญชีของคุณได้รับการอัปเดตเรียบร้อยแล้ว!',
-    'action' => 
-    array (
-      'text' => 'เยี่ยมชมโปรไฟล์ของคุณ',
-      'color' => 'สีน้ำเงิน',
-    ),
+    'button_text' => 'เยี่ยมชมโปรไฟล์ของคุณ',
   ),
-  'verdor_registered' => 
+  'verdor_registered' =>
   array (
     'subject' => 'ผู้ค้าใหม่เพิ่งลงทะเบียน!',
     'greeting' => 'ขอแสดงความยินดี!',
     'message' => 'ตลาด :marketplace ของคุณเพิ่งได้รับ verdor ใหม่พร้อมชื่อร้านค้า <strong>: shop_name </strong> และที่อยู่อีเมลของผู้ขายคือ :merchant_email',
-    'action' => 
-    array (
-      'text' => 'ไปที่หน้าแดชบอร์ด',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'ไปที่หน้าแดชบอร์ด',
   ),
-  'email_verification' => 
+  'email_verification' =>
   array (
     'subject' => 'ยืนยันบัญชี :marketplace ของคุณ!',
     'greeting' => 'ขอแสดงความยินดี :user!',
     'message' => 'สร้างบัญชีของคุณสำเร็จแล้ว! คลิกปุ่มด้านล่างเพื่อยืนยันที่อยู่อีเมลของคุณ',
     'button_text' => 'ยืนยันอีเมลของฉัน',
   ),
-  'dispute_solved' => 
+  'dispute_solved' =>
   array (
     'subject' => 'ข้อพิพาท [รหัสคำสั่งซื้อ: :order_id] ถูกทำเครื่องหมายว่าถูกแก้ไขแล้ว!',
     'greeting' => 'สวัสดี :customer!',
     'message' => 'ข้อพิพาทสำหรับรหัสการสั่งซื้อ: :order_id ได้รับการทำเครื่องหมายว่าแก้ไขแล้ว ขอบคุณที่อยู่กับเรา',
-    'action' => 
-    array (
-      'text' => 'ดูข้อพิพาท',
-      'color' => 'เขียว',
-    ),
+    'button_text' => 'ดูข้อพิพาท',
   ),
 );

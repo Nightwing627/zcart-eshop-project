@@ -4,8 +4,8 @@
 {{ trans('notifications.order_payment_failed.message', ['order' => $order->order_number]) }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.order_payment_failed.action.color')])
-{{ trans('notifications.order_payment_failed.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'red'])
+{{ trans('notifications.order_payment_failed.button_text') }}
 @endcomponent
 
 @include('admin.mail.order._order_detail_panel', ['order_detail' => $order])

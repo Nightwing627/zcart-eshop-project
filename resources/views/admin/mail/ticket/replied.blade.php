@@ -3,8 +3,8 @@
 
 {!! trans('notifications.ticket_replied.message', ['reply' => $reply->reply]) !!}
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.ticket_replied.action.color')])
-{{ trans('notifications.ticket_replied.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'blue'])
+{{ trans('notifications.ticket_replied.button_text') }}
 @endcomponent
 
 @include('admin.mail.ticket._ticket_detail_panel', ['ticket_detail' => $reply->repliable])

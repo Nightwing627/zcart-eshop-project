@@ -4,7 +4,7 @@
 {{ trans('notifications.email_verification.message') }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => 'green'])
+@component('mail::button', ['url' => $url, 'color' => 'blue'])
 {{ trans('notifications.email_verification.button_text') }}
 @endcomponent
 
