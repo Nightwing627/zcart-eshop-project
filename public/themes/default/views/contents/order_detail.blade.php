@@ -18,12 +18,12 @@
 						</tr>
 
 						<tr class="buyer-payment-info-body">
-							<td>{{ get_formated_currency($order->total) }}</td>
-							<td>{{ get_formated_currency($order->shipping + $order->handling) }}</td>
-							<td>{{ get_formated_currency($order->packaging) }}</td>
-							<td>{{ get_formated_currency($order->taxes) }}</td>
-							<td>{{ get_formated_currency($order->discount) }}</td>
-							<td>{{ get_formated_currency($order->grand_total) }}</td>
+							<td>{{ get_formated_currency($order->total, true, 2) }}</td>
+							<td>{{ get_formated_currency($order->shipping + $order->handling, true, 2) }}</td>
+							<td>{{ get_formated_currency($order->packaging, true, 2) }}</td>
+							<td>{{ get_formated_currency($order->taxes, true, 2) }}</td>
+							<td>{{ get_formated_currency($order->discount, true, 2) }}</td>
+							<td>{{ get_formated_currency($order->grand_total, true, 2) }}</td>
 						</tr>
 
 						<tr><td colspan="6"></td></tr>
@@ -35,7 +35,7 @@
 						</tr>
 
 						<tr class="buyer-payment-info-body">
-							<td colspan="2">{{ get_formated_currency($order->grand_total) }}</td>
+							<td colspan="2">{{ get_formated_currency($order->grand_total, true, 2) }}</td>
 							<td colspan="2">{{ $order->paymentMethod->name }}</td>
 							<td colspan="2">{!! $order->paymentStatusName() !!}</td>
 						</tr>
@@ -67,7 +67,7 @@
 			                @foreach($order->refunds as $refund )
 								<tr class="buyer-payment-info-body">
 									<td>{!! get_yes_or_no($refund->return_goods) !!}</td>
-									<td>{{ get_formated_currency($refund->amount) }}</td>
+									<td>{{ get_formated_currency($refund->amount, true, 2) }}</td>
 									<td>{!! $refund->statusName() !!}</td>
 						          	<td>{{ $refund->created_at->diffForHumans() }}</td>
 						          	<td>{{ $refund->updated_at->diffForHumans() }}</td>
@@ -120,7 +120,7 @@
 			                  	</h5>
 			                </td>
 			                <td width="20%" class="order-amount">
-			                  	<h5><span>@lang('theme.order_amount'): </span>{{ get_formated_currency($order->grand_total) }}</h5>
+			                  	<h5><span>@lang('theme.order_amount'): </span>{{ get_formated_currency($order->grand_total, true, 2) }}</h5>
 			                </td>
 			            </tr> <!-- /.order-info-head -->
 
@@ -133,7 +133,7 @@
 			                        <div class="product-info">
 			                            <a href="{{ route('show.product', $item->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>
 			                            <div class="order-info-amount">
-			                                <span>{{ get_formated_currency($item->pivot->unit_price) }} x {{ $item->pivot->quantity }}</span>
+			                                <span>{{ get_formated_currency($item->pivot->unit_price, true, 2) }} x {{ $item->pivot->quantity }}</span>
 			                            </div>
 			                            {{--
 			                            <ul class="order-info-properties">

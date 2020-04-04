@@ -47,7 +47,7 @@
                         <option value="all">@lang('theme.all_items')</option>
                         @foreach($order->inventories as $id => $item)
                             <option value="{{ $item->product_id }}">
-                                {{ $item->pivot->item_description }} (@lang('theme.unit_price'): {{ get_formated_currency($item->pivot->unit_price) }})
+                                {{ $item->pivot->item_description }} (@lang('theme.unit_price'): {{ get_formated_currency($item->pivot->unit_price, true, 2) }})
                             </option>
                         @endforeach
                     </select>
@@ -70,10 +70,10 @@
                       <div class="alert alert-warning alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4><i class="fa fa-warning"></i> {{ trans('theme.alert') }}!</h4>
-                        {!! trans('theme.help.order_refunded', ['amount' => get_formated_currency($refunded_amt), 'total' => get_formated_currency($order->grand_total)]) !!}
+                        {!! trans('theme.help.order_refunded', ['amount' => get_formated_currency($refunded_amt, true, 2), 'total' => get_formated_currency($order->grand_total, true, 2)]) !!}
                       </div>
                     @else
-                      <small>{!! trans('theme.help.customer_paid', ['amount' => get_formated_currency($order->grand_total)]) !!}</small>
+                      <small>{!! trans('theme.help.customer_paid', ['amount' => get_formated_currency($order->grand_total, true, 2)]) !!}</small>
                     @endif
                 </div>
             </div>

@@ -46,14 +46,14 @@
                           {{ $item->pivot->item_description }}
                         </td>
                         <td class="nopadding-right" width="15%">
-                          {{ get_formated_currency($item->pivot->unit_price) }}
+                          {{ get_formated_currency($item->pivot->unit_price, true, 2) }}
                         </td>
                         <td>x</td>
                         <td class="nopadding-right" width="10%">
                           {{ $item->pivot->quantity }}
                         </td>
                         <td class="nopadding-right text-center" width="10%">
-                          {{ get_formated_currency($item->pivot->quantity * $item->pivot->unit_price) }}
+                          {{ get_formated_currency($item->pivot->quantity * $item->pivot->unit_price, true, 2) }}
                         </td>
                       </tr>
                     @endforeach
@@ -104,7 +104,7 @@
                 <tr>
                   <td class="text-right">{{ trans('app.total') }}</td>
                   <td class="text-right" width="40%">
-                    {{ get_formated_currency($order->total) }}
+                    {{ get_formated_currency($order->total, true, 2) }}
                   </td>
                 </tr>
 
@@ -113,7 +113,7 @@
                       <span>{{ trans('app.discount') }}</span>
                   </td>
                   <td class="text-right" width="40%"> &minus;
-                    {{ get_formated_currency($order->discount) }}
+                    {{ get_formated_currency($order->discount, true, 2) }}
                   </td>
                 </tr>
 
@@ -135,7 +135,7 @@
                     </em>
                   </td>
                   <td class="text-right" width="40%">
-                    {{ get_formated_currency($order->shipping) }}
+                    {{ get_formated_currency($order->shipping, true, 2) }}
                   </td>
                 </tr>
 
@@ -146,7 +146,7 @@
                       <em class="small">{{ optional($order->shippingPackage)->name }}</em>
                     </td>
                     <td class="text-right" width="40%">
-                      {{ get_formated_currency($order->packaging) }}
+                      {{ get_formated_currency($order->packaging, true, 2) }}
                     </td>
                   </tr>
                 @endif
@@ -155,7 +155,7 @@
                   <tr>
                     <td class="text-right">{{ trans('app.handling') }}</td>
                     <td class="text-right" width="40%">
-                      {{ get_formated_currency($order->handling) }}
+                      {{ get_formated_currency($order->handling, true, 2) }}
                     </td>
                   </tr>
                 @endif
@@ -172,14 +172,14 @@
                     </em>
                   </td>
                   <td class="text-right" width="40%">
-                    {{  get_formated_currency($order->taxes) }}
+                    {{  get_formated_currency($order->taxes, true, 2) }}
                   </td>
                 </tr>
 
                 <tr class="lead">
                   <td class="text-right">{{ trans('app.grand_total') }}</td>
                   <td class="text-right" width="40%">
-                    {{ get_formated_currency($order->grand_total) }}
+                    {{ get_formated_currency($order->grand_total, true, 2) }}
                   </td>
                 </tr>
               </table>
@@ -196,7 +196,7 @@
         <div class="alert alert-warning alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4><i class="fa fa-warning"></i> {{ trans('app.alert') }}!</h4>
-          {!! trans('help.order_refunded', ['amount' => get_formated_currency($refunded_amt), 'total' => get_formated_currency($order->grand_total)]) !!}
+          {!! trans('help.order_refunded', ['amount' => get_formated_currency($refunded_amt, true, 2), 'total' => get_formated_currency($order->grand_total, true, 2)]) !!}
         </div>
       @endif
 
@@ -325,7 +325,7 @@
                 @foreach($order->refunds as $refund )
                   <tr>
                     <td>{{ $refund->created_at->diffForHumans() }}</td>
-                    <td>{{ get_formated_currency($refund->amount) }}</td>
+                    <td>{{ get_formated_currency($refund->amount, true, 2) }}</td>
                     <td>{!! $refund->statusName() !!}</td>
                     <td>
                       @can('approve', $refund)

@@ -13,14 +13,14 @@
 				<tr>
 					<td class="text-center">
 						@php
-							$value = $coupon->type == 'amount' ? get_formated_currency($coupon->value) : get_formated_decimal($coupon->value) . '%';
+							$value = $coupon->type == 'amount' ? get_formated_currency($coupon->value, true, 2) : get_formated_decimal($coupon->value) . '%';
 						@endphp
 
 						<div class="customer-coupon-lists {{ $coupon->ending_time < \Carbon\Carbon::now() ? 'customer-coupons-expired' : ''}}">
 							<div class="coupon-item">
 								<span class="customer-coupons-limit">
 									@if($coupon->min_order_amount)
-										{{ trans('theme.when_min_order_value', ['value' => get_formated_currency($coupon->min_order_amount)]) }}
+										{{ trans('theme.when_min_order_value', ['value' => get_formated_currency($coupon->min_order_amount, true, 2)]) }}
 									@endif
 								</span>
 								<span class="customer-coupon-value">{{ trans('theme.coupon_off', ['value' => $value]) }}</span>

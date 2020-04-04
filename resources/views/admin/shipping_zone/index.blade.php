@@ -148,7 +148,7 @@
 									    <p class="list-group-item-text">
 									    	{{ get_formated_shipping_range_of($shipping) }}
 										  	<span class="badge indent20">
-										  		{{ $shipping->rate > 0 ? get_formated_currency($shipping->rate) : trans('app.free') }}
+										  		{{ $shipping->rate > 0 ? get_formated_currency($shipping->rate, true, 2) : trans('app.free') }}
 										  	</span>
 											@can('update', $shipping)
 												<small class="pull-right">

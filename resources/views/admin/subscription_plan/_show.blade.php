@@ -16,7 +16,7 @@
 						</tr>
 						<tr>
 							<th class="text-right">{{ trans('app.cost') }}:</th>
-							<td class="lead">{{ get_formated_currency($subscriptionPlan->cost) . trans('app.per_month') }}</td>
+							<td class="lead">{{ get_formated_currency($subscriptionPlan->cost, true, 2) . trans('app.per_month') }}</td>
 						</tr>
 						@if((bool) config('system_settings.trial_days'))
 							<tr>
@@ -34,7 +34,7 @@
 						</tr>
 						<tr>
 							<th class="text-right">{{ trans('app.transaction_fee') }}:</th>
-							<td>{{ get_formated_currency($subscriptionPlan->transaction_fee) }}</td>
+							<td>{{ get_formated_currency($subscriptionPlan->transaction_fee, true, 2) }}</td>
 						</tr>
 						<tr>
 							<th class="text-right">{{ trans('app.marketplace_commission') }}:</th>

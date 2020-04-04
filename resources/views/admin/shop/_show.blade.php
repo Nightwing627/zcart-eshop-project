@@ -113,7 +113,7 @@
 				        <table class="table">
 							<tr>
 								<th class="text-right">{{ trans('app.order_handling_cost') }}:</th>
-								<td style="width: 75%;">{{ get_formated_currency($shop->config->order_handling_cost) }}</td>
+								<td style="width: 75%;">{{ get_formated_currency($shop->config->order_handling_cost, true, 2) }}</td>
 							</tr>
 
 							@if($shop->config->tax)

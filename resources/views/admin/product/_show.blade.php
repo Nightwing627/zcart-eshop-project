@@ -117,13 +117,13 @@
 				            @if($product->min_price && $product->min_price != 0)
 				                <tr>
 				                	<th>{{ trans('app.min_price') }}: </th>
-				                	<td>{{ get_formated_currency($product->min_price) }}</td>
+				                	<td>{{ get_formated_currency($product->min_price, true, 2) }}</td>
 				                </tr>
 				            @endif
 				            @if($product->max_price && $product->max_price != 0)
 				                <tr>
 				                	<th>{{ trans('app.max_price') }}: </th>
-				                	<td>{{ get_formated_currency($product->max_price) }}</td>
+				                	<td>{{ get_formated_currency($product->max_price, true, 2) }}</td>
 				                </tr>
 				            @endif
 				        </table>

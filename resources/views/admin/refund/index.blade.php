@@ -37,8 +37,8 @@
 								@endcan
 							</td>
 							<td>{!! get_yes_or_no($refund->return_goods) !!}</td>
-							<td>{{ get_formated_currency($refund->order->grand_total) }}</td>
-							<td>{{ get_formated_currency($refund->amount) }}</td>
+							<td>{{ get_formated_currency($refund->order->grand_total, true, 2) }}</td>
+							<td>{{ get_formated_currency($refund->amount, true, 2) }}</td>
 							<td>{!! $refund->statusName() !!}</td>
 				          	<td>{{ $refund->created_at->diffForHumans() }}</td>
 				          	<td>{{ $refund->updated_at->diffForHumans() }}</td>
@@ -93,8 +93,8 @@
 								@endcan
 							</td>
 							<td>{!! get_yes_or_no($refund->return_goods) !!}</td>
-							<td>{{ get_formated_currency($refund->order->total) }}</td>
-							<td>{{ get_formated_currency($refund->amount) }}</td>
+							<td>{{ get_formated_currency($refund->order->total, true, 2) }}</td>
+							<td>{{ get_formated_currency($refund->amount, true, 2) }}</td>
 							<td>{!! $refund->statusName() !!}</td>
 				          	<td>{{ $refund->created_at->diffForHumans() }}</td>
 				          	<td>{{ $refund->updated_at->diffForHumans() }}</td>

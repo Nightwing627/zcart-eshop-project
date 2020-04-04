@@ -45,11 +45,11 @@
 		        			<td>
 	        					@if($row['data']['offer_price'])
 			        				<dl>
-				        				{{ get_formated_currency($row['data']['offer_price']) }}
-				        				<strike>{{ get_formated_currency($row['data']['price']) }}</strike>
+				        				{{ get_formated_currency($row['data']['offer_price'], true, 2) }}
+				        				<strike>{{ get_formated_currency($row['data']['price'], true, 2) }}</strike>
 			        				</dl>
 								@else
-			        				{{ get_formated_currency($row['data']['price']) }}
+			        				{{ get_formated_currency($row['data']['price'], true, 2) }}
 								@endif
 		        			</td>
 		        			<td>

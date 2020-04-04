@@ -147,7 +147,7 @@
     function showCardForm()
     {
 		$('#cc-form').show().find('input, select').attr('required', 'required');
-		$('#pay-now-btn-txt').html('{!!trans('theme.button.pay_now') . ' <small>(' . get_formated_currency($cart->grand_total(), 2) . ')</small>'!!}');
+		$('#pay-now-btn-txt').html('{!!trans('theme.button.pay_now') . ' <small>(' . get_formated_currency($cart->grand_total(), true, 2) . ')</small>'!!}');
     }
 
     function hideCardForm()
@@ -160,7 +160,7 @@
     function showAuthorizeNetCardForm()
     {
 		$('#authorize-net-cc-form').show().find('input, select').attr('required', 'required');
-		$('#pay-now-btn-txt').html('{!!trans('theme.button.pay_now') . ' <small>(' . get_formated_currency($cart->grand_total(), 2) . ')</small>'!!}');
+		$('#pay-now-btn-txt').html('{!!trans('theme.button.pay_now') . ' <small>(' . get_formated_currency($cart->grand_total(), true, 2) . ')</small>'!!}');
     }
     function hideAuthorizeNetCardForm()
     {

@@ -19,7 +19,7 @@
                 @if($type == 'php')
                     <strong>
                         <small>
-                            (version {{ $phpSupportInfo['minimum'] }} required)
+                            (minimum {{ $phpSupportInfo['minimum'] . ' and bellow ' . $phpSupportInfo['maximum'] }} required)
                         </small>
                     </strong>
 
