@@ -9,7 +9,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <link href="{{ mix("css/app.css") }}" rel="stylesheet">
-    <link href="{{ mix("css/vendor.css") }}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -60,7 +59,6 @@
     <!-- /.login-box -->
 
     <script src="{{ mix("js/app.js") }}"></script>
-    <script src="{{ mix("js/vendor.js") }}"></script>
 
     <!-- Scripts -->
     @yield('scripts', '')
