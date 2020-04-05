@@ -31,6 +31,7 @@ class CreateCustomersTable extends Migration
             $table->boolean('active')->nullable()->default(true);
             $table->boolean('accepts_marketing')->nullable()->default(true);
             $table->string('verification_token', 100)->nullable();
+            $table->string('api_token', 80)->unique()->nullable()->default(null);
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

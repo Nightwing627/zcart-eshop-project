@@ -27,10 +27,6 @@ class CreateChatTables extends Migration
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('set null');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
         });
-
-        Schema::table('systems', function (Blueprint $table) {
-            $table->boolean('enable_chat')->nullable()->default(true)->after('max_role_level');
-        });
     }
 
     /**
@@ -41,9 +37,5 @@ class CreateChatTables extends Migration
     public function down()
     {
         Schema::dropIfExists('chat_conversations');
-
-        Schema::table('systems', function (Blueprint $table) {
-            $table->dropColumn('enable_chat');
-        });
     }
 }

@@ -21,15 +21,19 @@ class CreateSystemsTable extends Migration
             $table->text('slogan')->nullable();
             $table->text('legal_name')->nullable();
             $table->string('email')->nullable(); //Notifications, supports and other alert send to this email
+            $table->boolean('worldwide_business_area')->nullable()->default(true);
             $table->integer('timezone_id')->default(35);
             $table->integer('currency_id')->default(148);
+            $table->string('default_language', 3)->default('en');
             $table->boolean('vendor_can_view_customer_info')->nullable()->default(false);
+            $table->boolean('can_use_own_catalog_only')->nullable()->default(false);
 
             // Reporting
             $table->boolean('google_analytic_report')->nullable()->default(false);
 
             // Merchant registration
             $table->boolean('required_card_upfront')->nullable()->default(true);
+            $table->boolean('vendor_needs_approval')->nullable()->default(1);
             $table->integer('trial_days')->nullable();
 
             // Customer registration
@@ -74,6 +78,7 @@ class CreateSystemsTable extends Migration
             $table->string('active_theme')->default('default');
             $table->string('selling_theme')->default('default');
             $table->integer('pagination')->unsigned()->default(10);
+            $table->boolean('show_seo_info_to_frontend')->nullable()->default(true);
             $table->integer('max_img_size_limit_kb')->default(5000);
             $table->integer('max_number_of_inventory_imgs')->unsigned()->default(10);
 
@@ -98,6 +103,7 @@ class CreateSystemsTable extends Migration
             $table->boolean('digital_goods_only')->nullable()->default(false);
             $table->boolean('is_multi_vendor')->nullable()->default(true);
             $table->integer('max_role_level')->unsigned()->default(99);
+            $table->boolean('enable_chat')->nullable()->default(true);
 
             // Vendot Settings
             // $table->boolean('merchant_can_create_category_group')->nullable();

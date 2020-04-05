@@ -38,6 +38,7 @@ class CreateOrderTable extends Migration
             // $table->bigInteger('shipping_address')->unsigned()->nullable();
             $table->text('billing_address')->nullable();
             $table->text('shipping_address')->nullable();
+            $table->string('email')->nullable();
             $table->date('shipping_date')->nullable();
             $table->date('delivery_date')->nullable();
             $table->string('tracking_id')->nullable();

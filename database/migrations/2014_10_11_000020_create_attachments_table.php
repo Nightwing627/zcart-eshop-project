@@ -18,10 +18,10 @@ class CreateAttachmentsTable extends Migration
             $table->text('name')->nullable();
             $table->string('extension')->nullable();
             $table->string('size')->nullable();
-            // $table->integer('order')->default(0);
-            // $table->boolean('featured')->nullable();
             $table->unsignedInteger('attachable_id');
             $table->string('attachable_type');
+            $table->bigInteger('ownable_id')->nullable()->default(Null);
+            $table->string('ownable_type')->nullable()->default(Null);
             $table->timestamps();
         });
     }

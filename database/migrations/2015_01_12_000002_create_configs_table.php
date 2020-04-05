@@ -37,6 +37,8 @@ class CreateConfigsTable extends Migration
 
             // Views
             $table->integer('pagination')->unsigned()->default(10);
+            $table->boolean('show_shop_desc_with_listing')->nullable();
+            $table->boolean('show_refund_policy_with_listing')->nullable()->default(1);
 
             // Inventory
             $table->integer('alert_quantity')->nullable();
@@ -54,6 +56,7 @@ class CreateConfigsTable extends Migration
             $table->boolean('notify_new_disput')->nullable()->default(true);
 
             $table->boolean('maintenance_mode')->nullable()->default(true);
+            $table->boolean('pending_verification')->nullable()->default(Null);
             $table->timestamps();
 
             $table->primary('shop_id');

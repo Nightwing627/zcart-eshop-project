@@ -18,6 +18,8 @@ class CreateCartTable extends Migration
             $table->bigInteger('customer_id')->unsigned()->nullable();
             $table->ipAddress('ip_address')->nullable();
             $table->integer('ship_to')->unsigned()->nullable();
+            $table->integer('ship_to_country_id')->unsigned()->nullable();
+            $table->integer('ship_to_state_id')->unsigned()->nullable();
             $table->integer('shipping_zone_id')->unsigned()->nullable();
             $table->integer('shipping_rate_id')->unsigned()->nullable();
             $table->integer('packaging_id')->unsigned()->nullable();
@@ -36,6 +38,7 @@ class CreateCartTable extends Migration
             $table->decimal('shipping_weight', 20, 2)->nullable();
             $table->bigInteger('billing_address')->unsigned()->nullable();
             $table->bigInteger('shipping_address')->unsigned()->nullable();
+            $table->string('email')->nullable();
 
             $table->bigInteger('coupon_id')->unsigned()->nullable();
             $table->integer('payment_status')->default(1);

@@ -23,7 +23,9 @@ class CreateMessagesTable extends Migration
             $table->bigInteger('order_id')->unsigned()->nullable();
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->integer('status')->default(1);
+            $table->integer('customer_status')->nullable()->default(1);
             $table->integer('label')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
