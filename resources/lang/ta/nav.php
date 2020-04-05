@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'விற்பனை',
   'system_settings' => 'கணினி அமைப்புகளை',
   'subscription_plans' => 'திட்டங்கள்',
+  'chats' => 'அரட்டைகள்',
+  'countries' => 'வணிக பகுதியில்',
 );

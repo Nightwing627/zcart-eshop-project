@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'Файл не был загружен.',
   'error_uploading_file' => 'Ошибка при загрузке файла',
   'model_not_defined' => 'Модель не определена!',
+  'invalid_data' => 'Неверные данные.',
 );

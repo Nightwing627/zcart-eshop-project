@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'Ingen fil blev uploadet.',
   'error_uploading_file' => 'Fejl ved upload af fil',
   'model_not_defined' => 'Modellen er ikke defineret!',
+  'invalid_data' => 'Ugyldige data.',
 );

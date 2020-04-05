@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'Der Umsatz',
   'system_settings' => 'Systemeinstellungen',
   'subscription_plans' => 'Pläne',
+  'chats' => 'Chats',
+  'countries' => 'Geschäftsbereich',
 );

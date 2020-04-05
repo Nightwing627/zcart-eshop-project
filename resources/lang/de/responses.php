@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'Es wurde keine Datei hochgeladen.',
   'error_uploading_file' => 'Fehler beim Hochladen der Datei',
   'model_not_defined' => 'Das Modell ist nicht definiert!',
+  'invalid_data' => 'Ungültige Daten.',
 );

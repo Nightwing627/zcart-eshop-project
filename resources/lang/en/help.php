@@ -723,7 +723,7 @@ return [
 
     'currency_disambiguate_symbol' => 'Example: USD = US$ and BDT = BD$',
 
-    'currency_html_entity' => 'Example: JPY = ' . htmlentities('&#x00A5;') . ' and INR = ' . htmlentities('&#x20b9;'),
+    'currency_html_entity' => 'Example: JPY = ¥ and INR = ₹',
 
     'currency_smallest_denomination' => 'The smallest denomination of the currency. Default value is 1',
 

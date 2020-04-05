@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'Aucun fichier n\'a été téléchargé.',
   'error_uploading_file' => 'Erreur lors de l\'envoi du fichier',
   'model_not_defined' => 'Le modèle n\'est pas défini!',
+  'invalid_data' => 'Données invalides.',
 );

@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => '파일이 업로드되지 않았습니다.',
   'error_uploading_file' => '파일 업로드 오류',
   'model_not_defined' => '모델이 정의되지 않았습니다!',
+  'invalid_data' => '유효하지 않은 데이터.',
 );

@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'هیچ پرونده بارگیری نشد.',
   'error_uploading_file' => 'خطا در بارگیری پرونده',
   'model_not_defined' => 'مدل تعریف نشده است!',
+  'invalid_data' => 'داده نامعتبر است.',
 );

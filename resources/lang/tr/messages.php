@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => 'İşletmenizin adı bu şekilde gösterilecektir',
   'csv_import_process_started' => 'Veriler başarıyla gönderildi. İşlem birkaç minimum sürebilir. İşlem tamamlandığında bir e-posta alacaksınız.',
   'model_has_association' => 'X1\'in içinde :associate var. Bu :model’i silmek için, lütfen :model’in altındaki tüm :associate’leri kaldırın.',
+  'active_worldwide_business_area' => 'Pazar yeri iş alanı dünya çapında olarak ayarlandığından durum etkilenmeyecektir! İş alanı ayarlarını değiştirmek için lütfen yapılandırma bölümünü kontrol edin.',
+  'please_select_conversation' => 'Lütfen soldan bir ileti dizisi seçin.',
+  'session_expired' => 'Oturumunuzun süresi doldu! Lütfen giriş yapın.',
 );

@@ -59,4 +59,6 @@ return array (
   'sales_report' => '营业额',
   'system_settings' => '系统设置',
   'subscription_plans' => '计划',
+  'chats' => '聊天室',
+  'countries' => '商业领域',
 );

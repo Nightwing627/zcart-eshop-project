@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => 'Tên doanh nghiệp của bạn sẽ được hiển thị như thế này',
   'csv_import_process_started' => 'Dữ liệu đã được gửi thành công. Quá trình có thể mất một vài tối thiểu. Bạn sẽ nhận được email khi hoàn thành.',
   'model_has_association' => 'X1 có :associate trong đó. Để xóa :model này, vui lòng xóa tất cả :associate trong :model',
+  'active_worldwide_business_area' => 'Tình trạng sẽ không ảnh hưởng vì khu vực kinh doanh trên thị trường được thiết lập trên toàn thế giới! Để thay đổi cài đặt khu vực kinh doanh, vui lòng kiểm tra phần cấu hình.',
+  'please_select_conversation' => 'Vui lòng chọn một cuộc trò chuyện từ bên trái.',
+  'session_expired' => 'Phiên của bạn đã hết hạn! Xin vui lòng đăng nhập.',
 );

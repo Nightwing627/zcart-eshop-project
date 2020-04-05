@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'کوئی فائل اپ لوڈ نہیں کی گئی تھی۔',
   'error_uploading_file' => 'فائل اپ لوڈ کرنے میں خرابی',
   'model_not_defined' => 'ماڈل کی وضاحت نہیں کی گئی ہے!',
+  'invalid_data' => 'غلط ڈیٹا',
 );

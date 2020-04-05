@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => '没有文件上传。',
   'error_uploading_file' => '上传文件时出错',
   'model_not_defined' => '模型未定义！',
+  'invalid_data' => '无效数据。',
 );

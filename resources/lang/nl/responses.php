@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'Er is geen bestand geüpload.',
   'error_uploading_file' => 'Fout bij uploaden van bestand',
   'model_not_defined' => 'Het model is niet gedefinieerd!',
+  'invalid_data' => 'Onjuiste data.',
 );

@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'salgs~~POS=TRUNC',
   'system_settings' => 'Systeminnstillinger',
   'subscription_plans' => 'planer',
+  'chats' => 'samtaler',
+  'countries' => 'Forretningsområde',
 );

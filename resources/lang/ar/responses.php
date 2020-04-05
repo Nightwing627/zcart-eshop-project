@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'تم تحميله أي ملف.',
   'error_uploading_file' => 'خطأ في تحميل الملف',
   'model_not_defined' => 'لم يتم تعريف النموذج!',
+  'invalid_data' => 'بيانات غير صالحة.',
 );

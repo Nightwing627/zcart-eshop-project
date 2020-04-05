@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => 'Nama bisnis Anda akan ditampilkan seperti ini',
   'csv_import_process_started' => 'Data telah berhasil dikirim. Prosesnya mungkin membutuhkan beberapa minimum. Anda akan mendapatkan email saat selesai.',
   'model_has_association' => 'X1 memiliki :associate di dalamnya. Untuk menghapus :model ini, harap hapus semua :associate di bawah :model',
+  'active_worldwide_business_area' => 'Status tidak akan memengaruhi karena area bisnis marketplace ditetapkan ke seluruh dunia! Untuk mengubah pengaturan area bisnis, periksa bagian konfigurasi.',
+  'please_select_conversation' => 'Silakan pilih percakapan dari kiri.',
+  'session_expired' => 'Sesi Anda telah kedaluwarsa! Silahkan masuk.',
 );

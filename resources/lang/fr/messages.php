@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => 'Le nom de votre entreprise sera affiché comme ceci',
   'csv_import_process_started' => 'Les données ont été soumises avec succès. Le processus peut prendre quelques minimums. Vous recevrez un email lorsque ce sera fait.',
   'model_has_association' => 'Le :model contient :associate. Pour supprimer ce :model, s\'il vous plaît supprimer tous les :associate sous le :model',
+  'active_worldwide_business_area' => 'Le statut n\'affectera pas car le domaine d\'activité de la place de marché est défini dans le monde entier! Pour modifier les paramètres du domaine d\'activité, veuillez consulter la section de configuration.',
+  'please_select_conversation' => 'Veuillez sélectionner une conversation à gauche.',
+  'session_expired' => 'Votre session a expiré! Veuillez vous connecter.',
 );

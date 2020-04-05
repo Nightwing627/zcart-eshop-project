@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'مبيعات',
   'system_settings' => 'اعدادات النظام',
   'subscription_plans' => 'خطط',
+  'chats' => 'الدردشات',
+  'countries' => 'منطقة عمل',
 );

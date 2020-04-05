@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'Bán hàng',
   'system_settings' => 'Cài đặt hệ thống',
   'subscription_plans' => 'Các kế hoạch',
+  'chats' => 'trò chuyện',
+  'countries' => 'Khu vực kinh doanh',
 );

@@ -59,4 +59,6 @@ return array (
   'sales_report' => '매상',
   'system_settings' => '환경 설정',
   'subscription_plans' => '계획',
+  'chats' => '채팅',
+  'countries' => '사업 영역',
 );

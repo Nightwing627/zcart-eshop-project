@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'verkoop',
   'system_settings' => 'Systeem instellingen',
   'subscription_plans' => 'Plannen',
+  'chats' => 'chats',
+  'countries' => 'Zakelijk gebied',
 );

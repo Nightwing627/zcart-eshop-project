@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => 'Dit virksomheds navn vises på denne måde',
   'csv_import_process_started' => 'Dataene er blevet sendt. Processen kan tage et par minimumsniveauer. Du får en e-mail, når det er gjort.',
   'model_has_association' => 'X1 har :associate i sig. For at slette denne :model skal du fjerne alle :associate under :model',
+  'active_worldwide_business_area' => 'Status påvirker ikke, da forretningsområdet er indstillet til verdensomspændende! For at ændre forretningsområderne skal du kontrollere konfigurationsafsnittet.',
+  'please_select_conversation' => 'Vælg en samtale fra venstre.',
+  'session_expired' => 'Din session er udløbet! Vær venlig at logge ind.',
 );

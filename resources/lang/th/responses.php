@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'ไม่มีการอัปโหลดไฟล์',
   'error_uploading_file' => 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์',
   'model_not_defined' => 'รูปแบบไม่ได้กำหนดไว้!',
+  'invalid_data' => 'ข้อมูลไม่ถูกต้อง',
 );

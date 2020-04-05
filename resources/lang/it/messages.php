@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => 'Il nome della tua attività verrà mostrato in questo modo',
   'csv_import_process_started' => 'I dati sono stati inviati con successo. Il processo potrebbe richiedere alcuni minimi. Riceverai un\'email al termine.',
   'model_has_association' => 'X1 ha :associate al suo interno. Per eliminare questo :model, rimuovi tutti gli :associate in :model',
+  'active_worldwide_business_area' => 'Lo stato non influirà in quanto l\'area di business del marketplace è impostata in tutto il mondo! Per modificare le impostazioni dell\'area aziendale, consultare la sezione di configurazione.',
+  'please_select_conversation' => 'Seleziona una conversazione da sinistra.',
+  'session_expired' => 'La tua sessione è scaduta! Accedere prego.',
 );

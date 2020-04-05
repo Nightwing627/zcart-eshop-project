@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'حراجی',
   'system_settings' => 'تنظیمات سیستم',
   'subscription_plans' => 'برنامه ها',
+  'chats' => 'گپ ها',
+  'countries' => 'منطقه تجاری',
 );

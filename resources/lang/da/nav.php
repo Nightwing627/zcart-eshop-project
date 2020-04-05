@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'Salg',
   'system_settings' => 'Systemindstillinger',
   'subscription_plans' => 'Planer',
+  'chats' => 'chats',
+  'countries' => 'Forretningsområde',
 );

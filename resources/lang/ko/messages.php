@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => '업체명은 다음과 같이 표시됩니다',
   'csv_import_process_started' => '데이터가 성공적으로 제출되었습니다. 이 과정에는 최소한의 시간이 걸릴 수 있습니다. 완료되면 이메일을 받게됩니다.',
   'model_has_association' => ' :model에는 :associate가 있습니다. 이 :model을 삭제하려면 :model 아래의 모든 :associate를 제거하십시오.',
+  'active_worldwide_business_area' => '마켓 플레이스 비즈니스 영역이 전 세계로 설정되어 있어도 상태는 영향을받지 않습니다! 비즈니스 영역 설정을 변경하려면 구성 섹션을 확인하십시오.',
+  'please_select_conversation' => '왼쪽에서 대화를 선택하십시오.',
+  'session_expired' => '세션이 만료되었습니다! 로그인 해주세요.',
 );

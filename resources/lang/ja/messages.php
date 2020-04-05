@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => 'あなたの会社名はこのように表示されます',
   'csv_import_process_started' => 'データは正常に送信されました。このプロセスには、最低でも多少時間がかかる場合があります。完了するとメールが届きます。',
   'model_has_association' => ' :modelには :associateがあります。この :modelを削除するには、 :modelの下のすべての :associateを削除してください',
+  'active_worldwide_business_area' => 'マーケットプレイスのビジネスエリアは世界中に設定されているため、ステータスは影響を受けません。ビジネスエリアの設定を変更するには、構成セクションを確認してください。',
+  'please_select_conversation' => '左から会話を選択してください。',
+  'session_expired' => 'セッションの期限が切れました！ログインしてください。',
 );

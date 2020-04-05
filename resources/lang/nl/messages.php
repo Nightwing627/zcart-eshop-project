@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => 'Uw bedrijfsnaam wordt op deze manier weergegeven',
   'csv_import_process_started' => 'De gegevens zijn succesvol ingediend. Het proces kan enkele minima duren. U ontvangt een e-mail als het klaar is.',
   'model_has_association' => 'De :model heeft :associate erin. Verwijder alle :associate onder de :model om deze :model te verwijderen',
+  'active_worldwide_business_area' => 'De status heeft geen invloed aangezien de business area Marketplace is ingesteld op wereldwijd! Controleer het configuratiegedeelte om de instellingen van het bedrijfsgebied te wijzigen.',
+  'please_select_conversation' => 'Selecteer een gesprek aan de linkerkant.',
+  'session_expired' => 'Je sessie is verlopen! Log alsjeblieft in.',
 );

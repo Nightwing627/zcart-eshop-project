@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'Hiçbir dosya yüklenmedi.',
   'error_uploading_file' => 'Dosya yüklenirken hata oluştu',
   'model_not_defined' => 'Model tanımlanmadı!',
+  'invalid_data' => 'Geçersiz veri.',
 );

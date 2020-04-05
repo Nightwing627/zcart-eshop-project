@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'I saldi',
   'system_settings' => 'Impostazioni di sistema',
   'subscription_plans' => 'Piani',
+  'chats' => 'chat',
+  'countries' => 'Area commerciale',
 );

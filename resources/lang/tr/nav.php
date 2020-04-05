@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'Satış',
   'system_settings' => 'Sistem ayarları',
   'subscription_plans' => 'Planlar',
+  'chats' => 'sohbetler',
+  'countries' => 'İş alanı',
 );

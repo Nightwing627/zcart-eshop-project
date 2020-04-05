@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'বিক্রয়',
   'system_settings' => 'পদ্ধতি নির্ধারণ',
   'subscription_plans' => 'পরিকল্পনা সমূহ',
+  'chats' => 'চ্যাট',
+  'countries' => 'ব্যবসা এলাকা',
 );

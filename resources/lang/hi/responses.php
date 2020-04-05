@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'कोई फ़ाइल अपलोड नहीं की गई थी।',
   'error_uploading_file' => 'फ़ाइल अपलोड करने में त्रुटि हुई',
   'model_not_defined' => 'मॉडल परिभाषित नहीं है!',
+  'invalid_data' => 'गलत जानकारी।',
 );

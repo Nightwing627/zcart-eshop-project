@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => 'שם העסק שלך יוצג כך',
   'csv_import_process_started' => 'הנתונים הוגשו בהצלחה. התהליך עשוי לארוך כמה מינימום. תקבל דוא"ל בסיום.',
   'model_has_association' => 'ל- :model יש בו :associate. כדי למחוק את ה- :model הזה, אנא הסר את כל ה- :associate שמתחת ל- :model',
+  'active_worldwide_business_area' => 'הסטטוס לא ישפיע מכיוון שתחום העסקים בשוק מוגדר לכל העולם! כדי לשנות את הגדרות אזור העסקים, אנא בדוק את פרק התצורה.',
+  'please_select_conversation' => 'בחר שיחה משמאל.',
+  'session_expired' => 'פג תוקף ההפעלה שלך! אנא התחבר.',
 );

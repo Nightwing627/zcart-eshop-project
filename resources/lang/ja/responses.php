@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'ファイルはアップロードされませんでした。',
   'error_uploading_file' => 'ファイルのアップロードエラー',
   'model_not_defined' => 'モデルは定義されていません！',
+  'invalid_data' => '無効なデータ。',
 );

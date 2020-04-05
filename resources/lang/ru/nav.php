@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'Продажи',
   'system_settings' => 'Системные настройки',
   'subscription_plans' => 'планы',
+  'chats' => 'чатов',
+  'countries' => 'Сфера бизнеса',
 );

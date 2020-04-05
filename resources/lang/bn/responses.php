@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'কোনও ফাইল আপলোড করা হয়নি।',
   'error_uploading_file' => 'ফাইল আপলোড করার সময় ত্রুটি',
   'model_not_defined' => 'মডেল সংজ্ঞায়িত হয় না!',
+  'invalid_data' => 'অবৈধ তথ্য.',
 );

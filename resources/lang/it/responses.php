@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'Nessun file è stato caricato.',
   'error_uploading_file' => 'Errore durante il caricamento del file',
   'model_not_defined' => 'Il modello non è definito!',
+  'invalid_data' => 'Dati non validi.',
 );

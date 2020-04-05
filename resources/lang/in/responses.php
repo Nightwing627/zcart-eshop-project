@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'Tidak ada file yang diunggah.',
   'error_uploading_file' => 'Kesalahan mengunggah file',
   'model_not_defined' => 'Modelnya tidak ditentukan!',
+  'invalid_data' => 'Data tidak valid.',
 );

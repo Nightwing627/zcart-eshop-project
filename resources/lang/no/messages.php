@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => 'Forretningsnavnet ditt blir vist slik',
   'csv_import_process_started' => 'Dataene er sendt inn. Prosessen kan ta noen få minimumsnivåer. Du får en e-post når det er ferdig.',
   'model_has_association' => 'X1 har :associate i seg. For å slette denne :model, fjern all :associate under :model',
+  'active_worldwide_business_area' => 'Status vil ikke påvirke ettersom forretningsområdet for markedet er satt til hele verden! For å endre innstillinger for forretningsområdet, sjekk konfigurasjonsdelen.',
+  'please_select_conversation' => 'Velg en samtale fra venstre.',
+  'session_expired' => 'Økten din er utløpt! Vennligst Logg inn.',
 );

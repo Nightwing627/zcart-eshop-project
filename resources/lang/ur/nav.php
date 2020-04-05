@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'فروخت',
   'system_settings' => 'سسٹم کی ترتیبات',
   'subscription_plans' => 'منصوبے',
+  'chats' => 'چیٹس',
+  'countries' => 'کاروباری علاقہ',
 );

@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'לא הועלה קובץ.',
   'error_uploading_file' => 'שגיאה בהעלאת הקובץ',
   'model_not_defined' => 'המודל אינו מוגדר!',
+  'invalid_data' => 'נתונים לא חוקיים.',
 );

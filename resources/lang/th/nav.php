@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'ขาย',
   'system_settings' => 'การตั้งค่าระบบ',
   'subscription_plans' => 'แผน',
+  'chats' => 'แชท',
+  'countries' => 'พื้นที่ธุรกิจ',
 );

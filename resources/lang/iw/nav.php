@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'מכירות',
   'system_settings' => 'הגדרות מערכת',
   'subscription_plans' => 'תוכניות',
+  'chats' => 'צ\'אטים',
+  'countries' => 'אזור עסקים',
 );

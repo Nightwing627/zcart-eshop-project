@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => '您的公司名称将显示如下',
   'csv_import_process_started' => '数据已成功提交。该过程可能需要最少的时间。完成后，您会收到一封电子邮件。',
   'model_has_association' => ' :model中有 :associate。要删除此 :model，请删除 :model下的所有 :associate',
+  'active_worldwide_business_area' => '该状态不会受到影响，因为市场业务区域已设置为全球范围！要更改业务区域设置，请检查配置部分。',
+  'please_select_conversation' => '请从左侧选择一个对话。',
+  'session_expired' => '您的会话已过期！请登录。',
 );

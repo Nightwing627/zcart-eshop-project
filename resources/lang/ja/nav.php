@@ -59,4 +59,6 @@ return array (
   'sales_report' => '売上高',
   'system_settings' => 'システム設定',
   'subscription_plans' => '予定',
+  'chats' => 'チャット',
+  'countries' => 'ビジネスエリア',
 );

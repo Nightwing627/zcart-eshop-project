@@ -19,4 +19,5 @@ return array (
   'no_file_was_uploaded' => 'எந்தக் கோப்பும் பதிவேற்றப்படவில்லை.',
   'error_uploading_file' => 'கோப்பை பதிவேற்றுவதில் பிழை',
   'model_not_defined' => 'மாதிரி வரையறுக்கப்படவில்லை!',
+  'invalid_data' => 'தவறான தரவு.',
 );

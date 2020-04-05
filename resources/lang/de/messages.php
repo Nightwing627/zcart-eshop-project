@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => 'Ihr Firmenname wird so angezeigt',
   'csv_import_process_started' => 'Die Daten wurden erfolgreich übermittelt. Der Vorgang kann einige Minima dauern. Sie erhalten eine E-Mail, wenn es fertig ist.',
   'model_has_association' => 'Das :model hat :associate drin. Um dieses :model zu löschen, entfernen Sie bitte alle :associate unter dem :model',
+  'active_worldwide_business_area' => 'Der Status hat keine Auswirkungen, da der Geschäftsbereich Marktplatz auf weltweit eingestellt ist! Informationen zum Ändern der Geschäftsbereichseinstellungen finden Sie im Konfigurationsabschnitt.',
+  'please_select_conversation' => 'Bitte wählen Sie ein Gespräch von links aus.',
+  'session_expired' => 'Ihre Session ist abgelaufen! Bitte loggen Sie sich ein.',
 );

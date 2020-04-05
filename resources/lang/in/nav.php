@@ -59,4 +59,6 @@ return array (
   'sales_report' => 'Penjualan',
   'system_settings' => 'Pengaturan sistem',
   'subscription_plans' => 'Rencana',
+  'chats' => 'obrolan',
+  'countries' => 'Area Bisnis',
 );

@@ -170,4 +170,7 @@ return array (
   'verified_business_name_like' => 'Su nombre comercial se mostrará así',
   'csv_import_process_started' => 'Los datos se han enviado correctamente. El proceso puede tomar algunos mínimos. Recibirás un correo electrónico cuando termine.',
   'model_has_association' => 'El :model tiene :associate en él. Para eliminar este :model, elimine todos los :associate debajo del :model',
+  'active_worldwide_business_area' => '¡El estado no afectará ya que el área comercial del mercado está establecida en todo el mundo! Para cambiar la configuración del área comercial, consulte la sección de configuración.',
+  'please_select_conversation' => 'Selecciona una conversación de la izquierda.',
+  'session_expired' => '¡Tu sesión ha terminado! Por favor Iniciar sesión.',
 );
