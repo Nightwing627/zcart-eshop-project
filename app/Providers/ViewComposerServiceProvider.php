@@ -162,6 +162,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 function($view)
                 {
                     $view->with('active_announcement', ListHelper::activeAnnouncement());
+                    $view->with('unread_messages', ListHelper::unreadMessages());
                 });
     }
 

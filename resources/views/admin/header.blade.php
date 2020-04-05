@@ -22,7 +22,7 @@
         <li class="dropdown messages-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-envelope-o"></i>
-            @if($count_message = Auth::user()->messages->count())
+            @if($count_message = $unread_messages->count())
               <span class="label label-success">{{ $count_message }}</span>
             @endif
           </a>
@@ -30,30 +30,24 @@
             <li class="header">{{ trans('messages.message_count', ['count' => $count_message]) }}</li>
             <li>
               <ul class="menu">
-                @forelse(Auth::user()->messages as $message)
+                @forelse($unread_messages as $message)
+                  @continue($loop->index > 5)
                   <li><!-- start message -->
                     <a href="{{ route('admin.support.message.show', $message) }}">
                       <div class="pull-left">
-                        <!-- User Image -->
-                        @if($message->customer->image)
-                          <img src="{{ get_storage_file_url($message->customer->image->path, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-                        @else
-                          <img src="{{ get_gravatar_url($message->customer->email, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
-                        @endif
+                        <img src="{{ get_avatar_src($message->customer, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
                       </div>
-                      <!-- Message title and timestamp -->
                       <h4>
                         {{ $message->subject }}
                         <small><i class="fa fa-clock-o"></i> {{ $message->created_at->diffForHumans() }}</small>
                       </h4>
-                      <!-- The message -->
+
                       <p>
                         {{ str_limit($message->message, 100) }}
                       </p>
                     </a>
                   </li>
                 @endforeach
-                <!-- end message -->
               </ul><!-- /.menu -->
             </li>
             <li class="footer"><a href="{{ url('admin/support/message/labelOf/'. App\Message::LABEL_INBOX) }}">{{ trans('app.go_to_msg_inbox') }}</a></li>

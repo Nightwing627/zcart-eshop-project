@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Helpers;
-
 use Auth;
 use Carbon\Carbon;
 use App\User;
@@ -246,6 +245,22 @@ class ListHelper
     public static function activeAnnouncement()
     {
         return Announcement::orderBy('created_at', 'desc')->first();
+    }
+
+    /**
+     * Get unread Messages.
+     *
+     * @return array
+     */
+    public static function unreadMessages()
+    {
+
+        if(Auth::user()->merchantId())
+            return Auth::user()->shop->messages()->labelOf(Message::LABEL_INBOX)->unread()->get();
+
+        return Auth::user()->messages()->labelOf(Message::LABEL_INBOX)->unread()->get();
+
+        // return Messages::orderBy('created_at', 'desc')->get();
     }
 
     /**

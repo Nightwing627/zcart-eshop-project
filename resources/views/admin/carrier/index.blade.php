@@ -52,7 +52,7 @@
 							{{ $carrier->name }}
 						</td>
 						<td>
-							@foreach($carrier->shippingZones as $zone)
+							@foreach($carrier->shippingZones->unique('name') as $zone)
         						<label class="label label-outline">{{$zone->name}}</label>
 							@endforeach
 						</td>

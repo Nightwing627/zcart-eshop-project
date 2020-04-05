@@ -1108,7 +1108,7 @@
 	  	$(".checkbox-toggle").on('click', function (e) {
 		    var clicks = $(this).data('clicks');
 		    var areaId = $(this).closest('table').children('tbody').attr('id');
-		    var massSelectArea = "#" + areaId;
+		    var massSelectArea =  areaId ? "#" + areaId : "#massSelectArea";
 
 		    if (clicks) {
 		      $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');

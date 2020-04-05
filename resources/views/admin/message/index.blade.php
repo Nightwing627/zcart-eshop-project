@@ -35,7 +35,8 @@
               	<div class="mailbox-controls">
 	                <!-- Check all button -->
 					<div class="btn-group ">
-						<button type="button" class="btn btn-sm btn-default checkbox-toggle"><i class="fa fa-square-o" data-toggle="tooltip" data-placement="top" title="{{ trans('app.select_all') }}"></i>
+						<button type="button" class="btn btn-sm btn-default checkbox-toggle">
+							<i class="fa fa-square-o" data-toggle="tooltip" data-placement="top" title="{{ trans('app.select_all') }}"></i>
 						</button>
 						<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 							<span class="caret"></span>
