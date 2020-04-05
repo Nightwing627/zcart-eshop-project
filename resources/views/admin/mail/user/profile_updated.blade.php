@@ -4,8 +4,8 @@
 {{ trans('notifications.user_updated.message') }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.user_updated.action.color')])
-{{ trans('notifications.user_updated.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'blue'])
+{{ trans('notifications.user_updated.button_text') }}
 @endcomponent
 <br/>
 

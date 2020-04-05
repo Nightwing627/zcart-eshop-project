@@ -18,6 +18,15 @@
             $(this).hide();
         });
 
+        // Adjust the category manu height with contents
+        $('.menu-category-dropdown').mouseover(function() {
+            var height = $(this).height();
+
+            if(height > 491)
+                $('.category-section').css('min-height', height);
+        });
+
+
         initAppPlugins();
 
         // Activate the tab if the url has any #hash
@@ -220,40 +229,38 @@
         });
 
         //Country
-        $("#address_country_id").on('change', function() {
-              var ID = $("#address_country_id").select2('data')[0].id;
-              var url = "{{ route('ajax.getCountryStates') }}"
+        // $("#address_country_id").on('change', function() {
+        //     var ID = $("#address_country_id").select2('data')[0].id;
+            {{-- // var url = "{{ route('ajax.getCountryStates') }}" --}}
 
-              $.ajax({
-                  delay: 250,
-                  data: "id="+ID,
-                  url: url,
-                  success: function(result){
-                    var data = [];
-                    if(result.length !== 0){
-                      data = $.map(result, function(val, id) {
-                          return { id: id, text: val };
-                      })
-                    }
+        //     $.ajax({
+        //       delay: 250,
+        //       data: "id="+ID,
+        //       url: url,
+        //       success: function(result){
+        //         var data = [];
+        //         if(result.length !== 0){
+        //           data = $.map(result, function(val, id) {
+        //               return { id: id, text: val };
+        //           })
+        //         }
 
-                    console.log(data);
-                    // $("#state_id").select2({
-                    //   allowClear: true,
-                    //   tags: true,
-                    {{-- //   placeholder: "{{ trans('app.placeholder.state') }}", --}}
-                    //   data: data,
-                    //   sortResults: function(results, container, query) {
-                    //       if (query.term) {
-                    //           return results.sort();
-                    //       }
-                    //       return results;
-                    //   }
-                    // });
-                  }
-              });
-            }
-        );
-
+        //         // console.log(data);
+        //         // $("#state_id").select2({
+        //         //   allowClear: true,
+        //         //   tags: true,
+        //         {{-- //   placeholder: "{{ trans('app.placeholder.state') }}", --}}
+        //         //   data: data,
+        //         //   sortResults: function(results, container, query) {
+        //         //       if (query.term) {
+        //         //           return results.sort();
+        //         //       }
+        //         //       return results;
+        //         //   }
+        //         // });
+        //       }
+        //     });
+        // });
     });
 
     //App plugins
@@ -417,31 +424,32 @@
 
         // Address form
         $("#address_country_id").on('change', function() {
-              var country = $(this).val();
-              var state_node = $('#address_state_id');
+            var country = $(this).val();
+            var state_node = $('#address_state_id');
 
-              $.ajax({
-                  delay: 250,
-                  data: "id="+country,
-                  url: "{{ route('ajax.getCountryStates') }}",
-                  success: function(result){
-                    var data = '<option value="">{{trans('theme.placeholder.state')}}</option>';
-                    if(result.length !== 0){
-                        data += $.map(result, function(val, id) {
-                            return '<option value="'+id+'">'+val+'</option>';
-                        })
+            $.ajax({
+              delay: 250,
+              data: "id="+country,
+              url: "{{ route('ajax.getCountryStates') }}",
+              success: function(result){
+                var data = '<option value="">{{trans('theme.placeholder.state')}}</option>';
+                if(result.length !== 0){
+                    data += $.map(result, function(val, id) {
+                        return '<option value="'+id+'">'+val+'</option>';
+                    })
 
-                        state_node.attr('required', 'required');
-                    }
-                    else{
-                        state_node.removeAttr('required');
-                    }
+                    state_node.attr('required', 'required');
+                }
+                else{
+                    state_node.removeAttr('required');
+                }
 
-                    state_node.html(data);
-                  }
-              });
-            }
-        );
+                state_node.html(data);
+
+                state_node.trigger('change'); // Trigger the onchange event on state id
+              }
+            });
+        });
         // END Address form
     }
 

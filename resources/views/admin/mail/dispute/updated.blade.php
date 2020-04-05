@@ -4,8 +4,8 @@
 {{ trans('notifications.dispute_updated.message', ['order_id' => $reply->repliable->order->order_number, 'reply' => $reply->reply]) }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.dispute_updated.action.color')])
-{{ trans('notifications.dispute_updated.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'blue'])
+{{ trans('notifications.dispute_updated.button_text') }}
 @endcomponent
 
 @include('admin.mail.dispute._dispute_detail_panel', ['dispute_detail' => $reply->repliable])

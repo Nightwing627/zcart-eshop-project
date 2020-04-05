@@ -76,11 +76,11 @@
 											@endphp
 
 											<small class="text-muted">{{ $inventory->sale_price }}</small><br/>
-											{{ get_formated_currency($inventory->offer_price) }}
+											{{ get_formated_currency($inventory->offer_price, true, 2) }}
 
 											<small class="text-muted" data-toggle="tooltip" data-placement="top" title="{{ $offer_price_help }}"><sup><i class="fa fa-question"></i></sup></small>
 										@else
-											{{ get_formated_currency($inventory->sale_price) }}
+											{{ get_formated_currency($inventory->sale_price, true, 2) }}
 										@endif
 									</td>
 									<td>
@@ -165,11 +165,11 @@
 													$inventory->offer_end->diffForHumans(); ?>
 
 											<small class="text-muted">{{ $inventory->sale_price }}</small><br/>
-											{{ get_formated_currency($inventory->offer_price) }}
+											{{ get_formated_currency($inventory->offer_price, true, 2) }}
 
 											<small class="text-muted" data-toggle="tooltip" data-placement="top" title="{{ $offer_price_help }}"><sup><i class="fa fa-question"></i></sup></small>
 										@else
-											{{ get_formated_currency($inventory->sale_price) }}
+											{{ get_formated_currency($inventory->sale_price, true, 2) }}
 										@endif
 									</td>
 									<td>{{ ($inventory->stock_quantity > 0) ? $inventory->stock_quantity : trans('app.out_of_stock') }}</td>
@@ -246,11 +246,11 @@
 													$inventory->offer_end->diffForHumans(); ?>
 
 											<small class="text-muted">{{ $inventory->sale_price }}</small><br/>
-											{{ get_formated_currency($inventory->offer_price) }}
+											{{ get_formated_currency($inventory->offer_price, true, 2) }}
 
 											<small class="text-muted" data-toggle="tooltip" data-placement="top" title="{{ $offer_price_help }}"><sup><i class="fa fa-question"></i></sup></small>
 										@else
-											{{ get_formated_currency($inventory->sale_price) }}
+											{{ get_formated_currency($inventory->sale_price, true, 2) }}
 										@endif
 									</td>
 									<td>
@@ -330,7 +330,7 @@
 						<td>{{ $trash->sku }}</td>
 						<td>{{ $trash->title }}</td>
 						<td>{{ $trash->condition }}</td>
-						<td>{{ get_formated_currency($trash->sale_price) }}</td>
+						<td>{{ get_formated_currency($trash->sale_price, true, 2) }}</td>
 						<td>{{ $trash->stock_quantity }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">

@@ -70,7 +70,7 @@
 
 							<tr>
 								<th class="text-right">{{ trans('app.sale_price') }}:</th>
-								<td style="width: 75%;"> {{ get_formated_currency($inventory->sale_price) }} </td>
+								<td style="width: 75%;"> {{ get_formated_currency($inventory->sale_price, true, 2) }} </td>
 							</tr>
 
 							<tr>
@@ -129,7 +129,7 @@
 				            @if($inventory->puchase_price)
 								<tr>
 									<th class="text-right">{{ trans('app.puchase_price') }}:</th>
-									<td style="width: 75%;"> {{ get_formated_currency($inventory->puchase_price) }} </td>
+									<td style="width: 75%;"> {{ get_formated_currency($inventory->puchase_price, true, 2) }} </td>
 								</tr>
 							@endif
 
@@ -223,13 +223,13 @@
 				            @if($inventory->product->min_price && $inventory->product->min_price > 0)
 				                <tr>
 				                	<th class="text-right">{{ trans('app.min_price') }}: </th>
-				                	<td style="width: 75%;">{{ get_formated_currency($inventory->product->min_price) }}</td>
+				                	<td style="width: 75%;">{{ get_formated_currency($inventory->product->min_price, true, 2) }}</td>
 				                </tr>
 				            @endif
 				            @if($inventory->product->max_price && $inventory->product->max_price > 0)
 				                <tr>
 				                	<th class="text-right">{{ trans('app.max_price') }}: </th>
-				                	<td style="width: 75%;">{{ get_formated_currency($inventory->product->max_price) }}</td>
+				                	<td style="width: 75%;">{{ get_formated_currency($inventory->product->max_price, true, 2) }}</td>
 				                </tr>
 				            @endif
 
@@ -258,7 +258,7 @@
 				            @if($inventory->offer_price && $inventory->offer_price > 0)
 								<tr>
 									<th class="text-right">{{ trans('app.offer_price') }}:</th>
-									<td style="width: 75%;">{{ get_formated_currency($inventory->offer_price) }}</td>
+									<td style="width: 75%;">{{ get_formated_currency($inventory->offer_price, true, 2) }}</td>
 								</tr>
 					        @else
 								<tr>

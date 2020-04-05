@@ -3,14 +3,14 @@
     @if($carts->count() > 0)
       @php
           $geoip = geoip(request()->ip());
-          $current_shipping_country = $business_areas->where('iso_code', $geoip->iso_code)->first();
+          $geoip_country = $business_areas->where('iso_code', $geoip->iso_code)->first();
       @endphp
 
       @foreach($carts as $cart)
         @php
             $cart_total = 0;
 
-            $shipping_country_id = $cart->country->id ?? optional($current_shipping_country)->id;
+            $shipping_country_id = $cart->country->id ?? optional($geoip_country)->id;
 
             // if(! $shipping_country_id)
               // CANT SHIPP
@@ -51,26 +51,31 @@
 
             <div class="col-md-9 nopadding">
                 <div class="shopping-cart-header-section">
-                  <span>@lang('theme.store'):</span>
-                  @if($cart->shop->slug)
-                    <a href="{{ route('show.store', $cart->shop->slug) }}"> {{ $cart->shop->name }}</a>
-                  @else
-                    @lang('theme.store_not_available')
-                  @endif
-
-                  <span class="pull-right">
-                      @lang('theme.ship_to'):
-                      <a id="shipTo{{$cart->id}}" class="ship_to" data-cart="{{$cart->id}}" data-country="{{$shipping_country_id}}" data-state="{{$cart->state->id}}" href="javascript:void(0)">
-                        {{ $cart->state->id ? $cart->state->name : $cart->country->name }}
-                      </a>
-                  </span>
+                  <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                        <span>@lang('theme.store'):</span>
+                        @if($cart->shop->slug)
+                          <a href="{{ route('show.store', $cart->shop->slug) }}"> {{ $cart->shop->name }}</a>
+                        @else
+                          @lang('theme.store_not_available')
+                        @endif
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                        <span class="pull-right">
+                            @lang('theme.ship_to'):
+                            <a id="shipTo{{$cart->id}}" class="ship_to" data-cart="{{$cart->id}}" data-country="{{$shipping_country_id}}" data-state="{{$cart->state->id}}" href="javascript:void(0)">
+                              {{ $cart->state->id ? $cart->state->name : $cart->country->name }}
+                            </a>
+                        </span>
+                    </div>
+                  </div>
                 </div>
 
                 <table class="table table shopping-cart-item-table" id="table{{$cart->id}}">
                     <thead>
                       <tr>
                           <th width="65px">{{ trans('theme.image') }}</th>
-                          <th width="52%">{{ trans('theme.description') }}</th>
+                          <th width="52%" class="large-screen-only">{{ trans('theme.description') }}</th>
                           <th>{{ trans('theme.price') }}</th>
                           <th>{{ trans('theme.quantity') }}</th>
                           <th>{{ trans('theme.total') }}</th>
@@ -92,7 +97,7 @@
                             {{ Form::hidden('shipping_weight['.$item->id.']', ($item->shipping_weight * $item->pivot->quantity), ['id' => 'itemWeight'.$item->id, 'class' => 'itemWeight'.$cart->id]) }}
                             <img src="{{ get_product_img_src($item, 'mini') }}" class="img-mini" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
                           </td>
-                          <td>
+                          <td class="large-screen-only">
                             <div class="shopping-cart-item-title">
                               <a href="{{ route('show.product', $item->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>
                             </div>
@@ -123,8 +128,8 @@
 
                     <tfoot>
                       <tr>
-                        <td></td>
-                        <td colspan="2">
+                        <td class="large-screen-only"></td>
+                        <td colspan="2" class="large-screen-only">
                           <div class="input-group full-width">
                             <span class="input-group-addon flat">
                               <i class="fa fa-ticket"></i>
@@ -136,7 +141,19 @@
                             </span>
                           </div><!-- /input-group -->
                         </td>
-                        <td colspan="3"></td>
+                        <td colspan="5" class="small-screen-only">
+                          <div class="input-group full-width">
+                            <span class="input-group-addon flat">
+                              <i class="fa fa-ticket"></i>
+                            </span>
+                            {{-- {{ Form::input('coupon', $cart->coupon ? $cart->coupon->code : Null, ['class' => 'form-control flat', 'id' => 'coupon'.$cart->id, 'placeholder' => trans('theme.placeholder.have_coupon_from_seller')]) }} --}}
+                            <input name="coupon" value="{{ $cart->coupon ? $cart->coupon->code : Null }}" id="coupon{{$cart->id}}" class="form-control flat" type="text" placeholder="@lang('theme.placeholder.have_coupon_from_seller')">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default flat apply_seller_coupon" type="button" data-cart="{{$cart->id}}">@lang('theme.button.ok')</button>
+                            </span>
+                          </div><!-- /input-group -->
+                        </td>
+                        <td colspan="3" class="large-screen-only"></td>
                       </tr>
                     </tfoot>
                 </table>

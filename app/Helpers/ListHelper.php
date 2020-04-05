@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Helpers;
-
 use Auth;
 use Carbon\Carbon;
 use App\User;
@@ -249,6 +248,22 @@ class ListHelper
     }
 
     /**
+     * Get unread Messages.
+     *
+     * @return array
+     */
+    public static function unreadMessages()
+    {
+
+        if(Auth::user()->merchantId())
+            return Auth::user()->shop->messages()->labelOf(Message::LABEL_INBOX)->unread()->get();
+
+        return Auth::user()->messages()->labelOf(Message::LABEL_INBOX)->unread()->get();
+
+        // return Messages::orderBy('created_at', 'desc')->get();
+    }
+
+    /**
      * Get role list for form dropdown.
      * If the logged in user from a shop then show return roles thats are public.
      * otherwise return roles thats not public
@@ -286,21 +301,28 @@ class ListHelper
      *
      * @return array
      */
-    public static function categoriesForTheme()
+    public static function categoriesForTheme($all = False)
     {
-        return CategoryGroup::select('id','name','slug','icon')
-        ->with(['images:path,imageable_id,imageable_type', 'subGroups' => function($query){
-            $query->select('id','slug','category_group_id','name')
-                ->active()->has('categories.products.inventories')
-                ->orderBy('categories_count', 'desc')
-                ->withCount('categories');
+        $result = CategoryGroup::select('id','name','slug','icon')
+        ->with(['images:path,imageable_id,imageable_type', 'subGroups' => function($query) use ($all){
+            $query->select('id','slug','category_group_id','name');
+
+            if(!$all)
+                $query->active()->has('categories.products.inventories');
+
+            $query->orderBy('categories_count', 'desc')->withCount('categories');
         },
-        'subGroups.categories' => function($q){
-            $q->select('id','category_sub_group_id','name','slug','description')
-            ->active()->has('products.inventories');
-        }])
-        ->has('subGroups.categories.products.inventories')
-        ->active()->orderBy('order', 'asc')->get();
+        'subGroups.categories' => function($q) use ($all){
+            $q->select('id','category_sub_group_id','name','slug','description');
+
+            if(!$all)
+                $q->active()->has('products.inventories');
+        }]);
+
+        if(!$all)
+            $result->has('subGroups.categories.products.inventories')->active();
+
+        return $result->orderBy('order', 'asc')->get();
     }
 
     /**

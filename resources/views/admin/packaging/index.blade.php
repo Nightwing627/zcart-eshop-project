@@ -57,7 +57,7 @@
 							<small>{{ get_formated_dimension($packaging) }}</small>
 						</td>
 						<td>
-							{!! $packaging->cost && $packaging->cost > 0 ? get_formated_currency($packaging->cost) : '<label class="label label-primary">' . trans('app.free') . '</label>' !!}
+							{!! $packaging->cost && $packaging->cost > 0 ? get_formated_currency($packaging->cost, true, 2) : '<label class="label label-primary">' . trans('app.free') . '</label>' !!}
 						</td>
 						<td class="text-center">
 							{{ ($packaging->active) ? trans('app.yes') : '-'}}
@@ -119,7 +119,7 @@
 							<small>{{ get_formated_dimension($trash) }}</small>
 						</td>
 						<td>
-							{!! $trash->cost && $trash->cost > 0 ? get_formated_currency($trash->cost) : '<label class="label label-primary">' . trans('app.free') . '</label>' !!}
+							{!! $trash->cost && $trash->cost > 0 ? get_formated_currency($trash->cost, true, 2) : '<label class="label label-primary">' . trans('app.free') . '</label>' !!}
 						</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">

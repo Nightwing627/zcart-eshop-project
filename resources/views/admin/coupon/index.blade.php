@@ -59,7 +59,7 @@
 						<td>{{ get_yes_or_no(($coupon->customers_count || $coupon->promotion_zones_count)) }}</td>
 						<td>
 							<strong>
-								{{ $coupon->type == 'amount' ? get_formated_currency($coupon->value) : get_formated_decimal($coupon->value) . ' ' . trans('app.percent') }}
+								{{ $coupon->type == 'amount' ? get_formated_currency($coupon->value, true, 2) : get_formated_decimal($coupon->value) . ' ' . trans('app.percent') }}
 							</strong>
 						</td>
 						<td>
@@ -129,7 +129,7 @@
 							@endif
 						</td>
 						<td>
-							{{ $trash->type == 'amount' ? get_formated_currency($trash->value) : get_formated_decimal($trash->value) . ' ' . trans('app.percent') }}
+							{{ $trash->type == 'amount' ? get_formated_currency($trash->value, true, 2) : get_formated_decimal($trash->value) . ' ' . trans('app.percent') }}
 						</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">

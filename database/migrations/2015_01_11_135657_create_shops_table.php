@@ -31,8 +31,13 @@ class CreateShopsTable extends Migration
             $table->string('card_brand')->nullable();
             $table->string('card_last_four')->nullable();
             $table->timestamp('trial_ends_at')->nullable();
+            $table->boolean('hide_trial_notice')->nullable()->default(Null);
 
             $table->boolean('active')->nullable()->default(0);
+            $table->boolean('payment_verified')->nullable()->default(Null);
+            $table->boolean('id_verified')->nullable()->default(Null);
+            $table->boolean('phone_verified')->nullable()->default(Null);
+            $table->boolean('address_verified')->nullable()->default(Null);
             $table->softDeletes();
             $table->timestamps();
 

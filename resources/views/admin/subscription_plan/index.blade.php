@@ -55,7 +55,7 @@
 									<span class="label label-primary indent10">{{ trans('app.featured') }}</span>
 								@endif
 							</td>
-							<td>{{ get_formated_currency($subscriptionPlan->cost) }}</td>
+							<td>{{ get_formated_currency($subscriptionPlan->cost, true, 2) }}</td>
 							<td>{{ $subscriptionPlan->team_size }}</td>
 							<td>{{ $subscriptionPlan->inventory_limit }}</td>
 							<td class="row-options">
@@ -113,7 +113,7 @@
 					@foreach($trashes as $trash )
 					<tr>
 						<td>{{ $trash->name }}</td>
-						<td>{{ get_formated_currency($trash->cost) }}</td>
+						<td>{{ get_formated_currency($trash->cost, true, 2) }}</td>
 						<td>{{ $trash->team_size }}</td>
 						<td>{{ $trash->inventory_limit }}</td>
 						<td>{{ $trash->deleted_at->diffForHumans() }}</td>

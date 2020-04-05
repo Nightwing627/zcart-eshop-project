@@ -4,8 +4,8 @@
 {{ trans('notifications.dispute_created.message', ['order_id' => $dispute->order->order_number]) }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.dispute_created.action.color')])
-{{ trans('notifications.dispute_created.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'blue'])
+{{ trans('notifications.dispute_created.button_text') }}
 @endcomponent
 
 @include('admin.mail.dispute._dispute_detail_panel', ['dispute_detail' => $dispute])

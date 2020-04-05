@@ -46,7 +46,7 @@
                         <td>{{ $cart_list->customer->name }}</td>
                         <td>{{ $cart_list->item_count }}</td>
                         <td>{{ $cart_list->quantity }}</td>
-                        <td>{{ get_formated_currency($cart_list->grand_total) }}</td>
+                        <td>{{ get_formated_currency($cart_list->grand_total, true, 2) }}</td>
                         <td class="row-options">
                             <div class="btn-group">
                                 @if(Gate::allows('create', App\Order::class) || Gate::allows('update', $cart_list))

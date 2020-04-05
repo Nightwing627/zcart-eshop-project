@@ -1,21 +1,8 @@
 const mix = require('laravel-mix');
 
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for the application as well as bundling up all the JS files.
- |
- */
-mix.js('resources/assets/js/app.js', 'public/js/app.js')
-   .sass('resources/assets/sass/app.scss', 'public/css/app.css');
-
+// Compile js
 mix.scripts([
 	    'resources/assets/plugins/jQuery/jquery-3.3.1.min.js',
-	    // 'resources/assets/plugins/jQuery/jQuery-2.1.4.min.js',
 	    'resources/assets/plugins/moment/moment.js',
 	    'resources/assets/plugins/bootstrap/js/bootstrap.js',
 	    'resources/assets/plugins/datatables/jquery.dataTables.js',
@@ -40,9 +27,14 @@ mix.scripts([
 	    'resources/assets/dist/js/app.min.js',
 	    'resources/assets/plugins/jquery-confirm/js/jquery-confirm.js',
 	    'resources/assets/plugins/notie/notie.js',
-	], 'public/js/vendor.js')
+		// 'resources/assets/js/app.js',
+	], 'public/js/app.js');
+
+// Compile css
+mix.sass('resources/assets/sass/app.scss', '../resources/assets/tmp/scss.css')
 	.styles([
-	   // 'resources/assets/bootstrap/css/bootstrap.min.css',
+		'resources/assets/tmp/scss.css',
+	   'resources/assets/plugins/bootstrap/css/bootstrap.min.css',
 	   'resources/assets/plugins/datatables/dataTables.bootstrap.css',
 	   'resources/assets/plugins/datatables/buttons/buttons.dataTables.min.css',
 	   'resources/assets/plugins/datepicker/datepicker3.css',
@@ -60,16 +52,7 @@ mix.scripts([
 	   'resources/assets/plugins/handle-btn/handle-btn.css',
 	   'resources/assets/dist/css/style.css',
 	   'resources/assets/dist/css/skins.css',
-	], 'public/css/vendor.css');
-
-	// mix.scripts([
- //            'resources/assets/temp/app.js',
- //            'resources/assets/temp/all.js',
-	// 	], 'public/js/app.js')
-	//    .styles([
- //            'resources/assets/temp/app.css',
- //            'resources/assets/temp/all.css',
-	//    ], 'public/css/app.css');
+	], 'public/css/app.css');
 
 // kartik-v-bootstrap-fileinput
 mix.scripts([

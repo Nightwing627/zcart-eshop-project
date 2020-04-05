@@ -1,8 +1,7 @@
 {
+    "/../resources/assets/tmp/scss.css": "/../resources/assets/tmp/scss.css",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/js/vendor.js": "/js/vendor.js",
-    "/css/vendor.css": "/css/vendor.css",
     "/js/fileinput.js": "/js/fileinput.js",
     "/css/fileinput.css": "/css/fileinput.css",
     "/css/line.png": "/css/line.png",

@@ -48,7 +48,7 @@
                         <td>{{ $trash->customer->getName() }}</td>
                         <td>{{ $trash->item_count }}</td>
                         <td>{{ $trash->quantity }}</td>
-                        <td>{{ get_formated_currency($trash->grand_total) }}</td>
+                        <td>{{ get_formated_currency($trash->grand_total, true, 2) }}</td>
                         <td>{{ $trash->deleted_at->diffForHumans() }}</td>
 						<td class="row-options">
 							@can('delete', $trash)

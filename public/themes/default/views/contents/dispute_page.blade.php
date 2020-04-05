@@ -96,7 +96,7 @@
                       <td width="25%" class="order-amount">
                         <h5>
                           <span>{!! trans('theme.refund_amount') !!}: </span>
-                          {{ get_formated_currency($order->dispute->refund_amount) }}
+                          {{ get_formated_currency($order->dispute->refund_amount, true, 2) }}
                         </h5>
                         <h5>
                           <span>{!! trans('theme.return_goods') !!}:</span>

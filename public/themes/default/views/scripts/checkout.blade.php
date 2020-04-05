@@ -6,17 +6,6 @@
 		// Check if customer exist
 		var customer = {{ $customer ? 'true' : 'undefined'}};
 
-		var selected_address = $('input[type="radio"].ship-to-address:checked');
-		if(selected_address.val()){
-			checkShippingZone(selected_address.data('country'));
-		}
-
-		// Disable checkout if seller has no payment option
-		if ($('.payment-option').length == 0) {
-			disableCartCheckout('{{ trans('theme.notify.seller_has_no_payment_method') }}');
-			$('#payment-instructions').children('span').html('{{ trans('theme.notify.seller_has_no_payment_method') }}');
-		}
-
 		// Show email/password form is customer want to save the card/create account
 		if ($("#create-account-checkbox, #remember-the-card").is(':checked'))
 			showAccountForm();
@@ -63,23 +52,6 @@
 	            $('#paypal-express-btn').addClass('hide');
 	            $('#pay-now-btn').removeClass('hide');
 			}
-	    });
-
-		// Alter shipping address
-		$('.customer-address-list .address-list-item').on('click', function(){
-			var radio = $(this).find('input[type="radio"].ship-to-address');
-			$('.address-list-item').removeClass('selected has-error');
-			$(this).addClass('selected');
-			radio.prop("checked", true);
-			$('#ship-to-error-block').text('');
-
-			checkShippingZone(radio.data('country'));
-		});
-
-		// Show shipping charge may change msg if zone changes
-		$("select[name='country_id']").on('change', function(){
-			$(this).next('.help-block').html('<small>{{ trans('theme.notify.shipping_cost_may_change') }}</small>');
-			checkShippingZone($(this).val());
 	    });
 
 		// Submit the form
@@ -152,26 +124,26 @@
     });
 
 	// Functions
-    function checkShippingZone(countryId)
-    {
-        var shop = '{{ $cart->shop_id }}';
-        // var countryId = $(this).val();
-	    var zone = getFromPHPHelper('get_shipping_zone_of', [shop, countryId]);
-		zone = JSON.parse(zone);
+  //   function checkShippingZone(countryId, stateID)
+  //   {
+  {{-- //       var shop = '{{ $cart->shop_id }}'; --}}
+  //       // var countryId = $(this).val();
+	 //    var zone = getFromPHPHelper('get_shipping_zone_of', [shop, countryId, stateID]);
+		// zone = JSON.parse(zone);
 
-		if($.isEmptyObject(zone)) {
-			if($("#createAddressModal").is(':visible')){ //If the form in the address create modal
-				$("#createAddressModal").find("select[name='country_id']").next('.help-block').html('<small>{{ trans('theme.notify.seller_doesnt_ship') }}</small>');
-			}
-			else {
-				@include('layouts.notification', ['message' => trans('theme.notify.seller_doesnt_ship'), 'type' => 'warning', 'icon' => 'times-circle'])
-			  	disableCartCheckout("{{ trans('theme.notify.seller_doesnt_ship') }}")
-			}
-		}
-		else {
-		  	enableCartCheckout()
-		}
-    }
+		// if($.isEmptyObject(zone)) {
+		// 	if($("#createAddressModal").is(':visible')){ //If the form in the address create modal
+		{{-- // 		$("#createAddressModal").find("select[name='country_id']").next('.help-block').html('<small>{{ trans('theme.notify.seller_doesnt_ship') }}</small>'); --}}
+		// 	}
+		// 	else {
+		{{-- // 		@include('layouts.notification', ['message' => trans('theme.notify.seller_doesnt_ship'), 'type' => 'warning', 'icon' => 'times-circle']) --}}
+		{{-- // 	  	disableCartPayment("{{ trans('theme.notify.seller_doesnt_ship') }}") --}}
+		// 	}
+		// }
+		// else {
+		//   	enableCartPayment()
+		// }
+  //   }
 
     function showAccountForm()
     {
@@ -182,7 +154,7 @@
     function showCardForm()
     {
 		$('#cc-form').show().find('input, select').attr('required', 'required');
-		$('#pay-now-btn-txt').html('{!!trans('theme.button.pay_now') . ' <small>(' . get_formated_currency($cart->grand_total(), 2) . ')</small>'!!}');
+		$('#pay-now-btn-txt').html('{!!trans('theme.button.pay_now') . ' <small>(' . get_formated_currency($cart->grand_total(), true, 2) . ')</small>'!!}');
     }
 
     function hideCardForm()
@@ -195,7 +167,7 @@
     function showAuthorizeNetCardForm()
     {
 		$('#authorize-net-cc-form').show().find('input, select').attr('required', 'required');
-		$('#pay-now-btn-txt').html('{!!trans('theme.button.pay_now') . ' <small>(' . get_formated_currency($cart->grand_total(), 2) . ')</small>'!!}');
+		$('#pay-now-btn-txt').html('{!!trans('theme.button.pay_now') . ' <small>(' . get_formated_currency($cart->grand_total(), true, 2) . ')</small>'!!}');
     }
     function hideAuthorizeNetCardForm()
     {
@@ -203,17 +175,17 @@
 		$('#pay-now-btn-txt').text('{{trans('theme.button.checkout')}}');
     }
 
-  	function disableCartCheckout(msg = '')
-  	{
-		$('#checkout-notice-msg').html(msg);
-		$("#checkout-notice").show();
-        $('#pay-now-btn, #paypal-express-btn').hide();
-  	}
+  // 	function disableCartPayment(msg = '')
+  // 	{
+		// $('#checkout-notice-msg').html(msg);
+		// $("#checkout-notice").show();
+  //       $('#pay-now-btn, #paypal-express-btn').hide();
+  // 	}
 
-  	function enableCartCheckout()
-  	{
-		$("#checkout-notice").hide();
-        $('#pay-now-btn, #paypal-express-btn').show();
-  	}
+  // 	function enableCartPayment()
+  // 	{
+		// $("#checkout-notice").hide();
+  //       $('#pay-now-btn, #paypal-express-btn').show();
+  // 	}
 }(window.jQuery, window, document));
 </script>

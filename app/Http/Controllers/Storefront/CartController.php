@@ -40,7 +40,6 @@ class CartController extends Controller
 
         $platformDefaultPackaging = getPlatformDefaultPackaging(); // Get platform's default packaging
 
-        // Country list for ship_to dropdown
         $business_areas = Country::select('id', 'name', 'iso_code')->orderBy('name', 'asc')->get();
 
         return view('cart', compact('carts','business_areas','platformDefaultPackaging','expressId'));
@@ -170,10 +169,11 @@ class CartController extends Controller
         abort_unless( $shop, 406, trans('theme.notify.seller_has_no_payment_method') );
 
         $customer = Auth::guard('customer')->check() ? Auth::guard('customer')->user() : Null;
-        $countries = ListHelper::countries(); // Country list for ship_to dropdown
+        $business_areas = Country::select('id', 'name', 'iso_code')->orderBy('name', 'asc')->get();
         $states = $cart->ship_to_state_id ? ListHelper::states($cart->ship_to_country_id) : []; // Sate list of the country for ship_to dropdown
+        $platformDefaultPackaging = getPlatformDefaultPackaging(); // Get platform's default packaging
 
-        return view('checkout', compact('cart', 'customer', 'shop', 'countries', 'states'));
+        return view('checkout', compact('cart', 'customer', 'shop', 'business_areas', 'states', 'platformDefaultPackaging'));
     }
 
     /**

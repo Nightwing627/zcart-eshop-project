@@ -33,7 +33,7 @@
                 </h5>
               </td>
               <td width="20%" class="order-amount">
-                <h5><span>@lang('theme.order_amount'): </span>{{ get_formated_currency($order->grand_total) }}</h5>
+                <h5><span>@lang('theme.order_amount'): </span>{{ get_formated_currency($order->grand_total, true, 2) }}</h5>
                 <div class="text-center">
                   <div class="btn-group" role="group">
                     <a class="btn btn-xs btn-default flat" href="{{ route('order.detail', $order) }}">@lang('theme.button.order_detail')</a>
@@ -56,7 +56,7 @@
                   <div class="product-info">
                       <a href="{{ route('show.product', $item->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>
                       <div class="order-info-amount">
-                          <span>{{ get_formated_currency($item->pivot->unit_price) }} x {{ $item->pivot->quantity }}</span>
+                          <span>{{ get_formated_currency($item->pivot->unit_price, true, 2) }} x {{ $item->pivot->quantity }}</span>
                       </div>
                       {{--
                       <ul class="order-info-properties">

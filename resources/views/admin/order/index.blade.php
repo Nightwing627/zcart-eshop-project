@@ -61,7 +61,7 @@
 									</td>
 							        <td>{{ $order->created_at->toDayDateTimeString() }}</td>
 									<td>{{ $order->customer->name }}</td>
-									<td>{{ get_formated_currency($order->grand_total) }}</td>
+									<td>{{ get_formated_currency($order->grand_total, true, 2) }}</td>
 									<td>{!! $order->paymentStatusName() !!}</td>
 									<td>{!! $order->orderStatus() !!}</td>
 									<td class="row-options">
@@ -107,7 +107,7 @@
 									</td>
 							        <td>{{ $order->created_at->toDayDateTimeString() }}</td>
 									<td>{{ $order->customer->name }}</td>
-									<td>{{ get_formated_currency($order->grand_total )}}</td>
+									<td>{{ get_formated_currency($order->grand_total, true, 2)}}</td>
 									<td>{!! $order->paymentStatusName() !!}</td>
 									<td>{!! $order->orderStatus() !!}</td>
 									<td class="row-options">
@@ -154,7 +154,7 @@
 										</td>
 								        <td>{{ $order->created_at->toDayDateTimeString() }}</td>
 										<td>{{ $order->customer->name }}</td>
-										<td>{{ get_formated_currency($order->grand_total )}}</td>
+										<td>{{ get_formated_currency($order->grand_total, true, 2)}}</td>
 										<td>{!! $order->paymentStatusName() !!}</td>
 										<td>{!! $order->orderStatus() !!}</td>
 										<td class="row-options">
@@ -208,7 +208,7 @@
 							@endcan
 						</td>
 				        <td>{{ $archive->created_at->toDayDateTimeString() }}</td>
-						<td>{{ get_formated_currency($archive->grand_total) }}</td>
+						<td>{{ get_formated_currency($archive->grand_total, true, 2) }}</td>
 						<td>{!! $archive->paymentStatusName() !!}</td>
 						<td>{!! $archive->orderStatus() !!}</td>
 						<td>{{ $archive->deleted_at->diffForHumans() }}</td>

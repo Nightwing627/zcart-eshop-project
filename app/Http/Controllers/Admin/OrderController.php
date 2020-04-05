@@ -201,6 +201,25 @@ class OrderController extends Controller
         return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
     }
 
+    public function adminNote($id)
+    {
+        $order = $this->order->find($id);
+
+        $this->authorize('fulfill', $order); // Check permission
+
+        return view('admin.order._edit_admin_note', compact('order'));
+    }
+    public function saveAdminNote(Request $request, $id)
+    {
+        $order = $this->order->find($id);
+
+        // $this->authorize('fulfill', $order); // Check permission
+
+        $this->order->updateAdminNote($request, $order);
+
+        return back()->with('success', trans('messages.updated', ['model' => $this->model_name]));
+    }
+
     /**
      * Trash the specified resource.
      *

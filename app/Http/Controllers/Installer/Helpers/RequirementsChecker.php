@@ -10,7 +10,7 @@ class RequirementsChecker
      *
      * @var _minPhpVersion
      */
-    private $_minPhpVersion = '7.0.0';
+    private $_minPhpVersion = '7.2.0';
 
     /**
      * Check for the server requirements.
@@ -68,24 +68,33 @@ class RequirementsChecker
      *
      * @return array
      */
-    public function checkPHPversion(string $minPhpVersion = null)
+    public function checkPHPversion(string $minPhpVersion = null, string $maxPhpVersion = null)
     {
-        $minVersionPhp = $minPhpVersion;
+        // $minVersionPhp = $minPhpVersion;
         $currentPhpVersion = $this->getPhpVersionInfo();
         $supported = false;
 
         if ($minPhpVersion == null) {
-            $minVersionPhp = $this->getMinPhpVersion();
+            $minPhpVersion = $this->getMinPhpVersion();
         }
 
-        if (version_compare($currentPhpVersion['version'], $minVersionPhp) >= 0) {
+        if ($maxPhpVersion == null) {
+            $maxPhpVersion = $currentPhpVersion['version'];
+        }
+        // echo "<pre>"; print_r(version_compare($currentPhpVersion['version'], $maxPhpVersion, '>')); echo "<pre>"; exit('end!');
+        if (
+            version_compare($currentPhpVersion['version'], $minPhpVersion, '>=') &&
+            version_compare($currentPhpVersion['version'], $maxPhpVersion, '<=')
+            // version_compare($currentPhpVersion['version'], $maxPhpVersion) <= 0
+        ) {
             $supported = true;
         }
 
         $phpStatus = [
             'full' => $currentPhpVersion['full'],
             'current' => $currentPhpVersion['version'],
-            'minimum' => $minVersionPhp,
+            'minimum' => $minPhpVersion,
+            'maximum' => $maxPhpVersion,
             'supported' => $supported
         ];
 

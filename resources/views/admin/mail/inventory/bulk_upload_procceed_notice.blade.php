@@ -21,8 +21,8 @@
 @endif
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.inventory_bulk_upload_procceed_notice.action.color')])
-{{ trans('notifications.inventory_bulk_upload_procceed_notice.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'green'])
+{{ trans('notifications.inventory_bulk_upload_procceed_notice.button_text') }}
 @endcomponent
 
 {{ trans('messages.thanks') }},<br>

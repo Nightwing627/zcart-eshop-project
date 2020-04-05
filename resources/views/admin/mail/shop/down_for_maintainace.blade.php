@@ -4,8 +4,8 @@
 {{ trans('notifications.shop_down_for_maintainace.message', ['shop_name' => $shop->name]) }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.shop_down_for_maintainace.action.color')])
-{{ trans('notifications.shop_down_for_maintainace.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'blue'])
+{{ trans('notifications.shop_down_for_maintainace.button_text') }}
 @endcomponent
 
 {{ trans('messages.thanks') }},<br>

@@ -4,8 +4,8 @@
 {{ trans('notifications.order_updated.message', ['order' => $order->order_number]) }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.order_updated.action.color')])
-{{ trans('notifications.order_updated.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'blue'])
+{{ trans('notifications.order_updated.button_text') }}
 @endcomponent
 
 @include('admin.mail.order._order_detail_panel', ['order_detail' => $order])

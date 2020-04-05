@@ -7,8 +7,8 @@
 {{ trans('messages.temp_password', ['password' => $password]) }}
 @endcomponent
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.user_created.action.color')])
-{{ trans('notifications.user_created.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'green'])
+{{ trans('notifications.user_created.button_text') }}
 @endcomponent
 
 @component('mail::panel')

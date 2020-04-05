@@ -22,7 +22,7 @@
 						<th class="text-right">{{ trans('app.coupon_value') }}:</th>
 						<td style="width: 65%;">
 							<span class="label label-primary">
-								{{ $coupon->type == 'amount' ? get_formated_currency($coupon->value) : get_formated_decimal($coupon->value) . ' ' . trans('app.percent') }}
+								{{ $coupon->type == 'amount' ? get_formated_currency($coupon->value, true, 2) : get_formated_decimal($coupon->value) . ' ' . trans('app.percent') }}
 							</span>
 						</td>
 					</tr>
@@ -84,7 +84,7 @@
 				            @if($coupon->min_order_amount && $coupon->min_order_amount != 0)
 				                <tr>
 				                	<th>{{ trans('app.min_order_amount') }}: </th>
-				                	<td>{{ get_formated_currency($coupon->min_order_amount) }}</td>
+				                	<td>{{ get_formated_currency($coupon->min_order_amount, true, 2) }}</td>
 				                </tr>
 				            @endif
 			                <tr>

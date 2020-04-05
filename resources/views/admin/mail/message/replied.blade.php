@@ -4,8 +4,8 @@
 {{ trans('notifications.message_replied.message', ['reply' => $reply->reply]) }}
 <br/>
 
-@component('mail::button', ['url' => $url, 'color' => trans('notifications.message_replied.action.color')])
-{{ trans('notifications.message_replied.action.text') }}
+@component('mail::button', ['url' => $url, 'color' => 'blue'])
+{{ trans('notifications.message_replied.button_text') }}
 @endcomponent
 
 {{ trans('messages.thanks') }},<br>

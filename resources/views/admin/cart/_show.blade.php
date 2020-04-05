@@ -69,8 +69,8 @@
 										</td>
 										<td>{{ $item->pivot->item_description }}</td>
 										<td>{{ $item->pivot->quantity }}</td>
-										<td>{{ get_formated_currency($item->pivot->unit_price) }}</td>
-										<td>{{ get_formated_currency($item->pivot->quantity * $item->pivot->unit_price) }}</td>
+										<td>{{ get_formated_currency($item->pivot->unit_price, true, 2) }}</td>
+										<td>{{ get_formated_currency($item->pivot->quantity * $item->pivot->unit_price, true, 2) }}</td>
 									</tr>
 								@endforeach
 							@else
@@ -132,27 +132,27 @@
 						<table class="table no-border">
 							<tr>
 								<th class="text-right">{{ trans('app.grand_total') }}:</th>
-								<td style="width: 75%;"><span class="lead"> {{ get_formated_currency($cart->grand_total) }}</span></td>
+								<td style="width: 75%;"><span class="lead"> {{ get_formated_currency($cart->grand_total, true, 2) }}</span></td>
 							</tr>
 							<tr>
 								<th class="text-right">{{ trans('app.total') }}:</th>
-								<td style="width: 75%;">{{ get_formated_currency($cart->total) }}</td>
+								<td style="width: 75%;">{{ get_formated_currency($cart->total, true, 2) }}</td>
 							</tr>
 							<tr>
 								<th class="text-right">{{ trans('app.discount') }}:</th>
-								<td style="width: 75%;"> - {{ get_formated_currency($cart->discount) }}</td>
+								<td style="width: 75%;"> - {{ get_formated_currency($cart->discount, true, 2) }}</td>
 							</tr>
 							<tr>
 								<th class="text-right">{{ trans('app.shipping') }}:</th>
-								<td style="width: 75%;">{{ get_formated_currency($cart->shipping) }}</td>
+								<td style="width: 75%;">{{ get_formated_currency($cart->shipping, true, 2) }}</td>
 							</tr>
 							<tr>
 								<th class="text-right">{{ trans('app.handling') }}:</th>
-								<td style="width: 75%;">{{ get_formated_currency($cart->handling) }}</td>
+								<td style="width: 75%;">{{ get_formated_currency($cart->handling, true, 2) }}</td>
 							</tr>
 							<tr>
 								<th class="text-right">{{ trans('app.taxes') }}:</th>
-								<td style="width: 75%;">{{ get_formated_currency($cart->taxes) }}</td>
+								<td style="width: 75%;">{{ get_formated_currency($cart->taxes, true, 2) }}</td>
 							</tr>
 							<tr>
 								<th class="text-right">{{ trans('app.billing_address') }}:</th>
