@@ -6,7 +6,7 @@
 		    	@if($order->paymentMethod->type == \App\PaymentMethod::TYPE_MANUAL)
 		    		<p class="text-primary space50">
 		    			<strong>@lang('theme.payment_instruction'): </strong>
-		    			{!! $order->shop->manualPaymentMethods->where('id', $order->payment_method_id)->first()->pivot->payment_instructions !!}
+		    			{!! $order->shop->config->manualPaymentMethods->where('id', $order->payment_method_id)->first()->pivot->payment_instructions !!}
 		    		</p>
 		    	@elseif( ! $order->isPaid() )
 		    		<p class="text-danger space50">
