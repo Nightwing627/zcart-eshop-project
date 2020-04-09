@@ -59,7 +59,7 @@
 					                        <div id="product-info-shipping-detail">
 					                            <span>{{ strtolower(trans('theme.to')) }}
 
-					                            	<a id="shipTo" class="ship_to" data-country="{{$shipping_country->id}}" data-state="{{$shipping_state->id}}" href="javascript:void(0)">
+					                            	<a id="shipTo" class="ship_to" data-country="{{$shipping_country->id}}" data-state="{{optional($shipping_state)->id}}" href="javascript:void(0)">
 					                            		{{ $shipping_state ? $shipping_state->name : $geoip->country }}
 					                            	</a>
 
