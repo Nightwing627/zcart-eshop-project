@@ -164,7 +164,7 @@
 						  		@endif
 					    	</div>
 
-					        <div class="col-sm-3">
+					        <div class="col-sm-3 nopadding-left">
 						    	@if($can_update)
 									<div class="form-group text-center">
 										{!! Form::label('maintenance_mode', trans('app.form.maintenance_mode'), ['class' => 'control-label with-help']) !!}

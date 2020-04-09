@@ -167,7 +167,7 @@
 			              <tr class="message_from_seller">
 			                <td colspan="3">
 			                  <p>
-			                    <strong>@lang('theme.message_from_seller'): </strong> {{ $order->message_to_customer }}
+			                    <strong>@lang('theme.message_from_seller'): </strong> {!! $order->message_to_customer !!}
 			                  </p>
 			                </td>
 			              </tr>
@@ -177,7 +177,7 @@
 			              <tr class="order-info-footer">
 			                <td colspan="3">
 			                  <p class="order-detail-buyer-note">
-			                    <strong>@lang('theme.note'): </strong> {{ $order->buyer_note }}
+			                    <strong>@lang('theme.note'): </strong> {!! $order->buyer_note !!}
 			                  </p>
 			                </td>
 			              </tr>
@@ -263,7 +263,7 @@
 		          	</div>
 			        <div class="col-xs-8">
 			            <div class="message-content-wrapper">
-			                <div class="message-content">{{ $order->conversation->message }}</div>
+			                <div class="message-content">{!! $order->conversation->message !!}</div>
 			            	@if($attachment = optional($order->conversation->attachments)->first())
 						        <a href="{{ get_storage_file_url($attachment->path, 'original') }}" class="pull-right message-attachment" target="_blank">
 						        	<img src="{{ get_storage_file_url($attachment->path, 'tiny') }}" class="img-sm thumbnail">
