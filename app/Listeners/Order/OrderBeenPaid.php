@@ -3,9 +3,10 @@
 namespace App\Listeners\Order;
 
 use App\Events\Order\OrderPaid;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Notifications\Order\OrderBeenPaid as OrderBeenPaidNotification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Notification;
+use Illuminate\Queue\InteractsWithQueue;
 
 class OrderBeenPaid implements ShouldQueue
 {
@@ -37,7 +38,13 @@ class OrderBeenPaid implements ShouldQueue
         if(!config('system_settings'))
             setSystemConfig($event->order->shop_id);
 
-        if ($event->order->customer->id)
+        if ($event->order->customer_id){
             $event->order->customer->notify(new OrderBeenPaidNotification($event->order));
+        }
+        else if ($event->order->email){
+            Notification::route('mail', $event->order->email)
+                // ->route('nexmo', '5555555555')
+                ->notify(new OrderBeenPaidNotification($event->order));
+        }
     }
 }

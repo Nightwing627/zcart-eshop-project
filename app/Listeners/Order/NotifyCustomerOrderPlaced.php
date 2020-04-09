@@ -3,9 +3,10 @@
 namespace App\Listeners\Order;
 
 use App\Events\Order\OrderCreated;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Notifications\Order\OrderCreated as OrderCreatedNotification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Notification;
+use Illuminate\Queue\InteractsWithQueue;
 
 class NotifyCustomerOrderPlaced implements ShouldQueue
 {
@@ -37,7 +38,13 @@ class NotifyCustomerOrderPlaced implements ShouldQueue
         if(!config('system_settings'))
             setSystemConfig($event->order->shop_id);
 
-        if ($event->order->customer_id)
+        if ($event->order->customer_id){
             $event->order->customer->notify(new OrderCreatedNotification($event->order));
+        }
+        else if ($event->order->email){
+            Notification::route('mail', $event->order->email)
+                // ->route('nexmo', '5555555555')
+                ->notify(new OrderCreatedNotification($event->order));
+        }
     }
 }
