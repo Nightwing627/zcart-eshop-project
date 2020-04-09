@@ -50,6 +50,9 @@ Route::group(['prefix' => 'incevio'], function()
         Artisan::call('config:clear');
     	$out .= '<info>✔</info> '. Artisan::output() .'<br/>';
 
+        // Artisan::call('incevio:boost');
+        // $out .= '<info>✔</info> '. Artisan::output() .'<br/>';
+
         Artisan::call('route:clear');
         $out .= '<info>✔</info> '. Artisan::output() .'<br/>';
 
