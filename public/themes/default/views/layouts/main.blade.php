@@ -11,9 +11,9 @@
             <meta property="og:image" content="{{ get_product_img_src($item, 'large') }}">
         @endif
         <title> {{ get_platform_title() }} </title>
-        <link rel="icon" href="{{ Storage::url('icon.png') }}" type="image/x-icon" />
+        <link rel="icon" href="{{ get_storage_file_url('icon.png', 'full') }}" type="image/x-icon" />
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-        <link rel="apple-touch-icon" href="{{ Storage::url('icon.png') }}">
+        <link rel="apple-touch-icon" href="{{ get_storage_file_url('icon.png', 'full') }}">
         <link href='https://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
 

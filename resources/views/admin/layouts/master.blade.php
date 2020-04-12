@@ -9,8 +9,8 @@
     <title>{{ $title ?? get_site_title() }}</title>
 
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-    <link rel="icon" href="{{ Storage::url('icon.png') }}" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="{{ Storage::url('icon.png') }}">
+    <link rel="icon" href="{{ get_storage_file_url('icon.png', 'full') }}" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="{{ get_storage_file_url('icon.png', 'full') }}">
 
     <!-- Scripts -->
     <link href="{{ mix("css/app.css") }}" rel="stylesheet">

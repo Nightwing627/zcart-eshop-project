@@ -207,7 +207,7 @@ class ListingController extends Controller
                 return new ItemLightResource($variant);
         }
 
-        return response()->json(['message' => trans('api.item_not_available')], 404);
+        return response()->json(['message' => trans('api.item_not_in_stock')], 404);
     }
 
     /**

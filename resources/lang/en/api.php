@@ -15,6 +15,7 @@ return [
 	'item_alrealy_in_wishlist' => 'Item alrealy in your wishlist',
 	'item_max_stock' => 'This seller has limited stock available',
 	'item_minimum_qtt' => 'You can\'t place an order below this quantity',
+	'item_not_in_stock' => 'We\'re sorry! This item not in stock',
 	'item_alrealy_in_wishlist' => 'Item alrealy in your wishlist',
 	'item_removed_from_cart' => 'Item hs been removed',
 	'email_account_not_found' => 'We can\'t find a user with that e-mail address.',

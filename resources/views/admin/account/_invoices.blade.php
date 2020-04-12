@@ -14,7 +14,8 @@
 		    	<tbody>
 	                @foreach($invoice->subscriptions() as $subscription)
 			    		<tr>
-			    			<td>{{ $invoice->date()->toFormattedDateString() }}</td>
+			    			{{-- <td>{{ $invoice->date()->toFormattedDateString() }}</td> --}}
+			    			<td>{{ \Carbon\Carbon::createFromTimestamp($invoice->asStripeInvoice()->created)->toFormattedDateString() }}</td>
 			    			<td>
 			    				{{ trans('app.invoice_for', ['start' => $subscription->startDateAsCarbon()->toFormattedDateString(), 'end' => $subscription->endDateAsCarbon()->toFormattedDateString()]) }}
 			    			</td>
