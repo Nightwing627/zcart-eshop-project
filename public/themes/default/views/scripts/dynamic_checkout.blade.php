@@ -293,6 +293,7 @@
 	        var coupon = $('#coupon'+cart).val();
 	        var shop = $('#shop-id'+cart).val();
 	        var zone = $('#zone-id'+cart).val();
+			var totalPrice  = getOrderTotal(cart);
 			coupon = coupon.trim();
 
 	        if(coupon){
