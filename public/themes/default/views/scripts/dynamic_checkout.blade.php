@@ -293,7 +293,7 @@
 	        var coupon = $('#coupon'+cart).val();
 	        var shop = $('#shop-id'+cart).val();
 	        var zone = $('#zone-id'+cart).val();
-			var totalPrice  = getOrderTotal(cart);
+			// var totalPrice  = getOrderTotal(cart);
 			coupon = coupon.trim();
 
 	        if(coupon){
@@ -303,16 +303,16 @@
 				    data: {'coupon':coupon,'shop':shop,'cart':cart,'zone':zone},
 				    dataType: 'JSON',
 				    success: function (data, textStatus, xhr) {
-				    	if(200 == xhr.status){
-							if(data.min_order_amount && totalPrice < data.min_order_amount){
-				                @include('layouts.notification', ['message' => trans('theme.notify.coupon_min_order_value'), 'type' => 'danger', 'icon' => 'times-circle'])
-								resetDiscount(cart);
-							}
-							else{
+				    	// if(200 == xhr.status){
+							// if(data.min_order_amount && totalPrice < data.min_order_amount){
+				   {{-- //              @include('layouts.notification', ['message' => trans('theme.notify.coupon_min_order_value'), 'type' => 'danger', 'icon' => 'times-circle']) --}}
+							// 	resetDiscount(cart);
+							// }
+							// else{
 					    		setDiscount(cart, data);
-			                    @include('layouts.notification', ['message' => trans('theme.notify.coupon_applied'), 'type' => 'success', 'icon' => 'check-circle'])
-							}
-				    	}
+			                    {{-- @include('layouts.notification', ['message' => trans('theme.notify.coupon_applied'), 'type' => 'success', 'icon' => 'check-circle']) --}}
+							// }
+				    	// }
 				    }
 				})
 				.fail(function(response) {
@@ -687,6 +687,12 @@
 
 		function setDiscount(cart, coupon = null)
 		{
+			if(coupon == null){
+                @include('layouts.notification', ['message' => trans('theme.notify.coupon_not_valid'), 'type' => 'danger', 'icon' => 'times-circle'])
+				resetDiscount(cart);
+				return;
+			}
+
 			var value = coupon.value;
 			var name = coupon.name;
 			var totalPrice  = getOrderTotal(cart);
@@ -710,7 +716,11 @@
 			$('#summary-discount'+cart).text(getFormatedValue(value));
 			$('#summary-discount-name'+cart).text(name);
 			$('#discount-id'+cart).val(coupon.id);
+
 			calculateTax(cart);
+
+			@include('layouts.notification', ['message' => trans('theme.notify.coupon_applied'), 'type' => 'success', 'icon' => 'check-circle'])
+
 			return;
 		}
 

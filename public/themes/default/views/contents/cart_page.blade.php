@@ -75,11 +75,11 @@
                     <thead>
                       <tr>
                           <th width="65px">{{ trans('theme.image') }}</th>
-                          <th width="52%" class="large-screen-only">{{ trans('theme.description') }}</th>
+                          <th width="52%" class="hidden-sm hidden-xs">{{ trans('theme.description') }}</th>
                           <th>{{ trans('theme.price') }}</th>
                           <th>{{ trans('theme.quantity') }}</th>
                           <th>{{ trans('theme.total') }}</th>
-                          <th></th>
+                          <th>&nbsp;</th>
                       </tr>
                     </thead>
 
@@ -97,7 +97,7 @@
                             {{ Form::hidden('shipping_weight['.$item->id.']', ($item->shipping_weight * $item->pivot->quantity), ['id' => 'itemWeight'.$item->id, 'class' => 'itemWeight'.$cart->id]) }}
                             <img src="{{ get_product_img_src($item, 'mini') }}" class="img-mini" alt="{{ $item->slug }}" title="{{ $item->slug }}" />
                           </td>
-                          <td class="large-screen-only">
+                          <td class="hidden-sm hidden-xs">
                             <div class="shopping-cart-item-title">
                               <a href="{{ route('show.product', $item->slug) }}" class="product-info-title">{{ $item->pivot->item_description }}</a>
                             </div>
@@ -128,32 +128,17 @@
 
                     <tfoot>
                       <tr>
-                        <td class="large-screen-only"></td>
-                        <td colspan="2" class="large-screen-only">
+                        <td colspan="6">
                           <div class="input-group full-width">
                             <span class="input-group-addon flat">
                               <i class="fa fa-ticket"></i>
                             </span>
-                            {{-- {{ Form::input('coupon', $cart->coupon ? $cart->coupon->code : Null, ['class' => 'form-control flat', 'id' => 'coupon'.$cart->id, 'placeholder' => trans('theme.placeholder.have_coupon_from_seller')]) }} --}}
                             <input name="coupon" value="{{ $cart->coupon ? $cart->coupon->code : Null }}" id="coupon{{$cart->id}}" class="form-control flat" type="text" placeholder="@lang('theme.placeholder.have_coupon_from_seller')">
                             <span class="input-group-btn">
                               <button class="btn btn-default flat apply_seller_coupon" type="button" data-cart="{{$cart->id}}">@lang('theme.button.apply_coupon')</button>
                             </span>
                           </div><!-- /input-group -->
                         </td>
-                        <td colspan="5" class="small-screen-only">
-                          <div class="input-group full-width">
-                            <span class="input-group-addon flat">
-                              <i class="fa fa-ticket"></i>
-                            </span>
-                            {{-- {{ Form::input('coupon', $cart->coupon ? $cart->coupon->code : Null, ['class' => 'form-control flat', 'id' => 'coupon'.$cart->id, 'placeholder' => trans('theme.placeholder.have_coupon_from_seller')]) }} --}}
-                            <input name="coupon" value="{{ $cart->coupon ? $cart->coupon->code : Null }}" id="coupon{{$cart->id}}" class="form-control flat" type="text" placeholder="@lang('theme.placeholder.have_coupon_from_seller')">
-                            <span class="input-group-btn">
-                              <button class="btn btn-default flat apply_seller_coupon" type="button" data-cart="{{$cart->id}}">@lang('theme.button.ok')</button>
-                            </span>
-                          </div><!-- /input-group -->
-                        </td>
-                        <td colspan="3" class="large-screen-only"></td>
                       </tr>
                     </tfoot>
                 </table>

@@ -46,7 +46,7 @@ class CartController extends Controller
     }
 
     /**
-     * Validate coupon.
+     * Add given item to cart
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -197,7 +197,7 @@ class CartController extends Controller
     }
 
     /**
-     * validate coupon.
+     * Remove item from cart.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -229,7 +229,6 @@ class CartController extends Controller
      */
     public function validateCoupon(Request $request)
     {
-        // $request->all();
         $coupon = Coupon::active()->where([
             ['code', $request->coupon],
             ['shop_id', $request->shop],

@@ -144,6 +144,7 @@
 			                    </td>
 		                    	@if($loop->first)
 				                    <td rowspan="{{ $loop->count }}" class="order-actions">
+						                <a href="{{ route('order.invoice', $order) }}" class="btn btn-default btn-sm btn-block flat">@lang('theme.invoice')</a>
 			    	                    <a href="{{ route('order.track', $order) }}" class="btn btn-default btn-sm btn-block flat">@lang('theme.button.track_order')</a>
 						                @if($order->goods_received)
 				    	                    <a href="{{ route('order.feedback', $order) }}" class="btn btn-primary btn-sm btn-block flat">@lang('theme.button.give_feedback')</a>

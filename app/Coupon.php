@@ -201,7 +201,7 @@ class Coupon extends BaseModel
      */
     public function passMinAmount($total)
     {
-        return $this->min_order_amount == Null || $total < $this->min_order_amount;
+        return $this->min_order_amount == Null || $total >= $this->min_order_amount;
     }
 
     /**
