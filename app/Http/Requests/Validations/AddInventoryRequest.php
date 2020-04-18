@@ -13,7 +13,7 @@ class AddInventoryRequest extends Request
      */
     public function authorize()
     {
-        return $this->user()->shop->canAddThisInventory($this->product_id);
+        return $this->user()->shop->canAddThisInventory($this->product);
     }
 
     /**

@@ -102,7 +102,7 @@ class Coupon extends BaseModel
      */
     public function customerOrders($customer = Null)
     {
-        $customer = $customer ?? \Auth::guard('customer')->id();
+        $customer = $customer ?? Auth::user()->id();
 
         return $this->hasMany(Order::class)->where('customer_id', $customer)->withTrashed();
     }
@@ -154,7 +154,7 @@ class Coupon extends BaseModel
      */
     public function isValidCustomer($customer = Null)
     {
-        $customer = $customer ?? \Auth::guard('customer')->id();
+        $customer = $customer ?? Auth::user()->id();
 
         return ! $this->forLimitedCustomer() || in_array($customer, $this->customers->pluck('id')->toArray());
     }
@@ -211,7 +211,7 @@ class Coupon extends BaseModel
      */
     public function isValidForTheCart($total, $zone = Null, $customer = Null)
     {
-        $customer = $customer ?? \Auth::guard('customer')->id();
+        $customer = $customer ?? Auth::user()->id();
 
         return $this->passMinAmount($total) && $this->isActive() && $this->isLive() &&
         $this->isValidCustomer($customer) && $this->isValidZone($zone) && $this->hasQtt();

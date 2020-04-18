@@ -6,17 +6,17 @@ Route::post('inventory/upload', 'InventoryUploadController@upload')->name('inven
 Route::post('inventory/import', 'InventoryUploadController@import')->name('inventory.import');
 Route::post('inventory/downloadFailedRows', 'InventoryUploadController@downloadFailedRows')->name('inventory.downloadFailedRows');
 
-// inventorys
+// Mass Actions
 Route::post('inventory/massTrash', 'InventoryController@massTrash')->name('inventory.massTrash')->middleware('demoCheck');
 Route::post('inventory/massDestroy', 'InventoryController@massDestroy')->name('inventory.massDestroy')->middleware('demoCheck');
 Route::delete('inventory/emptyTrash', 'InventoryController@emptyTrash')->name('inventory.emptyTrash');
+
+// inventories
 Route::delete('inventory/{inventory}/trash', 'InventoryController@trash')->name('inventory.trash'); // inventory move to trash
 Route::get('inventory/{inventory}/restore', 'InventoryController@restore')->name('inventory.restore');
-// Route::get('inventory/showSearchForm', 'InventoryController@showSearchForm')->name('inventory.showSearchForm');
-// Route::get('inventory/search', 'InventoryController@search')->name('inventory.search');
 Route::get('inventory/setVariant/{inventory}', 'InventoryController@setVariant')->name('inventory.setVariant');
-Route::get('inventory/add/{inventory}', 'InventoryController@add')->name('inventory.add');
-Route::get('inventory/addWithVariant/{inventory}', 'InventoryController@addWithVariant')->name('inventory.addWithVariant');
+Route::get('inventory/add/{product}', 'InventoryController@add')->name('inventory.add');
+Route::get('inventory/addWithVariant/{product}', 'InventoryController@addWithVariant')->name('inventory.addWithVariant');
 Route::post('inventory/storeWithVariant', 'InventoryController@storeWithVariant')->name('inventory.storeWithVariant');
 Route::post('inventory/store', 'InventoryController@store')->name('inventory.store')->middleware('ajax');
 Route::post('inventory/{inventory}/update', 'InventoryController@update')->name('inventory.update')->middleware('ajax');

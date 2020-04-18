@@ -22,7 +22,7 @@
         "instamojo/instamojo-php": "^0.3.0",
         "ixudra/curl": "^6.16",
         "laracasts/flash": "^3.0",
-        "laravel/cashier": "^8.0",
+        "laravel/cashier": "^9.0",
         "laravel/framework": "5.7.*",
         "laravel/scout": "6.1.1",
         "laravel/socialite": "^4.0",
