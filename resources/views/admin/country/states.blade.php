@@ -5,7 +5,10 @@
 
 	<div class="box">
 		<div class="box-header with-border">
-			<h3 class="box-title">{{ trans('app.states') . ': '. $country->name }}</h3>
+			<h3 class="box-title">
+				{{ trans('app.states') . ': '. $country->name }}
+			    <i class="fa fa-question-circle indent10 small" data-toggle="tooltip" data-placement="right" title="{{ trans('help.active_business_zone') }}"></i>
+			</h3>
 			<div class="box-tools pull-right">
 				@can('update', $country)
 					<a href="javascript:void(0)" data-link="{{ route('admin.setting.state.create', $country->id) }}" class="ajax-modal-btn btn btn-new btn-flat">{{ trans('app.add_state') }}</a>
@@ -35,7 +38,6 @@
 						@endcan
 						<th>{{ trans('app.iso_code') }}</th>
 						<th>{{ trans('app.name') }}</th>
-						<th>{{ trans('app.calling_code') }}</th>
 						<th>{{ trans('app.option') }}</th>
 					</tr>
 				</thead>
@@ -51,10 +53,8 @@
 
 				          	@if($state->active)
 					          	<span class="indent10 label label-primary pull-right">{{ trans('app.active') }}</span>
-							    <i class="fa fa-question-circle pull-right" data-toggle="tooltip" data-placement="top" title="{{ trans('help.active_business_zone') }}"></i>
 					        @endif
 						</td>
-						<td>{{ $state->calling_code }}</td>
 						<td class="row-options">
 							@can('update', $country)
 								<a href="javascript:void(0)" data-link="{{ route('admin.setting.state.edit', $state->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;

@@ -744,4 +744,6 @@ return [
     'notify_new_chat' => 'Send me an email notification when a new chat message arrived',
 
     'not_in_business_area' => 'This area is not in marketplace\'s active business area. Maybe recently removed by the marketplace admin.',
+
+    'region_iso_code' => 'The region ISO code must have to be right. Read *Business Area* section on the documentation to get help.',
 ];

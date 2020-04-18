@@ -1407,7 +1407,7 @@ return [
     // Version 2.0.0
     'add_country' => 'Add country',
     'add_admin_note' => 'Add admin note',
-    'add_state' => 'Add state',
+    'add_state' => 'Add region',
     'business_area' => 'Business area',
     'buyer_note' => 'Buyer note',
     'can_use_own_catalog_only' => 'Can use own catalog only',
@@ -1424,7 +1424,7 @@ return [
     'iso_numeric' => 'ISO numeric code',
     'message_send_by_staff' => 'This message was sent by your staff <b>:user</b>',
     'no_invoice' => 'No invoice yet!',
-    'number_of_states' => 'Number of states',
+    'number_of_states' => 'Number of region',
     'of_total' => ':first - :last of :total',
     'smallest_denomination' => 'Smallest denomination',
     'subscription_fee' => 'Subscription fee',
