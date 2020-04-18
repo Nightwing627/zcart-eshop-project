@@ -340,4 +340,5 @@ return array (
   'marketplace_business_area' => '市场业务区',
   'notify_new_chat' => '当新的聊天消息到来时给我发送电子邮件通知',
   'not_in_business_area' => '该区域不在市场的活跃业务区域中。也许最近被市场管理员删除了。',
+  'region_iso_code' => '地区ISO代码必须正确。阅读文档中的“业务领域”部分以获取帮助。',
 );

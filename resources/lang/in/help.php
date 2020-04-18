@@ -340,4 +340,5 @@ return array (
   'marketplace_business_area' => 'Area bisnis pasar',
   'notify_new_chat' => 'Kirimi saya pemberitahuan email ketika pesan obrolan baru tiba',
   'not_in_business_area' => 'Area ini tidak berada dalam area bisnis aktif pasar. Mungkin baru-baru ini dihapus oleh admin marketplace.',
+  'region_iso_code' => 'Kode ISO wilayah harus benar. Baca * Area Bisnis * pada dokumentasi untuk mendapatkan bantuan.',
 );

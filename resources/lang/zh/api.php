@@ -14,6 +14,7 @@ return array (
   'item_alrealy_in_wishlist' => '商品已在您的愿望清单中',
   'item_max_stock' => '卖家库存有限',
   'item_minimum_qtt' => '您不能以低于此数量的价格下订单',
+  'item_not_in_stock' => '我们很抱歉！该项目没有库存',
   'item_removed_from_cart' => '项目已被删除',
   'email_account_not_found' => '我们找不到使用该电子邮件地址的用户。',
   'password_reset_link_sent' => '密码重置链接已发送！请检查您的电子邮件。',

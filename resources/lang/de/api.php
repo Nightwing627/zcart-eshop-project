@@ -14,6 +14,7 @@ return array (
   'item_alrealy_in_wishlist' => 'Artikel bereits in Ihrer Wunschliste',
   'item_max_stock' => 'Dieser Verkäufer hat eine begrenzte Anzahl verfügbarer Artikel',
   'item_minimum_qtt' => 'Unterhalb dieser Menge können Sie keine Bestellung aufgeben',
+  'item_not_in_stock' => 'Es tut uns leid! Dieser Artikel ist nicht auf Lager',
   'item_removed_from_cart' => 'Gegenstand wurde entfernt',
   'email_account_not_found' => 'Wir können keinen Benutzer mit dieser E-Mail-Adresse finden.',
   'password_reset_link_sent' => 'Der Link zum Zurücksetzen des Passworts wurde gesendet! Bitte überprüfen Sie Ihre E-Mails.',

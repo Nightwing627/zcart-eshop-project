@@ -340,4 +340,5 @@ return array (
   'marketplace_business_area' => 'Pazar alanı',
   'notify_new_chat' => 'Yeni bir sohbet mesajı geldiğinde bana bir e-posta bildirimi gönder',
   'not_in_business_area' => 'Bu alan pazarın aktif iş alanında değildir. Belki son zamanlarda pazar yöneticisi tarafından kaldırıldı.',
+  'region_iso_code' => 'Bölge ISO kodunun doğru olması gerekir. Yardım almak için belgelerdeki * İş Alanı * bölümünü okuyun.',
 );

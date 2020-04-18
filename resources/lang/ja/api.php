@@ -14,6 +14,7 @@ return array (
   'item_alrealy_in_wishlist' => 'すでにウィッシュリストにあるアイテム',
   'item_max_stock' => 'この販売者は在庫が限られています',
   'item_minimum_qtt' => 'この数量を下回る注文はできません',
+  'item_not_in_stock' => '申し訳ございません！この商品は在庫がありません',
   'item_removed_from_cart' => 'アイテムが削除されました',
   'email_account_not_found' => 'その電子メールアドレスを持つユーザーが見つかりません。',
   'password_reset_link_sent' => 'パスワードリセットリンクが送信されました！メールを確認してください。',

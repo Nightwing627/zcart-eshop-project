@@ -14,6 +14,7 @@ return array (
   'item_alrealy_in_wishlist' => 'Item staat al in uw verlanglijst',
   'item_max_stock' => 'Deze verkoper heeft beperkte voorraad beschikbaar',
   'item_minimum_qtt' => 'U kunt geen bestelling plaatsen onder deze hoeveelheid',
+  'item_not_in_stock' => 'Het spijt ons! Dit artikel is niet op voorraad',
   'item_removed_from_cart' => 'Item is verwijderd',
   'email_account_not_found' => 'We kunnen geen gebruiker vinden met dat e-mailadres.',
   'password_reset_link_sent' => 'De link voor het opnieuw instellen van het wachtwoord is verzonden! Controleer uw e-mail.',

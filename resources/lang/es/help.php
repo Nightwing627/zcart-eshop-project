@@ -340,4 +340,5 @@ return array (
   'marketplace_business_area' => 'El área de negocios del mercado',
   'notify_new_chat' => 'Enviarme una notificación por correo electrónico cuando llegue un nuevo mensaje de chat',
   'not_in_business_area' => 'Esta área no está en el área comercial activa del mercado. Quizás eliminado recientemente por el administrador del mercado.',
+  'region_iso_code' => 'El código ISO de la región debe tener que ser correcto. Lea la sección * Área comercial * en la documentación para obtener ayuda.',
 );

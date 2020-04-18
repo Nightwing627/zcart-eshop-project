@@ -340,4 +340,5 @@ return array (
   'marketplace_business_area' => 'Affärsområdet marknadsplats',
   'notify_new_chat' => 'Skicka ett e-postmeddelande när ett nytt chattmeddelande kom',
   'not_in_business_area' => 'Detta område finns inte på marknadens aktiva affärsområde. Kanske har nyligen tagits bort av marknadsadministratören.',
+  'region_iso_code' => 'Regionens ISO-kod måste vara rätt. Läs avsnittet * Affärsområde * i dokumentationen för att få hjälp.',
 );

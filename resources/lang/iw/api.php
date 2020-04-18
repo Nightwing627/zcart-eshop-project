@@ -14,6 +14,7 @@ return array (
   'item_alrealy_in_wishlist' => 'הפריט כבר ברשימת המשאלות שלך',
   'item_max_stock' => 'למוכר זה מלאי מוגבל',
   'item_minimum_qtt' => 'אינך יכול לבצע הזמנה מתחת לכמות זו',
+  'item_not_in_stock' => 'אנחנו מצטערים! פריט זה לא במלאי',
   'item_removed_from_cart' => 'הפריט הוסר',
   'email_account_not_found' => 'איננו יכולים למצוא משתמש עם כתובת דואר אלקטרוני זו.',
   'password_reset_link_sent' => 'קישור איפוס הסיסמה נשלח! אנא בדוק את הדוא"ל שלך.',

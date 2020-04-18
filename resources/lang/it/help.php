@@ -340,4 +340,5 @@ return array (
   'marketplace_business_area' => 'L\'area di mercato',
   'notify_new_chat' => 'Inviami una notifica via email quando arriva un nuovo messaggio di chat',
   'not_in_business_area' => 'Quest\'area non si trova nell\'area di attività attiva del mercato. Forse rimosso di recente dall\'amministratore del marketplace.',
+  'region_iso_code' => 'Il codice ISO della regione deve essere corretto. Leggi la sezione * Business Area * sulla documentazione per ottenere assistenza.',
 );

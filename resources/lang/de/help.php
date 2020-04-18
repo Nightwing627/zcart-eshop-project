@@ -340,4 +340,5 @@ return array (
   'marketplace_business_area' => 'Das Geschäftsfeld des Marktplatzes',
   'notify_new_chat' => 'Senden Sie mir eine E-Mail-Benachrichtigung, wenn eine neue Chat-Nachricht eingetroffen ist',
   'not_in_business_area' => 'Dieser Bereich befindet sich nicht im aktiven Geschäftsbereich des Marktes. Möglicherweise vor kurzem vom Marktplatz-Administrator entfernt.',
+  'region_iso_code' => 'Der ISO-Code der Region muss stimmen. Lesen Sie den Abschnitt * Geschäftsbereich * in der Dokumentation, um Hilfe zu erhalten.',
 );

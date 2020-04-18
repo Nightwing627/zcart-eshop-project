@@ -14,6 +14,7 @@ return array (
   'item_alrealy_in_wishlist' => 'Item sudah ada di wishlist Anda',
   'item_max_stock' => 'Penjual ini memiliki stok terbatas',
   'item_minimum_qtt' => 'Anda tidak dapat memesan di bawah jumlah ini',
+  'item_not_in_stock' => 'Kami meminta maaf! Barang ini tidak ada stok',
   'item_removed_from_cart' => 'Item telah dihapus',
   'email_account_not_found' => 'Kami tidak dapat menemukan pengguna dengan alamat email itu.',
   'password_reset_link_sent' => 'Tautan pengaturan ulang kata sandi terkirim! Silakan periksa email Anda.',

@@ -14,6 +14,7 @@ return array (
   'item_alrealy_in_wishlist' => 'Zaten istek listenizdeki öğe',
   'item_max_stock' => 'Bu satıcıda sınırlı stok mevcut',
   'item_minimum_qtt' => 'Bu miktarın altına sipariş veremezsiniz',
+  'item_not_in_stock' => 'Üzgünüz! Bu ürün stokta yok',
   'item_removed_from_cart' => 'Öğe kaldırıldı',
   'email_account_not_found' => 'Bu e-posta adresine sahip bir kullanıcı bulamıyoruz.',
   'password_reset_link_sent' => 'Şifre sıfırlama bağlantısı gönderildi! Lütfen emailinizi kontrol edin.',

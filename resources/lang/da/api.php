@@ -14,6 +14,7 @@ return array (
   'item_alrealy_in_wishlist' => 'Varen findes allerede på din ønskeliste',
   'item_max_stock' => 'Denne sælger har begrænset lagerbeholdning',
   'item_minimum_qtt' => 'Du kan ikke placere en ordre under dette antal',
+  'item_not_in_stock' => 'Vi er kede af det! Denne vare er ikke på lager',
   'item_removed_from_cart' => 'Varen er blevet fjernet',
   'email_account_not_found' => 'Vi kan ikke finde en bruger med den e-mail-adresse.',
   'password_reset_link_sent' => 'Linket til nulstilling af adgangskode er sendt! Tjek venligst din email.',

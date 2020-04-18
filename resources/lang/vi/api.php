@@ -14,6 +14,7 @@ return array (
   'item_alrealy_in_wishlist' => 'Mục đã có trong danh sách mong muốn của bạn',
   'item_max_stock' => 'Người bán này có sẵn cổ phiếu hạn chế',
   'item_minimum_qtt' => 'Bạn không thể đặt hàng dưới số lượng này',
+  'item_not_in_stock' => 'Chúng tôi xin lỗi! Mặt hàng này không có trong kho',
   'item_removed_from_cart' => 'Mục đã được gỡ bỏ',
   'email_account_not_found' => 'Chúng tôi không thể tìm thấy người dùng có địa chỉ email đó.',
   'password_reset_link_sent' => 'Liên kết đặt lại mật khẩu đã được gửi! Vui lòng kiểm tra email của bạn.',

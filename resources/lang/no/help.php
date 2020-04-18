@@ -340,4 +340,5 @@ return array (
   'marketplace_business_area' => 'Forretningsområdet for markedsplassen',
   'notify_new_chat' => 'Send meg en e-postvarsling da en ny chatmelding kom',
   'not_in_business_area' => 'Dette området er ikke i markedets aktive forretningsområde. Kanskje nylig blitt fjernet av markedsadministratoren.',
+  'region_iso_code' => 'Regionens ISO-kode må være riktig. Les * Forretningsområde * i dokumentasjonen for å få hjelp.',
 );

@@ -14,6 +14,7 @@ return array (
   'item_alrealy_in_wishlist' => 'Objekt redan i din önskelista',
   'item_max_stock' => 'Denna säljare har begränsat lager tillgängligt',
   'item_minimum_qtt' => 'Du kan inte göra en beställning under denna mängd',
+  'item_not_in_stock' => 'Vi är ledsna! Denna artikel finns inte i lager',
   'item_removed_from_cart' => 'Objektet har tagits bort',
   'email_account_not_found' => 'Vi kan inte hitta en användare med den e-postadressen.',
   'password_reset_link_sent' => 'Länken för återställning av lösenord skickad! Kontrollera din e-post.',

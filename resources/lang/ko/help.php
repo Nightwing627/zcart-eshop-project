@@ -340,4 +340,5 @@ return array (
   'marketplace_business_area' => '시장 사업 영역',
   'notify_new_chat' => '새로운 채팅 메시지가 도착하면 이메일 알림을 보내주세요',
   'not_in_business_area' => '이 영역은 마켓 플레이스의 활성 비즈니스 영역에 없습니다. 마켓 플레이스 관리자가 최근에 제거한 것 같습니다.',
+  'region_iso_code' => '지역 ISO 코드가 정확해야합니다. 도움이 필요하면 설명서의 * 사업 영역 * 섹션을 읽으십시오.',
 );

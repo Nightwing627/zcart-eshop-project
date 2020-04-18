@@ -340,4 +340,5 @@ return array (
   'marketplace_business_area' => 'Khu vực kinh doanh thị trường',
   'notify_new_chat' => 'Gửi cho tôi một thông báo email khi có tin nhắn trò chuyện mới',
   'not_in_business_area' => 'Khu vực này không nằm trong khu vực kinh doanh đang hoạt động của thị trường. Có lẽ gần đây đã bị gỡ bỏ bởi các quản trị viên thị trường.',
+  'region_iso_code' => 'Mã ISO khu vực phải có quyền. Đọc phần * Khu vực kinh doanh * trên tài liệu để nhận trợ giúp.',
 );

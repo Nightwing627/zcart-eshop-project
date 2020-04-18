@@ -14,6 +14,7 @@ return array (
   'item_alrealy_in_wishlist' => 'مورد موجود در لیست دلخواه شما است',
   'item_max_stock' => 'این فروشنده دارای سهام محدود است',
   'item_minimum_qtt' => 'شما نمی توانید سفارش زیر این مقدار بدهید',
+  'item_not_in_stock' => 'ما متاسفیم! این مورد موجود نیست',
   'item_removed_from_cart' => 'مورد حذف شده است',
   'email_account_not_found' => 'ما نمی توانیم یک کاربر با آن آدرس ایمیل پیدا کنیم.',
   'password_reset_link_sent' => 'پیوند تنظیم مجدد رمز عبور ارسال شد! لطفا ایمیل خود را چک کنید.',
