@@ -87,16 +87,14 @@ class SubscriptionController extends Controller
             return redirect()->route('admin.account.billing')->with('warning', trans('messages.demo_restriction'));
 
         try {
-            $ccToken = $request->input('cc_token');
 
-            if ($request->user()->hasBillingToken()) {
-                $request->user()->shop->updateCard($ccToken);
-            }
-            else{
-                $request->user()->shop->createAsStripeCustomer($ccToken, [
+            if (!$request->user()->hasBillingToken()) {
+                $request->user()->shop->createAsStripeCustomer([
                     'email' => $request->user()->email
                 ]);
             }
+
+            $request->user()->shop->updateCard($request->input('cc_token'));
         }
         catch(\Stripe\Error\Card $e){
             $response = $e->getJsonBody();
