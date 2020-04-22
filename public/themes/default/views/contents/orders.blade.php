@@ -66,16 +66,44 @@
                   </div>
               </td>
               @if($loop->first)
-                <td rowspan="{{ $loop->count }}" class="order-actions">
-                  <a href="{{ route('order.invoice', $order) }}" class="btn btn-default btn-sm btn-block flat">@lang('theme.invoice')</a>
 
-                  <a href="{{ route('order.track', $order) }}" class="btn btn-black btn-sm btn-block flat">@lang('theme.button.track_order')</a>
-                  @if($order->goods_received)
-                    <a href="{{ route('order.feedback', $order) }}" class="btn btn-primary btn-sm btn-block flat">@lang('theme.button.give_feedback')</a>
+                <td rowspan="{{ $loop->count }}" class="order-actions">
+                  @if($order->isCanceled())
+
+                    <button class="btn btn-warning btn-sm btn-block flat"><i class="fa fa-ban"></i> @lang('theme.canceled')</button>
+
+                    <a href="{{ route('order.again', $order) }}" class="btn btn-primary btn-sm btn-block flat">
+                      <i class="fa fa-shopping-cart"></i> @lang('theme.order_again')
+                    </a>
+
                   @else
-                    {!! Form::model($order, ['method' => 'PUT', 'route' => ['goods.received', $order]]) !!}
-                      {!! Form::button(trans('theme.button.confirm_goods_received'), ['type' => 'submit', 'class' => 'confirm btn btn-primary btn-block flat', 'data-confirm' => trans('theme.confirm_action.goods_received')]) !!}
-                    {!! Form::close() !!}
+
+                    <a href="{{ route('order.invoice', $order) }}" class="btn btn-default btn-sm btn-block flat">
+                      <i class="fa fa-cloud-download"></i> @lang('theme.invoice')
+                    </a>
+
+                    @if($order->canTrack())
+                      <a href="{{ route('order.track', $order) }}" class="btn btn-black btn-sm btn-block flat">
+                        <i class="fa fa-map-marker"></i> @lang('theme.button.track_order')
+                      </a>
+                    @endif
+
+                    @if($order->canBeCanceled())
+                      {!! Form::model($order, ['method' => 'PUT', 'route' => ['order.cancel', $order]]) !!}
+                        {!! Form::button('<i class="fa fa-times-circle-o"></i> ' . trans('theme.cancel_order'), ['type' => 'submit', 'class' => 'confirm btn btn-default btn-block flat', 'data-confirm' => trans('theme.confirm_action.cant_undo')]) !!}
+                      {!! Form::close() !!}
+                    @endif
+
+                    @if($order->goods_received)
+                      <a href="{{ route('order.feedback', $order) }}" class="btn btn-primary btn-sm btn-block flat">
+                        @lang('theme.button.give_feedback')
+                      </a>
+                    @else
+                      {!! Form::model($order, ['method' => 'PUT', 'route' => ['goods.received', $order]]) !!}
+                        {!! Form::button(trans('theme.button.confirm_goods_received'), ['type' => 'submit', 'class' => 'confirm btn btn-primary btn-block flat', 'data-confirm' => trans('theme.confirm_action.goods_received')]) !!}
+                      {!! Form::close() !!}
+                    @endif
+
                   @endif
 
                   <a href="{{ route('order.detail', $order) . '#message-section' }}" class="btn btn-link btn-block">

@@ -17,7 +17,7 @@ class System extends BaseModel
      *
      * @var string
      */
-    const VERSION = '2.0.2'; // The current version
+    const VERSION = '2.0.3'; // The current version
 
     /**
      * The database table used by the model.

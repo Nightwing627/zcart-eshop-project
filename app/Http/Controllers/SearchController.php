@@ -24,7 +24,7 @@ class SearchController extends Controller
         if(! $request->user()->shop->canUseSystemCatalog())
             $query->where('shop_id', $request->user()->merchantId());
 
-        $products = $query->take(5)->get();
+        $products = $query->take(10)->get();
 
         $results = '';
 

@@ -1733,6 +1733,7 @@ if ( ! function_exists('get_order_status_name') )
             case Order::STATUS_AWAITING_DELIVERY: return trans("app.statuses.awaiting_delivery");
             case Order::STATUS_DELIVERED: return trans("app.statuses.delivered");
             case Order::STATUS_RETURNED: return trans("app.statuses.refunded");
+            case Order::STATUS_CANCELED: return trans("app.canceled");
             default: return '';
         }
     }

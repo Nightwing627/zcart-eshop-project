@@ -14,7 +14,7 @@ Route::delete('inventory/emptyTrash', 'InventoryController@emptyTrash')->name('i
 // inventories
 Route::delete('inventory/{inventory}/trash', 'InventoryController@trash')->name('inventory.trash'); // inventory move to trash
 Route::get('inventory/{inventory}/restore', 'InventoryController@restore')->name('inventory.restore');
-Route::get('inventory/setVariant/{inventory}', 'InventoryController@setVariant')->name('inventory.setVariant');
+Route::get('inventory/setVariant/{product}', 'InventoryController@setVariant')->name('inventory.setVariant');
 Route::get('inventory/add/{product}', 'InventoryController@add')->name('inventory.add');
 Route::get('inventory/addWithVariant/{product}', 'InventoryController@addWithVariant')->name('inventory.addWithVariant');
 Route::post('inventory/storeWithVariant', 'InventoryController@storeWithVariant')->name('inventory.storeWithVariant');

@@ -1438,6 +1438,7 @@ return [
     'cybersource_api_key_id' => 'API key ID',
     'cybersource_merchant_id' => 'Merchant ID',
     'cybersource_secret' => 'Secret Key',
+    'canceled' => 'Canceled',
 
     // Version 2.1.0
     'chats' => 'Chats',

@@ -599,6 +599,10 @@ return [
 	'subject' => 'Subject',
 	'unread_messages' => 'Unread messages',
 	'std_delivery_time' => 'Standard delivery time',
+    'cancel_order' 		=> 'Cancel Order',
+    'canceled' 		=> 'Canceled',
+	'order_canceled' => 'The order has been canceled!',
+	'order_again' => 'Order Again',
 
     // Version 2.1.0
     'chat_welcome' => 'Hey! Have a question?',

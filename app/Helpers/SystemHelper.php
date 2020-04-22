@@ -330,7 +330,6 @@ if ( ! function_exists('saveOrderFromCart') )
             $item->decrement('stock_quantity', $item->pivot->quantity);
         }
 
-
         // Reduce the coupone in use
         if ($order->coupon_id)
             Coupon::find($order->coupon_id)->decrement('quantity');
@@ -340,7 +339,7 @@ if ( ! function_exists('saveOrderFromCart') )
     }
 }
 
-if ( ! function_exists('revertOrderAndMoveToCart') )
+if ( ! function_exists('moveAllItemsToCartAgain') )
 {
     /**
      * Revert order to cart
@@ -349,7 +348,7 @@ if ( ! function_exists('revertOrderAndMoveToCart') )
      *
      * @return App\Cart
      */
-    function revertOrderAndMoveToCart($order)
+    function moveAllItemsToCartAgain($order, $revert = false)
     {
         if( !$order instanceOf Order )
             $order = Order::find($order);
@@ -372,14 +371,20 @@ if ( ! function_exists('revertOrderAndMoveToCart') )
                 'created_at'        => $item->created_at,
                 'updated_at'        => $item->updated_at,
             ];
+
+            // Sync up the inventory. Increase the stock of the order items from the listing
+            if($revert)
+                $item->increment('stock_quantity', $item->quantity);
         }
         \DB::table('cart_items')->insert($cart_items);
 
-        // Increment the coupone in use
-        if ($order->coupon_id)
-            Coupon::find($order->coupon_id)->increment('quantity');
+        if($revert){
+            // Increment the coupone in use
+            if ($order->coupon_id)
+                Coupon::find($order->coupon_id)->increment('quantity');
 
-        $order->forceDelete();   // Delete the order
+            $order->forceDelete();   // Delete the order
+        }
 
         return $cart;
     }

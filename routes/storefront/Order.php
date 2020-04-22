@@ -17,6 +17,8 @@
 		Route::get('order/invoice/{order}', 'OrderController@invoice')->name('order.invoice');
 		Route::get('order/track/{order}', 'OrderController@track')->name('order.track');
 		Route::put('order/goodsReceived/{order}', 'OrderController@goods_received')->name('goods.received');
+		Route::put('order/cancel/{order}', 'OrderController@cancel')->name('order.cancel');
+		Route::get('order/again/{order}', 'OrderController@again')->name('order.again');
 
 		// Conversations
 		Route::post('order/conversation/{order}', 'ConversationController@order_conversation')->name('order.conversation');

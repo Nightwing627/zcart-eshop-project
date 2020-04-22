@@ -143,7 +143,6 @@ class OrderController extends Controller
         return redirect()->route('order.success', $order)->with('success', trans('theme.notify.order_placed'));
     }
 
-
     private function chargeWithCyberSource($request, Order $order)
     {
         // Get the vendor configs
@@ -608,8 +607,7 @@ class OrderController extends Controller
 
     public function paymentFailed(Request $request, $order)
     {
-        // $cart = $this->revertOrder($order);
-        $cart = revertOrderAndMoveToCart($order);
+        $cart = moveAllItemsToCartAgain($order, true);
 
         return redirect()->route('cart.checkout', $cart)->with('error', trans('theme.notify.payment_failed'))->withInput();
     }
@@ -702,6 +700,32 @@ class OrderController extends Controller
         event(new OrderPaid($order));
 
         return $order;
+    }
+
+    /**
+     * Order again by moving all items into th cart
+     */
+    public function again(Request $request, Order $order)
+    {
+        $cart = moveAllItemsToCartAgain($order);
+
+        return redirect()->route('cart.checkout', $cart)->with('success', trans('theme.notify.cart_updated'));
+    }
+
+    /**
+     * Cancel the order and revert the items into available stock
+     */
+    public function cancel(OrderDetailRequest $request, Order $order)
+    {
+        $order->cancel();
+
+        // Sync up the inventory. Increase the stock of the order items from the listing
+        $order_items = $order->inventories->pluck('pivot');
+        foreach ($order_items as $item) {
+            $item->increment('stock_quantity', $item->quantity);
+        }
+
+        return redirect()->back()->with('success', trans('theme.order_canceled'));
     }
 
     private function logErrors($error, $feedback)

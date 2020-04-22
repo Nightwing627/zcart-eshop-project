@@ -20,6 +20,7 @@ class Order extends BaseModel
     const STATUS_AWAITING_DELIVERY      = 5;
     const STATUS_DELIVERED              = 6;
     const STATUS_RETURNED               = 7;
+    const STATUS_CANCELED               = 8;
 
     const PAYMENT_STATUS_UNPAID             = 1;       // Default
     const PAYMENT_STATUS_PENDING            = 2;
@@ -400,6 +401,16 @@ class Order extends BaseModel
     }
 
     /**
+     * Check if the order has been Canceled
+     *
+     * @return boolean
+     */
+    public function isCanceled()
+    {
+        return $this->order_status_id == static::STATUS_CANCELED;
+    }
+
+    /**
      * Check if the order has been archived
      *
      * @return boolean
@@ -438,6 +449,26 @@ class Order extends BaseModel
             return str_replace('@', $this->tracking_id, $this->carrier->tracking_url);
 
         return Null;
+    }
+
+    /**
+     * Check if the order has been Canceled
+     *
+     * @return boolean
+     */
+    public function canBeCanceled()
+    {
+        return ! $this->isCanceled() && ! $this->isFulfilled();
+    }
+
+    /**
+     * Check if the order has been tracked
+     *
+     * @return boolean
+     */
+    public function canTrack()
+    {
+        return $this->isFulfilled() && $this->tracking_id;
     }
 
     /**
@@ -525,6 +556,12 @@ class Order extends BaseModel
         $invoice->render(get_platform_title() . '-' . $this->order_number .'.pdf', $des);
     }
 
+    public function cancel()
+    {
+        $this->order_status_id = static::STATUS_CANCELED;
+        $this->save();
+    }
+
     /**
      * [orderStatus description]
      *
@@ -542,6 +579,7 @@ class Order extends BaseModel
         switch ($this->order_status_id) {
             case static::STATUS_WAITING_FOR_PAYMENT:
             case static::STATUS_PAYMENT_ERROR:
+            case static::STATUS_CANCELED:
             case static::STATUS_RETURNED:
                 return '<span class="label label-danger">' . $order_status . '</span>';
 
