@@ -171,10 +171,10 @@ class Message extends BaseModel
 
     public function about()
     {
-        if($this->order_id){
+        if($this->order){
             $str = trans('app.order') . ': ' . $this->order->order_number;
         }
-        else if($this->product_id){
+        else if($this->item){
             $str = trans('app.product') . ': ' . $this->item->sku;
         }
 
