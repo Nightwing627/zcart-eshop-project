@@ -442,7 +442,8 @@ class Shop extends BaseModel
     {
         if($this->canUseSystemCatalog()) return true;
 
-        $product = Product::select('shop_id')->where('id', $product)->first();
+        if(! $product instanceof Product)
+            $product = Product::select('shop_id')->where('id', $product)->first();
 
         if(!$product) return false;
 

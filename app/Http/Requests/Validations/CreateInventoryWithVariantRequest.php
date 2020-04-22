@@ -13,7 +13,9 @@ class CreateInventoryWithVariantRequest extends Request
      */
     public function authorize()
     {
-        return $this->user()->shop->canAddThisInventory($this->product_id);
+        $tempObj = json_decode($this->product);
+
+        return $this->user()->shop->canAddThisInventory($tempObj->id);
     }
 
     /**
