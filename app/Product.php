@@ -7,11 +7,12 @@ use App\Common\Taggable;
 use App\Common\Imageable;
 use App\Common\Feedbackable;
 use Laravel\Scout\Searchable;
+use App\Common\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends BaseModel
 {
-    use SoftDeletes, Taggable, Imageable, Searchable, Feedbackable;
+    use SoftDeletes, CascadeSoftDeletes, Taggable, Imageable, Searchable, Feedbackable;
 
     /**
      * The database table used by the model.
@@ -19,6 +20,13 @@ class Product extends BaseModel
      * @var string
      */
     protected $table = 'products';
+
+    /**
+     * Cascade Soft Deletes Relationships
+     *
+     * @var array
+     */
+    protected $cascadeDeletes = ['inventories'];
 
     /**
      * The attributes that should be casted to boolean types.

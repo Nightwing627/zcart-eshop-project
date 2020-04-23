@@ -7,13 +7,17 @@
             $t_category = $item->product->categories->first();
           @endphp
           <ol class="breadcrumb nav-breadcrumb">
-            @if($t_category->subGroup)
+            @if($t_category && $t_category->subGroup)
+
               @if($t_category->subGroup->group)
                 @include('headers.lists.category_grp', ['category' => $t_category->subGroup->group])
               @endif
+
               @include('headers.lists.category_subgrp', ['category' => $t_category->subGroup])
+
+              @include('headers.lists.category', ['category' => $t_category])
+
             @endif
-            @include('headers.lists.category', ['category' => $t_category])
             <li class="active">{!! $item->title !!}</li>
           </ol>
         </div>
