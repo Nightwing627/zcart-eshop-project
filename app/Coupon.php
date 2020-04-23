@@ -269,16 +269,6 @@ class Coupon extends BaseModel
         return $query->where('active', 1)->where('starting_time', '<', Carbon::now())->where('ending_time', '>', Carbon::now());
     }
 
-    /**
-     * Scope a query to only include records from the users shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeMine($query)
-    {
-        return $query->where('shop_id', Auth::user()->merchantId);
-    }
-
     public function getFormatedAmountText()
     {
         return $this->type == 'amount' ?

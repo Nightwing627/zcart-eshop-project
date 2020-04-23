@@ -54,7 +54,7 @@
 		</div> <!-- /.box-body -->
 	</div> <!-- /.box -->
 
-	@if(Auth::user()->isFromPlatform())
+	{{-- @if(Auth::user()->isFromPlatform()) --}}
 		<div class="box collapsed-box">
 			<div class="box-header with-border">
 				<h3 class="box-title">
@@ -115,5 +115,5 @@
 				</table>
 			</div> <!-- /.box-body -->
 		</div> <!-- /.box -->
-	@endif
+	{{-- @endif --}}
 @endsection
