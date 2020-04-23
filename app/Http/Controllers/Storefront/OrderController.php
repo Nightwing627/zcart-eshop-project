@@ -720,9 +720,8 @@ class OrderController extends Controller
         $order->cancel();
 
         // Sync up the inventory. Increase the stock of the order items from the listing
-        $order_items = $order->inventories->pluck('pivot');
-        foreach ($order_items as $item) {
-            $item->increment('stock_quantity', $item->quantity);
+        foreach ($order->inventories as $item) {
+            $item->increment('stock_quantity', $item->pivot->quantity);
         }
 
         return redirect()->back()->with('success', trans('theme.order_canceled'));
