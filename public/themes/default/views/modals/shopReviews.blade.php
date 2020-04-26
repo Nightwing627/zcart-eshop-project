@@ -54,7 +54,7 @@
                     {{ trans('theme.return_and_refund_policy') }}
                   </a></li>
                   @endif
-                  <li><a href="#reviews_tab" data-toggle="tab">
+                  <li><a href="#shop_reviews_tab" data-toggle="tab">
                     {{ trans('theme.latest_reviews') }}
                   </a></li>
                 </ul>
@@ -67,7 +67,7 @@
                         {!! $shop->config->return_refund !!}
                     </div> <!-- /.tab-pane -->
 
-                    <div class="tab-pane" id="reviews_tab">
+                    <div class="tab-pane" id="shop_reviews_tab">
                         @forelse($shop->feedbacks->sortByDesc('created_at') as $feedback)
                             <p>
                                 <b>{{ $feedback->customer->nice_name ?? $feedback->customer->name  }}</b>

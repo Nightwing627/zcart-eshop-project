@@ -228,39 +228,11 @@
             });
         });
 
-        //Country
-        // $("#address_country_id").on('change', function() {
-        //     var ID = $("#address_country_id").select2('data')[0].id;
-            {{-- // var url = "{{ route('ajax.getCountryStates') }}" --}}
+        // Shop feedback
+        $('.shop-rating-count').on('click', function(e) {
+            $('ul.nav a[href="' + $(this).data('tab') + '"]').tab('show');
+        });
 
-        //     $.ajax({
-        //       delay: 250,
-        //       data: "id="+ID,
-        //       url: url,
-        //       success: function(result){
-        //         var data = [];
-        //         if(result.length !== 0){
-        //           data = $.map(result, function(val, id) {
-        //               return { id: id, text: val };
-        //           })
-        //         }
-
-        //         // console.log(data);
-        //         // $("#state_id").select2({
-        //         //   allowClear: true,
-        //         //   tags: true,
-        //         {{-- //   placeholder: "{{ trans('app.placeholder.state') }}", --}}
-        //         //   data: data,
-        //         //   sortResults: function(results, container, query) {
-        //         //       if (query.term) {
-        //         //           return results.sort();
-        //         //       }
-        //         //       return results;
-        //         //   }
-        //         // });
-        //       }
-        //     });
-        // });
     });
 
     //App plugins

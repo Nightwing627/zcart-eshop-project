@@ -31,6 +31,9 @@
     <!-- bottom Banner -->
     @include('banners.bottom')
 
+    <!-- MODALS -->
+    @include('modals.shopReviews', ['shop' => $item->shop])
+
     @if(Auth::guard('customer')->check())
       @include('modals.contact_seller')
     @endif

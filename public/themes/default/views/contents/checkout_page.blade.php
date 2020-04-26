@@ -40,7 +40,7 @@
         </div>
 
         <div class="col-md-4 bg-light">
-          <div class="seller-info">
+          <div class="seller-info space20">
             <div class="text-muted small">@lang('theme.sold_by')</div>
 
             <img src="{{ get_storage_file_url(optional($shop->image)->path, 'tiny') }}" class="seller-info-logo img-sm img-circle" alt="{{ trans('theme.logo') }}">
@@ -50,10 +50,17 @@
             </a>
           </div><!-- /.seller-info -->
 
-          <hr class="style1 muted"/>
+          <div class="input-group full-width space30">
+            <span class="input-group-addon flat">
+              <i class="fa fa-ticket"></i>
+            </span>
+            <input name="coupon" value="{{ $cart->coupon ? $cart->coupon->code : Null }}" id="coupon{{$cart->id}}" class="form-control flat" type="text" placeholder="@lang('theme.placeholder.have_coupon_from_seller')">
+            <span class="input-group-btn">
+              <button class="btn btn-default flat apply_seller_coupon" type="button" data-cart="{{$cart->id}}">@lang('theme.button.apply_coupon')</button>
+            </span>
+          </div><!-- /input-group -->
 
           {{ Form::hidden('cart_id', $cart->id, ['id' => 'checkout-id']) }}
-          {{-- {{ Form::hidden('cart_id', $cart->id, ['id' => 'cart-id'.$cart->id]) }} --}}
           {{ Form::hidden('shop_id', $cart->shop->id, ['id' => 'shop-id'.$cart->id]) }}
           {{ Form::hidden('tax_id', isset($shipping_zone->id) ? $shipping_zone->tax_id : Null, ['id' => 'tax-id'.$cart->id]) }}
           {{ Form::hidden('taxrate', $cart->taxrate, ['id' => 'cart-taxrate'.$cart->id]) }}
@@ -154,19 +161,24 @@
                   @foreach($customer->addresses as $address)
                     @php
                       $ship_to_this_address = Null;
-                      if($pre_select == Null){  // If any address not selected yet
-                        if($customer->addresses->count() == 1) {  // Has onely address
+                      // If any address not selected yet
+                      if($pre_select == Null){
+                        // Has onely address
+                        if($customer->addresses->count() == 1) {
                           $pre_select = 1; $ship_to_this_address = TRUE;
                         }
-                        elseif(Request::has('address')) { // Just created this address
+                        // Just created this address
+                        elseif(Request::has('address')) {
                           if(request()->address == $address->id){
                             $pre_select = 1; $ship_to_this_address = TRUE;
                           }
                         }
-                        elseif($cart->ship_to == $address->country_id) {  // Zone selected at cart page
+                        // Zone selected at cart page
+                        elseif($cart->ship_to_country_id == $address->country_id) {
                           $pre_select = 1; $ship_to_this_address = TRUE;
                         }
-                        elseif($cart->ship_to == Null && $address->address_type === 'Shipping') {  // Customer's shipping address
+                        // Customer's shipping address
+                        elseif($cart->ship_to == Null && $address->address_type === 'Shipping') {
                           $pre_select = 1; $ship_to_this_address = TRUE;
                         }
                       }

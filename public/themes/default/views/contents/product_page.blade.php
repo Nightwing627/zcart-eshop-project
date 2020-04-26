@@ -116,13 +116,23 @@
 
 				  	<div class="col-md-5 col-sm-6 nopadding-right">
 				        <div class="seller-info space30">
-				            <div class="text-muted small">@lang('theme.sold_by')</div>
+				            <div class="text-muted small space10">
+				            	@lang('theme.sold_by')
+				            	<a href="{{ route('show.store', $item->shop->slug) }}" class="btn-link pull-right">
+				            		{{ trans('theme.button.visit_store') }}
+				            	</a>
+				            </div>
 
 							<img src="{{ get_storage_file_url(optional($item->shop->image)->path, 'thumbnail') }}" class="seller-info-logo img-sm img-circle" alt="{{ trans('theme.logo') }}">
 
-				            <a href="{{ route('show.store', $item->shop->slug) }}" class="seller-info-name">
+					        <a href="javascript:void(0)" data-toggle="modal" data-target="#shopReviewsModal" class="seller-info-name">
 				            	{!! $item->shop->getQualifiedName() !!}
 				            </a>
+
+				            <div class="space10"></div>
+
+							@include('layouts.ratings', ['ratings' => $item->shop->feedbacks->avg('rating'), 'count' => $item->shop->feedbacks_count, 'shop' => true])
+
 				        </div><!-- /.seller-info -->
 
 			          	<a data-link="{{ route('cart.addItem', $item->slug) }}" class="btn btn-primary btn-lg btn-block flat space10 sc-add-to-cart">

@@ -12,10 +12,14 @@
 	@endif
 
 	@if(isset($count) && $count)
-		@if(isset($item))
-			<a href="{{ route('show.product', $item->slug) . '#reviews_tab' }}" class="product-info-rating-count">({{ get_formated_decimal($ratings,true,1) }}) {{ trans_choice('theme.reviews', $count, ['count' => $count]) }}</a>
-		@else
-			<a class="product-info-rating-count">({{ get_formated_decimal($ratings,true,1) }}) {{ trans_choice('theme.reviews', $count, ['count' => $count]) }}</a>
+		@if(isset($shop) && $shop)
+	        <a href="javascript:void(0)" data-toggle="modal" data-target="#shopReviewsModal" data-tab="#shop_reviews_tab" class="rating-count shop-rating-count">
+	        	({{ get_formated_decimal($ratings,true,1) }}) {{ trans_choice('theme.reviews', $count, ['count' => $count]) }}
+			</a>
+		@elseif(isset($item))
+			<a href="{{ route('show.product', $item->slug) . '#reviews_tab' }}" class="rating-count product-rating-count">
+				({{ get_formated_decimal($ratings,true,1) }}) {{ trans_choice('theme.reviews', $count, ['count' => $count]) }}
+			</a>
 		@endif
 	@endif
 </div>

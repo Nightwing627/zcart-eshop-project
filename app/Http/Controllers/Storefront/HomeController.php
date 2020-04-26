@@ -142,6 +142,8 @@ class HomeController extends Controller
                 }]);
             }, 'attributeValues' => function($q){
                 $q->select('id', 'attribute_values.attribute_id', 'value', 'color', 'order')->with('attribute:id,name,attribute_type_id,order');
+            }, 'shop' => function($q){
+                $q->withCount('feedbacks');
             },
             'feedbacks.customer:id,nice_name,name',
             'images:id,path,imageable_id,imageable_type',

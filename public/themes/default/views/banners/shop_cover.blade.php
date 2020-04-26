@@ -8,7 +8,7 @@
                 </a>
 			</h5>
             <span class="small">
-	            @include('layouts.ratings', ['ratings' => $shop->feedbacks->avg('rating'), 'count' => $shop->feedbacks->count()])
+	            @include('layouts.ratings', ['ratings' => $shop->feedbacks->avg('rating'), 'count' => $shop->feedbacks->count(), 'shop' => true])
 	        </span>
 			<p class="member-since small">{{ trans('theme.member_since') }}: {{ $shop->created_at->diffForHumans() }}</p>
 		</div>

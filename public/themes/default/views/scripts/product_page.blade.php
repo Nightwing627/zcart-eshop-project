@@ -106,7 +106,7 @@ foreach ($variants as &$value) {
             if(tabs.indexOf(window.location.hash) != -1)
                 $('html,body').animate({scrollTop:$("#item-desc-section").offset().top}, 500);
         });
-        $('.product-info-rating-count').on('click', function(e) {
+        $('.product-rating-count').on('click', function(e) {
             $('html,body').animate({scrollTop:$("#item-desc-section").offset().top}, 500);
             $('ul.nav a[href="' + this.hash + '"]').tab('show');
         });

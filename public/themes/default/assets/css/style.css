@@ -2515,7 +2515,7 @@ table .product-info-price .percent-off {
     /*margin-right: 3px;*/
     color: #d9d9d9;
 }
-.product-info-rating-count{
+.rating-count{
   margin-left: 10px;
   font-size: 71%;
   line-height: 1em;
@@ -2967,7 +2967,7 @@ table .product-info-price .percent-off {
     max-width: 50%;
     -webkit-filter: drop-shadow(1px 1px 3px rgba(0,0,0,0.2));
 }
-.banner .product-info-rating-count {
+.banner .rating-count {
   color: #fff!important;
 }
 .member-since {
