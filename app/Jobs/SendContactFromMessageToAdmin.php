@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\System;
-use App\ContactUs;
+use App\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -29,7 +29,7 @@ class SendContactFromMessageToAdmin implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(ContactUs $message)
+    public function __construct(Message $message)
     {
         $this->message = $message;
     }

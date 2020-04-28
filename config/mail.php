@@ -138,4 +138,19 @@ return [
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Universal To
+    |--------------------------------------------------------------------------
+    |
+    | Another solution provided by Laravel is to set a universal recipient of
+    | all emails sent by the framework. This way, all the emails generated
+    | by your application will be sent to a specific address, instead
+    | of the address actually specified when sending the message.
+    |
+    */
+    // 'to' => [
+    //     'address' => 'example@example.com',
+    //     'name' => 'Example'
+    // ],
 ];

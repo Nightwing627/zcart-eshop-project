@@ -39,4 +39,8 @@ return [
     // Version 1.4.0
     'invalid_data' => 'Invalid data.',
 
+    // Version 2.0.3
+    'resource_not_found' => 'Resource not found.',
+    'unauthenticated' => 'Unauthenticated.',
+
 ];

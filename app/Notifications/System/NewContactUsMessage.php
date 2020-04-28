@@ -2,7 +2,7 @@
 
 namespace App\Notifications\System;
 
-use App\ContactUs;
+use App\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -19,7 +19,7 @@ class NewContactUsMessage extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(ContactUs $message)
+    public function __construct(Message $message)
     {
         $this->message = $message;
     }

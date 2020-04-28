@@ -27,6 +27,14 @@ class EventServiceProvider extends ServiceProvider
         //     'App\Listeners\Blog\EmailConversationSubscribers',
         // ],
 
+        // Email senting events
+        'Illuminate\Mail\Events\MessageSending' => [
+            'App\Listeners\Mail\LogSendingMessage',
+        ],
+        'Illuminate\Mail\Events\MessageSent' => [
+            'App\Listeners\Mail\LogSentMessage',
+        ],
+
         // Announcement Events
         'App\Events\Announcement\AnnouncementCreated' => [
             'App\Listeners\Announcement\SendAnnouncementCreatedNotification',
@@ -210,13 +218,12 @@ class EventServiceProvider extends ServiceProvider
         });
 
         Queue::before(function (JobProcessing $event) {
-            Log::info('..................................................................');
-            Log::info('JobProcessing: ', ['payload' => $event->job->payload()]);
+            Log::info('............. Job Processing:: '. $event->job->resolveName() . ' .................');
+            Log::info(['payload' => $event->job->payload()]);
         });
 
         Queue::after(function (JobProcessed $event) {
-            Log::info('Job Processed Successfully');
-            Log::info('..................................................................');
+            Log::info('......................... Job Processed Successfully .............................');
         });
     }
 }

@@ -6,8 +6,15 @@ use App\Events\Inventory\InventoryLow;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NotifyMerchantInventoryLow
+class NotifyMerchantInventoryLow implements ShouldQueue
 {
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 5;
+
     /**
      * Create the event listener.
      *
