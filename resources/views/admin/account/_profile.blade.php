@@ -64,6 +64,7 @@
 
             {!! Form::submit(trans('app.update'), ['class' => 'btn btn-flat btn-new']) !!}
         {!! Form::close() !!}
+        <div class="spacer30"></div>
   	</div>
 
   	<div class="col-md-3">

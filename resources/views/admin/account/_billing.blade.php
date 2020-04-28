@@ -74,9 +74,15 @@
 						                            </button>
 												@endif
 				                        	@else
-				                                <a href="{{ route('admin.account.subscribe', $plan->plan_id) }}" class="confirm btn btn-lg btn-default">
-					                            	<i class="fa fa-leaf"></i> {{ trans('app.select_this_plan') }}
-					                            </a>
+												@if(Auth::user()->localActivePlan() == $plan->plan_id)
+						                            <button class="btn btn-lg btn-primary disabled">
+						                            	<i class="fa fa-check-circle-o"></i> {{ trans('app.current_plan') }}
+						                            </button>
+												@else
+					                                <a href="{{ route('admin.account.subscribe', $plan->plan_id) }}" class="confirm btn btn-lg btn-default">
+						                            	<i class="fa fa-leaf"></i> {{ trans('app.select_this_plan') }}
+						                            </a>
+												@endif
 				                        	@endif
 						  				</td>
 					  				@endif

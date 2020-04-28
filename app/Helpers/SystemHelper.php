@@ -681,6 +681,12 @@ if ( ! function_exists('get_activity_str') )
                 }
                 break;
 
+            case 'active':
+                $attrbute = trans('app.status');
+                $old = $new ? trans('app.inactive') : trans('app.active');
+                $new = $new ? trans('app.active') : trans('app.inactive');
+                break;
+
             default:
                 $attrbute = title_case(str_replace('_', ' ', $attrbute));
                 break;

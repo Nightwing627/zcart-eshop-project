@@ -12,6 +12,7 @@
         @forelse($logger->logs() as $log)
           @php
             $changes = $log->changes;
+                // print_r($changes); //echo "<pre>"; //exit('end!');
           @endphp
 
           <a class="list-group-item" data-toggle="collapse" data-target="#sl-{{ $log->id }}" data-parent="#menu">

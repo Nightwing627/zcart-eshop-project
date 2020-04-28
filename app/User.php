@@ -427,6 +427,11 @@ class User extends Authenticatable
         return $subscription && $subscription->onGracePeriod();
     }
 
+    public function localActivePlan()
+    {
+        return $this->shop->current_billing_plan;
+    }
+
     /**
      * Check if access level the user
      *
