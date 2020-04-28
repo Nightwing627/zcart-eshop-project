@@ -100,11 +100,15 @@ return [
         | Primary sizes
         |--------------------------------------------------------------------------
         |
-        | The system will create thumbnails using this settings only.
+        | The system will create thumbnails using these settings only.
         | Any request for other than this sizes will return the original image.
         | Sets how the image is fitted to its target dimensions.
+        |
         | w = width, h = height. All values are in pixels
-        | fit = how the image is fitted to its target dimensions, Available values "contain,max,fill,stretch,crop"
+        |
+        | fit = how the image is fitted to its target dimensions,
+        | Available values "contain,max,fill,stretch,crop"
+        |
         | Don't modify this values if you are not sure
         |
         */

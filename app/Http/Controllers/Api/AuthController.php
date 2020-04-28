@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Events\Customer\Registered;
 use App\Http\Resources\CustomerResource;
 use App\Http\Requests\Validations\ApiSpcialLoginRequest;
 use App\Http\Requests\Validations\RegisterCustomerRequest;
@@ -38,6 +39,8 @@ class AuthController extends Controller
 
         $customer->generateToken();
 
+        event(new Registered($customer));
+
         return new CustomerResource($customer);
     }
 
@@ -54,10 +57,9 @@ class AuthController extends Controller
             $customer->generateToken();
 
             return new CustomerResource($customer);
-        } else {
-
-            return response()->json(['message' => trans('api.auth_failed')], 401);
         }
+
+        return response()->json(['message' => trans('api.auth_failed')], 401);
     }
 
     /**

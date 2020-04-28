@@ -35,6 +35,7 @@ class EventServiceProvider extends ServiceProvider
         // Customer Events
         'App\Events\Customer\Registered' => [
             'App\Listeners\Customer\SendWelcomeEmail',
+            'App\Listeners\Customer\RegisterNewsletter',
         ],
         'App\Events\Customer\CustomerCreated' => [
             'App\Listeners\Customer\SendLoginInfo',

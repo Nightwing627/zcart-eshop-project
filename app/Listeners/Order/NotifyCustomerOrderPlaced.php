@@ -2,10 +2,10 @@
 
 namespace App\Listeners\Order;
 
+use Notification;
 use App\Events\Order\OrderCreated;
 use App\Notifications\Order\OrderCreated as OrderCreatedNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Notification;
 use Illuminate\Queue\InteractsWithQueue;
 
 class NotifyCustomerOrderPlaced implements ShouldQueue

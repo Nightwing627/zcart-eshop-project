@@ -92,7 +92,18 @@ class RegisterController extends Controller
 
         $this->validator($request->all())->validate();
 
-        $customer = $this->create($request->all());
+        $data = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'verification_token' => str_random(40)
+        ];
+
+        // If customer agree to subscribe newsletter or the system set it auto
+        if($request->input('subscribe') || !config('system_settings.ask_customer_for_email_subscription'))
+            $data['accepts_marketing'] = 1;
+
+        $customer = Customer::create($data);
 
         event(new Registered($customer));
 
@@ -100,22 +111,6 @@ class RegisterController extends Controller
 
         return $this->registered($request, $customer)
                         ?: redirect($this->redirectPath());
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Customer
-     */
-    protected function create(array $data)
-    {
-        return Customer::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'verification_token' => str_random(40)
-        ]);
     }
 
     /**

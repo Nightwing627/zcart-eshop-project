@@ -424,8 +424,7 @@ return [
 	'input_label' => [
 		'agree' => 'I agree',
         'i_agree_with_terms' => 'I agree with the <u><a href=":url" target="_blank"> terms</a></u>',
-		'subscribe' => 'Subscribe to the Newsletter',
-        'subscribe_to_the_newsletter' => 'I want to get offers and updates via email',
+        'subscribe_to_the_newsletter' => 'Subscribe to the Newsletter',
 	],
 
 	'placeholder' => [

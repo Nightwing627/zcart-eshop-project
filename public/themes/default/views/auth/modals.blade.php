@@ -81,11 +81,13 @@
             <input name="password_confirmation" class="form-control input-lg flat" placeholder="{{ trans('theme.placeholder.confirm_password') }}" type="password" required/>
             <div class="help-block with-errors"></div>
           </div>
-          <div class="form-group">
-            <label>
-              <input name="subscribe" class="i-check-blue" type="checkbox"/> {{ trans('theme.input_label.subscribe') }}
-            </label>
-          </div>
+          @if(config('system_settings.ask_customer_for_email_subscription'))
+            <div class="form-group">
+              <label>
+                <input name="subscribe" class="i-check-blue" type="checkbox"/> {{ trans('theme.input_label.subscribe_to_the_newsletter') }}
+              </label>
+            </div>
+          @endif
           <div class="row">
             <div class="col-xs-7">
               <div class="form-group">

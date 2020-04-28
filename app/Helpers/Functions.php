@@ -1348,7 +1348,7 @@ if ( ! function_exists('cart_item_count') )
             $customer_id = \Auth::guard('customer')->check() ? \Auth::guard('customer')->user()->id : Null;
 
         $cart_list = \DB::table('carts')->join('cart_items', 'cart_items.cart_id', '=', 'carts.id')
-        ->whereNull('customer_id')->where('ip_address', request()->ip());
+        ->whereNull('customer_id')->whereNull('deleted_at')->where('ip_address', request()->ip());
 
         if($customer_id)
             $cart_list = $cart_list->orWhere('customer_id', $customer_id);

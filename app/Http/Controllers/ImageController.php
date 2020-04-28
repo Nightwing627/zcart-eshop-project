@@ -211,5 +211,4 @@ class ImageController extends Controller
 
 	    fclose($handle);								// close the file handle
 	}
-
 }

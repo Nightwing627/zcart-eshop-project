@@ -99,7 +99,7 @@
 
 							<tr>
 								<th class="text-right">{{ trans('app.condition') }}:</th>
-								<td style="width: 75%;">{!! $inventory->getCondition() !!}</td>
+								<td style="width: 75%;">{!! $inventory->condition !!}</td>
 							</tr>
 
 				            @if($inventory->condition_note)

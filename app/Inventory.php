@@ -8,13 +8,14 @@ use App\Common\Imageable;
 use App\Common\Feedbackable;
 use Laravel\Scout\Searchable;
 use EloquentFilter\Filterable;
+use App\Common\CascadeSoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Inventory extends BaseModel
 {
-    use SoftDeletes, Taggable, Imageable, Searchable, Filterable, Feedbackable;
+    use SoftDeletes, CascadeSoftDeletes, Taggable, Imageable, Searchable, Filterable, Feedbackable;
 
     /**
      * The database table used by the model.
@@ -22,6 +23,13 @@ class Inventory extends BaseModel
      * @var string
      */
     protected $table = 'inventories';
+
+    /**
+     * Cascade Soft Deletes Relationships
+     *
+     * @var array
+     */
+    protected $cascadeDeletes = ['carts'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -439,9 +447,9 @@ class Inventory extends BaseModel
      *
      * @return str condition
      */
-    public function getCondition()
+    public function getConditionAttribute($condition)
     {
-        switch ($this->condition) {
+        switch ($condition) {
             case 'New': return trans('app.new');
             case 'Used': return trans('app.used');
             case 'Refurbished': return trans('app.refurbished');
