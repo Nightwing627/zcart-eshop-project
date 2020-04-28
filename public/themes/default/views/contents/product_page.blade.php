@@ -32,7 +32,7 @@
 					    	              		<span class="info-label" id="attr-{{str_slug($attribute->name)}}" >{{ $attribute->name }}:</span>
 											</div>
 										  	<div class="col-sm-9 col-xs-8 nopadding-left">
-							                    <select class="product-attribute-selector {{ $attribute->attribute_type_id == \App\Attribute::TYPE_COLOR ? 'color-options' : 'selectBoxIt' }}" required="required">
+							                    <select class="product-attribute-selector {{ $attribute->getClass() }}" required="required">
 								              		@foreach($attribute->attributeValues as $option)
 						                          		<option value="{{ $option->id }}" data-color="{{ $option->color ?? $option->value }}" {{ in_array($option->id, $item_attrs) ? 'selected' : '' }}>{{ $option->value }}</option>
 								              		@endforeach

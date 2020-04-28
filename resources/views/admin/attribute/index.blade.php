@@ -66,7 +66,7 @@
 						</td>
 						<td class="row-options">
 							@can('view', $attribute)
-								<a href="{{ route('admin.catalog.attribute.entities', $attribute->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.entities') }}" class="fa fa-expand"></i></a>&nbsp;
+								<a href="{{ route('admin.catalog.attribute.entities', $attribute->id) }}"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.entities') }}" class="fa fa-plus"></i></a>&nbsp;
 							@endcan
 							@can('update', $attribute)
 								<a href="javascript:void(0)" data-link="{{ route('admin.catalog.attribute.edit', $attribute->id) }}"  class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.edit') }}" class="fa fa-edit"></i></a>&nbsp;
