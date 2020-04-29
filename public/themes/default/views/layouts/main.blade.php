@@ -19,7 +19,6 @@
 
         <link href="{{ theme_asset_url('css/vendor.css') }}" rel="stylesheet">
         <link href="{{ theme_asset_url('css/style.css') }}" rel="stylesheet">
-        <link href="{{ theme_asset_url('css/jquery.simplecolorpicker.css') }}" rel="stylesheet">
     </head>
     <body class="{{ config('active_locales')->firstWhere('code', App::getLocale())->rtl ? 'rtl' : 'ltr'}}">
         <!--[if lte IE 9]>

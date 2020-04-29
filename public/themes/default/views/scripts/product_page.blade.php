@@ -110,6 +110,47 @@ foreach ($variants as &$value) {
             $('html,body').animate({scrollTop:$("#item-desc-section").offset().top}, 500);
             $('ul.nav a[href="' + this.hash + '"]').tab('show');
         });
+
+        //radioSelect
+        $(function () {
+            $('.radioSelect').each(function (selectIndex, selectElement) {
+                var select = $(selectElement);
+                var container = $("<div class='radioSelectContainer' />");
+                // select.prepend().append(container);
+                select.parent().append(container);
+                container.append(select);
+
+                select.find('option').each(function (optionIndex, optionElement) {
+                    // console.log();
+                    var label = $("<label />");
+                    container.append(label);
+
+                    var selectedOption = optionElement.hasAttribute('selected') ? "selected" : "";
+                    $("<span data-value='"+ $(this).val() +"' class='"+ selectedOption +"'>" + $(this).text() + "</span>").appendTo(label);
+                });
+
+                // Handles unchecking when clicking on an already checked radio
+                container.find("label > span").mousedown(
+                    function (e) {
+                        var selectedSpan = $(this);
+
+                        // Ignore if already selected
+                        if(selectedSpan.hasClass('selected')) return;
+
+                        // Apply class
+                        container.find("label > span").removeClass('selected');
+                        selectedSpan.addClass('selected');
+
+                        // Reset and update the seleceted value
+                        $('option:selected', 'select[id="'+select.attr('id')+'"]').removeAttr('selected');
+                        $("select[id='"+select.attr('id')+"']")
+                            .find("option[value='"+selectedSpan.data('value')+"']")
+                            .attr("selected", true).change();
+                    }
+                );
+            });
+        });
+
     });
 
     // Social share btns

@@ -4002,3 +4002,88 @@ h1.blog-post-title a {
     float: left;
     color: #999;
 }
+
+/*
+ * Very simple jQuery Color Picker
+ * https://github.com/tkrotoff/jquery-simplecolorpicker
+ *
+ * Copyright (C) 2012-2013 Tanguy Krotoff <tkrotoff@gmail.com>
+ *
+ * Licensed under the MIT license
+ */
+
+.simplecolorpicker.inline {
+  display: inline-block;
+}
+
+.simplecolorpicker span {
+  margin: 0 10px 0 0;
+}
+
+.simplecolorpicker.icon,
+.simplecolorpicker span.color {
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 2px #ccc;
+}
+
+.simplecolorpicker.icon:after,
+.simplecolorpicker span.color:after {
+  content: '\00a0\00a0\00a0\00a0'; /* Spaces */
+}
+
+.simplecolorpicker span.color[data-disabled]:hover {
+  /*cursor: not-allowed;*/
+  /*border: 1px solid #ff4747;*/
+}
+
+.simplecolorpicker span.color:hover {
+  box-shadow: inset 0 0 0 2px #ff4747;
+}
+.simplecolorpicker span.color[data-selected] {
+  box-shadow: inset 0 0 0 2px #ff4747;
+}
+.simplecolorpicker span.color[data-selected]:after {
+  /*color: #ccc;*/
+}
+.simplecolorpicker span.color:focus,
+.simplecolorpicker span.color:active{
+  outline: none;
+}
+
+/* Select to radio button */
+.radioSelectContainer {
+  margin-top: -15px;
+}
+
+.radioSelectContainer > select {
+     display: none;
+}
+.radioSelectContainer > label {
+    display: inline-block;
+    margin-right: 9px;
+    cursor: pointer;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 4px;
+    box-shadow: inset 0 0 0 2px #ccc;
+    white-space: nowrap;
+}
+.radioSelectContainer > label > span {
+    padding: 0px 10px;
+    text-align: center;
+    display: block;
+    font-weight: normal;
+}
+.radioSelectContainer > label > input {
+    position: absolute;
+    z-index: -9999;
+}
+.radioSelectContainer > label > span:hover,
+.radioSelectContainer > label > span.selected {
+    border-radius: 4px;
+    box-shadow: inset 0 0 0 2px #ff4747;
+}
