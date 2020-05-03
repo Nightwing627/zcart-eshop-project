@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => 'موافقم',
     'i_agree_with_terms' => 'من با <u> <a href=":url" target="_blank"> شرایط </a> </u> موافقم',
-    'subscribe' => 'مشترک شدن در خبرنامه',
     'subscribe_to_the_newsletter' => 'من می خواهم از طریق ایمیل پیشنهادات و به روز رسانی ها را دریافت کنم',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => 'موضوع',
   'unread_messages' => 'پیام های خوانده نشده',
   'std_delivery_time' => 'زمان تحویل استاندارد',
+  'cancel_order' => 'لغو سفارش',
+  'canceled' => 'لغو شد',
+  'order_canceled' => 'سفارش لغو شده است!',
+  'order_again' => 'دوباره سفارش دهید',
   'chat_welcome' => 'با سلام سوالی دارید؟',
   'connecting' => 'برقراری ارتباط...',
   'login_to_chat' => 'ما فقط یک قدم فاصله داریم! لطفا وارد شوید تا مکالمه شروع شود.',

@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'فائل اپ لوڈ کرنے میں خرابی',
   'model_not_defined' => 'ماڈل کی وضاحت نہیں کی گئی ہے!',
   'invalid_data' => 'غلط ڈیٹا',
+  'resource_not_found' => 'وسیلہ نہیں ملا۔',
+  'unauthenticated' => 'غیر تصدیق شدہ',
 );

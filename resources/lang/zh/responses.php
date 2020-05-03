@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => '上传文件时出错',
   'model_not_defined' => '模型未定义！',
   'invalid_data' => '无效数据。',
+  'resource_not_found' => '找不到资源。',
+  'unauthenticated' => '未经身份验证。',
 );

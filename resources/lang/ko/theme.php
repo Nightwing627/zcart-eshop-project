@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => '동의한다',
     'i_agree_with_terms' => '<u> <a href=":url" target="_blank"> 약관 </a> </ u>에 동의합니다',
-    'subscribe' => '뉴스 레터 구독',
     'subscribe_to_the_newsletter' => '이메일을 통해 제안 및 업데이트를 받고 싶습니다',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => '제목',
   'unread_messages' => '읽지 않은 메시지',
   'std_delivery_time' => '표준 배달 시간',
+  'cancel_order' => '주문 취소',
+  'canceled' => '취소 된',
+  'order_canceled' => '주문이 취소되었습니다!',
+  'order_again' => '다시 주문',
   'chat_welcome' => '야! 질문이 있습니다?',
   'connecting' => '연결 중 ...',
   'login_to_chat' => '우리는 한 걸음 떨어져 있습니다! 대화를 시작하려면 로그인하십시오.',

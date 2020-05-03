@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => '我同意',
     'i_agree_with_terms' => '我同意<u> <a href=":url" target="_blank">条款</a> </ u>',
-    'subscribe' => '订阅新闻通讯',
     'subscribe_to_the_newsletter' => '我想通过电子邮件获得报价和更新',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => '学科',
   'unread_messages' => '未读邮件',
   'std_delivery_time' => '标准交货时间',
+  'cancel_order' => '取消订单',
+  'canceled' => '取消',
+  'order_canceled' => '订单已取消！',
+  'order_again' => '再次订购',
   'chat_welcome' => '嘿!有一个问题？',
   'connecting' => '正在连线...',
   'login_to_chat' => '我们只有一步之遥！请登录以开始对话。',

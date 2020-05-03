@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => 'Я согласен',
     'i_agree_with_terms' => 'Я согласен с <u> <a href=":url" target="_blank"> условиями </a> </ u>',
-    'subscribe' => 'Подписаться на рассылку',
     'subscribe_to_the_newsletter' => 'Я хочу получать предложения и обновления по электронной почте',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => 'Тема',
   'unread_messages' => 'Непрочитанные сообщения',
   'std_delivery_time' => 'Стандартное время доставки',
+  'cancel_order' => 'Отменить заказ',
+  'canceled' => 'отменен',
+  'order_canceled' => 'Заказ был отменен!',
+  'order_again' => 'Заказать снова',
   'chat_welcome' => 'Привет! Есть вопрос?',
   'connecting' => 'Подключение ...',
   'login_to_chat' => 'Мы всего в одном шаге! Пожалуйста, войдите, чтобы начать разговор.',

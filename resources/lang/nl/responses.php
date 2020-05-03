@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'Fout bij uploaden van bestand',
   'model_not_defined' => 'Het model is niet gedefinieerd!',
   'invalid_data' => 'Onjuiste data.',
+  'resource_not_found' => 'Bron niet gevonden.',
+  'unauthenticated' => 'Niet geverifieerd.',
 );

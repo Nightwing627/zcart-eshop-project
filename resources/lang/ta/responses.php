@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'கோப்பை பதிவேற்றுவதில் பிழை',
   'model_not_defined' => 'மாதிரி வரையறுக்கப்படவில்லை!',
   'invalid_data' => 'தவறான தரவு.',
+  'resource_not_found' => 'ஆதாரம் கிடைக்கவில்லை.',
+  'unauthenticated' => 'அங்கீகரிக்கப்படவில்லை.',
 );

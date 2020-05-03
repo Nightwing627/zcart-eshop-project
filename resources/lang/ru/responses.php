@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'Ошибка при загрузке файла',
   'model_not_defined' => 'Модель не определена!',
   'invalid_data' => 'Неверные данные.',
+  'resource_not_found' => 'Ресурс не найден.',
+  'unauthenticated' => 'Unauthenticated.',
 );

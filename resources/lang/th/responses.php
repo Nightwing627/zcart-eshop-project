@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์',
   'model_not_defined' => 'รูปแบบไม่ได้กำหนดไว้!',
   'invalid_data' => 'ข้อมูลไม่ถูกต้อง',
+  'resource_not_found' => 'ไม่พบทรัพยากร',
+  'unauthenticated' => 'ไม่ผ่านการรับรอง',
 );

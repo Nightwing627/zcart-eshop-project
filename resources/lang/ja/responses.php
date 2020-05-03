@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'ファイルのアップロードエラー',
   'model_not_defined' => 'モデルは定義されていません！',
   'invalid_data' => '無効なデータ。',
+  'resource_not_found' => 'リソースが見つかりません。',
+  'unauthenticated' => '認証されていません。',
 );

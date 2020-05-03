@@ -4040,11 +4040,9 @@ h1.blog-post-title a {
   /*border: 1px solid #ff4747;*/
 }
 
-.simplecolorpicker span.color:hover {
-  box-shadow: inset 0 0 0 2px #ff4747;
-}
+.simplecolorpicker span.color:hover,
 .simplecolorpicker span.color[data-selected] {
-  box-shadow: inset 0 0 0 2px #ff4747;
+  box-shadow: inset 0 0 0 2px #ff4747, inset 0 0 0 3px #fff;
 }
 .simplecolorpicker span.color[data-selected]:after {
   /*color: #ccc;*/

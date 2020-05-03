@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => '파일 업로드 오류',
   'model_not_defined' => '모델이 정의되지 않았습니다!',
   'invalid_data' => '유효하지 않은 데이터.',
+  'resource_not_found' => '리소스를 찾을 수 없습니다.',
+  'unauthenticated' => '인증되지 않았습니다.',
 );

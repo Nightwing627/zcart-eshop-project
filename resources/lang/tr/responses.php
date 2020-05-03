@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'Dosya yüklenirken hata oluştu',
   'model_not_defined' => 'Model tanımlanmadı!',
   'invalid_data' => 'Geçersiz veri.',
+  'resource_not_found' => 'Kaynak bulunamadı.',
+  'unauthenticated' => 'Kimliği doğrulanmamış.',
 );

@@ -38,13 +38,11 @@ class BoostPerformance extends Command
     public function handle()
     {
         // Clear cache
-        $this->call('config:clear');
-        $this->call('cache:clear');
-        $this->call('route:clear');
-        $this->call('view:clear');
+        $this->call('optimize:clear');
 
-        // Re cache
-        $this->call('config:cache');
-        $this->call('route:cache');
+        // Cache again
+        $this->call('optimize');
+
+        $this->info('Optimization done: <info>✔</info>');
     }
 }

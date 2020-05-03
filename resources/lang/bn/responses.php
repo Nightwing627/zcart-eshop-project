@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'ফাইল আপলোড করার সময় ত্রুটি',
   'model_not_defined' => 'মডেল সংজ্ঞায়িত হয় না!',
   'invalid_data' => 'অবৈধ তথ্য.',
+  'resource_not_found' => 'রিসোর্স পাওয়া যায় নি।',
+  'unauthenticated' => 'সত্যতা নিরূপিত।',
 );

@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => 'jag håller med',
     'i_agree_with_terms' => 'Jag håller med <u> <a href=":url" target="_blank"> villkoren </a> </u>',
-    'subscribe' => 'Prenumerera på nyhetsbrevet',
     'subscribe_to_the_newsletter' => 'Jag vill få erbjudanden och uppdateringar via e-post',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => 'Ämne',
   'unread_messages' => 'Olästa meddelanden',
   'std_delivery_time' => 'Standard leveranstid',
+  'cancel_order' => 'Avbryt beställning',
+  'canceled' => 'Inställt',
+  'order_canceled' => 'Beställningen har avbrutits!',
+  'order_again' => 'Beställ igen',
   'chat_welcome' => 'Hallå! Har en fråga?',
   'connecting' => 'Ansluter...',
   'login_to_chat' => 'Vi är bara ett steg bort! Logga in för att starta konversationen.',

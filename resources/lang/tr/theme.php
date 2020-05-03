@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => 'katılıyorum',
     'i_agree_with_terms' => '<u> <a href=":url" target="_blank"> şartları </a> </u> kabul ediyorum',
-    'subscribe' => 'Bültene Abone Ol',
     'subscribe_to_the_newsletter' => 'E-posta yoluyla teklifler ve güncellemeler almak istiyorum',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => 'konu',
   'unread_messages' => 'Okunmamış mesajlar',
   'std_delivery_time' => 'Standart teslimat süresi',
+  'cancel_order' => 'Siparişi iptal et',
+  'canceled' => 'İptal edildi',
+  'order_canceled' => 'Sipariş iptal edildi!',
+  'order_again' => 'Tekrar Sipariş Ver',
   'chat_welcome' => 'Hey! Bir sorunuz mu var?',
   'connecting' => 'Bağlanıyor...',
   'login_to_chat' => 'Sadece bir adım ötedeyiz! Görüşmeye başlamak için lütfen giriş yapın.',

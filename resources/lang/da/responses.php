@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'Fejl ved upload af fil',
   'model_not_defined' => 'Modellen er ikke defineret!',
   'invalid_data' => 'Ugyldige data.',
+  'resource_not_found' => 'Ressource ikke fundet.',
+  'unauthenticated' => '-Godkendt.',
 );

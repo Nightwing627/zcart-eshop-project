@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'Fel vid uppladdning av fil',
   'model_not_defined' => 'Modellen är inte definierad!',
   'invalid_data' => 'Ogiltiga data.',
+  'resource_not_found' => 'Resursen hittades inte.',
+  'unauthenticated' => 'Oautentiserad.',
 );

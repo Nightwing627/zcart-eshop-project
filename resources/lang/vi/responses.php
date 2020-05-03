@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'Lỗi tải lên tập tin',
   'model_not_defined' => 'Mô hình không được xác định!',
   'invalid_data' => 'Dữ liệu không hợp lệ.',
+  'resource_not_found' => 'Nguồn tài nguyên không được tìm thấy.',
+  'unauthenticated' => 'Không xác thực.',
 );

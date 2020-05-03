@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'Kesalahan mengunggah file',
   'model_not_defined' => 'Modelnya tidak ditentukan!',
   'invalid_data' => 'Data tidak valid.',
+  'resource_not_found' => 'Sumber tidak ditemukan.',
+  'unauthenticated' => 'Tidak terauthentikasi.',
 );

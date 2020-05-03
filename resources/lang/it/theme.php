@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => 'sono d\'accordo',
     'i_agree_with_terms' => 'Accetto i <u> <a href=":url" target="_blank"> termini </a> </u>',
-    'subscribe' => 'Iscriviti alla newsletter',
     'subscribe_to_the_newsletter' => 'Voglio ricevere offerte e aggiornamenti via e-mail',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => 'Soggetto',
   'unread_messages' => 'Messaggi non letti',
   'std_delivery_time' => 'Tempi di consegna standard',
+  'cancel_order' => 'Annulla Ordine',
+  'canceled' => 'Annullato',
+  'order_canceled' => 'L\'ordine è stato cancellato!',
+  'order_again' => 'Ordina ancora',
   'chat_welcome' => 'Hey! Hai una domanda?',
   'connecting' => 'Connessione in corso ...',
   'login_to_chat' => 'Siamo solo a un passo! Effettua il login per iniziare la conversazione.',

@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => 'ฉันเห็นด้วย',
     'i_agree_with_terms' => 'ฉันเห็นด้วยกับ <u> <a href=":url" target="_blank"> ข้อกำหนด </a> </u>',
-    'subscribe' => 'สมัครรับจดหมายข่าว',
     'subscribe_to_the_newsletter' => 'ฉันต้องการรับข้อเสนอและอัปเดตทางอีเมล',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => 'เรื่อง',
   'unread_messages' => 'ข้อความที่ยังไม่ได้อ่าน',
   'std_delivery_time' => 'เวลาการส่งมอบมาตรฐาน',
+  'cancel_order' => 'ยกเลิกคำสั่งซื้อ',
+  'canceled' => 'ยกเลิก',
+  'order_canceled' => 'คำสั่งซื้อถูกยกเลิก!',
+  'order_again' => 'สั่งซื้ออีกครั้ง',
   'chat_welcome' => 'เฮ้! มีคำถาม?',
   'connecting' => 'เชื่อมต่อ ...',
   'login_to_chat' => 'เราอยู่ห่างออกไปเพียงหนึ่งก้าว! กรุณาเข้าสู่ระบบเพื่อเริ่มการสนทนา',

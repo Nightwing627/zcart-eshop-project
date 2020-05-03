@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'Error al cargar el archivo',
   'model_not_defined' => '¡El modelo no está definido!',
   'invalid_data' => 'Datos inválidos.',
+  'resource_not_found' => 'Recurso no encontrado.',
+  'unauthenticated' => 'Sin autenticar.',
 );

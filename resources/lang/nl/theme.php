@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => 'ik ga akkoord',
     'i_agree_with_terms' => 'Ik ga akkoord met de <u> <a href=":url" target="_blank"> voorwaarden </a> </u>',
-    'subscribe' => 'Abonneer u op de nieuwsbrief',
     'subscribe_to_the_newsletter' => 'Ik wil aanbiedingen en updates ontvangen via e-mail',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => 'Onderwerpen',
   'unread_messages' => 'Ongelezen berichten',
   'std_delivery_time' => 'Standaard levertijd',
+  'cancel_order' => 'Annuleer bestelling',
+  'canceled' => 'Geannuleerd',
+  'order_canceled' => 'De bestelling is geannuleerd!',
+  'order_again' => 'Opnieuw bestellen',
   'chat_welcome' => 'Hallo! Heb je een vraag?',
   'connecting' => 'Verbinden...',
   'login_to_chat' => 'We zijn nog maar één stap verwijderd! Log in om het gesprek te starten.',

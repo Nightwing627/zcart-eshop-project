@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => 'tôi đồng ý',
     'i_agree_with_terms' => 'Tôi đồng ý với các điều khoản <u> <a href=":url"arget </a> </ u>',
-    'subscribe' => 'Đăng ký nhận bản tin',
     'subscribe_to_the_newsletter' => 'Tôi muốn nhận được ưu đãi và cập nhật qua email',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => 'Môn học',
   'unread_messages' => 'Tin nhắn chưa đọc',
   'std_delivery_time' => 'Thời gian giao hàng tiêu chuẩn',
+  'cancel_order' => 'Hủy đơn hàng',
+  'canceled' => 'Đã hủy',
+  'order_canceled' => 'Đơn hàng đã bị hủy!',
+  'order_again' => 'Đặt hàng lại',
   'chat_welcome' => 'Chào! Có một câu hỏi?',
   'connecting' => 'Đang kết nối...',
   'login_to_chat' => 'Chúng ta chỉ còn một bước nữa thôi! Vui lòng đăng nhập để bắt đầu cuộc trò chuyện.',

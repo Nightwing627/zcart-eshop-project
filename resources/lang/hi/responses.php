@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'फ़ाइल अपलोड करने में त्रुटि हुई',
   'model_not_defined' => 'मॉडल परिभाषित नहीं है!',
   'invalid_data' => 'गलत जानकारी।',
+  'resource_not_found' => 'संसाधन नही मिला।',
+  'unauthenticated' => 'अनधिकृत।',
 );

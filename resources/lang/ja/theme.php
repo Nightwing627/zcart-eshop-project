@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => '同意する',
     'i_agree_with_terms' => '<u> <a href=":url" target="_blank">利用規約</a> </ u>に同意します',
-    'subscribe' => 'ニュースレターを購読する',
     'subscribe_to_the_newsletter' => 'メールでオファーやアップデートを取得したい',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => '件名',
   'unread_messages' => '未読メッセージ',
   'std_delivery_time' => '標準配達時間',
+  'cancel_order' => '注文をキャンセルする',
+  'canceled' => 'キャンセル',
+  'order_canceled' => '注文はキャンセルされました！',
+  'order_again' => 'もう一度注文する',
   'chat_welcome' => 'おい！質問があります？',
   'connecting' => '接続しています...',
   'login_to_chat' => 'あと一歩です！ログインして会話を開始してください。',

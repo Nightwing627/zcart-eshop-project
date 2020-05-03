@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'خطأ في تحميل الملف',
   'model_not_defined' => 'لم يتم تعريف النموذج!',
   'invalid_data' => 'بيانات غير صالحة.',
+  'resource_not_found' => 'الموارد غير موجود.',
+  'unauthenticated' => 'لم تتم مصادقته.',
 );

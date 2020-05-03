@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'שגיאה בהעלאת הקובץ',
   'model_not_defined' => 'המודל אינו מוגדר!',
   'invalid_data' => 'נתונים לא חוקיים.',
+  'resource_not_found' => 'המשאב לא נמצא.',
+  'unauthenticated' => 'לא מאומת.',
 );

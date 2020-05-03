@@ -3,6 +3,7 @@
 namespace App\Notifications\Order;
 
 use App\Order;
+use App\Customer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,7 +33,11 @@ class PaymentFailed extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        if($notifiable instanceof Customer) {
+            return ['mail', 'database'];
+        }
+
+        return ['mail'];
     }
 
     /**

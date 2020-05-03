@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => 'אני מסכים',
     'i_agree_with_terms' => 'אני מסכים עם <u> <a href=":url" target="_blank"> תנאים </a> </u>',
-    'subscribe' => 'הירשמו לניוזלטר',
     'subscribe_to_the_newsletter' => 'אני רוצה לקבל הצעות ועדכונים באמצעות דואר אלקטרוני',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => 'נושא',
   'unread_messages' => 'הודעות שלא נקראו',
   'std_delivery_time' => 'זמן אספקה ​​סטנדרטי',
+  'cancel_order' => 'בטל הזמנה',
+  'canceled' => 'מבוטל',
+  'order_canceled' => 'ההזמנה בוטלה!',
+  'order_again' => 'הזמן שוב',
   'chat_welcome' => 'היי! יש שאלה?',
   'connecting' => 'מתחבר ...',
   'login_to_chat' => 'אנחנו רק צעד אחד משם! אנא התחבר כדי להתחיל בשיחה.',

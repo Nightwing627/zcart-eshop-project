@@ -20,4 +20,6 @@ return array (
   'error_uploading_file' => 'خطا در بارگیری پرونده',
   'model_not_defined' => 'مدل تعریف نشده است!',
   'invalid_data' => 'داده نامعتبر است.',
+  'resource_not_found' => 'منبع یافت نشد.',
+  'unauthenticated' => 'غیرمجاز',
 );

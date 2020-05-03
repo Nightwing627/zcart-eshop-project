@@ -416,7 +416,6 @@ return array (
   array (
     'agree' => 'saya setuju',
     'i_agree_with_terms' => 'Saya setuju dengan <u> <a href=":url" target="_blank"> persyaratan </a> </u>',
-    'subscribe' => 'Berlangganan Newsletter',
     'subscribe_to_the_newsletter' => 'Saya ingin mendapatkan penawaran dan pembaruan melalui email',
   ),
   'placeholder' => 
@@ -588,6 +587,10 @@ return array (
   'subject' => 'Subyek',
   'unread_messages' => 'Pesan yang belum dibaca',
   'std_delivery_time' => 'Waktu pengiriman standar',
+  'cancel_order' => 'Batalkan pesanan',
+  'canceled' => 'Dibatalkan',
+  'order_canceled' => 'Pesanan telah dibatalkan!',
+  'order_again' => 'Pesan lagi',
   'chat_welcome' => 'Hei! Punya pertanyaan?',
   'connecting' => 'Menghubungkan ...',
   'login_to_chat' => 'Kami hanya selangkah lagi! Silakan masuk untuk memulai percakapan.',
