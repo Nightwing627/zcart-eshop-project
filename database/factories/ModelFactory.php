@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
 // $factory->define(App\Role::class, function (Faker $faker) {
@@ -23,7 +24,7 @@ use Faker\Generator as Faker;
 //         'sex' => $faker->randomElement(['app.male', 'app.female']),
 //         'description' => $faker->text(500),
 //         'active' => $faker->boolean,
-//         'remember_token' => str_random(10),
+//         'remember_token' => Str::random(10),
 //         'created_at' => Carbon::Now()->subDays(rand(0, 15)),
 //         'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
 //     ];
@@ -47,8 +48,8 @@ use Faker\Generator as Faker;
 //         'sex' => $faker->randomElement(['app.male', 'app.female']),
 //         'description' => $faker->text(500),
 //         'active' => $faker->boolean,
-//         'remember_token' => str_random(10),
-//         'verification_token' => rand(0,1) == 1 ? Null : str_random(10),
+//         'remember_token' => Str::random(10),
+//         'verification_token' => rand(0,1) == 1 ? Null : Str::random(10),
 //         'created_at' => Carbon::Now()->subDays(rand(0, 15)),
 //         'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
 //     ];
@@ -64,8 +65,8 @@ use Faker\Generator as Faker;
 //         'sex' => $faker->randomElement(['app.male', 'app.female', 'Other']),
 //         'description' => $faker->text(500),
 //         'active' => $faker->boolean,
-//         'remember_token' => str_random(10),
-//         'verification_token' => rand(0,1) == 1 ? Null : str_random(10),
+//         'remember_token' => Str::random(10),
+//         'verification_token' => rand(0,1) == 1 ? Null : Str::random(10),
 //         'created_at' => Carbon::Now()->subDays(rand(0, 15)),
 //         'updated_at' => Carbon::Now()->subDays(rand(0, 15)),
 //     ];

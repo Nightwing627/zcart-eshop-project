@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
@@ -30,7 +31,7 @@ class InventoriesSeeder extends BaseSeeder
 
                 foreach ($images as $key => $file)
                 {
-                    $name = str_random(10) . '.png';
+                    $name = Str::random(10) . '.png';
                     $targetFile = $this->dir . DIRECTORY_SEPARATOR . $name;
 
                     if( $this->disk->put($targetFile, file_get_contents($file)) )

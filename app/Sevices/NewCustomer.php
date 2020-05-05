@@ -3,6 +3,7 @@ namespace App\Services;
 
 use Auth;
 use App\Customer;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Notifications\Auth\SendVerificationEmail as EmailVerificationNotification;
 
@@ -16,7 +17,7 @@ class NewCustomer
             'email' => $request->email,
             'password' => $request->password,
             'accepts_marketing' => $request->accepts_marketing,
-            'verification_token' => str_random(40),
+            'verification_token' => Str::random(40),
             'active' => 1,
         ]);
 
@@ -29,12 +30,12 @@ class NewCustomer
             Auth::logout();
 
 		//Login the customer
-        if($request->wantsJson()) 
-	        Auth::guard('api')->login($customer); 
+        if($request->wantsJson())
+	        Auth::guard('api')->login($customer);
         else
 	        Auth::guard('customer')->login($customer);
 
-        return $customer;		
+        return $customer;
 	}
 
 }

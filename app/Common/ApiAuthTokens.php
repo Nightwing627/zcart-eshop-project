@@ -2,6 +2,8 @@
 
 namespace App\Common;
 
+use Illuminate\Support\Str;
+
 /**
  * Attach this Trait to a User has ApiAuthTokens
  *
@@ -11,7 +13,7 @@ trait ApiAuthTokens {
 
 	public function generateToken()
     {
-        $this->api_token = str_random(60);
+        $this->api_token = Str::random(60);
         $this->save();
 
         return $this->api_token;

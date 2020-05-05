@@ -7,6 +7,7 @@ use Log;
 use Auth;
 use App\User;
 use App\System;
+use Illuminate\Support\Str;
 use App\Jobs\SubscribeShopToNewPlan;
 use App\Events\Shop\ShopCreated;
 use App\Jobs\CreateShopForMerchant;
@@ -129,7 +130,7 @@ class RegisterController extends Controller
         return User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'verification_token' => str_random(40)
+            'verification_token' => Str::random(40)
         ]);
     }
 
@@ -161,7 +162,7 @@ class RegisterController extends Controller
         if( ! $token ){
             $user = Auth::user();
 
-            $user->verification_token = str_random(40);
+            $user->verification_token = Str::random(40);
 
             if($user->save()){
                 $user->notify(new EmailVerificationNotification($user));

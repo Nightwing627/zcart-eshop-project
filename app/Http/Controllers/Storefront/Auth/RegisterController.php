@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Storefront\Auth;
 
 use Auth;
 use App\Customer;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Events\Customer\Registered;
 use App\Http\Controllers\Controller;
@@ -96,7 +97,7 @@ class RegisterController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
-            'verification_token' => str_random(40)
+            'verification_token' => Str::random(40)
         ];
 
         // If customer agree to subscribe newsletter or the system set it auto
@@ -124,7 +125,7 @@ class RegisterController extends Controller
         if(!$token){
             $customer = Auth::guard('customer')->user();
 
-            $customer->verification_token = str_random(40);
+            $customer->verification_token = Str::random(40);
 
             if($customer->save()){
                 $customer->notify(new EmailVerificationNotification($customer));

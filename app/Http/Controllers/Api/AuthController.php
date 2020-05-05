@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use Socialite;
 use App\Customer;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => $request->password,
             'accepts_marketing' => $request->subscribe,
-            'verification_token' => str_random(40),
+            'verification_token' => Str::random(40),
             'active' => 0,
         ]);
 
@@ -159,7 +160,7 @@ class AuthController extends Controller
         if (!$customer)
             return response()->json(['message' => trans('api.email_account_not_found')], 404);
 
-        $token = str_random(60);
+        $token = Str::random(60);
         $url = url('/api/auth/find/'.$token);
 
         $passwordReset = DB::table('password_resets')
