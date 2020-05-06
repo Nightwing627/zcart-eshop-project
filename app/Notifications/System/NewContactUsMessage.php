@@ -43,8 +43,11 @@ class NewContactUsMessage extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        // Set fallback email address if sender not found
+        $from = $this->message->email ?? config('mail.from.address');
+
         return (new MailMessage)
-        ->from($this->message->email)
+        ->from($from)
         ->subject(trans('notifications.new_contact_us_message.subject', ['subject' => $this->message->subject]))
         ->markdown('admin.mail.system.new_contact_us_message', ['message' => $this->message]);
     }

@@ -17,9 +17,12 @@ class CreateMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('shop_id')->unsigned()->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->bigInteger('customer_id')->unsigned()->nullable();
+            $table->string('name')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->string('subject')->nullable();
             $table->longtext('message')->nullable();
-            $table->bigInteger('customer_id')->unsigned()->nullable();
             $table->bigInteger('order_id')->unsigned()->nullable();
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->integer('status')->default(1);

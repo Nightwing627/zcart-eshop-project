@@ -36,6 +36,9 @@ class Message extends BaseModel
      */
     protected $fillable = [
                     'shop_id',
+                    'name',
+                    'phone',
+                    'email',
                     'user_id',
                     'subject',
                     'message',
