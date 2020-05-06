@@ -13,17 +13,17 @@
         <h3>@lang('theme.condition')</h3>
         <div class="checkbox">
             <label>
-                <input name="condition[New]" class="i-check filter_opt_checkbox" type="checkbox" {{ Request::has('condition.New') ? 'checked' : '' }}> @lang('theme.new') <span class="small">({{ $products->where('condition', 'New')->count() }})</span>
+                <input name="condition[New]" class="i-check filter_opt_checkbox" type="checkbox" {{ Request::has('condition.New') ? 'checked' : '' }}> @lang('theme.new') <span class="small">({{ $products->where('condition', trans('app.new'))->count() }})</span>
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input name="condition[Used]" class="i-check filter_opt_checkbox" type="checkbox" {{ Request::has('condition.Used') ? 'checked' : '' }}> @lang('theme.used') <span class="small">({{ $products->where('condition', 'Used')->count() }})</span>
+                <input name="condition[Used]" class="i-check filter_opt_checkbox" type="checkbox" {{ Request::has('condition.Used') ? 'checked' : '' }}> @lang('theme.used') <span class="small">({{ $products->where('condition', trans('app.used'))->count() }})</span>
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input name="condition[Refurbished]" class="i-check filter_opt_checkbox" type="checkbox" {{ Request::has('condition.Refurbished') ? 'checked' : '' }}> @lang('theme.refurbished') <span class="small">({{ $products->where('condition', 'Refurbished')->count() }})</span>
+                <input name="condition[Refurbished]" class="i-check filter_opt_checkbox" type="checkbox" {{ Request::has('condition.Refurbished') ? 'checked' : '' }}> @lang('theme.refurbished') <span class="small">({{ $products->where('condition', trans('app.refurbished'))->count() }})</span>
             </label>
         </div>
     </div>
