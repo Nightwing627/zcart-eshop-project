@@ -65,6 +65,14 @@ mix.scripts([
    ], 'public/css/fileinput.css');
 //END kartik-v-bootstrap-fileinput
 
+// highcharts
+mix.scripts([
+        'resources/assets/plugins/highcharts/highcharts.js',
+        'resources/assets/plugins/highcharts/exporting.js',
+        'resources/assets/plugins/highcharts/export-data.js',
+	], 'public/js/highchart.js');
+//END highcharts
+
 // Copy some assets file for iCheck plugin
 mix.copy('resources/assets/plugins/iCheck/line/line.png', 'public/css/line.png')
 	.copy('resources/assets/plugins/iCheck/line/line@2x.png', 'public/css/line@2x.png')

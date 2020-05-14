@@ -2389,7 +2389,8 @@ table .product-info-price .percent-off {
 }
 .product-info-qty-item {
   float: left;
-  margin-right: 10px;
+  /*margin-right: 10px;*/
+  border-radius: 4px;
   border: 1px solid #ccc;
   overflow: hidden;
 }
@@ -3033,7 +3034,7 @@ table .product-info-price .percent-off {
 }
 .modal-content .product-info-qty-item,
 .shopping-cart-item-table .product-info-qty-item {
-  zoom: 0.81!important;
+  /*zoom: 0.81!important;*/
 }
 .shopping-cart-item-table > tfoot > tr > td,
 .shopping-cart-item-table > thead > tr > th {

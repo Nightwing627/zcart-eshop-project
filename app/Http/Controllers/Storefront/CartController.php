@@ -6,6 +6,7 @@ use Auth;
 use App\Shop;
 use App\Cart;
 use App\Order;
+use App\State;
 use App\Coupon;
 use App\Country;
 use App\Inventory;
@@ -26,8 +27,9 @@ class CartController extends Controller
     {
         $carts = Cart::whereNull('customer_id')->where('ip_address', $request->ip());
 
-        if(Auth::guard('customer')->check())
+        if( Auth::guard('customer')->check() ) {
             $carts = $carts->orWhere('customer_id', Auth::guard('customer')->user()->id);
+        }
 
         $carts = $carts->get();
 
@@ -42,7 +44,14 @@ class CartController extends Controller
 
         $business_areas = Country::select('id', 'name', 'iso_code')->orderBy('name', 'asc')->get();
 
-        return view('cart', compact('carts','business_areas','platformDefaultPackaging','expressId'));
+        $geoip = geoip(request()->ip());
+
+        $geoip_country = $business_areas->where('iso_code', $geoip->iso_code)->first();
+
+        $geoip_state = State::select('id', 'name', 'iso_code', 'country_id')
+        ->where('iso_code', $geoip->state)->where('country_id', $geoip_country->id)->first();
+
+        return view('cart', compact('carts','business_areas','geoip_country','geoip_state','platformDefaultPackaging','expressId'));
     }
 
     /**
@@ -57,21 +66,24 @@ class CartController extends Controller
 
         $customer_id = Auth::guard('customer')->check() ? Auth::guard('customer')->user()->id : Null;
 
-        if($customer_id){
+        if( $customer_id ) {
             $old_cart = Cart::where('shop_id', $item->shop_id)->where(function($query) use ($customer_id){
                 $query->where('customer_id', $customer_id)->orWhere(function($q){
                     $q->whereNull('customer_id')->where('ip_address', request()->ip());
                 });
             })->first();
         }
-        else{
+        else {
             $old_cart = Cart::where('shop_id', $item->shop_id)->whereNull('customer_id')->where('ip_address', $request->ip())->first();
         }
 
         // Check if the item is alrealy in the cart
-        if($old_cart){
+        if( $old_cart ) {
             $item_in_cart = \DB::table('cart_items')->where('cart_id', $old_cart->id)->where('inventory_id', $item->id)->first();
-            if($item_in_cart) return response()->json(['cart_id' => $item_in_cart->cart_id], 444);  // Item alrealy in cart
+
+            if( $item_in_cart ) {
+                return response()->json(['cart_id' => $item_in_cart->cart_id], 444);  // Item alrealy in cart
+            }
         }
 
         $qtt = $request->quantity ?? $item->min_order_quantity;
@@ -86,14 +98,17 @@ class CartController extends Controller
         $cart->item_count = $old_cart ? ($old_cart->item_count + 1) : 1;
         $cart->quantity = $old_cart ? ($old_cart->quantity + $qtt) : $qtt;
 
-        if($request->shipTo)
+        if( $request->shipTo ) {
             $cart->ship_to = $request->shipTo;
+        }
 
-        if($request->shipToCountryId)
+        if( $request->shipToCountryId ) {
             $cart->ship_to_country_id = $request->shipToCountryId;
+        }
 
-        if($request->shipToStateId)
+        if( $request->shipToStateId ) {
             $cart->ship_to_state_id = $request->shipToStateId;
+        }
 
         //Reset if the old cart exist, bcoz shipping rate will change after adding new item
         $cart->shipping_zone_id = $old_cart ? Null : $request->shippingZoneId;
@@ -105,10 +120,12 @@ class CartController extends Controller
 
         // All items need to have shipping_weight to calculate shipping
         // If any one the item missing shipping_weight set null to cart shipping_weight
-        if($item->shipping_weight == Null || ($old_cart && $old_cart->shipping_weight == Null))
+        if( $item->shipping_weight == Null || ($old_cart && $old_cart->shipping_weight == Null) ) {
             $cart->shipping_weight = Null;
-        else
+        }
+        else {
             $cart->shipping_weight = $old_cart ? ($old_cart->shipping_weight + $item->shipping_weight) : $item->shipping_weight;
+        }
 
         $cart->save();
 
@@ -124,8 +141,9 @@ class CartController extends Controller
         ];
 
         // Save cart items into pivot
-        if (!empty($cart_item_pivot_data))
+        if ( ! empty($cart_item_pivot_data) ) {
             $cart->inventories()->syncWithoutDetaching($cart_item_pivot_data);
+        }
 
         return response()->json($cart->toArray(), 200);
     }
@@ -140,8 +158,9 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        if( !crosscheckCartOwnership($request, $cart) )
+        if( !crosscheckCartOwnership($request, $cart) ) {
             return redirect()->route('cart.index')->with('warning', trans('theme.notify.please_login_to_checkout'));
+        }
 
         $cart = crosscheckAndUpdateOldCartInfo($request, $cart);
 
@@ -156,8 +175,9 @@ class CartController extends Controller
      */
     public function checkout(Request $request, Cart $cart)
     {
-        if( !crosscheckCartOwnership($request, $cart) )
+        if( !crosscheckCartOwnership($request, $cart) ) {
             return redirect()->route('cart.index')->with('warning', trans('theme.notify.please_login_to_checkout'));
+        }
 
         $cart = crosscheckAndUpdateOldCartInfo($request, $cart);
 
@@ -188,10 +208,12 @@ class CartController extends Controller
     {
         $cart = $this->addToCart($request, $slug);
 
-        if (200 == $cart->status())
+        if ( 200 == $cart->status() ) {
             return redirect()->route('cart.index', $cart->getdata()->id);
-        else if (444 == $cart->status())
+        }
+        elseif ( 444 == $cart->status() ) {
             return redirect()->route('cart.index', $cart->getdata()->cart_id);
+        }
 
         return redirect()->back()->with('warning', trans('theme.notify.failed'));
     }

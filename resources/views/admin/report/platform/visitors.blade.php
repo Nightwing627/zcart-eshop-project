@@ -85,8 +85,6 @@
 @section('page-script')
     @if(config('system_settings.google_analytic_report') && \App\SystemConfig::isGgoogleAnalyticConfigured())
 		@include('plugins.chart')
-		<script src="https://code.highcharts.com/modules/exporting.js"></script>
-		<script src="https://code.highcharts.com/modules/export-data.js"></script>
 
 		{!! $chartVisitors->script() !!}
 		{!! $chartReferrers->script() !!}

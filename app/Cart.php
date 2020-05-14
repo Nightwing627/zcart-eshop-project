@@ -221,7 +221,14 @@ class Cart extends BaseModel
      */
     public function is_free_shipping()
     {
-        return ! $this->shipping_rate_id;
+        // return ! $this->shipping_rate_id;
+        foreach($this->inventories as $item) {
+            if( ! $item->free_shipping ) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

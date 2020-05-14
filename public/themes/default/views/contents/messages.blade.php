@@ -13,10 +13,14 @@
 			@foreach($messages as $message)
         <tr id="item_{{ $message->id }}">
           <td class="mailbox-name" width="15%">
-            <a href="{{ route('show.store', $message->shop->slug) }}">
-                <img src="{{ get_storage_file_url(optional($message->shop->image)->path, 'thumbnail') }}" class="seller-info-logo img-circle" alt="{{ trans('theme.logo') }}">
-                {!! $message->shop->getQualifiedName() !!}
-            </a>
+            @if($message->shop)
+              <a href="{{ route('show.store', $message->shop->slug) }}">
+                  <img src="{{ get_storage_file_url(optional($message->shop->image)->path, 'thumbnail') }}" class="seller-info-logo img-circle" alt="{{ trans('theme.logo') }}">
+                  {!! $message->shop->getQualifiedName() !!}
+              </a>
+            @else
+              {{ trans('theme.store') }}
+            @endif
           </td>
           <td class="mailbox-subject" width="60%">
             <a href="{{ route('message.show', $message) }}" class="{{ $message->isUnread() ? 'unread' : '' }}">

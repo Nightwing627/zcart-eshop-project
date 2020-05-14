@@ -438,7 +438,6 @@ class Inventory extends BaseModel
      */
     public function isHotItem()
     {
-        return true;
         return $this->orders_count >= config('system.popular.hot_item.sell_count', 3);
     }
 
@@ -464,12 +463,22 @@ class Inventory extends BaseModel
     public function getLabels()
     {
         $labels = [];
-        if($this->free_shipping)
-            $labels[] = trans('theme.free_shipping');
-        if($this->stuff_pick)
-            $labels[] = trans('theme.stuff_pick');
-        if($this->isHotItem())
+
+        if($this->isHotItem()) {
             $labels[] = trans('theme.hot_item');
+        }
+
+        if($this->free_shipping) {
+            $labels[] = trans('theme.free_shipping');
+        }
+
+        if($this->stuff_pick) {
+            $labels[] = trans('theme.stuff_pick');
+        }
+
+       if($this->hasOffer()) {
+            $labels[] = trans('theme.percent_off', ['value' => $this->discount_percentage()]);
+       }
 
         return $labels;
     }

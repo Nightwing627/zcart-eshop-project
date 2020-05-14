@@ -116,12 +116,12 @@ foreach ($variants as &$value) {
             $('.radioSelect').each(function (selectIndex, selectElement) {
                 var select = $(selectElement);
                 var container = $("<div class='radioSelectContainer' />");
-                // select.prepend().append(container);
+
                 select.parent().append(container);
                 container.append(select);
 
                 select.find('option').each(function (optionIndex, optionElement) {
-                    // console.log();
+
                     var label = $("<label />");
                     container.append(label);
 
@@ -309,6 +309,14 @@ foreach ($variants as &$value) {
         $('#loginModal').modal();
     });
 
+    $("#buy-now-btn").on("click", function(e) {
+        e.preventDefault();
+
+        if( ! $(this).attr('disabled') ) {
+            window.location.href = $(this).attr('href') + '?&quantity=' + $('input.product-info-qty-input').val();
+        }
+    });
+
     function populateStateSelect(country, state = null)
     {
         $.ajax({
@@ -371,6 +379,7 @@ foreach ($variants as &$value) {
     function updateUrls(item)
     {
         $("#buy-now-btn").attr('href', buyNowBaseUrl + item.slug);
+
         itemWrapper.find('.sc-add-to-cart').data('link', addToCartBaseUrl + item.slug);
         // itemWrapper.find('.sc-add-to-cart').attr('href', addToCartBaseUrl + item.slug);
         history.pushState(item, item.title, item.slug);         // HTML5 History pushState method to update browser URI

@@ -400,8 +400,6 @@
 
 @section('page-script')
   @include('plugins.chart')
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
-	<script src="https://code.highcharts.com/modules/export-data.js"></script>
 
   {!! $chart->script() !!}
 

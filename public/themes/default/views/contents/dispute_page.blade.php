@@ -206,7 +206,7 @@
               <a href="{{ route('order.detail', $order) . '#message-section' }}" class="btn btn-primary flat">{!! trans('theme.button.contact_seller') !!}</a>
 
               @unless($order->dispute)
-                <a href="#" data-toggle="modal" data-target="#disputeOpenModal" class="btn btn-black flat">{!! trans('theme.button.open_dispute') !!}</a>
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#disputeOpenModal" class="btn btn-black flat">{!! trans('theme.button.open_dispute') !!}</a>
               @endunless
           </p>
           <div class="sep"></div>

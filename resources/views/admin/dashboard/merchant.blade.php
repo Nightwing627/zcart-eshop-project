@@ -92,7 +92,7 @@
 
               	@php
               		$difference = $todays_sale_amount - $yesterdays_sale_amount;
-              		$todays_sale_percents = $todays_sale_amount == 0 ? 0 : round(($difference / $todays_sale_amount) * 100);
+              		$todays_sale_percents = $todays_sale_amount > 0 ? round(($difference / $todays_sale_amount) * 100) : 0;
               	@endphp
               	<div class="progress">
                 	<div class="progress-bar progress-bar-success" style="width: {{$todays_sale_percents}}%"></div>
@@ -129,8 +129,9 @@
               	</span>
 
               	@php
-              		$stock_out_percents = $stock_count == 0 ?
-              				($stock_out_count * 100) : round(($stock_out_count / $stock_count) * 100);
+              		$stock_out_percents = $stock_count > 0 ?
+              				round(($stock_out_count / $stock_count) * 100) :
+              				($stock_out_count * 100);
               	@endphp
               	<div class="progress">
                 	<div class="progress-bar progress-bar-danger" style="width: 70%"></div>
@@ -144,8 +145,7 @@
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
-    </div>
-    <!-- /.row -->
+    </div> <!-- /.row -->
 
     <div class="row">
         <div class="col-md-8 col-sm-7 col-xs-12">
@@ -167,7 +167,7 @@
 				              	@php
 				              		$last_months = $last_60days_dispute_count - $last_30days_dispute_count;
 				              		$difference = $last_30days_dispute_count - $last_months;
-				              		$last_30_days_percents = $last_months == 0 ? 100 : round(($difference / $last_months) * 100);
+				              		$last_30_days_percents = $last_months > 0 ? round(($difference / $last_months) * 100) : 100;
 				              	@endphp
 								<div class="progress">
 									<div class="progress-bar" style="width: {{$last_30_days_percents}}%"></div>
@@ -197,7 +197,7 @@
 				              	@php
 				              		$last_months = $last_60days_refund_request_count - $last_30days_refund_request_count;
 				              		$difference = $last_30days_refund_request_count - $last_months;
-				              		$last_30_days_percents = $last_months == 0 ? 100 : round(($difference / $last_months) * 100);
+				              		$last_30_days_percents = $last_months > 0 ? round(($difference / $last_months) * 100) : 100;
 				              	@endphp
 								<div class="progress">
 									<div class="progress-bar" style="width: {{$last_30_days_percents}}%"></div>
@@ -342,20 +342,16 @@
 											@endforelse
 										</tbody>
 									</table>
-								</div>
-								<!-- /.table-responsive -->
-				            </div>
-				            <!-- /.box-body -->
+								</div><!-- /.table-responsive -->
+				            </div><!-- /.box-body -->
 				            <div class="box-footer clearfix">
 					            @can('index', App\Inventory::class)
 									<a href="{{ route('admin.stock.inventory.index') }}" class="btn btn-default btn-flat pull-right">
 										<i class="icon ion-md-cube"></i> {{ trans('app.inventories') }}
 									</a>
 								@endcan
-				            </div>
-				            <!-- /.box-footer -->
-						</div>
-			            <!-- /.tab-pane -->
+				            </div><!-- /.box-footer -->
+						</div><!-- /.tab-pane -->
 
 					    <div class="tab-pane" id="low_stock_tab">
 				            <div class="box-body nopadding">
@@ -380,7 +376,7 @@
 													<td>{{ $inventory->sku }}</td>
 													<td>{{ optional($inventory->product)->name }}</td>
 													<td class="qtt-{{$inventory->id}}">{{ ($inventory->stock_quantity > 0) ? $inventory->stock_quantity : trans('app.out_of_stock') }}</td>
-													<td>{{ ($inventory->active) ? trans('app.active') : trans('app.inactive') }}</td>
+													<td>{{ $inventory->active ? trans('app.active') : trans('app.inactive') }}</td>
 													<td class="row-options">
 														@can('update', $inventory)
 															<a href="javascript:void(0)" data-link="{{ route('admin.stock.inventory.editQtt', $inventory->id) }}" class="ajax-modal-btn"><i data-toggle="tooltip" data-placement="top" title="{{ trans('app.update') }}" class="icon ion-md-add-circle"></i></a>
@@ -394,34 +390,26 @@
 											@endforelse
 										</tbody>
 									</table>
-								</div>
-								<!-- /.table-responsive -->
-				            </div>
-				            <!-- /.box-body -->
+								</div> <!-- /.table-responsive -->
+				            </div> <!-- /.box-body -->
 				            <div class="box-footer clearfix">
 					            @can('index', App\Inventory::class)
 									<a href="{{ route('admin.stock.inventory.index') }}" class="btn btn-default btn-flat pull-right">
 										<i class="icon ion-md-cube"></i> {{ trans('app.inventories') }}
 									</a>
 								@endcan
-				            </div>
-				            <!-- /.box-footer -->
-						</div>
-			            <!-- /.tab-pane -->
-					</div>
-		            <!-- /.tab-content -->
-				</div>
-	            <!-- /.nav-tabs-custom -->
-          	</div>
-          	<!-- /.box -->
+				            </div> <!-- /.box-footer -->
+						</div> <!-- /.tab-pane -->
+					</div> <!-- /.tab-content -->
+				</div> <!-- /.nav-tabs-custom -->
+          	</div> <!-- /.box -->
 
           	{{-- Activity Logs --}}
 	    	@include('admin.partials._activity_logs', ['logger' => Auth::user()->shop])
-	    </div>
-      	<!-- /.col-*-* -->
+	    </div> <!-- /.col-*-* -->
 
         <div class="col-md-4 col-sm-5 col-xs-12 nopadding-left">
-        	@if((bool) config('dashboard.upgrade_plan_notice'))
+        	@if($current_plan->team_size && (bool) config('dashboard.upgrade_plan_notice'))
 	          	@php
 	          		$staff_count_percentage = round(($user_count / $current_plan->team_size ) * 100);
 	          		$stock_used_percentage = round(($stock_count / $current_plan->inventory_limit ) * 100);
@@ -533,8 +521,7 @@
         			</table>
 	            </div>
 	            <!-- /.box-body -->
-          	</div>
-          	<!-- /.box -->
+          	</div> <!-- /.box -->
 
 	        <!-- PRODUCT LIST -->
 	        <div class="box box-primary">
@@ -591,6 +578,7 @@
 					</a>
 	            </div><!-- /.box-footer -->
 	        </div><!-- /.box -->
+
 	    </div><!-- /.col-*-* -->
     </div><!-- /.row -->
 @endsection

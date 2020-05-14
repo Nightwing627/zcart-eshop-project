@@ -44,7 +44,15 @@
 					@foreach($subscription_plans as $subscriptionPlan )
 						<tr id="{{ $subscriptionPlan->plan_id }}">
 						  	@can('massDelete', App\SubscriptionPlan::class)
-								<td><input id="{{ $subscriptionPlan->plan_id }}" type="checkbox" class="massCheck"></td>
+							  	<td>
+							  		@if($subscriptionPlan->shops_count)
+										<span class="text-muted">
+											<i class="fa fa-ban" data-toggle="tooltip" data-placement="right" title="{{ trans('help.this_plan_has_active_subscribers') }}" ></i>
+										</span>
+								  	@else
+										<input id="{{ $subscriptionPlan->plan_id }}" type="checkbox" class="massCheck">
+								  	@endif
+							  	</td>
 						  	@endcan
 					        <td>
 								<i data-toggle="tooltip" data-placement="top" title="{{ trans('app.move') }}" class="fa fa-arrows sort-handler"> </i>
@@ -54,6 +62,10 @@
 								@if($subscriptionPlan->featured)
 									<span class="label label-primary indent10">{{ trans('app.featured') }}</span>
 								@endif
+
+								<span class="label label-outline pull-right" data-toggle="tooltip" data-placement="top" title="{{ trans('help.subscribers_count') }}">
+									{{ $subscriptionPlan->shops_count }}
+								</span>
 							</td>
 							<td>{{ get_formated_currency($subscriptionPlan->cost, true, 2) }}</td>
 							<td>{{ $subscriptionPlan->team_size }}</td>
@@ -68,9 +80,15 @@
 								@endcan
 
 								@can('delete', $subscriptionPlan)
-									{!! Form::open(['route' => ['admin.setting.subscriptionPlan.trash', $subscriptionPlan->plan_id], 'method' => 'delete', 'class' => 'data-form']) !!}
-										{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-									{!! Form::close() !!}
+									@if($subscriptionPlan->shops_count)
+										<span class="text-muted">
+											<i class="fa fa-trash-o" data-toggle="tooltip" data-placement="left" title="{{ trans('help.this_plan_has_active_subscribers') }}" ></i>
+										</span>
+									@else
+										{!! Form::open(['route' => ['admin.setting.subscriptionPlan.trash', $subscriptionPlan->plan_id], 'method' => 'delete', 'class' => 'data-form']) !!}
+											{!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'confirm ajax-silent', 'title' => trans('app.trash'), 'data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+										{!! Form::close() !!}
+									@endif
 								@endcan
 							</td>
 						</tr>

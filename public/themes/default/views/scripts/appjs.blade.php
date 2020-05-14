@@ -88,8 +88,14 @@
             });
         });
 
+        // Prevent the option if disabled
         $("#buy-now-btn").on("click", function(e) {
-            apply_busy_filter('body');
+            if( $(this).attr('disabled') ) {
+                e.preventDefault();
+            }
+            else {
+                apply_busy_filter('body');
+            }
         });
 
         // Item Quick View Modal

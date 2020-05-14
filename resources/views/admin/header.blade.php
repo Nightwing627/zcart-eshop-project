@@ -38,12 +38,12 @@
                         <img src="{{ get_avatar_src($message->customer, 'tiny') }}" class="img-circle" alt="{{ trans('app.avatar') }}">
                       </div>
                       <h4>
-                        {{ $message->subject }}
+                        {!! $message->subject !!}
                         <small><i class="fa fa-clock-o"></i> {{ $message->created_at->diffForHumans() }}</small>
                       </h4>
 
                       <p>
-                        {{ str_limit($message->message, 100) }}
+                        {!! str_limit($message->message, 100) !!}
                       </p>
                     </a>
                   </li>

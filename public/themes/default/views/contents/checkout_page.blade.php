@@ -61,6 +61,8 @@
           </div><!-- /input-group -->
 
           {{ Form::hidden('cart_id', $cart->id, ['id' => 'checkout-id']) }}
+          {{ Form::hidden('cart_weight', $cart->shipping_weight, ['id' => 'cartWeight'.$cart->id]) }}
+          {{ Form::hidden('free_shipping', $cart->is_free_shipping(), ['id' => 'freeShipping'.$cart->id]) }}
           {{ Form::hidden('shop_id', $cart->shop->id, ['id' => 'shop-id'.$cart->id]) }}
           {{ Form::hidden('tax_id', isset($shipping_zone->id) ? $shipping_zone->tax_id : Null, ['id' => 'tax-id'.$cart->id]) }}
           {{ Form::hidden('taxrate', $cart->taxrate, ['id' => 'cart-taxrate'.$cart->id]) }}

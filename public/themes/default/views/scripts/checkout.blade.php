@@ -7,8 +7,9 @@
 		var customer = {{ $customer ? 'true' : 'undefined'}};
 
 		// Show email/password form is customer want to save the card/create account
-		if ($("#create-account-checkbox, #remember-the-card").is(':checked'))
+		if ($("#create-account-checkbox, #remember-the-card").is(':checked')) {
 			showAccountForm();
+		}
 
 	    // Toggle account creation fields
 	    $('#create-account-checkbox, #remember-the-card').on('ifChecked', function() {
@@ -26,22 +27,28 @@
 			$('#payment-instructions').children('span').html($(this).data('info'));
 
 	    	// Alter checkout button text Stripe
-			if ('stripe' == code)
+			if ('stripe' == code) {
 				showCardForm();
-	    	else
+			}
+	    	else {
 	    		hideCardForm();
+	    	}
 
 	    	// Alter checkout button text Authorize Net
-			if ('authorize-net' == code)
+			if ('authorize-net' == code) {
 				showAuthorizeNetCardForm();
-	    	else
+			}
+	    	else {
 	    		hideAuthorizeNetCardForm();
+	    	}
 
 	    	// Alter checkout button text Authorize Net
-			if ('cybersource' == code)
+			if ('cybersource' == code) {
 				showAuthorizeNetCardForm();
-	    	else
+			}
+	    	else {
 	    		hideAuthorizeNetCardForm();
+	    	}
 
 	    	// Alter checkout button
 			if ('paypal-express' == code){

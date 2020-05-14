@@ -78,7 +78,7 @@ class Message extends BaseModel
     public function user()
     {
         return $this->belongsTo(User::class)->withDefault([
-            'name' => trans('app.user')
+            'name' => trans('theme.user')
         ]);
     }
 

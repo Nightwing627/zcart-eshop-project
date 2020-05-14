@@ -6,7 +6,6 @@
 /storage/*.index
 /storage/installed
 /storage/logs/**
-/resources/assets
 /vendor/**
 !/vendor/helper_functions.php
 /.idea

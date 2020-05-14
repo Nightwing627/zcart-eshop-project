@@ -746,4 +746,8 @@ return [
     'not_in_business_area' => 'This area is not in marketplace\'s active business area. Maybe recently removed by the marketplace admin.',
 
     'region_iso_code' => 'The region ISO code must have to be right. Read *Business Area* section on the documentation to get help.',
+
+    'subscribers_count' => 'Number of active subscribers',
+
+    'this_plan_has_active_subscribers' => 'This plan can not be deleted because it has active subscribers.',
 ];

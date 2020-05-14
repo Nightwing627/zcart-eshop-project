@@ -31,7 +31,7 @@ class SubscriptionPlanController extends Controller
      */
     public function index()
     {
-        $subscription_plans = SubscriptionPlan::orderBy('order', 'asc')->get();
+        $subscription_plans = SubscriptionPlan::withCount('shops')->orderBy('order', 'asc')->get();
 
         $trashes = SubscriptionPlan::onlyTrashed()->get();
 
@@ -94,8 +94,9 @@ class SubscriptionPlanController extends Controller
      */
     public function update(UpdateSubscriptionPlanRequest $request, SubscriptionPlan $subscriptionPlan)
     {
-        if( config('app.demo') == true && in_array($subscriptionPlan->plan_id, config('system.demo.plans', ['business', 'individual', 'professional'])) )
+        if( config('app.demo') == true && in_array($subscriptionPlan->plan_id, config('system.demo.plans', ['business', 'individual', 'professional'])) ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         try{
             \DB::beginTransaction();
@@ -125,8 +126,9 @@ class SubscriptionPlanController extends Controller
      */
     public function trash(Request $request, SubscriptionPlan $subscriptionPlan)
     {
-        if( config('app.demo') == true && in_array($subscriptionPlan->plan_id, config('system.demo.plans', ['business', 'individual', 'professional'])) )
+        if( config('app.demo') == true && in_array($subscriptionPlan->plan_id, config('system.demo.plans', ['business', 'individual', 'professional'])) ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $subscriptionPlan->delete();
 
@@ -168,13 +170,15 @@ class SubscriptionPlanController extends Controller
      */
     public function massTrash(Request $request)
     {
-        if(config('app.demo') == true)
+        if( config('app.demo') == true ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         SubscriptionPlan::whereIn('plan_id', $request->ids)->delete();
 
-        if($request->ajax())
+        if( $request->ajax() ) {
             return response()->json(['success' => trans('messages.trashed', ['model' => $this->model])]);
+        }
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
     }
@@ -189,8 +193,9 @@ class SubscriptionPlanController extends Controller
     {
         SubscriptionPlan::onlyTrashed()->whereIn('plan_id', $request->ids)->restore();
 
-        if($request->ajax())
+        if( $request->ajax() ) {
             return response()->json(['success' => trans('messages.restored', ['model' => $this->model])]);
+        }
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model]));
     }
@@ -203,13 +208,15 @@ class SubscriptionPlanController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        if(config('app.demo') == true)
+        if( config('app.demo') == true ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         SubscriptionPlan::withTrashed()->whereIn('plan_id', $request->ids)->forceDelete();
 
-        if($request->ajax())
+        if( $request->ajax() ) {
             return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+        }
 
         return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
@@ -224,8 +231,9 @@ class SubscriptionPlanController extends Controller
     {
         SubscriptionPlan::onlyTrashed()->forceDelete();
 
-        if($request->ajax())
+        if( $request->ajax() ) {
             return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+        }
 
         return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
@@ -237,8 +245,9 @@ class SubscriptionPlanController extends Controller
     {
         // $this->attribute->reorder($request->all());
 
-        foreach ($request->all() as $id => $order)
+        foreach ($request->all() as $id => $order) {
             SubscriptionPlan::findOrFail($id)->update(['order' => $order]);
+        }
 
         return response('success!', 200);
     }

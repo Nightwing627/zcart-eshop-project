@@ -4,7 +4,7 @@
     <div class="col-xs-2 nopadding-right">
       @if($message->user_id)
           <div class="message-user-info">
-              <div class="message-user-name" title="seller">{{ $message->shop->name ?? lang('theme.seller')}}</div>
+              <div class="message-user-name" title="seller">{{ $message->shop ? $message->shop->name : trans('theme.store') }}</div>
             <div class="message-date">{{ $message->created_at->toDayDateTimeString() }}</div>
         </div>
       @endif
@@ -37,7 +37,7 @@
     <div class="col-xs-2 nopadding-right">
       @unless($msg->customer_id)
           <div class="message-user-info">
-              <div class="message-user-name" title="seller">{{ $message->shop->name ?? lang('theme.seller')}}</div>
+            <div class="message-user-name" title="seller">{{ $message->shop ? $message->shop->name : trans('theme.store') }}</div>
             <div class="message-date">{{ $msg->created_at->toDayDateTimeString() }}</div>
         </div>
       @endunless

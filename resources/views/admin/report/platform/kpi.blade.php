@@ -89,8 +89,7 @@
         </div>
       </div>
       <!-- /.col -->
-  </div>
-  <!-- /.row -->
+  </div> <!-- /.row -->
 
 {{-- 	<div class="box">
 		<div class="box-header with-border">
@@ -114,8 +113,8 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-        	<div class="row">
-            	<div class="col-sm-7 nopadding-right">
+    	<div class="row">
+      	<div class="col-sm-7 nopadding-right">
 					<table class="table table-striped">
 						<thead>
 							<tr>
@@ -134,19 +133,17 @@
 							@endforeach
 						</tbody>
 					</table>
-            	</div>
-            	<div class="col-sm-5 nopadding-left">
-            		{!! $chartSubscribers->container() !!}
-        		</div>
-        	</div> <!-- /.row -->
+      	</div>
+      	<div class="col-sm-5 nopadding-left">
+      		{!! $chartSubscribers->container() !!}
+    		</div>
+    	</div> <!-- /.row -->
 		</div> <!-- /.box-body -->
 	</div> <!-- /.box -->
 @endsection
 
 @section('page-script')
 	@include('plugins.chart')
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
-	<script src="https://code.highcharts.com/modules/export-data.js"></script>
 
 	{!! $chartSubscribers->script() !!}
 @endsection

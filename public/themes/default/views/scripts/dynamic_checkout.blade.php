@@ -38,9 +38,10 @@
 
 	    	// Reset the shipping option if any addess selected
 			var address = $('input[type="radio"].ship-to-address:checked');
-			if(address.val())
+			if(address.val()) {
 	            setShippingZone($("#checkout-id").val(), address.data('country'), address.data('state'));
 				// checkShippingZone(selected_address.data('country'), selected_address.data('state'));
+			}
 
 
 			// Alter shipping address
@@ -91,8 +92,9 @@
 	        $('#shipTo_country').selectBoxIt(); //Initialise the selectBoxIt
 
 	        // Populate states field if required
-	        if(state && $("#state_id_select_wrapper").hasClass('hidden'))
+	        if(state && $("#state_id_select_wrapper").hasClass('hidden')) {
 	            populateStateSelect(country, state);
+	        }
 
 	        // Set the cart id into the form
 	        $("input#cartinfo").val($(this).data('cart'));
@@ -109,8 +111,7 @@
 	        var state_id = $("#shipTo_state").val();
 
 	        // Check if the state is selected if exist
-	        if(state_id || $("#state_id_select_wrapper").hasClass('hidden'))
-	        {
+	        if(state_id || $("#state_id_select_wrapper").hasClass('hidden')) {
 	            // Set the ship to text
 	            var text = state_id ? "#shipTo_state" : "#shipTo_country";
 	            $("#shipTo"+cart).text($(text+" option:selected").html());
@@ -475,6 +476,12 @@
 	    // Functions
 		function isFreeShipping(cart)
 		{
+			// Checkout page
+			if ($("#checkout-id").length == 1) {
+				return $("#freeShipping"+cart).val();
+			}
+
+			// Cart page
 			var notFree = $(".freeShipping"+cart).filter(function() {
 				return this.value != 1;
 			});
@@ -545,6 +552,12 @@
 
 		function getCartWeight(cart)
 		{
+			// Checkout page
+			if ($("#checkout-id").length == 1) {
+				return Number($("#cartWeight"+cart).val());
+			}
+
+			// Cart page
 	      	var cartWeight = 0;
 	        $(".itemWeight"+cart).each(function()
 	        	{

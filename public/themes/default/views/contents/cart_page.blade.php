@@ -1,23 +1,19 @@
 <section>
   <div class="container">
     @if($carts->count() > 0)
-      @php
-          $geoip = geoip(request()->ip());
-          $geoip_country = $business_areas->where('iso_code', $geoip->iso_code)->first();
-      @endphp
-
       @foreach($carts as $cart)
         @php
             $cart_total = 0;
 
-            $shipping_country_id = $cart->country->id ?? optional($geoip_country)->id;
+            $shipping_country_id = $cart->ship_to_country_id ?? optional($geoip_country)->id;
+            $shipping_state_id = $cart->ship_to_state_id ?? optional($geoip_state)->id;
 
             // if(! $shipping_country_id)
               // CANT SHIPP
 
             $shop_id = $cart->shop_id;
 
-            $shipping_zone = get_shipping_zone_of($shop_id, $shipping_country_id, $cart->state->id);
+            $shipping_zone = get_shipping_zone_of($shop_id, $shipping_country_id, $shipping_state_id);
 
             $shipping_options = isset($shipping_zone->id) ? getShippingRates($shipping_zone->id) : 'NaN';
 
@@ -25,7 +21,7 @@
 
             if($cart->shop){
               $default_packaging = $cart->shippingPackage ??
-                                    optional($cart->shop->packagings)->where('default',1)->first() ??
+                                    optional($cart->shop->packagings)->where('default', 1)->first() ??
                                     $platformDefaultPackaging;
             }
             else{
@@ -63,8 +59,8 @@
                     <div class="col-sm-6 col-xs-12">
                         <span class="pull-right">
                             @lang('theme.ship_to'):
-                            <a id="shipTo{{$cart->id}}" class="ship_to" data-cart="{{$cart->id}}" data-country="{{$shipping_country_id}}" data-state="{{$cart->state->id}}" href="javascript:void(0)">
-                              {{ $cart->state->id ? $cart->state->name : $cart->country->name }}
+                            <a id="shipTo{{$cart->id}}" class="ship_to" data-cart="{{$cart->id}}" data-country="{{$shipping_country_id}}" data-state="{{$shipping_state_id}}" href="javascript:void(0)">
+                              {{ $shipping_state_id ? $cart->state->name : $cart->country->name }}
                             </a>
                         </span>
                     </div>

@@ -47,7 +47,7 @@
 
                     <div class="sep"></div>
 
-                    <a data-link="{{ route('cart.addItem', $item->slug) }}" class="btn btn-primary flat sc-add-to-cart" data-dismiss="modal">
+                    <a href="javascript:void(0);" data-link="{{ route('cart.addItem', $item->slug) }}" class="btn btn-primary flat sc-add-to-cart" data-dismiss="modal">
                         <i class="fa fa-shopping-bag"></i> @lang('theme.button.add_to_cart')
                     </a>
 

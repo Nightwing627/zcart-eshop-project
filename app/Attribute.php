@@ -92,7 +92,6 @@ class Attribute extends BaseModel
     {
         switch ($this->attribute_type_id) {
             case static::TYPE_COLOR: return 'color-options';
-            // case static::TYPE_RADIO: return 'selectBoxIt';
             case static::TYPE_RADIO: return 'radioSelect';
             case static::TYPE_SELECT: return 'selectBoxIt';
             default: return 'selectBoxIt';

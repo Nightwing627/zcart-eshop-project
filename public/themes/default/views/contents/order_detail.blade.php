@@ -108,7 +108,7 @@
 			                <td width="40%" class="store-info">
 			                  	<h5>
 			                    	<span>@lang('theme.store'):</span>
-			                    	@if($order->shop)
+			                    	@if($order->shop->slug)
 				                    	<a href="{{ route('show.store', $order->shop->slug) }}"> {{ $order->shop->name }}</a>
 				                    @else
 			                      		@lang('theme.store_not_available')

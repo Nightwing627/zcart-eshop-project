@@ -880,13 +880,15 @@ if ( ! function_exists('get_formated_price') )
 
         $price = get_formated_currency($value, $decimal);
 
-        if( $decimal == 0 )
+        if( $decimal == 0 ) {
             return $price;
+        }
 
         $arr = explode( config('system_settings.currency.decimal_mark', '.'), $price );
 
-        if(isset($arr[1]))
+        if( isset($arr[1]) ) {
             return $arr[1] > 0 ? $arr[0] . '<sup class="price-fractional">' . $arr[1] .'</sup>' : $arr[0];
+        }
 
         return $price;
     }
@@ -898,8 +900,9 @@ if ( ! function_exists('get_formated_currency') )
     {
         $value =  get_formated_decimal($value, $decimal ? false : true, $decimal);
 
-        if (config('system_settings.currency.symbol_first'))
+        if ( config('system_settings.currency.symbol_first') ) {
             return get_formated_currency_symbol() . $value;
+        }
 
         return $value . get_formated_currency_symbol();
     }
@@ -909,9 +912,11 @@ if ( ! function_exists('get_formated_currency_symbol') )
 {
     function get_formated_currency_symbol()
     {
-        if (config('system_settings.show_currency_symbol')) {
-            if (config('system_settings.currency.symbol_first'))
+        if ( config('system_settings.show_currency_symbol') ) {
+
+            if ( config('system_settings.currency.symbol_first') ) {
                 return get_currency_symbol() . (config('system_settings.show_space_after_symbol') ? ' ' : '');
+            }
 
             return (config('system_settings.show_space_after_symbol') ? ' ' : '') . get_currency_symbol();
         }

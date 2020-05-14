@@ -10,18 +10,10 @@
                         <li>@lang('theme.from_verified_seller')</li>
                     @endif
 
-                    @if($item->orders_count >= config('system.popular.hot_item.sell_count', 3))
-                        <li>@lang('theme.hot_item')</li>
-                    @endif
-                    @if($item->free_shipping == 1)
-                        <li>@lang('theme.free_shipping')</li>
-                    @endif
-                    @if($item->stuff_pick == 1)
-                        <li>@lang('theme.stuff_pick')</li>
-                    @endif
-                    @if($item->hasOffer())
-                        <li>@lang('theme.percent_off', ['value' => get_percentage_of($item->sale_price, $item->offer_price)])</li>
-                    @endif
+                    @foreach($item->getLabels() as $label)
+                        <li>{!! $label !!}</li>
+                    @endforeach
+
                 </ul>
 
                 <div class="product-img-wrap">
@@ -58,7 +50,7 @@
                     @include('layouts.pricing', ['item' => $item])
 
                     <div class="product-info-desc"> {!! $item->description !!} </div>
-                    {{-- <div class="product-info-desc"> {{ $item->description }} </div> --}}
+
                     <ul class="product-info-feature-list">
                         <li>{!! $item->condition !!}</li>
                         {{-- <li>{{ $item->manufacturer->name }}</li> --}}
