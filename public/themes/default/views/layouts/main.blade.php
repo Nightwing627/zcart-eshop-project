@@ -13,11 +13,7 @@
             @include('meta')
         @endif
 
-        @if(isset($item))
-            <title>{!! $item->title !!}</title>
-        @else
-            <title>{!! $title ?? get_platform_title() !!}</title>
-        @endif
+        <title>{!! $SEOtitle ?? $title ?? get_platform_title() !!}</title>
 
         <link rel="icon" href="{{ get_storage_file_url('icon.png', 'full') }}" type="image/x-icon" />
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">

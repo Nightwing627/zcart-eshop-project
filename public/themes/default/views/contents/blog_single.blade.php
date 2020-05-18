@@ -6,15 +6,14 @@
             <div class="col-md-9">
                 <article class="blog-post">
                     @if($blog->image)
-                        <a href="{{ route('blog.show', $blog->slug) }}">
-				            <img class="full-width" src="{{ get_storage_file_url(optional($blog->image)->path, 'full') }}" alt="{{ $blog->title }}" title="{!! $blog->title !!}" />
-                        </a>
+			            <img class="full-width" src="{{ get_storage_file_url(optional($blog->image)->path, 'full') }}" alt="{{ $blog->title }}" title="{!! $blog->title !!}" />
                     @endif
 
-                    <h1 class="blog-post-title"><a href="{{ route('blog.show', $blog->slug) }}">{!! $blog->title !!}</a></h1>
+                    <h1 class="blog-post-title">{!! $blog->title !!}</h1>
+
                     <ul class="blog-post-meta">
                         <li>{{ trans('theme.published_at') . ' ' . $blog->published_at->diffForHumans() }}</li>
-                        <li>by <a href="{{ route('blog.author', $blog->user_id) }}">{!! $blog->author->getName() !!}</a>
+                        <li>{{ trans('theme.by') }} <a href="{{ route('blog.author', $blog->user_id) }}">{!! $blog->author->getName() !!}</a>
                         </li>
                     </ul>
 

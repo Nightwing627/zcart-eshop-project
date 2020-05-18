@@ -55,6 +55,9 @@
 				  <li><a href="#description_tab" data-toggle="tab">
 					{{ trans('app.description') }}
 				  </a></li>
+				  <li><a href="#listings_tab" data-toggle="tab">
+					{{ trans('app.listings') }}
+				  </a></li>
 				  <li><a href="#seo_tab" data-toggle="tab">
 					{{ trans('app.seo') }}
 				  </a></li>
@@ -127,8 +130,7 @@
 				                </tr>
 				            @endif
 				        </table>
-				    </div>
-				    <!-- /.tab-pane -->
+				    </div> <!-- /.tab-pane -->
 				    <div class="tab-pane" id="description_tab">
 					  <div class="box-body">
 				        @if($product->description)
@@ -137,8 +139,65 @@
 				            <p>{{ trans('app.description_not_available') }} </p>
 				        @endif
 					  </div>
-				    </div>
-				    <!-- /.tab-pane -->
+				    </div> <!-- /.tab-pane -->
+				    <div class="tab-pane" id="listings_tab">
+				        <table class="table">
+			                <thead>
+				                <tr>
+									<th>{{ trans('app.vendor') }}</th>
+				                	<th>{{ trans('app.stock_quantity') }} </th>
+				                	<th>{{ trans('app.condition') }} </th>
+				                	<th>{{ trans('app.price') }} </th>
+				                	<th>{{ trans('app.options') }} </th>
+				                </tr>
+				            </thead>
+				            <tbody>
+						        @foreach($product->inventories as $listing)
+					            	<tr>
+										<td>
+											{{ $listing->shop->name }}
+
+						            		@if($listing->shop->isVerified())
+												<img src="{{ get_verified_badge() }}" class="verified-badge img-xs" data-toggle="tooltip" data-placement="top" title="{{ trans('help.verified_seller') }}" alt="verified-badge">
+											@endif
+
+						            		@if($listing->shop->isDown())
+									          	<span class="label label-default indent10">{{ trans('app.maintenance_mode') }}</span>
+											@endif
+										</td>
+										<td>
+											{{ ($listing->stock_quantity > 0) ? $listing->stock_quantity : trans('app.out_of_stock') }}
+										</td>
+										<td>
+											{{ $listing->condition }}
+											<small class="text-muted" data-toggle="tooltip" data-placement="top" title="{{ $listing->condition_note }}"><sup><i class="fa fa-question-circle"></i></sup></small>
+										</td>
+										<td>
+											@if($listing->hasOffer())
+												@php
+													$offer_price_help =
+														trans('help.offer_starting_time') . ': ' .
+														$listing->offer_start->diffForHumans() . ' ' . trans('app.and') . ' ' .
+														trans('help.offer_ending_time') . ': ' .
+														$listing->offer_end->diffForHumans();
+												@endphp
+
+												<small class="text-muted">{{ get_formated_currency($listing->sale_price, true, 2) }}</small>
+												<small class="text-muted" data-toggle="tooltip" data-placement="top" title="{{ $offer_price_help }}"><sup><i class="fa fa-question-circle"></i></sup></small><br/>
+											@endif
+											{{ get_formated_currency($listing->currnt_sale_price(), true, 2) }}
+										</td>
+										<td>
+											<a href="{{ route('show.product', $listing->slug) }}" target="_blank">
+												{{ trans('app.view_detail') }}
+											</a>
+
+										</td>
+					            	</tr>
+				            	@endforeach
+				            </tbody>
+				        </table>
+				    </div> <!-- /.tab-pane -->
 				    <div class="tab-pane" id="seo_tab">
 				        <table class="table">
 				            @if($product->slug)
@@ -176,8 +235,7 @@
 				                </tr>
 				            @endif
 				        </table>
-				    </div>
-				  <!-- /.tab-pane -->
+				    </div> <!-- /.tab-pane -->
 				</div>
 				<!-- /.tab-content -->
 			</div>

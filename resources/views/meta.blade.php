@@ -1,28 +1,40 @@
+@php
+    $SEOurl = url()->current();
+    $SEOtitle = $title ?? get_platform_title();
+    $SEOdescription = config('seo.meta.description');
+    $SEOimage = filter_var(config('seo.meta.image'), FILTER_VALIDATE_URL) ? config('seo.meta.image') : get_storage_file_url('logo.png', 'full');
+    $SEOkeywords = config('seo.meta.keywords');
+
+    // For Products
+    if(isset($item)) {
+        $SEOtitle = $item->meta_title ?? $item->title;
+        $SEOdescription = $item->meta_description ?? substr($item->description, 0, config('seo.meta.description_character_limit', 160));
+        $SEOimage = get_product_img_src($item, 'full');
+        $SEOkeywords = implode(', ', $item->tags->pluck('name')->toArray());
+    }
+    // For Categories
+    elseif(Request::is('categories/*') || Request::is('categorygrp/*') || Request::is('category/*')) {
+        $category = $category ?? $categorySubGroup ?? $categoryGroup;
+        $SEOtitle = $category->meta_title ?? $SEOtitle;
+        $SEOdescription = $category->meta_description ?? $SEOdescription;
+    }
+    // For blogs
+    elseif(isset($blog)) {
+        $SEOtitle = $blog->title;
+        $SEOdescription = substr($blog->excerpt, 0, config('seo.meta.description_character_limit', 160));
+        $SEOimage = get_storage_file_url(optional($blog->image)->path, 'blog');
+        $SEOkeywords = implode(', ', $blog->tags->pluck('name')->toArray());
+    }
+@endphp
 
     <!-- Standard -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="referrer" content="{{ $referrer ?? config('seo.meta.referrer') }}">
     <meta name="robots" content="{{ $robots ?? config('seo.meta.robots') }}">
     <meta name="revisit-after" content="{{ config('seo.meta.revisit_after', '7 days') }}" />
-
-    @if(isset($item))
-
-        <meta name="description" content="{!! substr($item->description, 0, config('seo.meta.description_character_limit', 160)) !!}">
-        <meta name="image" content="{{ get_product_img_src($item, 'full') }}">
-        <meta name="keywords" content="{!! implode(', ', $item->tags->pluck('name')->toArray()) !!}">
-
-    @elseif(isset($blog))
-
-        <meta property="article:published_time" content="2020-02-25">
-        <meta property="article:author" content="author">
-        <meta name="keywords" content="{!! implode(', ', $blog->tags->pluck('name')->toArray()) !!}">
-
-    @else
-
-        <meta name="description" content="{!! $description ?? config('seo.meta.description') !!}">
-        <meta name="image" content="{{ $image ?? config('seo.meta.image') }}">
-
-    @endif
+    <meta name="description" content="{!! $SEOdescription !!}">
+    <meta name="image" content="{{ $SEOimage }}">
+    <meta name="keywords" content="{!! $SEOkeywords !!}">
 
     <!-- Geo loacation -->
     @if(config('seo.meta.geo_region') !== '')
@@ -38,42 +50,25 @@
     <meta name="dcterms.Format" content="text/html">
     <meta name="dcterms.Type" content="text/html">
     <meta name="dcterms.Language" content="{{ config('app.locale') }}">
-    <meta name="dcterms.Identifier" content="{{ url()->current() }}">
-    <meta name="dcterms.Relation" content="{{  config('app.name') }}">
-    <meta name="dcterms.Publisher" content="{{  config('app.name') }}">
-    <meta name="dcterms.Coverage" content="{{ url()->current() }}">
-    <meta name="dcterms.Contributor" content="{{ $author ?? config('app.name') }}">
-
-    @if(isset($item))
-
-        <meta name="dcterms.Title" content="{!! $item->title !!}">
-        <meta name="dcterms.Subject" content="{!! implode(', ', $item->tags->pluck('name')->toArray()) !!}">
-        <meta name="dcterms.Description" content="{!! substr($item->description, 0, config('seo.meta.description_character_limit', 160)) !!}">
-
-    @elseif(isset($blog))
-
-        <meta name="dcterms.Title" content="{{ $title ?? get_platform_title() }}">
-        <meta name="dcterms.Subject" content="{{ $keywords ?? config('seo.meta.keywords') }}">
-        <meta name="dcterms.Description" content="{{ $description ?? config('seo.meta.description') }}">
-
-    @else
-
-        <meta name="dcterms.Title" content="{{ $title ?? get_platform_title() }}">
-        <meta name="dcterms.Subject" content="{{ $keywords ?? config('seo.meta.keywords') }}">
-        <meta name="dcterms.Description" content="{{ $description ?? config('seo.meta.description') }}">
-
-    @endif
+    <meta name="dcterms.Identifier" content="{{ $SEOurl }}">
+    <meta name="dcterms.Relation" content="{{  get_platform_title() }}">
+    <meta name="dcterms.Publisher" content="{{  get_platform_title() }}">
+    <meta name="dcterms.Coverage" content="{{ $SEOurl }}">
+    <meta name="dcterms.Contributor" content="{{ $author ?? get_platform_title() }}">
+    <meta name="dcterms.Title" content="{!! $SEOtitle !!}">
+    <meta name="dcterms.Subject" content="{!! $SEOkeywords !!}">
+    <meta name="dcterms.Description" content="{!! $SEOdescription !!}">
 
     <!-- Facebook OpenGraph -->
     <meta property="og:locale" content="{{ config('app.locale') }}">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:site_name" content="{{  config('app.name') }}">
+    <meta property="og:url" content="{{ $SEOurl }}">
+    <meta property="og:site_name" content="{{  get_platform_title() }}">
+    <meta property="og:title" content="{{ $SEOtitle }}">
+    <meta property="og:description" content="{{ $SEOdescription }}">
 
     @if(isset($item))
 
         <meta property="og:type" content="product">
-        <meta property="og:title" content="{!! $item->title !!}">
-        <meta property="og:description" content="{!! substr($item->description, 0, config('seo.meta.description_character_limit', 160)) !!}">
         <meta name="product:availability" content="{{ $item->stock_quantity > 0 ? trans('theme.in_stock') : trans('theme.out_of_stock') }}">
         <meta name="product:price:currency" content="{{ get_system_currency() }}">
         <meta name="product:price:amount" content="{!! get_formated_currency($item->currnt_sale_price(), config('system_settings.decimals', 2)) !!}">
@@ -100,10 +95,8 @@
 
     @else
 
-        <meta property="og:title" content="{{ $title ?? get_platform_title() }}">
-        <meta property="og:description" content="{{ $description ?? config('seo.meta.description') }}">
-        <meta property="og:type" content="{{ $type ?? 'website' }}">
-        <meta property="og:image" content="{{ $image ?? config('seo.meta.image') }}">
+        <meta property="og:type" content="{{ 'website' }}">
+        <meta property="og:image" content="{{ $SEOimage }}">
 
     @endif
 
@@ -119,13 +112,13 @@
     @endif
 
     <!-- Twitter Card -->
-    @if(isset($item))
+    <meta name="twitter:title" content="{{ $SEOtitle }}">
+    <meta name="twitter:description" content="{{ $SEOdescription }}">
+    <meta name="twitter:image" content="{{ $SEOimage }}">
+    <meta name="twitter:image:alt" content="{!! $SEOtitle !!}">
 
+    @if(isset($item))
         <meta name="twitter:card" content="product">
-        <meta name="twitter:title" content="{!! $item->title !!}">
-        <meta name="twitter:description" content="{!! substr($item->description, 0, config('seo.meta.description_character_limit', 160)) !!}">
-        <meta name="twitter:image" content="{{ get_product_img_src($item, 'full') }}">
-        <meta name="twitter:image:alt" content="{!! $item->title !!}">
         <meta name="twitter:label1" content="price">
         <meta name="twitter:data1" content="{!! get_formated_currency($item->currnt_sale_price(), config('system_settings.decimals', 2)) !!}">
         <meta name="twitter:label2" content="availability">
@@ -138,16 +131,11 @@
         <meta name="twitter:data4" content="{!! $item->shop->name !!}">
 
     @elseif(config('seo.meta.twitter_card') !== '')
-
-        <meta name="twitter:card" content="{{ $twitter_card ?? config('seo.meta.twitter_card') }}">
-        <meta name="twitter:image" content="{{ $image ?? config('seo.meta.image') }}">
-        <meta name="twitter:title" content="{{ $title ?? get_platform_title() }}">
-        <meta name="twitter:description" content="{{ $description ?? config('seo.meta.description') }}">
-
+        <meta name="twitter:card" content="{{ config('seo.meta.twitter_card') }}">
     @endif
 
-    @if(config('seo.meta.twitter_site') !== '' || !empty($twitter_site))
-        <meta name="twitter:site" content="{{ $twitter_site ?? config('seo.meta.twitter_site') }}">
+    @if(config('seo.meta.twitter_site') !== '')
+        <meta name="twitter:site" content="{{ config('seo.meta.twitter_site') }}">
     @endif
 
     @if(isset($item))
@@ -156,9 +144,9 @@
             {
                 "@context": "http://schema.org",
                 "@type": "Product",
-                "name": "{!! $item->title !!}",
-                "description": "{!! substr($item->description, 0, config('seo.meta.description_character_limit', 160)) !!}",
-                "image": "{!! get_product_img_src($item, 'full') !!}",
+                "name": "{!! $SEOtitle !!}",
+                "description": "{!! $SEOdescription !!}",
+                "image": "{!! $SEOimage !!}",
                 "brand": {
                     "@type": "Brand",
                     "name": "{!! $item->product->manufacturer->name !!}"
@@ -169,7 +157,7 @@
                 @endif
                 "offers": {
                     "@type": "Offer",
-                    "url": "{{ url()->current() }}",
+                    "url": "{{ $SEOurl }}",
                     "availability": "http://schema.org/InStock",
                     "priceCurrency": "{{ get_system_currency() }}",
                     "price": "{!! get_formated_decimal($item->currnt_sale_price(), true, config('system_settings.decimals', 2)) !!}"
@@ -186,4 +174,3 @@
             }
         </script>
     @endif
-

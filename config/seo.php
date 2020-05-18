@@ -82,7 +82,7 @@ return [
         | or a specific page page.
         |
         */
-    	'image' => url("image/logo.png"),
+    	'image' => '',
 
 
         /*

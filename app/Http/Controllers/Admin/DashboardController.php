@@ -31,8 +31,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->isFromPlatform())
+        if(Auth::user()->isFromPlatform()) {
             return view('admin.dashboard.platform');
+        }
 
         return view('admin.dashboard.merchant');
     }

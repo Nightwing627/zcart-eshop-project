@@ -249,8 +249,9 @@ class Inventory extends BaseModel
             ($this->offer_price < $this->sale_price) &&
             ($this->offer_start < Carbon::now()) &&
             ($this->offer_end > Carbon::now())
-        )
+        ) {
             return TRUE;
+        }
 
         return FALSE;
     }
@@ -262,8 +263,9 @@ class Inventory extends BaseModel
      */
     public function currnt_sale_price()
     {
-        if($this->hasOffer())
+        if($this->hasOffer()) {
             return $this->offer_price;
+        }
 
         return $this->sale_price;
     }
