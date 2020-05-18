@@ -37,8 +37,9 @@ class Language
             $lang = config('active_locales')->firstWhere('code', $locale);
 
             // Skip if the language not found
-            if(! $lang)
+            if(! $lang) {
                 return $next($request);
+            }
 
             /*
              * setLocale for php. Enables ->formatLocalized() with localized values for dates

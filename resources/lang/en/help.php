@@ -750,4 +750,6 @@ return [
     'subscribers_count' => 'Number of active subscribers',
 
     'this_plan_has_active_subscribers' => 'This plan can not be deleted because it has active subscribers.',
+
+    'max_chat_allowed' => 'Maximum of :size characters.',
 ];

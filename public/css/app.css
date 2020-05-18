@@ -11926,7 +11926,25 @@ label.img-btn-sm input[type="file"] {
 }
 
 /*Drad and Drop file upload hacks*/
-.krajee-default.file-preview-frame{
+.file-preview {
+  border: none !important;
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+}
+.file-drop-zone {
+  margin: 5px !important;
+  padding: 0px 0px 20px 0px !important;
+}
+.file-drop-zone.clickable:hover {
+  border: 1px dashed #43467f !important;
+  background-color: #f9f9f9 !important;
+  color: #666 !important;
+}
+.file-drop-zone.clickable:focus {
+  border: 1px solid #43467f !important;
+  box-shadow: none !important;
+}
+.krajee-default.file-preview-frame {
   width: calc(25% - 4px) !important;
   box-shadow: none !important;
   border: 1px solid rgba(0,0,0,.1) !important;

@@ -77,8 +77,9 @@ if ( ! function_exists('get_site_title') )
      */
     function get_site_title()
     {
-        if(auth()->guard('web')->check() && auth()->user()->isFromMerchant() && auth()->user()->shop)
+        if(auth()->guard('web')->check() && auth()->user()->isFromMerchant() && auth()->user()->shop) {
             return auth()->user()->shop->name;
+        }
 
         return get_platform_title();
     }
@@ -523,11 +524,13 @@ if ( ! function_exists('get_storage_file_url') )
 {
     function get_storage_file_url($path = null, $size = 'small')
     {
-        if ( !$path )
+        if ( !$path ) {
             return get_placeholder_img($size);
+        }
 
-        if($size == Null)
+        if($size == Null) {
             return url("image/{$path}");
+        }
 
         return url("image/{$path}?p={$size}");
     }
@@ -539,8 +542,9 @@ if ( ! function_exists('get_placeholder_img') )
     {
         $size = config("image.sizes.{$size}");
 
-        if ($size && is_array($size))
+        if ($size && is_array($size)) {
             return "https://placehold.it/{$size['w']}x{$size['h']}/eee?text=" . trans('app.no_img_available');
+        }
 
         return url("images/placeholders/no_img.png");
     }
@@ -550,8 +554,9 @@ if ( ! function_exists('get_product_img_src') )
 {
     function get_product_img_src($item = null, $size = 'medium', $type = 'primary')
     {
-        if (is_numeric($item) && !($item instanceof Inventory))
+        if (is_numeric($item) && !($item instanceof Inventory)) {
             $item = Inventory::findorFail($item);
+        }
 
         $images_count = $item->images->count();
 
@@ -580,11 +585,13 @@ if ( ! function_exists('get_inventory_img_src') )
 {
     function get_inventory_img_src($item, $size = 'medium')
     {
-        if ($item->image)
+        if ($item->image) {
             return get_storage_file_url($item->image->path, $size);
+        }
 
-        if ($item->product->image)
+        if ($item->product->image) {
             return get_storage_file_url($item->product->image->path, $size);
+        }
 
         return asset('images/placeholders/no_img.png');
     }
@@ -594,14 +601,17 @@ if ( ! function_exists('get_catalog_featured_img_src') )
 {
     function get_catalog_featured_img_src($product, $size = 'small')
     {
-        if (is_int($product) && !($product instanceof Product))
+        if (is_int($product) && !($product instanceof Product)) {
             $product = Product::findorFail($product);
+        }
 
-        if ($product->featuredImage)
+        if ($product->featuredImage) {
             return get_storage_file_url($product->featuredImage->path, $size);
+        }
 
-        if ($product->image)
+        if ($product->image) {
             return get_storage_file_url($product->image->path, $size);
+        }
 
         return asset('images/placeholders/no_img.png');
     }
@@ -611,10 +621,12 @@ if ( ! function_exists('get_cover_img_src') )
 {
     function get_cover_img_src($model, $type = 'category')
     {
-        if(isset($model->featuredImage->path) && Storage::exists($model->featuredImage->path))
+        if(isset($model->featuredImage->path) && Storage::exists($model->featuredImage->path)) {
             return get_storage_file_url($model->featuredImage->path, 'cover');
-        else
+        }
+        else {
             return asset('images/placeholders/'. $type .'_cover.jpg');
+        }
     }
 }
 

@@ -45,17 +45,17 @@ if ( ! function_exists('updateVisitorTable') )
         $ip = $request->ip();
         $visitor = Visitor::withTrashed()->find($ip);
 
-        if( ! $visitor ){
+        if( ! $visitor ) {
             $visitor = new Visitor;
 
-            // Get country code
-            if(check_internet_connection()){
-                $response = (new HttpClient)->get('http://ip2c.org/?ip='.$ip);
-                $body = (string) $response->getBody();
-                if ($body[0] === '1'){
-                    $visitor->country_code = explode(';', $body)[1];
-                }
-            }
+            // Get country code (Disabled bacause of un-reliable service)
+            // if(check_internet_connection()){
+            //     $response = (new HttpClient)->get('http://ip2c.org/?ip='.$ip);
+            //     $body = (string) $response->getBody();
+            //     if ($body[0] === '1'){
+            //         $visitor->country_code = explode(';', $body)[1];
+            //     }
+            // }
             $visitor->ip = $ip;
             $visitor->hits = 1;
             $visitor->page_views = 1;

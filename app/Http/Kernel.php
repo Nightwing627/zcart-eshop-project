@@ -44,8 +44,8 @@ class Kernel extends HttpKernel
 
             //The Application Middlewares
             \App\Http\Middleware\InitSettings::class, //This need to be exactly here, dont move
-            \App\Http\Middleware\CookieConsentMiddleware::class,
             \App\Http\Middleware\Language::class,
+            \App\Http\Middleware\CookieConsentMiddleware::class,
         ],
 
         'api' => [

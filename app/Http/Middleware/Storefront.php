@@ -21,8 +21,9 @@ class Storefront
     public function handle($request, Closure $next)
     {
         // Check platform maintenance_mode
-        if(config('system_settings.maintenance_mode'))
+        if(config('system_settings.maintenance_mode')) {
             return response()->view('errors.503', [], 503);
+        }
 
         // Get theme view path
         $paths = [

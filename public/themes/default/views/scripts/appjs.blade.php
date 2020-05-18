@@ -279,6 +279,9 @@
                         // Increase global cart item count by 1
                         increaseCartItem(1);
                     }
+                    else if(404 == xhr.status){
+                        @include('layouts.notification', ['message' => trans('theme.item_not_available'), 'type' => 'warning', 'icon' => 'info-circle'])
+                    }
                     else if(444 == xhr.status){
                         @include('layouts.notification', ['message' => trans('theme.notify.item_added_already_in_cart'), 'type' => 'info', 'icon' => 'info-circle'])
                     }

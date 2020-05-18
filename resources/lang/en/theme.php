@@ -613,4 +613,5 @@ return [
     'online' => 'Online',
     'shop_not_found' => 'Shop not found. Check other vendors.',
     'session_expired' => 'The session has been expired! Please refresh the page.',
+    'item_not_available' => 'This item is no more available!',
 ];

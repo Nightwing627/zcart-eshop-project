@@ -2,15 +2,23 @@
 <html class="no-js" lang="{{ App::getLocale() }}">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="author" content="Munna Khan">
-        @if(isset($item))
-            <meta property="og:image" content="{{ get_product_img_src($item, 'large') }}">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+        <meta name="author" content="Incevio | incevio.com">
+
+        @if (config('seo.enabled'))
+            <!-- SEO -->
+            @include('meta')
         @endif
-        <title> {{ get_platform_title() }} </title>
+
+        @if(isset($item))
+            <title>{!! $item->title !!}</title>
+        @else
+            <title>{!! $title ?? get_platform_title() !!}</title>
+        @endif
+
         <link rel="icon" href="{{ get_storage_file_url('icon.png', 'full') }}" type="image/x-icon" />
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
         <link rel="apple-touch-icon" href="{{ get_storage_file_url('icon.png', 'full') }}">

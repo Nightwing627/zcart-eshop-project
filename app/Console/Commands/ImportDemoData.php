@@ -42,8 +42,9 @@ class ImportDemoData extends Command
         $this->call('db:seed', ['--force' => true, '--class' => 'demoSeeder']);
 
         // if ( app()->runningInConsole() && (config('scout.driver') == 'mysql') )
-        if (config('scout.driver') == 'mysql')
+        if (config('scout.driver') == 'mysql') {
             $this->call('scout:mysql-index');
+        }
 
         $this->info('Demo data seeded!');
 

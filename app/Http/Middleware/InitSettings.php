@@ -18,7 +18,9 @@ class InitSettings
     public function handle($request, Closure $next)
     {
         // Ignore the setup routes
-        if($request->is('install*')) return $next($request);
+        if($request->is('install*'))  {
+            return $next($request);
+        }
 
         // $this->can_load();
 
@@ -27,12 +29,14 @@ class InitSettings
         if(Auth::guard('web')->check()){
 
             // Check if the user has impersonated
-            if($request->session()->has('impersonated'))
+            if($request->session()->has('impersonated')) {
                 Auth::onceUsingId($request->session()->get('impersonated'));
+            }
 
             // If the user from the platform then no need to set shop settings
-            if( ! Auth::guard('web')->user()->isFromPlatform() && Auth::guard('web')->user()->merchantId())
+            if( ! Auth::guard('web')->user()->isFromPlatform() && Auth::guard('web')->user()->merchantId()) {
                 setShopConfig(Auth::guard('web')->user()->merchantId());
+            }
 
             // Set all authorization slugs into the session to check permission very fast
             $permissions = ListHelper::authorizations();
@@ -47,8 +51,9 @@ class InitSettings
         }
 
         // update the visitor table for state
-        if( !$request->ajax() )
+        if( !$request->ajax() ) {
             updateVisitorTable($request);
+        }
 
         return $next($request);
     }

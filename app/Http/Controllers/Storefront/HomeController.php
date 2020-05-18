@@ -147,6 +147,7 @@ class HomeController extends Controller
             },
             'feedbacks.customer:id,nice_name,name',
             'images:id,path,imageable_id,imageable_type',
+            'tags:id,name',
         ]);
 
         $this->update_recently_viewed_items($item); //update_recently_viewed_items
@@ -168,8 +169,9 @@ class HomeController extends Controller
         $related = ListHelper::related_products($item);
         $linked_items = ListHelper::linked_items($item);
 
-        if( ! $linked_items->count() )
+        if( ! $linked_items->count() ) {
             $linked_items = $related->random($related->count() >= 3 ? 3 : $related->count());
+        }
 
         // Country list for ship_to dropdown
         $business_areas = Country::select('id', 'name', 'iso_code')->orderBy('name', 'asc')->get();

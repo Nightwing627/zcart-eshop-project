@@ -64,6 +64,10 @@ class CartController extends Controller
     {
         $item = Inventory::where('slug', $slug)->first();
 
+        if( ! $item ) {
+            return response()->json(trans('theme.item_not_available'), 404);
+        }
+
         $customer_id = Auth::guard('customer')->check() ? Auth::guard('customer')->user()->id : Null;
 
         if( $customer_id ) {

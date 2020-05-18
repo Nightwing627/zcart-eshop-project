@@ -8,12 +8,15 @@
         @include('admin.partials._product_widget')
 
         @php
-          if(isset($inventory)){
+          if( isset($inventory) ) {
             $product = $inventory->product;
           }
+
           $requires_shipping = $product->requires_shipping || (isset($inventory) && $inventory->product->requires_shipping);
+
           $title_classes = isset($inventory) ? 'form-control' : 'form-control makeSlug';
         @endphp
+
         {{ Form::hidden('product_id', $product->id) }}
         {{ Form::hidden('brand', $product->brand) }}
 
@@ -267,18 +270,21 @@
           <div class="form-group">
             {!! Form::label('tag_list[]', trans('app.form.tags'), ['class' => 'with-help']) !!}
             {!! Form::select('tag_list[]', $tags, null, ['class' => 'form-control select2-tag', 'multiple' => 'multiple']) !!}
+            <div class="help-block with-errors"></div>
           </div>
 
           <div class="form-group">
             {!! Form::label('meta_title', trans('app.form.meta_title'), ['class' => 'with-help']) !!}
             <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.meta_title') }}"></i>
             {!! Form::text('meta_title', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.meta_title')]) !!}
+            <div class="help-block with-errors"></div>
           </div>
 
           <div class="form-group">
             {!! Form::label('meta_description', trans('app.form.meta_description'), ['class' => 'with-help']) !!}
             <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.meta_description') }}"></i>
-            {!! Form::text('meta_description', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.meta_description')]) !!}
+            {!! Form::text('meta_description', null, ['class' => 'form-control', 'maxlength' => config('seo.meta.description_character_limit', '160'), 'placeholder' => trans('app.placeholder.meta_description')]) !!}
+            <div class="help-block with-errors"><small><i class="fa fa-info-circle"></i> {{ trans('help.max_chat_allowed', ['size' => config('seo.meta.description_character_limit', '160')]) }}</small></div>
           </div>
         </fieldset>
       </div>
