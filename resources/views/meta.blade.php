@@ -25,9 +25,24 @@
         $SEOimage = get_storage_file_url(optional($blog->image)->path, 'blog');
         $SEOkeywords = implode(', ', $blog->tags->pluck('name')->toArray());
     }
+    // For pages
+    elseif(isset($page)) {
+        $SEOtitle = $page->title;
+        $SEOdescription = substr($page->content, 0, config('seo.meta.description_character_limit', 160));
+        $SEOimage = get_storage_file_url(optional($page->image)->path, 'page');
+        // $SEOkeywords = implode(', ', $page->tags->pluck('name')->toArray());
+    }
 @endphp
 
-    <!-- Standard -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<meta name="author" content="Incevio | incevio.com">
+
+@if (config('seo.enabled'))
+    <!-- Standard SEO -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="referrer" content="{{ $referrer ?? config('seo.meta.referrer') }}">
     <meta name="robots" content="{{ $robots ?? config('seo.meta.robots') }}">
@@ -174,3 +189,10 @@
             }
         </script>
     @endif
+
+@endif
+
+<title>{!! $SEOtitle !!}</title>
+<link rel="icon" href="{{ get_storage_file_url('icon.png', 'full') }}" type="image/x-icon" />
+<link rel="manifest" href="{{ asset('site.webmanifest') }}">
+<link rel="apple-touch-icon" href="{{ get_storage_file_url('icon.png', 'full') }}">

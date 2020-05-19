@@ -12,5 +12,10 @@
     "/css/flat.png": "/css/flat.png",
     "/css/flat@2x.png": "/css/flat@2x.png",
     "/css/pink.png": "/css/pink.png",
-    "/css/pink@2x.png": "/css/pink@2x.png"
+    "/css/pink@2x.png": "/css/pink@2x.png",
+    "/css/img/alpha.png": "/css/img/alpha.png",
+    "/css/img/alpha-horizontal.png": "/css/img/alpha-horizontal.png",
+    "/css/img/hue.png": "/css/img/hue.png",
+    "/css/img/hue-horizontal.png": "/css/img/hue-horizontal.png",
+    "/css/img/saturation.png": "/css/img/saturation.png"
 }

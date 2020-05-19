@@ -1,23 +1,8 @@
 <!doctype html>
 <html class="no-js" lang="{{ App::getLocale() }}">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
-        <meta name="author" content="Incevio | incevio.com">
+        @include('meta')
 
-        @if (config('seo.enabled'))
-            <!-- SEO -->
-            @include('meta')
-        @endif
-
-        <title>{!! $SEOtitle ?? $title ?? get_platform_title() !!}</title>
-
-        <link rel="icon" href="{{ get_storage_file_url('icon.png', 'full') }}" type="image/x-icon" />
-        <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-        <link rel="apple-touch-icon" href="{{ get_storage_file_url('icon.png', 'full') }}">
         <link href='https://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
 

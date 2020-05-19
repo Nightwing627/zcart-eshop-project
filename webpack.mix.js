@@ -81,4 +81,9 @@ mix.copy('resources/assets/plugins/iCheck/line/line.png', 'public/css/line.png')
 	.copy('resources/assets/plugins/iCheck/flat/flat.png', 'public/css/flat.png')
 	.copy('resources/assets/plugins/iCheck/flat/flat@2x.png', 'public/css/flat@2x.png')
 	.copy('resources/assets/plugins/iCheck/flat/pink.png', 'public/css/pink.png')
-	.copy('resources/assets/plugins/iCheck/flat/pink@2x.png', 'public/css/pink@2x.png');
+	.copy('resources/assets/plugins/iCheck/flat/pink@2x.png', 'public/css/pink@2x.png')
+	.copy('resources/assets/plugins/colorpicker/img/alpha.png', 'public/css/img/alpha.png')
+	.copy('resources/assets/plugins/colorpicker/img/alpha-horizontal.png', 'public/css/img/alpha-horizontal.png')
+	.copy('resources/assets/plugins/colorpicker/img/hue.png', 'public/css/img/hue.png')
+	.copy('resources/assets/plugins/colorpicker/img/hue-horizontal.png', 'public/css/img/hue-horizontal.png')
+	.copy('resources/assets/plugins/colorpicker/img/saturation.png', 'public/css/img/saturation.png');
