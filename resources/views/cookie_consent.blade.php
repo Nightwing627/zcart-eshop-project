@@ -1,84 +1,74 @@
 <style type="text/css">
-    .cookie-consent-container {
-        width: 350px;
-        min-height: 20px;
-        box-sizing: border-box;
-        padding: 30px;
-        border: thin solid #d6644a;
-        background: #555;
-        overflow: hidden;
-        position: fixed;
-        bottom: 30px;
-        right: 32px;
-        display: none;
-        z-index: 9999;
-    }
-    .cookie-consent-container .cookie-title{
-        color: #e3e3e3;
-        font-size: 22px;
-        line-height: 20px;
-        display: block;
-    }
-    .cookie-consent-container .cookie-title img{
-        margin-right: 7px;
-    }
-    .cookie-consent-container .cookie-consent-message p {
-      margin: 0;
-      padding: 0;
-      color: #e3e3e3;
-      font-size: 13px;
-      line-height: 20px;
-      display: block;
-      margin-top: 10px;
-    }
-    .cookie-consent-container .cookie-consent-message a {
-        color: #e3e3e3;
-        text-decoration: underline;
-        font-style: italic;
-    }
-    .cookie-consent-container .cookie-consent-button a {
-        display: inline-block;
-        text-decoration: none;
-        color: #e3e3e3;
-        font-size: 14px;
-        letter-spacing: 1px;
-        margin-top: 14px;
-        background: #d6644a;
-        box-sizing: border-box;
-        padding: 13px 21px;
-        text-align: center;
-        transition: background 0.3s;
-    }
-    .cookie-consent-container .cookie-consent-button a:hover {
-      cursor: pointer;
-      background: #3E9B67;
-    }
+#new-cookie-consent-container {
+    /*overflow: hidden;*/
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    /*display: none;*/
+    z-index: 9999;
+}
 
-    @media (max-width: 980px) {
-      .cookie-consent-container {
-        bottom: 0px !important;
-        left: 0px !important;
-        width: 100%  !important;
-      }
-    }
+.cookie-consent-banner {
+    width: calc(100% - 64px);
+    min-height: 142px;
+    margin: 32px;
+    padding: 35px 40px;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border-width: 0;
+    background-color: rgb(52, 73, 94);
+    box-shadow: 0 0 35px 0 rgba(0,0,0,.2);
+    left: 0;
+}
+.cookie-consent-banner p {
+    font-family: Helvetica;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+.cookie-consent-banner a {
+    color: rgb(255, 255, 255);
+    text-decoration: underline;
+}
+
+.new-style-button {
+    font-family: Helvetica, Open Sans,Arial;
+    font-size: 12px;
+    color: #fff;
+    line-height: 1.5;
+    padding: 9px;
+    cursor: pointer;
+    outline: none;
+    letter-spacing: .5px;
+    border-radius: 3px;
+    background: transparent;
+    margin-right: 10px;
+    min-width: 190px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.new-style-button.btn-light-bg{
+    background: rgb(255, 255, 255); color: rgb(51, 51, 51);
+}
 </style>
 
-<div class="cookie-consent-container" id="cookieConsentContainer" style="opacity: 1; display: block;">
-    <div class="cookie-title">
-        <img src="{{ get_cookie_img() }}" width="32" height="32" /> {{ trans('app.cookies') }}
-    </div>
-
-    <div class="cookie-consent-message">
+<div id="new-cookie-consent-container">
+    <div class="cookie-consent-banner">
         <p>
             {!! trans('app.cookie_consent_message') !!}
             <a href="{{ get_page_url(\App\Page::PAGE_PRIVACY_POLICY) }}" target="_blank">{{ trans('app.cookies_terms') }}</a>
         </p>
-    </div>
 
-    <div class="cookie-consent-button">
-        <a onclick="purecookieDismiss();">
-            {!! trans('app.cookie_consent_agree') !!}
-        </a>
+        <div>
+            <button class="new-style-button" id="cookie-consent-button" type="button">
+                {{ trans('app.cookie_consent_agree') }}
+            </button>
+
+            <button class="new-style-button btn-light-bg" id="cookie-cancel-button" type="button">
+                {{ trans('app.cancel') }}
+            </button>
+        </div>
     </div>
 </div>
 
@@ -88,8 +78,8 @@
         const COOKIE_DOMAIN = '{{ config('session.domain') ?? request()->getHost() }}';
 
         function consentWithCookies() {
-            setCookie('{{ config('gdpr.cookie.name') }}', COOKIE_VALUE, {{ config('gdpr.cookie.lifetime') }});
             hideCookieDialog();
+            setCookie('{{ config('gdpr.cookie.name') }}', COOKIE_VALUE, {{ config('gdpr.cookie.lifetime') }});
         }
 
         function cookieExists(name) {
@@ -97,10 +87,10 @@
         }
 
         function hideCookieDialog() {
-            const dialogs = document.getElementsByClassName('cookie-consent-container');
+            const dialogs = document.getElementById('new-cookie-consent-container');
 
-            for (let i = 0; i < dialogs.length; ++i) {
-                dialogs[i].style.display = 'none';
+            if(dialogs) {
+                dialogs.style.display = 'none';
             }
         }
 
@@ -117,10 +107,15 @@
             hideCookieDialog();
         }
 
-        const buttons = document.getElementsByClassName('cookie-consent-button');
+        const consentButton = document.getElementById('cookie-consent-button');
+        const cancelButton = document.getElementById('cookie-cancel-button');
 
-        for (let i = 0; i < buttons.length; ++i) {
-            buttons[i].addEventListener('click', consentWithCookies);
+        if(consentButton) {
+            consentButton.addEventListener('click', consentWithCookies);
+        }
+
+        if(cancelButton) {
+            cancelButton.addEventListener('click', hideCookieDialog);
         }
 
         return {

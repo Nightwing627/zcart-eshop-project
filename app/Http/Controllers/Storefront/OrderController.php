@@ -8,6 +8,7 @@ use App\Cart;
 use App\Order;
 use Paypalpayment;
 use Instamojo\Instamojo;
+use CybersourcePayments;
 use Illuminate\Http\Request;
 use App\Services\NewCustomer;
 use App\Events\Order\OrderPaid;
@@ -20,8 +21,6 @@ use App\Http\Requests\Validations\ConfirmGoodsReceivedRequest;
 
 use net\authorize\api\contract\v1 as AuthorizeNetAPI;
 use net\authorize\api\controller as AuthorizeNetController;
-
-use CybersourcePayments;
 
 class OrderController extends Controller
 {
@@ -148,8 +147,9 @@ class OrderController extends Controller
         // Get the vendor configs
         $vendorConfig = $order->shop->config->cybersource;
         // If the stripe is not cofigured
-        if( ! $vendorConfig )
+        if( ! $vendorConfig ) {
             return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
+        }
 
         // Set vendor's cybersource config
         config()->set('cybersource_config.authType', 'http_signature');

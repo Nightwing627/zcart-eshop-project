@@ -1398,10 +1398,9 @@ return [
     'offer_ends' => 'Offer ends',
     'view_invoice' => 'View invoice',
     'total_number_of_rows' => 'Total number of rows: :value',
-    'cookie_consent_message' => 'Your experience on this site will be improved by allowing cookies.',
+    'cookie_consent_message' => 'We use cookies to improve user experience, and analyze website traffic. For these reasons, we may share your site usage data with our analytics partners. By continuing to the site, you consent to store on your device all the technologies described in our cookie policy.',
     'cookie_consent_agree' => 'Allow cookies',
-    'cookies' => 'Cookies',
-    'cookies_terms' => 'Know more',
+    'cookies_terms' => 'Here is the the cookie policy',
     'search_result_found' => ':count result found',
 
     // Version 2.0.0

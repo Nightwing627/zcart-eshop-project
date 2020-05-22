@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="{{ App::getLocale() }}">
     <head>
+
         @include('meta')
 
         <link href='https://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet' type='text/css'>
