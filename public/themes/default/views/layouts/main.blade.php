@@ -20,7 +20,7 @@
                 {!! session('global_announcement')->parsed_body !!}
                 @if(session('global_announcement')->action_url)
                   <span class="indent10">
-                    <a href="{{ session('global_announcement')->action_url }}" class="btn btn-primary flat btn-sm">
+                    <a href="{{ session('global_announcement')->action_url }}" class="btn btn-sm">
                         {{ session('global_announcement')->action_text }}
                     </a>
                   </span>

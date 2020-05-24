@@ -40,10 +40,12 @@ class OrderController extends Controller
         }
 
         // Get shipping address
-        if(is_numeric($request->ship_to))
+        if(is_numeric($request->ship_to)) {
             $address = \App\Address::find($request->ship_to)->toString(True);
-        else
+        }
+        else {
             $address = get_address_str_from_request_data($request);
+        }
 
         // Push shipping address into the request
         $request->merge(['shipping_address' => $address]);
@@ -52,7 +54,6 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             // Create the order
-            // $order = $this->saveOrderFromCart($request, $cart);
             $order = saveOrderFromCart($request, $cart);
 
             // Process payment with credit card
@@ -192,8 +193,9 @@ class OrderController extends Controller
         try {
             $response = CybersourcePayments::processPayment($cliRefInfoArr, $amountDetailsArr, $billtoArr, $paymentCardInfo, false);
 
-            if($response[0]['status'] == 'AUTHORIZED')
+            if($response[0]['status'] == 'AUTHORIZED') {
                 return $response[0]['id'];
+            }
 
             throw new \Incevio\Cybersource\CybersourceSDK\ApiException($response[0]['errorInformation']);
         }
@@ -210,12 +212,14 @@ class OrderController extends Controller
         $vendorStripeAccountId = $order->shop->config->stripe->stripe_user_id;
 
         // If the stripe is not cofigured
-        if( ! $vendorStripeAccountId )
+        if( ! $vendorStripeAccountId ) {
             return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
+        }
 
         // Get customer
-        if(Auth::guard('customer')->check())
+        if(Auth::guard('customer')->check()) {
             $customer = Auth::guard('customer')->user();
+        }
 
         \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -314,11 +318,13 @@ class OrderController extends Controller
 
     public function instamojoSuccess(Request $request, $order, $cart)
     {
-        if ( $request->payment_status != 'Credit' || ! $request->has('payment_request_id') ||  ! $request->has('payment_id') )
+        if ( $request->payment_status != 'Credit' || ! $request->has('payment_request_id') ||  ! $request->has('payment_id') ) {
             return redirect()->route("payment.failed", $order);
+        }
 
-        if( !$order instanceOf Order )
+        if( !$order instanceOf Order ) {
             $order = Order::find($order);
+        }
 
         // Delete the cart
         Cart::find($cart)->forceDelete();   // Delete the cart
@@ -339,8 +345,9 @@ class OrderController extends Controller
         // Get the vendor configs
         $vendorAuthorizeNetConfig = $order->shop->config->authorizeNet;
         // If the stripe is not cofigured
-        if( ! $vendorAuthorizeNetConfig )
+        if( ! $vendorAuthorizeNetConfig ) {
             return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
+        }
 
         // Common setup for API credentials
         $merchantAuthentication = new AuthorizeNetAPI\MerchantAuthenticationType();
@@ -401,8 +408,9 @@ class OrderController extends Controller
         // Get the vendor configs
         $vendorPaystackConfig = $order->shop->config->paystack;
         // If the stripe is not cofigured
-        if( ! $vendorPaystackConfig )
+        if( ! $vendorPaystackConfig ) {
             return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
+        }
 
         $paystack = new \Yabacon\Paystack($vendorPaystackConfig->secret);
         $tranx = $paystack->transaction->initialize([
@@ -428,8 +436,9 @@ class OrderController extends Controller
             ])
         ]);
 
-        if(!$tranx->status)
+        if(!$tranx->status) {
             throw new \Yabacon\Paystack\Exception\ApiException;
+        }
 
         // store transaction reference so we can query in case user never comes back
         // perhaps due to network issue
@@ -442,11 +451,13 @@ class OrderController extends Controller
 
     public function paystackPaymentSuccess(Request $request, $order, $cart)
     {
-        if ( ! $request->has('trxref') ||  ! $request->has('reference') )
+        if ( ! $request->has('trxref') ||  ! $request->has('reference') ) {
             return redirect()->route("payment.failed", $order);
+        }
 
-        if( !$order instanceOf Order )
+        if( !$order instanceOf Order ) {
             $order = Order::find($order);
+        }
 
         // Delete the cart
         Cart::find($cart)->forceDelete();   // Delete the cart
@@ -468,8 +479,9 @@ class OrderController extends Controller
         $vendorPaypalConfig = $order->shop->config->paypalExpress;
 
         // If the paypal is not cofigured
-        if( ! $vendorPaypalConfig )
+        if( ! $vendorPaypalConfig ) {
             return redirect()->back()->with('error', trans('theme.notify.payment_method_config_error'))->withInput();
+        }
 
         // Set vendor's paypal config
         config()->set('paypal_payment.mode', $vendorPaypalConfig->sandbox == 1 ? 'sandbox' : 'live');
@@ -553,11 +565,13 @@ class OrderController extends Controller
 
     public function paypalPaymentSuccess(Request $request, $order)
     {
-        if ( ! $request->has('token') ||  ! $request->has('paymentId') || ! $request->has('PayerID') )
+        if ( ! $request->has('token') ||  ! $request->has('paymentId') || ! $request->has('PayerID') ) {
             return redirect()->route("payment.failed", $order);
+        }
 
-        if( !$order instanceOf Order )
+        if( !$order instanceOf Order ) {
             $order = Order::find($order);
+        }
 
         // ///////////////////////////////////
         // Get the vendor configs
@@ -621,8 +635,9 @@ class OrderController extends Controller
      */
     public function orderPlaced($order)
     {
-        if( !$order instanceOf Order )
+        if( !$order instanceOf Order ) {
             $order = Order::find($order);
+        }
 
         return view('order_complete', compact('order'));
     }
@@ -688,11 +703,13 @@ class OrderController extends Controller
      */
     private function markOrderAsPaid($order)
     {
-        if( !$order instanceOf Order )
+        if( !$order instanceOf Order ) {
             $order = Order::find($order);
+        }
 
-        if($order->order_status_id < Order::STATUS_CONFIRMED)
+        if($order->order_status_id < Order::STATUS_CONFIRMED) {
             $order->order_status_id = Order::STATUS_CONFIRMED;
+        }
 
         $order->payment_status = Order::PAYMENT_STATUS_PAID;
         $order->save();

@@ -35,10 +35,10 @@
 		        		<tr>
 		        			<td><img src="{{ $row['image_link'] ?: get_placeholder_img('tiny') }}" class="img-sm"></td>
 		        			<td>
-		        				{{ $row['name'] }}<br/>
+		        				{!! $row['name'] !!}<br/>
 		        				<strong>{{ trans('app.slug') }}: </strong> {{ $row['slug'] ?: str_slug($row['name'], '-') }}
 		        			</td>
-		        			<td>{{ $row['description'] }}</td>
+		        			<td>{!! $row['description'] !!}</td>
 		        			<td>
 		        				<dl>
 		        					<dt>{{ trans('app.gtin') }}: </dt> <dd>{{ $row['gtin_type'] . ' ' . $row['gtin'] }}</dd>

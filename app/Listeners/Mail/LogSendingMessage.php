@@ -26,7 +26,7 @@ class LogSendingMessage
     public function handle(MessageSending $event)
     {
         Log::info('............................. Message Sending .....................................');
-        Log::info(['payload' => $event->data]);
+        Log::info(['subject' => isset($event->data['subject']) ? $event->data['subject'] : '']);
     }
 
 }

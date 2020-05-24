@@ -166,14 +166,22 @@ ul, li {
   font-weight: lighter;
   text-align: center;
   letter-spacing: 1px;
-  background-color: #555;
-  border: thin solid #d6644a;
+  background-color: rgb(52, 73, 94);
 }
 #global-announcement p {
   display: inline-block;
   padding: 0;
   margin: 0;
 }
+.new-btn,
+#global-announcement .btn {
+  font-family: Helvetica;
+  font-size: 12px;
+  color: rgb(255, 255, 255);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
 #global-wrapper{
   width: 100%;
   min-height: 100%;

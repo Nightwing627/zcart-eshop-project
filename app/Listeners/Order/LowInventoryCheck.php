@@ -34,8 +34,9 @@ class LowInventoryCheck implements ShouldQueue
      */
     public function handle(OrderCreated $event)
     {
-        if(!config('shop_settings'))
+        if(!config('shop_settings')) {
             setShopConfig($event->order->shop_id);
+        }
 
         if(config('shop_settings.notify_alert_quantity')){
             $low = False;
@@ -47,8 +48,9 @@ class LowInventoryCheck implements ShouldQueue
                 }
             }
             // \Log::info($items);
-            if ($low)
+            if ($low) {
                 $event->order->shop->notify(new LowInventory());
+            }
         }
     }
 }

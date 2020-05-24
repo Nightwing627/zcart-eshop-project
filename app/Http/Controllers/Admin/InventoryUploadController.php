@@ -31,24 +31,35 @@ class InventoryUploadController extends Controller
 	public function upload(InventoryUploadRequest $request)
 	{
 		$path = $request->file('inventories')->getRealPath();
-
-		$data = array_map('str_getcsv', file($path));
-		$data[0] = array_map('strtolower', $data[0]);
-
-	    array_walk($data, function(&$a) use ($data) {
-	      $a = array_combine($data[0], $a);
-	    });
-	    array_shift($data); # remove header column
+		$records = array_map('str_getcsv', file($path));
 
 	    // Validations check for csv_import_limit
-	    if(count($data) > get_csv_import_limit()){
-	    	$message_bag = (new MessageBag)->add('error', trans('validation.upload_rows', ['rows' => get_csv_import_limit()]));
-	    	return back()->withErrors($message_bag);
+	    if( (count($records) - 1) > get_csv_import_limit() ){
+	    	$err = (new MessageBag)->add('error', trans('validation.upload_rows', ['rows' => get_csv_import_limit()]));
+
+	    	return back()->withErrors($err);
 	    }
 
+	    // Get field names from header column
+		$fields = array_map('strtolower', $records[0]);
+
+	    // Remove the header column
+	    array_shift($records);
+
 	    $rows = [];
-	    foreach ($data as $values)
-	    	$rows[] = clear_encoding_str($values);
+	    foreach ($records as $record) {
+	    	if(count($fields) != count($record)){
+		    	$err = (new MessageBag)->add('error', trans('validation.csv_upload_invalid_data'));
+
+		    	return back()->withErrors($err);
+	    	}
+
+	    	// Set the field name as key
+			$temp = array_combine($fields, $record);
+
+			// Get the clean data
+	    	$rows[] = clear_encoding_str($temp);
+	    }
 
         return view('admin.inventory.upload_review', compact('rows'));
 	}
@@ -61,8 +72,9 @@ class InventoryUploadController extends Controller
 	 */
 	public function import(InventoryImportRequest $request)
 	{
-        if( config('app.demo') == true )
+        if( config('app.demo') == true ) {
             return redirect()->route('admin.stock.inventory.index')->with('warning', trans('messages.demo_restriction'));
+        }
 
         ProcessUpload::dispatch(Auth::user(), $request->input('data'));
 

@@ -22,8 +22,9 @@ if ( ! function_exists('getPlatformFeeForOrder') )
      */
     function getPlatformFeeForOrder($order)
     {
-        if ( ! $order instanceof Order )
+        if ( ! $order instanceof Order ) {
             $order = Order::findOrFail($order);
+        }
 
         $plan = $order->shop->plan;
 
@@ -219,8 +220,9 @@ if ( ! function_exists('getShopConfig') )
      */
     function getShopConfig($shop, $column)
     {
-        if( config('shop_settings') && array_key_exists($column, config('shop_settings')) )
+        if( config('shop_settings') && array_key_exists($column, config('shop_settings')) ) {
            return config('shop_settings.' . $column);
+        }
 
         return \DB::table('configs')->where('shop_id', $shop)->value($column);
     }
@@ -234,7 +236,6 @@ if ( ! function_exists('getMysqliConnection') )
     function getMysqliConnection()
     {
         return mysqli_connect(config('database.connections.mysql.host', '127.0.0.1'), config('database.connections.mysql.username', 'root'), config('database.connections.mysql.password'), config('database.connections.mysql.database'), config('database.connections.mysql.port', '3306'));
-        // return mysqli_connect(env('DB_HOST', '127.0.0.1'), env('DB_USERNAME', 'root'), env('DB_PASSWORD', 'root'), env('DB_DATABASE'), env('DB_PORT', '3306'));
     }
 }
 
@@ -350,38 +351,40 @@ if ( ! function_exists('moveAllItemsToCartAgain') )
      */
     function moveAllItemsToCartAgain($order, $revert = false)
     {
-        if( !$order instanceOf Order )
+        if( !$order instanceOf Order ) {
             $order = Order::find($order);
+        }
 
         if (!$order) return;
 
         // Save the cart
         $cart = Cart::create(array_merge($order->toArray(), ['ip_address' => request()->ip()]));
 
-        // Add order item into pivot table
-        $order_items = $order->inventories->pluck('pivot');
+        // Add order item into cart pivot table
         $cart_items = [];
-        foreach ($order_items as $item) {
+        foreach ($order->inventories as $item) {
             $cart_items[] = [
                 'cart_id'           => $cart->id,
-                'inventory_id'      => $item->inventory_id,
-                'item_description'  => $item->item_description,
-                'quantity'          => $item->quantity,
-                'unit_price'        => $item->unit_price,
-                'created_at'        => $item->created_at,
-                'updated_at'        => $item->updated_at,
+                'inventory_id'      => $item->pivot->inventory_id,
+                'item_description'  => $item->pivot->item_description,
+                'quantity'          => $item->pivot->quantity,
+                'unit_price'        => $item->pivot->unit_price,
+                'created_at'        => $item->pivot->created_at,
+                'updated_at'        => $item->pivot->updated_at,
             ];
 
             // Sync up the inventory. Increase the stock of the order items from the listing
-            if($revert)
-                $item->increment('stock_quantity', $item->quantity);
+            if($revert) {
+                $item->increment('stock_quantity', $item->pivot->quantity);
+            }
         }
         \DB::table('cart_items')->insert($cart_items);
 
         if($revert){
             // Increment the coupone in use
-            if ($order->coupon_id)
+            if ($order->coupon_id) {
                 Coupon::find($order->coupon_id)->increment('quantity');
+            }
 
             $order->forceDelete();   // Delete the order
         }

@@ -163,8 +163,6 @@ return [
 
     'attributes' => [],
 
-
-    // Version 1.3.3
     'upload_rows' => 'You can upload a maximum of :rows records per batch.',
-
+    'csv_upload_invalid_data' => 'Some rows contain invalid data that cannot be processed. Please check your data and try again.',
 ];

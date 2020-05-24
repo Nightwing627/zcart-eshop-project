@@ -35,7 +35,9 @@
 			            		<img src="{{ get_avatar_src($message->customer, 'tiny') }}" class="img-circle img-sm" alt="{{ trans('app.avatar') }}">
 
 								@can('view', $message->customer)
-					            	<a href="javascript:void(0)" data-link="{{ route('admin.admin.customer.show', $message->customer) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
+									@if($message->customer->id)
+						            	<a href="javascript:void(0)" data-link="{{ route('admin.admin.customer.show', $message->customer) }}" class="ajax-modal-btn small">{{ trans('app.view_detail') }}</a>
+									@endif
 								@endcan
 							</div>
 		              		<div class="col-md-11 nopadding-left">

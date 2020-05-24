@@ -444,8 +444,10 @@ if ( ! function_exists('clear_encoding_str') )
         if (is_array($value))
         {
             $clean = [];
-            foreach ($value as $key => $val)
+
+            foreach ($value as $key => $val) {
                 $clean[$key] = mb_convert_encoding($val, 'UTF-8', 'UTF-8');
+            }
 
             return $clean;
         }

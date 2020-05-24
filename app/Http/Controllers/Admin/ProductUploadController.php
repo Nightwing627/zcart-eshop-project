@@ -38,23 +38,35 @@ class ProductUploadController extends Controller
 	public function upload(ProductUploadRequest $request)
 	{
 		$path = $request->file('products')->getRealPath();
-		$data = array_map('str_getcsv', file($path));
-		$data[0] = array_map('strtolower', $data[0]);
-
-	    array_walk($data, function(&$a) use ($data) {
-	      $a = array_combine($data[0], $a);
-	    });
-	    array_shift($data); # remove header column
+		$records = array_map('str_getcsv', file($path));
 
 	    // Validations check for csv_import_limit
-	    if(count($data) > get_csv_import_limit()){
+	    if( (count($records) - 1) > get_csv_import_limit() ){
 	    	$err = (new MessageBag)->add('error', trans('validation.upload_rows', ['rows' => get_csv_import_limit()]));
+
 	    	return back()->withErrors($err);
 	    }
 
+	    // Get field names from header column
+		$fields = array_map('strtolower', $records[0]);
+
+	    // Remove the header column
+	    array_shift($records);
+
 	    $rows = [];
-	    foreach ($data as $values)
-	    	$rows[] = clear_encoding_str($values);
+	    foreach ($records as $record) {
+	    	if(count($fields) != count($record)){
+		    	$err = (new MessageBag)->add('error', trans('validation.csv_upload_invalid_data'));
+
+		    	return back()->withErrors($err);
+	    	}
+
+	    	// Set the field name as key
+			$temp = array_combine($fields, $record);
+
+			// Get the clean data
+	    	$rows[] = clear_encoding_str($temp);
+	    }
 
         return view('admin.product.upload_review', compact('rows'));
 	}
@@ -75,8 +87,9 @@ class ProductUploadController extends Controller
 		{
 			$data = unserialize($row);
 
-			if( ! is_array($data) ) // Invalid data
+			if( ! is_array($data) ) { // Invalid data
 				continue;
+			}
 
 			// Ignore if required info is not given
 			if( ! verifyRequiredDataForBulkUpload($data, 'product') ){
@@ -85,8 +98,9 @@ class ProductUploadController extends Controller
 			}
 
 			// If the slug is not given the make it
-			if( ! $data['slug'] )
+			if( ! $data['slug'] ) {
     			$data['slug'] = convertToSlugString($data['name'], $data['gtin']);
+			}
 
 			// Ignore if the slug is exist in the database
 			$product = Product::select('slug')->where('slug', $data['slug'])->first();
@@ -97,6 +111,7 @@ class ProductUploadController extends Controller
 
 			// Find categories and make the category_list. Ignore the row if category not found
 			$data['category_list'] = Category::whereIn('slug', explode(',', $data['categories']))->pluck('id')->toArray();
+
 			if( empty($data['category_list']) ){
 				$this->pushIntoFailed($data, trans('help.invalid_category'));
 				continue;
@@ -115,8 +130,9 @@ class ProductUploadController extends Controller
 
         $failed_rows = $this->getFailedList();
 
-		if(!empty($failed_rows))
+		if(!empty($failed_rows)) {
 	        return view('admin.product.import_failed', compact('failed_rows'));
+		}
 
         return redirect()->route('admin.catalog.product.index');
 	}
@@ -129,11 +145,13 @@ class ProductUploadController extends Controller
 	 */
 	private function createProduct($data)
 	{
-		if($data['origin_country'])
+		if($data['origin_country']) {
 			$origin_country = DB::table('countries')->select('id')->where('iso_code', strtoupper($data['origin_country']))->first();
+		}
 
-		if($data['manufacturer'])
+		if($data['manufacturer']) {
 			$manufacturer = Manufacturer::firstOrCreate(['name' => $data['manufacturer']]);
+		}
 
 		// Create the product
 		$product = Product::create([
@@ -156,16 +174,19 @@ class ProductUploadController extends Controller
 					]);
 
 		// Sync categories
-		if($data['category_list'])
+		if($data['category_list']) {
             $product->categories()->sync($data['category_list']);
+		}
 
 		// Upload featured image
-        if ($data['image_link'])
+        if ($data['image_link']) {
             $product->saveImageFromUrl($data['image_link'], true);
+        }
 
 		// Sync tags
-		if($data['tags'])
+		if($data['tags']) {
             $product->syncTags($product, explode(',', $data['tags']));
+		}
 
 		return $product;
 	}
@@ -202,8 +223,9 @@ class ProductUploadController extends Controller
 	 */
 	public function downloadFailedRows(Request $request)
 	{
-		foreach ($request->input('data') as $row)
+		foreach ($request->input('data') as $row) {
 			$data[] = unserialize($row);
+		}
 
 		return (new FastExcel(collect($data)))->download('failed_rows.xlsx');
 	}
