@@ -152,6 +152,11 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ route('account', 'wishlist') }}" class="navbar-item-mergin-top"><i class="fa fa-heart-o hidden-xs"></i> {{ trans('theme.nav.wishlist') }}</a>
         </li>
+
+        @foreach($pages->where('position', 'main_nav') as $page)
+          <li><a href="{{ get_page_url($page->slug) }}" class="navbar-item-mergin-top">{{ $page->title }}</a></li>
+        @endforeach
+
         <li><a href="{{ get_page_url(\App\Page::PAGE_CONTACT_US) }}" class="navbar-item-mergin-top" target="_blank">{{ trans('theme.nav.support') }}</a>
         </li>
 

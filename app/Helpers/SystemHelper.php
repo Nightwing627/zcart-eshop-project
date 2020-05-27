@@ -138,6 +138,7 @@ if ( ! function_exists('setSystemTimezone') )
         $system_timezone = ListHelper::system_timezone();
 
         Config::set('app.timezone', $system_timezone->utc);
+
         date_default_timezone_set($system_timezone->utc);
     }
 }
@@ -413,8 +414,9 @@ if ( ! function_exists('prepareFilteredListings') )
             }])
             ->with(['feedbacks:rating,feedbackable_id,feedbackable_type', 'images:path,imageable_id,imageable_type'])->get();
 
-            foreach ($t_products as $t_product)
+            foreach ($t_products as $t_product) {
                 $t_listings[] = $t_product;
+            }
         }
 
         return collect($t_listings);
@@ -432,11 +434,13 @@ if ( ! function_exists('crosscheckCartOwnership') )
     {
         $return = $cart->customer_id == Null && $cart->ip_address == request()->ip();
 
-        if(Auth::guard('customer')->check())
+        if(Auth::guard('customer')->check()) {
             return  $return || ($cart->customer_id == Auth::guard('customer')->user()->id);
+        }
 
-        if(Auth::guard('api')->check())
+        if(Auth::guard('api')->check()) {
             return  $return || ($cart->customer_id == Auth::guard('api')->user()->id);
+        }
 
         return $return;
     }
@@ -545,16 +549,20 @@ if ( ! function_exists('crosscheckAndUpdateOldCartInfo') )
         }
 
         // Set customer_id if not set yet
-        if( ! $cart->customer_id && Auth::guard('customer')->check() )
+        if( ! $cart->customer_id && Auth::guard('customer')->check() ) {
             $cart->customer_id = Auth::guard('customer')->user()->id;
-        else if ( Auth::guard('api')->check() )
+        }
+        else if ( Auth::guard('api')->check() ) {
             $cart->customer_id = Auth::guard('api')->user()->id;
+        }
 
-        if($request->ship_to_country_id)
+        if($request->ship_to_country_id) {
             $cart->ship_to_country_id = $request->ship_to_country_id;
+        }
 
-        if($request->ship_to_state_id)
+        if($request->ship_to_state_id) {
             $cart->ship_to_state_id = $request->ship_to_state_id;
+        }
 
         $cart->ship_to = $request->ship_to ?? $request->country_id ?? $cart->ship_to;
         $cart->shipping_weight = $shipping_weight;
@@ -699,5 +707,19 @@ if ( ! function_exists('get_activity_str') )
             return trans('app.activities.updated', ['key' => $attrbute, 'from' => $old, 'to' => $new]);
         else
             return trans('app.activities.added', ['key' => $attrbute, 'value' => $new]);
+    }
+}
+
+if ( ! function_exists('check_internet_connection') )
+{
+    /**
+     * Check Internet Connection Status.
+     *
+     * @param            string $sCheckHost Default: www.google.com
+     * @return           boolean
+     */
+    function check_internet_connection($sCheckHost = 'www.google.com')
+    {
+        return (bool) @fsockopen($sCheckHost, 80, $iErrno, $sErrStr, 5);
     }
 }

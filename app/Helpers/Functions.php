@@ -19,20 +19,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-if ( ! function_exists('check_internet_connection') )
-{
-    /**
-     * Check Internet Connection Status.
-     *
-     * @param            string $sCheckHost Default: www.google.com
-     * @return           boolean
-     */
-    function check_internet_connection($sCheckHost = 'www.google.com')
-    {
-        return (bool) @fsockopen($sCheckHost, 80, $iErrno, $sErrStr, 5);
-    }
-}
-
 // if ( ! function_exists('get_platform_tld') )
 // {
 //     /**
@@ -111,9 +97,11 @@ if ( ! function_exists('get_social_media_links') )
         $media = ['facebook','twitter','google_plus','pinterest','instagram','youtube'];
         $links = [];
         foreach ($media as $value) {
-            if ($link = config('system_settings.'.$value.'_link'))
+            if ($link = config('system_settings.'.$value.'_link')) {
                 $links[str_replace('_', '-', $value)] = $link;
+            }
         }
+
         return $links;
     }
 }
@@ -126,10 +114,12 @@ if ( ! function_exists('get_shop_url') )
     function get_shop_url($id = null)
     {
         $slug = '';
-        if(auth()->user()->isFromMerchant() && auth()->user()->shop)
+        if(auth()->user()->isFromMerchant() && auth()->user()->shop) {
             $slug = auth()->user()->shop->slug;
-        else if(auth()->user()->isFromPlatform() && $id)
+        }
+        else if(auth()->user()->isFromPlatform() && $id) {
             $slug = \DB::table('shops')->find($id)->slug;
+        }
 
         return url('/shop/' . $slug);
     }
@@ -153,8 +143,9 @@ if ( ! function_exists('get_page_url') )
      */
     function get_page_url($page = Null)
     {
-        if($page == Null)
+        if($page == Null) {
             return url('/');
+        }
 
         return route('page.open', $page);
     }

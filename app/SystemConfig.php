@@ -119,4 +119,13 @@ class SystemConfig extends BaseModel
         return (bool) config('analytics.view_id') && file_exists(config('analytics.service_account_credentials_json'));
     }
 
+    /**
+     * Check if newsletter has been Configured.
+     *
+     * @return bool
+     */
+    public static function isNewsletterConfigured()
+    {
+        return (bool) config('newsletter.apiKey') && config('newsletter.lists.subscribers.id');
+    }
 }

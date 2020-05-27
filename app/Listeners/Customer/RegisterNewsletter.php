@@ -3,6 +3,7 @@
 namespace App\Listeners\Customer;
 
 use Newsletter;
+use App\SystemConfig;
 use App\Events\Customer\Registered;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,7 +35,8 @@ class RegisterNewsletter implements ShouldQueue
      */
     public function handle(Registered $event)
     {
-        if($event->customer->accepts_marketing)
+        if($event->customer->accepts_marketing && SystemConfig::isNewsletterConfigured()) {
             Newsletter::subscribeOrUpdate($event->customer->email);
+        }
     }
 }

@@ -88,8 +88,9 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
-        if(Auth::guard('web')->check())
+        if(Auth::guard('web')->check()) {
             return redirect()->back()->with('error', trans('messages.loogedin_as_admin'));
+        }
 
         $this->validator($request->all())->validate();
 
@@ -101,8 +102,9 @@ class RegisterController extends Controller
         ];
 
         // If customer agree to subscribe newsletter or the system set it auto
-        if($request->input('subscribe') || !config('system_settings.ask_customer_for_email_subscription'))
+        if($request->input('subscribe') || !config('system_settings.ask_customer_for_email_subscription')) {
             $data['accepts_marketing'] = 1;
+        }
 
         $customer = Customer::create($data);
 
