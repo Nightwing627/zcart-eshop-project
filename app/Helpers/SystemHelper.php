@@ -325,6 +325,7 @@ if ( ! function_exists('saveOrderFromCart') )
                 'updated_at'        => $item->updated_at,
             ];
         }
+
         \DB::table('order_items')->insert($order_items);
 
          // Sync up the inventory. Decrease the stock of the order items from the listing
@@ -333,9 +334,9 @@ if ( ! function_exists('saveOrderFromCart') )
         }
 
         // Reduce the coupone in use
-        if ($order->coupon_id)
+        if ($order->coupon_id) {
             Coupon::find($order->coupon_id)->decrement('quantity');
-            // \DB::table('coupons')->where('id', $order->coupon_id)->decrement('quantity');
+        }
 
         return $order;
     }
@@ -379,6 +380,7 @@ if ( ! function_exists('moveAllItemsToCartAgain') )
                 $item->increment('stock_quantity', $item->pivot->quantity);
             }
         }
+
         \DB::table('cart_items')->insert($cart_items);
 
         if($revert){

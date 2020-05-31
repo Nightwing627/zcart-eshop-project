@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="{{ App::getLocale() }}">
+<html class="no-js" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
 
         @include('meta')

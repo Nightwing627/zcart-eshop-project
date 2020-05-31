@@ -60,7 +60,7 @@
             <a href="{{ get_page_url(\App\Page::PAGE_PRIVACY_POLICY) }}" target="_blank">{{ trans('app.cookies_terms') }}</a>
         </p>
 
-        <div>
+        <div class="pull-right">
             <button class="new-style-button" id="cookie-consent-button" type="button">
                 {{ trans('app.cookie_consent_agree') }}
             </button>

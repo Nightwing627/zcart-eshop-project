@@ -32,7 +32,7 @@
 			</ul>
 			<div class="tab-content">
 			    <div class="tab-pane {{ Request::has('tab') ? '' : 'active' }}" id="all_orders_tab">
-					<table class="table table-hover table-desc">
+					<table class="table table-hover table-no-sort">
 						<thead>
 							<tr>
 								<th>{{ trans('app.order_number') }}</th>
@@ -78,7 +78,7 @@
 				</div>
 
 			    <div class="tab-pane {{ Request::input('tab') == 'unpaid' ? 'active' : '' }}" id="unpaid_tab">
-					<table class="table table-hover table-desc">
+					<table class="table table-hover table-no-sort">
 						<thead>
 							<tr>
 								<th>{{ trans('app.order_number') }}</th>
@@ -124,7 +124,7 @@
 				</div>
 
 			    <div class="tab-pane {{ Request::input('tab') == 'unfulfilled' ? 'active' : '' }}" id="unfulfilled_tab">
-					<table class="table table-hover table-desc">
+					<table class="table table-hover table-no-sort">
 						<thead>
 							<tr>
 								<th>{{ trans('app.order_number') }}</th>
@@ -183,7 +183,7 @@
 			</div>
 		</div> <!-- /.box-header -->
 		<div class="box-body">
-			<table class="table table-hover table-2nd-sort">
+			<table class="table table-hover table-no-sort">
 				<thead>
 					<tr>
 						<th>{{ trans('app.order_number') }}</th>

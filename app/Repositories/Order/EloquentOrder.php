@@ -24,26 +24,29 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
 
     public function all()
     {
-        if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->with('customer')->get();
+        if (!Auth::user()->isFromPlatform()) {
+            return $this->model->mine()->with('customer')->orderBy('created_at', 'desc')->get();
+        }
 
-        return $this->model->with('customer')->get();
+        return $this->model->with('customer')->orderBy('created_at', 'desc')->get();
     }
 
     public function latest()
     {
-        if (!Auth::user()->isFromPlatform())
+        if (!Auth::user()->isFromPlatform()) {
             return $this->model->with('customer')->latest()->limit(10)->get();
+        }
 
         return $this->model->mine()->with('customer')->latest()->limit(10)->get();
     }
 
     public function trashOnly()
     {
-        if (!Auth::user()->isFromPlatform())
-            return $this->model->mine()->archived()->get();
+        if (!Auth::user()->isFromPlatform()) {
+            return $this->model->mine()->archived()->orderBy('deleted_at', 'desc')->get();
+        }
 
-        return $this->model->archived()->get();
+        return $this->model->archived()->orderBy('deleted_at', 'desc')->get();
     }
 
     public function getCart($id)
@@ -83,16 +86,18 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
 
     public function fulfill(Request $request, $order)
     {
-        if(! $order instanceof Order)
+        if(! $order instanceof Order) {
             $order = $this->model->find($order);
+        }
 
         return $order->update($request->all());
     }
 
     public function updateOrderStatus(Request $request, $order)
     {
-        if(! $order instanceof Order)
+        if(! $order instanceof Order) {
             $order = $this->model->find($order);
+        }
 
         $order->order_status_id = $request->input('order_status_id');
 
@@ -101,8 +106,9 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
 
     public function updateAdminNote(Request $request, $order)
     {
-        if(! $order instanceof Order)
+        if(! $order instanceof Order) {
             $order = $this->model->find($order);
+        }
 
         $order->admin_note = $request->input('admin_note');
 
@@ -111,20 +117,23 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
 
     public function togglePaymentStatus($order)
     {
-        if(! $order instanceof Order)
+        if(! $order instanceof Order){
             $order = $this->model->find($order);
+        }
 
         if ($order->payment_status == Order::PAYMENT_STATUS_PAID) {
             $order->payment_status = Order::PAYMENT_STATUS_UNPAID;
 
-            if($order->order_status_id == Order::STATUS_CONFIRMED)
+            if($order->order_status_id == Order::STATUS_CONFIRMED) {
                 $order->order_status_id = Order::STATUS_WAITING_FOR_PAYMENT;
+            }
         }
         else {
             $order->payment_status = Order::PAYMENT_STATUS_PAID;
 
-            if($order->order_status_id < Order::STATUS_CONFIRMED)
+            if($order->order_status_id < Order::STATUS_CONFIRMED) {
                 $order->order_status_id = Order::STATUS_CONFIRMED;
+            }
         }
 
         $order->save();
@@ -145,8 +154,9 @@ class EloquentOrder extends EloquentRepository implements BaseRepository, OrderR
             $newItems = array_column($items, 'inventory_id');
 
             foreach ($order->inventories as $inventory) {
-                if ( ! in_array($inventory->id, $newItems) )
+                if ( ! in_array($inventory->id, $newItems) ) {
                     Inventory::find($inventory->id)->increment('stock_quantity', $inventory->pivot->quantity);
+                }
             }
         }
 

@@ -83,7 +83,7 @@ if ( ! function_exists('get_currency_symbol') )
 {
     function get_currency_symbol()
     {
-        return config('system_settings.currency.symbol');
+        return config('system_settings.currency.symbol', '$');
     }
 }
 

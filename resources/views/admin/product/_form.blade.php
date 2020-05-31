@@ -140,7 +140,7 @@
                   {!! Form::label('min_price', trans('app.form.catalog_min_price'), ['class' => 'with-help']) !!}
                   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.catalog_min_price') }}"></i>
                     <div class="input-group">
-                      <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
+                      <span class="input-group-addon">{{ get_currency_symbol() }}</span>
                       {!! Form::number('min_price' , null, ['class' => 'form-control', 'step' => 'any', 'min' => '0','placeholder' => trans('app.placeholder.catalog_min_price')]) !!}
                     </div>
                     <div class="help-block with-errors"></div>
@@ -151,7 +151,7 @@
                   {!! Form::label('max_price', trans('app.form.catalog_max_price'), ['class' => 'with-help']) !!}
                   <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.catalog_max_price') }}"></i>
                   <div class="input-group">
-                    <span class="input-group-addon">{{ config('system_settings.currency_symbol') ?: '$' }}</span>
+                    <span class="input-group-addon">{{ get_currency_symbol() }}</span>
                     {!! Form::number('max_price' , null, ['class' => 'form-control', 'step' => 'any', 'min' => '0', 'placeholder' => trans('app.placeholder.catalog_max_price')]) !!}
                   </div>
                   <div class="help-block with-errors"></div>

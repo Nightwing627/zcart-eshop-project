@@ -325,29 +325,6 @@
 		      ]
 	  	});
 
-	  	$(".table-desc").DataTable({
-		    "iDisplayLength": {{ getPaginationValue() }},
-		    "aaSorting": [[ 0, "desc" ]],
-		    "oLanguage": {
-		        "sInfo": "_START_ to _END_ of _TOTAL_ entries",
-		        "sLengthMenu": "Show _MENU_",
-		        "sSearch": "",
-		        "sEmptyTable": "No data found!",
-		        "oPaginate": {
-		          "sNext": '<i class="fa fa-hand-o-right"></i>',
-		          "sPrevious": '<i class="fa fa-hand-o-left"></i>',
-		        },
-		    },
-		    "aoColumnDefs": [{
-		        "bSortable": false,
-		        "aTargets": [ -1 ]
-		     }],
-		    dom: 'Bfrtip',
-		    buttons: [
-		          'copy', 'csv', 'excel', 'pdf', 'print'
-		      	]
-	  	});
-
 	  	$('.table-no-option').DataTable({
 		    "sLength": "",
 		    "paging": true,
