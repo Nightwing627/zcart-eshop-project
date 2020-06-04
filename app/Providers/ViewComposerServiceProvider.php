@@ -1073,6 +1073,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                         'latest_sale_total'         => array_sum($salesData),
                         'dispute_count'             => $dispute_count,
                         'refund_request_count'      => $refund_request_count,
+                        'current_plan'              => $current_plan,
                     ]);
 
                     // Disputs and Refunds widget (optional)
@@ -1090,7 +1091,6 @@ class ViewComposerServiceProvider extends ServiceProvider
                         $view->with([
                             // 'stock_count'           => Statistics::shop_inventories_count(), Already loaded
                             'user_count'                => Statistics::shop_user_count(),
-                            'current_plan'              => $current_plan,
                         ]);
                     }
                 });
