@@ -93,8 +93,9 @@ class MessageController extends Controller
     {
         $this->message->update($request, $id);
 
-        if($request->has('draft'))
+        if($request->has('draft')) {
             return back()->with('success', trans('messages.updated', ['model' => $this->model]));
+        }
 
         return back()->with('success', trans('messages.sent', ['model' => $this->model]));
     }

@@ -324,8 +324,9 @@ class Inventory extends BaseModel
     }
     public function setKeyFeaturesAttribute($value)
     {
-        if(is_array($value))
+        if(is_array($value)) {
             $value = array_filter($value, function($item) { return !empty($item[0]); });
+        }
 
         $this->attributes['key_features'] = serialize($value);
     }

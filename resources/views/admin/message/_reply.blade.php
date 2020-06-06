@@ -6,6 +6,12 @@
             {{ trans('app.reply') }}
         </div>
         <div class="modal-body">
+            <div class="form-group">
+              {!! Form::label('email', trans('app.reply_to')) !!}
+              {!! Form::text('email', $message->email ?? optional($message->customer)->email, ['class' => 'form-control', 'placeholder' => trans('app.reply_to'), 'disabled']) !!}
+              <div class="help-block with-errors"></div>
+            </div>
+
             @if($template)
                 @include('admin.partials._email_template_id_field')
                 @include('admin.partials._attachment_upload_field')

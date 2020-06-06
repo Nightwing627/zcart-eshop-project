@@ -36,8 +36,9 @@ class SendNewMessageNotificationToReceiver implements ShouldQueue
      */
     public function handle(NewMessage $event)
     {
-        if(! config('system_settings') )
+        if(! config('system_settings') ) {
             setSystemConfig($event->message->shop_id);
+        }
 
         if ( $event->message->label == Message::LABEL_INBOX ){
             if( $event->message->shop_id ){

@@ -1439,6 +1439,7 @@ return [
     'subunit_to_unit' => 'Subunit to unit',
     'symbol_first' => 'Symbol first',
     'to' => 'To',
+    'reply_to' => 'Reply to',
 
     // Version 2.1.0
     'chats' => 'Chats',

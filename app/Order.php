@@ -445,8 +445,9 @@ class Order extends BaseModel
      */
     public function getTrackingUrl()
     {
-        if($this->carrier_id && $this->tracking_id && $this->carrier->tracking_url)
+        if($this->carrier_id && $this->tracking_id && $this->carrier->tracking_url) {
             return str_replace('@', $this->tracking_id, $this->carrier->tracking_url);
+        }
 
         return Null;
     }
@@ -477,13 +478,15 @@ class Order extends BaseModel
     public function canEvaluate()
     {
         // Check if the shop has been rated yet
-        if(! $this->feedback_id)
+        if(! $this->feedback_id) {
             return True;
+        }
 
         // Check if all items are been rated yet
         foreach ($this->inventories as $item) {
-            if(! $item->pivot->feedback_id)
+            if(! $item->pivot->feedback_id) {
                 return True;
+            }
         }
 
         return False;
@@ -497,12 +500,16 @@ class Order extends BaseModel
      */
     public function invoice($des = 'D')
     {
-        $billingAddress = explode("<br/>", strip_tags($this->billing_address, "<br>"));
-        array_unshift($billingAddress, $this->customer->getName());
+        $invoiceTo = explode("<br/>", strip_tags($this->billing_address, "<br>"));
+        array_unshift($invoiceTo, $this->customer->getName());
 
-        $vendorAddress = $this->shop->primaryAddress->toArray();
-        $vendorAddress['address_type'] = $this->shop->legal_name; // Replace the address type with vendor shop name
-        $vendorAddress = array_values($vendorAddress); // Reset the array keys
+        $vendorAddress = $this->shop->primaryAddress ?? $this->shop->address;
+
+        $invoiceFrom = $vendorAddress ? $vendorAddress->toArray() : [];
+
+        $invoiceFrom['address_type'] = $this->shop->legal_name; // Replace the address type with vendor shop name
+
+        $invoiceFrom = array_values($invoiceFrom); // Reset the array keys
 
         $invoice = new PdfInvoice();
 
@@ -510,16 +517,18 @@ class Order extends BaseModel
         $invoice->setColor("#007fff");      // pdf color scheme
         $invoice->setType(trans("invoice.invoice"));    // Invoice Type
 
-        $logo = get_storage_file_url('logo.png', Null); //logo image path
-        if(file_exists($logo))
+        //Set logo image if exist
+        $logo = get_storage_file_url('logo.png', Null);
+        if(file_exists($logo)) {
             $invoice->setLogo($logo);
+        }
 
         $invoice->setReference($this->order_number);   // Reference
         $invoice->setDate($this->created_at->format('M d, Y'));   //Billing Date
         $invoice->setTime($this->created_at->format('h:i:s A'));   //Billing Time
         // $invoice->setDue(date('M dS ,Y',strtotime('+3 months')));    // Due Date
-        $invoice->setFrom($vendorAddress);
-        $invoice->setTo($billingAddress);
+        $invoice->setFrom($invoiceFrom);
+        $invoice->setTo($invoiceTo);
 
         foreach ($this->inventories as $item) {
             $invoice->addItem($item->pivot->item_description, "", $item->pivot->quantity, $item->pivot->unit_price);
@@ -527,20 +536,25 @@ class Order extends BaseModel
 
         $invoice->addSummary(trans('invoice.total'), $this->total);
 
-        if($this->taxes)
+        if($this->taxes) {
             $invoice->addSummary(trans('invoice.taxes') . " " . get_formated_decimal($this->taxrate, true, 2)."%", $this->taxes);
+        }
 
-        if($this->packaging)
+        if($this->packaging) {
             $invoice->addSummary(trans('invoice.packaging'), $this->packaging);
+        }
 
-        if($this->handling)
+        if($this->handling) {
             $invoice->addSummary(trans('invoice.handling'), $this->handling);
+        }
 
-        if($this->shipping)
+        if($this->shipping) {
             $invoice->addSummary(trans('invoice.shipping'), $this->shipping);
+        }
 
-        if($this->discount)
+        if($this->discount) {
             $invoice->addSummary(trans('invoice.discount'), $this->discount);
+        }
 
         $invoice->addSummary(trans('invoice.grand_total'), $this->grand_total, true);
 
@@ -573,8 +587,9 @@ class Order extends BaseModel
     {
         $order_status = strtoupper(get_order_status_name($this->order_status_id));
 
-        if( $plain )
+        if( $plain ) {
             return $order_status;
+        }
 
         switch ($this->order_status_id) {
             case static::STATUS_WAITING_FOR_PAYMENT:
@@ -606,8 +621,9 @@ class Order extends BaseModel
     {
         $payment_status = strtoupper(get_payment_status_name($this->payment_status));
 
-        if( $plain )
+        if( $plain ) {
             return $payment_status;
+        }
 
         switch ($this->payment_status) {
             case static::PAYMENT_STATUS_UNPAID:

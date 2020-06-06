@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Message;
 
+use Notification;
 use App\Events\Message\MessageReplied;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,14 +35,21 @@ class NotifyAssociatedUsersMessagetReplied implements ShouldQueue
      */
     public function handle(MessageReplied $event)
     {
-        if(!config('system_settings'))
+        if(!config('system_settings')) {
             setSystemConfig(optional($event->reply->repliable)->shop_id);
+        }
 
         if ($event->reply->user_id) {
-            if($event->reply->repliable->customer->email)
+            if($event->reply->repliable->customer->email) {
                 $event->reply->repliable->customer->notify(
                     new MessageRepliedNotification($event->reply, $event->reply->repliable->customer->getName())
                 );
+            }
+            else if ($event->reply->repliable->email){
+                Notification::route('mail', $event->reply->repliable->email)
+                    // ->route('nexmo', '5555555555')
+                    ->notify(new MessageRepliedNotification($event->reply, $event->reply->repliable->name));
+            }
         }
         else if ($event->reply->customer_id){
             if($event->reply->repliable->user->email){
