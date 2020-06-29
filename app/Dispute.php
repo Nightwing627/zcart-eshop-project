@@ -112,10 +112,7 @@ class Dispute extends BaseModel
      */
     public function setProductIdAttribute($value)
     {
-        if(is_numeric($value))
-            $this->attributes['product_id'] = $value;
-        else
-            $this->attributes['product_id'] = Null;
+        $this->attributes['product_id'] = is_numeric($value) ? $value : Null;
     }
 
     /**

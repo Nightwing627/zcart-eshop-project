@@ -29,11 +29,13 @@ class UpdateRoleRequest extends Request
         $rules = [];
         $rules['name'] = 'bail|required|composite_unique:roles,shop_id:'.$shop_id.', '.$id;
 
-        if (Request::user()->accessLevel())
+        if (Request::user()->accessLevel()) {
             $rules['level'] = 'nullable|integer|between:'.Request::user()->accessLevel().','.config('system_settings.max_role_level');
+        }
 
-        if (Request::input('level') && !Request::user()->accessLevel())
+        if (Request::input('level') && !Request::user()->accessLevel()) {
             Request::replace(['level' => Null]); //Reset the level
+        }
 
         return $rules;
     }

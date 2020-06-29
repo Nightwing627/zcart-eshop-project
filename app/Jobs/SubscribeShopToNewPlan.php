@@ -43,33 +43,45 @@ class SubscribeShopToNewPlan
         // Create subscription intance
         $subscriptionPlan = SubscriptionPlan::findOrFail($this->plan);
         $subscription = $shop->newSubscription($subscriptionPlan->name, $this->plan);
-
+        // echo "<pre>"; print_r($subscription); echo "<pre>"; exit('end!');
         $trialDays = (bool) config('system_settings.trial_days') ? config('system_settings.trial_days') : Null;
 
         // Subtract the used trial days with the new subscription
-        if($shop->onGenericTrial())
+        if($shop->onGenericTrial()) {
             $trialDays = Carbon::now()->lt($shop->trial_ends_at) ? Carbon::now()->diffInDays($shop->trial_ends_at) : Null;
+        }
 
         // Set trial days
-        if($trialDays)
+        if($trialDays) {
             $subscription->trialDays($trialDays);
+        }
 
         if ($this->token) {
             $subscription->create($this->token, [
                 'email' => $this->merchant->email
             ]);
         }
-        else if($this->merchant->hasBillingToken()){
+        else {
             $subscription->create();
 
-            $this->adjustGenericTrial($shop);
-        }
-        else if ( ! config('system_settings.required_card_upfront') && $trialDays )
-        {
-            $trial_ends_at = $shop->trial_ends_at ?: Carbon::now()->addDays($trialDays);
+            $trial_ends_at = $shop->trial_ends_at ?? Carbon::now()->addDays($trialDays);
 
             $this->adjustGenericTrial($shop, $trial_ends_at);
         }
+
+        // elseif($this->merchant->hasBillingToken()){
+        //     $subscription->create();
+
+        //     $this->adjustGenericTrial($shop);
+        // }
+        // elseif (! config('system_settings.required_card_upfront') && $trialDays)
+        // {
+        //     $subscription->create();
+
+        //     $trial_ends_at = $shop->trial_ends_at ?: Carbon::now()->addDays($trialDays);
+
+        //     $this->adjustGenericTrial($shop, $trial_ends_at);
+        // }
     }
 
     /**

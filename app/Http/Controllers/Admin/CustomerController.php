@@ -160,8 +160,9 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, $id)
     {
-        if( config('app.demo') == true && $id <= config('system.demo.customers', 1) )
+        if( config('app.demo') == true && $id <= config('system.demo.customers', 1) ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $this->customer->update($request, $id);
 
@@ -190,9 +191,9 @@ class CustomerController extends Controller
      */
     public function updatePassword(UpdatePasswordRequest $request, $id)
     {
-        // if( config('app.demo') == true && $id <= config('system.demo.users', 3) )
-        if( config('app.demo') == true && $id <= config('system.demo.customers', 1) )
+        if( config('app.demo') == true && $id <= config('system.demo.customers', 1) ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $customer = $this->customer->update($request, $id);
 
@@ -210,8 +211,9 @@ class CustomerController extends Controller
      */
     public function trash(Request $request, $id)
     {
-        if( config('app.demo') == true && $id <= config('system.demo.customers', 1) )
+        if( config('app.demo') == true && $id <= config('system.demo.customers', 1) ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $this->customer->trash($id);
 
@@ -254,13 +256,15 @@ class CustomerController extends Controller
      */
     public function massTrash(Request $request)
     {
-        if(config('app.demo') == true)
+        if(config('app.demo') == true) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $this->customer->massTrash($request->ids);
 
-        if($request->ajax())
+        if($request->ajax()) {
             return response()->json(['success' => trans('messages.trashed', ['model' => $this->model])]);
+        }
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
     }
@@ -275,8 +279,9 @@ class CustomerController extends Controller
     {
         $this->customer->massRestore($request->ids);
 
-        if($request->ajax())
+        if($request->ajax()) {
             return response()->json(['success' => trans('messages.restored', ['model' => $this->model])]);
+        }
 
         return back()->with('success', trans('messages.restored', ['model' => $this->model]));
     }
@@ -289,13 +294,15 @@ class CustomerController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        if(config('app.demo') == true)
+        if(config('app.demo') == true) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $this->customer->massDestroy($request->ids);
 
-        if($request->ajax())
+        if($request->ajax()) {
             return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+        }
 
         return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
@@ -310,8 +317,9 @@ class CustomerController extends Controller
     {
         $this->customer->emptyTrash($request);
 
-        if($request->ajax())
+        if($request->ajax()) {
             return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+        }
 
         return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }

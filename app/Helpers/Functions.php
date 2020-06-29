@@ -210,8 +210,9 @@ if ( ! function_exists('get_avatar_src') )
     function get_avatar_src($model, $size = 'small')
     {
         if ( $model instanceof User || $model instanceof Customer ){
-            if ($model->image)
+            if ($model->image) {
                 return get_storage_file_url($model->image->path, $size);
+            }
 
             return get_gravatar_url($model->email, $size);
         }
@@ -242,8 +243,9 @@ if ( ! function_exists('get_sender_email') )
      */
     function get_sender_email($shop = Null)
     {
-        if ($shop)
+        if ($shop) {
             return config('shop_settings.default_sender_email_address') ?: config('mail.from.address');
+        }
 
         return config('system_settings.default_sender_email_address') ?? get_value_from(1, 'systems', 'default_sender_email_address') ?? config('mail.from.address');
     }
@@ -451,7 +453,7 @@ if ( ! function_exists('get_qualified_model') )
 {
     function get_qualified_model($class_name = '')
     {
-        return 'App\\' . str_singular(studly_case($class_name));
+        return 'App\\' . Str::singular(Str::studly($class_name));
     }
 }
 
@@ -459,7 +461,7 @@ if ( ! function_exists('temp_storage_dir') )
 {
     function temp_storage_dir($dir = '')
     {
-        return str_finish(public_path("temp/{$dir}"), '/');
+        return Str::finish(public_path("temp/{$dir}"), '/');
     }
 }
 
@@ -468,7 +470,7 @@ if ( ! function_exists('attachment_storage_dir') )
     function attachment_storage_dir($dir = '')
     {
         return "attachments";
-        // return str_finish("attachments/{$dir}", '/');
+        // return Str::finish("attachments/{$dir}", '/');
     }
 }
 
@@ -484,7 +486,7 @@ if ( ! function_exists('sys_image_path') )
 {
     function sys_image_path($dir = '')
     {
-        return str_finish("images/{$dir}", '/');
+        return Str::finish("images/{$dir}", '/');
     }
 }
 
@@ -493,7 +495,7 @@ if ( ! function_exists('image_storage_path') )
     function image_storage_path($path = Null)
     {
         $path = image_storage_dir() . '/' . $path;
-        return str_finish($path, '/');
+        return Str::finish($path, '/');
     }
 }
 
@@ -502,7 +504,8 @@ if ( ! function_exists('image_cache_path') )
     function image_cache_path($path = Null)
     {
         $path = config('image.cache_dir') . '/' . $path;
-        return str_finish($path, '/');
+
+        return Str::finish($path, '/');
     }
 }
 
@@ -643,9 +646,9 @@ if ( ! function_exists('convertToSlugString') )
     function convertToSlugString($str, $salt = Null, $separator = '-')
     {
         if($salt)
-            return str_slug($str, $separator) . $separator . str_slug($salt, $separator);
+            return Str::slug($str, $separator) . $separator . Str::slug($salt, $separator);
 
-        return str_slug($str, $separator);
+        return Str::slug($str, $separator);
     }
 }
 
@@ -1587,30 +1590,36 @@ if ( ! function_exists('userLevelCompare') )
      */
     function userLevelCompare($compare, $user = Null)
     {
-        if (!$user)
+        if (!$user) {
             $user = auth()->user();
+        }
 
-        if ($user->isSuperAdmin())
+        if ($user->isSuperAdmin()) {
             return true;
+        }
 
-        if (! $compare instanceof User )
+        if (! $compare instanceof User ) {
             $compare = User::findorFail($compare);
+        }
 
         // If the comparable user is from a shop and the request user is the owner of the shop
         if (
             $compare->merchantId() && $user->isMerchant() &&
             $user->merchantId() === $compare->merchantId()
-        )
+        ) {
             return true;
+        }
 
         //Return if the user is from a shop and the compare user is not from the same shop
-        if (!$user->isFromPlatform() && $user->merchantId() !== $compare->merchantId())
+        if (!$user->isFromPlatform() && $user->merchantId() !== $compare->merchantId()) {
             return false;
+        }
 
         //Return true, If comparable user role level not set
         //and requesr user from platform or same shop
-        if (!$compare->role->level)
+        if (!$compare->role->level) {
             return $user->isFromPlatform() || $user->merchantId() == $compare->merchantId();
+        }
 
         //If the comparable user role have level.
         //Then the request user must have role level set and have to be an user level user

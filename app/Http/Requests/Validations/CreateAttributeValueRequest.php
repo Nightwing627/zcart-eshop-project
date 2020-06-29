@@ -28,7 +28,7 @@ class CreateAttributeValueRequest extends Request
 
         return [
            'attribute_id' => 'required',
-           'value' => 'bail|required|composite_unique:attribute_values,shop_id:'.$shop_id,
+           'value' => 'required',
            'image' => 'mimes:jpeg,png',
         ];
     }

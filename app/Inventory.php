@@ -277,8 +277,9 @@ class Inventory extends BaseModel
      */
     public function discount_percentage()
     {
-        if($this->hasOffer())
+        if($this->hasOffer()) {
             return get_percentage_of($this->sale_price, $this->offer_price);
+        }
 
         return 0;
     }
@@ -288,13 +289,21 @@ class Inventory extends BaseModel
      */
     public function setMinOrderQuantityAttribute($value)
     {
-        if ($value > 1)  $this->attributes['min_order_quantity'] = $value;
-        else $this->attributes['min_order_quantity'] = 1;
+        if ($value > 1) {
+            $this->attributes['min_order_quantity'] = $value;
+        }
+        else {
+            $this->attributes['min_order_quantity'] = 1;
+        }
     }
     public function setOfferPriceAttribute($value)
     {
-        if ($value > 0) $this->attributes['offer_price'] = $value;
-        else $this->attributes['offer_price'] = null;
+        if ($value > 0) {
+            $this->attributes['offer_price'] = $value;
+        }
+        else {
+            $this->attributes['offer_price'] = null;
+        }
     }
     public function setWarehouseIdAttribute($value)
     {

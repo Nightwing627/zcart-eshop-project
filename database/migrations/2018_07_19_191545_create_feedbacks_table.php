@@ -23,6 +23,8 @@ class CreateFeedbacksTable extends Migration
             $table->boolean('approved')->default(1);
             $table->boolean('spam')->default(0);
             $table->timestamps();
+
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
         });
     }
 

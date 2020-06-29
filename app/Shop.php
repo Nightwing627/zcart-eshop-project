@@ -131,7 +131,8 @@ class Shop extends BaseModel
      */
     public function plan()
     {
-        return $this->belongsTo(SubscriptionPlan::class, 'current_billing_plan', 'plan_id')->withDefault();
+        return $this->belongsTo(SubscriptionPlan::class, 'current_billing_plan', 'plan_id')
+        ->withDefault();
     }
 
     /**
@@ -294,7 +295,8 @@ class Shop extends BaseModel
 
     public function revenue()
     {
-        return $this->hasMany(Order::class)->selectRaw('SUM(total) as total, shop_id')->groupBy('shop_id');
+        return $this->hasMany(Order::class)->selectRaw('SUM(total) as total, shop_id')
+        ->groupBy('shop_id');
     }
 
     // /**
@@ -409,8 +411,9 @@ class Shop extends BaseModel
         if($this->current_billing_plan){
             $plan = SubscriptionPlan::findOrFail($this->current_billing_plan);
 
-            if(Statistics::shop_user_count() < $plan->team_size)
+            if(Statistics::shop_user_count() < $plan->team_size) {
                 return True;
+            }
         }
 
         return false;
@@ -426,8 +429,9 @@ class Shop extends BaseModel
         if($this->current_billing_plan){
             $plan = SubscriptionPlan::findOrFail($this->current_billing_plan);
 
-            if( Statistics::shop_inventories_count() < $plan->inventory_limit )
+            if( Statistics::shop_inventories_count() < $plan->inventory_limit ) {
                 return True;
+            }
         }
 
         return false;
@@ -440,12 +444,17 @@ class Shop extends BaseModel
      */
     public function canAddThisInventory($product)
     {
-        if($this->canUseSystemCatalog()) return true;
+        if($this->canUseSystemCatalog()) {
+            return true;
+        }
 
-        if(! $product instanceof Product)
+        if(! $product instanceof Product) {
             $product = Product::select('shop_id')->where('id', $product)->first();
+        }
 
-        if(!$product) return false;
+        if(!$product) {
+            return false;
+        }
 
         return $product->shop_id == $this->id;
     }
@@ -485,7 +494,19 @@ class Shop extends BaseModel
         return $query->approved()->where(function($q) {
             $q->whereNotNull('current_billing_plan')
             ->where(function($x) {
-                $x->whereNull('trial_ends_at')->orWhere('trial_ends_at', '>', Carbon::now());
+                $x->doesntHave('subscriptions')
+                ->whereNull('trial_ends_at')
+                ->orWhere('trial_ends_at', '>', Carbon::now());
+            })
+            ->orWhere(function($r){
+                $r->whereHas('subscriptions', function ($s) {
+                    $s->whereNested(function ($t) {
+                        $t->whereNull('ends_at')
+                            ->orWhere('ends_at', '>', Carbon::now())
+                            ->orWhereNotNull('trial_ends_at')
+                            ->where('trial_ends_at', '>', Carbon::today());
+                    });
+                });
             });
         })
         ->whereHas('config', function ($q) {
@@ -501,11 +522,13 @@ class Shop extends BaseModel
      */
     public function getNextBillingDate()
     {
-        if($this->onGenericTrial())
+        if($this->onGenericTrial()) {
             return trans('app.on_generic_trial');
+        }
 
-        if ( ! $this->subscribed($this->current_billing_plan) )
+        if ( ! $this->subscribed($this->current_billing_plan) ) {
             return trans('app.on_generic_trial');
+        }
 
         $sub = $this->subscription($this->current_billing_plan)->asStripeSubscription();
 
@@ -514,10 +537,12 @@ class Shop extends BaseModel
 
     public function getVerificationStatus()
     {
-        if($this->id_verified && $this->phone_verified && $this->address_verified)
+        if($this->id_verified && $this->phone_verified && $this->address_verified) {
             return trans('app.verified');
-        elseif($this->id_verified || $this->phone_verified || $this->address_verified)
+        }
+        elseif($this->id_verified || $this->phone_verified || $this->address_verified) {
             return trans('app.partially_verified');
+        }
 
         return trans('app.not_verified');
     }
@@ -613,10 +638,11 @@ class Shop extends BaseModel
     {
         $subscription = $this->subscriptions->first();
 
-        if ($subscription && ! is_null($subscription->ends_at))
-            return \Carbon\Carbon::now()->gt($subscription->ends_at);
+        if ($subscription) {
+            return ! is_null($subscription->ends_at) && Carbon::now()->gt($subscription->ends_at);
+        }
 
-        return false;
+        return $this->hasExpiredOnGenericTrial();
     }
 
     /**
@@ -626,7 +652,7 @@ class Shop extends BaseModel
      */
     public function hasExpiredOnGenericTrial()
     {
-        return $this->trial_ends_at && $this->trial_ends_at->isPast();
+        return ! $this->subscription && $this->trial_ends_at && $this->trial_ends_at->isPast();
     }
 
     /**

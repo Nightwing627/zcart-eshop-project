@@ -47,8 +47,9 @@ class EloquentCustomer extends EloquentRepository implements BaseRepository, Cus
 
         $this->saveAdrress($request->all(), $customer);
 
-        if ($request->hasFile('image'))
+        if ($request->hasFile('image')) {
             $customer->saveImage($request->file('image'));
+        }
 
         return $customer;
     }
@@ -57,11 +58,13 @@ class EloquentCustomer extends EloquentRepository implements BaseRepository, Cus
     {
         $customer = parent::update($request, $id);
 
-        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1)) {
             $customer->deleteImage();
+        }
 
-        if ($request->hasFile('image'))
+        if ($request->hasFile('image')) {
             $customer->saveImage($request->file('image'));
+        }
 
         return $customer;
     }

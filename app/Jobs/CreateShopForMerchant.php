@@ -33,12 +33,15 @@ class CreateShopForMerchant
      */
     public function handle()
     {
-        if( isset($this->request['active']) )
+        if( isset($this->request['active']) ) {
             $status = $this->request['active'];
-        else if( config('system_settings.vendor_needs_approval') )
+        }
+        else if( config('system_settings.vendor_needs_approval') ) {
             $status = Null;
-        else
+        }
+        else {
             $status = 1;
+        }
 
         $shop = Shop::create([
             'name' => $this->request['shop_name'],

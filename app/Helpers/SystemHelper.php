@@ -28,7 +28,14 @@ if ( ! function_exists('getPlatformFeeForOrder') )
 
         $plan = $order->shop->plan;
 
-        $commission = ($plan->marketplace_commission > 0) ? ($order->total * $plan->marketplace_commission)/100 : 0;
+        // Return zero is on trial period
+        if($order->shop->onTrial()) {
+            return 0;
+        }
+
+        $commission = ($plan->marketplace_commission > 0) ?
+                            ($order->total * $plan->marketplace_commission)/100
+                            : 0;
 
         return ($commission + $plan->transaction_fee );
     }

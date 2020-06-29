@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Common\Authorizable;
 use Illuminate\Http\Request;
@@ -101,8 +103,9 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, $id)
     {
-        if( config('app.demo') == true && $id <= config('system.demo.roles', 3) )
+        if( config('app.demo') == true && $id <= config('system.demo.roles', 3) ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $this->role->update($request, $id);
 
@@ -118,8 +121,9 @@ class RoleController extends Controller
      */
     public function trash(Request $request, $id)
     {
-        if( config('app.demo') == true && $id <= config('system.demo.roles', 3) )
+        if( config('app.demo') == true && $id <= config('system.demo.roles', 3) ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $this->role->trash($id);
 
@@ -162,13 +166,15 @@ class RoleController extends Controller
      */
     public function massTrash(Request $request)
     {
-        if(config('app.demo') == true)
+        if(config('app.demo') == true) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $this->role->massTrash($request->ids);
 
-        if($request->ajax())
+        if($request->ajax()) {
             return response()->json(['success' => trans('messages.trashed', ['model' => $this->model])]);
+        }
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
     }
@@ -181,13 +187,15 @@ class RoleController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        if(config('app.demo') == true)
+        if(config('app.demo') == true) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $this->role->massDestroy($request->ids);
 
-        if($request->ajax())
+        if($request->ajax()) {
             return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+        }
 
         return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
@@ -202,8 +210,9 @@ class RoleController extends Controller
     {
         $this->role->emptyTrash($request);
 
-        if($request->ajax())
+        if($request->ajax()) {
             return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+        }
 
         return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }

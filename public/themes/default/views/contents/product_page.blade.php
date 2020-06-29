@@ -303,10 +303,12 @@
 						                </tr>
 						            @endif
 
-									<tr class="noborder">
-										<th class="text-right noborder">{{ trans('theme.first_listed_on', ['platform' => get_platform_title()]) }}:</th>
-										<td class="noborder" style="width: 75%;">{{ $item->product->created_at->toFormattedDateString() }}</td>
-									</tr>
+						            @if($item->product->created_at)
+										<tr class="noborder">
+											<th class="text-right noborder">{{ trans('theme.first_listed_on', ['platform' => get_platform_title()]) }}:</th>
+											<td class="noborder" style="width: 75%;">{{ $item->product->created_at->toFormattedDateString() }}</td>
+										</tr>
+						            @endif
 								</tbody>
 							</table>
 		                </div>
@@ -338,7 +340,7 @@
                       		<div class="reviews-tab">
 	                      		@forelse($item->feedbacks->sortByDesc('created_at') as $feedback)
 									<p>
-										<b>{{ $feedback->customer->getName() }}</b>
+										<b>{{ optional($feedback->customer)->getName() }}</b>
 
 										<span class="pull-right small">
 											<b class="text-success">@lang('theme.verified_purchase')</b>

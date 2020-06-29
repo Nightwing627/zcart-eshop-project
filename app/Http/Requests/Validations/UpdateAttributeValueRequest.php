@@ -23,12 +23,9 @@ class UpdateAttributeValueRequest extends Request
      */
     public function rules()
     {
-        $shop_id = Request::user()->merchantId(); //Get current user's shop_id
-        $ignore = Request::segment(count(Request::segments())); //Current model ID
-
         return [
            'attribute_id' => 'required',
-           'value' => 'bail|required|composite_unique:attribute_values,shop_id:'.$shop_id.', '.$ignore,
+           'value' => 'required',
            'image' => 'mimes:jpeg,png',
         ];
     }

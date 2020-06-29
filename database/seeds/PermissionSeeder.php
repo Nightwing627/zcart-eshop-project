@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class PermissionSeeder extends BaseSeeder
 {
@@ -21,7 +22,7 @@ class PermissionSeeder extends BaseSeeder
             {
                 DB::table('permissions')->insert([
                         'module_id' => $module->id,
-                        'name' => title_case($action),
+                        'name' => Str::title($action),
                         'slug' =>  strtolower($action). '_' . snake_case($module->name),
                         'created_at' => Carbon::Now(),
                         'updated_at' => Carbon::Now(),

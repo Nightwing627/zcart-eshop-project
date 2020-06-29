@@ -55,8 +55,9 @@ class AccountController extends Controller
      */
     public function showTicket(Ticket $ticket)
     {
-        if(!(new Authorize(Auth::user(), 'view_ticket', $ticket))->check())
+        if(!(new Authorize(Auth::user(), 'view_ticket', $ticket))->check()) {
             abort(403, 'Unauthorized action.');
+        }
 
         return view('admin.account.show_ticket', compact('ticket'));
     }
@@ -81,8 +82,9 @@ class AccountController extends Controller
     {
         $ticket = Ticket::create($request->all());
 
-        if ($request->hasFile('attachments'))
+        if ($request->hasFile('attachments')) {
             $ticket->saveAttachments($request->file('attachments'));
+        }
 
         // Send notification to Admin
         if(config('system_settings.notify_new_ticket')){
@@ -116,19 +118,22 @@ class AccountController extends Controller
      */
     public function storeTicketReply(ReplyTicketRequest $request, Ticket $ticket)
     {
-        if(!(new Authorize(Auth::user(), 'reply_ticket', $ticket))->check())
+        if(!(new Authorize(Auth::user(), 'reply_ticket', $ticket))->check()) {
             abort(403, 'Unauthorized action.');
+        }
 
         $ticket->update($request->except('user_id'));
 
         $reply = $ticket->replies()->create($request->all());
 
-        if ($request->hasFile('attachments'))
+        if ($request->hasFile('attachments')) {
             $reply->saveAttachments($request->file('attachments'));
+        }
 
         event(new TicketReplied($reply));
 
-        return redirect()->route('admin.account.ticket')->with('success', trans('messages.updated', ['model' => trans('app.model.ticket')]));
+        return redirect()->route('admin.account.ticket')
+        ->with('success', trans('messages.updated', ['model' => trans('app.model.ticket')]));
     }
 
     /**
@@ -140,12 +145,14 @@ class AccountController extends Controller
      */
     public function archiveTicket(Request $request, Ticket $ticket)
     {
-        if(Auth::id() != $ticket->user_id)
+        if(Auth::id() != $ticket->user_id) {
             abort(403, 'Unauthorized action.');
+        }
 
         $ticket->delete();
 
-        return redirect()->route('admin.account.ticket')->with('success', trans('messages.deleted', ['model' => trans('app.model.ticket')]));
+        return redirect()->route('admin.account.ticket')
+        ->with('success', trans('messages.deleted', ['model' => trans('app.model.ticket')]));
     }
 
     /**
@@ -165,8 +172,9 @@ class AccountController extends Controller
      */
     public function update(UpdateProfileRequest $request)
     {
-        if( config('app.demo') == true && Auth::user()->id <= config('system.demo.users', 3) )
+        if( config('app.demo') == true && Auth::user()->id <= config('system.demo.users', 3) ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $profile = $this->profile->updateProfile($request);
 
@@ -183,8 +191,9 @@ class AccountController extends Controller
      */
     public function updatePassword(UpdatePasswordRequest $request)
     {
-        if( config('app.demo') == true && Auth::user()->id <= config('system.demo.users', 3) )
+        if( config('app.demo') == true && Auth::user()->id <= config('system.demo.users', 3) ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $profile = $this->profile->updatePassword($request);
 

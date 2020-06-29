@@ -37,20 +37,23 @@ class SubscriptionController extends Controller
      */
     public function subscribe(Request $request, $plan, $merchant = Null)
     {
-        if( config('app.demo') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) )
+        if( config('app.demo') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) ) {
             return redirect()->route('admin.account.billing')->with('warning', trans('messages.demo_restriction'));
+        }
 
 		$merchant = $merchant ? User::findOrFail($merchant) : Auth::user();
 
-        if ( config('system_settings.required_card_upfront') && ! $merchant->hasBillingToken() )
+        if ( config('system_settings.required_card_upfront') && ! $merchant->hasBillingToken() ) {
             return redirect()->route('admin.account.billing')->with('error', trans('messages.no_card_added'));
+        }
 
         // create the subscription
         try {
             $subscription = SubscriptionPlan::findOrFail($plan);
 
             // If the merchant already has any subscription then just swap to new plan
-            if ($currentPlan = $merchant->getCurrentPlan()) {
+            $currentPlan = $merchant->getCurrentPlan();
+            if ($currentPlan) {
                 if(! $this->validateSubscriptionSwap($subscription)) {
                     return redirect()->route('admin.account.billing')
                     ->with('error', trans('messages.using_more_resource', ['plan' => $subscription->name]));
@@ -88,8 +91,8 @@ class SubscriptionController extends Controller
 
         try {
 
-            if (!$request->user()->hasBillingToken()) {
-                $request->user()->shop->createAsStripeCustomer([
+            if (! $request->user()->hasBillingToken()) {
+                $stripeCustomer = $request->user()->shop->createAsStripeCustomer([
                     'email' => $request->user()->email
                 ]);
             }
@@ -113,18 +116,26 @@ class SubscriptionController extends Controller
      */
     public function resumeSubscription(Request $request)
     {
-        if( config('app.demo') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) )
-            return redirect()->route('admin.account.billing')->with('warning', trans('messages.demo_restriction'));
+        if(
+            config('app.demo') == true &&
+            $request->user()->merchantId() <= config('system.demo.shops', 1)
+        ) {
+            return redirect()->route('admin.account.billing')
+            ->with('warning', trans('messages.demo_restriction'));
+        }
 
         try {
             $request->user()->getCurrentPlan()->resume();
         }
         catch(\Stripe\Error\Card $e){
             $response = $e->getJsonBody();
-            return redirect()->route('admin.account.billing')->with('error', $response['error']['message']);
+
+            return redirect()->route('admin.account.billing')
+            ->with('error', $response['error']['message']);
         }
 
-        return redirect()->route('admin.account.billing')->with('success', trans('messages.subscription_resumed'));
+        return redirect()->route('admin.account.billing')
+        ->with('success', trans('messages.subscription_resumed'));
     }
 
     /**
@@ -135,18 +146,23 @@ class SubscriptionController extends Controller
      */
     public function cancelSubscription(Request $request)
     {
-        if( config('app.demo') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) )
-            return redirect()->route('admin.account.billing')->with('warning', trans('messages.demo_restriction'));
+        if( config('app.demo') == true && $request->user()->merchantId() <= config('system.demo.shops', 1) ) {
+            return redirect()->route('admin.account.billing')
+            ->with('warning', trans('messages.demo_restriction'));
+        }
 
         try {
             $request->user()->getCurrentPlan()->cancel();
         }
         catch(\Stripe\Error\Card $e){
             $response = $e->getJsonBody();
-            return redirect()->route('admin.account.billing')->with(['error' => $response['error']['message']]);
+
+            return redirect()->route('admin.account.billing')
+            ->with(['error' => $response['error']['message']]);
         }
 
-        return redirect()->route('admin.account.billing')->with('success', trans('messages.subscription_cancelled'));
+        return redirect()->route('admin.account.billing')
+        ->with('success', trans('messages.subscription_cancelled'));
     }
 
     /**
@@ -172,16 +188,20 @@ class SubscriptionController extends Controller
      */
     public function updateTrial(UpdateTrialPeriodRequest $request, Shop $shop)
     {
-        try {
-            $new_end_time = Carbon::createFromFormat('Y-m-d h:i a', $request->trial_ends_at)->timestamp;
+        $new_end_time = Carbon::createFromFormat('Y-m-d h:i a', $request->trial_ends_at)->timestamp;
 
+        try {
             if($shop->hasBillingToken()){
                 $currentPlan = $shop->owner->getCurrentPlan();
 
-                $currentPlan->swap($shop->current_billing_plan)->update([ 'trial_ends_at' => $new_end_time ]);
+                //Update the plan on local
+                $currentPlan->update(['trial_ends_at' => $new_end_time]);
+
+                //Now update the plan on stripe
+                $currentPlan->swap($shop->current_billing_plan);
             }
 
-            if( $shop->onGenericTrial() || $shop->hasExpiredOnGenericTrial() ){
+            if( $shop->onGenericTrial() || $shop->hasExpiredPlan() ){
                 $shop->forceFill([
                     'trial_ends_at' => $new_end_time,
                     'hide_trial_notice' => $request->hide_trial_notice,
@@ -209,8 +229,9 @@ class SubscriptionController extends Controller
             'inventories' => Statistics::shop_inventories_count(),
         ];
 
-        if($resources['users'] > $plan->team_size || $resources['inventories'] > $plan->inventory_limit)
+        if($resources['users'] > $plan->team_size || $resources['inventories'] > $plan->inventory_limit) {
             return False;
+        }
 
         return True;
     }

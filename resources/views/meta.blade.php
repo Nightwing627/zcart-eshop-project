@@ -7,8 +7,8 @@
 
     // For Products
     if(isset($item)) {
-        $SEOtitle = $item->meta_title ?? $item->title;
-        $SEOdescription = $item->meta_description ?? substr($item->description, 0, config('seo.meta.description_character_limit', 160));
+        $SEOtitle = $item->meta_title ?? strip_tags($item->title);
+        $SEOdescription = $item->meta_description ?? substr(strip_tags($item->description), 0, config('seo.meta.description_character_limit', 160));
         $SEOimage = get_product_img_src($item, 'full');
         $SEOkeywords = implode(', ', $item->tags->pluck('name')->toArray());
     }

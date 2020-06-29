@@ -22,10 +22,10 @@
         $('.menu-category-dropdown').mouseover(function() {
             var height = $(this).height();
 
-            if(height > 491)
+            if(height > 491) {
                 $('.category-section').css('min-height', height);
+            }
         });
-
 
         initAppPlugins();
 

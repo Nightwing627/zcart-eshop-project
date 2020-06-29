@@ -1,6 +1,6 @@
 <div class="form-group">
   {!! Form::label('name', trans('app.form.name').'*') !!}
-  {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.supplier_name'), 'required']) !!}
+  {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('app.placeholder.name'), 'required']) !!}
   <div class="help-block with-errors"></div>
 </div>
 

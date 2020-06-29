@@ -4,6 +4,7 @@ namespace App\Common;
 
 use Auth;
 use App\Helpers\Authorize;
+use Illuminate\Support\Str;
 
 /**
  * Attach this Trait to a User (or other model) for easier read/writes on Addresses
@@ -122,9 +123,10 @@ trait Authorizable
      */
     public function callAction($method, $parameters)
     {
-        if ( ! $this->checkPermission('', $parameters) )
+        if ( ! $this->checkPermission('', $parameters) ) {
             return view('errors.forbidden');
             // return back()->with('error', trans('messages.permission.denied'));
+        }
 
         return parent::callAction($method, $parameters);
     }
@@ -140,8 +142,9 @@ trait Authorizable
      */
     private function checkPermission($slug = '', $model = Null)
     {
-        if (\Request::ajax())
+        if (\Request::ajax()) {
             return TRUE;
+        }
 
         $slug = (bool) $slug ? $slug : $this->getSlug();
 
@@ -159,21 +162,24 @@ trait Authorizable
         $module = $module ? $module : array_slice($temp1, -2, 1)[0];
         $action = $action ? $action : array_slice($temp1, -1, 1)[0];
 
-        if($this->isVendor($module))
+        if($this->isVendor($module)) {
             return $this->abilities[$action] . '_vendor';
+        }
 
         if($this->isUtility($module))
             return $this->abilities[$action] . '_utility';
 
-        if($this->isAppearance($module))
+        if($this->isAppearance($module)) {
             return 'customize_appearance';
-
-        if ('update' == $action) {
-            if($this->isUpdateException($module))
-                return $action . '_' . snake_case($module);
         }
 
-        return array_key_exists($action, $this->abilities) ? $this->abilities[$action] . '_' . snake_case($module) : $action;
+        if ('update' == $action) {
+            if($this->isUpdateException($module)) {
+                return $action . '_' . Str::snake($module);
+            }
+        }
+
+        return array_key_exists($action, $this->abilities) ? $this->abilities[$action] . '_' . Str::snake($module) : $action;
     }
 
     /**

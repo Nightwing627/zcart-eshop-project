@@ -70,11 +70,11 @@
 
 			            		@if($shop->onTrial())
 						          	<span class="label label-info indent10">{{ trans('app.trialing') }}</span>
-						        @elseif($shop->hasExpiredPlan() || $shop->hasExpiredOnGenericTrial())
+						        @elseif($shop->hasExpiredPlan())
 						          	<span class="label label-default indent10">{{ trans('app.expired') }}</span>
 								@endif
 
-			            		@if($shop->onTrial() || $shop->hasExpiredOnGenericTrial())
+			            		@if($shop->onTrial() || $shop->hasExpiredPlan())
 									@if(Auth::user()->isAdmin())
 										<a href="javascript:void(0)" data-link="{{ route('admin.vendor.subscription.editTrial', $shop) }}"  class="ajax-modal-btn pull-right"><i data-toggle="tooltip" data-placement="top" title="{{ trans('help.update_trial_period') }}" class="fa fa-calendar"></i> </a>
 									@endif

@@ -53,7 +53,7 @@ class Feedback extends BaseModel
     */
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class)->withDefault();
     }
 
     /**

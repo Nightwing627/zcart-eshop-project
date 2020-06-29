@@ -106,12 +106,12 @@ class CountryController extends Controller
      * @param  \App\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Country $country)
-    {
-        $country->delete();
+    // public function destroy(Country $country)
+    // {
+    //     $country->delete();
 
-        return back()->with('success',  trans('messages.deleted', ['model' => $this->model]));
-    }
+    //     return back()->with('success',  trans('messages.deleted', ['model' => $this->model]));
+    // }
 
     /**
      * Trash the mass resources.
@@ -119,14 +119,14 @@ class CountryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function massDestroy(Request $request)
-    {
-        Country::whereIn('id', $request->ids)->forceDelete();
+    // public function massDestroy(Request $request)
+    // {
+    //     Country::whereIn('id', $request->ids)->forceDelete();
 
-        if($request->ajax())
-            return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+    //     if($request->ajax())
+    //         return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
 
-        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
-    }
+    //     return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
+    // }
 
 }

@@ -17,16 +17,18 @@ class EloquentRole extends EloquentRepository implements BaseRepository, RoleRep
 
     public function all()
     {
-        if (!Auth::user()->isFromPlatform())
+        if (!Auth::user()->isFromPlatform()) {
             return $this->model->mine()->lowerPrivileged()->withCount('users')->get();
+        }
 
         return $this->model->lowerPrivileged()->withCount('users')->get();
     }
 
     public function trashOnly()
     {
-        if (!Auth::user()->isFromPlatform())
+        if (!Auth::user()->isFromPlatform()) {
             return $this->model->mine()->lowerPrivileged()->onlyTrashed()->get();
+        }
 
         return $this->model->lowerPrivileged()->onlyTrashed()->get();
     }

@@ -18,16 +18,18 @@ class EloquentAttribute extends EloquentRepository implements BaseRepository, At
 
 	public function all()
 	{
-        if (!Auth::user()->isFromPlatform())
+        if (!Auth::user()->isFromPlatform()) {
             return $this->model->mine()->with('attributeType')->withCount('attributeValues')->get();
+        }
 
         return $this->model->with('attributeType')->withCount('attributeValues')->get();
 	}
 
 	public function trashOnly()
 	{
-        if (!Auth::user()->isFromPlatform())
+        if (!Auth::user()->isFromPlatform()) {
             return $this->model->mine()->onlyTrashed()->with('attributeType')->get();
+        }
 
 		return $this->model->onlyTrashed()->with('attributeType')->get();
 	}
@@ -45,8 +47,9 @@ class EloquentAttribute extends EloquentRepository implements BaseRepository, At
 
     public function reorder(array $attributes)
     {
-        foreach ($attributes as $id => $order)
+        foreach ($attributes as $id => $order) {
             $this->model->findOrFail($id)->update(['order' => $order]);
+        }
 
         return true;
     }
@@ -58,13 +61,15 @@ class EloquentAttribute extends EloquentRepository implements BaseRepository, At
 
     public function destroy($attribute)
     {
-        if(! $attribute instanceof Attribute)
+        if(! $attribute instanceof Attribute) {
             $attribute = parent::findTrash($attribute);
+        }
 
         $attributeValues = $attribute->attributeValues()->get();
 
-        foreach ($attributeValues as $entity)
+        foreach ($attributeValues as $entity) {
             $entity->deleteImage();
+        }
 
         return $attribute->forceDelete();
     }

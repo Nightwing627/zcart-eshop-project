@@ -54,8 +54,9 @@ class UserController extends Controller
     public function create()
     {
         // Check if the merchant can add more user in the team
-        if(auth()->user()->isFromPlatform() || auth()->user()->shop->canAddMoreUser())
+        if(auth()->user()->isFromPlatform() || auth()->user()->shop->canAddMoreUser()) {
             return view('admin.user._create');
+        }
 
         return view('admin.partials._max_user_limit_notice');
     }
@@ -110,8 +111,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        if( config('app.demo') == true && $id <= config('system.demo.users', 3) )
+        if( config('app.demo') == true && $id <= config('system.demo.users', 3) ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $user = $this->user->update($request, $id);
 
@@ -142,8 +144,9 @@ class UserController extends Controller
      */
     public function updatePassword(UpdatePasswordRequest $request, $id)
     {
-        if( config('app.demo') == true && $id <= config('system.demo.users', 3) )
+        if( config('app.demo') == true && $id <= config('system.demo.users', 3) ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $user = $this->user->update($request, $id);
 
@@ -161,8 +164,9 @@ class UserController extends Controller
      */
     public function trash(Request $request, $id)
     {
-        if( config('app.demo') == true && $id <= config('system.demo.users', 3) )
+        if( config('app.demo') == true && $id <= config('system.demo.users', 3) ) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $user = $this->user->trash($id);
 
@@ -205,13 +209,15 @@ class UserController extends Controller
      */
     public function massTrash(Request $request)
     {
-        if(config('app.demo') == true)
+        if(config('app.demo') == true) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $this->user->massTrash($request->ids);
 
-        if($request->ajax())
+        if($request->ajax()) {
             return response()->json(['success' => trans('messages.trashed', ['model' => $this->model_name])]);
+        }
 
         return back()->with('success', trans('messages.trashed', ['model' => $this->model_name]));
     }
@@ -224,13 +230,15 @@ class UserController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        if(config('app.demo') == true)
+        if(config('app.demo') == true) {
             return back()->with('warning', trans('messages.demo_restriction'));
+        }
 
         $this->user->massDestroy($request->ids);
 
-        if($request->ajax())
+        if($request->ajax()) {
             return response()->json(['success' => trans('messages.deleted', ['model' => $this->model_name])]);
+        }
 
         return back()->with('success', trans('messages.deleted', ['model' => $this->model_name]));
     }
@@ -245,8 +253,9 @@ class UserController extends Controller
     {
         $this->user->emptyTrash($request);
 
-        if($request->ajax())
+        if($request->ajax()) {
             return response()->json(['success' => trans('messages.deleted', ['model' => $this->model_name])]);
+        }
 
         return back()->with('success', trans('messages.deleted', ['model' => $this->model_name]));
     }

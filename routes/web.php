@@ -15,8 +15,11 @@ Route::get('locale/{locale?}', 'LocaleController@change')->name('locale.change')
 Route::post('/contact_us', 'ContactUsController@send')->name('contact_us');
 
 // Webhooks
-Route::post('webhook/stripe', 'WebhookController@handleStripeCallback'); 		// Stripe
-
+// Route::post('webhook/stripe', 'WebhookController@handleStripeCallback'); 		// Stripe
+Route::post(
+    'stripe/webhook',
+    '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
+);
 // AJAX routes for get images
 // Route::get('order/ajax/taxrate', 'OrderController@ajaxTaxRate')->name('ajax.taxrate');
 

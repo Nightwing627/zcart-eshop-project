@@ -102,7 +102,10 @@ class RegisterController extends Controller
         ];
 
         // If customer agree to subscribe newsletter or the system set it auto
-        if($request->input('subscribe') || !config('system_settings.ask_customer_for_email_subscription')) {
+        if(
+            $request->input('subscribe') ||
+            ! config('system_settings.ask_customer_for_email_subscription')
+        ) {
             $data['accepts_marketing'] = 1;
         }
 

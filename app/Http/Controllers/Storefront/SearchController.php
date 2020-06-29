@@ -36,16 +36,31 @@ class SearchController extends Controller
         $products->load([
                         'shop:id,current_billing_plan,trial_ends_at,active',
                         'shop.config:shop_id,maintenance_mode',
+                        'shop.subscription',
                         'product:id,name,gtin,model_number'
                     ]);
 
         // Keep results only from active shops
         $products = $products->filter(function ($product) {
-            return (optional($product->shop)->current_billing_plan !== Null) &&
-                    ($product->shop->active == 1) &&
-                    $product->shop->hasPaymentMethods() &&
-                    ($product->shop->trial_ends_at == Null || $product->shop->trial_ends_at > Carbon::now()) &&
-                    ($product->shop->config->maintenance_mode == 0 || $product->shop->config->maintenance_mode == Null);
+            $tShop = $product->shop;
+
+            return $tShop && ($tShop->active == 1) &&
+                    ($tShop->current_billing_plan !== Null) &&
+                    $tShop->hasPaymentMethods() && !$tShop->isDown() &&
+                    (
+                        (
+                            ! $tShop->subscription &&
+                            $tShop->trial_ends_at == Null ||
+                            $tShop->trial_ends_at > Carbon::now()
+                        ) ||
+                        (
+                            $tShop->subscription &&
+                            $tShop->subscription->ends_at === Null ||
+                            $tShop->subscription->ends_at > Carbon::now() ||
+                            $tShop->subscription->trial_ends_at !== Null &&
+                            $tShop->subscription->trial_ends_at > Carbon::now()
+                        )
+                    );
         });
 
         // Filter variants from same vendor

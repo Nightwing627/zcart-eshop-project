@@ -255,8 +255,9 @@ class Customer extends Authenticatable
      */
     public function getDobAttribute($dob)
     {
-        if($dob)
+        if($dob) {
             return date('Y-m-d', strtotime($dob));
+        }
     }
 
     /**

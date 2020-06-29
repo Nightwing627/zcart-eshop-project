@@ -22,6 +22,16 @@ trait Billable
     }
 
     /**
+     * Get all of the subscription for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function subscription()
+    {
+        return $this->hasOne(Subscription::class)->orderBy('created_at', 'desc');
+    }
+
+    /**
      * Get all of the subscriptions for the user.
      *
      * @return \Illuminate\Database\Eloquent\Collection

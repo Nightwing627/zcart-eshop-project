@@ -14,8 +14,10 @@ class BaseSeeder extends Seeder
     public function __construct()
     {
         $dir  = image_storage_dir();
-        if( ! Storage::exists($dir) )
+
+        if( ! Storage::exists($dir) ) {
             Storage::makeDirectory($dir, 0755, true, true);
+        }
 
         $this->dir = image_storage_dir();
 

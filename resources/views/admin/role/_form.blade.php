@@ -67,8 +67,8 @@
         @endphp
         @foreach($modules as $module)
           @php
-            $access_level = snake_case($module->access);
-            $module_name = snake_case($module->name);
+            $access_level = Str::snake($module->access);
+            $module_name = Str::snake($module->name);
             $module_enabled = find_string_in_array($role_permissions, $module_name);
           @endphp
           <tr class="{{ $access_level . '-module'}}"

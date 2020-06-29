@@ -213,7 +213,8 @@ class OrderController extends Controller
 
         // If the stripe is not cofigured
         if( ! $vendorStripeAccountId ) {
-            return redirect()->back()->with('success', trans('theme.notify.payment_method_config_error'))->withInput();
+            return redirect()->back()->withInput()
+            ->with('success', trans('theme.notify.payment_method_config_error'));
         }
 
         // Get customer

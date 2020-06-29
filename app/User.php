@@ -220,8 +220,9 @@ class User extends Authenticatable
      */
     public function getDobAttribute($dob)
     {
-        if($dob)
+        if($dob) {
             return date('Y-m-d', strtotime($dob));
+        }
     }
 
     /**
@@ -231,7 +232,9 @@ class User extends Authenticatable
      */
     public function getRoleListAttribute()
     {
-        if (count($this->roles)) return $this->roles->pluck('id')->toArray();
+        if (count($this->roles)) {
+            return $this->roles->pluck('id')->toArray();
+        }
     }
 
     /**
@@ -271,12 +274,17 @@ class User extends Authenticatable
      */
     public function getCurrentPlan()
     {
-        if( ! $this->merchantId() )  return Null;
+        if( ! $this->merchantId() ) {
+            return Null;
+        }
 
         $subscription = optional($this->shop->subscriptions)->first();
 
-        if($subscription && $subscription->valid())
+        // echo "<pre>"; print_r($subscription); echo "<pre>"; exit('end!');
+
+        if($subscription && $subscription->valid()) {
             return $subscription;
+        }
 
         return Null;
     }
@@ -358,12 +366,15 @@ class User extends Authenticatable
      */
     public function hasExpiredPlan()
     {
-        if(!$this->merchantId())        return false;
+        if( ! $this->merchantId() ) {
+            return false;
+        }
 
         $subscription = $this->shop->subscriptions->first();
 
-        if ($subscription && ! is_null($subscription->ends_at))
+        if ($subscription && ! is_null($subscription->ends_at)) {
             return \Carbon\Carbon::now()->gt($subscription->ends_at);
+        }
 
         return false;
     }
@@ -375,7 +386,7 @@ class User extends Authenticatable
      */
     public function hasExpiredOnGenericTrial()
     {
-        return $this->shop->trial_ends_at && $this->shop->trial_ends_at->isPast();
+        return $this->shop->hasExpiredOnGenericTrial();
     }
 
     /**
@@ -385,8 +396,9 @@ class User extends Authenticatable
      */
     public function isSubscribed()
     {
-        if($this->isFromPlatform() || !$this->merchantId())
+        if($this->isFromPlatform() || !$this->merchantId()) {
             return False;
+        }
 
         $subscription = optional($this->shop->subscriptions)->first();
 
@@ -491,8 +503,9 @@ class User extends Authenticatable
     {
         return $query->whereHas('role', function($q)
         {
-            if (Auth::user()->role->level)
+            if (Auth::user()->role->level) {
                 return $q->where('level', '>', Auth::user()->role->level)->orWhere('level', Null);
+            }
 
             return $q->whereNull('level');
         });

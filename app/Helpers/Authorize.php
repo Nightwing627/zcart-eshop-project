@@ -31,8 +31,9 @@ class Authorize
 	public function check()
 	{
 		// return true; //FOR TEMPORARY TEST
-		if($this->isExceptional())
+		if($this->isExceptional()) {
 			return true;
+		}
 
 		// echo "<pre>"; print_r($this->permissionSlugs()); echo "</pre>"; exit();
 		// Deny the action immediately if the model has shop_id field and user from different shop
@@ -65,21 +66,24 @@ class Authorize
 	private function isExceptional()
 	{
 		// Some routes only shows personalized information and allow access
-        if(in_array($this->slug, ['dashboard', 'profile', 'verify', 'secretLogout']))
+        if(in_array($this->slug, ['dashboard', 'profile', 'verify', 'secretLogout'])) {
             return true;
+        }
 
 		// The Super admin will not required to check authorization.
 		if(Auth::user()->isSuperAdmin()){
 			// Just avoid the merchant modules to keep the dashboard clean
-			if (isset(config('authSlugs')[$this->slug]))
+			if (isset(config('authSlugs')[$this->slug])) {
 				return config('authSlugs')[$this->slug] != 'Merchant';
+			}
 
 			return true;
 		}
 
 		// The content creator always have the full permission
-		if(isset($this->model->user_id) && $this->model->user_id == $this->user->id)
+		if(isset($this->model->user_id) && $this->model->user_id == $this->user->id) {
 			return true;
+		}
 
 		return false;
 	}
@@ -94,8 +98,9 @@ class Authorize
 	private function permissionSlugs()
 	{
 		// For current user just return permissions from cinfig
-		if( Auth::guard('web')->user()->id == $this->user->id )
+		if( Auth::guard('web')->user()->id == $this->user->id ) {
 	        return config('permissions');
+		}
 
         return $this->user->role->permissions()->pluck('slug')->toArray();
 	}
