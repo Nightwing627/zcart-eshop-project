@@ -35,13 +35,14 @@ class NotifyCustomerPaymentFailed implements ShouldQueue
      */
     public function handle(OrderPaymentFailed $event)
     {
-        if(!config('system_settings'))
+        if(!config('system_settings')) {
             setSystemConfig($event->order->shop_id);
+        }
 
        if ($event->order->customer_id){
             $event->order->customer->notify(new PaymentFailedNotification($event->order));
         }
-        else if ($event->order->email){
+        elseif ($event->order->email){
             Notification::route('mail', $event->order->email)
                 // ->route('nexmo', '5555555555')
                 ->notify(new PaymentFailedNotification($event->order));

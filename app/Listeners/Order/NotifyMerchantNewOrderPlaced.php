@@ -34,10 +34,12 @@ class NotifyMerchantNewOrderPlaced implements ShouldQueue
      */
     public function handle(OrderCreated $event)
     {
-        if(!config('shop_settings'))
+        if(!config('shop_settings')) {
             setShopConfig($event->order->shop_id);
+        }
 
-        if(config('shop_settings.notify_new_order'))
+        if(config('shop_settings.notify_new_order')) {
             $event->order->shop->notify(new OrderCreatedNotification($event->order));
+        }
     }
 }

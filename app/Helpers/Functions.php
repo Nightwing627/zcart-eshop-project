@@ -543,6 +543,10 @@ if ( ! function_exists('get_product_img_src') )
 {
     function get_product_img_src($item = null, $size = 'medium', $type = 'primary')
     {
+        if(! $item) {
+            return asset('images/placeholders/no_img.png');
+        }
+
         if (is_numeric($item) && !($item instanceof Inventory)) {
             $item = Inventory::findorFail($item);
         }

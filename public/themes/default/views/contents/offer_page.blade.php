@@ -1,15 +1,15 @@
 <div class="container">
     <div class="offered-product-widget space30">
         <span class="offered-product-widget-img">
-            <img src="{{ get_storage_file_url(optional($product->featuredImage)->path, 'medium') }}" alt="{{ $product->name }}" title="{{ $product->name }}"/>
+            <img src="{{ get_storage_file_url(optional($product->featuredImage)->path, 'medium') }}" alt="{!! $product->name !!}" title="{!! $product->name !!}"/>
         </span>
 
         <div class="offered-product-widget-content">
-            <h2>{{ $product->name }}</h2>
+            <h2>{!! $product->name !!}</h2>
             <span class="offered-product-widget-text text-muted space20">
                 @if($product->manufacturer->slug)
                     {{ trans('theme.by') . ' ' }}
-                    <a href="{{ route('show.brand', $product->manufacturer->slug) }}" class="product-info-seller-name">{{ $product->manufacturer->name }}</a>
+                    <a href="{{ route('show.brand', $product->manufacturer->slug) }}" class="product-info-seller-name">{!! $product->manufacturer->name !!}</a>
                 @endif
             </span>
             <span class="offered-product-widget-text">

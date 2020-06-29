@@ -603,6 +603,7 @@ return [
 	'order_canceled' => 'The order has been canceled!',
 	'order_again' => 'Order Again',
 	'user' => 'User',
+	'free' => 'Free',
 
     // Version 2.1.0
     'chat_welcome' => 'Hey! Have a question?',

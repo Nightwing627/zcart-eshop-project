@@ -36,13 +36,14 @@ class NotifyCustomerOrderUpdated implements ShouldQueue
     public function handle(OrderUpdated $event)
     {
         if ($event->notify_customer){
-            if(!config('system_settings'))
+            if(!config('system_settings')) {
                 setSystemConfig($event->order->shop_id);
+            }
 
             if ($event->order->customer_id){
                 $event->order->customer->notify(new OrderUpdatedNotification($event->order));
             }
-            else if ($event->order->email){
+            elseif ($event->order->email){
                 Notification::route('mail', $event->order->email)
                     // ->route('nexmo', '5555555555')
                     ->notify(new OrderUpdatedNotification($event->order));

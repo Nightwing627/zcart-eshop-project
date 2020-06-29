@@ -114,18 +114,35 @@
       </thead>
       <tbody>
         @foreach($dashboard->wishlists as $wish)
-          <tr>
-            <td>
-              <img class="" src="{{ get_product_img_src($wish->inventory, 'tiny') }}" alt="{!! $wish->inventory->title !!}" title="{!! $wish->inventory->title !!}" />
+          @if($wish->inventory)
+            <tr>
+              <td>
+                <img class="" src="{{ get_product_img_src($wish->inventory, 'tiny') }}" alt="{!! $wish->inventory->title !!}" title="{!! $wish->inventory->title !!}" />
 
-              <a class="product-link" href="{{ route('show.product', $wish->inventory->slug) }}">{!! str_limit($wish->inventory->title, 35) !!}</a>
-            </td>
-            <td>
-                <a class="btn btn-primary btn-xs flat" href="{{ route('direct.checkout', $wish->inventory->slug) }}">
-                    <i class="fa fa-rocket"></i> @lang('theme.button.buy_now')
-                </a>
-            </td>
-          </tr>
+                <a class="product-link" href="{{ route('show.product', $wish->inventory->slug) }}">{!! str_limit($wish->inventory->title, 35) !!}</a>
+              </td>
+              <td>
+                  <a class="btn btn-primary btn-xs flat" href="{{ route('direct.checkout', $wish->inventory->slug) }}">
+                      <i class="fa fa-rocket"></i> @lang('theme.button.buy_now')
+                  </a>
+              </td>
+            </tr>
+
+          @elseif($wish->product)
+
+            <tr>
+              <td>
+                <img src="{{ get_storage_file_url(optional($wish->product->featuredImage)->path, 'tiny') }}" alt="{!! $wish->product->name !!}" title="{!! $wish->product->name !!}"/>
+
+                <a class="product-link" href="{{ route('show.offers', $wish->product->slug) }}" class="btn btn-sm btn-link">{!! str_limit($wish->product->name, 35) !!}</a>
+              </td>
+              <td>
+                  <a class="btn btn-primary btn-xs flat" href="{{ route('show.offers', $wish->product->slug) }}">
+                      @lang('theme.view_more_offers', ['count' => $wish->product->inventories_count])
+                  </a>
+              </td>
+            </tr>
+          @endif
         @endforeach
       </tbody>
     </table>

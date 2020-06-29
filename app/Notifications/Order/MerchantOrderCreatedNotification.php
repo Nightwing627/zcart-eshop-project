@@ -46,7 +46,7 @@ class MerchantOrderCreatedNotification extends Notification implements ShouldQue
         return (new MailMessage)
         ->from(get_sender_email(), get_sender_name())
         ->subject( trans('notifications.merchant_order_created_notification.subject', ['order' => $this->order->order_number]) )
-        ->markdown('admin.mail.order.merchant_order_created_notification', ['url' => url('admin.order.order.show', $this->order->id), 'order' => $this->order]);
+        ->markdown('admin.mail.order.merchant_order_created_notification', ['url' => route('admin.order.order.show', $this->order->id), 'order' => $this->order]);
     }
 
     /**

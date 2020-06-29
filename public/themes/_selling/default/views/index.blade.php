@@ -145,9 +145,13 @@
                                       <path class='deco-layer deco-layer--4' d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428&#x000A;   c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z' fill='#FFFFFF'></path>
                                     </svg>
 
-                                    <div class='pricing-price'><span class='pricing-currency'>
-                                        {{ config('system_settings.currency.symbol') }}</span>{{ get_formated_decimal($plan->cost) }}<span class='pricing-period'>{{ __('theme.per_month') }}</span>
-                                    </div>
+                                    @if($plan->cost == 0)
+                                        <div class='pricing-price'>{{ __('theme.free') }}</div>
+                                    @else
+                                        <div class='pricing-price'><span class='pricing-currency'>
+                                            {{ config('system_settings.currency.symbol') }}</span>{{ get_formated_decimal($plan->cost) }}<span class='pricing-period'>{{ __('theme.per_month') }}</span>
+                                        </div>
+                                    @endif
                                     <h3 class='pricing-title'>{{ $plan->name }}</h3>
                                   </div>
 
@@ -160,8 +164,11 @@
                                     <li class='pricing-feature'>{{ __('theme.plan.inventory_limit', ['limit' => $plan->inventory_limit]) }}</li>
 
                                     @if($plan->transaction_fee > 0 && $plan->marketplace_commission > 0)
+
                                         <li class='pricing-feature'>{{ __('theme.plan.transaction_and_commission', ['commission' => $plan->marketplace_commission, 'fee' => get_formated_currency($plan->transaction_fee)]) }}</li>
+
                                     @else
+
                                         @if($plan->transaction_fee > 0)
                                             <li class='pricing-feature'>{{ __('theme.plan.transaction_fee', ['fee' => get_formated_currency($plan->transaction_fee)]) }}</li>
                                         @else
@@ -173,6 +180,7 @@
                                         @else
                                             <li class='pricing-feature'>{{ __('theme.plan.no_marketplace_commission') }}</li>
                                         @endif
+
                                     @endif
                                   </ul>
                                   <a href="{{ route('register', $plan) }}" class='pricing-action'>{{ __('theme.button.choose_plan') }}</a>
