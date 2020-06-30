@@ -26,10 +26,10 @@ trait Billable
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    // public function subscription()
-    // {
-    //     return $this->hasOne(Subscription::class)->orderBy('created_at', 'desc');
-    // }
+    public function activeSubscription()
+    {
+        return $this->hasOne(Subscription::class)->orderBy('created_at', 'desc');
+    }
 
     /**
      * Get all of the subscriptions for the user.

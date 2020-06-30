@@ -652,7 +652,7 @@ class Shop extends BaseModel
      */
     public function hasExpiredOnGenericTrial()
     {
-        return ! $this->subscription && $this->trial_ends_at && $this->trial_ends_at->isPast();
+        return ! $this->activeSubscription && $this->trial_ends_at && $this->trial_ends_at->isPast();
     }
 
     /**

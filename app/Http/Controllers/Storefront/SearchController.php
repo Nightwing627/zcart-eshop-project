@@ -36,7 +36,7 @@ class SearchController extends Controller
         $products->load([
                         'shop:id,current_billing_plan,trial_ends_at,active',
                         'shop.config:shop_id,maintenance_mode',
-                        'shop.subscription',
+                        'shop.activeSubscription',
                         'product:id,name,gtin,model_number'
                     ]);
 
@@ -49,16 +49,16 @@ class SearchController extends Controller
                     $tShop->hasPaymentMethods() && !$tShop->isDown() &&
                     (
                         (
-                            ! $tShop->subscription &&
+                            ! $tShop->activeSubscription &&
                             $tShop->trial_ends_at == Null ||
                             $tShop->trial_ends_at > Carbon::now()
                         ) ||
                         (
-                            $tShop->subscription &&
-                            $tShop->subscription->ends_at === Null ||
-                            $tShop->subscription->ends_at > Carbon::now() ||
-                            $tShop->subscription->trial_ends_at !== Null &&
-                            $tShop->subscription->trial_ends_at > Carbon::now()
+                            $tShop->activeSubscription &&
+                            $tShop->activeSubscription->ends_at === Null ||
+                            $tShop->activeSubscription->ends_at > Carbon::now() ||
+                            $tShop->activeSubscription->trial_ends_at !== Null &&
+                            $tShop->activeSubscription->trial_ends_at > Carbon::now()
                         )
                     );
         });
