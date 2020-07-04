@@ -110,33 +110,41 @@ class Address extends BaseModel
      *
      * @return str
      */
-    public function toHtml($separator = '<br/>', $show_heading = true)
+    public function toHtml($separator = '<br/>', $show_type = true)
     {
         $html = [];
 
-        if ('App\Customer' == $this->addressable_type && $show_heading)
+        if ('App\Customer' == $this->addressable_type && $show_type) {
             $html [] = '<strong class="pull-right">' . strtoupper($this->address_type) . '</strong>';
+        }
 
-        if(config('system_settings.show_address_title'))
+        if(config('system_settings.show_address_title')) {
             $html [] = $this->address_title;
+        }
 
-        if(strlen($this->address_line_1))
+        if(strlen($this->address_line_1)) {
             $html [] = $this->address_line_1;
+        }
 
-        if(strlen($this->address_line_2))
+        if(strlen($this->address_line_2)) {
             $html [] = $this->address_line_2;
+        }
 
-        if(strlen($this->city))
+        if(strlen($this->city)) {
             $html []= $this->city . ', ';
+        }
 
-        if(strlen($this->state_id) || $this->zip_code)
+        if(strlen($this->state_id) || $this->zip_code) {
             $html []= sprintf('%s %s', e($this->state_id ? optional($this->state)->name : ''), e($this->zip_code));
+        }
 
-        if(config('system_settings.address_show_country') && $this->country)
+        if(config('system_settings.address_show_country') && $this->country) {
             $html []= e($this->country->name);
+        }
 
-        if(strlen($this->phone))
+        if(strlen($this->phone)) {
             $html [] = '<abbr title="' . trans('app.phone') . '">P:</abbr> ' . e($this->phone);
+        }
 
         $addressStr = implode($separator, $html);
 
@@ -152,31 +160,38 @@ class Address extends BaseModel
     {
         $str = [];
 
-        if($title || config('system_settings.show_address_title'))
+        if($title || config('system_settings.show_address_title')) {
             $str [] = $this->address_title;
+        }
 
-        if(strlen($this->address_line_1))
+        if(strlen($this->address_line_1)) {
             $str [] = $this->address_line_1;
+        }
 
-        if(strlen($this->address_line_2))
+        if(strlen($this->address_line_2)) {
             $str [] = $this->address_line_2;
+        }
 
-        if(strlen($this->city))
+        if(strlen($this->city)) {
             $str []= $this->city . ', ';
+        }
 
-        if(strlen($this->state_id) || $this->zip_code)
+        if(strlen($this->state_id) || $this->zip_code) {
             $str []= sprintf('%s %s', e($this->state_id ? $this->state->name : ''), e($this->zip_code));
+        }
 
         // if(strlen($this->city)){
         //     $state_name = $this->state ? $this->state->name : '';
         //     $str []= sprintf('%s, %s %s', $this->city, $state_name, $this->zip_code);
         // }
 
-        if(config('system_settings.address_show_country') && $this->country)
+        if(config('system_settings.address_show_country') && $this->country) {
             $str []= $this->country->name;
+        }
 
-        if(strlen($this->phone))
+        if(strlen($this->phone)) {
             $str [] =  trans('app.phone') . ': ' . e($this->phone);
+        }
 
         return implode(', ', $str);
     }

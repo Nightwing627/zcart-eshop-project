@@ -8,9 +8,6 @@
             $shipping_country_id = $cart->ship_to_country_id ?? optional($geoip_country)->id;
             $shipping_state_id = $cart->ship_to_state_id ?? optional($geoip_state)->id;
 
-            // if(! $shipping_country_id)
-              // CANT SHIPP
-
             $shop_id = $cart->shop_id;
 
             $shipping_zone = get_shipping_zone_of($shop_id, $shipping_country_id, $shipping_state_id);
@@ -41,7 +38,6 @@
             {{ Form::hidden('shipping_rate_id', $cart->shipping_rate_id, ['id' => 'shipping-rate-id'.$cart->id]) }}
             {{ Form::hidden('ship_to_country_id', $cart->ship_to_country_id, ['id' => 'shipto-country-id'.$cart->id]) }}
             {{ Form::hidden('ship_to_state_id', $cart->ship_to_state_id, ['id' => 'shipto-state-id'.$cart->id]) }}
-            {{-- {{ Form::hidden('shipping_rate_id', Null, ['id' => 'shipping-rate-id'.$cart->id]) }} --}}
             {{ Form::hidden('discount_id', $cart->coupon_id, ['id' => 'discount-id'.$cart->id]) }}
             {{ Form::hidden('handling_cost', optional($cart->shop->config)->order_handling_cost, ['id' => 'handling-cost'.$cart->id]) }}
 

@@ -501,6 +501,7 @@ class Order extends BaseModel
     public function invoice($des = 'D')
     {
         $invoiceTo = explode("<br/>", strip_tags($this->billing_address, "<br>"));
+
         array_unshift($invoiceTo, $this->customer->getName());
 
         $vendorAddress = $this->shop->primaryAddress ?? $this->shop->address;
@@ -518,10 +519,14 @@ class Order extends BaseModel
         $invoice->setType(trans("invoice.invoice"));    // Invoice Type
 
         //Set logo image if exist
-        $logo = get_storage_file_url('logo.png', Null);
-        if(file_exists($logo)) {
+        $logo = get_storage_file_url(optional($this->shop->image)->path, Null);
+        if(Storage::exists(optional($this->shop->image)->path)) {
             $invoice->setLogo($logo);
         }
+        // if(Storage::exists('logo.png')) {
+        //     $logo = get_storage_file_url('logo.png', Null);
+        //     $invoice->setLogo($logo);
+        // }
 
         $invoice->setReference($this->order_number);   // Reference
         $invoice->setDate($this->created_at->format('M d, Y'));   //Billing Date

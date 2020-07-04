@@ -15,7 +15,7 @@
   $shipping_zone = get_shipping_zone_of($cart->shop_id, $shipping_country_id, $shipping_state_id);
 
   $shipping_options = isset($shipping_zone->id) ? getShippingRates($shipping_zone->id) : 'NaN';
-    // echo "<pre>"; print_r($shipping_options->toArray()); echo "<pre>"; exit('end!');
+
   $packaging_options = optional($cart->shop)->packagings;
 
   $default_packaging = $cart->shippingPackage ??

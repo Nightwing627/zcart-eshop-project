@@ -272,16 +272,20 @@ if ( ! function_exists('get_address_str_from_request_data') )
         $state = is_numeric($request->state_id) ? get_value_from($request->state_id, 'states', 'name') : $request->state_id;
 
         $str = array();
+        $str [] = '<address>';
         $str [] = $request->address_title;
         $str [] = $request->address_line_1;
         $str [] = $request->address_line_2;
         $str []= $request->city;
         $str []= $state . ' ' . $request->zip_code;
         $str []= is_numeric($request->country_id) ? get_value_from($request->country_id, 'countries', 'name') : $request->country_id;
-        if($request->phone)
-            $str [] =  trans('app.phone') . ': ' . e($request->phone);
 
-        return implode(', ', array_filter($str));
+        if($request->phone) {
+            $str [] =  trans('app.phone') . ': ' . e($request->phone);
+        }
+        $str [] = '</address>';
+
+        return implode(',<br/>', array_filter($str));
     }
 }
 

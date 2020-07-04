@@ -41,7 +41,7 @@ class OrderController extends Controller
 
         // Get shipping address
         if(is_numeric($request->ship_to)) {
-            $address = \App\Address::find($request->ship_to)->toString(True);
+            $address = \App\Address::find($request->ship_to)->toHtml('<br/>', False);
         }
         else {
             $address = get_address_str_from_request_data($request);

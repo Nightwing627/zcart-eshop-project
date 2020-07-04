@@ -122,7 +122,7 @@ class demoSeeder extends BaseSeeder
                 $supplier->addresses()->save(factory(App\Address::class)->make(['address_title' => $supplier->name, 'address_type' => 'Primary']));
             });
 
-        factory(App\Product::class, $this->longCount)->create();
+        $this->call('ProductsSeeder');
 
         // factory(App\Shop::class, $this->count)
         //     ->create()

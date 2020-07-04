@@ -83,7 +83,8 @@ class CartController extends Controller
 
         // Check if the item is alrealy in the cart
         if( $old_cart ) {
-            $item_in_cart = \DB::table('cart_items')->where('cart_id', $old_cart->id)->where('inventory_id', $item->id)->first();
+            $item_in_cart = \DB::table('cart_items')->where('cart_id', $old_cart->id)
+            ->where('inventory_id', $item->id)->first();
 
             if( $item_in_cart ) {
                 return response()->json(['cart_id' => $item_in_cart->cart_id], 444);  // Item alrealy in cart
@@ -91,7 +92,6 @@ class CartController extends Controller
         }
 
         $qtt = $request->quantity ?? $item->min_order_quantity;
-        // $shipping_rate_id = $old_cart ? $old_cart->shipping_rate_id : $request->shippingRateId;
         $unit_price = $item->currnt_sale_price();
 
         // Instantiate new cart if old cart not found for the shop and customer
@@ -238,8 +238,9 @@ class CartController extends Controller
         ])->delete();
 
         if($result){
-            if( ! $cart->inventories()->count() )
+            if(! $cart->inventories()->count()) {
                 $cart->forceDelete();
+            }
 
             return response('Item removed', 200);
         }
@@ -260,13 +261,21 @@ class CartController extends Controller
             ['shop_id', $request->shop],
         ])->withCount(['orders','customerOrders'])->first();
 
-        if( ! $coupon ) return response('Coupon not found', 404);
+        if( ! $coupon ) {
+            return response('Coupon not found', 404);
+        }
 
-        if( ! $coupon->isLive() || ! $coupon->isValidCustomer() ) return response('Coupon not valid', 403);
+        if( ! $coupon->isLive() || ! $coupon->isValidCustomer() ) {
+            return response('Coupon not valid', 403);
+        }
 
-        if( ! $coupon->isValidZone($request->zone) ) return response('Coupon not valid for shipping area', 443);
+        if( ! $coupon->isValidZone($request->zone) ) {
+            return response('Coupon not valid for shipping area', 443);
+        }
 
-        if( ! $coupon->hasQtt() ) return response('Coupon qtt limit exit', 444);
+        if( ! $coupon->hasQtt() ) {
+            return response('Coupon qtt limit exit', 444);
+        }
 
         return response()->json($coupon->toArray());
     }
