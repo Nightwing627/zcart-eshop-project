@@ -38,9 +38,17 @@
     	</a>
     </div>
     <div class="col-sm-6 col-xs-12 nopadding-left">
-      <a href="javascript:void(0);" class="btn btn-link" data-toggle="modal" data-target="{{ Auth::guard('customer')->check() ? "#contactSellerModal" : "#loginModal" }}">
-        <i class="fa fa-envelope-o"></i> @lang('theme.button.contact_seller')
-      </a>
+      @if('quickView.product' == Route::currentRouteName())
+        <a href="{{ route('show.store', $item->shop->slug) }}" class="btn btn-link">
+          <i class="fa fa-list-alt"></i> @lang('theme.more_items_from_this_seller', ['seller' => $item->shop->name])
+        </a>
+      {{-- @elseif('quickView.product' == Route::currentRouteName()) --}}
+        {{-- <a href="{{ route('show.brand', $item->product->manufacturer->slug) }}" class="product-info-seller-name"> @lang('theme.more_items_from_this_seller', ['seller' => $item->product->manufacturer->name])</a> --}}
+      @else
+        <a href="javascript:void(0);" class="btn btn-link" data-toggle="modal" data-target="{{ Auth::guard('customer')->check() ? "#contactSellerModal" : "#loginModal" }}">
+          <i class="fa fa-envelope-o"></i> @lang('theme.button.contact_seller')
+        </a>
+      @endif
     </div>
   </div><!-- /.row -->
 </div><!-- /.product-info -->

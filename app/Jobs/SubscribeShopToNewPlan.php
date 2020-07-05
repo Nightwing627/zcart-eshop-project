@@ -42,8 +42,9 @@ class SubscribeShopToNewPlan
 
         // Create subscription intance
         $subscriptionPlan = SubscriptionPlan::findOrFail($this->plan);
+
         $subscription = $shop->newSubscription($subscriptionPlan->name, $this->plan);
-        // echo "<pre>"; print_r($subscription); echo "<pre>"; exit('end!');
+
         $trialDays = (bool) config('system_settings.trial_days') ? config('system_settings.trial_days') : Null;
 
         // Subtract the used trial days with the new subscription

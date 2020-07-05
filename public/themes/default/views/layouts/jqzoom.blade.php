@@ -2,7 +2,7 @@
 	@php
 		$pImg = get_product_img_src($item, 'full');
 	@endphp
-	<a href="{{ $pImg }}" id="jqzoom" data-rel="gal-1">
+	<a href="{{ $pImg }}" id="{{ $zoomID ?? 'jqzoom'}}" data-rel="gal-1">
 		<img class="product-img" data-name="product_image" src="{{ $pImg }}" alt="{{ $item->title }}" title="{{ $item->title }}" />
 	</a>
 </div>

@@ -20,7 +20,8 @@ class EloquentMerchant extends EloquentRepository implements BaseRepository, Mer
 
     public function all()
     {
-        return $this->model->where('role_id', Role::MERCHANT)->with('owns', 'image', 'primaryAddress')->get();
+        return $this->model->where('role_id', Role::MERCHANT)
+        ->with('owns', 'owns.plan:name,plan_id', 'image', 'primaryAddress')->get();
     }
 
     public function trashOnly()
@@ -39,8 +40,9 @@ class EloquentMerchant extends EloquentRepository implements BaseRepository, Mer
 
         $this->saveAdrress($request->all(), $merchant);
 
-        if ($request->hasFile('image'))
+        if ($request->hasFile('image')) {
             $merchant->saveImage($request->file('image'));
+        }
 
         return $merchant;
     }
@@ -49,11 +51,13 @@ class EloquentMerchant extends EloquentRepository implements BaseRepository, Mer
     {
         $merchant = parent::update($request, $id);
 
-        if ($request->hasFile('image') || ($request->input('delete_image') == 1))
+        if ($request->hasFile('image') || ($request->input('delete_image') == 1)) {
             $merchant->deleteImage();
+        }
 
-        if ($request->hasFile('image'))
+        if ($request->hasFile('image')) {
             $merchant->saveImage($request->file('image'));
+        }
 
         return $merchant;
     }

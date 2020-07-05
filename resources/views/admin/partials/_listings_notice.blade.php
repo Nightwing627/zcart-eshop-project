@@ -36,6 +36,17 @@
       </div>
     @endunless
 
+@elseif( ! Auth::user()->shop->hasAddress() )
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <strong><i class="icon fa fa-warning"></i>{{ trans('app.alert') }}</strong>
+        {!! trans('messages.no_address_for_invoice') !!}
+        @if(Auth::user()->isMerchant() && ! Request::is('admin/setting/general*'))
+          <span class="pull-right">
+              <a href="{{ route('admin.setting.config.general') }}" class="btn bg-navy"><i class="fa fa-rocket"></i>  {{ trans('app.take_action') }}</a>
+          </span>
+        @endif
+    </div>
 @elseif( ! Auth::user()->shop->hasShippingZones() )
 
     @unless(Request::is('admin/shipping/shippingZone*'))

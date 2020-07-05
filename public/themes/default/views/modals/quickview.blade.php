@@ -7,33 +7,12 @@
             </div>
             <div class="col-md-7 col-sm-6">
                 <div class="product-single">
-                    @include('layouts.product_info', ['item' => $item])
+                    @include('layouts.product_info', ['zoomID' => 'quickViewZoom', 'item' => $item])
 
                     <div class="sep"></div>
 
                     <div class="row product-attribute">
-                        <div class="col-sm-6 col-xs-12">
-                            <div class="product-info-options">
-                                {{-- @foreach($item->attributeValues as $attribute_value) --}}
-                                @foreach($attributes as $attribute)
-                                    <div class="row">
-                                        <div class="col-sm-3 col-xs-4">
-                                            <span class="info-label">{!! $attribute->name !!}:</span>
-                                        </div>
-                                        <div class="col-sm-9 col-xs-8 nopadding-left">
-                                            {{ implode(', ', $attribute->attributeValues->pluck('value')->toArray()) }}
-                                        </div><!-- /.col-sm-9 .col-xs-6 -->
-                                    </div><!-- /.row -->
-                                @endforeach
-                            </div><!-- /.product-option -->
-
-                            <div class="clearfix space50"></div>
-
-                            <a href="{{ route('show.product', $item->slug) }}" class="btn btn-info btn-block flat space10">
-                                @lang('theme.button.view_product_details')
-                            </a>
-                        </div>
-                        <div class="col-sm-6 col-xs-12 nopadding-left">
+                        <div class="col-xs-12">
                             <div class="section-title space10">
                               {!! trans('theme.section_headings.key_features') !!}
                             </div>
@@ -42,6 +21,12 @@
                                     <li>{!! $key_feature !!}</li>
                                 @endforeach
                             </ul>
+
+                            <div class="clearfix space10"></div>
+
+                            <a href="{{ route('show.product', $item->slug) }}" class="btn btn-default flat space10">
+                                @lang('theme.button.view_product_details')
+                            </a>
                         </div><!-- /.col-sm-9 .col-xs-6 -->
                     </div><!-- /.row -->
 

@@ -211,19 +211,19 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         Queue::failing(function (JobFailed $event) {
-            Log::error('Job Failed!', [
+            Log::channel('joblog')->error('Job Failed!', [
                 'Queue Connection' => $event->connectionName,
                 'Exception' => $event->exception,
             ]);
         });
 
         Queue::before(function (JobProcessing $event) {
-            Log::info('............. Job Processing:: '. $event->job->resolveName() . ' .................');
-            Log::info(['payload' => $event->job->payload()]);
+            Log::channel('joblog')->info('............. Job Processing:: '. $event->job->resolveName() . ' .................');
+            Log::channel('joblog')->info(['payload' => $event->job->payload()]);
         });
 
         Queue::after(function (JobProcessed $event) {
-            Log::info('......................... Job Processed Successfully .............................');
+            Log::channel('joblog')->info('......................... Job Processed Successfully .............................');
         });
     }
 }

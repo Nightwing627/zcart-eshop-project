@@ -232,4 +232,7 @@ return [
     'please_select_conversation' => 'Please select a conversation from the left.',
 
     'session_expired' => 'Your session has been expired! Please login.',
+
+    'no_address_for_invoice' => 'You have no business address set up yet. Please add address now.',
+
 ];

@@ -24,8 +24,7 @@
                     <div class="col-md-6 nopadding-right">
                         <div class="form-group">
                             @if(config('services.recaptcha.key'))
-                              <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.key') }}">
-                              </div>
+                              <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
                             @endif
                             <div class="help-block with-errors"></div>
                         </div>

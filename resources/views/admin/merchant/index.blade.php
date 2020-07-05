@@ -80,7 +80,8 @@
 					          	@endif
 				          	</td>
 				          	<td>
-				          		{{ $merchant->owns->current_billing_plan }}
+
+				          		{{ optional($merchant->owns)->plan->name }}
 
 		            			@if($merchant->owns->onTrial())
 					          		<span class="label label-info indent10">{{ trans('app.trialing') }}</span>

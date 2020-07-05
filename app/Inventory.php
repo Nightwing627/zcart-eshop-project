@@ -296,6 +296,7 @@ class Inventory extends BaseModel
             $this->attributes['min_order_quantity'] = 1;
         }
     }
+
     public function setOfferPriceAttribute($value)
     {
         if ($value > 0) {
@@ -305,32 +306,53 @@ class Inventory extends BaseModel
             $this->attributes['offer_price'] = null;
         }
     }
+
     public function setWarehouseIdAttribute($value)
     {
-        if ($value > 0) $this->attributes['warehouse_id'] = $value;
-        else $this->attributes['warehouse_id'] = null;
+        if ($value > 0) {
+            $this->attributes['warehouse_id'] = $value;
+        }
+        else {
+            $this->attributes['warehouse_id'] = null;
+        }
     }
+
     public function setSupplierIdAttribute($value)
     {
-        if ($value > 0) $this->attributes['supplier_id'] = $value;
-        else $this->attributes['supplier_id'] = null;
+        if ($value > 0) {
+            $this->attributes['supplier_id'] = $value;
+        }
+        else {
+            $this->attributes['supplier_id'] = null;
+        }
     }
+
     public function setAvailableFromAttribute($value)
     {
-        if($value) $this->attributes['available_from'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+        if($value) {
+            $this->attributes['available_from'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+        }
     }
+
     public function setOfferStartAttribute($value)
     {
-        if($value) $this->attributes['offer_start'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+        if($value) {
+            $this->attributes['offer_start'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+        }
     }
+
     public function setOfferEndAttribute($value)
     {
-        if($value) $this->attributes['offer_end'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+        if($value) {
+            $this->attributes['offer_end'] = Carbon::createFromFormat('Y-m-d h:i a', $value);
+        }
     }
+
     public function setFreeShippingAttribute($value)
     {
         $this->attributes['free_shipping'] = (bool) $value;
     }
+
     public function setKeyFeaturesAttribute($value)
     {
         if(is_array($value)) {
@@ -339,6 +361,7 @@ class Inventory extends BaseModel
 
         $this->attributes['key_features'] = serialize($value);
     }
+
     public function setLinkedItemsAttribute($value)
     {
         $this->attributes['linked_items'] = serialize($value);

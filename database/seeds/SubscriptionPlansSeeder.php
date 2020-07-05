@@ -14,7 +14,7 @@ class SubscriptionPlansSeeder extends BaseSeeder
         DB::table('subscription_plans')->insert([
             [
                 'name' => 'Individual',
-                'plan_id' => 'individual',
+                'plan_id' => 'price_1H1HUQJewI4n8wVFTnjx77Ws',
                 'cost' => 9,
                 'transaction_fee' => 2.5,
                 'marketplace_commission' => 3,
@@ -26,7 +26,7 @@ class SubscriptionPlansSeeder extends BaseSeeder
                 'updated_at' => Carbon::Now(),
             ],[
                 'name' => 'Business',
-                'plan_id' => 'business',
+                'plan_id' => 'price_1GyyRyJewI4n8wVFSRWlMSHy',
                 'cost' => 29,
                 'transaction_fee' => 1.9,
                 'marketplace_commission' => 2.5,
@@ -38,7 +38,7 @@ class SubscriptionPlansSeeder extends BaseSeeder
                 'updated_at' => Carbon::Now(),
             ],[
                 'name' => 'Professional',
-                'plan_id' => 'professional',
+                'plan_id' => 'price_1H1HW7JewI4n8wVFl8Ukknoz',
                 'cost' => 49,
                 'transaction_fee' => 1,
                 'marketplace_commission' => 1.5,

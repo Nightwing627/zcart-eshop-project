@@ -44,7 +44,7 @@ class SearchController extends Controller
         $products = $products->filter(function ($product) {
             $tShop = $product->shop;
 
-            return $tShop && ($tShop->active == 1) &&
+            return $tShop && ($tShop->active == 1) && $tShop->hasAddress() &&
                     ($tShop->current_billing_plan !== Null) &&
                     $tShop->hasPaymentMethods() && !$tShop->isDown() &&
                     (

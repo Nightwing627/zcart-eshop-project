@@ -54,8 +54,9 @@ class AppServiceProvider extends ServiceProvider
             Collection::macro('paginate', function ($perPage = 15, $page = null, $options = []) {
                 $q = url()->full();
                 // Remove unwanted page parameter from the url if exist
-                if(Request::has('page'))
+                if(Request::has('page')) {
                     $q = remove_url_parameter($q, 'page');
+                }
 
                 $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
                 return (new LengthAwarePaginator(

@@ -88,6 +88,12 @@ return [
             'level' => 'debug',
         ],
 
+        'joblog' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/jobs.log'),
+            'level' => 'debug',
+        ],
+
         'mail' => [
             'driver' => 'daily',
             'path' => storage_path('logs/mail.log'),

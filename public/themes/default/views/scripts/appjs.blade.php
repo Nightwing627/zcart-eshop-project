@@ -339,7 +339,7 @@
         $(".selectBoxIt").selectBoxIt();
 
         // jqzoom
-        $('#jqzoom').jqzoom({
+        $('#jqzoom, #quickViewZoom').jqzoom({
             zoomType: 'standard',
             lens: true,
             preloadImages: false,

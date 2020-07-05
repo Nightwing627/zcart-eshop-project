@@ -282,7 +282,7 @@ class Shop extends BaseModel
      */
     public function activePackagings()
     {
-        return $this->hasMany(Packaging::class)->where('active',1);
+        return $this->hasMany(Packaging::class)->where('active', 1);
     }
 
     /**
@@ -512,7 +512,7 @@ class Shop extends BaseModel
         ->whereHas('config', function ($q) {
             $q->live();
         })
-        ->whereHas('paymentMethods');
+        ->whereHas('paymentMethods')->whereHas('addresses');
     }
 
     /**

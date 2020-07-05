@@ -604,6 +604,7 @@ return [
 	'order_again' => 'Order Again',
 	'user' => 'User',
 	'free' => 'Free',
+	'more_items_from_this_seller' => 'More items from :seller',
 
     // Version 2.1.0
     'chat_welcome' => 'Hey! Have a question?',

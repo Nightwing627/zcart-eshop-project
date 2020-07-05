@@ -66,7 +66,7 @@
 								@endcan
 							</td>
 				          	<td>
-				          		{{ $shop->current_billing_plan }}
+				          		{{ $shop->plan->name }}
 
 			            		@if($shop->onTrial())
 						          	<span class="label label-info indent10">{{ trans('app.trialing') }}</span>

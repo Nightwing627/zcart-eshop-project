@@ -280,8 +280,6 @@ class User extends Authenticatable
 
         $subscription = optional($this->shop->subscriptions)->first();
 
-        // echo "<pre>"; print_r($subscription); echo "<pre>"; exit('end!');
-
         if($subscription && $subscription->valid()) {
             return $subscription;
         }

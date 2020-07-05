@@ -22,7 +22,7 @@ $factory->define(App\Product::class, function (Faker $faker) {
     $desc .= str_replace("::LINK::", $faker->randomElement($youtube), '<p><br/><iframe frameborder="0" src="//www.youtube.com/embed/::LINK::" class="note-video-clip" style="width: 100%; height: 475px; float: none;"></iframe></p><br/>');
     $desc .= $faker->text($faker->randomElement([100, 200, 300]));
     $desc .= str_replace("::LINK::", $faker->randomElement($images), '<img src="::LINK::" style="width: 50%; float: right;">');
-    $desc .= $faker->text($faker->randomElement([1000, 800, 500, 1500, 300]));
+    $desc .= $faker->text($faker->randomElement([1000, 1200, 1500, 1800]));
     $desc .= str_replace("::LINK::", $faker->randomElement($images), '<p><br/><img src="::LINK::" style="width: 100%; float: none;"></p><br/>');
     $desc .= $faker->text($faker->randomElement([400, 200, 300]));
 

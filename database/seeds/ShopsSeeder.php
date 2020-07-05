@@ -23,7 +23,7 @@ class ShopsSeeder extends BaseSeeder
                         'legal_name' => 'Demo Shop ' . $merchant . ' Ltd.',
                         'slug' => 'demo-shop-' . $merchant,
                         'email' => 'shop'.$merchant.'@demo.com',
-                        'current_billing_plan' => 'business',
+                        'current_billing_plan' => 'price_1H1HW7JewI4n8wVFl8Ukknoz',
                         'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                         'timezone_id' => 73,
                         'active' => 1,
