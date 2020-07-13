@@ -2,10 +2,11 @@
 
 namespace App\Listeners\Order;
 
+use Notification;
 use App\Events\Order\OrderUpdated;
 use App\Notifications\Order\OrderUpdated as OrderUpdatedNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Notification;
+// use Illuminate\Notifications\Notification;
 use Illuminate\Queue\InteractsWithQueue;
 
 class NotifyCustomerOrderUpdated implements ShouldQueue
@@ -35,8 +36,8 @@ class NotifyCustomerOrderUpdated implements ShouldQueue
      */
     public function handle(OrderUpdated $event)
     {
-        if ($event->notify_customer){
-            if(!config('system_settings')) {
+        if ($event->notify_customer) {
+            if(! config('system_settings')) {
                 setSystemConfig($event->order->shop_id);
             }
 

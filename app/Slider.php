@@ -37,6 +37,16 @@ class Slider extends BaseModel
         $this->attributes['order'] = $value ?: 100;
     }
 
+    /**
+     * Return the bannerbg related to the banner bg img
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function mobile()
+    {
+        return $this->morphOne(\App\Image::class, 'imageable')->where('featured','!=',1);
+    }
+
     // public function setOptionsAttribute($value)
     // {
     //     $this->attributes['options'] = serialize($value);

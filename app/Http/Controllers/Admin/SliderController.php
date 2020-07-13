@@ -57,11 +57,13 @@ class SliderController extends Controller
     {
         $slider = Slider::create($request->all());
 
-        if ($request->hasFile('image'))
+        if ($request->hasFile('image')) {
             $slider->saveImage($request->file('image'), true);
+        }
 
-        if ($request->hasFile('thumb'))
+        if ($request->hasFile('thumb')) {
             $slider->saveImage($request->file('thumb'));
+        }
 
         return back()->with('success', trans('messages.created', ['model' => $this->model]));
     }
@@ -89,20 +91,24 @@ class SliderController extends Controller
         $slider->update($request->all());
 
         if ($request->hasFile('image') || ($request->input('delete_image') == 1)){
-            if($slider->featuredImage)
+            if($slider->featuredImage) {
                 $slider->deleteImage($slider->featuredImage);
+            }
         }
 
-        if ($request->hasFile('image'))
+        if ($request->hasFile('image')) {
             $slider->saveImage($request->file('image'), true);
+        }
 
         if ($request->hasFile('thumb') || ($request->input('delete_thumb') == 1)){
-            if($slider->images->first())
+            if($slider->images->first()) {
                 $slider->deleteImage($slider->images->first());
+            }
         }
 
-        if ($request->hasFile('thumb'))
+        if ($request->hasFile('thumb')) {
             $slider->saveImage($request->file('thumb'));
+        }
 
         return back()->with('success', trans('messages.updated', ['model' => $this->model]));
     }
@@ -132,8 +138,9 @@ class SliderController extends Controller
     {
         Slider::whereIn('id', $request->ids)->forceDelete();
 
-        if($request->ajax())
+        if($request->ajax()) {
             return response()->json(['success' => trans('messages.deleted', ['model' => $this->model])]);
+        }
 
         return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }

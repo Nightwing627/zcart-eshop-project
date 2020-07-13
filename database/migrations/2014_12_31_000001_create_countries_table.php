@@ -53,16 +53,7 @@ class CreateCountriesTable extends Migration
             $table->integer('timezone_id')->unsigned()->nullable();
             $table->string('citizenship', 255)->nullable();
             $table->string('iso_code', 2);
-            // $table->string('country_code', 3)->nullable();
-            // $table->string('currency', 255)->nullable();
-            // $table->string('currency_code', 255)->nullable();
-            // $table->string('currency_sub_unit', 255)->nullable();
-            // $table->string('currency_symbol', 3)->nullable();
-            // $table->string('iso_3166_2', 2);
-            // $table->string('iso_3166_3', 3);
             $table->string('iso_numeric', 3)->nullable();
-            // $table->string('region_code', 3)->nullable();
-            // $table->string('sub_region_code', 3)->nullable();
             $table->string('calling_code', 3)->nullable();
             $table->string('flag', 6)->nullable();
             $table->boolean('eea')->nullable()->default(false);
@@ -78,11 +69,7 @@ class CreateCountriesTable extends Migration
             $table->integer('country_id')->unsigned();
             $table->string('iso_code');
             $table->string('iso_numeric')->nullable();
-            // $table->string('country_name', 255)->nullable();
             $table->string('name', 255)->nullable();
-            // $table->string('region', 255)->nullable();
-            // $table->string('iso_3166_2', 2)->nullable();
-            // $table->string('region_code', 10)->nullable();
             $table->string('calling_code', 5)->nullable();
             $table->boolean('active')->nullable()->default(1);
             $table->timestamps();

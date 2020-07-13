@@ -124,8 +124,9 @@ trait Imageable {
 
     	// Get file size in Bite
 	    $size = isset($file_headers['Content-Length']) ? $file_headers['Content-Length'] : strlen($file_content);
-		if(is_array($size))
+		if(is_array($size)) {
     		$size = array_key_exists(1, $size) ? $size[1] : $size[0];
+		}
 
     	// Make path and upload
 		$path = image_storage_dir() . '/' . uniqid() . '.' . $extension;
@@ -141,8 +142,9 @@ trait Imageable {
 	 */
 	public function deleteImage($image = Null)
 	{
-		if (!$image)
+		if (!$image) {
 			$image = $this->image;
+		}
 
 		if (optional($image)->path) {
 	    	Storage::delete($image->path);
@@ -160,8 +162,10 @@ trait Imageable {
 	 */
 	public function deleteFeaturedImage()
 	{
-		if($img = $this->featuredImage)
+		if($img = $this->featuredImage) {
 			$this->deleteImage($img);
+		}
+
 		return;
 	}
 
@@ -172,8 +176,10 @@ trait Imageable {
 	 */
 	public function deleteLogo()
 	{
-		if($img = $this->logo)
+		if($img = $this->logo) {
 			$this->deleteImage($img);
+		}
+
 		return;
 	}
 
@@ -184,8 +190,9 @@ trait Imageable {
 	 */
 	public function flushImages()
 	{
-		foreach ($this->images as $image)
+		foreach ($this->images as $image) {
 			$this->deleteImage($image);
+		}
 
 		$this->deleteLogo();
 		$this->deleteFeaturedImage();

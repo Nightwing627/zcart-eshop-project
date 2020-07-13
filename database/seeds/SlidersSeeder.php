@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 
 class SlidersSeeder extends BaseSeeder
@@ -12,6 +13,8 @@ class SlidersSeeder extends BaseSeeder
      */
     public function run()
     {
+        $now = Carbon::Now();
+
         $slugs = \DB::table('categories')->pluck('slug')->toArray();
         DB::table('sliders')->insert([
             [
@@ -19,57 +22,59 @@ class SlidersSeeder extends BaseSeeder
                 'sub_title' => NULL,
                 'link' => '/category/' . $slugs[array_rand($slugs)],
                 'order' => 1,
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ], [
                 'title' => NULL,
                 'sub_title' => NULL,
                 'link' => '/category/' . $slugs[array_rand($slugs)],
                 'order' => 2,
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
+                'created_at' => $now,
+                'updated_at' => $now,
+            ], [
+                'title' => 'Demo Slider',
+                'sub_title' => 'Change text and color',
+                'link' => '/category/' . $slugs[array_rand($slugs)],
+                'order' => 3,
+                'created_at' => $now,
+                'updated_at' => $now,
             ], [
                 'title' => NULL,
                 'sub_title' => NULL,
                 'link' => '/category/' . $slugs[array_rand($slugs)],
-                'order' => 3,
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
-            ], [
-                'title' => 'Demo Slider',
-                'sub_title' => 'You can change this',
-                'link' => '/category/' . $slugs[array_rand($slugs)],
                 'order' => 4,
-                'created_at' => Carbon::Now(),
-                'updated_at' => Carbon::Now(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ]
         ]);
 
         if (File::isDirectory($this->demo_dir))
         {
-            $bgs = glob($this->demo_dir . '/sliders/*.jpg');
+            $sliders = \DB::table('sliders')->pluck('id')->toArray();
 
-            $i = 0;
-            foreach ($bgs as $bg)
+            $img_dirs = glob($this->demo_dir . '/sliders/*', GLOB_ONLYDIR);
+
+            foreach ($sliders as $slider_id)
             {
-                $i++;
-                $name = "slider_{$i}.jpg";
+                $images = glob($img_dirs[array_rand($img_dirs)] . DIRECTORY_SEPARATOR . '*.{jpg,png,jpeg}', GLOB_BRACE);
+
+                $file = $images[array_rand($images)];
+                $ext = pathinfo($file, PATHINFO_EXTENSION);
+                $name = Str::random(10) . '.' . $ext;
                 $targetFile = $this->dir . DIRECTORY_SEPARATOR . $name;
 
-                if( $this->disk->put($targetFile, file_get_contents($bg)) )
+                if( $this->disk->put($targetFile, file_get_contents($file)) )
                 {
-                    DB::table('images')->insert([
-                        [
-                            'name' => $name,
-                            'path' => $targetFile,
-                            'extension' => 'jpg',
-                            'order' => 1,
-                            'featured' => 1,
-                            'imageable_id' => $i,
-                            'imageable_type' => 'App\Slider',
-                            'created_at' => Carbon::Now(),
-                            'updated_at' => Carbon::Now(),
-                        ]
+                   DB::table('images')->insert([
+                        'name' => $name,
+                        'path' => $targetFile,
+                        'extension' => $ext,
+                        'order' => $slider_id,
+                        'featured' => 1,
+                        'imageable_id' => $slider_id,
+                        'imageable_type' => 'App\Slider',
+                        'created_at' => $now,
+                        'updated_at' => $now,
                     ]);
                 }
             }

@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 
 class BannersSeeder extends BaseSeeder
@@ -39,22 +40,24 @@ class BannersSeeder extends BaseSeeder
 
         if (File::isDirectory($this->demo_dir))
         {
-            $bgs = glob($this->demo_dir . '/banners/backgrounds/*.jpg');
-            natsort($bgs);
+            $images = glob($this->demo_dir . '/banners/backgrounds/*.{jpg,png,jpeg}', GLOB_BRACE);
+            natsort($images);
             $i = 0;
 
-            foreach ($bgs as $bg) { $i++;
-
-                $name = "banner_bg_{$i}.jpg";
+            foreach ($images as $file)
+            {
+                $i++;
+                $ext = pathinfo($file, PATHINFO_EXTENSION);
+                $name = Str::random(10) . '.' . $ext;
                 $targetFile = $this->dir . DIRECTORY_SEPARATOR . $name;
 
-                if( $this->disk->put($targetFile, file_get_contents($bg)) )
+                if( $this->disk->put($targetFile, file_get_contents($file)) )
                 {
                     DB::table('images')->insert([
                         [
                             'name' => $name,
                             'path' => $targetFile,
-                            'extension' => 'jpg',
+                            'extension' => $ext,
                             'featured' => 0,
                             'imageable_id' => $i,
                             'imageable_type' => 'App\Banner',
@@ -65,6 +68,7 @@ class BannersSeeder extends BaseSeeder
                 }
 
                 $hover = $this->demo_dir . "/banners/hover/{$i}.png";
+
                 if( ! file_exists($hover) ) continue;
 
                 $name = "banner_{$i}.png";

@@ -2,10 +2,11 @@
 
 namespace App\Listeners\Order;
 
+use Notification;
 use App\Events\Order\OrderPaid;
 use App\Notifications\Order\OrderBeenPaid as OrderBeenPaidNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Notification;
+// use Illuminate\Notifications\Notification;
 use Illuminate\Queue\InteractsWithQueue;
 
 class OrderBeenPaid implements ShouldQueue

@@ -2,10 +2,11 @@
 
 namespace App\Listeners\Order;
 
+use Notification;
 use App\Events\Order\OrderPaymentFailed;
 use App\Notifications\Order\PaymentFailed as PaymentFailedNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Notification;
+// use Illuminate\Notifications\Notification;
 use Illuminate\Queue\InteractsWithQueue;
 
 class NotifyCustomerPaymentFailed implements ShouldQueue

@@ -12,6 +12,7 @@ Route::group(['namespace' => 'Api'], function(){
 	Route::get('states/{country}', 'HomeController@states');
 
 	Route::get('page/{slug}', 'HomeController@page');
+	Route::get('shops', 'HomeController@allShops');
 	Route::get('shop/{slug}', 'HomeController@shop');
 	Route::get('packaging/{shop}', 'HomeController@packaging');
 	Route::post('shipping/{shop}', 'HomeController@shipping');

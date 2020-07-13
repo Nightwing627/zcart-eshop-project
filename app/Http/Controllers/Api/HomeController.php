@@ -14,6 +14,7 @@ use App\ShippingRate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ShopResource;
+use App\Http\Resources\ShopLightResource;
 use App\Http\Resources\PageResource;
 use App\Http\Resources\OfferResource;
 use App\Http\Resources\BannerResource;
@@ -34,7 +35,8 @@ class HomeController extends Controller
      */
     public function sliders()
     {
-        $sliders = Slider::whereHas('featuredImage')->get();
+        $sliders = Slider::whereHas('mobile')->get();
+
         return SliderResource::collection($sliders);
     }
 
@@ -65,6 +67,17 @@ class HomeController extends Controller
 
         return new OfferResource($product);
     }
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function allShops()
+    {
+        $shops = Shop::active()->get();
+
+        return ShopLightResource::collection($shops);
+    }
 
     /**
      * Display the specified resource.
@@ -83,8 +96,9 @@ class HomeController extends Controller
         }])->firstOrFail();
 
         // Check shop maintenance_mode
-        if($shop->isDown())
+        if($shop->isDown()) {
             return response()->json(['message' => trans('app.marketplace_down')], 404);
+        }
 
         return new ShopResource($shop);
     }
@@ -172,8 +186,9 @@ class HomeController extends Controller
                   break;
             }
 
-            if( ! $has_config )
+            if( ! $has_config ) {
                 $paymentMethods->forget($key);
+            }
         }
 
         return PaymentMethodResource::collection($paymentMethods);

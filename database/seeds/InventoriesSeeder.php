@@ -27,11 +27,12 @@ class InventoriesSeeder extends BaseSeeder
 
             foreach ($inventories as $item)
             {
-                $images = glob($img_dirs[array_rand($img_dirs)] . DIRECTORY_SEPARATOR . '*.jpg');
+                $images = glob($img_dirs[array_rand($img_dirs)] . DIRECTORY_SEPARATOR . '*.{jpg,png,jpeg}', GLOB_BRACE);
 
                 foreach ($images as $key => $file)
                 {
-                    $name = Str::random(10) . '.png';
+                    $ext = pathinfo($file, PATHINFO_EXTENSION);
+                    $name = Str::random(10) . '.' . $ext;
                     $targetFile = $this->dir . DIRECTORY_SEPARATOR . $name;
 
                     if( $this->disk->put($targetFile, file_get_contents($file)) )
@@ -40,8 +41,8 @@ class InventoriesSeeder extends BaseSeeder
                             [
                                 'name' => $name,
                                 'path' => $targetFile,
-                                'extension' => 'png',
-                                'size' => 0,
+                                'extension' => $ext,
+                                'size' => filesize($file),
                                 'imageable_id' => $item,
                                 'imageable_type' => 'App\Inventory',
                                 'created_at' => Carbon::Now(),

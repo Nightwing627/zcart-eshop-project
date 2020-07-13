@@ -2,7 +2,7 @@
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Illuminate\Database\Seeder;
+// use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
 class ProductsSeeder extends BaseSeeder
