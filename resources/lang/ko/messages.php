@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => '마켓 플레이스 비즈니스 영역이 전 세계로 설정되어 있어도 상태는 영향을받지 않습니다! 비즈니스 영역 설정을 변경하려면 구성 섹션을 확인하십시오.',
   'please_select_conversation' => '왼쪽에서 대화를 선택하십시오.',
   'session_expired' => '세션이 만료되었습니다! 로그인 해주세요.',
+  'no_address_for_invoice' => '아직 사업장 주소를 설정하지 않았습니다. 지금 주소를 추가하십시오.',
 );

@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => 'Le statut n\'affectera pas car le domaine d\'activité de la place de marché est défini dans le monde entier! Pour modifier les paramètres du domaine d\'activité, veuillez consulter la section de configuration.',
   'please_select_conversation' => 'Veuillez sélectionner une conversation à gauche.',
   'session_expired' => 'Votre session a expiré! Veuillez vous connecter.',
+  'no_address_for_invoice' => 'Vous n\'avez pas encore configuré d\'adresse professionnelle. Veuillez ajouter une adresse maintenant.',
 );

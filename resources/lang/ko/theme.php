@@ -591,6 +591,9 @@ return array (
   'canceled' => '취소 된',
   'order_canceled' => '주문이 취소되었습니다!',
   'order_again' => '다시 주문',
+  'user' => '사용자',
+  'free' => '비어 있는',
+  'more_items_from_this_seller' => ' :seller의 다른 항목',
   'chat_welcome' => '야! 질문이 있습니다?',
   'connecting' => '연결 중 ...',
   'login_to_chat' => '우리는 한 걸음 떨어져 있습니다! 대화를 시작하려면 로그인하십시오.',
@@ -599,4 +602,5 @@ return array (
   'online' => '온라인',
   'shop_not_found' => '상점을 찾을 수 없습니다. 다른 공급 업체를 확인하십시오.',
   'session_expired' => '세션이 만료되었습니다! 페이지를 새로 고침하십시오.',
+  'item_not_available' => '이 상품은 더 이상 사용할 수 없습니다!',
 );

@@ -591,6 +591,9 @@ return array (
   'canceled' => 'Đã hủy',
   'order_canceled' => 'Đơn hàng đã bị hủy!',
   'order_again' => 'Đặt hàng lại',
+  'user' => 'Người sử dụng',
+  'free' => 'Miễn phí',
+  'more_items_from_this_seller' => 'Thêm mặt hàng từ :seller',
   'chat_welcome' => 'Chào! Có một câu hỏi?',
   'connecting' => 'Đang kết nối...',
   'login_to_chat' => 'Chúng ta chỉ còn một bước nữa thôi! Vui lòng đăng nhập để bắt đầu cuộc trò chuyện.',
@@ -599,4 +602,5 @@ return array (
   'online' => 'Trực tuyến',
   'shop_not_found' => 'Cửa hàng không tìm thấy. Kiểm tra các nhà cung cấp khác.',
   'session_expired' => 'Phiên đã hết hạn! Vui lòng làm mới trang.',
+  'item_not_available' => 'Mục này không còn nữa!',
 );

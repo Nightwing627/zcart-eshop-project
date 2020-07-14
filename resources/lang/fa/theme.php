@@ -591,6 +591,9 @@ return array (
   'canceled' => 'لغو شد',
   'order_canceled' => 'سفارش لغو شده است!',
   'order_again' => 'دوباره سفارش دهید',
+  'user' => 'کاربر',
+  'free' => 'رایگان',
+  'more_items_from_this_seller' => 'موارد بیشتر از :seller',
   'chat_welcome' => 'با سلام سوالی دارید؟',
   'connecting' => 'برقراری ارتباط...',
   'login_to_chat' => 'ما فقط یک قدم فاصله داریم! لطفا وارد شوید تا مکالمه شروع شود.',
@@ -599,4 +602,5 @@ return array (
   'online' => 'برخط',
   'shop_not_found' => 'فروشگاه یافت نشد فروشندگان دیگر را بررسی کنید.',
   'session_expired' => 'جلسه منقضی شده است! لطفاً صفحه را تازه کنید.',
+  'item_not_available' => 'این مورد دیگر موجود نیست',
 );

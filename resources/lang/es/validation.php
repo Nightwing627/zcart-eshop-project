@@ -129,4 +129,5 @@ return array (
   array (
   ),
   'upload_rows' => 'Puede cargar un máximo de :rows registros por lote.',
+  'csv_upload_invalid_data' => 'Algunas filas contienen datos no válidos que no se pueden procesar. Verifique sus datos e intente nuevamente.',
 );

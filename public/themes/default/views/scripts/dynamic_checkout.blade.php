@@ -9,7 +9,7 @@
 			// var shippingOptions = $("#shipping-options"+cart).data('options');
 			var shippingOptions = getShippingOptions(cart);
 
-			if( ! shop || ! shippingOptions ){
+			if(! shop || ! shippingOptions){
 				disableCartCheckout(cart);
 			}
 			else{
@@ -18,10 +18,12 @@
 					return el.id === shippingRateId;
 				})[0];
 
-				if (shippingRate)
+				if (shippingRate) {
 		            setShippingCost(cart, shippingRate.name, shippingRate.rate, shippingRate.id);
-				else
+				}
+				else {
 					setShippingOptions(cart);
+				}
 			}
     	});
 
@@ -390,13 +392,13 @@
 
 				var options = '<table class="table table-striped">' +
 				'<tr><td><div class="radio"><label id="1"><input type="radio" name="packaging_option" id="{{ trans('theme.basic_packaging') }}" value="'+ getFormatedValue(0) +'" '+ preChecked +'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ trans('theme.basic_packaging') }}</label></div></td>' +
-				'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(0) +'</span></td></tr>';
+				'<td><span>{{ get_currency_prefix() }}'+ getFormatedValue(0) +'{{ get_currency_suffix() }}</span></td></tr>';
 
 				$(this).data('options').forEach( function (item){
 				  	preChecked = String(current) == String(item.name) ? 'checked' : '';
 
 				  	options += '<tr><td><div class="radio"><label id="'+ item.id +'"><input type="radio" name="packaging_option" id="'+ item.name +'" value="'+ getFormatedValue(item.cost) +'" '+ preChecked +'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.name +'</label></div></td>' +
-				  	'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(item.cost) +'</span></td></tr>';
+				  	'<td><span>{{ get_currency_prefix() }}'+ getFormatedValue(item.cost) +'{{ get_currency_suffix() }}</span></td></tr>';
 				});
 				options += '</table>';
 
@@ -440,7 +442,7 @@
 					if(free_shipping){
 						options += '<tr><td><div class="radio"><label id="0"><input type="radio" name="shipping_option" id="{{ trans('theme.free_shipping') }}" value="'+ getFormatedValue(0) +'" '+ preChecked +'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ trans('theme.free_shipping') }}</label></div></td>' +
 						'<td>&nbsp;</td><td>&nbsp;</td>' +
-						'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(0) +'</span></td></tr>';
+						'<td><span>{{ get_currency_prefix() }}'+ getFormatedValue(0) +'{{ get_currency_suffix() }}</span></td></tr>';
 					}
 
 					filtered.forEach( function (item){
@@ -450,7 +452,7 @@
 				  		options += '<tr><td><div class="radio"><label id="'+ item.id +'"><input type="radio" name="shipping_option" id="'+ item.name +'" value="'+ getFormatedValue(item.rate) +'" '+ preChecked +'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.name +'</label></div></td>' +
 				  		'<td>' + item.carrier.name + '</td>' +
 				  		'<td><small class"text-muted">'+ item.delivery_takes +'</small></td>' +
-				  		'<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(shippingRate) +'</span></td></tr>';
+				  		'<td><span>{{ get_currency_prefix() }}'+ getFormatedValue(shippingRate) +'{{ get_currency_suffix() }}</span></td></tr>';
 					});
 					options += '</table>';
 				}

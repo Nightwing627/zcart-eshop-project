@@ -341,4 +341,8 @@ return array (
   'notify_new_chat' => 'Kirimi saya pemberitahuan email ketika pesan obrolan baru tiba',
   'not_in_business_area' => 'Area ini tidak berada dalam area bisnis aktif pasar. Mungkin baru-baru ini dihapus oleh admin marketplace.',
   'region_iso_code' => 'Kode ISO wilayah harus benar. Baca * Area Bisnis * pada dokumentasi untuk mendapatkan bantuan.',
+  'subscribers_count' => 'Jumlah pelanggan aktif',
+  'this_plan_has_active_subscribers' => 'Paket ini tidak dapat dihapus karena memiliki pelanggan aktif.',
+  'max_chat_allowed' => 'Maksimal :size karakter.',
+  'mobile_slider_image' => 'Gambar slider untuk aplikasi seluler. Sistem akan menyembunyikan slider ini di ponsel jika tidak disediakan.',
 );

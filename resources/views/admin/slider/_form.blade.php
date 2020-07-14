@@ -62,15 +62,17 @@
 </div>
 
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-6">
     <div class="form-group">
       <label for="exampleInputFile" class="with-help"> {{ trans('app.slider_image') . '*' }}</label>
       <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.slider_image') }}"></i>
       @if(isset($slider) && Storage::exists(optional($slider->featuredImage)->path))
-        <img src="{{ get_storage_file_url(optional($slider->featuredImage)->path, 'medium') }}" width="50%" alt="{{ trans('app.slider_image') }}">
-        <span class="indent10">
-          {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
-        </span>
+        <div>
+          <img src="{{ get_storage_file_url(optional($slider->featuredImage)->path, 'medium') }}" width="50%" alt="{{ trans('app.slider_image') }}">
+          <span class="indent10">
+            {!! Form::checkbox('delete_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
+          </span>
+        </div><div class="spacer5"></div>
       @endif
 
       <div class="row">
@@ -87,15 +89,17 @@
       <div class="help-block with-errors">{{ trans('help.slider_img_hint') }}</div>
     </div>
   </div>
-  <div class="col-md-4 nopadding-left">
+  <div class="col-md-6 nopadding-left">
     <div class="form-group">
-      <label for="thumb" class="with-help"> {{ trans('app.thumbnail') }}</label>
-      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.slider_thumb_image') }}"></i>
-      @if(isset($slider) && Storage::exists(optional($slider->images->first())->path))
-        <img src="{{ get_storage_file_url(optional($slider->images->first())->path, 'medium') }}" width="30%" alt="{{ trans('app.slider_image') }}">
-        <span class="indent10">
-          {!! Form::checkbox('delete_thumb_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
-        </span>
+      <label for="thumb" class="with-help"> {{ trans('app.mobile_slider') }}</label>
+      <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ trans('help.mobile_slider_image') }}"></i>
+      @if(isset($slider) && Storage::exists(optional($slider->mobile)->path))
+        <div>
+          <img src="{{ get_storage_file_url(optional($slider->mobile)->path, 'medium') }}" width="50%" alt="{{ trans('app.slider_image') }}">
+          <span class="indent10">
+            {!! Form::checkbox('delete_thumb_image', 1, null, ['class' => 'icheck']) !!} {{ trans('app.form.delete_image') }}
+          </span>
+        </div><div class="spacer5"></div>
       @endif
       <span class="spacer5"></span>
       <input type="file" name="thumb" style="display: inline-block;" />

@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => 'Status kommer inte att påverka eftersom affärsområdet marknadsplats är inställt på hela världen! För att ändra inställningarna för affärsområdet, kontrollera konfigurationsavsnittet.',
   'please_select_conversation' => 'Välj en konversation från vänster.',
   'session_expired' => 'Din session har gått ut! Vänligen logga in.',
+  'no_address_for_invoice' => 'Du har ännu inte ställt in någon affärsadress. Lägg till adress nu.',
 );

@@ -1440,6 +1440,7 @@ return [
     'symbol_first' => 'Symbol first',
     'to' => 'To',
     'reply_to' => 'Reply to',
+    'mobile_slider' => 'Mobile',
 
     // Version 2.1.0
     'chats' => 'Chats',

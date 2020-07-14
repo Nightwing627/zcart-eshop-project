@@ -27,7 +27,9 @@ class AccountController extends Controller
      */
     public function index($tab = 'dashboard')
     {
-        if( ! method_exists($this, $tab) ) abort(404);
+        if(! method_exists($this, $tab)) {
+            abort(404);
+        };
 
         // Call the methods dynamically to load needed models
         $$tab = $this->$tab();

@@ -591,6 +591,9 @@ return array (
   'canceled' => 'מבוטל',
   'order_canceled' => 'ההזמנה בוטלה!',
   'order_again' => 'הזמן שוב',
+  'user' => 'מִשׁתַמֵשׁ',
+  'free' => 'חינם',
+  'more_items_from_this_seller' => 'פריטים נוספים מ- :seller',
   'chat_welcome' => 'היי! יש שאלה?',
   'connecting' => 'מתחבר ...',
   'login_to_chat' => 'אנחנו רק צעד אחד משם! אנא התחבר כדי להתחיל בשיחה.',
@@ -599,4 +602,5 @@ return array (
   'online' => 'באינטרנט',
   'shop_not_found' => 'חנות לא נמצאה. בדוק ספקים אחרים.',
   'session_expired' => 'פג תוקף ההפעלה! רענן את הדף.',
+  'item_not_available' => 'פריט זה אינו זמין יותר!',
 );

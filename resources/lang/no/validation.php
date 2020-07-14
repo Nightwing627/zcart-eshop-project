@@ -129,4 +129,5 @@ return array (
   array (
   ),
   'upload_rows' => 'Du kan laste opp maksimalt :rows poster per batch.',
+  'csv_upload_invalid_data' => 'Noen rader inneholder ugyldige data som ikke kan behandles. Kontroller dataene dine og prøv igjen.',
 );

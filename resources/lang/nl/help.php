@@ -341,4 +341,8 @@ return array (
   'notify_new_chat' => 'Stuur me een e-mailmelding wanneer er een nieuw chatbericht is binnengekomen',
   'not_in_business_area' => 'Dit gebied bevindt zich niet in het actieve bedrijfsgebied van de markt. Misschien onlangs verwijderd door de Marketplace-beheerder.',
   'region_iso_code' => 'De ISO-code van de regio moet kloppen. Lees het gedeelte * Business Area * in de documentatie voor hulp.',
+  'subscribers_count' => 'Aantal actieve abonnees',
+  'this_plan_has_active_subscribers' => 'Dit plan kan niet worden verwijderd omdat het actieve abonnees heeft.',
+  'max_chat_allowed' => 'Maximaal :size tekens.',
+  'mobile_slider_image' => 'De slider-afbeelding voor mobiele app. Het systeem verbergt deze schuifregelaar op mobiel indien niet aanwezig.',
 );

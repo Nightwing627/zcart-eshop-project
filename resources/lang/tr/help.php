@@ -341,4 +341,8 @@ return array (
   'notify_new_chat' => 'Yeni bir sohbet mesajı geldiğinde bana bir e-posta bildirimi gönder',
   'not_in_business_area' => 'Bu alan pazarın aktif iş alanında değildir. Belki son zamanlarda pazar yöneticisi tarafından kaldırıldı.',
   'region_iso_code' => 'Bölge ISO kodunun doğru olması gerekir. Yardım almak için belgelerdeki * İş Alanı * bölümünü okuyun.',
+  'subscribers_count' => 'Etkin abone sayısı',
+  'this_plan_has_active_subscribers' => 'Etkin aboneleri olduğu için bu plan silinemez.',
+  'max_chat_allowed' => 'Maksimum :size karakter.',
+  'mobile_slider_image' => 'Mobil uygulama için kaydırıcı resmi. Sistem bu kaydırıcıyı sağlanmazsa mobil cihazda gizler.',
 );

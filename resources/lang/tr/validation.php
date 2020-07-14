@@ -129,4 +129,5 @@ return array (
   array (
   ),
   'upload_rows' => 'Parti başına maksimum :rows kayıt yükleyebilirsiniz.',
+  'csv_upload_invalid_data' => 'Bazı satırlar işlenemeyen geçersiz veriler içeriyor. Lütfen verilerinizi kontrol edip tekrar deneyin.',
 );

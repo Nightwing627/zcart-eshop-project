@@ -341,4 +341,8 @@ return array (
   'notify_new_chat' => 'Send meg en e-postvarsling da en ny chatmelding kom',
   'not_in_business_area' => 'Dette området er ikke i markedets aktive forretningsområde. Kanskje nylig blitt fjernet av markedsadministratoren.',
   'region_iso_code' => 'Regionens ISO-kode må være riktig. Les * Forretningsområde * i dokumentasjonen for å få hjelp.',
+  'subscribers_count' => 'Antall aktive abonnenter',
+  'this_plan_has_active_subscribers' => 'Denne planen kan ikke slettes fordi den har aktive abonnenter.',
+  'max_chat_allowed' => 'Maksimalt :size tegn.',
+  'mobile_slider_image' => 'Skyvebildet for mobilapp. Systemet vil skjule denne glidebryteren på mobilen hvis den ikke leveres.',
 );

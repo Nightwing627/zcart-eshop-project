@@ -591,6 +591,9 @@ return array (
   'canceled' => 'Inställt',
   'order_canceled' => 'Beställningen har avbrutits!',
   'order_again' => 'Beställ igen',
+  'user' => 'Användare',
+  'free' => 'Fri',
+  'more_items_from_this_seller' => 'Fler artiklar från :seller',
   'chat_welcome' => 'Hallå! Har en fråga?',
   'connecting' => 'Ansluter...',
   'login_to_chat' => 'Vi är bara ett steg bort! Logga in för att starta konversationen.',
@@ -599,4 +602,5 @@ return array (
   'online' => 'Uppkopplad',
   'shop_not_found' => 'Butik hittades inte. Kontrollera andra leverantörer.',
   'session_expired' => 'Sessionen har gått ut! Uppdatera sidan.',
+  'item_not_available' => 'Den här artikeln är inte längre tillgänglig!',
 );

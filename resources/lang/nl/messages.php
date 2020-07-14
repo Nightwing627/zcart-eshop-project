@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => 'De status heeft geen invloed aangezien de business area Marketplace is ingesteld op wereldwijd! Controleer het configuratiegedeelte om de instellingen van het bedrijfsgebied te wijzigen.',
   'please_select_conversation' => 'Selecteer een gesprek aan de linkerkant.',
   'session_expired' => 'Je sessie is verlopen! Log alsjeblieft in.',
+  'no_address_for_invoice' => 'U heeft nog geen bedrijfsadres ingesteld. Voeg nu een adres toe.',
 );

@@ -591,6 +591,9 @@ return array (
   'canceled' => 'Annullato',
   'order_canceled' => 'L\'ordine è stato cancellato!',
   'order_again' => 'Ordina ancora',
+  'user' => 'Utente',
+  'free' => 'Gratuito',
+  'more_items_from_this_seller' => 'Altri articoli da :seller',
   'chat_welcome' => 'Hey! Hai una domanda?',
   'connecting' => 'Connessione in corso ...',
   'login_to_chat' => 'Siamo solo a un passo! Effettua il login per iniziare la conversazione.',
@@ -599,4 +602,5 @@ return array (
   'online' => 'in linea',
   'shop_not_found' => 'Negozio non trovato. Controlla altri fornitori.',
   'session_expired' => 'La sessione è scaduta! Si prega di aggiornare la pagina.',
+  'item_not_available' => 'Questo articolo non è più disponibile!',
 );

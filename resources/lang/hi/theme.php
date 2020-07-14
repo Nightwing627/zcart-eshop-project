@@ -591,6 +591,9 @@ return array (
   'canceled' => 'रद्द',
   'order_canceled' => 'आदेश रद्द कर दिया गया है!',
   'order_again' => 'फिर से आदेश',
+  'user' => 'उपयोगकर्ता',
+  'free' => 'नि: शुल्क',
+  'more_items_from_this_seller' => ' :seller से अधिक आइटम',
   'chat_welcome' => 'अरे! एक सवाल है?',
   'connecting' => 'कनेक्ट ...',
   'login_to_chat' => 'हम सिर्फ एक कदम दूर हैं! कृपया बातचीत शुरू करने के लिए लॉगिन करें।',
@@ -599,4 +602,5 @@ return array (
   'online' => 'ऑनलाइन',
   'shop_not_found' => 'दुकान नहीं मिली। अन्य विक्रेताओं की जाँच करें।',
   'session_expired' => 'सत्र समाप्त हो चुका है! कृपया पेज को रिफ्रेश करें।',
+  'item_not_available' => 'यह आइटम अधिक उपलब्ध नहीं है!',
 );

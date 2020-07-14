@@ -206,7 +206,7 @@
 							  	@if( Storage::exists('logo.png') )
 									<div class="form-group text-center">
 										<label class="with-help control-label"> {{ trans('app.logo') }}: </label>
-										<img src="{{ get_storage_file_url('logo.png', Null) }}" class="brand-logo" alt="{{ trans('app.logo') }}">
+										<img src="{{ get_storage_file_url('logo.png', Null) }}" class="brand-logo" style="max-width: 90%" alt="{{ trans('app.logo') }}">
 									</div>
 							  	@endif
 							</div>

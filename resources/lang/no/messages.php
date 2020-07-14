@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => 'Status vil ikke påvirke ettersom forretningsområdet for markedet er satt til hele verden! For å endre innstillinger for forretningsområdet, sjekk konfigurasjonsdelen.',
   'please_select_conversation' => 'Velg en samtale fra venstre.',
   'session_expired' => 'Økten din er utløpt! Vennligst Logg inn.',
+  'no_address_for_invoice' => 'Du har ikke satt noen forretningsadresse ennå. Legg til adresse nå.',
 );

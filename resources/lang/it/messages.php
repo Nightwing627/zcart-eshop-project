@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => 'Lo stato non influirà in quanto l\'area di business del marketplace è impostata in tutto il mondo! Per modificare le impostazioni dell\'area aziendale, consultare la sezione di configurazione.',
   'please_select_conversation' => 'Seleziona una conversazione da sinistra.',
   'session_expired' => 'La tua sessione è scaduta! Accedere prego.',
+  'no_address_for_invoice' => 'Non hai ancora impostato un indirizzo commerciale. Si prega di aggiungere l\'indirizzo ora.',
 );

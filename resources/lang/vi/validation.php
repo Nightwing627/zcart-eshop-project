@@ -129,4 +129,5 @@ return array (
   array (
   ),
   'upload_rows' => 'Bạn có thể tải lên tối đa :rows hồ sơ mỗi đợt.',
+  'csv_upload_invalid_data' => 'Một số hàng chứa dữ liệu không hợp lệ không thể xử lý. Vui lòng kiểm tra dữ liệu của bạn và thử lại.',
 );

@@ -129,4 +129,5 @@ return array (
   array (
   ),
   'upload_rows' => 'U kunt maximaal :rows records per batch uploaden.',
+  'csv_upload_invalid_data' => 'Sommige rijen bevatten ongeldige gegevens die niet kunnen worden verwerkt. Controleer uw gegevens en probeer het opnieuw.',
 );

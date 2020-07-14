@@ -591,6 +591,9 @@ return array (
   'canceled' => 'avbrutt',
   'order_canceled' => 'Bestillingen er kansellert!',
   'order_again' => 'Bestill igjen',
+  'user' => 'Bruker',
+  'free' => 'Gratis',
+  'more_items_from_this_seller' => 'Flere elementer fra :seller',
   'chat_welcome' => 'Hei! Har et spørsmål?',
   'connecting' => 'Kobler til...',
   'login_to_chat' => 'Vi er bare ett skritt unna! Vennligst logg inn for å starte samtalen.',
@@ -599,4 +602,5 @@ return array (
   'online' => 'på nett',
   'shop_not_found' => 'Butikk ikke funnet. Sjekk andre leverandører.',
   'session_expired' => 'Økten er utløpt! Oppdater siden.',
+  'item_not_available' => 'Denne varen er ikke mer tilgjengelig!',
 );

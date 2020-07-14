@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use FPDF;
@@ -61,7 +62,7 @@ class PdfInvoice extends FPDF
         $this->SetMargins($this->margins['l'], $this->margins['t'], $this->margins['r']);
     }
 
-    private function setDocumentSize($dsize)
+    public function setDocumentSize($dsize)
     {
         switch ($dsize) {
             case 'A4':
@@ -217,17 +218,19 @@ class PdfInvoice extends FPDF
 
     public function price($price)
     {
-        $decimalPoint = $this->referenceformat[0];
-        $thousandSeparator = $this->referenceformat[1];
-        $alignment = isset($this->referenceformat[2]) ? strtolower($this->referenceformat[2]) : 'left';
-        $spaceBetweenCurrencyAndAmount = isset($this->referenceformat[3]) ? (bool) $this->referenceformat[3] : true;
-        $space = $spaceBetweenCurrencyAndAmount ? ' ' : '';
+        return get_formated_price($price);
 
-        if ('right' == $alignment) {
-            return number_format($price, 2, $decimalPoint, $thousandSeparator) . $space . $this->currency;
-        } else {
-            return $this->currency . $space . number_format($price, 2, $decimalPoint, $thousandSeparator);
-        }
+        // $decimalPoint = $this->referenceformat[0];
+        // $thousandSeparator = $this->referenceformat[1];
+        // $alignment = isset($this->referenceformat[2]) ? strtolower($this->referenceformat[2]) : 'left';
+        // $spaceBetweenCurrencyAndAmount = isset($this->referenceformat[3]) ? (bool) $this->referenceformat[3] : true;
+        // $space = $spaceBetweenCurrencyAndAmount ? ' ' : '';
+
+        // if ('right' == $alignment) {
+        //     return number_format($price, 2, $decimalPoint, $thousandSeparator) . $space . $this->currency;
+        // } else {
+        //     return $this->currency . $space . number_format($price, 2, $decimalPoint, $thousandSeparator);
+        // }
     }
 
     // public function addItem($item, $description = "", $quantity, $vat, $price, $discount = 0, $total)

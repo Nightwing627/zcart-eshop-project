@@ -82,13 +82,18 @@ class Role extends BaseModel
      */
     public function isLowerPrivileged($role = Null)
     {
-        if (!Auth::guard('web')->user()->role->level)
+        // If the current user's role has no level
+        if (! Auth::guard('web')->user()->role->level) {
             return $this->level == Null;
+        }
 
-        if ($role)
+        $role = $role ?? $this;
+
+        // if ($role) {
              return $role->level == Null || $role->level > Auth::guard('web')->user()->role->level;
+        // }
 
-         return $this->level == Null || $this->level > Auth::guard('web')->user()->role->level;
+         // return $this->level == Null || $this->level > Auth::guard('web')->user()->role->level;
     }
 
     /**

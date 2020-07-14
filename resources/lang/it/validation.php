@@ -129,4 +129,5 @@ return array (
   array (
   ),
   'upload_rows' => 'È possibile caricare un massimo di :rows record per batch.',
+  'csv_upload_invalid_data' => 'Alcune righe contengono dati non validi che non possono essere elaborati. Controlla i tuoi dati e riprova.',
 );

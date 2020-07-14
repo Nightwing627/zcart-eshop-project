@@ -341,4 +341,8 @@ return array (
   'notify_new_chat' => 'Skicka ett e-postmeddelande när ett nytt chattmeddelande kom',
   'not_in_business_area' => 'Detta område finns inte på marknadens aktiva affärsområde. Kanske har nyligen tagits bort av marknadsadministratören.',
   'region_iso_code' => 'Regionens ISO-kod måste vara rätt. Läs avsnittet * Affärsområde * i dokumentationen för att få hjälp.',
+  'subscribers_count' => 'Antal aktiva prenumeranter',
+  'this_plan_has_active_subscribers' => 'Denna plan kan inte raderas eftersom den har aktiva prenumeranter.',
+  'max_chat_allowed' => 'Maximalt :size tecken.',
+  'mobile_slider_image' => 'Bilden för mobilapp. Systemet döljer denna skjutreglage på mobilen om den inte tillhandahålls.',
 );

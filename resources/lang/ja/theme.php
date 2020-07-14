@@ -591,6 +591,9 @@ return array (
   'canceled' => 'キャンセル',
   'order_canceled' => '注文はキャンセルされました！',
   'order_again' => 'もう一度注文する',
+  'user' => 'ユーザー',
+  'free' => '自由',
+  'more_items_from_this_seller' => ' :sellerの他の商品',
   'chat_welcome' => 'おい！質問があります？',
   'connecting' => '接続しています...',
   'login_to_chat' => 'あと一歩です！ログインして会話を開始してください。',
@@ -599,4 +602,5 @@ return array (
   'online' => 'オンライン',
   'shop_not_found' => 'ショップが見つかりません。他のベンダーを確認してください。',
   'session_expired' => 'セッションは終了しました！ページを更新してください。',
+  'item_not_available' => 'このアイテムはもう利用できません！',
 );

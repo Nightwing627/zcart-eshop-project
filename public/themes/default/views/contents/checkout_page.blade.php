@@ -82,8 +82,8 @@
             </li>
             <li>
               <span>{{ trans('theme.subtotal') }}</span>
-              <span>{{ get_formated_currency_symbol() }}
-                <span id="summary-total{{$cart->id}}">{{ number_format($cart->total, 2, '.', '') }}</span>
+              <span>{{ get_currency_prefix() }}
+                <span id="summary-total{{$cart->id}}">{{ number_format($cart->total, 2, '.', '') }}</span>{{ get_currency_suffix() }}
               </span>
             </li>
             <li>
@@ -93,8 +93,8 @@
                   </a>
                   <em id="summary-shipping-name{{$cart->id}}" class="small text-muted"></em>
               </span>
-              <span>{{ get_formated_currency_symbol() }}
-                <span id="summary-shipping{{$cart->id}}">{{ number_format($cart->get_shipping_cost(), 2, '.', '') }}</span>
+              <span>{{ get_currency_prefix() }}
+                <span id="summary-shipping{{$cart->id}}">{{ number_format($cart->get_shipping_cost(), 2, '.', '') }}</span>{{ get_currency_suffix() }}
               </span>
 
             </li>
@@ -109,10 +109,10 @@
                       {{ optional($default_packaging)->name }}
                     </em>
                   </span>
-                  <span>{{ get_formated_currency_symbol() }}
+                  <span>{{ get_currency_prefix() }}
                     <span id="summary-packaging{{$cart->id}}">
                       {{ number_format($default_packaging ? $default_packaging->cost : 0, 2, '.', '') }}
-                    </span>
+                    </span>{{ get_currency_suffix() }}
                   </span>
               </li>
             @endunless
@@ -121,22 +121,22 @@
               <span>{{ trans('theme.discount') }}
                 <em id="summary-discount-name{{$cart->id}}" class="small text-muted">{{$cart->coupon ? $cart->coupon->name : ''}}</em>
               </span>
-              <span>-{{ get_formated_currency_symbol() }}
-                <span id="summary-discount{{$cart->id}}">{{$cart->coupon ? number_format($cart->discount, 2, '.', '') : number_format(0, 2, '.', '') }}</span>
+              <span>-{{ get_currency_prefix() }}
+                <span id="summary-discount{{$cart->id}}">{{$cart->coupon ? number_format($cart->discount, 2, '.', '') : number_format(0, 2, '.', '') }}</span>{{ get_currency_suffix() }}
               </span>
             </li>
 
             <li id="tax-section-li{{$cart->id}}" style="display: {{$cart->taxes > 0 ? 'block' : 'none'}};">
               <span>{{ trans('theme.taxes') }}</span>
-              <span>{{ get_formated_currency_symbol() }}
-                <span id="summary-taxes{{$cart->id}}">{{ number_format($cart->taxes, 2, '.', '') }}</span>
+              <span>{{ get_currency_prefix() }}
+                <span id="summary-taxes{{$cart->id}}">{{ number_format($cart->taxes, 2, '.', '') }}</span>{{ get_currency_suffix() }}
               </span>
             </li>
 
             <li>
               <span class="lead">{{ trans('theme.total') }}</span>
-              <span class="lead">{{ get_formated_currency_symbol() }}
-                <span id="summary-grand-total{{$cart->id}}">{{ number_format($cart->grand_total(), 2, '.', '') }}</span>
+              <span class="lead">{{ get_currency_prefix() }}
+                <span id="summary-grand-total{{$cart->id}}">{{ number_format($cart->grand_total(), 2, '.', '') }}</span>{{ get_currency_suffix() }}
               </span>
             </li>
           </ul>
@@ -421,7 +421,7 @@
                 <small><i class="fa fa-shield"></i> <span id="pay-now-btn-txt">@lang('theme.button.checkout')</span></small>
               </button>
 
-              <a href="#" id="paypal-express-btn" class="hide" type="submit">
+              <a href="javascript:void(0)" id="paypal-express-btn" class="hide" type="submit">
                 <img src="{{ asset(sys_image_path('payment-methods') . "paypal-express.png") }}" width="70%" alt="paypal express checkout" title="paypal-express" />
               </a>
             </div>

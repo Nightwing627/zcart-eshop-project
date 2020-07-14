@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => 'Status påvirker ikke, da forretningsområdet er indstillet til verdensomspændende! For at ændre forretningsområderne skal du kontrollere konfigurationsafsnittet.',
   'please_select_conversation' => 'Vælg en samtale fra venstre.',
   'session_expired' => 'Din session er udløbet! Vær venlig at logge ind.',
+  'no_address_for_invoice' => 'Du har endnu ikke oprettet en forretningsadresse. Tilføj venligst adresse nu.',
 );

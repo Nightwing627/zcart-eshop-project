@@ -1,8 +1,9 @@
 <?php
 // Remove the morphic values from the collection to look clean
 foreach ($variants as &$value) {
-    foreach ($value->images as &$image)
+    foreach ($value->images as &$image) {
         unset($image->imageable_id, $image->imageable_type);
+    }
 }
 ?>
 
@@ -46,7 +47,7 @@ foreach ($variants as &$value) {
                         options += "<tr><td><div class='radio'><label id='0' data-option='" + JSON.stringify({name: '{{ trans('theme.free_shipping') }}', rate: 0}) + "'><input type='radio' name='shipping_option' id='{{ trans('theme.free_shipping') }}' value='"+ getFormatedValue(0) +"' "+ preChecked +"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ trans('theme.free_shipping') }}</label></div></td>" +
                         '<td>&nbsp;</td>' +
                         '<td><small class"text-muted">{{ trans('theme.std_delivery_time') }}</small></td>' +
-                        '<td><span>{{ get_formated_currency_symbol() }}'+ getFormatedValue(0) +'</span></td></tr>';
+                        '<td><span>{{ trans('app.free') }}</span></td></tr>';
                     }
 
                     filtered.forEach( function (item){
@@ -103,8 +104,9 @@ foreach ($variants as &$value) {
         // Move to the detail section if hash given
         $(function () {
             var tabs = ['#seller_desc_tab', '#desc_tab', '#reviews_tab'];
-            if(tabs.indexOf(window.location.hash) != -1)
+            if(tabs.indexOf(window.location.hash) != -1) {
                 $('html,body').animate({scrollTop:$("#item-desc-section").offset().top}, 500);
+            }
         });
         $('.product-rating-count').on('click', function(e) {
             $('html,body').animate({scrollTop:$("#item-desc-section").offset().top}, 500);
@@ -181,8 +183,9 @@ foreach ($variants as &$value) {
         var attrs = [];
         $('.product-attribute-selector').each(function(){
             var val = $(this).val();
-            if(val)
+            if(val) {
                 attrs.push(Number(val));
+            }
         });
 
         var filtered = filterItems(attrs);
@@ -245,8 +248,9 @@ foreach ($variants as &$value) {
         $('#shipTo_country').selectBoxIt();
 
         // Populate states field if required
-        if(state && $("#state_id_select_wrapper").hasClass('hidden'))
+        if(state && $("#state_id_select_wrapper").hasClass('hidden')) {
             populateStateSelect(country, state);
+        }
     });
 
     // Submit
@@ -283,8 +287,9 @@ foreach ($variants as &$value) {
             $("#shipping-options").data('options', JSON.parse(options))
 
             // Reset shipping option if the zone are not same the same
-            if(zone.id != $('#shipping-zone-id').val())
+            if(zone.id != $('#shipping-zone-id').val()) {
                 setShippingOptions();
+            }
 
             $('#shipToModal').modal('hide'); //Hide the modal
         }
@@ -343,8 +348,9 @@ foreach ($variants as &$value) {
                     $("#shipTo_state").append(options);
 
                     // Pre select the state
-                    if(state)
+                    if(state){
                         $('#shipTo_state option[value="'+state+'"]').attr("selected", "selected");
+                    }
 
                     $("#shipTo_state").selectBoxIt("refresh");
                 }
@@ -425,10 +431,12 @@ foreach ($variants as &$value) {
                 var src = $(this).attr("src").replace(/\?.*/,'');
                 var node = $(this).parent('a');
 
-                if(path == src)
+                if(path == src) {
                     node.addClass('zoomThumbActive');
-                else
+                }
+                else {
                     node.removeClass('zoomThumbActive');
+                }
             });
 
             //binding
@@ -461,6 +469,7 @@ foreach ($variants as &$value) {
     function getItemTotal()
     {
         var qtt = $('input.product-info-qty-input').val();
+
         return Number(unitPrice) * Number(qtt);
     };
 
@@ -475,7 +484,9 @@ foreach ($variants as &$value) {
     function getShippingOptions()
     {
         var shippingOptions = $("#shipping-options").data('options');
-        if (!shippingOptions || $.isEmptyObject(shippingOptions))   return NaN;
+        if (!shippingOptions || $.isEmptyObject(shippingOptions)) {
+            return NaN;
+        }
 
         var totalPrice  = getItemTotal();
         var cartWeight  = getShippingWeight();
@@ -510,10 +521,12 @@ foreach ($variants as &$value) {
 
             $('#summary-shipping-cost').attr('data-value', value).html( getFormatedPrice(value) );
 
-            if (shipping.carrier.name != ' ')
+            if (shipping.carrier.name != ' ') {
                 $('#summary-shipping-carrier').text(' {{ strtolower(trans('theme.by')) }} ' + shipping.carrier.name);
-            else
+            }
+            else {
                 $('#summary-shipping-carrier').text(' ');
+            }
 
             var delivery_takes = shipping.delivery_takes ? '{{ trans('theme.estimated_delivery_time') }}: ' + shipping.delivery_takes : '';
 

@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => 'Tình trạng sẽ không ảnh hưởng vì khu vực kinh doanh trên thị trường được thiết lập trên toàn thế giới! Để thay đổi cài đặt khu vực kinh doanh, vui lòng kiểm tra phần cấu hình.',
   'please_select_conversation' => 'Vui lòng chọn một cuộc trò chuyện từ bên trái.',
   'session_expired' => 'Phiên của bạn đã hết hạn! Xin vui lòng đăng nhập.',
+  'no_address_for_invoice' => 'Bạn chưa có địa chỉ kinh doanh nào được thiết lập. Vui lòng thêm địa chỉ ngay bây giờ.',
 );

@@ -591,6 +591,9 @@ return array (
   'canceled' => 'Dibatalkan',
   'order_canceled' => 'Pesanan telah dibatalkan!',
   'order_again' => 'Pesan lagi',
+  'user' => 'Pengguna',
+  'free' => 'Gratis',
+  'more_items_from_this_seller' => 'Lebih banyak item dari :seller',
   'chat_welcome' => 'Hei! Punya pertanyaan?',
   'connecting' => 'Menghubungkan ...',
   'login_to_chat' => 'Kami hanya selangkah lagi! Silakan masuk untuk memulai percakapan.',
@@ -599,4 +602,5 @@ return array (
   'online' => 'On line',
   'shop_not_found' => 'Toko tidak ditemukan. Periksa vendor lain.',
   'session_expired' => 'Sesi telah kedaluwarsa! Harap segarkan halaman.',
+  'item_not_available' => 'Item ini tidak lagi tersedia!',
 );

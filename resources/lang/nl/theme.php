@@ -591,6 +591,9 @@ return array (
   'canceled' => 'Geannuleerd',
   'order_canceled' => 'De bestelling is geannuleerd!',
   'order_again' => 'Opnieuw bestellen',
+  'user' => 'Gebruiker',
+  'free' => 'Vrij',
+  'more_items_from_this_seller' => 'Meer items van :seller',
   'chat_welcome' => 'Hallo! Heb je een vraag?',
   'connecting' => 'Verbinden...',
   'login_to_chat' => 'We zijn nog maar één stap verwijderd! Log in om het gesprek te starten.',
@@ -599,4 +602,5 @@ return array (
   'online' => 'Online',
   'shop_not_found' => 'Winkel niet gevonden. Controleer andere leveranciers.',
   'session_expired' => 'De sessie is verlopen! Gelieve de pagina te vernieuwen.',
+  'item_not_available' => 'Dit artikel is niet meer beschikbaar!',
 );

@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => '该状态不会受到影响，因为市场业务区域已设置为全球范围！要更改业务区域设置，请检查配置部分。',
   'please_select_conversation' => '请从左侧选择一个对话。',
   'session_expired' => '您的会话已过期！请登录。',
+  'no_address_for_invoice' => '您尚未设置公司地址。请立即添加地址。',
 );

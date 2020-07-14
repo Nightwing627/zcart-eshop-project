@@ -129,4 +129,5 @@ return array (
   array (
   ),
   'upload_rows' => 'Vous pouvez télécharger un maximum de :rows enregistrements par lot.',
+  'csv_upload_invalid_data' => 'Certaines lignes contiennent des données non valides qui ne peuvent pas être traitées. Veuillez vérifier vos données et réessayer.',
 );

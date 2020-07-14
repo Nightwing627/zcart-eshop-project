@@ -129,4 +129,5 @@ return array (
   array (
   ),
   'upload_rows' => '每批最多可以上传 :rows条记录。',
+  'csv_upload_invalid_data' => '有些行包含无法处理的无效数据。请检查您的数据，然后重试。',
 );

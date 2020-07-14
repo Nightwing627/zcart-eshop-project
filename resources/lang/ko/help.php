@@ -341,4 +341,8 @@ return array (
   'notify_new_chat' => '새로운 채팅 메시지가 도착하면 이메일 알림을 보내주세요',
   'not_in_business_area' => '이 영역은 마켓 플레이스의 활성 비즈니스 영역에 없습니다. 마켓 플레이스 관리자가 최근에 제거한 것 같습니다.',
   'region_iso_code' => '지역 ISO 코드가 정확해야합니다. 도움이 필요하면 설명서의 * 사업 영역 * 섹션을 읽으십시오.',
+  'subscribers_count' => '활성 가입자 수',
+  'this_plan_has_active_subscribers' => '구독자가 활성 상태이므로이 계획을 삭제할 수 없습니다.',
+  'max_chat_allowed' => '최대 1 자',
+  'mobile_slider_image' => '모바일 앱의 슬라이더 이미지입니다. 제공되지 않은 경우 시스템은 모바일에서이 슬라이더를 숨 깁니다.',
 );

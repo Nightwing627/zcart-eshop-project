@@ -341,4 +341,8 @@ return array (
   'notify_new_chat' => 'Envoyez-moi une notification par e-mail lorsqu\'un nouveau message de chat est arrivé',
   'not_in_business_area' => 'Cette zone n\'est pas dans la zone d\'activité active du marché. Peut-être récemment supprimé par l\'administrateur du marché.',
   'region_iso_code' => 'Le code ISO de la région doit être correct. Lisez la section * Domaine d\'activité * de la documentation pour obtenir de l\'aide.',
+  'subscribers_count' => 'Nombre d\'abonnés actifs',
+  'this_plan_has_active_subscribers' => 'Ce plan ne peut pas être supprimé car il a des abonnés actifs.',
+  'max_chat_allowed' => 'Maximum de :size caractères.',
+  'mobile_slider_image' => 'L\'image du curseur pour l\'application mobile. Le système masquera ce curseur sur mobile s\'il n\'est pas fourni.',
 );

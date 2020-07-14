@@ -341,4 +341,8 @@ return array (
   'notify_new_chat' => 'Gửi cho tôi một thông báo email khi có tin nhắn trò chuyện mới',
   'not_in_business_area' => 'Khu vực này không nằm trong khu vực kinh doanh đang hoạt động của thị trường. Có lẽ gần đây đã bị gỡ bỏ bởi các quản trị viên thị trường.',
   'region_iso_code' => 'Mã ISO khu vực phải có quyền. Đọc phần * Khu vực kinh doanh * trên tài liệu để nhận trợ giúp.',
+  'subscribers_count' => 'Số lượng thuê bao đang hoạt động',
+  'this_plan_has_active_subscribers' => 'Gói này không thể bị xóa vì nó có người đăng ký hoạt động.',
+  'max_chat_allowed' => 'Tối đa :size ký tự.',
+  'mobile_slider_image' => 'Hình ảnh thanh trượt cho ứng dụng di động. Hệ thống sẽ ẩn thanh trượt này trên thiết bị di động nếu không được cung cấp.',
 );

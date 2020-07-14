@@ -341,4 +341,8 @@ return array (
   'notify_new_chat' => '当新的聊天消息到来时给我发送电子邮件通知',
   'not_in_business_area' => '该区域不在市场的活跃业务区域中。也许最近被市场管理员删除了。',
   'region_iso_code' => '地区ISO代码必须正确。阅读文档中的“业务领域”部分以获取帮助。',
+  'subscribers_count' => '活跃用户数',
+  'this_plan_has_active_subscribers' => '该计划有有效的订阅者，因此无法删除。',
+  'max_chat_allowed' => '最多 :size个字符。',
+  'mobile_slider_image' => '移动应用程序的滑块图像。如果未提供，系统将在移动设备上隐藏此滑块。',
 );

@@ -591,6 +591,9 @@ return array (
   'canceled' => 'İptal edildi',
   'order_canceled' => 'Sipariş iptal edildi!',
   'order_again' => 'Tekrar Sipariş Ver',
+  'user' => 'kullanıcı',
+  'free' => 'Bedava',
+  'more_items_from_this_seller' => ' :seller markasına ait diğer ürünler',
   'chat_welcome' => 'Hey! Bir sorunuz mu var?',
   'connecting' => 'Bağlanıyor...',
   'login_to_chat' => 'Sadece bir adım ötedeyiz! Görüşmeye başlamak için lütfen giriş yapın.',
@@ -599,4 +602,5 @@ return array (
   'online' => 'İnternet üzerinden',
   'shop_not_found' => 'Dükkan bulunamadı. Diğer satıcıları kontrol edin.',
   'session_expired' => 'Oturumun süresi doldu! Lütfen sayfayı yenileyin.',
+  'item_not_available' => 'Bu ürün artık mevcut değil!',
 );

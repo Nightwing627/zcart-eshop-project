@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => 'マーケットプレイスのビジネスエリアは世界中に設定されているため、ステータスは影響を受けません。ビジネスエリアの設定を変更するには、構成セクションを確認してください。',
   'please_select_conversation' => '左から会話を選択してください。',
   'session_expired' => 'セッションの期限が切れました！ログインしてください。',
+  'no_address_for_invoice' => '会社の住所はまだ設定されていません。今すぐ住所を追加してください。',
 );

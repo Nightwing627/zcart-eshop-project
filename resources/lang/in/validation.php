@@ -129,4 +129,5 @@ return array (
   array (
   ),
   'upload_rows' => 'Anda dapat mengunggah maksimum catatan :rows per batch.',
+  'csv_upload_invalid_data' => 'Beberapa baris berisi data yang tidak valid yang tidak dapat diproses. Silakan periksa data Anda dan coba lagi.',
 );

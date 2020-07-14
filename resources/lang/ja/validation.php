@@ -129,4 +129,5 @@ return array (
   array (
   ),
   'upload_rows' => 'バッチごとに最大 :rowsレコードをアップロードできます。',
+  'csv_upload_invalid_data' => '一部の行には、処理できない無効なデータが含まれています。データを確認して、もう一度お試しください。',
 );

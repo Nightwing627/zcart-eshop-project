@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => 'Pazar yeri iş alanı dünya çapında olarak ayarlandığından durum etkilenmeyecektir! İş alanı ayarlarını değiştirmek için lütfen yapılandırma bölümünü kontrol edin.',
   'please_select_conversation' => 'Lütfen soldan bir ileti dizisi seçin.',
   'session_expired' => 'Oturumunuzun süresi doldu! Lütfen giriş yapın.',
+  'no_address_for_invoice' => 'Henüz ayarlanmış bir işletme adresiniz yok. Lütfen şimdi adres ekleyin.',
 );

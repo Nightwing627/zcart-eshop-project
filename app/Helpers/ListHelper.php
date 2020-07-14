@@ -284,7 +284,7 @@ class ListHelper
                 });
         }
 
-        return $roles->orderBy('name', 'asc')->pluck('name', 'id');
+        return $roles->where('id', '!=', Role::MERCHANT)->orderBy('name', 'asc')->pluck('name', 'id');
     }
 
     /**

@@ -165,16 +165,19 @@ if ( ! function_exists('is_serialized') )
      */
     function is_serialized( $data ) {
         // if it isn't a string, it isn't serialized
-        if ( !is_string( $data ) )
+        if ( !is_string( $data ) ) {
             return false;
+        }
 
         $data = trim( $data );
 
-        if ( 'N;' == $data )
+        if ( 'N;' == $data ) {
             return true;
+        }
 
-        if ( !preg_match( '/^([adObis]):/', $data, $badions ) )
+        if ( !preg_match( '/^([adObis]):/', $data, $badions ) ) {
             return false;
+        }
 
         switch ( $badions[1] ) {
             case 'a' :
@@ -247,7 +250,9 @@ if ( ! function_exists('get_sender_email') )
             return config('shop_settings.default_sender_email_address') ?: config('mail.from.address');
         }
 
-        return config('system_settings.default_sender_email_address') ?? get_value_from(1, 'systems', 'default_sender_email_address') ?? config('mail.from.address');
+        return config('system_settings.default_sender_email_address') ??
+            get_value_from(1, 'systems', 'default_sender_email_address') ??
+            config('mail.from.address');
     }
 }
 
@@ -258,10 +263,13 @@ if ( ! function_exists('get_sender_name') )
      */
     function get_sender_name($shop = Null)
     {
-        if ($shop)
+        if ($shop) {
             return config('shop_settings.default_email_sender_name') ?: config('mail.from.name');
+        }
 
-        return config('system_settings.default_email_sender_name') ?? get_value_from(1, 'systems', 'default_email_sender_name') ?? config('mail.from.name');
+        return config('system_settings.default_email_sender_name') ??
+            get_value_from(1, 'systems', 'default_email_sender_name') ??
+            config('mail.from.name');
     }
 }
 
@@ -309,8 +317,9 @@ if ( ! function_exists('address_str_to_geocode_str') )
         array_shift($t_arr); // Remove address titme/name
 
         // Remove phone number from address
-        if(preg_match('/^[0-9 +-]*$/', end($t_arr)))
+        if(preg_match('/^[0-9 +-]*$/', end($t_arr))) {
             array_pop($t_arr);
+        }
 
         // build str string
         $str = trim( implode(',', array_filter($t_arr)) );
@@ -358,8 +367,9 @@ if ( ! function_exists('getPaginationValue') )
 {
     function getPaginationValue()
     {
-        if(auth()->user()->isFromPlatform())
+        if(auth()->user()->isFromPlatform()) {
             return config('system_settings.pagination') ?: 10;
+        }
 
         return config('shop_settings.pagination') ?: 10;
     }
@@ -421,11 +431,14 @@ if ( ! function_exists('highlightWords') )
 {
     function highlightWords($content = Null, $words = Null)
      {
-        if($content == Null || $words == Null) return $content;
+        if($content == Null || $words == Null) {
+            return $content;
+        }
 
         if(is_array($words)) {
-            foreach ( $words as $word )
+            foreach ( $words as $word ) {
                 $content = str_ireplace($word, '<mark>'.$word.'</mark>', $content);
+            }
 
             return $content;
         }
@@ -631,10 +644,12 @@ if ( ! function_exists('get_logo_url') )
 {
     function get_logo_url($model,  $size = 'small')
     {
-        if($model->logo)
+        if($model->logo) {
             return get_storage_file_url($model->logo->path, $size);
-        else
+        }
+        else {
             return get_placeholder_img($size);
+        }
     }
 }
 
@@ -642,8 +657,9 @@ if ( ! function_exists('verifyUniqueSlug') )
 {
     function verifyUniqueSlug($slug, $table, $field = 'slug', $json = TRUE)
     {
-        if(\DB::table($table)->select($field)->where($field, $slug)->first())
+        if(\DB::table($table)->select($field)->where($field, $slug)->first()) {
             return $json ? response()->json('false') : FALSE;
+        }
 
         return $json ? response()->json('true') : TRUE;
     }
@@ -653,8 +669,9 @@ if ( ! function_exists('convertToSlugString') )
 {
     function convertToSlugString($str, $salt = Null, $separator = '-')
     {
-        if($salt)
+        if($salt) {
             return Str::slug($str, $separator) . $separator . Str::slug($salt, $separator);
+        }
 
         return Str::slug($str, $separator);
     }
@@ -756,7 +773,8 @@ if ( ! function_exists('get_formated_file_size') )
      * @param  int $precision
      * @return str formated size string
      */
-    function get_formated_file_size($bytes = 0, $precision = 2) {
+    function get_formated_file_size($bytes = 0, $precision = 2)
+    {
         $units = array('B', 'KB', 'MB', 'GB', 'TB');
         $bytes = max($bytes, 0);
         $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
@@ -771,11 +789,13 @@ if ( ! function_exists('get_customer_email_from_order') )
 {
     function get_customer_email_from_order($order)
     {
-        if (! $order instanceof Order )
+        if (! $order instanceof Order ) {
             $order = Order::find($order);
+        }
 
-        if ($order->customer->email)
+        if ($order->customer->email) {
             return $order->customer->email;
+        }
 
         return $order->email;
     }
@@ -792,8 +812,9 @@ if ( ! function_exists('get_formated_cutomer_str') )
      */
     function get_formated_cutomer_str($customer)
     {
-        if (is_array($customer))
+        if (is_array($customer)) {
             return  $customer['nice_name'] . ' | ' . $customer['name'] . ' | ' . $customer['email'];
+        }
 
         return  $customer->nice_name . ' | ' . $customer->name . ' | ' . $customer->email;
     }
@@ -852,8 +873,9 @@ if ( ! function_exists('format_to_number') )
      */
     function format_to_number($value, $decimals = 2)
     {
-        if (trim($value) != null)
+        if (trim($value) != null) {
             return number_format($value, $decimals, '.', '');
+        }
 
         return null;
     }
@@ -909,11 +931,23 @@ if ( ! function_exists('get_formated_currency') )
     {
         $value =  get_formated_decimal($value, $decimal ? false : true, $decimal);
 
-        if ( config('system_settings.currency.symbol_first') ) {
-            return get_formated_currency_symbol() . $value;
-        }
+        return get_currency_prefix() . $value . get_currency_suffix();
+    }
+}
 
-        return $value . get_formated_currency_symbol();
+if (! function_exists('get_currency_prefix'))
+{
+    function get_currency_prefix()
+    {
+        return config('system_settings.currency.symbol_first') ? get_formated_currency_symbol() : '';
+    }
+}
+
+if (! function_exists('get_currency_suffix'))
+{
+    function get_currency_suffix()
+    {
+        return config('system_settings.currency.symbol_first') ? '' : get_formated_currency_symbol();
     }
 }
 
@@ -948,8 +982,9 @@ if ( ! function_exists('get_formated_dimension') )
     {
         $dimension = get_formated_decimal($packaging->width) . ' x ' . get_formated_decimal($packaging->height);
 
-        if ($packaging->depth && $packaging->depth > 0)
+        if ($packaging->depth && $packaging->depth > 0) {
             $dimension .= ' x ' . get_formated_decimal($packaging->depth);
+        }
 
         return $dimension . ' ' . config('system_settings.length_unit');
     }
@@ -971,8 +1006,9 @@ if ( ! function_exists('get_formated_order_number') )
     {
         $order_id = $order_id ?? str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT);
 
-        if($shop_id == Null && auth()->guard('web')->check())
+        if($shop_id == Null && auth()->guard('web')->check()){
             $shop_id = auth()->user()->merchantId();
+        }
 
         return getShopConfig($shop_id, 'order_number_prefix') . $order_id . getShopConfig($shop_id, 'order_number_suffix');
     }
@@ -1090,8 +1126,9 @@ if ( ! function_exists('get_formated_shipping_range_of') )
             $upper = get_formated_currency($rate->maximum);
         }
 
-        if (get_formated_decimal($rate->maximum) > 0)
+        if (get_formated_decimal($rate->maximum) > 0) {
             return  $lower . ' - ' . $upper;
+        }
 
         return  trans('app.and_up', ['value' => $lower]);
     }

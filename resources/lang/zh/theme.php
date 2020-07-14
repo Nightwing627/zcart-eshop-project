@@ -591,6 +591,9 @@ return array (
   'canceled' => '取消',
   'order_canceled' => '订单已取消！',
   'order_again' => '再次订购',
+  'user' => '用户',
+  'free' => '自由',
+  'more_items_from_this_seller' => ' :seller起的更多物品',
   'chat_welcome' => '嘿!有一个问题？',
   'connecting' => '正在连线...',
   'login_to_chat' => '我们只有一步之遥！请登录以开始对话。',
@@ -599,4 +602,5 @@ return array (
   'online' => '线上',
   'shop_not_found' => '找不到店铺。检查其他供应商。',
   'session_expired' => '会话已过期！请刷新页面。',
+  'item_not_available' => '该产品不再可用！',
 );

@@ -341,4 +341,8 @@ return array (
   'notify_new_chat' => '新しいチャットメッセージが届いたときにメール通知を受け取る',
   'not_in_business_area' => 'このエリアは、マーケットプレイスのアクティブなビジネスエリアではありません。たぶん最近、マーケットプレイス管理者によって削除されました。',
   'region_iso_code' => '地域のISOコードは正しい必要があります。ドキュメントの* Business Area *セクションを読んでヘルプを取得してください。',
+  'subscribers_count' => 'アクティブなサブスクライバーの数',
+  'this_plan_has_active_subscribers' => 'アクティブなサブスクライバーがいるため、このプランは削除できません。',
+  'max_chat_allowed' => '最大 :size文字。',
+  'mobile_slider_image' => 'モバイルアプリのスライダー画像。提供されていない場合、システムはこのスライダーをモバイルで非表示にします。',
 );

@@ -69,12 +69,17 @@
 
 		// Show cart form if the card option is selected
 		var paymentOptionSelected = $('input[name="payment_method"]:checked');
+
 		if ( paymentOptionSelected.length > 0) {
 			var code = paymentOptionSelected.data('code');
-			if( code == 'stripe' )
+
+			if( code == 'stripe' ) {
 				showCardForm();
-			if( code == 'authorize-net' || code == 'cybersource' )
+			}
+
+			if( code == 'authorize-net' || code == 'cybersource' ) {
 				showAuthorizeNetCardForm();
+			}
 		}
 
 	    // Stripe code, create a token
@@ -109,12 +114,14 @@
 			apply_busy_filter('body');
 
 		  	// Skip the strip payment and submit if the payment method is not stripe
-		  	if ( $('input[name=payment_method]:checked').data('code') !== 'stripe' )
+		  	if ( $('input[name=payment_method]:checked').data('code') !== 'stripe' ) {
 				form.get(0).submit();
+		  	}
 
 			// Stripe API skip the request if the information are not there
-			if (!$("input[data-stripe='number']").val() || !$("input[data-stripe='cvc']").val())
+			if (! $("input[data-stripe='number']").val() || !$("input[data-stripe='cvc']").val()) {
 				return;
+			}
 
 		    Stripe.card.createToken(form, function(status, response) {
 		        if (response.error) {

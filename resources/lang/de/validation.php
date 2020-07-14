@@ -129,4 +129,5 @@ return array (
   array (
   ),
   'upload_rows' => 'Sie können maximal :rows Datensätze pro Stapel hochladen.',
+  'csv_upload_invalid_data' => 'Einige Zeilen enthalten ungültige Daten, die nicht verarbeitet werden können. Bitte überprüfen Sie Ihre Daten und versuchen Sie es erneut.',
 );

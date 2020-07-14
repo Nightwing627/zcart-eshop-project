@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => 'Der Status hat keine Auswirkungen, da der Geschäftsbereich Marktplatz auf weltweit eingestellt ist! Informationen zum Ändern der Geschäftsbereichseinstellungen finden Sie im Konfigurationsabschnitt.',
   'please_select_conversation' => 'Bitte wählen Sie ein Gespräch von links aus.',
   'session_expired' => 'Ihre Session ist abgelaufen! Bitte loggen Sie sich ein.',
+  'no_address_for_invoice' => 'Sie haben noch keine Geschäftsadresse eingerichtet. Bitte Adresse jetzt hinzufügen.',
 );

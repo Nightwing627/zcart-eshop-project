@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => '¡El estado no afectará ya que el área comercial del mercado está establecida en todo el mundo! Para cambiar la configuración del área comercial, consulte la sección de configuración.',
   'please_select_conversation' => 'Selecciona una conversación de la izquierda.',
   'session_expired' => '¡Tu sesión ha terminado! Por favor Iniciar sesión.',
+  'no_address_for_invoice' => 'Aún no tiene una dirección comercial configurada. Por favor agregue la dirección ahora.',
 );

@@ -512,17 +512,19 @@ class Order extends BaseModel
 
         $invoiceFrom = array_values($invoiceFrom); // Reset the array keys
 
-        $invoice = new PdfInvoice();
+        $title = (bool) config('invoice.title') ? config('invoice.title') : trans("invoice.invoice");
 
-        /* Header settings */
-        $invoice->setColor("#007fff");      // pdf color scheme
-        $invoice->setType(trans("invoice.invoice"));    // Invoice Type
+        $invoice = new PdfInvoice();
+        $invoice->setColor(config('invoice.color', '#007fff'));      // pdf color scheme
+        $invoice->setDocumentSize(config('invoice.size', 'A4'));      // set document size
+        $invoice->setType($title);    // Invoice Type
 
         //Set logo image if exist
         $logo = get_storage_file_url(optional($this->shop->image)->path, Null);
-        if(Storage::exists(optional($this->shop->image)->path)) {
-            $invoice->setLogo($logo);
-        }
+        // if(Storage::exists(optional($this->shop->image)->path)) {
+        //     $invoice->setLogo($logo);
+        // }
+
         // if(Storage::exists('logo.png')) {
         //     $logo = get_storage_file_url('logo.png', Null);
         //     $invoice->setLogo($logo);

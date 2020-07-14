@@ -31,7 +31,7 @@
 								</div>
 							</th>
 						@endcan
-						<th>{{ trans('app.thumbnail') }}</th>
+						<th>{{ trans('app.mobile_slider') }}</th>
 						<th>{{ trans('app.detail') }}</th>
 						<th>{{ trans('app.slider') }}</th>
 						<th>{{ trans('app.options') }}</th>
@@ -46,7 +46,7 @@
 								<td><input id="{{ $slider->id }}" type="checkbox" class="massCheck"></td>
 						  	@endcan
 				          	<td>
-								<img src="{{ get_storage_file_url(optional($slider->images->first())->path, 'cover_thumb') }}" class="" height ="50%" alt="{{ trans('app.image') }}">
+								<img src="{{ get_storage_file_url(optional($slider->mobile)->path, 'cover_thumb') }}" class="" height ="50%" alt="{{ trans('app.image') }}">
 							</td>
 				          	<td>
 					          	<strong style="color: {{ $slider->title_color }}">{!! $slider->title !!} </strong>

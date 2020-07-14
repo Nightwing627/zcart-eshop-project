@@ -173,4 +173,5 @@ return array (
   'active_worldwide_business_area' => 'Status tidak akan memengaruhi karena area bisnis marketplace ditetapkan ke seluruh dunia! Untuk mengubah pengaturan area bisnis, periksa bagian konfigurasi.',
   'please_select_conversation' => 'Silakan pilih percakapan dari kiri.',
   'session_expired' => 'Sesi Anda telah kedaluwarsa! Silahkan masuk.',
+  'no_address_for_invoice' => 'Anda belum mengatur alamat bisnis. Silakan tambahkan alamat sekarang.',
 );

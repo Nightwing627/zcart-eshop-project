@@ -341,4 +341,8 @@ return array (
   'notify_new_chat' => 'Senden Sie mir eine E-Mail-Benachrichtigung, wenn eine neue Chat-Nachricht eingetroffen ist',
   'not_in_business_area' => 'Dieser Bereich befindet sich nicht im aktiven Geschäftsbereich des Marktes. Möglicherweise vor kurzem vom Marktplatz-Administrator entfernt.',
   'region_iso_code' => 'Der ISO-Code der Region muss stimmen. Lesen Sie den Abschnitt * Geschäftsbereich * in der Dokumentation, um Hilfe zu erhalten.',
+  'subscribers_count' => 'Anzahl der aktiven Teilnehmer',
+  'this_plan_has_active_subscribers' => 'Dieser Plan kann nicht gelöscht werden, da er aktive Abonnenten hat.',
+  'max_chat_allowed' => 'Maximal :size Zeichen.',
+  'mobile_slider_image' => 'Das Schiebereglerbild für die mobile App. Das System blendet diesen Schieberegler auf Mobilgeräten aus, wenn er nicht bereitgestellt wird.',
 );

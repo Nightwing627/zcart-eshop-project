@@ -591,6 +591,9 @@ return array (
   'canceled' => 'ألغيت',
   'order_canceled' => 'تم إلغاء الطلب!',
   'order_again' => 'أجل مرة أخرى',
+  'user' => 'المستعمل',
+  'free' => 'مجانا',
+  'more_items_from_this_seller' => 'المزيد من العناصر من :seller',
   'chat_welcome' => 'مهلا! لدي سؤال؟',
   'connecting' => 'توصيل...',
   'login_to_chat' => 'نحن على بعد خطوة واحدة! يرجى تسجيل الدخول لبدء المحادثة.',
@@ -599,4 +602,5 @@ return array (
   'online' => 'عبر الانترنت',
   'shop_not_found' => 'المحل غير موجود. تحقق من البائعين الآخرين.',
   'session_expired' => 'انتهت صلاحية الجلسة! يرجى تحديث الصفحة.',
+  'item_not_available' => 'هذا العنصر لم يعد متاحا!',
 );
